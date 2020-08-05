@@ -94,7 +94,7 @@ class WPFM_Post_Types {
 			return;
 
 
-		$admin_capability = 'manage_food_manager';
+		$admin_capability = 'manage_food_managers';
 		$permalink_structure = WPFM_Post_Types::get_permalink_structure();
 
 
@@ -924,7 +924,7 @@ class WPFM_Post_Types {
 	public function add_feed_query_args( $wp ) {
 		
 		// Let's leave if not the event feed
-		if ( ! isset( $wp->query_vars['feed'] ) || 'event_feed' !== $wp->query_vars['feed'] ) {
+		if ( ! isset( $wp->query_vars['feed'] ) || 'food_feed' !== $wp->query_vars['feed'] ) {
 			return;
 		}
 		
@@ -946,16 +946,16 @@ class WPFM_Post_Types {
 	 * Add a custom namespace to the event feed
 	 */
 
-	public function event_feed_namespace() {
+	public function food_feed_namespace() {
 
-		echo 'xmlns:event_listing="' .  site_url() . '"' . "\n";
+		echo 'xmlns:food_manager="' .  site_url() . '"' . "\n";
 	}
 
 	/**
 	 * Add custom data to the event feed
 	 */
 
-	public function event_feed_item() {
+	public function food_feed_item() {
 
 		$post_id  = get_the_ID();
 		get_event_manager_template( 'rss-event-feed.php', array( 'post_id' => $post_id ) );
@@ -965,178 +965,178 @@ class WPFM_Post_Types {
 	 * Expire events
 	 */
 
-	public function check_for_expired_events() {
+	// public function check_for_expired_events() {
 
-		global $wpdb;
+	// 	global $wpdb;
 		
-		// Change status to expired
+	// 	// Change status to expired
 
-		$event_ids = $wpdb->get_col( $wpdb->prepare( "
+	// 	$event_ids = $wpdb->get_col( $wpdb->prepare( "
 
-			SELECT postmeta.post_id FROM {$wpdb->postmeta} as postmeta
+	// 		SELECT postmeta.post_id FROM {$wpdb->postmeta} as postmeta
 
-			LEFT JOIN {$wpdb->posts} as posts ON postmeta.post_id = posts.ID
+	// 		LEFT JOIN {$wpdb->posts} as posts ON postmeta.post_id = posts.ID
 
-			WHERE postmeta.meta_key = '_event_expiry_date'
+	// 		WHERE postmeta.meta_key = '_event_expiry_date'
 
-			AND postmeta.meta_value > 0
+	// 		AND postmeta.meta_value > 0
 
-			AND postmeta.meta_value < %s
+	// 		AND postmeta.meta_value < %s
 
-			AND posts.post_status = 'publish'
+	// 		AND posts.post_status = 'publish'
 
-			AND posts.post_type = 'event_listing'
+	// 		AND posts.post_type = 'event_listing'
 
-		", date( 'Y-m-d', current_time( 'timestamp' ) ) ) );
+	// 	", date( 'Y-m-d', current_time( 'timestamp' ) ) ) );
 
-		if ( $event_ids ) {
+	// 	if ( $event_ids ) {
 
-			foreach ( $event_ids as $event_id ) {
+	// 		foreach ( $event_ids as $event_id ) {
 
-				$event_data       = array();
+	// 			$event_data       = array();
 
-				$event_data['ID'] = $event_id;
+	// 			$event_data['ID'] = $event_id;
 
-				$event_data['post_status'] = 'expired';
+	// 			$event_data['post_status'] = 'expired';
 
-				wp_update_post( $event_data );
-			}
-		}
+	// 			wp_update_post( $event_data );
+	// 		}
+	// 	}
 		
-		// Delete old expired events	
-		$return_flag=absint( get_option( 'event_manager_delete_expired_events' ) ) == 1 ? true : false;
-		if ( apply_filters( 'event_manager_delete_expired_events', $return_flag ) ) {
+	// 	// Delete old expired events	
+	// 	$return_flag=absint( get_option( 'event_manager_delete_expired_events' ) ) == 1 ? true : false;
+	// 	if ( apply_filters( 'event_manager_delete_expired_events', $return_flag ) ) {
 
-			$event_ids = $wpdb->get_col( $wpdb->prepare( "
+	// 		$event_ids = $wpdb->get_col( $wpdb->prepare( "
 
-				SELECT posts.ID FROM {$wpdb->posts} as posts
+	// 			SELECT posts.ID FROM {$wpdb->posts} as posts
 
-				WHERE posts.post_type = 'event_listing'
+	// 			WHERE posts.post_type = 'event_listing'
 
-				AND posts.post_modified < %s
+	// 			AND posts.post_modified < %s
 
-				AND posts.post_status = 'expired'
+	// 			AND posts.post_status = 'expired'
 
-			", date( 'Y-m-d', strtotime( '-' . apply_filters( 'event_manager_delete_expired_events_days', 30 ) . ' days', current_time( 'timestamp' ) ) ) ) );
+	// 		", date( 'Y-m-d', strtotime( '-' . apply_filters( 'event_manager_delete_expired_events_days', 30 ) . ' days', current_time( 'timestamp' ) ) ) ) );
 			
-			if ( $event_ids ) {
+	// 		if ( $event_ids ) {
 
-				foreach ( $event_ids as $event_id ) {
+	// 			foreach ( $event_ids as $event_id ) {
 
-					wp_trash_post( $event_id );
-				}
-			}
-		}
+	// 				wp_trash_post( $event_id );
+	// 			}
+	// 		}
+	// 	}
 
-		//Delete event after finished
-		$delete_events_after_finished = absint( get_option( 'event_manager_delete_events_after_finished' ) ) == 1 ? true : false;
-		if($delete_events_after_finished)
-		{
-			$args = [
-				'post_type'      => 'event_listing',
-				'post_status'    => array( 'publish', 'expired' ),
-				'posts_per_page' => -1,
-				'meta_query' => array(
-			        'relation' => 'AND',
-			        array(
-			            'key'     => '_event_end_date',
-			            'value'   => date( 'Y-m-d'),
-			            'compare' => '<=',
-			        ),
-			        array(
-			            'key'     => '_event_end_time',
-			            'value'   => date( 'H:i A'),
-			            'compare' => '<',
-			        ),
-			    ),
-			];
+	// 	//Delete event after finished
+	// 	$delete_events_after_finished = absint( get_option( 'event_manager_delete_events_after_finished' ) ) == 1 ? true : false;
+	// 	if($delete_events_after_finished)
+	// 	{
+	// 		$args = [
+	// 			'post_type'      => 'event_listing',
+	// 			'post_status'    => array( 'publish', 'expired' ),
+	// 			'posts_per_page' => -1,
+	// 			'meta_query' => array(
+	// 		        'relation' => 'AND',
+	// 		        array(
+	// 		            'key'     => '_event_end_date',
+	// 		            'value'   => date( 'Y-m-d'),
+	// 		            'compare' => '<=',
+	// 		        ),
+	// 		        array(
+	// 		            'key'     => '_event_end_time',
+	// 		            'value'   => date( 'H:i A'),
+	// 		            'compare' => '<',
+	// 		        ),
+	// 		    ),
+	// 		];
 
-			$event_ids = get_posts($args);
+	// 		$event_ids = get_posts($args);
 
-			if ( $event_ids ) 
-			{
-				foreach ( $event_ids as $event_id ) 
-				{
-					$event_data       = array();
+	// 		if ( $event_ids ) 
+	// 		{
+	// 			foreach ( $event_ids as $event_id ) 
+	// 			{
+	// 				$event_data       = array();
 
-					$event_data['ID'] = $event_id->ID;
+	// 				$event_data['ID'] = $event_id->ID;
 
-					$event_data['post_status'] = 'expired';
+	// 				$event_data['post_status'] = 'expired';
 
-					wp_update_post( $event_data );
+	// 				wp_update_post( $event_data );
 
-					wp_trash_post( $event_id->ID );
-				}
-			}
-		}
+	// 				wp_trash_post( $event_id->ID );
+	// 			}
+	// 		}
+	// 	}
 
-	}
+	// }
 	
 	/**
 	 * Delete old previewed events after 30 days to keep the DB clean
 	 */
 
-	public function delete_old_previews() {
+	// public function delete_old_previews() {
 
-		global $wpdb;
+	// 	global $wpdb;
 
-		// Delete old expired events
+	// 	// Delete old expired events
 
-		$event_ids = $wpdb->get_col( $wpdb->prepare( "
+	// 	$event_ids = $wpdb->get_col( $wpdb->prepare( "
 
-			SELECT posts.ID FROM {$wpdb->posts} as posts
+	// 		SELECT posts.ID FROM {$wpdb->posts} as posts
 
-			WHERE posts.post_type = 'event_listing'
+	// 		WHERE posts.post_type = 'event_listing'
 
-			AND posts.post_modified < %s
+	// 		AND posts.post_modified < %s
 
-			AND posts.post_status = 'preview'
+	// 		AND posts.post_status = 'preview'
 
-		", date( 'Y-m-d', strtotime( '-30 days', current_time( 'timestamp' ) ) ) ) );
+	// 	", date( 'Y-m-d', strtotime( '-30 days', current_time( 'timestamp' ) ) ) ) );
 
-		if ( $event_ids ) {
+	// 	if ( $event_ids ) {
 
-			foreach ( $event_ids as $event_id ) {
+	// 		foreach ( $event_ids as $event_id ) {
 
-				wp_delete_post( $event_id, true );
-			}
-		}
-	}
+	// 			wp_delete_post( $event_id, true );
+	// 		}
+	// 	}
+	// }
 
 	/**
 	 * Set expirey date when event status changes
 	 */
 
-	public function set_event_expiry_date( $post ) {
-		if ( $post->post_type !== 'event_listing' ) {
-			return;
-		}
-		// See if it is already set
-		if ( metadata_exists( 'post', $post->ID, '_event_expiry_date' ) ) {
+	// public function set_event_expiry_date( $post ) {
+	// 	if ( $post->post_type !== 'event_listing' ) {
+	// 		return;
+	// 	}
+	// 	// See if it is already set
+	// 	if ( metadata_exists( 'post', $post->ID, '_event_expiry_date' ) ) {
 			
-			$expires = get_post_meta( $post->ID, '_event_expiry_date', true );
+	// 		$expires = get_post_meta( $post->ID, '_event_expiry_date', true );
 			
-			if ( $expires && strtotime( $expires ) < current_time( 'timestamp' ) ) {
+	// 		if ( $expires && strtotime( $expires ) < current_time( 'timestamp' ) ) {
 				
-				update_post_meta( $post->ID, '_event_expiry_date', '' );
-			}
-		}
+	// 			update_post_meta( $post->ID, '_event_expiry_date', '' );
+	// 		}
+	// 	}
 		
-		// No metadata set so we can generate an expiry date
-		// See if the user has set the expiry manually:
-		if ( ! empty( $_POST[ '_event_expiry_date' ] ) ) {
-			update_post_meta( $post->ID, '_event_expiry_date', date( 'Y-m-d', strtotime( sanitize_text_field( $_POST[ '_event_expiry_date' ] ) ) ) );
-			// No manual setting? Lets generate a date
-		} elseif (false == isset( $expires ) ){
-			$expires = get_event_expiry_date( $post->ID );
-			update_post_meta( $post->ID, '_event_expiry_date', $expires );
-			// In case we are saving a post, ensure post data is updated so the field is not overridden
-			if ( isset( $_POST[ '_event_expiry_date' ] ) ) {
+	// 	// No metadata set so we can generate an expiry date
+	// 	// See if the user has set the expiry manually:
+	// 	if ( ! empty( $_POST[ '_event_expiry_date' ] ) ) {
+	// 		update_post_meta( $post->ID, '_event_expiry_date', date( 'Y-m-d', strtotime( sanitize_text_field( $_POST[ '_event_expiry_date' ] ) ) ) );
+	// 		// No manual setting? Lets generate a date
+	// 	} elseif (false == isset( $expires ) ){
+	// 		$expires = get_event_expiry_date( $post->ID );
+	// 		update_post_meta( $post->ID, '_event_expiry_date', $expires );
+	// 		// In case we are saving a post, ensure post data is updated so the field is not overridden
+	// 		if ( isset( $_POST[ '_event_expiry_date' ] ) ) {
 				
-				$_POST[ '_event_expiry_date' ] = $expires;
-			}
-		}
-	}
+	// 			$_POST[ '_event_expiry_date' ] = $expires;
+	// 		}
+	// 	}
+	// }
 
 	    /**
 	    * Set post view on the single listing page
@@ -1210,7 +1210,7 @@ class WPFM_Post_Types {
 
 	public function fix_post_name( $data, $postarr ) {
 
-		 if ( 'event_listing' === $data['post_type'] && 'pending' === $data['post_status'] && ! current_user_can( 'publish_posts' ) ) {
+		 if ( 'food_manager' === $data['post_type'] && 'pending' === $data['post_status'] && ! current_user_can( 'publish_posts' ) ) {
 
 				$data['post_name'] = $postarr['post_name'];
 		 }
@@ -1225,11 +1225,11 @@ class WPFM_Post_Types {
 
 	public function maybe_add_geolocation_data( $object_id, $meta_key, $_meta_value ) {
 
-		if ( '_event_location' !== $meta_key || 'event_listing' !== get_post_type( $object_id ) ) {
+		if ( '_food_location' !== $meta_key || 'food_manager' !== get_post_type( $object_id ) ) {
 
 			return;
 		}
-		do_action( 'event_manager_event_location_edited', $object_id, $_meta_value );
+		do_action( 'food_manager_event_location_edited', $object_id, $_meta_value );
 	}
 
 	/**
@@ -1243,7 +1243,7 @@ class WPFM_Post_Types {
 	public function update_post_meta( $meta_id, $object_id, $meta_key, $meta_value ) {
 		if ( 'event_listing' === get_post_type( $object_id ) ) {
 			switch ( $meta_key ) {
-				case '_event_location':
+				case '_food_location':
 					$this->maybe_update_geolocation_data( $meta_id, $object_id, $meta_key, $meta_value );
 					break;
 				case '_featured':
@@ -1261,11 +1261,11 @@ class WPFM_Post_Types {
 
 	public function maybe_update_geolocation_data( $meta_id, $object_id, $meta_key, $_meta_value ) {
 
-		if ( '_event_location' !== $meta_key || 'event_listing' !== get_post_type( $object_id ) ) {
+		if ( '_food_location' !== $meta_key || 'event_listing' !== get_post_type( $object_id ) ) {
 		    
 			return;
 		}
-		do_action( 'event_manager_event_location_edited', $object_id, $_meta_value );
+		do_action( 'food_manager_event_location_edited', $object_id, $_meta_value );
 	}
 
 	/**
@@ -1274,7 +1274,7 @@ class WPFM_Post_Types {
 
 	public function maybe_update_menu_order( $meta_id, $object_id, $meta_key, $_meta_value ) {
 
-		if ( '_featured' !== $meta_key || 'event_listing' !== get_post_type( $object_id ) ) {
+		if ( '_featured' !== $meta_key || 'food_manager' !== get_post_type( $object_id ) ) {
 
 			return;
 		}
@@ -1325,7 +1325,7 @@ class WPFM_Post_Types {
 
 	public function pmxi_saved_post( $post_id ) {
 
-		if ( 'event_listing' === get_post_type( $post_id ) ) {
+		if ( 'food_manager' === get_post_type( $post_id ) ) {
 
 			$this->maybe_add_default_meta_data( $post_id );
 

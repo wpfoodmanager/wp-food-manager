@@ -4,7 +4,7 @@
  *
  * Template functions specifically created for event listings and other event related methods.
  *
- * @author 	WP Event Manager
+ * @author 	WP Food Manager
  * @category 	Core
  * @package 	Event Manager/Template
  * @version     1.0.5

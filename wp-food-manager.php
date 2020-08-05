@@ -76,12 +76,14 @@ class WP_Food_Manager {
 		define( 'WPFM_PLUGIN_DIR', untrailingslashit( plugin_dir_path( __FILE__ ) ) );
 		define( 'WPFM_PLUGIN_URL', untrailingslashit( plugins_url( basename( plugin_dir_path( __FILE__ ) ), basename( __FILE__ ) ) ) );
 		//includes
-
-		include( 'wp-food-manager-template.php' );
+		include( 'includes/wpfm-install.php' );
 		include( 'includes/wpfm-post-types.php' );
-		
+
+		//forms
 		include( 'forms/wpfm-forms.php' );
 		include( 'shortcodes/wpfm-shortcodes.php' );
+
+		include( 'wp-food-manager-template.php' );
 
 		if(is_admin()){
 			include( 'admin/wpfm-admin.php' );
@@ -94,6 +96,16 @@ class WP_Food_Manager {
 
 		// Activation - works with symlinks
 		register_activation_hook( basename( dirname( __FILE__ ) ) . '/' . basename( __FILE__ ), array( $this, 'activate' ) );
+		// Switch theme
+		add_action( 'after_switch_theme', array( $this->post_types, 'register_post_types' ), 11 );
+
+		add_action( 'after_switch_theme', 'flush_rewrite_rules', 15 );
+
+
+		// Actions
+		add_action( 'after_setup_theme', array( $this, 'load_plugin_textdomain' ) );
+
+		add_action( 'after_setup_theme', array( $this, 'include_template_functions' ), 11 );
 
 	}
 
@@ -112,6 +124,35 @@ class WP_Food_Manager {
 
 		load_plugin_textdomain($domain, false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
 	}
+
+		/**
+	 * Called on plugin activation
+	 */
+
+	public function activate() {
+
+		unregister_post_type( 'food_manager' );
+		add_filter( 'pre_option_wpfm_enable_categories', '__return_true' );
+		add_filter( 'pre_option_wpfm_enable_event_types', '__return_true' );
+		$this->post_types->register_post_types();
+		remove_filter( 'pre_option_wpfm_categories', '__return_true' );
+		remove_filter( 'pre_option_wpfm_enable_event_types', '__return_true' );
+		WPFM_Install::install();
+		flush_rewrite_rules();
+	}
+
+
+	/**
+	 * Load functions
+	 */
+
+	public function include_template_functions() {
+
+		include( 'wp-food-manager-functions.php' );
+
+		include( 'wp-food-manager-template.php' );
+	}
+
 }
 
 if(!function_exists('WPFM')){
