@@ -540,7 +540,7 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
 		}
 
 		wp_enqueue_script( 'wp-event-manager-event-submission' );
-		get_event_manager_template( 'event-submit.php', array(
+		get_food_manager_template( 'food-submit.php', array(
 			'form'               => $this->form_name,
 			'event_id'             => $this->get_event_id(),
 			'resume_edit'        => $this->resume_edit,

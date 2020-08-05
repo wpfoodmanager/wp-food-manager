@@ -64,8 +64,9 @@ class WPFM_Forms {
 		// Now try to load the form_name
 
 		$form_class  = 'WPFM_Form_' . str_replace( '-', '_', $form_name );
+		
 
-		$form_file   = EVENT_MANAGER_PLUGIN_DIR . '/forms/wpfm-form-' . $form_name . '.php';			
+		$form_file   = WPFM_PLUGIN_DIR . '/forms/wpfm-form-' . $form_name . '.php';		
 
 		if ( class_exists( $form_class ) ) {
 
@@ -95,6 +96,7 @@ class WPFM_Forms {
 	 */
 	 
 	public function get_form( $form_name, $atts = array() ) {
+		
 
 		if ( $form = $this->load_form_class( $form_name ) ) {
 

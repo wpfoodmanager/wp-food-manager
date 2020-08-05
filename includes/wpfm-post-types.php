@@ -90,29 +90,20 @@ class WPFM_Post_Types {
 
 	public function register_post_types() {
 
-		if ( post_type_exists( "food_manager_1" ) )
+		if ( post_type_exists( "food_manager" ) )
 			return;
-
 
 
 		$admin_capability = 'manage_food_manager';
 		$permalink_structure = WPFM_Post_Types::get_permalink_structure();
 
-		 /**
-		 * Post types
-		 */
 
-		$singular  = __( 'Food', 'wp-food-manager' );
-
-		$plural    = __( 'Foods', 'wp-food-manager' );
-
-		
 
 		/**
 		 * Taxonomies
 		 */
 
-		if ( get_option( 'food_manager_enable_categories' ,true) ) {
+		//if ( get_option( 'food_manager_enable_categories' ,true) ) {
 
 			$singular  = __( 'Food category', 'wp-food-manager' );
 
@@ -139,7 +130,7 @@ class WPFM_Post_Types {
 			}
 
 			register_taxonomy( "food_manager_category",
-
+				
 			apply_filters( 'register_taxonomy_food_manager_category_object_type', array( 'food_manager' ) ),
 
 	       	 	apply_filters( 'register_taxonomy_food_manager_category_args', array(
@@ -199,9 +190,9 @@ class WPFM_Post_Types {
 
 		    );
 
-		}
+		//}
 
-		if ( get_option( 'food_manager_enable_event_types' ,true) ) {
+		//if ( get_option( 'food_manager_enable_event_types' ,true) ) {
 
 		        $singular  = __( 'Food type', 'wp-food-manager' );
 
@@ -284,14 +275,14 @@ class WPFM_Post_Types {
 		           'rewrite' 				=> $rewrite,
 		        ) )
 		    );
-	    }
+	  //   //}
 
 
 
 		/**
 		 * Set whether to add archive page support when registering the food manager post type.
 		 *
-		 * @since 2.5
+		 * @since 1.0.0
 		 *
 		 * @param bool $enable_event_archive_page
 		 */
@@ -311,6 +302,17 @@ class WPFM_Post_Types {
 
 			'pages'      => false
 		);
+
+
+		/**
+		 * Post types
+		 */
+
+		$singular  = __( 'Food', 'wp-food-manager' );
+
+		$plural    = __( 'Foods', 'wp-food-manager' );
+
+		
 
 		register_post_type( "food_manager",
 
@@ -1403,7 +1405,7 @@ class WPFM_Post_Types {
 		}
 
 		$permalinks = wp_parse_args(
-			(array) get_option( 'wpem_permalinks', array() ),
+			(array) get_option( 'wpfm_permalinks', array() ),
 			array(
 				'food_base'      => '',
 				'category_base' => '',
@@ -1412,9 +1414,9 @@ class WPFM_Post_Types {
 		);
 
 		// Ensure rewrite slugs are set.
-		$permalinks['food_rewrite_slug']      = untrailingslashit( empty( $permalinks['food_base'] ) ? _x( 'event', 'Food permalink - resave permalinks after changing this', 'wp-food-manager' ) : $permalinks['event_base'] );
-		$permalinks['category_rewrite_slug'] = untrailingslashit( empty( $permalinks['category_base'] ) ? _x( 'event-category', 'Food category slug - resave permalinks after changing this', 'wp-food-manager' ) : $permalinks['category_base'] );
-		$permalinks['type_rewrite_slug']     = untrailingslashit( empty( $permalinks['type_base'] ) ? _x( 'event-type', 'Food type slug - resave permalinks after changing this', 'wp-food-manager' ) : $permalinks['type_base'] );
+		$permalinks['food_rewrite_slug']      = untrailingslashit( empty( $permalinks['food_base'] ) ? _x( 'food', 'Food permalink - resave permalinks after changing this', 'wp-food-manager' ) : $permalinks['event_base'] );
+		$permalinks['category_rewrite_slug'] = untrailingslashit( empty( $permalinks['category_base'] ) ? _x( 'food-category', 'Food category slug - resave permalinks after changing this', 'wp-food-manager' ) : $permalinks['category_base'] );
+		$permalinks['type_rewrite_slug']     = untrailingslashit( empty( $permalinks['type_base'] ) ? _x( 'food-type', 'Food type slug - resave permalinks after changing this', 'wp-food-manager' ) : $permalinks['type_base'] );
 
 		// Restore the original locale.
 		if ( function_exists( 'restore_current_locale' ) && did_action( 'admin_init' ) ) {

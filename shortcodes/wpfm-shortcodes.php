@@ -1,19 +1,19 @@
 <?php
 /*
-* This file is use to create a sortcode of wp event manager plugin. 
-* This file include sortcode of event listing,event submit form and event dashboard etc.
+* This file is use to create a sortcode of wp food manager plugin. 
+* This file include sortcode of food listing,food submit form and food dashboard etc.
 */
 ?>
 <?php
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 /**
- * WP_Event_Manager_Shortcodes class.
+ * WP_food_Manager_Shortcodes class.
  */
 
 class WPFM_Shortcodes {
 
-	private $event_dashboard_message = '';
-	private $organizer_dashboard_message = '';
+	private $food_dashboard_message = '';
+	private $neutrition_dashboard_message = '';
 	private $venue_dashboard_message = '';
 	
 	/**
@@ -21,39 +21,39 @@ class WPFM_Shortcodes {
 	 */
 	public function __construct() {
 
-		// add_action( 'wp', array( $this, 'shortcode_action_handler' ) );
+		 add_action( 'wp', array( $this, 'shortcode_action_handler' ) );
 
-		// add_action( 'event_manager_event_dashboard_content_edit', array( $this, 'edit_event' ) );
-		// add_action( 'event_manager_organizer_dashboard_content_edit', array( $this, 'edit_organizer' ) );
-		// add_action( 'event_manager_venue_dashboard_content_edit', array( $this, 'edit_venue' ) );
+		// add_action( 'food_manager_food_dashboard_content_edit', array( $this, 'edit_food' ) );
+		// add_action( 'food_manager_organizer_dashboard_content_edit', array( $this, 'edit_organizer' ) );
+		// add_action( 'food_manager_venue_dashboard_content_edit', array( $this, 'edit_venue' ) );
 
-		// add_action( 'event_manager_event_filters_end', array( $this, 'event_filter_results' ), 30 );
-		// add_action( 'event_manager_output_events_no_results', array( $this, 'output_no_results' ) );
+		// add_action( 'food_manager_food_filters_end', array( $this, 'food_filter_results' ), 30 );
+		// add_action( 'food_manager_output_foods_no_results', array( $this, 'output_no_results' ) );
 
-		//add_action( 'single_event_listing_organizer_action_start', array( $this, 'organizer_more_info_link' ) );
+		//add_action( 'single_food_manager_organizer_action_start', array( $this, 'organizer_more_info_link' ) );
 
 		add_shortcode( 'submit_food_form', array( $this, 'submit_food_form' ) );
-		//add_shortcode( 'food_dashboard', array( $this, 'event_dashboard' ) );
+		add_shortcode( 'food_dashboard', array( $this, 'food_dashboard' ) );
 
 		//hide the shortcode if organizer or venue not enabled
-		// if(get_option('enable_event_organizer')){
+		// if(get_option('enable_food_organizer')){
 		// 	add_shortcode( 'submit_organizer_form', array( $this, 'submit_organizer_form' ) );
 		// 	add_shortcode( 'organizer_dashboard', array( $this, 'organizer_dashboard' ) );
 		// }
 		
-		// if(get_option('enable_event_venue')){
+		// if(get_option('enable_food_venue')){
 		// 	add_shortcode( 'submit_venue_form', array( $this, 'submit_venue_form' ) );
 		// 	add_shortcode( 'venue_dashboard', array( $this, 'venue_dashboard' ) );
 		// }
 		
-		// add_shortcode( 'events', array( $this, 'output_events' ) );
-		// add_shortcode( 'event', array( $this, 'output_event' ) );
-		// add_shortcode( 'event_summary', array( $this, 'output_event_summary' ) );
-		// add_shortcode( 'past_events', array( $this, 'output_past_events' ) );
-		// add_shortcode( 'event_register', array( $this, 'output_event_register' ) );
+		// add_shortcode( 'foods', array( $this, 'output_foods' ) );
+		// add_shortcode( 'food', array( $this, 'output_food' ) );
+		// add_shortcode( 'food_summary', array( $this, 'output_food_summary' ) );
+		// add_shortcode( 'past_foods', array( $this, 'output_past_foods' ) );
+		// add_shortcode( 'food_register', array( $this, 'output_food_register' ) );
 
-		// add_shortcode( 'event_organizers', array( $this, 'output_event_organizers' ) );
-		// add_shortcode( 'event_organizer', array( $this, 'output_event_organizer' ) );
+		// add_shortcode( 'food_organizers', array( $this, 'output_food_organizers' ) );
+		// add_shortcode( 'food_organizer', array( $this, 'output_food_organizer' ) );
 	}
 
 	/**
@@ -63,21 +63,22 @@ class WPFM_Shortcodes {
 
 		global $post;
 		
-		if ( is_page() && strstr( $post->post_content, '[event_dashboard' ) ) {
-			$this->event_dashboard_handler();
+		if ( is_page() && strstr( $post->post_content, '[food_dashboard' ) ) {
+			$this->food_dashboard_handler();
 		}
-		elseif ( is_page() && strstr( $post->post_content, '[organizer_dashboard' )) {
-			$this->organizer_dashboard_handler();
+		elseif ( is_page() && strstr( $post->post_content, '[neutritions_dashboard' )) {
+			$this->neutritions_dashboard_handler();
 		}
-		elseif ( is_page() && strstr( $post->post_content, '[venue_dashboard' )) {
-			$this->venue_dashboard_handler();
+		elseif ( is_page() && strstr( $post->post_content, '[ingredients_dashboard' )) {
+			$this->ingredients_dashboard_handler();
 		}
 	}
 	
 	/**
-	 * Show the event submission form
+	 * Show the food submission form
 	*/
 	public function submit_food_form( $atts = array() ) {
+		
 
 		return $GLOBALS['food_manager']->forms->get_form( 'submit-food', $atts );
 	}
@@ -90,36 +91,29 @@ class WPFM_Shortcodes {
 		return $GLOBALS['food_manager']->forms->get_form( 'submit-neutritions', $atts );
 	}
 
-	/**
-	 * Show the organizer submission form
-	 */
-	public function submit_venue_form( $atts = array() ) {
-
-		return $GLOBALS['event_manager']->forms->get_form( 'submit-venue', $atts );
-	}
 
 	/**
-	 * Handles actions on event dashboard
+	 * Handles actions on food dashboard
 	 */
-	public function event_dashboard_handler() {
+	public function food_dashboard_handler() {
 
-		if ( ! empty( $_REQUEST['action'] ) && ! empty( $_REQUEST['_wpnonce'] ) && wp_verify_nonce( $_REQUEST['_wpnonce'], 'event_manager_my_event_actions' ) ) {
+		if ( ! empty( $_REQUEST['action'] ) && ! empty( $_REQUEST['_wpnonce'] ) && wp_verify_nonce( $_REQUEST['_wpnonce'], 'food_manager_my_food_actions' ) ) {
 
 			$action = sanitize_title( $_REQUEST['action'] );
 
-			$event_id = absint( $_REQUEST['event_id'] );
+			$food_id = absint( $_REQUEST['food_id'] );
 
 			try {
 
-				// Get Event
+				// Get food
 
-				$event    = get_post( $event_id );
+				$food    = get_post( $food_id );
 
 				// Check ownership
 
-				if ( ! event_manager_user_can_edit_event( $event_id ) ) {
+				if ( ! food_manager_user_can_edit_food( $food_id ) ) {
 
-					throw new Exception( __( 'Invalid ID', 'wp-event-manager' ) );
+					throw new Exception( __( 'Invalid ID', 'wp-food-manager' ) );
 				}
 
 				switch ( $action ) {
@@ -128,55 +122,55 @@ class WPFM_Shortcodes {
 
 						// Check status
 
-						if ( $event->_cancelled == 1 )
+						if ( $food->_cancelled == 1 )
 
-							throw new Exception( __( 'This event has already been cancelled', 'wp-event-manager' ) );
+							throw new Exception( __( 'This food has already been cancelled', 'wp-food-manager' ) );
 
 						// Update
 
-						update_post_meta( $event_id, '_cancelled', 1 );
+						update_post_meta( $food_id, '_cancelled', 1 );
 
 						// Message
 
-						$this->event_dashboard_message = '<div class="event-manager-message wpem-alert wpem-alert-success">' . sprintf( __( '%s has been cancelled', 'wp-event-manager' ), esc_html( $event->post_title ) ) . '</div>';
+						$this->food_dashboard_message = '<div class="food-manager-message wpem-alert wpem-alert-success">' . sprintf( __( '%s has been cancelled', 'wp-food-manager' ), esc_html( $food->post_title ) ) . '</div>';
 
 						break;
 
 					case 'mark_not_cancelled' :
 
 						// Check status
-						if ( $event->_cancelled != 1 ) {
+						if ( $food->_cancelled != 1 ) {
 
-							throw new Exception( __( 'This event is not cancelled', 'wp-event-manager' ) );
+							throw new Exception( __( 'This food is not cancelled', 'wp-food-manager' ) );
 
 						}
 
 						// Update
-						update_post_meta( $event_id, '_cancelled', 0 );
+						update_post_meta( $food_id, '_cancelled', 0 );
 						
 						// Message
-						$this->event_dashboard_message = '<div class="event-manager-message wpem-alert wpem-alert-success">' . sprintf( __( '%s has been marked as not cancelled', 'wp-event-manager' ), esc_html( $event->post_title ) ) . '</div>';
+						$this->food_dashboard_message = '<div class="food-manager-message wpem-alert wpem-alert-success">' . sprintf( __( '%s has been marked as not cancelled', 'wp-food-manager' ), esc_html( $food->post_title ) ) . '</div>';
 
 						break;
 
 					case 'delete' :
 
 						// Trash it
-						wp_trash_post( $event_id );
+						wp_trash_post( $food_id );
 
 						// Message
-						$this->event_dashboard_message = '<div class="event-manager-message wpem-alert wpem-alert-danger">' . sprintf( __( '%s has been deleted', 'wp-event-manager' ), esc_html( $event->post_title ) ) . '</div>';
+						$this->food_dashboard_message = '<div class="food-manager-message wpem-alert wpem-alert-danger">' . sprintf( __( '%s has been deleted', 'wp-food-manager' ), esc_html( $food->post_title ) ) . '</div>';
 
 						break;
 					case 'duplicate' :
-						if ( ! event_manager_get_permalink( 'submit_event_form' ) ) {
-							throw new Exception( __( 'Missing submission page.', 'wp-event-manager' ) );
+						if ( ! food_manager_get_permalink( 'submit_food_form' ) ) {
+							throw new Exception( __( 'Missing submission page.', 'wp-food-manager' ) );
 						}
 					
-						$new_event_id = event_manager_duplicate_listing( $event_id );
+						$new_food_id = food_manager_duplicate_listing( $food_id );
 					
-						if ( $new_event_id ) {
-							wp_redirect( add_query_arg( array( 'event_id' => absint( $new_event_id ) ), event_manager_get_permalink( 'submit_event_form' ) ) );
+						if ( $new_food_id ) {
+							wp_redirect( add_query_arg( array( 'food_id' => absint( $new_food_id ) ), food_manager_get_permalink( 'submit_food_form' ) ) );
 							exit;
 						}
 					
@@ -186,36 +180,36 @@ class WPFM_Shortcodes {
 
 						// redirect to post page
 
-						wp_redirect( add_query_arg( array( 'event_id' => absint( $event_id ) ), event_manager_get_permalink( 'submit_event_form' ) ) );
+						wp_redirect( add_query_arg( array( 'food_id' => absint( $food_id ) ), food_manager_get_permalink( 'submit_food_form' ) ) );
 
 						break;
 
 					default :
 
-						do_action( 'event_manager_event_dashboard_do_action_' . $action );
+						do_action( 'food_manager_food_dashboard_do_action_' . $action );
 
 						break;
 				}
 				
-				do_action( 'event_manager_my_event_do_action', $action, $event_id );
+				do_action( 'food_manager_my_food_do_action', $action, $food_id );
 
 			} catch ( Exception $e ) {
 
-				$this->event_dashboard_message = '<div class="event-manager-error wpem-alert wpem-alert-danger">' . $e->getMessage() . '</div>';
+				$this->food_dashboard_message = '<div class="food-manager-error wpem-alert wpem-alert-danger">' . $e->getMessage() . '</div>';
 			}
 		}
 	}
 	
 	/**
-	 * Shortcode which lists the logged in user's events
+	 * Shortcode which lists the logged in user's foods
 	 */	 
-	public function event_dashboard( $atts ) {
+	public function food_dashboard( $atts ) {
 
 		if ( ! is_user_logged_in() ) {
 
 			ob_start();
 
-			get_event_manager_template( 'event-dashboard-login.php' );
+			get_food_manager_template( 'food-dashboard-login.php' );
 
 			return ob_get_clean();
 		}
@@ -226,7 +220,7 @@ class WPFM_Shortcodes {
 
 		), $atts ) );
 
-		wp_enqueue_script( 'wp-event-manager-event-dashboard' );
+		wp_enqueue_script( 'wp-food-manager-food-dashboard' );
 
 		ob_start();
 
@@ -238,19 +232,19 @@ class WPFM_Shortcodes {
 
 			// Show alternative content if a plugin wants to
 
-			if ( has_action( 'event_manager_event_dashboard_content_' . $action ) ) {
+			if ( has_action( 'food_manager_food_dashboard_content_' . $action ) ) {
 
-				do_action( 'event_manager_event_dashboard_content_' . $action, $atts );
+				do_action( 'food_manager_food_dashboard_content_' . $action, $atts );
 
 				return ob_get_clean();
 			}
 		}
 		
-		// ....If not show the event dashboard
+		// ....If not show the food dashboard
 
-		$args     = apply_filters( 'event_manager_get_dashboard_events_args', array(
+		$args     = apply_filters( 'food_manager_get_dashboard_foods_args', array(
 
-			'post_type'           => 'event_listing',
+			'post_type'           => 'food_manager',
 			'post_status'         => array( 'publish', 'expired', 'pending' ),
 			'ignore_sticky_posts' => 1,
 			'posts_per_page'      => $posts_per_page,
@@ -261,32 +255,32 @@ class WPFM_Shortcodes {
 
 		) );
 
-		$events = new WP_Query;
-		echo $this->event_dashboard_message;
+		$foods = new WP_Query;
+		echo $this->food_dashboard_message;
 
-		$event_dashboard_columns = apply_filters( 'event_manager_event_dashboard_columns', array(
+		$food_dashboard_columns = apply_filters( 'food_manager_food_dashboard_columns', array(
 
-			'event_title' => __( 'Title', 'wp-event-manager' ),
-			'event_location' => __( 'Location', 'wp-event-manager' ),
-			'event_start_date' => __( 'Start Date', 'wp-event-manager' ),
-			'event_end_date' => __( 'End Date', 'wp-event-manager' ),
-			'view_count' => __( 'Viewed', 'wp-event-manager' ),
-			'event_action' => __( 'Action', 'wp-event-manager' ), 
+			'food_title' => __( 'Title', 'wp-food-manager' ),
+			'food_location' => __( 'Location', 'wp-food-manager' ),
+			'food_start_date' => __( 'Start Date', 'wp-food-manager' ),
+			'food_end_date' => __( 'End Date', 'wp-food-manager' ),
+			'view_count' => __( 'Viewed', 'wp-food-manager' ),
+			'food_action' => __( 'Action', 'wp-food-manager' ), 
 		) );
 
-		get_event_manager_template( 'event-dashboard.php', array( 'events' => $events->query( $args ), 'max_num_pages' => $events->max_num_pages, 'event_dashboard_columns' => $event_dashboard_columns ) );
+		get_food_manager_template( 'food-dashboard.php', array( 'foods' => $foods->query( $args ), 'max_num_pages' => $foods->max_num_pages, 'food_dashboard_columns' => $food_dashboard_columns ) );
 
 		return ob_get_clean();
 	}
 
 	/**
-	 * Edit event form
+	 * Edit food form
 	 */
-	public function edit_event() {
+	public function edit_food() {
 
-		global $event_manager;
+		global $food_manager;
 
-		echo $event_manager->forms->get_form( 'edit-event' );
+		echo $food_manager->forms->get_form( 'edit-food' );
 	}
 
 	/**
@@ -294,7 +288,7 @@ class WPFM_Shortcodes {
 	 */
 	public function organizer_dashboard_handler() {
 
-		if ( ! empty( $_REQUEST['action'] ) && ! empty( $_REQUEST['_wpnonce'] ) && wp_verify_nonce( $_REQUEST['_wpnonce'], 'event_manager_my_organizer_actions' ) ) {
+		if ( ! empty( $_REQUEST['action'] ) && ! empty( $_REQUEST['_wpnonce'] ) && wp_verify_nonce( $_REQUEST['_wpnonce'], 'food_manager_my_organizer_actions' ) ) {
 
 			$action = sanitize_title( $_REQUEST['action'] );
 
@@ -302,15 +296,15 @@ class WPFM_Shortcodes {
 
 			try {
 
-				// Get Event
+				// Get food
 
-				$event    = get_post( $organizer_id );
+				$food    = get_post( $organizer_id );
 
 				// Check ownership
 
-				if ( ! event_manager_user_can_edit_event( $organizer_id ) ) {
+				if ( ! food_manager_user_can_edit_food( $organizer_id ) ) {
 
-					throw new Exception( __( 'Invalid ID', 'wp-event-manager' ) );
+					throw new Exception( __( 'Invalid ID', 'wp-food-manager' ) );
 				}
 
 				switch ( $action ) {
@@ -323,15 +317,15 @@ class WPFM_Shortcodes {
 						wp_trash_post( $organizer_id );
 
 						// Message
-						$this->organizer_dashboard_message = '<div class="event-manager-message wpem-alert wpem-alert-danger">' . sprintf( __( '%s has been deleted', 'wp-event-manager' ), esc_html( $event->post_title ) ) . '</div>';
+						$this->organizer_dashboard_message = '<div class="food-manager-message wpem-alert wpem-alert-danger">' . sprintf( __( '%s has been deleted', 'wp-food-manager' ), esc_html( $food->post_title ) ) . '</div>';
 
 						break;
 					case 'duplicate' :
-						if ( ! event_manager_get_permalink( 'submit_organizer_form' ) ) {
-							throw new Exception( __( 'Missing submission page.', 'wp-event-manager' ) );
+						if ( ! food_manager_get_permalink( 'submit_organizer_form' ) ) {
+							throw new Exception( __( 'Missing submission page.', 'wp-food-manager' ) );
 						}
 					
-						$new_organizer_id = event_manager_duplicate_listing( $organizer_id );
+						$new_organizer_id = food_manager_duplicate_listing( $organizer_id );
 					
 						if ( $new_organizer_id ) {
 							// Puslish organizer
@@ -343,7 +337,7 @@ class WPFM_Shortcodes {
 							// Update the post into the database
 							wp_update_post( $my_post );
 
-							wp_redirect( add_query_arg( array( 'organizer_id' => absint( $new_organizer_id ) ), event_manager_get_permalink( 'submit_organizer_form' ) ) );
+							wp_redirect( add_query_arg( array( 'organizer_id' => absint( $new_organizer_id ) ), food_manager_get_permalink( 'submit_organizer_form' ) ) );
 							exit;
 						}
 					
@@ -351,16 +345,16 @@ class WPFM_Shortcodes {
 
 					default :
 
-						do_action( 'event_manager_organizer_dashboard_do_action_' . $action );
+						do_action( 'food_manager_organizer_dashboard_do_action_' . $action );
 
 						break;
 				}
 				
-				do_action( 'event_manager_my_organizer_do_action', $action, $organizer_id );
+				do_action( 'food_manager_my_organizer_do_action', $action, $organizer_id );
 
 			} catch ( Exception $e ) {
 
-				$this->organizer_dashboard_message = '<div class="event-manager-error wpem-alert wpem-alert-danger">' . $e->getMessage() . '</div>';
+				$this->organizer_dashboard_message = '<div class="food-manager-error wpem-alert wpem-alert-danger">' . $e->getMessage() . '</div>';
 			}
 		}
 	}
@@ -374,7 +368,7 @@ class WPFM_Shortcodes {
 
 			ob_start();
 
-			get_event_manager_template( 'event-dashboard-login.php' );
+			get_food_manager_template( 'food-dashboard-login.php' );
 
 			return ob_get_clean();
 		}
@@ -385,7 +379,7 @@ class WPFM_Shortcodes {
 
 		), $atts ) );
 
-		wp_enqueue_script( 'wp-event-manager-organizer-dashboard' );
+		wp_enqueue_script( 'wp-food-manager-organizer-dashboard' );
 
 		ob_start();
 
@@ -397,19 +391,19 @@ class WPFM_Shortcodes {
 
 			// Show alternative content if a plugin wants to
 
-			if ( has_action( 'event_manager_organizer_dashboard_content_' . $action ) ) {
+			if ( has_action( 'food_manager_organizer_dashboard_content_' . $action ) ) {
 
-				do_action( 'event_manager_organizer_dashboard_content_' . $action, $atts );
+				do_action( 'food_manager_organizer_dashboard_content_' . $action, $atts );
 
 				return ob_get_clean();
 			}
 		}
 		
-		// ....If not show the event dashboard
+		// ....If not show the food dashboard
 
-		$args     = apply_filters( 'event_manager_get_dashboard_organizers_args', array(
+		$args     = apply_filters( 'food_manager_get_dashboard_organizers_args', array(
 
-			'post_type'           => 'event_organizer',
+			'post_type'           => 'food_organizer',
 			'post_status'         => array( 'publish' ),
 			'ignore_sticky_posts' => 1,
 			'posts_per_page'      => $posts_per_page,
@@ -423,28 +417,28 @@ class WPFM_Shortcodes {
 		$organizers = new WP_Query;
 		echo $this->organizer_dashboard_message;
 
-		$organizer_dashboard_columns = apply_filters( 'event_manager_organizer_dashboard_columns', array(
+		$organizer_dashboard_columns = apply_filters( 'food_manager_organizer_dashboard_columns', array(
 
-			'organizer_name' => __( 'Organizer name', 'wp-event-manager' ),
+			'organizer_name' => __( 'Organizer name', 'wp-food-manager' ),
 
-			'organizer_events' => __( 'Events', 'wp-event-manager' ),
+			'organizer_foods' => __( 'foods', 'wp-food-manager' ),
 			
-			'organizer_action' => __( 'Action', 'wp-event-manager' ), 
+			'organizer_action' => __( 'Action', 'wp-food-manager' ), 
 		) );
 
-		get_event_manager_template( 'organizer-dashboard.php', array( 'organizers' => $organizers->query( $args ), 'max_num_pages' => $organizers->max_num_pages, 'organizer_dashboard_columns' => $organizer_dashboard_columns ) );
+		get_food_manager_template( 'organizer-dashboard.php', array( 'organizers' => $organizers->query( $args ), 'max_num_pages' => $organizers->max_num_pages, 'organizer_dashboard_columns' => $organizer_dashboard_columns ) );
 
 		return ob_get_clean();
 	}
 
 	/**
-	 * Edit event form
+	 * Edit food form
 	 */
 	public function edit_organizer() {
 
-		global $event_manager;
+		global $food_manager;
 
-		echo $event_manager->forms->get_form( 'edit-organizer' );
+		echo $food_manager->forms->get_form( 'edit-organizer' );
 	}
 
 	/**
@@ -452,7 +446,7 @@ class WPFM_Shortcodes {
 	 */
 	public function venue_dashboard_handler() {
 
-		if ( ! empty( $_REQUEST['action'] ) && ! empty( $_REQUEST['_wpnonce'] ) && wp_verify_nonce( $_REQUEST['_wpnonce'], 'event_manager_my_venue_actions' ) ) {
+		if ( ! empty( $_REQUEST['action'] ) && ! empty( $_REQUEST['_wpnonce'] ) && wp_verify_nonce( $_REQUEST['_wpnonce'], 'food_manager_my_venue_actions' ) ) {
 
 			$action = sanitize_title( $_REQUEST['action'] );
 
@@ -460,15 +454,15 @@ class WPFM_Shortcodes {
 
 			try {
 
-				// Get Event
+				// Get food
 
 				$venue    = get_post( $venue_id );
 
 				// Check ownership
 
-				if ( ! event_manager_user_can_edit_event( $venue_id ) ) {
+				if ( ! food_manager_user_can_edit_food( $venue_id ) ) {
 
-					throw new Exception( __( 'Invalid ID', 'wp-event-manager' ) );
+					throw new Exception( __( 'Invalid ID', 'wp-food-manager' ) );
 				}
 
 				switch ( $action ) {
@@ -481,15 +475,15 @@ class WPFM_Shortcodes {
 						wp_trash_post( $venue_id );
 
 						// Message
-						$this->venue_dashboard_message = '<div class="event-manager-message wpem-alert wpem-alert-danger">' . sprintf( __( '%s has been deleted', 'wp-event-manager' ), esc_html( $venue->post_title ) ) . '</div>';
+						$this->venue_dashboard_message = '<div class="food-manager-message wpem-alert wpem-alert-danger">' . sprintf( __( '%s has been deleted', 'wp-food-manager' ), esc_html( $venue->post_title ) ) . '</div>';
 
 						break;
 					case 'duplicate' :
-						if ( ! event_manager_get_permalink( 'submit_venue_form' ) ) {
-							throw new Exception( __( 'Missing submission page.', 'wp-event-manager' ) );
+						if ( ! food_manager_get_permalink( 'submit_venue_form' ) ) {
+							throw new Exception( __( 'Missing submission page.', 'wp-food-manager' ) );
 						}
 					
-						$new_venue_id = event_manager_duplicate_listing( $venue_id );
+						$new_venue_id = food_manager_duplicate_listing( $venue_id );
 					
 						if ( $new_venue_id ) {
 							// Puslish organizer
@@ -501,7 +495,7 @@ class WPFM_Shortcodes {
 							// Update the post into the database
 							wp_update_post( $my_post );
 
-							wp_redirect( add_query_arg( array( 'venue_id' => absint( $new_venue_id ) ), event_manager_get_permalink( 'submit_venue_form' ) ) );
+							wp_redirect( add_query_arg( array( 'venue_id' => absint( $new_venue_id ) ), food_manager_get_permalink( 'submit_venue_form' ) ) );
 							exit;
 						}
 					
@@ -509,16 +503,16 @@ class WPFM_Shortcodes {
 
 					default :
 
-						do_action( 'event_manager_venue_dashboard_do_action_' . $action );
+						do_action( 'food_manager_venue_dashboard_do_action_' . $action );
 
 						break;
 				}
 				
-				do_action( 'event_manager_my_venue_do_action', $action, $venue_id );
+				do_action( 'food_manager_my_venue_do_action', $action, $venue_id );
 
 			} catch ( Exception $e ) {
 
-				$this->venue_dashboard_message = '<div class="event-manager-error wpem-alert wpem-alert-danger">' . $e->getMessage() . '</div>';
+				$this->venue_dashboard_message = '<div class="food-manager-error wpem-alert wpem-alert-danger">' . $e->getMessage() . '</div>';
 			}
 		}
 	}
@@ -532,7 +526,7 @@ class WPFM_Shortcodes {
 
 			ob_start();
 
-			get_event_manager_template( 'event-dashboard-login.php' );
+			get_food_manager_template( 'food-dashboard-login.php' );
 
 			return ob_get_clean();
 		}
@@ -543,7 +537,7 @@ class WPFM_Shortcodes {
 
 		), $atts ) );
 
-		//wp_enqueue_script( 'wp-event-manager-venue-dashboard' );
+		//wp_enqueue_script( 'wp-food-manager-venue-dashboard' );
 
 		ob_start();
 
@@ -555,19 +549,19 @@ class WPFM_Shortcodes {
 
 			// Show alternative content if a plugin wants to
 
-			if ( has_action( 'event_manager_venue_dashboard_content_' . $action ) ) {
+			if ( has_action( 'food_manager_venue_dashboard_content_' . $action ) ) {
 
-				do_action( 'event_manager_venue_dashboard_content_' . $action, $atts );
+				do_action( 'food_manager_venue_dashboard_content_' . $action, $atts );
 
 				return ob_get_clean();
 			}
 		}
 		
-		// ....If not show the event dashboard
+		// ....If not show the food dashboard
 
-		$args     = apply_filters( 'event_manager_get_dashboard_venue_args', array(
+		$args     = apply_filters( 'food_manager_get_dashboard_venue_args', array(
 
-			'post_type'           => 'event_venue',
+			'post_type'           => 'food_venue',
 			'post_status'         => array( 'publish' ),
 			'ignore_sticky_posts' => 1,
 			'posts_per_page'      => $posts_per_page,
@@ -581,16 +575,16 @@ class WPFM_Shortcodes {
 		$venues = new WP_Query;
 		echo $this->venue_dashboard_message;
 
-		$venue_dashboard_columns = apply_filters( 'event_manager_venue_dashboard_columns', array(
+		$venue_dashboard_columns = apply_filters( 'food_manager_venue_dashboard_columns', array(
 
-			'venue_name' => __( 'Venue name', 'wp-event-manager' ),
+			'venue_name' => __( 'Venue name', 'wp-food-manager' ),
 
-			'venue_events' => __( 'Events', 'wp-event-manager' ),
+			'venue_foods' => __( 'foods', 'wp-food-manager' ),
 			
-			'venue_action' => __( 'Action', 'wp-event-manager' ), 
+			'venue_action' => __( 'Action', 'wp-food-manager' ), 
 		) );
 
-		get_event_manager_template( 'venue-dashboard.php', array( 'venues' => $venues->query( $args ), 'max_num_pages' => $venues->max_num_pages, 'venue_dashboard_columns' => $venue_dashboard_columns ) );
+		get_food_manager_template( 'venue-dashboard.php', array( 'venues' => $venues->query( $args ), 'max_num_pages' => $venues->max_num_pages, 'venue_dashboard_columns' => $venue_dashboard_columns ) );
 
 		return ob_get_clean();
 	}
@@ -600,25 +594,25 @@ class WPFM_Shortcodes {
 	 */
 	public function edit_venue() {
 
-		global $event_manager;
+		global $food_manager;
 
-		echo $event_manager->forms->get_form( 'edit-venue' );
+		echo $food_manager->forms->get_form( 'edit-venue' );
 	}
 
 	/**
-	 * output_events function.
+	 * output_foods function.
 	 *
 	 * @access public
 	 * @param mixed $args
 	 * @return void
 	 */
-	public function output_events( $atts ) {
+	public function output_foods( $atts ) {
 
 		ob_start();
 
-		extract( $atts = shortcode_atts( apply_filters( 'event_manager_output_events_defaults', array(
+		extract( $atts = shortcode_atts( apply_filters( 'food_manager_output_foods_defaults', array(
 
-			'per_page'                  => get_option( 'event_manager_per_page' ),
+			'per_page'                  => get_option( 'food_manager_per_page' ),
 
 			'orderby'                   => 'meta_value', // meta_value
 
@@ -630,23 +624,23 @@ class WPFM_Shortcodes {
 
 			'show_categories'           => true,
 
-			'show_event_types'          => true,
+			'show_food_types'          => true,
 
 			'show_ticket_prices'        => true,
 
-			'show_category_multiselect' => get_option( 'event_manager_enable_default_category_multiselect', false ),
+			'show_category_multiselect' => get_option( 'food_manager_enable_default_category_multiselect', false ),
 
-			'show_event_type_multiselect' => get_option( 'event_manager_enable_default_event_type_multiselect', false ),
+			'show_food_type_multiselect' => get_option( 'food_manager_enable_default_food_type_multiselect', false ),
 
 			'show_pagination'           => false,
 
 			'show_more'                 => true,
 
-			// Limit what events are shown based on category and type
+			// Limit what foods are shown based on category and type
 
 			'categories'                => '',
 
-			'event_types'               => '',
+			'food_types'               => '',
 
 			'ticket_prices'             => '',
 
@@ -664,7 +658,7 @@ class WPFM_Shortcodes {
 
 			'selected_category'         => '',
 
-			'selected_event_type'       => '',
+			'selected_food_type'       => '',
 
 			'selected_ticket_price'      => '',
 		    
@@ -674,23 +668,23 @@ class WPFM_Shortcodes {
 
 		//Categories
 
-		if ( ! get_option( 'event_manager_enable_categories' ) ) {
+		if ( ! get_option( 'food_manager_enable_categories' ) ) {
 
 			$show_categories = false;
 
 		}
 
-		//Event types
+		//food types
 
-		if ( ! get_option( 'event_manager_enable_event_types' ) ) {
+		if ( ! get_option( 'food_manager_enable_food_types' ) ) {
 
-			$show_event_types = false;
+			$show_food_types = false;
 
 		}
 
-		//Event ticket prices		
+		//food ticket prices		
 
-		if ( ! get_option( 'event_manager_enable_event_ticket_prices' ) ) {
+		if ( ! get_option( 'food_manager_enable_food_ticket_prices' ) ) {
 
 			$show_ticket_prices = false;
 
@@ -702,19 +696,19 @@ class WPFM_Shortcodes {
 
 		$show_categories           = $this->string_to_bool( $show_categories );
 
-		$show_event_types          = $this->string_to_bool( $show_event_types );
+		$show_food_types          = $this->string_to_bool( $show_food_types );
 
 		$show_ticket_prices        = $this->string_to_bool( $show_ticket_prices );
 
 		$show_category_multiselect = $this->string_to_bool( $show_category_multiselect );
 
-		$show_event_type_multiselect= $this->string_to_bool( $show_event_type_multiselect);
+		$show_food_type_multiselect= $this->string_to_bool( $show_food_type_multiselect);
 
 		$show_more                 = $this->string_to_bool( $show_more );
 
 		$show_pagination           = $this->string_to_bool( $show_pagination );
 		
-		//order by meta value and it will take default sort order by start date of event
+		//order by meta value and it will take default sort order by start date of food
 		if ( is_null( $orderby ) ||  empty($orderby ) ) {
 			$orderby  = 'meta_value';
 		}
@@ -729,13 +723,13 @@ class WPFM_Shortcodes {
 			$cancelled = ( is_bool( $cancelled ) && $cancelled ) || in_array( $cancelled, array( '1', 'true', 'yes' ) ) ? true : false;
 		}
 		
-		//set value for the event datetimes
+		//set value for the food datetimes
 
-		$datetimes=WP_Event_Manager_Filters::get_datetimes_filter();
+		$datetimes=WP_food_Manager_Filters::get_datetimes_filter();
 
 		//Set value for the ticket prices		
 
-		$ticket_prices	=	WP_Event_Manager_Filters::get_ticket_prices_filter();
+		$ticket_prices	=	WP_food_Manager_Filters::get_ticket_prices_filter();
 
 		// Array handling
 
@@ -743,11 +737,11 @@ class WPFM_Shortcodes {
 
 		$categories           = is_array( $categories ) ? $categories : array_filter( array_map( 'trim', explode( ',', $categories ) ) );
 
-		$event_types          = is_array( $event_types ) ? $event_types : array_filter( array_map( 'trim', explode( ',', $event_types ) ) );
+		$food_types          = is_array( $food_types ) ? $food_types : array_filter( array_map( 'trim', explode( ',', $food_types ) ) );
 
 		$ticket_prices        = is_array( $ticket_prices) ? $ticket_prices: array_filter( array_map( 'trim', explode( ',', $ticket_prices) ) );
 
-		// Get keywords, location, datetime, category, event type and ticket price from query string if set
+		// Get keywords, location, datetime, category, food type and ticket price from query string if set
 
 		if ( ! empty( $_GET['search_keywords'] ) ) {
 
@@ -769,9 +763,9 @@ class WPFM_Shortcodes {
 			$selected_category = sanitize_text_field( $_GET['search_category'] );
 		}
 
-		if ( ! empty( $_GET['search_event_type'] ) ) {
+		if ( ! empty( $_GET['search_food_type'] ) ) {
 
-			$selected_event_type = sanitize_text_field( $_GET['search_event_type'] );
+			$selected_food_type = sanitize_text_field( $_GET['search_food_type'] );
 		}
 
 		if ( ! empty( $_GET['search_ticket_price'] ) ) {
@@ -781,7 +775,7 @@ class WPFM_Shortcodes {
 
 		if ( $show_filters ) {
 
-			get_event_manager_template( 'event-filters.php', array( 
+			get_food_manager_template( 'food-filters.php', array( 
 
 										'per_page' => $per_page, 
 
@@ -801,13 +795,13 @@ class WPFM_Shortcodes {
 
 										'selected_category' => $selected_category, 
 
-										'show_event_types' => $show_event_types ,
+										'show_food_types' => $show_food_types ,
 
-										'show_event_type_multiselect' => $show_event_type_multiselect,
+										'show_food_type_multiselect' => $show_food_type_multiselect,
 
-										'event_types' => $event_types, 
+										'food_types' => $food_types, 
 
-										'selected_event_type' => $selected_event_type, 
+										'selected_food_type' => $selected_food_type, 
 
 										'show_ticket_prices' => $show_ticket_prices ,
 
@@ -823,18 +817,18 @@ class WPFM_Shortcodes {
 										
 									      ));
 
-			get_event_manager_template( 'event-listings-start.php',array('layout_type'=>$layout_type) );
+			get_food_manager_template( 'food-listings-start.php',array('layout_type'=>$layout_type) );
 
-			get_event_manager_template( 'event-listings-end.php' );
+			get_food_manager_template( 'food-listings-end.php' );
 
 			if ( ! $show_pagination && $show_more ) {
 
-				echo '<a class="load_more_events" id="load_more_events" href="#" style="display:none;"><strong>' . __( 'Load more events', 'wp-event-manager' ) . '</strong></a>';
+				echo '<a class="load_more_foods" id="load_more_foods" href="#" style="display:none;"><strong>' . __( 'Load more foods', 'wp-food-manager' ) . '</strong></a>';
 			}
 			
 		} else {
 		    
-			$events = get_event_listings( apply_filters( 'event_manager_output_events_args', array(
+			$foods = get_food_managers( apply_filters( 'food_manager_output_foods_args', array(
 
 				'search_location'   => $location,
 
@@ -844,7 +838,7 @@ class WPFM_Shortcodes {
 
 				'search_categories' => $categories,
 
-				'search_event_types'       => $event_types,
+				'search_food_types'       => $food_types,
 
 				'search_ticket_prices'       => $ticket_prices,
 
@@ -860,29 +854,29 @@ class WPFM_Shortcodes {
 
 			) ) );
 
-			if ( $events->have_posts() ) : ?>
+			if ( $foods->have_posts() ) : ?>
 
-				<?php get_event_manager_template( 'event-listings-start.php' ,array('layout_type'=>$layout_type)); ?>			
+				<?php get_food_manager_template( 'food-listings-start.php' ,array('layout_type'=>$layout_type)); ?>			
 
-				<?php while ( $events->have_posts() ) : $events->the_post(); ?>
+				<?php while ( $foods->have_posts() ) : $foods->the_post(); ?>
 
-					<?php  get_event_manager_template_part( 'content', 'event_listing' ); ?>
+					<?php  get_food_manager_template_part( 'content', 'food_manager' ); ?>
 					
 				<?php endwhile; ?>
 
-				<?php get_event_manager_template( 'event-listings-end.php' ); ?>
+				<?php get_food_manager_template( 'food-listings-end.php' ); ?>
 
-				<?php if ( $events->found_posts > $per_page && $show_more ) : ?>
+				<?php if ( $foods->found_posts > $per_page && $show_more ) : ?>
 
-					<?php wp_enqueue_script( 'wp-event-manager-ajax-filters' ); ?>
+					<?php wp_enqueue_script( 'wp-food-manager-ajax-filters' ); ?>
 
 					<?php if ( $show_pagination ) : ?>
 
-						<?php echo get_event_listing_pagination( $events->max_num_pages ); ?>
+						<?php echo get_food_manager_pagination( $foods->max_num_pages ); ?>
 
 					<?php else : ?>
 
-						<a class="load_more_events" id="load_more_events" href="#"><strong><?php _e( 'Load more listings', 'wp-event-manager' ); ?></strong></a>
+						<a class="load_more_foods" id="load_more_foods" href="#"><strong><?php _e( 'Load more listings', 'wp-food-manager' ); ?></strong></a>
 
 					<?php endif; ?>
 
@@ -890,7 +884,7 @@ class WPFM_Shortcodes {
 
 			<?php else :
 
-				do_action( 'event_manager_output_events_no_results' );
+				do_action( 'food_manager_output_foods_no_results' );
 
 			endif;
 
@@ -919,7 +913,7 @@ class WPFM_Shortcodes {
 
 			'categories'      => !empty($selected_category) ? implode( ',', $selected_category ) : '',
 
-			'event_types'     => !empty($selected_event_type) ? implode( ',', $selected_event_type) : '',
+			'food_types'     => !empty($selected_food_type) ? implode( ',', $selected_food_type) : '',
 
 			'ticket_prices'   => !empty($selected_ticket_price) ? $selected_ticket_price : ''
 		);
@@ -939,9 +933,9 @@ class WPFM_Shortcodes {
 			$data_attributes_string .= 'data-' . esc_attr( $key ) . '="' . esc_attr( $value ) . '" ';
 		}
 		
-		$event_listings_output = apply_filters( 'event_manager_event_listings_output', ob_get_clean() );
+		$food_managers_output = apply_filters( 'food_manager_food_managers_output', ob_get_clean() );
 
-		return '<div class="event_listings" ' . $data_attributes_string . '>' . $event_listings_output . '</div>';
+		return '<div class="food_managers" ' . $data_attributes_string . '>' . $food_managers_output . '</div>';
 	}
 
 	/**
@@ -949,7 +943,7 @@ class WPFM_Shortcodes {
 	 */
 	public function output_no_results() {
 
-		get_event_manager_template( 'content-no-events-found.php' );
+		get_food_manager_template( 'content-no-foods-found.php' );
 	}
 
 	/**
@@ -959,7 +953,7 @@ class WPFM_Shortcodes {
 
 		global $post;
 		
-		if ( ! $post || 'event_listing' !== $post->post_type ) {
+		if ( ! $post || 'food_manager' !== $post->post_type ) {
 			return;
 		}
 
@@ -969,7 +963,7 @@ class WPFM_Shortcodes {
 
 			if(isset($organizer_url) && !empty($organizer_url))
 			{
-				printf( '<div class="wpem-organizer-page-url-button"><a href="%s" class="wpem-theme-button"><span>%s</span></a></div>',  get_permalink( $organizer_id ), __( 'More info', 'wp-event-manager' ) );	
+				printf( '<div class="wpem-organizer-page-url-button"><a href="%s" class="wpem-theme-button"><span>%s</span></a></div>',  get_permalink( $organizer_id ), __( 'More info', 'wp-food-manager' ) );	
 			}
 		}
 	}
@@ -987,19 +981,19 @@ class WPFM_Shortcodes {
 	/**
 	 * Show results div
 	 */
-	public function event_filter_results() {
+	public function food_filter_results() {
 
 		echo '<div class="showing_applied_filters"></div>';
 	}
 
 	/**
-	 * output_event function.
+	 * output_food function.
 	 *
 	 * @access public
 	 * @param array $args
 	 * @return string
 	 */
-	public function output_event( $atts ) {
+	public function output_food( $atts ) {
 	    
 		extract( shortcode_atts( array(
 		    
@@ -1015,21 +1009,21 @@ class WPFM_Shortcodes {
 
 		$args = array(
 
-			'post_type'   => 'event_listing',
+			'post_type'   => 'food_manager',
 
 			'post_status' => 'publish',
 
 			'p'           => $id
 		);
 
-		$events = new WP_Query( $args );
+		$foods = new WP_Query( $args );
 
-		if ( $events->have_posts() ) : ?>
+		if ( $foods->have_posts() ) : ?>
 
-			<?php while ( $events->have_posts() ) : $events->the_post(); ?>
+			<?php while ( $foods->have_posts() ) : $foods->the_post(); ?>
 				
 				<div class="clearfix" />
-                <?php get_event_manager_template_part( 'content-single', 'event_listing' ); ?>
+                <?php get_food_manager_template_part( 'content-single', 'food_manager' ); ?>
 
 			<?php endwhile; ?>
 
@@ -1037,17 +1031,17 @@ class WPFM_Shortcodes {
 
 		wp_reset_postdata();
 
-		return '<div class="event_shortcode single_event_listing">' . ob_get_clean() . '</div>';
+		return '<div class="food_shortcode single_food_manager">' . ob_get_clean() . '</div>';
 	}
 	
 	/**
-	 * Event Summary shortcode
+	 * food Summary shortcode
 	 *
 	 * @access public
 	 * @param array $args
 	 * @return string
 	 */
-	public function output_event_summary( $atts ) {
+	public function output_food_summary( $atts ) {
 
 		extract( shortcode_atts( array(
 
@@ -1064,7 +1058,7 @@ class WPFM_Shortcodes {
 		
 		$args = array(
 
-			'post_type'   => 'event_listing',
+			'post_type'   => 'food_manager',
 
 			'post_status' => 'publish'
 		);
@@ -1093,15 +1087,15 @@ class WPFM_Shortcodes {
 			$args['p'] = absint( $id );
 		}
 
-		$events = new WP_Query( $args );
+		$foods = new WP_Query( $args );
 
-		if ( $events->have_posts() ) : ?>
+		if ( $foods->have_posts() ) : ?>
 
-			<?php while ( $events->have_posts() ) : $events->the_post();
+			<?php while ( $foods->have_posts() ) : $foods->the_post();
 
-				echo '<div class="event_summary_shortcode align' . esc_attr( $align ) . '" style="width: ' . esc_attr( $width ) . '">';
+				echo '<div class="food_summary_shortcode align' . esc_attr( $align ) . '" style="width: ' . esc_attr( $width ) . '">';
 
-				get_event_manager_template_part( 'content-summary', 'event_listing' );
+				get_food_manager_template_part( 'content-summary', 'food_manager' );
 
 				echo '</div>';
 
@@ -1117,7 +1111,7 @@ class WPFM_Shortcodes {
 	/**
 	 * Show the registration area
 	 */
-	public function output_event_register( $atts ) {
+	public function output_food_register( $atts ) {
 		extract( shortcode_atts( array(
 			'id'       => ''
 		), $atts ) );
@@ -1125,7 +1119,7 @@ class WPFM_Shortcodes {
 		ob_start();
 
 		$args = array(
-			'post_type'   => 'event_listing',
+			'post_type'   => 'food_manager',
 			'post_status' => 'publish'
 		);
 
@@ -1135,16 +1129,16 @@ class WPFM_Shortcodes {
 			$args['p'] = absint( $id );
 		}
 
-		$events = new WP_Query( $args );
+		$foods = new WP_Query( $args );
 
-		if ( $events->have_posts() ) : ?>
+		if ( $foods->have_posts() ) : ?>
 
-			<?php while ( $events->have_posts() ) : $events->the_post(); ?>
+			<?php while ( $foods->have_posts() ) : $foods->the_post(); ?>
 
-				<div class="event-manager-registration-wrapper">
+				<div class="food-manager-registration-wrapper">
 					<?php
-						$register = get_event_registration_method();
-						do_action( 'event_manager_registration_details_' . $register->type, $register );
+						$register = get_food_registration_method();
+						do_action( 'food_manager_registration_details_' . $register->type, $register );
 					?>
 				</div>
 
@@ -1158,13 +1152,13 @@ class WPFM_Shortcodes {
 	}
 
 	/**
-	 * output_events function.
+	 * output_foods function.
 	 *
 	 * @access public
 	 * @param mixed $args
 	 * @return void
 	 */
-	public function output_past_events( $atts ) {
+	public function output_past_foods( $atts ) {
 
 		ob_start();
 
@@ -1172,13 +1166,13 @@ class WPFM_Shortcodes {
 
 			'show_pagination'           => true,
 
-			'per_page'                  => get_option( 'event_manager_per_page' ),
+			'per_page'                  => get_option( 'food_manager_per_page' ),
 
 			'order'                     => 'DESC',
 
 			'orderby'                   => 'meta_value', // meta_value
 
-			'meta_key'  				=> 'event_start_date',
+			'meta_key'  				=> 'food_start_date',
 
 			'location'                  => '',
 
@@ -1188,7 +1182,7 @@ class WPFM_Shortcodes {
 
 			'selected_categories'       => '',
 
-			'selected_event_types'     => '',
+			'selected_food_types'     => '',
 		), $atts ) );
 
 		$paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
@@ -1199,7 +1193,7 @@ class WPFM_Shortcodes {
 		}
 		
 		$args_past = array(
-			'post_type'  	=> 'event_listing',
+			'post_type'  	=> 'food_manager',
 			'post_status'	=> array('expired'),
 			'posts_per_page' => $per_page,
 			'paged'			=> $paged,
@@ -1218,20 +1212,20 @@ class WPFM_Shortcodes {
 			$categories = explode(',', sanitize_text_field($selected_categories) );
 
 			$args_past['tax_query'][] = [
-				'taxonomy'	=> 'event_listing_category',
+				'taxonomy'	=> 'food_manager_category',
 				'field'   	=> 'name',
 				'terms'   	=> $categories,
 			];
 		}
 
-		if(!empty($selected_event_types))
+		if(!empty($selected_food_types))
 		{
-			$event_types = explode(',', sanitize_text_field($selected_event_types) );
+			$food_types = explode(',', sanitize_text_field($selected_food_types) );
 
 			$args_past['tax_query'][] = [
-				'taxonomy'	=> 'event_listing_type',
+				'taxonomy'	=> 'food_manager_type',
 				'field'   	=> 'name',
-				'terms'   	=> $event_types,
+				'terms'   	=> $food_types,
 			];
 		}
 
@@ -1240,7 +1234,7 @@ class WPFM_Shortcodes {
 			$datetimes = explode(',', $selected_datetime);
 
 			$args_past['meta_query'][] = [
-				'key' => '_event_start_date',
+				'key' => '_food_start_date',
 				'value'   => $datetimes,
 				'compare' => 'BETWEEN',
 				'type'    => 'date'
@@ -1250,28 +1244,28 @@ class WPFM_Shortcodes {
 		if(!empty($location))
 		{
 			$args_past['meta_query'][] = [
-				'key' 		=> '_event_location',
+				'key' 		=> '_food_location',
 				'value'  	=> $location,
 				'compare'	=> 'LIKE'
 			];
 		}
 
-		$past_events = new WP_Query( $args_past );
+		$past_foods = new WP_Query( $args_past );
 
 		wp_reset_query();
 
-		if ( $past_events->have_posts() ) : ?>
-			<div id="event-listing-view" class="wpem-main wpem-event-listings event_listings wpem-event-listing-list-view">	
-			<?php while ( $past_events->have_posts() ) : $past_events->the_post(); ?>
+		if ( $past_foods->have_posts() ) : ?>
+			<div id="food-listing-view" class="wpem-main wpem-food-listings food_managers wpem-food-listing-list-view">	
+			<?php while ( $past_foods->have_posts() ) : $past_foods->the_post(); ?>
 
-				<?php  get_event_manager_template_part( 'content', 'past_event_listing' ); ?>
+				<?php  get_food_manager_template_part( 'content', 'past_food_manager' ); ?>
 				
 			<?php endwhile; ?>
 
-			<?php if ($past_events->found_posts > $per_page) : ?>
+			<?php if ($past_foods->found_posts > $per_page) : ?>
                 <?php if ($show_pagination == "true") : ?>
-                    <div class="event-organizer-pagination">
-                    	<?php get_event_manager_template('pagination.php', array('max_num_pages' => $past_events->max_num_pages)); ?>
+                    <div class="food-organizer-pagination">
+                    	<?php get_food_manager_template('pagination.php', array('max_num_pages' => $past_foods->max_num_pages)); ?>
                     </div> 
                 <?php endif; ?>
             <?php endif; ?>
@@ -1279,32 +1273,32 @@ class WPFM_Shortcodes {
 			</div>
 		<?php else :
 
-			do_action( 'event_manager_output_events_no_results' );
+			do_action( 'food_manager_output_foods_no_results' );
 
 		endif;
 
 		wp_reset_postdata();
 		
-		$event_listings_output = apply_filters( 'event_manager_event_listings_output', ob_get_clean() );
+		$food_managers_output = apply_filters( 'food_manager_food_managers_output', ob_get_clean() );
 
-		return  $event_listings_output;
+		return  $food_managers_output;
 		
 	}
 
 	/**
-	 *  It is very simply a plugin that outputs a list of all organizers that have listed events on your website. 
-     *  Once you have installed " WP Event Manager - Organizer Profiles" simply visit "Pages > Add New". 
-     *  Once you have added a title to your page add the this shortcode: [event_organizers]
+	 *  It is very simply a plugin that outputs a list of all organizers that have listed foods on your website. 
+     *  Once you have installed " WP food Manager - Organizer Profiles" simply visit "Pages > Add New". 
+     *  Once you have added a title to your page add the this shortcode: [food_organizers]
      *  This will output a grouped and alphabetized list of all organizers.
 	 *
 	 * @access public
 	 * @param array $args
 	 * @return string
 	 */
-	public function output_event_organizers($atts)
+	public function output_food_organizers($atts)
 	{
 		$organizers   = get_all_organizer_array();
-		$countAllEvents = get_event_organizer_count();        
+		$countAllfoods = get_food_organizer_count();        
         $organizers_array = [];
 
         if(!empty($organizers))
@@ -1315,17 +1309,17 @@ class WPFM_Shortcodes {
         	}
         }        
          
-		wp_enqueue_script( 'wp-event-manager-organizer');
+		wp_enqueue_script( 'wp-food-manager-organizer');
         
-        get_event_manager_template( 
-      		'event-organizers.php', 
+        get_food_manager_template( 
+      		'food-organizers.php', 
       		array(
 				'organizers'		=> $organizers,
 				'organizers_array'  => $organizers_array,
-            	'countAllEvents'    => $countAllEvents,
+            	'countAllfoods'    => $countAllfoods,
 			), 
-			'wp-event-manager', 
-			EVENT_MANAGER_PLUGIN_DIR . '/templates/organizer/' 
+			'wp-food-manager', 
+			food_MANAGER_PLUGIN_DIR . '/templates/organizer/' 
 		);
               
 		wp_reset_postdata();
@@ -1335,16 +1329,16 @@ class WPFM_Shortcodes {
 
 
 	/**
-	 *  It is very simply a plugin that outputs a list of all organizers that have listed events on your website. 
-     *  Once you have installed " WP Event Manager - Organizer Profiles" simply visit "Pages > Add New". 
-     *  Once you have added a title to your page add the this shortcode: [event_organizer]
+	 *  It is very simply a plugin that outputs a list of all organizers that have listed foods on your website. 
+     *  Once you have installed " WP food Manager - Organizer Profiles" simply visit "Pages > Add New". 
+     *  Once you have added a title to your page add the this shortcode: [food_organizer]
      *  This will output a grouped and alphabetized list of all organizers.
 	 *
 	 * @access public
 	 * @param array $args
 	 * @return string
 	 */
-	public function output_event_organizer($atts)
+	public function output_food_organizer($atts)
 	{
 		extract( shortcode_atts( array(		    
 			'id' => '',
@@ -1356,7 +1350,7 @@ class WPFM_Shortcodes {
 		ob_start();
 
 		$args = array(
-			'post_type'   => 'event_organizer',
+			'post_type'   => 'food_organizer',
 			'post_status' => 'publish',
 			'p'           => $id
 		);
@@ -1377,7 +1371,7 @@ class WPFM_Shortcodes {
         $show_pagination = true;
 
         $args_upcoming = array(
-            'post_type'      => 'event_listing',
+            'post_type'      => 'food_manager',
             'post_status'    => 'publish',
             'posts_per_page' => $per_page,
             'paged'          => $paged
@@ -1386,19 +1380,19 @@ class WPFM_Shortcodes {
         $args_upcoming['meta_query'] = array(
             'relation' => 'AND',
             array(
-                'key'     => '_event_organizer_ids',
+                'key'     => '_food_organizer_ids',
                 'value'   => $organizer_id,
                 'compare' => 'LIKE',
             ),
             array(
-                'key'     => '_event_start_date',
+                'key'     => '_food_start_date',
                 'value'   => $today_date,
                 'type'    => 'date',
                 'compare' => '>'
             )
         );
 
-        $upcomingEvents = new WP_Query($args_upcoming);
+        $upcomingfoods = new WP_Query($args_upcoming);
         wp_reset_query();
 
         $args_current = $args_upcoming;
@@ -1406,29 +1400,29 @@ class WPFM_Shortcodes {
         $args_current['meta_query'] = array(
             'relation' => 'AND',
             array(
-                'key'     => '_event_organizer_ids',
+                'key'     => '_food_organizer_ids',
                 'value'   => $organizer_id,
                 'compare' => 'LIKE',
             ),
             array(
-                'key'     => '_event_start_date',
+                'key'     => '_food_start_date',
                 'value'   => $today_date,
                 'type'    => 'date',
                 'compare' => '<='
             ),
             array(
-                'key'     => '_event_end_date',
+                'key'     => '_food_end_date',
                 'value'   => $today_date,
                 'type'    => 'date',
                 'compare' => '>='
             )
         );
 
-        $currentEvents = new WP_Query($args_current);
+        $currentfoods = new WP_Query($args_current);
         wp_reset_query();
 
         $args_past = array(
-            'post_type'      => 'event_listing',
+            'post_type'      => 'food_manager',
             'post_status'    => array('expired', 'publish'),
             'posts_per_page' => $per_page,
             'paged'          => $paged
@@ -1437,33 +1431,33 @@ class WPFM_Shortcodes {
         $args_past['meta_query'] = array(
             'relation' => 'AND',
             array(
-                'key'     => '_event_organizer_ids',
+                'key'     => '_food_organizer_ids',
                 'value'   => $organizer_id,
                 'compare' => 'LIKE',
             ),
             array(
-                'key'     => '_event_end_date',
+                'key'     => '_food_end_date',
                 'value'   => $today_date,
                 'type'    => 'date',
                 'compare' => '<'
             )
         );
-        $pastEvents              = new WP_Query($args_past);
+        $pastfoods              = new WP_Query($args_past);
         wp_reset_query();
 
         do_action('organizer_content_start');
 
-        wp_enqueue_script('wp-event-manager-organizer');
+        wp_enqueue_script('wp-food-manager-organizer');
 
-        get_event_manager_template(
-            'content-single-event_organizer.php', array(
+        get_food_manager_template(
+            'content-single-food_organizer.php', array(
             'organizer_id'    => $organizer_id,
             'per_page'        => $per_page,
             'show_pagination' => $show_pagination,
-            'upcomingEvents'  => $upcomingEvents,
-            'currentEvents'   => $currentEvents,
-            'pastEvents'      => $pastEvents,
-                ), 'wp-event-manager', EVENT_MANAGER_PLUGIN_DIR . '/templates/organizer/'
+            'upcomingfoods'  => $upcomingfoods,
+            'currentfoods'   => $currentfoods,
+            'pastfoods'      => $pastfoods,
+                ), 'wp-food-manager', food_MANAGER_PLUGIN_DIR . '/templates/organizer/'
         );
 
         wp_reset_postdata();

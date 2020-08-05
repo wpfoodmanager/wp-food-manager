@@ -77,9 +77,16 @@ class WP_Food_Manager {
 		define( 'WPFM_PLUGIN_URL', untrailingslashit( plugins_url( basename( plugin_dir_path( __FILE__ ) ), basename( __FILE__ ) ) ) );
 		//includes
 
+		include( 'wp-food-manager-template.php' );
 		include( 'includes/wpfm-post-types.php' );
+		
 		include( 'forms/wpfm-forms.php' );
 		include( 'shortcodes/wpfm-shortcodes.php' );
+
+		if(is_admin()){
+			include( 'admin/wpfm-admin.php' );
+			
+		}
 
 		// Init classes
 		$this->forms      = WPFM_Forms::instance();
