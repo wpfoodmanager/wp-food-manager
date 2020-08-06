@@ -8,9 +8,9 @@ global $event_manager;
 ?>
 <form action="<?php echo esc_url( $action ); ?>" method="post" id="submit-event-form" class="wpem-form-wrapper wpem-main event-manager-form" enctype="multipart/form-data">
 	<?php if ( apply_filters( 'submit_event_form_show_signin', true ) ) : ?>
-		<?php get_event_manager_template( 'account-signin.php' ); ?>
+		<?php get_food_manager_template( 'account-signin.php' ); ?>
 	<?php endif; ?>
-	<?php if ( event_manager_user_can_post_event() || event_manager_user_can_edit_event( $event_id )   ) : ?>
+	<?php if ( wpfm_user_can_post_food() || wpfm_user_can_edit_food( $event_id )   ) : ?>
 		<!-- Event Information Fields -->
     	<h2 class="wpem-form-title wpem-heading-text"><?php _e( 'Event Details', 'wp-event-manager' ); ?></h2>
     <?php
@@ -19,16 +19,16 @@ global $event_manager;
 	}
 	?>
 	
-		<?php do_action( 'submit_event_form_event_fields_start' ); ?>
-		<?php foreach ( $event_fields as $key => $field ) : ?>
+		<?php do_action( 'submit_event_form_food_fields_start' ); ?>
+		<?php foreach ( $food_fields as $key => $field ) : ?>
 			<fieldset class="wpem-form-group fieldset-<?php echo esc_attr( $key ); ?>">
 				<label for="<?php esc_attr_e( $key ); ?>"><?php echo $field['label'] . apply_filters( 'submit_event_form_required_label', $field['required'] ? '<span class="require-field">*</span>' : ' <small>' . __( '(optional)', 'wp-event-manager' ) . '</small>', $field ); ?></label>
 				<div class="field <?php echo $field['required'] ? 'required-field' : ''; ?>">
-					<?php get_event_manager_template( 'form-fields/' . $field['type'] . '-field.php', array( 'key' => $key, 'field' => $field ) ); ?>
+					<?php get_food_manager_template( 'form-fields/' . $field['type'] . '-field.php', array( 'key' => $key, 'field' => $field ) ); ?>
 				</div>
 			</fieldset>
 		<?php endforeach; ?>
-		<?php do_action( 'submit_event_form_event_fields_end' ); ?>
+		<?php do_action( 'submit_event_form_food_fields_end' ); ?>
 
 		<!-- Organizer Information Fields -->
 		<?php if ( $organizer_fields ) : ?>

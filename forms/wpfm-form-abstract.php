@@ -1,6 +1,6 @@
 <?php
 /**
- * Abstract WP_Event_Manager_Form class.
+ * Abstract WP_food_Manager_Form class.
  *
  * @abstract
  */
@@ -46,7 +46,7 @@ abstract class WPFM_Form {
     			) {
     				delete_post_meta( $_COOKIE[ 'wpfm-submitting-food-id' ], '_submitting_key' );
     				setcookie( 'wpfm-submitting-food-id', '', 0, COOKIEPATH, COOKIE_DOMAIN, false );
-    				setcookie( 'wpfm-submitting-event-key', '', 0, COOKIEPATH, COOKIE_DOMAIN, false );
+    				setcookie( 'wpfm-submitting-food-key', '', 0, COOKIEPATH, COOKIE_DOMAIN, false );
     				wp_redirect( remove_query_arg( array( 'new', 'key' ), $_SERVER[ 'REQUEST_URI' ] ) );
     			}
     			
@@ -507,11 +507,11 @@ abstract class WPFM_Form {
 
 			$file_urls       = array();
 
-			$files_to_upload = event_manager_prepare_uploaded_files( $_FILES[ $field_key ] );
+			$files_to_upload = food_manager_prepare_uploaded_files( $_FILES[ $field_key ] );
 
 			foreach ( $files_to_upload as $file_to_upload ) {
 
-				$uploaded_file = event_manager_upload_file( $file_to_upload, array( 'file_key' => $field_key ,'allowed_mime_types' => $allowed_mime_types) );
+				$uploaded_file = food_manager_upload_file( $file_to_upload, array( 'file_key' => $field_key ,'allowed_mime_types' => $allowed_mime_types) );
 
 				if ( is_wp_error( $uploaded_file ) ) {
 
@@ -541,34 +541,34 @@ abstract class WPFM_Form {
 	 */
 	public function merge_with_custom_fields( $field_view = 'frontend' ) {
 	
-		$custom_fields  = $this->get_event_manager_fieldeditor_fields();
+		$custom_fields  = $this->get_food_manager_fieldeditor_fields();
 		$default_fields = $this->get_default_fields( );
 		
-		if(!get_option('event_manager_enable_event_ticket_prices', false)){
-		    if(isset($custom_fields['event']['event_ticket_options']))
-		        $custom_fields['event']['event_ticket_options']['visibility']=false;
-		    if(isset($custom_fields['event']['event_ticket_price']))
-		        $custom_fields['event']['event_ticket_price']['visibility']=false;
+		if(!get_option('food_manager_enable_food_ticket_prices', false)){
+		    if(isset($custom_fields['food']['food_ticket_options']))
+		        $custom_fields['food']['food_ticket_options']['visibility']=false;
+		    if(isset($custom_fields['food']['food_ticket_price']))
+		        $custom_fields['food']['food_ticket_price']['visibility']=false;
 		            
-		    if(isset($default_fields['event']['event_ticket_options']))
-		        unset($default_fields['event']['event_ticket_options']);
-		    if(isset($default_fields['event']['event_ticket_price']))
-		        unset($default_fields['event']['event_ticket_price']);
+		    if(isset($default_fields['food']['food_ticket_options']))
+		        unset($default_fields['food']['food_ticket_options']);
+		    if(isset($default_fields['food']['food_ticket_price']))
+		        unset($default_fields['food']['food_ticket_price']);
 		}
-		if ( !get_option( 'event_manager_enable_categories') || (wp_count_terms( 'event_listing_category' ) == 0 && isset($custom_fields['event']['event_category'])) ) {
+		if ( !get_option( 'food_manager_enable_categories') || (wp_count_terms( 'food_manager_category' ) == 0 && isset($custom_fields['food']['food_category'])) ) {
 			
-			if(isset( $custom_fields['event']['event_category']))
-				$custom_fields['event']['event_category']['visibility']=false;
+			if(isset( $custom_fields['food']['food_category']))
+				$custom_fields['food']['food_category']['visibility']=false;
 			
-		    unset($default_fields['event']['event_category']);
+		    unset($default_fields['food']['food_category']);
 		}
 		
-		if ( ! get_option( 'event_manager_enable_event_types' ) || (wp_count_terms( 'event_listing_type' ) == 0 && isset($custom_fields['event']['event_type'])) ) {
+		if ( ! get_option( 'food_manager_enable_food_types' ) || (wp_count_terms( 'food_listing_type' ) == 0 && isset($custom_fields['food']['food_type'])) ) {
 			
-			if(isset( $custom_fields['event']['event_type']))
-			$custom_fields['event']['event_type']['visibility']=false;
+			if(isset( $custom_fields['food']['food_type']))
+			$custom_fields['food']['food_type']['visibility']=false;
 		    
-			unset($default_fields['event']['event_type']);
+			unset($default_fields['food']['food_type']);
 		}
 		
 		if(!is_array($custom_fields )){
@@ -582,7 +582,7 @@ abstract class WPFM_Form {
 		 * Above array_replace_recursive function will replace the default fields by custom fields.
 		 * If array key is not same then it will merge array. This is only case for the Radio and Select Field(In case of array if key is not same).
 		 * For eg. options key it has any value or option as per user requested or overrided but array_replace_recursive will merge both 		options of default field and custom fields.
-		 User change the default value of the event_online (radio button) from Yes --> Y and No--> N then array_replace_recursive will merge both valus of the options array for event_online like options('yes'=>'yes', 'no'=>'no','y'=>'y','n'=>'n') but  we need to keep only updated options value of the event_online so we have to remove old default options values and for that we have to do the following procedure.
+		 User change the default value of the food_online (radio button) from Yes --> Y and No--> N then array_replace_recursive will merge both valus of the options array for food_online like options('yes'=>'yes', 'no'=>'no','y'=>'y','n'=>'n') but  we need to keep only updated options value of the food_online so we have to remove old default options values and for that we have to do the following procedure.
 		 * In short: To remove default options need to replace the options array with custom options which is added by user.
 		 **/
 		foreach($default_fields as $default_group_key => $default_group){
@@ -597,7 +597,7 @@ abstract class WPFM_Form {
 		/**
 		 * If default field is removed via field editor then we can not removed this field from the code because it is hardcode in the file so we need to set flag to identify to keep the record which perticular field is removed by the user.
 		 * Using visibility flag we can identify those fields need to remove or keep in the Field Editor based on visibility flag value. if visibility true then we will keep the field and if visibility flag false then we will not show this default field in the field editor. (As action of user removed this field from the field editor but not removed from the code so we have to set this flag)
-		 * We are getting several default fields from the addons and using theme side customization via 'submit_event_form_fields' filter.
+		 * We are getting several default fields from the addons and using theme side customization via 'submit_food_form_fields' filter.
 		 * Now, Not easy to manage filter fields and default fields of plugin in this case so we need to set this flag for identify wheather field show  or not in the field editor.
 		 *
 		 * If user selected admin only fields then we need to unset that fields from the frontend user.

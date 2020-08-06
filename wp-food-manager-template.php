@@ -6,7 +6,6 @@
  *
  * @author 	WP Food Manager
  * @category 	Core
- * @package 	Event Manager/Template
  * @version     1.0.5
  */
 
@@ -16,7 +15,7 @@
  *
  * @return string The name of the current role
  * @since 1.0.0
- **/
+ */
 function get_food_manager_current_user_role() {
 	global $wp_roles;
 	$current_user = wp_get_current_user();

@@ -83,7 +83,7 @@ class WP_Food_Manager {
 		include( 'forms/wpfm-forms.php' );
 		include( 'shortcodes/wpfm-shortcodes.php' );
 
-		include( 'wp-food-manager-template.php' );
+		
 
 		if(is_admin()){
 			include( 'admin/wpfm-admin.php' );
