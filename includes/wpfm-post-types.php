@@ -39,33 +39,33 @@ class WPFM_Post_Types {
 		add_filter( 'the_content', array( $this, 'food_content' ) );
 		// add_filter( 'the_content', array( $this, 'neutritions_content' ) );
 	
-		// add_action( 'event_manager_check_for_expired_events', array( $this, 'check_for_expired_events' ) );
-		// add_action( 'event_manager_delete_old_previews', array( $this, 'delete_old_previews' ) );
+		// add_action( 'food_manager_check_for_expired_foods', array( $this, 'check_for_expired_foods' ) );
+		// add_action( 'food_manager_delete_old_previews', array( $this, 'delete_old_previews' ) );
 
-		// add_action( 'pending_to_publish', array( $this, 'set_event_expiry_date' ) );
-		// add_action( 'preview_to_publish', array( $this, 'set_event_expiry_date' ) );
-		// add_action( 'draft_to_publish', array( $this, 'set_event_expiry_date' ) );
-		// add_action( 'auto-draft_to_publish', array( $this, 'set_event_expiry_date' ) );
-		// add_action( 'expired_to_publish', array( $this, 'set_event_expiry_date' ) );
+		// add_action( 'pending_to_publish', array( $this, 'set_food_expiry_date' ) );
+		// add_action( 'preview_to_publish', array( $this, 'set_food_expiry_date' ) );
+		// add_action( 'draft_to_publish', array( $this, 'set_food_expiry_date' ) );
+		// add_action( 'auto-draft_to_publish', array( $this, 'set_food_expiry_date' ) );
+		// add_action( 'expired_to_publish', array( $this, 'set_food_expiry_date' ) );
 		
 		// add_action( 'wp_footer', array( $this, 'output_structured_data' ) );
 		
-		// add_action( 'wp_head', array( $this, 'noindex_expired_cancelled_event_listings' ) );
+		// add_action( 'wp_head', array( $this, 'noindex_expired_cancelled_food_listings' ) );
 
-		// add_filter( 'display_event_description', 'wptexturize'        );
-		// add_filter( 'display_event_description', 'convert_smilies'    );
-		// add_filter( 'display_event_description', 'convert_chars'      );
-		// add_filter( 'display_event_description', 'wpautop'            );
-		// add_filter( 'display_event_description', 'shortcode_unautop'  );
-		// add_filter( 'display_event_description', 'prepend_attachment' );
+		// add_filter( 'display_food_description', 'wptexturize'        );
+		// add_filter( 'display_food_description', 'convert_smilies'    );
+		// add_filter( 'display_food_description', 'convert_chars'      );
+		// add_filter( 'display_food_description', 'wpautop'            );
+		// add_filter( 'display_food_description', 'shortcode_unautop'  );
+		// add_filter( 'display_food_description', 'prepend_attachment' );
 
 		// if ( ! empty( $GLOBALS['wp_embed'] ) ) {
-  //  			add_filter( 'display_event_description', array( $GLOBALS['wp_embed'], 'run_shortcode' ), 8 );
-  //    		add_filter( 'display_event_description', array( $GLOBALS['wp_embed'], 'autoembed' ), 8 );
+  //  			add_filter( 'display_food_description', array( $GLOBALS['wp_embed'], 'run_shortcode' ), 8 );
+  //    		add_filter( 'display_food_description', array( $GLOBALS['wp_embed'], 'autoembed' ), 8 );
   //  		}
 		
-		// add_action( 'event_manager_registration_details_email', array( $this, 'registration_details_email' ) );
-		// add_action( 'event_manager_registration_details_url', array( $this, 'registration_details_url' ) );		
+		// add_action( 'food_manager_registration_details_email', array( $this, 'registration_details_email' ) );
+		// add_action( 'food_manager_registration_details_url', array( $this, 'registration_details_url' ) );		
 
 		// add_filter( 'wp_insert_post_data', array( $this, 'fix_post_name' ), 10, 2 );
 		// add_action( 'add_post_meta', array( $this, 'maybe_add_geolocation_data' ), 10, 3 );
@@ -192,7 +192,7 @@ class WPFM_Post_Types {
 
 		//}
 
-		//if ( get_option( 'food_manager_enable_event_types' ,true) ) {
+		//if ( get_option( 'food_manager_enable_food_types' ,true) ) {
 
 		        $singular  = __( 'Food type', 'wp-food-manager' );
 
@@ -284,7 +284,7 @@ class WPFM_Post_Types {
 		 *
 		 * @since 1.0.0
 		 *
-		 * @param bool $enable_event_archive_page
+		 * @param bool $enable_food_archive_page
 		 */
 		if ( apply_filters( 'food_manager_enable_food_archive_page', current_theme_supports( 'food-manager-templates' ) ) ) {
 			$has_archive = _x( 'Foods', 'Post type archive slug - resave permalinks after changing this', 'wp-food-manager' );
@@ -480,7 +480,7 @@ class WPFM_Post_Types {
 
 		$plural     = __( 'Food Listings', 'wp-food-manager' );
 
-		$count_events = wp_count_posts( 'food_manager', 'readable' );
+		$count_foods = wp_count_posts( 'food_manager', 'readable' );
 
 		if ( ! empty( $menu ) && is_array( $menu ) ) {
 
@@ -488,9 +488,9 @@ class WPFM_Post_Types {
 
 				if ( strpos( $menu_item[0], $plural ) === 0 ) {
 
-					if ( $order_count = $count_events->pending ) {
+					if ( $order_count = $count_foods->pending ) {
 
-						$menu[ $key ][0] .= " <span class='awaiting-mod update-plugins count-$order_count'><span class='pending-count'>" . number_format_i18n( $count_events->pending ) . "</span></span>" ;
+						$menu[ $key ][0] .= " <span class='awaiting-mod update-plugins count-$order_count'><span class='pending-count'>" . number_format_i18n( $count_foods->pending ) . "</span></span>" ;
 					}
 
 					break;
@@ -500,7 +500,7 @@ class WPFM_Post_Types {
 	}
 
 	/**
-	 * Add extra content when showing event content
+	 * Add extra content when showing food content
 	 */
 	public function food_content( $content ) {
 
@@ -519,7 +519,7 @@ class WPFM_Post_Types {
 
 			do_action( 'food_content_start' );
 
-			get_event_manager_template_part( 'content-single', 'food_manager' );
+			get_food_manager_template_part( 'content-single', 'food_manager' );
 
 			do_action( 'food_content_end' );
 
@@ -598,12 +598,12 @@ class WPFM_Post_Types {
             $args_past['meta_query'] = array( 
                 'relation' => 'AND', 
                 array(
-                    'key'     => '_event_organizer_ids',
+                    'key'     => '_food_organizer_ids',
                     'value'   => $neutritions_id, 
                     'compare' => 'LIKE',
                 ),
                 array(
-                    'key'     => '_event_end_date',
+                    'key'     => '_food_end_date',
                     'value'   => $today_date,
                     'type'    => 'date',
                     'compare' => '<'   
@@ -616,8 +616,8 @@ class WPFM_Post_Types {
 
 			wp_enqueue_script( 'wp-food-manager-organizer');
 
-			get_event_manager_template( 
-			    'content-single-event_organizer.php', 
+			get_food_manager_template( 
+			    'content-single-food_organizer.php', 
 			    array(
 			        'organizer_id'	=> $neutritions_id,
 			        'per_page'		=> $per_page,
@@ -631,7 +631,7 @@ class WPFM_Post_Types {
 			);
 
 			wp_reset_postdata();
-			//get_event_manager_template_part( 'content-single', 'event_organizer', 'wp-food-manager', EVENT_MANAGER_PLUGIN_DIR . '/templates/organizer/');
+			//get_food_manager_template_part( 'content-single', 'food_organizer', 'wp-food-manager', EVENT_MANAGER_PLUGIN_DIR . '/templates/organizer/');
 
 			do_action( 'organizer_content_end' );
 
@@ -640,7 +640,7 @@ class WPFM_Post_Types {
 
 		add_filter( 'the_content', array( $this, 'organizer_content' ) );
 
-		return apply_filters( 'event_manager_single_organizer_content', $content, $post );
+		return apply_filters( 'food_manager_single_organizer_content', $content, $post );
 	}
 
 	/**
@@ -666,7 +666,7 @@ class WPFM_Post_Types {
 
 		if ( ! empty( $_GET['search_location'] ) ) {
 
-			$location_meta_keys = array( 'geolocation_formatted_address', '_event_location', 'geolocation_state_long' );
+			$location_meta_keys = array( 'geolocation_formatted_address', '_food_location', 'geolocation_state_long' );
 
 			$location_search    = array( 'relation' => 'OR' );
 
@@ -692,7 +692,7 @@ class WPFM_Post_Types {
 				$datetime=date('Y-m-d');
 				
 				$date_search[] = array(
-						'key'     => '_event_start_date',
+						'key'     => '_food_start_date',
 						'value'   => $datetime,
 						'compare' => 'LIKE',
 					);
@@ -702,7 +702,7 @@ class WPFM_Post_Types {
 				$datetime=date('Y-m-d',strtotime("+1 day")); 
 				
 				$date_search[] = array(
-						'key'     => '_event_start_date',
+						'key'     => '_food_start_date',
 						'value'   => $datetime,
 						'compare' => 'LIKE',
 					);
@@ -715,7 +715,7 @@ class WPFM_Post_Types {
                 $dates[1] = date('Y-m-d', strtotime($year.'W'.str_pad($weekNumber, 2, 0, STR_PAD_LEFT).' +6 days'));				
 
 				$date_search[] = array(
-					'key'     => '_event_start_date',
+					'key'     => '_food_start_date',
 					'value'   => $dates,
 					'compare' => 'BETWEEN',
 					'type'    => 'date'
@@ -729,7 +729,7 @@ class WPFM_Post_Types {
                 $dates[1]= $sunday_date;
                 
 			    $date_search[] = array(
-						'key'     => '_event_start_date',
+						'key'     => '_food_start_date',
 						'value'   => $dates,
 					    'compare' => 'BETWEEN',
 					    'type'    => 'date'
@@ -741,7 +741,7 @@ class WPFM_Post_Types {
                 $dates[1] = date('Y-m-d', strtotime('last day of this month', time()));				
 
 				$date_search[] = array(
-						'key'     => '_event_start_date',
+						'key'     => '_food_start_date',
 						'value'   => $dates,
 					    'compare' => 'BETWEEN',
 					    'type'    => 'date'
@@ -753,7 +753,7 @@ class WPFM_Post_Types {
                 $dates[1] = date('Y-m-d', strtotime('last day of december', time()));	
 
 				$date_search[] = array(
-						'key'     => '_event_start_date',
+						'key'     => '_food_start_date',
 						'value'   => $dates,
 					    'compare' => 'BETWEEN',
 					    'type'    => 'date'
@@ -767,7 +767,7 @@ class WPFM_Post_Types {
                 $dates[1] = date('Y-m-d', strtotime($year.'W'.str_pad($weekNumber, 2, 0, STR_PAD_LEFT).' +6 days'));	
                
 				$date_search[] = array(
-					'key'     => '_event_start_date',
+					'key'     => '_food_start_date',
 					'value'   => $dates,
 					'compare' => 'BETWEEN',
 					'type'    => 'date'
@@ -782,7 +782,7 @@ class WPFM_Post_Types {
                 $dates[1]= $next_sunday_date;               
                 
 			    $date_search[] = array(
-						'key'     => '_event_start_date',
+						'key'     => '_food_start_date',
 						'value'   => $dates,
 					    'compare' => 'BETWEEN',
 					    'type'    => 'date'
@@ -794,7 +794,7 @@ class WPFM_Post_Types {
                 $dates[1] = date('Y-m-d', strtotime('last day of next month', time()));	
                 
 				$date_search[] = array(
-						'key'     => '_event_start_date',
+						'key'     => '_food_start_date',
 						'value'   => $dates,
 					    'compare' => 'BETWEEN',
 					    'type'    => 'date'
@@ -807,7 +807,7 @@ class WPFM_Post_Types {
                 $dates[1] = date('Y-m-d', strtotime('last day of december '. $year, time()));              
 
 				$date_search[] = array(
-						'key'     => '_event_start_date',
+						'key'     => '_food_start_date',
 						'value'   => $dates,
 					    'compare' => 'BETWEEN',
 					    'type'    => 'date'
@@ -818,7 +818,7 @@ class WPFM_Post_Types {
 				$dates = json_decode($args['search_datetimes'][0], true);
 
 				$date_search[] = array(
-					'key'     => '_event_start_date',
+					'key'     => '_food_start_date',
 					'value'   => [$dates['start'], $dates['end']],
 				    'compare' => 'BETWEEN',
 				    'type'    => 'date'
@@ -839,20 +839,20 @@ class WPFM_Post_Types {
 			  $ticket_price_value='free';
 			}
 			$ticket_search[] = array(
-							'key'     => '_event_ticket_options',
+							'key'     => '_food_ticket_options',
 							'value'   => $ticket_price_value,
 							'compare' => '=',
 						);
 			$query_args['meta_query'][] = $ticket_search;			
 		}
 		
-		if ( ! empty( $_GET['search_event_types'] ) ) {
+		if ( ! empty( $_GET['search_food_types'] ) ) {
 		    
-			$cats     = explode( ',', sanitize_text_field( $_GET['search_event_types'] ) ) + array( 0 );
+			$cats     = explode( ',', sanitize_text_field( $_GET['search_food_types'] ) ) + array( 0 );
 
 			$field    = is_numeric( $cats ) ? 'term_id' : 'slug';
 
-			$operator = 'all' === get_option( 'event_manager_event_type_filter_type', 'all' ) && sizeof( $args['search_event_types'] ) > 1 ? 'AND' : 'IN';
+			$operator = 'all' === get_option( 'food_manager_food_type_filter_type', 'all' ) && sizeof( $args['search_food_types'] ) > 1 ? 'AND' : 'IN';
 
 			$query_args['tax_query'][] = array(
 
@@ -874,11 +874,11 @@ class WPFM_Post_Types {
 
 			$field    = is_numeric( $cats ) ? 'term_id' : 'slug';
 
-			$operator = 'all' === get_option( 'event_manager_category_filter_type', 'all' ) && sizeof( $args['search_categories'] ) > 1 ? 'AND' : 'IN';
+			$operator = 'all' === get_option( 'food_manager_category_filter_type', 'all' ) && sizeof( $args['search_categories'] ) > 1 ? 'AND' : 'IN';
 
 			$query_args['tax_query'][] = array(
 
-				'taxonomy'         => 'event_listing_category',
+				'taxonomy'         => 'food_listing_category',
 
 				'field'            => $field,
 
@@ -889,11 +889,11 @@ class WPFM_Post_Types {
 				'operator'         => $operator
 			);
 		}
-		if ( $event_manager_keyword = sanitize_text_field( $_GET['search_keywords'] ) ) {
+		if ( $food_manager_keyword = sanitize_text_field( $_GET['search_keywords'] ) ) {
 
-			$query_args['s'] = $event_manager_keyword;
+			$query_args['s'] = $food_manager_keyword;
 			
-			add_filter( 'posts_search', 'get_event_listings_keyword_search' );
+			add_filter( 'posts_search', 'get_food_listings_keyword_search' );
 		}
 		
 		if ( empty( $query_args['meta_query'] ) ) {
@@ -906,24 +906,24 @@ class WPFM_Post_Types {
 			unset( $query_args['tax_query'] );
 		}
 
-		query_posts( apply_filters( 'event_feed_args', $query_args ) );
+		query_posts( apply_filters( 'food_feed_args', $query_args ) );
 
-		add_action( 'rss2_ns', array( $this, 'event_feed_namespace' ) );
+		add_action( 'rss2_ns', array( $this, 'food_feed_namespace' ) );
 
-		add_action( 'rss2_item', array( $this, 'event_feed_item' ) );
+		add_action( 'rss2_item', array( $this, 'food_feed_item' ) );
 
 		do_feed_rss2( false );
-		remove_filter( 'posts_search', 'get_event_listings_keyword_search' );
+		remove_filter( 'posts_search', 'get_food_listings_keyword_search' );
 	}
 	
 	/**
-	 * In order to make sure that the feed properly queries the 'event_listing' type
+	 * In order to make sure that the feed properly queries the 'food_listing' type
 	 *
 	 * @param WP_Query $wp
 	 */
 	public function add_feed_query_args( $wp ) {
 		
-		// Let's leave if not the event feed
+		// Let's leave if not the food feed
 		if ( ! isset( $wp->query_vars['feed'] ) || 'food_feed' !== $wp->query_vars['feed'] ) {
 			return;
 		}
@@ -943,7 +943,7 @@ class WPFM_Post_Types {
 	
 
 	/**
-	 * Add a custom namespace to the event feed
+	 * Add a custom namespace to the food feed
 	 */
 
 	public function food_feed_namespace() {
@@ -952,32 +952,32 @@ class WPFM_Post_Types {
 	}
 
 	/**
-	 * Add custom data to the event feed
+	 * Add custom data to the food feed
 	 */
 
 	public function food_feed_item() {
 
 		$post_id  = get_the_ID();
-		get_event_manager_template( 'rss-event-feed.php', array( 'post_id' => $post_id ) );
+		get_food_manager_template( 'rss-food-feed.php', array( 'post_id' => $post_id ) );
 	}
 
 	/**
-	 * Expire events
+	 * Expire foods
 	 */
 
-	// public function check_for_expired_events() {
+	// public function check_for_expired_foods() {
 
 	// 	global $wpdb;
 		
 	// 	// Change status to expired
 
-	// 	$event_ids = $wpdb->get_col( $wpdb->prepare( "
+	// 	$food_ids = $wpdb->get_col( $wpdb->prepare( "
 
 	// 		SELECT postmeta.post_id FROM {$wpdb->postmeta} as postmeta
 
 	// 		LEFT JOIN {$wpdb->posts} as posts ON postmeta.post_id = posts.ID
 
-	// 		WHERE postmeta.meta_key = '_event_expiry_date'
+	// 		WHERE postmeta.meta_key = '_food_expiry_date'
 
 	// 		AND postmeta.meta_value > 0
 
@@ -985,87 +985,87 @@ class WPFM_Post_Types {
 
 	// 		AND posts.post_status = 'publish'
 
-	// 		AND posts.post_type = 'event_listing'
+	// 		AND posts.post_type = 'food_listing'
 
 	// 	", date( 'Y-m-d', current_time( 'timestamp' ) ) ) );
 
-	// 	if ( $event_ids ) {
+	// 	if ( $food_ids ) {
 
-	// 		foreach ( $event_ids as $event_id ) {
+	// 		foreach ( $food_ids as $food_id ) {
 
-	// 			$event_data       = array();
+	// 			$food_data       = array();
 
-	// 			$event_data['ID'] = $event_id;
+	// 			$food_data['ID'] = $food_id;
 
-	// 			$event_data['post_status'] = 'expired';
+	// 			$food_data['post_status'] = 'expired';
 
-	// 			wp_update_post( $event_data );
+	// 			wp_update_post( $food_data );
 	// 		}
 	// 	}
 		
-	// 	// Delete old expired events	
-	// 	$return_flag=absint( get_option( 'event_manager_delete_expired_events' ) ) == 1 ? true : false;
-	// 	if ( apply_filters( 'event_manager_delete_expired_events', $return_flag ) ) {
+	// 	// Delete old expired foods	
+	// 	$return_flag=absint( get_option( 'food_manager_delete_expired_foods' ) ) == 1 ? true : false;
+	// 	if ( apply_filters( 'food_manager_delete_expired_foods', $return_flag ) ) {
 
-	// 		$event_ids = $wpdb->get_col( $wpdb->prepare( "
+	// 		$food_ids = $wpdb->get_col( $wpdb->prepare( "
 
 	// 			SELECT posts.ID FROM {$wpdb->posts} as posts
 
-	// 			WHERE posts.post_type = 'event_listing'
+	// 			WHERE posts.post_type = 'food_listing'
 
 	// 			AND posts.post_modified < %s
 
 	// 			AND posts.post_status = 'expired'
 
-	// 		", date( 'Y-m-d', strtotime( '-' . apply_filters( 'event_manager_delete_expired_events_days', 30 ) . ' days', current_time( 'timestamp' ) ) ) ) );
+	// 		", date( 'Y-m-d', strtotime( '-' . apply_filters( 'food_manager_delete_expired_foods_days', 30 ) . ' days', current_time( 'timestamp' ) ) ) ) );
 			
-	// 		if ( $event_ids ) {
+	// 		if ( $food_ids ) {
 
-	// 			foreach ( $event_ids as $event_id ) {
+	// 			foreach ( $food_ids as $food_id ) {
 
-	// 				wp_trash_post( $event_id );
+	// 				wp_trash_post( $food_id );
 	// 			}
 	// 		}
 	// 	}
 
-	// 	//Delete event after finished
-	// 	$delete_events_after_finished = absint( get_option( 'event_manager_delete_events_after_finished' ) ) == 1 ? true : false;
-	// 	if($delete_events_after_finished)
+	// 	//Delete food after finished
+	// 	$delete_foods_after_finished = absint( get_option( 'food_manager_delete_foods_after_finished' ) ) == 1 ? true : false;
+	// 	if($delete_foods_after_finished)
 	// 	{
 	// 		$args = [
-	// 			'post_type'      => 'event_listing',
+	// 			'post_type'      => 'food_listing',
 	// 			'post_status'    => array( 'publish', 'expired' ),
 	// 			'posts_per_page' => -1,
 	// 			'meta_query' => array(
 	// 		        'relation' => 'AND',
 	// 		        array(
-	// 		            'key'     => '_event_end_date',
+	// 		            'key'     => '_food_end_date',
 	// 		            'value'   => date( 'Y-m-d'),
 	// 		            'compare' => '<=',
 	// 		        ),
 	// 		        array(
-	// 		            'key'     => '_event_end_time',
+	// 		            'key'     => '_food_end_time',
 	// 		            'value'   => date( 'H:i A'),
 	// 		            'compare' => '<',
 	// 		        ),
 	// 		    ),
 	// 		];
 
-	// 		$event_ids = get_posts($args);
+	// 		$food_ids = get_posts($args);
 
-	// 		if ( $event_ids ) 
+	// 		if ( $food_ids ) 
 	// 		{
-	// 			foreach ( $event_ids as $event_id ) 
+	// 			foreach ( $food_ids as $food_id ) 
 	// 			{
-	// 				$event_data       = array();
+	// 				$food_data       = array();
 
-	// 				$event_data['ID'] = $event_id->ID;
+	// 				$food_data['ID'] = $food_id->ID;
 
-	// 				$event_data['post_status'] = 'expired';
+	// 				$food_data['post_status'] = 'expired';
 
-	// 				wp_update_post( $event_data );
+	// 				wp_update_post( $food_data );
 
-	// 				wp_trash_post( $event_id->ID );
+	// 				wp_trash_post( $food_id->ID );
 	// 			}
 	// 		}
 	// 	}
@@ -1073,20 +1073,20 @@ class WPFM_Post_Types {
 	// }
 	
 	/**
-	 * Delete old previewed events after 30 days to keep the DB clean
+	 * Delete old previewed foods after 30 days to keep the DB clean
 	 */
 
 	// public function delete_old_previews() {
 
 	// 	global $wpdb;
 
-	// 	// Delete old expired events
+	// 	// Delete old expired foods
 
-	// 	$event_ids = $wpdb->get_col( $wpdb->prepare( "
+	// 	$food_ids = $wpdb->get_col( $wpdb->prepare( "
 
 	// 		SELECT posts.ID FROM {$wpdb->posts} as posts
 
-	// 		WHERE posts.post_type = 'event_listing'
+	// 		WHERE posts.post_type = 'food_listing'
 
 	// 		AND posts.post_modified < %s
 
@@ -1094,46 +1094,46 @@ class WPFM_Post_Types {
 
 	// 	", date( 'Y-m-d', strtotime( '-30 days', current_time( 'timestamp' ) ) ) ) );
 
-	// 	if ( $event_ids ) {
+	// 	if ( $food_ids ) {
 
-	// 		foreach ( $event_ids as $event_id ) {
+	// 		foreach ( $food_ids as $food_id ) {
 
-	// 			wp_delete_post( $event_id, true );
+	// 			wp_delete_post( $food_id, true );
 	// 		}
 	// 	}
 	// }
 
 	/**
-	 * Set expirey date when event status changes
+	 * Set expirey date when food status changes
 	 */
 
-	// public function set_event_expiry_date( $post ) {
-	// 	if ( $post->post_type !== 'event_listing' ) {
+	// public function set_food_expiry_date( $post ) {
+	// 	if ( $post->post_type !== 'food_listing' ) {
 	// 		return;
 	// 	}
 	// 	// See if it is already set
-	// 	if ( metadata_exists( 'post', $post->ID, '_event_expiry_date' ) ) {
+	// 	if ( metadata_exists( 'post', $post->ID, '_food_expiry_date' ) ) {
 			
-	// 		$expires = get_post_meta( $post->ID, '_event_expiry_date', true );
+	// 		$expires = get_post_meta( $post->ID, '_food_expiry_date', true );
 			
 	// 		if ( $expires && strtotime( $expires ) < current_time( 'timestamp' ) ) {
 				
-	// 			update_post_meta( $post->ID, '_event_expiry_date', '' );
+	// 			update_post_meta( $post->ID, '_food_expiry_date', '' );
 	// 		}
 	// 	}
 		
 	// 	// No metadata set so we can generate an expiry date
 	// 	// See if the user has set the expiry manually:
-	// 	if ( ! empty( $_POST[ '_event_expiry_date' ] ) ) {
-	// 		update_post_meta( $post->ID, '_event_expiry_date', date( 'Y-m-d', strtotime( sanitize_text_field( $_POST[ '_event_expiry_date' ] ) ) ) );
+	// 	if ( ! empty( $_POST[ '_food_expiry_date' ] ) ) {
+	// 		update_post_meta( $post->ID, '_food_expiry_date', date( 'Y-m-d', strtotime( sanitize_text_field( $_POST[ '_food_expiry_date' ] ) ) ) );
 	// 		// No manual setting? Lets generate a date
 	// 	} elseif (false == isset( $expires ) ){
-	// 		$expires = get_event_expiry_date( $post->ID );
-	// 		update_post_meta( $post->ID, '_event_expiry_date', $expires );
+	// 		$expires = get_food_expiry_date( $post->ID );
+	// 		update_post_meta( $post->ID, '_food_expiry_date', $expires );
 	// 		// In case we are saving a post, ensure post data is updated so the field is not overridden
-	// 		if ( isset( $_POST[ '_event_expiry_date' ] ) ) {
+	// 		if ( isset( $_POST[ '_food_expiry_date' ] ) ) {
 				
-	// 			$_POST[ '_event_expiry_date' ] = $expires;
+	// 			$_POST[ '_food_expiry_date' ] = $expires;
 	// 		}
 	// 	}
 	// }
@@ -1149,7 +1149,7 @@ class WPFM_Post_Types {
 	       //get the user role. 
 		    if ( is_user_logged_in() ) 
 		     {
-			     $role=get_event_manager_current_user_role();  
+			     $role=get_food_manager_current_user_role();  
 
 		         $current_user = wp_get_current_user();
 
@@ -1165,7 +1165,7 @@ class WPFM_Post_Types {
 	    }
 
     /**
-	 * This function is use to set the counts the event views and attendees views.
+	 * This function is use to set the counts the food views and attendees views.
      * This function also used at attendees dashboard file.
 	 * @param  int $post_id	 
 	*/
@@ -1192,14 +1192,14 @@ class WPFM_Post_Types {
 	 * The registration content when the registration method is an email
 	 */
 	public function registration_details_email( $register ) {
-		get_event_manager_template( 'event-registration-email.php', array( 'register' => $register ) );
+		get_food_manager_template( 'food-registration-email.php', array( 'register' => $register ) );
 	}
 
 	/**
 	 * The registration content when the registration method is a url
 	 */
 	public function registration_details_url( $register ) {
-		get_event_manager_template( 'event-registration-url.php', array( 'register' => $register ) );
+		get_food_manager_template( 'food-registration-url.php', array( 'register' => $register ) );
 	}
 
 	/**
@@ -1229,11 +1229,11 @@ class WPFM_Post_Types {
 
 			return;
 		}
-		do_action( 'food_manager_event_location_edited', $object_id, $_meta_value );
+		do_action( 'food_manager_food_location_edited', $object_id, $_meta_value );
 	}
 
 	/**
-	 * Triggered when updating meta on a event listing.
+	 * Triggered when updating meta on a food listing.
 	 *
 	 * @param int    $meta_id
 	 * @param int    $object_id
@@ -1241,7 +1241,7 @@ class WPFM_Post_Types {
 	 * @param mixed  $meta_value
 	 */
 	public function update_post_meta( $meta_id, $object_id, $meta_key, $meta_value ) {
-		if ( 'event_listing' === get_post_type( $object_id ) ) {
+		if ( 'food_listing' === get_post_type( $object_id ) ) {
 			switch ( $meta_key ) {
 				case '_food_location':
 					$this->maybe_update_geolocation_data( $meta_id, $object_id, $meta_key, $meta_value );
@@ -1261,15 +1261,15 @@ class WPFM_Post_Types {
 
 	public function maybe_update_geolocation_data( $meta_id, $object_id, $meta_key, $_meta_value ) {
 
-		if ( '_food_location' !== $meta_key || 'event_listing' !== get_post_type( $object_id ) ) {
+		if ( '_food_location' !== $meta_key || 'food_listing' !== get_post_type( $object_id ) ) {
 		    
 			return;
 		}
-		do_action( 'food_manager_event_location_edited', $object_id, $_meta_value );
+		do_action( 'food_manager_food_location_edited', $object_id, $_meta_value );
 	}
 
 	/**
-	 * Maybe set menu_order if the featured status of a event is changed
+	 * Maybe set menu_order if the featured status of a food is changed
 	 */
 
 	public function maybe_update_menu_order( $meta_id, $object_id, $meta_key, $_meta_value ) {
@@ -1303,14 +1303,14 @@ class WPFM_Post_Types {
 	}
 
 	/**
-	 * Maybe set default meta data for event listings
+	 * Maybe set default meta data for food listings
 	 * @param  int $post_id
 	 * @param  WP_Post $post
 	*/
 
 	public function maybe_add_default_meta_data( $post_id, $post = '' ) {
 
-		if ( empty( $post ) || 'event_listing' === $post->post_type ) {
+		if ( empty( $post ) || 'food_listing' === $post->post_type ) {
 
 			add_post_meta( $post_id, '_cancelled', 0, true );
 
@@ -1329,7 +1329,7 @@ class WPFM_Post_Types {
 
 			$this->maybe_add_default_meta_data( $post_id );
 
-			if ( ! WP_Event_Manager_Geocode::has_location_data( $post_id ) && ( $location = get_post_meta( $post_id, '_event_location', true ) ) ) {
+			if ( ! WP_Event_Manager_Geocode::has_location_data( $post_id ) && ( $location = get_post_meta( $post_id, '_food_location', true ) ) ) {
 
 				WP_Event_Manager_Geocode::generate_location_data( $post_id, $location );
 			}
@@ -1338,11 +1338,11 @@ class WPFM_Post_Types {
 
 	
 	/**
-	 * When deleting a event, delete its attachments
+	 * When deleting a food, delete its attachments
 	 * @param  int $post_id
 	 */
-	public function before_delete_event( $post_id ) {
-    	if ( 'event_listing' === get_post_type( $post_id ) ) {
+	public function before_delete_food( $post_id ) {
+    	if ( 'food_listing' === get_post_type( $post_id ) ) {
 			$attachments = get_children( array(
 		        'post_parent' => $post_id,
 		        'post_type'   => 'attachment'
@@ -1358,9 +1358,9 @@ class WPFM_Post_Types {
 	}
 	
 	/**
-	 * Add noindex for expired and filled event listings.
+	 * Add noindex for expired and filled food listings.
 	 */
-	public function noindex_expired_cancelled_event_listings() {
+	public function noindex_expired_cancelled_food_listings() {
 		if ( ! is_single() ) {
 			return;
 		}
@@ -1368,7 +1368,7 @@ class WPFM_Post_Types {
 		if ( ! $post || 'food_manager' !== $post->post_type ) {
 			return;
 		}
-		if ( event_manager_allow_indexing_event_listing() ) {
+		if ( food_manager_allow_indexing_food_listing() ) {
 			return;
 		}
 		wp_no_robots();
@@ -1382,10 +1382,10 @@ class WPFM_Post_Types {
 		if ( ! is_single() ) {
 			return;
 		}
-		if ( ! event_manager_output_event_listing_structured_data() ) {
+		if ( ! food_manager_output_food_listing_structured_data() ) {
 			return;
 		}
-		$structured_data = event_manager_get_event_listing_structured_data();
+		$structured_data = food_manager_get_food_listing_structured_data();
 		if ( ! empty( $structured_data ) ) {
 			echo '<script type="application/ld+json">' . wp_json_encode( $structured_data ) . '</script>';
 		}
@@ -1414,7 +1414,7 @@ class WPFM_Post_Types {
 		);
 
 		// Ensure rewrite slugs are set.
-		$permalinks['food_rewrite_slug']      = untrailingslashit( empty( $permalinks['food_base'] ) ? _x( 'food', 'Food permalink - resave permalinks after changing this', 'wp-food-manager' ) : $permalinks['event_base'] );
+		$permalinks['food_rewrite_slug']      = untrailingslashit( empty( $permalinks['food_base'] ) ? _x( 'food', 'Food permalink - resave permalinks after changing this', 'wp-food-manager' ) : $permalinks['food_base'] );
 		$permalinks['category_rewrite_slug'] = untrailingslashit( empty( $permalinks['category_base'] ) ? _x( 'food-category', 'Food category slug - resave permalinks after changing this', 'wp-food-manager' ) : $permalinks['category_base'] );
 		$permalinks['type_rewrite_slug']     = untrailingslashit( empty( $permalinks['type_base'] ) ? _x( 'food-type', 'Food type slug - resave permalinks after changing this', 'wp-food-manager' ) : $permalinks['type_base'] );
 

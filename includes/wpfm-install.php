@@ -49,7 +49,7 @@ class WPFM_Install {
 
 		if ( is_object( $wp_roles ) ) {
 
-			add_role( 'store_owner', __( 'Store owner', 'wp-event-manager' ), array(
+			add_role( 'store_owner', __( 'Store owner', 'wp-food-manager' ), array(
 
 				'read'         => true,
 
@@ -227,9 +227,9 @@ class WPFM_Install {
 	}
 
 	/**
-	 * Adds the employment type to default event types when updating from a previous WP Event Manager version.
+	 * Adds the employment type to default food types when updating from a previous WP Event Manager version.
 	 */
-	private static function add_event_types() {
+	private static function add_food_types() {
 		$taxonomies = self::get_default_taxonomy_terms();
 		$terms      = $taxonomies['food_manager_type'];
 

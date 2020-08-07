@@ -2,7 +2,7 @@
 /**
  * Template Functions
  *
- * Template functions specifically created for event listings and other event related methods.
+ * Template functions specifically created for food listings and other food related methods.
  *
  * @author 	WP Food Manager
  * @category 	Core
@@ -52,7 +52,7 @@ function get_food_manager_template( $template_name, $args = array(), $template_p
  *		$default_path	/	$template_name
  *
  * @param string $template_name
- * @param string $template_path (default: 'wp-event-manager')
+ * @param string $template_path (default: 'wp-food-manager')
  * @param string|bool $default_path (default: '') False to not load a default
  * @return string
  */
@@ -92,7 +92,7 @@ function locate_food_manager_template( $template_name, $template_path = 'wp-food
  *
  * @param string $slug
  * @param string $name (default: '')
- * @param string $template_path (default: 'wp-event-manager')
+ * @param string $template_path (default: 'wp-food-manager')
  * @param string|bool $default_path (default: '') False to not load a default
  */
 function get_food_manager_template_part( $slug, $name = '', $template_path = 'wp-food-manager', $default_path = '' ) {
@@ -104,7 +104,7 @@ function get_food_manager_template_part( $slug, $name = '', $template_path = 'wp
 		$template = locate_food_manager_template( "{$slug}-{$name}.php", $template_path, $default_path );
 	}
 
-	// If template file doesn't exist, look in yourtheme/slug.php and yourtheme/wp-event-manager/slug.php
+	// If template file doesn't exist, look in yourtheme/slug.php and yourtheme/wp-food-manager/slug.php
 
 	if ( ! $template ) {
 
@@ -154,7 +154,7 @@ function is_food_featured( $post = null ) {
 
 
 /**
- * get_event_location function.
+ * get_food_location function.
  *
  * @access public
  * @param mixed $post (default: null)
@@ -171,7 +171,7 @@ function get_food_location( $post = null ) {
 }
 
 /**
-* display_event_location function.
+* display_food_location function.
 * @param  boolean $map_link whether or not to link to the map on google maps
 * @return [type]
 */
@@ -188,6 +188,101 @@ function display_food_location( $map_link = true, $post = null ) {
 
 	} else {
 
-		echo  apply_filters( 'display_food_location_anywhere_text', __( 'Online food', 'wp-event-manager' ) );
+		echo  apply_filters( 'display_food_location_anywhere_text', __( 'Online food', 'wp-food-manager' ) );
 	}
+}
+
+/**
+ * get_the_food_logo function.
+ *
+ * @access public
+ * @param mixed $post (default: null)
+ * @return string
+ */
+function get_food_banner( $post = null ) {
+
+	$post = get_post( $post );
+
+	if ( $post->post_type !== 'food_manager' )
+		return;
+
+	if(isset($post->_food_banner) && empty($post->_food_banner))
+		$food_banner = apply_filters( 'wpfm_default_food_banner', WPFM_PLUGIN_URL . '/assets/images/wpfm-placeholder.jpg' );
+	else
+		$food_banner = $post->_food_banner;			
+	
+	return apply_filters( 'display_food_banner', $food_banner, $post );
+}
+
+/**
+ * get_food_thumbnail function.
+ *
+ * @access public
+ * @param mixed $post (default: null)
+ * @return string
+ */
+function get_food_thumbnail( $post = null ) {
+
+	$post = get_post( $post );
+
+	if ( $post->post_type !== 'food_listing' )
+		return;
+
+	$food_thumbnail = get_the_post_thumbnail_url( $post );
+
+	if( isset($food_thumbnail) && empty($food_thumbnail) )
+		$food_thumbnail = apply_filters( 'wpfm_default_food_banner', WPFM_PLUGIN_URL . '/assets/images/wpfm-placeholder.jpg' );	
+	
+	return apply_filters( 'display_food_thumbnail', $food_thumbnail, $post );
+}
+
+/**
+ * display_food_banner function.
+ *
+ * @access public
+ * @param string $size (default: 'full')
+ * @param mixed $default (default: null)
+ * @return void
+ */
+function display_food_banner( $size = 'full', $default = null, $post = null ) {
+
+	$banner = get_food_banner( $post );
+
+	if ( ! empty( $banner ) && ! is_array( $banner )  && ( strstr( $banner, 'http' ) || file_exists( $banner ) ) )
+	{
+		if ( $size !== 'full' ) {
+				
+			$banner = wpfm_get_resized_image( $banner, $size );
+		}
+		echo '<img itemprop="image" content="' . esc_attr( $banner ) . '" src="' . esc_attr( $banner ) . '" alt="' . esc_attr( get_organizer_name( $post ) ) . '" />';
+
+	} else if ( $default ) {
+
+		echo '<img itemprop="image" content="' . esc_attr( $default ) . '" src="' . esc_attr( $default ) . '" alt="' . esc_attr( get_organizer_name( $post ) ) . '" />';
+
+	} else if(is_array($banner) && isset($banner[0]) ){
+		echo '<img itemprop="image" content="' . esc_attr( $banner[0] ) . '" src="' . esc_attr( $banner[0] ) . '" alt="' .  '" />';
+	}
+	else  {
+		echo '<img itemprop="image" content="' . esc_attr( apply_filters( 'food_manager_default_food_banner', WPFM_PLUGIN_URL . '/assets/images/wpfm-placeholder.jpg' ) ) . '" src="' . esc_attr( apply_filters( 'food_manager_default_food_banner', WPFM_PLUGIN_URL . '/assets/images/wpfm-placeholder.jpg' ) ) . '" alt="' . esc_attr( get_the_title() ) . '" />';
+	}
+}
+
+/** This function is use to get the counts the food views and attendee views.
+ *   This function also used at food, attendee dashboard file.
+ *   @return number counted view.
+ *   @param $post
+ **/
+function get_food_views_count($post)
+{
+	$count_key = '_view_count';
+	$count = get_post_meta($post->ID, $count_key, true);
+
+	if($count=='' || $count==null)
+	{
+		delete_post_meta($post->ID, $count_key);
+		add_post_meta($post->ID, $count_key, '0');
+		return "-";
+	}
+	return $count;
 }

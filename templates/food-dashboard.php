@@ -1,12 +1,12 @@
 <?php do_action('food_manager_food_dashboard_before'); ?>
 <p></p>
 <div id="food-manager-food-dashboard">
-	<div class="wpem-responsive-table-block">
-		<table class="wpem-main wpem-responsive-table-wrapper">
+	<div class="wpfm-responsive-table-block">
+		<table class="wpfm-main wpfm-responsive-table-wrapper">
 			<thead>
 				<tr>
 					<?php foreach ( $food_dashboard_columns as $key => $column ) : ?>
-					<th class="wpem-heading-text <?php echo esc_attr( $key ); ?>"><?php echo esc_html( $column ); ?></th>
+					<th class="wpfm-heading-text <?php echo esc_attr( $key ); ?>"><?php echo esc_html( $column ); ?></th>
 					<?php endforeach; ?>
 				</tr>
 			</thead>
@@ -29,7 +29,7 @@
 									<?php echo $food->post_title; ?> <small>(<?php display_food_status( $food ); ?>)</small>
 								<?php endif; ?>
 								<?php elseif ('food_action' === $key ) :?>
-		                            <div class="wpem-dboard-food-action">
+		                            <div class="wpfm-dboard-food-action">
 									<?php
 								$actions = array ();
 								switch ($food->post_status) {
@@ -85,7 +85,7 @@
 									if ($value ['nonce']) {
 										$action_url = wp_nonce_url ( $action_url, 'food_manager_my_food_actions' );
 									}
-									echo '<div class="wpem-dboard-food-act-btn"><a href="' . esc_url ( $action_url ) . '" class="food-dashboard-action-' . esc_attr ( $action ) . '" title="' . esc_html ( $value ['label'] ) . '" >' . esc_html ( $value ['label'] ) . '</a></div>';
+									echo '<div class="wpfm-dboard-food-act-btn"><a href="' . esc_url ( $action_url ) . '" class="food-dashboard-action-' . esc_attr ( $action ) . '" title="' . esc_html ( $value ['label'] ) . '" >' . esc_html ( $value ['label'] ) . '</a></div>';
 								}
 								?>
 								</div>		
@@ -104,7 +104,7 @@ elseif ('food_location' === $key) :
 						<?php
 
 elseif ('view_count' === $key) :
-								echo get_post_views_count ( $food );
+								echo get_food_views_count ( $food );
 								?>
 							<?php else : ?>
 								<?php do_action( 'food_manager_food_dashboard_column_' . $key, $food ); ?>

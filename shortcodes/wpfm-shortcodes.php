@@ -46,7 +46,7 @@ class WPFM_Shortcodes {
 		// 	add_shortcode( 'venue_dashboard', array( $this, 'venue_dashboard' ) );
 		// }
 		
-		// add_shortcode( 'foods', array( $this, 'output_foods' ) );
+		 add_shortcode( 'foods', array( $this, 'output_foods' ) );
 		// add_shortcode( 'food', array( $this, 'output_food' ) );
 		// add_shortcode( 'food_summary', array( $this, 'output_food_summary' ) );
 		// add_shortcode( 'past_foods', array( $this, 'output_past_foods' ) );
@@ -132,7 +132,7 @@ class WPFM_Shortcodes {
 
 						// Message
 
-						$this->food_dashboard_message = '<div class="food-manager-message wpem-alert wpem-alert-success">' . sprintf( __( '%s has been cancelled', 'wp-food-manager' ), esc_html( $food->post_title ) ) . '</div>';
+						$this->food_dashboard_message = '<div class="food-manager-message wpfm-alert wpfm-alert-success">' . sprintf( __( '%s has been cancelled', 'wp-food-manager' ), esc_html( $food->post_title ) ) . '</div>';
 
 						break;
 
@@ -149,7 +149,7 @@ class WPFM_Shortcodes {
 						update_post_meta( $food_id, '_cancelled', 0 );
 						
 						// Message
-						$this->food_dashboard_message = '<div class="food-manager-message wpem-alert wpem-alert-success">' . sprintf( __( '%s has been marked as not cancelled', 'wp-food-manager' ), esc_html( $food->post_title ) ) . '</div>';
+						$this->food_dashboard_message = '<div class="food-manager-message wpfm-alert wpfm-alert-success">' . sprintf( __( '%s has been marked as not cancelled', 'wp-food-manager' ), esc_html( $food->post_title ) ) . '</div>';
 
 						break;
 
@@ -159,7 +159,7 @@ class WPFM_Shortcodes {
 						wp_trash_post( $food_id );
 
 						// Message
-						$this->food_dashboard_message = '<div class="food-manager-message wpem-alert wpem-alert-danger">' . sprintf( __( '%s has been deleted', 'wp-food-manager' ), esc_html( $food->post_title ) ) . '</div>';
+						$this->food_dashboard_message = '<div class="food-manager-message wpfm-alert wpfm-alert-danger">' . sprintf( __( '%s has been deleted', 'wp-food-manager' ), esc_html( $food->post_title ) ) . '</div>';
 
 						break;
 					case 'duplicate' :
@@ -195,7 +195,7 @@ class WPFM_Shortcodes {
 
 			} catch ( Exception $e ) {
 
-				$this->food_dashboard_message = '<div class="food-manager-error wpem-alert wpem-alert-danger">' . $e->getMessage() . '</div>';
+				$this->food_dashboard_message = '<div class="food-manager-error wpfm-alert wpfm-alert-danger">' . $e->getMessage() . '</div>';
 			}
 		}
 	}
@@ -220,7 +220,7 @@ class WPFM_Shortcodes {
 
 		), $atts ) );
 
-		wp_enqueue_script( 'wp-food-manager-food-dashboard' );
+		wp_enqueue_script( 'wpfm-food-dashboard' );
 
 		ob_start();
 
@@ -317,7 +317,7 @@ class WPFM_Shortcodes {
 						wp_trash_post( $organizer_id );
 
 						// Message
-						$this->organizer_dashboard_message = '<div class="food-manager-message wpem-alert wpem-alert-danger">' . sprintf( __( '%s has been deleted', 'wp-food-manager' ), esc_html( $food->post_title ) ) . '</div>';
+						$this->organizer_dashboard_message = '<div class="food-manager-message wpfm-alert wpfm-alert-danger">' . sprintf( __( '%s has been deleted', 'wp-food-manager' ), esc_html( $food->post_title ) ) . '</div>';
 
 						break;
 					case 'duplicate' :
@@ -354,7 +354,7 @@ class WPFM_Shortcodes {
 
 			} catch ( Exception $e ) {
 
-				$this->organizer_dashboard_message = '<div class="food-manager-error wpem-alert wpem-alert-danger">' . $e->getMessage() . '</div>';
+				$this->organizer_dashboard_message = '<div class="food-manager-error wpfm-alert wpfm-alert-danger">' . $e->getMessage() . '</div>';
 			}
 		}
 	}
@@ -475,7 +475,7 @@ class WPFM_Shortcodes {
 						wp_trash_post( $venue_id );
 
 						// Message
-						$this->venue_dashboard_message = '<div class="food-manager-message wpem-alert wpem-alert-danger">' . sprintf( __( '%s has been deleted', 'wp-food-manager' ), esc_html( $venue->post_title ) ) . '</div>';
+						$this->venue_dashboard_message = '<div class="food-manager-message wpfm-alert wpfm-alert-danger">' . sprintf( __( '%s has been deleted', 'wp-food-manager' ), esc_html( $venue->post_title ) ) . '</div>';
 
 						break;
 					case 'duplicate' :
@@ -512,7 +512,7 @@ class WPFM_Shortcodes {
 
 			} catch ( Exception $e ) {
 
-				$this->venue_dashboard_message = '<div class="food-manager-error wpem-alert wpem-alert-danger">' . $e->getMessage() . '</div>';
+				$this->venue_dashboard_message = '<div class="food-manager-error wpfm-alert wpfm-alert-danger">' . $e->getMessage() . '</div>';
 			}
 		}
 	}
@@ -626,8 +626,7 @@ class WPFM_Shortcodes {
 
 			'show_food_types'          => true,
 
-			'show_ticket_prices'        => true,
-
+			
 			'show_category_multiselect' => get_option( 'food_manager_enable_default_category_multiselect', false ),
 
 			'show_food_type_multiselect' => get_option( 'food_manager_enable_default_food_type_multiselect', false ),
@@ -642,8 +641,6 @@ class WPFM_Shortcodes {
 
 			'food_types'               => '',
 
-			'ticket_prices'             => '',
-
 			'featured'                  => null, // True to show only featured, false to hide featured, leave null to show both.
 
 			'cancelled'                 => null, // True to show only cancelled, false to hide cancelled, leave null to show both/use the settings.
@@ -654,15 +651,11 @@ class WPFM_Shortcodes {
 
 			'keywords'                  => '',
 
-			'selected_datetime'         => '',
-
 			'selected_category'         => '',
 
 			'selected_food_type'       => '',
 
-			'selected_ticket_price'      => '',
-		    
-		    'layout_type'      => 'all',
+			'layout_type'      => 'all',
 
 		) ), $atts ) );
 
@@ -722,24 +715,18 @@ class WPFM_Shortcodes {
 
 			$cancelled = ( is_bool( $cancelled ) && $cancelled ) || in_array( $cancelled, array( '1', 'true', 'yes' ) ) ? true : false;
 		}
+
 		
-		//set value for the food datetimes
-
-		$datetimes=WP_food_Manager_Filters::get_datetimes_filter();
-
-		//Set value for the ticket prices		
-
-		$ticket_prices	=	WP_food_Manager_Filters::get_ticket_prices_filter();
 
 		// Array handling
 
-		$datetimes            = is_array( $datetimes) ? $datetimes: array_filter( array_map( 'trim', explode( ',', $datetimes) ) );		
+	
 
 		$categories           = is_array( $categories ) ? $categories : array_filter( array_map( 'trim', explode( ',', $categories ) ) );
 
 		$food_types          = is_array( $food_types ) ? $food_types : array_filter( array_map( 'trim', explode( ',', $food_types ) ) );
 
-		$ticket_prices        = is_array( $ticket_prices) ? $ticket_prices: array_filter( array_map( 'trim', explode( ',', $ticket_prices) ) );
+	
 
 		// Get keywords, location, datetime, category, food type and ticket price from query string if set
 
@@ -783,10 +770,7 @@ class WPFM_Shortcodes {
 
 										'order' => $order, 
 
-										'datetimes' => $datetimes,
-
-										'selected_datetime' => $selected_datetime , 
-
+										
 										'show_categories' => $show_categories, 
 
 										'show_category_multiselect' => $show_category_multiselect,
@@ -805,9 +789,8 @@ class WPFM_Shortcodes {
 
 										'show_ticket_prices' => $show_ticket_prices ,
 
-										'ticket_prices' => $ticket_prices, 
-
-										'selected_ticket_price' => $selected_ticket_price , 
+										
+							
 
 										'atts' => $atts, 
 
@@ -818,6 +801,7 @@ class WPFM_Shortcodes {
 									      ));
 
 			get_food_manager_template( 'food-listings-start.php',array('layout_type'=>$layout_type) );
+			
 
 			get_food_manager_template( 'food-listings-end.php' );
 
@@ -868,7 +852,7 @@ class WPFM_Shortcodes {
 
 				<?php if ( $foods->found_posts > $per_page && $show_more ) : ?>
 
-					<?php wp_enqueue_script( 'wp-food-manager-ajax-filters' ); ?>
+					<?php wp_enqueue_script( 'wpfm-ajax-filters' ); ?>
 
 					<?php if ( $show_pagination ) : ?>
 
@@ -909,7 +893,6 @@ class WPFM_Shortcodes {
 
 			'order'           => $order,
 
-			'datetimes'       => $selected_datetime,
 
 			'categories'      => !empty($selected_category) ? implode( ',', $selected_category ) : '',
 
@@ -933,9 +916,9 @@ class WPFM_Shortcodes {
 			$data_attributes_string .= 'data-' . esc_attr( $key ) . '="' . esc_attr( $value ) . '" ';
 		}
 		
-		$food_managers_output = apply_filters( 'food_manager_food_managers_output', ob_get_clean() );
+		$food_managers_output = apply_filters( 'wpfm_food_managers_output', ob_get_clean() );
 
-		return '<div class="food_managers" ' . $data_attributes_string . '>' . $food_managers_output . '</div>';
+		return '<div class="food_listings" ' . $data_attributes_string . '>' . $food_managers_output . '</div>';
 	}
 
 	/**
@@ -963,7 +946,7 @@ class WPFM_Shortcodes {
 
 			if(isset($organizer_url) && !empty($organizer_url))
 			{
-				printf( '<div class="wpem-organizer-page-url-button"><a href="%s" class="wpem-theme-button"><span>%s</span></a></div>',  get_permalink( $organizer_id ), __( 'More info', 'wp-food-manager' ) );	
+				printf( '<div class="wpfm-organizer-page-url-button"><a href="%s" class="wpfm-theme-button"><span>%s</span></a></div>',  get_permalink( $organizer_id ), __( 'More info', 'wp-food-manager' ) );	
 			}
 		}
 	}
@@ -1255,7 +1238,7 @@ class WPFM_Shortcodes {
 		wp_reset_query();
 
 		if ( $past_foods->have_posts() ) : ?>
-			<div id="food-listing-view" class="wpem-main wpem-food-listings food_managers wpem-food-listing-list-view">	
+			<div id="food-listing-view" class="wpfm-main wpfm-food-listings food_managers wpfm-food-listing-list-view">	
 			<?php while ( $past_foods->have_posts() ) : $past_foods->the_post(); ?>
 
 				<?php  get_food_manager_template_part( 'content', 'past_food_manager' ); ?>
@@ -1309,7 +1292,7 @@ class WPFM_Shortcodes {
         	}
         }        
          
-		wp_enqueue_script( 'wp-food-manager-organizer');
+		//wp_enqueue_script( 'wp-food-manager-organizer');
         
         get_food_manager_template( 
       		'food-organizers.php', 
