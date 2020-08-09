@@ -289,19 +289,19 @@ function get_food_views_count($post)
 
 
 /**
- * display_event_type function.
+ * display_food_type function.
  *
  * @access public
  * @return void
  */
 function display_food_type( $post = null, $after = '') {
 
-	if ( $event_type = get_event_type( $post ) ) {
-		if (! empty( $event_type ) ) {
-		    $numType = count($event_type);
+	if ( $food_type = get_food_type( $post ) ) {
+		if (! empty( $food_type ) ) {
+		    $numType = count($food_type);
 		    $i = 0;
-			foreach ( $event_type as $type ) {
-				echo '<span class="wpem-event-type-text event-type '. esc_attr( sanitize_title( $type->slug ) ).' ">'. $type->name.'</span>';
+			foreach ( $food_type as $type ) {
+				echo '<span class="wpem-food-type-text food-type '. esc_attr( sanitize_title( $type->slug ) ).' ">'. $type->name.'</span>';
 				if($numType > ++$i){
 				    echo $after;
 				}
@@ -311,7 +311,7 @@ function display_food_type( $post = null, $after = '') {
 }
 
 /**
- * get_event_type function.
+ * get_food_type function.
  *
  * @access public
  * @param mixed $post (default: null)
@@ -321,14 +321,14 @@ function get_food_type( $post = null ) {
 
 	$post = get_post( $post );
 
-	if ( $post->post_type !== 'food_manager' || !get_option( 'food_manager_enable_event_types' ) ) {
+	if ( $post->post_type !== 'food_manager' || !get_option( 'food_manager_enable_food_types' ) ) {
 		return;
 	}
 
 	$types = wp_get_post_terms( $post->ID, 'food_manager_type' );
 
 	// Return single if not enabled.
-	if ( ! empty( $types ) && ! event_manager_multiselect_event_type() ) {
+	if ( ! empty( $types ) ) {
 		$types = array( current( $types ) );
 	}
 	if(empty($types))
@@ -336,19 +336,19 @@ function get_food_type( $post = null ) {
 	return apply_filters( 'display_food_type', $types, $post );
 }
 /**
- * display_event_category function.
+ * display_food_category function.
  *
  * @access public
  * @return void
  */
 function display_food_category( $post = null, $after = '' ) {
 
-	if ( $event_category = get_food_category( $post ) ) {
+	if ( $food_category = get_food_category( $post ) ) {
 
-		if (! empty( $event_category ) ) {
-		    $numCategory = count($event_category);
+		if (! empty( $food_category ) ) {
+		    $numCategory = count($food_category);
 		    $i = 0;
-			foreach ( $event_category as $cat ) {
+			foreach ( $food_category as $cat ) {
 				echo '<span class="event-category '. esc_attr( sanitize_title( $cat->slug ) ).' ">'. $cat->name.'</span>';
 				if($numCategory > ++$i){
 				    echo $after;
@@ -359,7 +359,7 @@ function display_food_category( $post = null, $after = '' ) {
 }
 
 /**
- * get_event_category function.
+ * get_food_category function.
  *
  * @access public
  * @param mixed $post (default: null)
@@ -393,7 +393,7 @@ function display_food_permalink( $post = null ) {
 }
 
 /**
- * get_event_permalink function
+ * get_food_permalink function
  *
  * @access public
  * @param mixed $post (default: null)
@@ -410,7 +410,7 @@ function get_food_permalink( $post = null ) {
 
 
 /**
- * event_listing_class function.
+ * food_manager_class function.
  *
  * @access public
  * @param string $class (default: '')
@@ -425,7 +425,7 @@ function food_manager_class( $class = '', $post_id = null ) {
 }
 
 /**
- * get_event_listing_class function.
+ * get_food_listing_class function.
  *
  * @access public
  * @return array
@@ -446,10 +446,10 @@ function get_food_manager_class( $class = '', $post_id = null ) {
 
 	$classes[] = 'food_manager';
 
-	if ( $event_type = get_food_type() ) {
+	if ( $food_type = get_food_type() ) {
 
-		if ( $event_type && ! empty( $event_type ) ) {
-			foreach ( $event_type as $type ) {
+		if ( $food_type && ! empty( $food_type ) ) {
+			foreach ( $food_type as $type ) {
 				$classes[] = 'food-type-' . sanitize_title( $type->name );
 			}
 		}

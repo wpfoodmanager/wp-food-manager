@@ -888,7 +888,7 @@ endif;
 
 
 /**
- * Filters the upload dir when $event_manager_upload is true
+ * Filters the upload dir when $food_manager_upload is true
  * @param  array $pathdata
  * @return array
  */
@@ -1096,7 +1096,7 @@ function wpfm_get_allowed_mime_types( $field = '' ){
 
 
 /**
- * True if only one type allowed per event
+ * True if only one type allowed per food
  *
  * @return bool
  */

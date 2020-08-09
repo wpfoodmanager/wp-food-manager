@@ -37,11 +37,6 @@ class WPFM_Writepanels {
 	public function __construct() {
 
 		add_action( 'add_meta_boxes', array( $this, 'add_meta_boxes' ) );
-		// add_action( 'save_post', array( $this, 'save_post' ), 1, 2 );
-		// add_action( 'event_manager_save_event_listing', array( $this, 'save_event_listing_data' ), 20, 2 );
-
-		// add_action( 'event_manager_save_organizer_listing', array( $this, 'save_organizer_listing_data' ), 20, 2 );
-		// add_action( 'event_manager_save_venue_listing', array( $this, 'save_venue_listing_data' ), 20, 2 );
 	}
 
 
@@ -55,20 +50,10 @@ class WPFM_Writepanels {
 		global $wp_post_types;
 		
 		add_meta_box( 'food_manager_data', sprintf( __( '%s Data', 'wp-food-manager' ), $wp_post_types['food_manager']->labels->singular_name ), array( $this, 'food_manager_data' ), 'food_manager', 'normal', 'high' );
-		//array( $this, 'food_manager_data' )
-		// if ( ! get_option( 'food_manager_enable_food_ingredient' ) ) {
-		// 	remove_meta_box( 'food_manager_typediv', 'food_manager', 'side');
-		// } elseif ( false == food_manager_multiselect_food_ingredient() ) {
-		// 	remove_meta_box( 'food_manager_typediv', 'food_manager', 'side');
-		// 	$food_manager_ingredient = get_taxonomy( 'food_manager_ingredient' );
-		// 	add_meta_box( 'food_manager_ingredient', $food_manager_ingredient->labels->menu_name, array( $this, 'food_manager_metabox' ),'food_manager' ,'side','core');
-		// }
-
-		//add more meta box here
 	}
 
 	/**
-	 * event_listing_data function.
+	 * food_manager_data function.
 	 *
 	 * @access public
 	 * @param mixed $post
@@ -135,7 +120,7 @@ class WPFM_Writepanels {
 	}
 
 
-		/**
+	/**
 	 * Return array of tabs to show.
 	 *
 	 * @return array
@@ -150,18 +135,18 @@ class WPFM_Writepanels {
 					'class'    => array( '' ),
 					'priority' => 1,
 				),
-				'ingredient'      => array(
-					'label'    => __( 'Ingredients', 'wp-food-manager' ),
-					'target'   => 'ingredient_food_data_content',
-					'class'    => array( '' ),
-					'priority' => 2,
-				),
-				'neutritions'       => array(
-					'label'    => __( 'Neutritions', 'wp-food-manager' ),
-					'target'   => 'neutritions_food_data_content',
-					'class'    => array( '' ),
-					'priority' => 3,
-				),
+				// 'ingredient'      => array(
+				// 	'label'    => __( 'Ingredients', 'wp-food-manager' ),
+				// 	'target'   => 'ingredient_food_data_content',
+				// 	'class'    => array( '' ),
+				// 	'priority' => 2,
+				// ),
+				// 'neutritions'       => array(
+				// 	'label'    => __( 'Neutritions', 'wp-food-manager' ),
+				// 	'target'   => 'neutritions_food_data_content',
+				// 	'class'    => array( '' ),
+				// 	'priority' => 3,
+				// ),
 				
 			)
 		);
@@ -183,65 +168,9 @@ class WPFM_Writepanels {
 	}
 
 
+
 	/**
-	 * event_listing_fields function.
-	 *
-	 * @access public
-	 * @return void
-	 */
-	public function food_ingredient_fields() {	    
-		global $post;
-		$current_user = wp_get_current_user();
-		
-		
-		$GLOBALS['food_manager']->forms->get_form( 'submit-food', array() );
-		$form_submit_food_instance = call_user_func( array( 'WPFM_Form_Submit_Food', 'instance' ) );
-		$fields = $form_submit_food_instance->merge_with_custom_fields('backend');
-		
-		/** add _ (prefix) for all backend fields. 
-		* 	Field editor will only return fields without _(prefix).
-		**/
-		foreach ($fields as $group_key => $group_fields) {
-			foreach ($group_fields as $field_key => $field_value) {
-				
-				if( strpos($field_key, '_') !== 0 ) {
-					$fields['_'.$field_key]  = $field_value;	
-				}else{
-					$fields[$field_key]  = $field_value;	
-				}
-			}
-			unset($fields[$group_key]);
-		}
-		$fields = apply_filters( 'food_manager_food_data_fields', $fields );
-
-		if(isset($fields['_food_title']))
-			unset($fields['_food_title']);
-
-		if(isset( $fields['_food_description'] )) 
-			unset($fields['_food_description']);
-		
-		if ( $current_user->has_cap( 'manage_food_managers' ) ) {
-			$fields['_featured'] = array(
-				'label'       => __( 'Featured Listing', 'wp-food-manager' ),
-				'type'        => 'checkbox',
-				'description' => __( 'Featured listings will be sticky during searches, and can be styled differently.', 'wp-food-manager' ),
-				'priority'    => 39
-			);
-		}
-
-		if ( $current_user->has_cap( 'edit_others_food_managers' ) ) {
-			$fields['_food_author'] = array(
-				'label'    => __( 'Posted by', 'wp-food-manager' ),
-				'type'     => 'author',
-				'priority' => 41
-			);
-		}
-
-		uasort( $fields, array( $this, 'sort_by_priority' ) );
-		return $fields;
-	}
-	/**
-	 * event_listing_fields function.
+	 * food_listing_fields function.
 	 *
 	 * @access public
 	 * @return void
@@ -333,15 +262,15 @@ class WPFM_Writepanels {
 			<?php
 			if ( ! empty( $field['multiple'] ) ) {
 				foreach ( (array) $field['value'] as $value ) {
-					?><span class="file_url"><input type="text" name="<?php echo esc_attr( $name ); ?>[]" placeholder="<?php echo esc_attr( $field['placeholder'] ); ?>" value="<?php echo esc_attr( $value ); ?>" /><button class="button button-small wp_event_manager_upload_file_button" data-uploader_button_text="<?php _e( 'Use file', 'wp-event-manager' ); ?>"><?php _e( 'Upload', 'wp-event-manager' ); ?></button></span><?php
+					?><span class="file_url"><input type="text" name="<?php echo esc_attr( $name ); ?>[]" placeholder="<?php echo esc_attr( $field['placeholder'] ); ?>" value="<?php echo esc_attr( $value ); ?>" /><button class="button button-small wp_food_manager_upload_file_button" data-uploader_button_text="<?php _e( 'Use file', 'wp-food-manager' ); ?>"><?php _e( 'Upload', 'wp-food-manager' ); ?></button></span><?php
 				}
 			} else {
 				if(isset($field['value']) && is_array($field['value']) )
 					$field['value'] = array_shift($field['value']);
-				?><span class="file_url"><input type="text" name="<?php echo esc_attr( $name ); ?>" id="<?php echo esc_attr( $key ); ?>" placeholder="<?php echo esc_attr( $field['placeholder'] ); ?>" value="<?php echo esc_attr( $field['value'] ); ?>" /><button class="button button-small wp_event_manager_upload_file_button" data-uploader_button_text="<?php _e( 'Use file', 'wp-event-manager' ); ?>"><?php _e( 'Upload', 'wp-event-manager' ); ?></button></span><?php
+				?><span class="file_url"><input type="text" name="<?php echo esc_attr( $name ); ?>" id="<?php echo esc_attr( $key ); ?>" placeholder="<?php echo esc_attr( $field['placeholder'] ); ?>" value="<?php echo esc_attr( $field['value'] ); ?>" /><button class="button button-small wp_food_manager_upload_file_button" data-uploader_button_text="<?php _e( 'Use file', 'wp-food-manager' ); ?>"><?php _e( 'Upload', 'wp-food-manager' ); ?></button></span><?php
 			}
 			if ( ! empty( $field['multiple'] ) ) {
-				?><button class="button button-small wp_event_manager_add_another_file_button" data-field_name="<?php echo esc_attr( $key ); ?>" data-field_placeholder="<?php echo esc_attr( $field['placeholder'] ); ?>" data-uploader_button_text="<?php _e( 'Use file', 'wp-event-manager' ); ?>" data-uploader_button="<?php _e( 'Upload', 'wp-event-manager' ); ?>"><?php _e( 'Add file', 'wp-event-manager' ); ?></button><?php
+				?><button class="button button-small wp_food_manager_add_another_file_button" data-field_name="<?php echo esc_attr( $key ); ?>" data-field_placeholder="<?php echo esc_attr( $field['placeholder'] ); ?>" data-uploader_button_text="<?php _e( 'Use file', 'wp-food-manager' ); ?>" data-uploader_button="<?php _e( 'Upload', 'wp-food-manager' ); ?>"><?php _e( 'Add file', 'wp-food-manager' ); ?></button><?php
 			}
 			?>
 		</p>
@@ -400,35 +329,7 @@ class WPFM_Writepanels {
 			<?php
 		}
 	
-	/**
-	 * input_date function.
-	 *
-	 * @param mixed $key
-	 * @param mixed $field
-	 */
-	public static function input_date( $key, $field ) {
-	    global $thepostid;
-	    if ( ! isset( $field['value'] ) ) {
-	        $date = get_post_meta( $thepostid, $key, true );
-	        if(!empty($date)){
-	        	$datepicker_date_format = WP_Event_Manager_Date_Time::get_datepicker_format();
-				$php_date_format = WP_Event_Manager_Date_Time::get_view_date_format_from_datepicker_date_format($datepicker_date_format );
-				$date = date($php_date_format,strtotime($date));
-				$field['value'] = $date;
-	        }
-	    }
-	    if ( ! empty( $field['name'] ) ) {
-	        $name = $field['name'];
-	    } else {
-	        $name = $key;
-	    }
-	    ?>
-		<p class="form-field">
-			<label for="<?php echo esc_attr( $key ); ?>"><?php echo esc_html( $field['label'] ) ; ?>: <?php if ( ! empty( $field['description'] ) ) : ?><span class="tips" data-tip="<?php echo esc_attr( $field['description'] ); ?>">[?]</span><?php endif; ?></label>
-			<input type="text" name="<?php echo esc_attr( $name ); ?>" id="<?php echo esc_attr( $key ); ?>" placeholder="<?php echo esc_attr( $field['placeholder'] ); ?>" value="<?php if( isset($field['value']) ) echo esc_attr( $field['value'] ); ?>" data-picker="datepicker" />
-		</p>
-		<?php
-	}
+	
 
 	/**
 	 * input_text function.
@@ -589,7 +490,7 @@ class WPFM_Writepanels {
 		}	
 		
 	/**
-	 * Box to choose who posted the event
+	 * Box to choose who posted the food
 	 *
 	 * @param mixed $key
 	 * @param mixed $field
@@ -613,13 +514,13 @@ class WPFM_Writepanels {
 					if ( $posted_by ) {
 						echo '<a href="' . admin_url( 'user-edit.php?user_id=' . absint( $author_id ) ) . '">#' . absint( $author_id ) . ' &ndash; ' . $posted_by->user_login . '</a>';
 					} else {
-						 _e( 'Guest User', 'wp-event-manager' );
+						 _e( 'Guest User', 'wp-food-manager' );
 					}
-				?> <a href="#" class="change-author button button-small"><?php _e( 'Change', 'wp-event-manager' ); ?></a>
+				?> <a href="#" class="change-author button button-small"><?php _e( 'Change', 'wp-food-manager' ); ?></a>
 			</span>
 			<span class="hidden change-author">
 				<input type="number" name="<?php echo esc_attr( $name ); ?>" id="<?php echo esc_attr( $key ); ?>" step="1" value="<?php echo esc_attr( $author_id ); ?>" style="width: 4em;" />
-				<span class="description"><?php _e( 'Enter the ID of the user, or leave blank if submitted by a guest.', 'wp-event-manager' ) ?></span>
+				<span class="description"><?php _e( 'Enter the ID of the user, or leave blank if submitted by a guest.', 'wp-food-manager' ) ?></span>
 			</span>
 		</p>
 		<?php

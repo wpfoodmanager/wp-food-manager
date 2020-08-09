@@ -1652,7 +1652,7 @@ class WPFM_Post_Types {
 		}
 	}
 
-		/**
+	/**
 	 * Retrieves permalink settings.
 	 *
 	 * @see https://github.com/woocommerce/woocommerce/blob/3.0.8/includes/wc-core-functions.php#L1573
