@@ -169,7 +169,7 @@ do_action('set_single_listing_view_count');
                 </div>
 
                 <?php
-                get_food_manager_template_part('content', 'single-food_listing-organizer');
+               // get_food_manager_template_part('content', 'single-food_listing-organizer');
                 /**
                  * single_food_listing_end hook
                  */

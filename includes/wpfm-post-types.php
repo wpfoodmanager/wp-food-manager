@@ -37,6 +37,13 @@ class WPFM_Post_Types {
 		add_filter( 'admin_head', array( $this, 'admin_head' ) );
 
 		add_filter( 'the_content', array( $this, 'food_content' ) );
+
+		add_filter('use_block_editor_for_post_type', array($this,'wpfm_disable_gutenberg'), 10, 2);
+
+
+
+
+
 		// add_filter( 'the_content', array( $this, 'neutritions_content' ) );
 	
 		// add_action( 'food_manager_check_for_expired_foods', array( $this, 'check_for_expired_foods' ) );
@@ -97,13 +104,11 @@ class WPFM_Post_Types {
 		$admin_capability = 'manage_food_managers';
 		$permalink_structure = WPFM_Post_Types::get_permalink_structure();
 
-
-
 		/**
 		 * Taxonomies
 		 */
 
-		//if ( get_option( 'food_manager_enable_categories' ,true) ) {
+		if ( get_option( 'food_manager_enable_categories' ,true) ) {
 
 			$singular  = __( 'Food category', 'wp-food-manager' );
 
@@ -169,7 +174,7 @@ class WPFM_Post_Types {
 
 		            'show_ui' 				=> true,
 	       	 		'show_in_rest'          => true,
-
+	       	 		'hierarchical'        => false, // Hierarchical causes memory issues
 		            'public' 	     		=> $public,
 
 		            'capabilities'			=> array(
@@ -190,13 +195,13 @@ class WPFM_Post_Types {
 
 		    );
 
-		//}
+		}
 
-		//if ( get_option( 'food_manager_enable_food_types' ,true) ) {
+		if ( get_option( 'food_manager_enable_food_types' ,true) ) {
 
 		        $singular  = __( 'Food type', 'wp-food-manager' );
 
-				$plural    = __( 'Food types', 'wp-food-manager' );
+				$plural    = __( 'Food type', 'wp-food-manager' );
 
 			if ( current_theme_supports( 'food-manager-templates' ) ) {
 
@@ -222,9 +227,9 @@ class WPFM_Post_Types {
 
 			register_taxonomy( "food_manager_type",
 
-			apply_filters( 'register_taxonomy_food_manager_type_object_type', array( 'food_manager' ) ),
+			apply_filters( 'register_taxonomy_food_manager_types_object_type', array( 'food_manager' ) ),
 
-		        apply_filters( 'register_taxonomy_food_manager_type_args', array(
+		        apply_filters( 'register_taxonomy_food_manager_types_args', array(
 
 		            'hierarchical' 			=> true,
 
@@ -275,7 +280,263 @@ class WPFM_Post_Types {
 		           'rewrite' 				=> $rewrite,
 		        ) )
 		    );
-	  //   //}
+	  }
+
+
+	if ( get_option( 'food_manager_enable_food_ingredients' ,true) ) {
+
+		        $singular  = __( 'Food ingredient', 'wp-food-manager' );
+
+				$plural    = __( 'Food ingredients', 'wp-food-manager' );
+
+			if ( current_theme_supports( 'food-manager-templates' ) ) {
+
+				$rewrite   = array(
+
+					'slug'         => $permalink_structure['type_rewrite_slug'],
+
+					'with_front'   => false,
+
+					'hierarchical' => false
+
+				);
+
+				$public    = true;
+
+			} else {
+
+				$rewrite   = false;
+
+				$public    = false;
+
+			}
+
+			register_taxonomy( "food_manager_ingredient",
+
+			apply_filters( 'register_taxonomy_food_manager_ingredients_object_type', array( 'food_manager' ) ),
+
+		        apply_filters( 'register_taxonomy_food_manager_ingredients_args', array(
+
+		            'hierarchical' 			=> true,
+
+		            'label' 				=> $plural,
+
+		            'labels' => array(
+
+	                    'name' 				=> $plural,
+
+	                    'singular_name' 	=> $singular,
+
+	                    'menu_name'         => ucwords( $plural ),
+
+	                    'search_items' 		=> sprintf( __( 'Search %s', 'wp-food-manager' ), $plural ),
+
+	                    'all_items' 		=> sprintf( __( 'All %s', 'wp-food-manager' ), $plural ),
+
+	                    'parent_item' 		=> sprintf( __( 'Parent %s', 'wp-food-manager' ), $singular ),
+
+	                    'parent_item_colon' => sprintf( __( 'Parent %s:', 'wp-food-manager' ), $singular ),
+
+	                    'edit_item' 		=> sprintf( __( 'Edit %s', 'wp-food-manager' ), $singular ),
+
+	                    'update_item' 		=> sprintf( __( 'Update %s', 'wp-food-manager' ), $singular ),
+
+	                    'add_new_item' 		=> sprintf( __( 'Add New %s', 'wp-food-manager' ), $singular ),
+
+	                    'new_item_name' 	=> sprintf( __( 'New %s Name', 'wp-food-manager' ),  $singular )
+	            	),
+
+		            'show_ui' 				=> true,
+		        		
+		        	'show_in_rest'          => true,
+
+		            'public' 			    => $public,
+
+		            'capabilities'			=> array(
+
+		            	'manage_terms' 		=> $admin_capability,
+
+		            	'edit_terms' 		=> $admin_capability,
+
+		            	'delete_terms' 		=> $admin_capability,
+
+		            	'assign_terms' 		=> $admin_capability,
+		            ),
+
+		           'rewrite' 				=> $rewrite,
+		        ) )
+		    );
+	 }
+
+	if ( get_option( 'food_manager_enable_food_neutritions' ,true) ) {
+
+		        $singular  = __( 'Food neutrition', 'wp-food-manager' );
+
+				$plural    = __( 'Food neutritions', 'wp-food-manager' );
+
+			if ( current_theme_supports( 'food-manager-templates' ) ) {
+
+				$rewrite   = array(
+
+					'slug'         => $permalink_structure['type_rewrite_slug'],
+
+					'with_front'   => false,
+
+					'hierarchical' => false
+
+				);
+
+				$public    = true;
+
+			} else {
+
+				$rewrite   = false;
+
+				$public    = false;
+
+			}
+
+			register_taxonomy( "food_manager_neutrition",
+
+			apply_filters( 'register_taxonomy_food_manager_neutritions_object_type', array( 'food_manager' ) ),
+
+		        apply_filters( 'register_taxonomy_food_manager_neutritions_args', array(
+
+		            'hierarchical' 			=> true,
+
+		            'label' 				=> $plural,
+
+		            'labels' => array(
+
+	                    'name' 				=> $plural,
+
+	                    'singular_name' 	=> $singular,
+
+	                    'menu_name'         => ucwords( $plural ),
+
+	                    'search_items' 		=> sprintf( __( 'Search %s', 'wp-food-manager' ), $plural ),
+
+	                    'all_items' 		=> sprintf( __( 'All %s', 'wp-food-manager' ), $plural ),
+
+	                    'parent_item' 		=> sprintf( __( 'Parent %s', 'wp-food-manager' ), $singular ),
+
+	                    'parent_item_colon' => sprintf( __( 'Parent %s:', 'wp-food-manager' ), $singular ),
+
+	                    'edit_item' 		=> sprintf( __( 'Edit %s', 'wp-food-manager' ), $singular ),
+
+	                    'update_item' 		=> sprintf( __( 'Update %s', 'wp-food-manager' ), $singular ),
+
+	                    'add_new_item' 		=> sprintf( __( 'Add New %s', 'wp-food-manager' ), $singular ),
+
+	                    'new_item_name' 	=> sprintf( __( 'New %s Name', 'wp-food-manager' ),  $singular )
+	            	),
+
+		            'show_ui' 				=> true,
+		        		
+		        	'show_in_rest'          => true,
+
+		            'public' 			    => $public,
+
+		            'capabilities'			=> array(
+
+		            	'manage_terms' 		=> $admin_capability,
+
+		            	'edit_terms' 		=> $admin_capability,
+
+		            	'delete_terms' 		=> $admin_capability,
+
+		            	'assign_terms' 		=> $admin_capability,
+		            ),
+
+		           'rewrite' 				=> $rewrite,
+		        ) )
+		    );
+	}
+
+	if ( get_option( 'food_manager_enable_food_units' ,true) ) {
+
+		        $singular  = __( 'Unit', 'wp-food-manager' );
+
+				$plural    = __( 'Units', 'wp-food-manager' );
+
+			if ( current_theme_supports( 'food-manager-templates' ) ) {
+
+				$rewrite   = array(
+
+					'slug'         => $permalink_structure['type_rewrite_slug'],
+
+					'with_front'   => false,
+
+					'hierarchical' => false
+
+				);
+
+				$public    = true;
+
+			} else {
+
+				$rewrite   = false;
+
+				$public    = false;
+
+			}
+
+			register_taxonomy( "food_manager_unit",
+
+			apply_filters( 'register_taxonomy_food_manager_units_object_type', array( 'food_manager' ) ),
+
+		        apply_filters( 'register_taxonomy_food_manager_units_args', array(
+
+		            'hierarchical' 			=> true,
+
+		            'label' 				=> $plural,
+
+		            'labels' => array(
+
+	                    'name' 				=> $plural,
+
+	                    'singular_name' 	=> $singular,
+
+	                    'menu_name'         => ucwords( $plural ),
+
+	                    'search_items' 		=> sprintf( __( 'Search %s', 'wp-food-manager' ), $plural ),
+
+	                    'all_items' 		=> sprintf( __( 'All %s', 'wp-food-manager' ), $plural ),
+
+	                    'parent_item' 		=> sprintf( __( 'Parent %s', 'wp-food-manager' ), $singular ),
+
+	                    'parent_item_colon' => sprintf( __( 'Parent %s:', 'wp-food-manager' ), $singular ),
+
+	                    'edit_item' 		=> sprintf( __( 'Edit %s', 'wp-food-manager' ), $singular ),
+
+	                    'update_item' 		=> sprintf( __( 'Update %s', 'wp-food-manager' ), $singular ),
+
+	                    'add_new_item' 		=> sprintf( __( 'Add New %s', 'wp-food-manager' ), $singular ),
+
+	                    'new_item_name' 	=> sprintf( __( 'New %s Name', 'wp-food-manager' ),  $singular )
+	            	),
+
+		            'show_ui' 				=> true,
+		        		
+		        	'show_in_rest'          => true,
+
+		            'public' 			    => $public,
+
+		            'capabilities'			=> array(
+
+		            	'manage_terms' 		=> $admin_capability,
+
+		            	'edit_terms' 		=> $admin_capability,
+
+		            	'delete_terms' 		=> $admin_capability,
+
+		            	'assign_terms' 		=> $admin_capability,
+		            ),
+
+		           'rewrite' 				=> $rewrite,
+		        ) )
+		    );
+	   }
 
 
 
@@ -1423,5 +1684,16 @@ class WPFM_Post_Types {
 			restore_current_locale();
 		}
 		return $permalinks;
+	}
+
+/**
+* 
+* @param boolean
+* @param string
+* @since 1.0.0
+*/
+public function wpfm_disable_gutenberg($is_enabled, $post_type) {
+	if (apply_filters('wpfm_disable_gutenberg',true) && $post_type === 'food_manager') return false; 
+		return $is_enabled;
 	}
 }

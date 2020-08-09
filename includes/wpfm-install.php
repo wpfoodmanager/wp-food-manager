@@ -132,7 +132,7 @@ class WPFM_Install {
 	private static function get_default_taxonomy_terms() {
 		return array(
 
-			'food_manager_type' => array(
+			'food_manager_ingredient' => array(
 
 				'Appearance or Signing',
 
@@ -144,61 +144,18 @@ class WPFM_Install {
 
 				'Concert or Performance',
 
-				'Conference',
-
-				'Convention',
-
-				'Dinner or Gala',
-
-				'Festival or Fair',
-
-				'Game or Competition',
-
-				'Meeting or Networking Event',
-
-				'Other',
-
-				'Party or Social Gathering',
-				
-				'Race or Endurance Event',
-
-				'Rally',
-
-				'Screening',
-
-				'Seminar or Talk',
-
-				'Tour',
-
-				'Tournament',
-
-				'Tradeshow, Consumer Show or Expo'
 			),
 			'food_manager_category' => array(
 			
-					'Business & Professional',
+					'Appetizers/Starters',
 			
-					'Charity & Causes',
+					'Breakfast',
 			
-					'Community & Culture',
+					'Dessert',
 			
-					'Family & Education',
+					'Beverage',
 			
-					'Fashion & Beauty',
-			
-					'Film, Media & Entertainment',
-			
-					'Food & Drink',
-			
-					'Game or Competition',
-			
-					'Other',
-			
-					'Performing & Visual Arts',
-			
-					'Science & Technology',
-			
-					'Sports & Fitness'
+					'Main dishes',
 			)
 		);
 	}

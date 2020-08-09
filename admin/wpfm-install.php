@@ -133,72 +133,27 @@ class WPFM_Install {
 		return array(
 
 			'food_manager_type' => array(
+				'Vegeterian',
 
-				'Appearance or Signing',
+				'Non Vegesterian',
 
-				'Attraction',
-
-				'Camp, Trip, or Retreat',
-
-				'Class, Training, or Workshop',
-
-				'Concert or Performance',
-
-				'Conference',
-
-				'Convention',
-
-				'Dinner or Gala',
-
-				'Festival or Fair',
-
-				'Game or Competition',
-
-				'Meeting or Networking Event',
-
-				'Other',
-
-				'Party or Social Gathering',
-				
-				'Race or Endurance Event',
-
-				'Rally',
-
-				'Screening',
-
-				'Seminar or Talk',
-
-				'Tour',
-
-				'Tournament',
-
-				'Tradeshow, Consumer Show or Expo'
+				'Vegan',
 			),
 			'food_manager_category' => array(
 			
-					'Business & Professional',
-			
-					'Charity & Causes',
-			
-					'Community & Culture',
-			
-					'Family & Education',
-			
-					'Fashion & Beauty',
-			
-					'Film, Media & Entertainment',
-			
-					'Food & Drink',
-			
-					'Game or Competition',
-			
-					'Other',
-			
-					'Performing & Visual Arts',
-			
-					'Science & Technology',
-			
-					'Sports & Fitness'
+				'Appetizers/Starters',
+
+				'Breakfast',
+
+				'Dessert',
+
+				'Beverage',
+
+				'Main dishes',
+
+				'Soup',
+
+				'Salad',
 			)
 		);
 	}

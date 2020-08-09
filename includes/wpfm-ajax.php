@@ -237,7 +237,7 @@ class WPFM_Ajax {
 
 			<?php while ( $foods->have_posts() ) : $foods->the_post(); ?>
 
-				<?php get_food_manager_template_part( 'content', 'food_listing' ); ?>
+				<?php get_food_manager_template_part( 'content', 'food_manager' ); ?>
 
 			<?php endwhile; ?>
 
@@ -351,8 +351,6 @@ class WPFM_Ajax {
 		$search_values = array(
 				'location'   => $search_location,
 				'keywords'   => $search_keywords,
-				'datetimes'  => $search_datetimes,
-				'tickets'	 => $search_ticket_prices,
 				'types'		 => $search_food_types,
 				'categories' => $search_categories
 		);
@@ -368,13 +366,10 @@ class WPFM_Ajax {
 
 			'search_location'   => $search_location,
 
-			'search_datetimes' => $search_datetimes,
-
 			'search_categories' => $search_categories,
 
 			'search_food_types' => $search_food_types,
 
-			'search_ticket_prices' => $search_ticket_prices
 
 		) );
 		

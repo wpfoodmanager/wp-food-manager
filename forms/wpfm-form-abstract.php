@@ -507,11 +507,11 @@ abstract class WPFM_Form {
 
 			$file_urls       = array();
 
-			$files_to_upload = food_manager_prepare_uploaded_files( $_FILES[ $field_key ] );
+			$files_to_upload = wpfm_prepare_uploaded_files( $_FILES[ $field_key ] );
 
 			foreach ( $files_to_upload as $file_to_upload ) {
 
-				$uploaded_file = food_manager_upload_file( $file_to_upload, array( 'file_key' => $field_key ,'allowed_mime_types' => $allowed_mime_types) );
+				$uploaded_file = wpfm_upload_file( $file_to_upload, array( 'file_key' => $field_key ,'allowed_mime_types' => $allowed_mime_types) );
 
 				if ( is_wp_error( $uploaded_file ) ) {
 
@@ -563,12 +563,12 @@ abstract class WPFM_Form {
 		    unset($default_fields['food']['food_category']);
 		}
 		
-		if ( ! get_option( 'food_manager_enable_food_types' ) || (wp_count_terms( 'food_listing_type' ) == 0 && isset($custom_fields['food']['food_type'])) ) {
+		if ( ! get_option( 'food_manager_enable_food_ingredient' ) || (wp_count_terms( 'food_manager_ingredient' ) == 0 && isset($custom_fields['food']['food_ingredient'])) ) {
 			
-			if(isset( $custom_fields['food']['food_type']))
-			$custom_fields['food']['food_type']['visibility']=false;
+			if(isset( $custom_fields['food']['food_ingredient']))
+			$custom_fields['food']['food_ingredient']['visibility']=false;
 		    
-			unset($default_fields['food']['food_type']);
+			unset($default_fields['food']['food_ingredient']);
 		}
 		
 		if(!is_array($custom_fields )){

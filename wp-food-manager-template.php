@@ -254,11 +254,11 @@ function display_food_banner( $size = 'full', $default = null, $post = null ) {
 				
 			$banner = wpfm_get_resized_image( $banner, $size );
 		}
-		echo '<img itemprop="image" content="' . esc_attr( $banner ) . '" src="' . esc_attr( $banner ) . '" alt="' . esc_attr( get_organizer_name( $post ) ) . '" />';
+		echo '<img itemprop="image" content="' . esc_attr( $banner ) . '" src="' . esc_attr( $banner ) . '" alt="" />';
 
 	} else if ( $default ) {
 
-		echo '<img itemprop="image" content="' . esc_attr( $default ) . '" src="' . esc_attr( $default ) . '" alt="' . esc_attr( get_organizer_name( $post ) ) . '" />';
+		echo '<img itemprop="image" content="' . esc_attr( $default ) . '" src="' . esc_attr( $default ) . '" alt="" />';
 
 	} else if(is_array($banner) && isset($banner[0]) ){
 		echo '<img itemprop="image" content="' . esc_attr( $banner[0] ) . '" src="' . esc_attr( $banner[0] ) . '" alt="' .  '" />';
@@ -285,4 +285,190 @@ function get_food_views_count($post)
 		return "-";
 	}
 	return $count;
+}
+
+
+/**
+ * display_event_type function.
+ *
+ * @access public
+ * @return void
+ */
+function display_food_type( $post = null, $after = '') {
+
+	if ( $event_type = get_event_type( $post ) ) {
+		if (! empty( $event_type ) ) {
+		    $numType = count($event_type);
+		    $i = 0;
+			foreach ( $event_type as $type ) {
+				echo '<span class="wpem-event-type-text event-type '. esc_attr( sanitize_title( $type->slug ) ).' ">'. $type->name.'</span>';
+				if($numType > ++$i){
+				    echo $after;
+				}
+			}
+		}
+	}
+}
+
+/**
+ * get_event_type function.
+ *
+ * @access public
+ * @param mixed $post (default: null)
+ * @return void
+ */
+function get_food_type( $post = null ) {
+
+	$post = get_post( $post );
+
+	if ( $post->post_type !== 'food_manager' || !get_option( 'food_manager_enable_event_types' ) ) {
+		return;
+	}
+
+	$types = wp_get_post_terms( $post->ID, 'food_manager_type' );
+
+	// Return single if not enabled.
+	if ( ! empty( $types ) && ! event_manager_multiselect_event_type() ) {
+		$types = array( current( $types ) );
+	}
+	if(empty($types))
+		$types = '';
+	return apply_filters( 'display_food_type', $types, $post );
+}
+/**
+ * display_event_category function.
+ *
+ * @access public
+ * @return void
+ */
+function display_food_category( $post = null, $after = '' ) {
+
+	if ( $event_category = get_food_category( $post ) ) {
+
+		if (! empty( $event_category ) ) {
+		    $numCategory = count($event_category);
+		    $i = 0;
+			foreach ( $event_category as $cat ) {
+				echo '<span class="event-category '. esc_attr( sanitize_title( $cat->slug ) ).' ">'. $cat->name.'</span>';
+				if($numCategory > ++$i){
+				    echo $after;
+				}
+			}
+		}
+	}
+}
+
+/**
+ * get_event_category function.
+ *
+ * @access public
+ * @param mixed $post (default: null)
+ * @return void
+ */
+function get_food_category( $post = null ) {
+
+	$post = get_post( $post );
+
+	if ( $post->post_type !== 'food_manager' || !get_option( 'food_manager_enable_categories' ) ) {
+		return;
+	}
+
+	$categories = wp_get_post_terms( $post->ID, 'food_manager_category' );
+
+	// Return single if not enabled.
+	if ( !empty( $categories ) && ! food_manager_multiselect_food_category() ) {
+		$categories = array( current( $categories ) );
+	}
+	return apply_filters( 'display_food_category', $categories, $post );
+}
+/**
+ * display_food_permalink function.
+ *
+ * @access public
+ * @return void
+ */
+function display_food_permalink( $post = null ) {
+
+	echo get_food_permalink( $post );
+}
+
+/**
+ * get_event_permalink function
+ *
+ * @access public
+ * @param mixed $post (default: null)
+ * @return string
+ */
+function get_food_permalink( $post = null ) {
+
+	$post = get_post( $post );
+
+	$link = get_permalink( $post );
+
+	return apply_filters( 'display_food_permalink', $link, $post );
+}
+
+
+/**
+ * event_listing_class function.
+ *
+ * @access public
+ * @param string $class (default: '')
+ * @param mixed $post_id (default: null)
+ * @return void
+ */
+function food_manager_class( $class = '', $post_id = null ) {
+
+	// Separates classes with a single space, collates classes for post DIV
+	echo 'class="' . join( ' ', get_food_manager_class( $class, $post_id ) ) . '"';
+
+}
+
+/**
+ * get_event_listing_class function.
+ *
+ * @access public
+ * @return array
+ */
+function get_food_manager_class( $class = '', $post_id = null ) {
+
+	$post = get_post( $post_id );
+
+	if ( $post->post_type !== 'food_manager' ) {
+		return array();
+	}
+
+	$classes = array();
+
+	if ( empty( $post ) ) {
+		return $classes;
+	}
+
+	$classes[] = 'food_manager';
+
+	if ( $event_type = get_food_type() ) {
+
+		if ( $event_type && ! empty( $event_type ) ) {
+			foreach ( $event_type as $type ) {
+				$classes[] = 'food-type-' . sanitize_title( $type->name );
+			}
+		}
+	}
+
+	
+	if ( is_food_featured( $post ) ) {
+
+		$classes[] = 'food_featured';
+	}
+
+	if ( ! empty( $class ) ) {
+
+		if ( ! is_array( $class ) ) {
+			$class = preg_split( '#\s+#', $class );
+		}
+
+		$classes = array_merge( $classes, $class );
+	}
+
+	return get_post_class( $classes, $post->ID );
 }

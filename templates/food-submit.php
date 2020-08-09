@@ -29,36 +29,6 @@ global $food_manager;
 			</fieldset>
 		<?php endforeach; ?>
 		<?php do_action( 'submit_food_form_food_fields_end' ); ?>
-
-		<!-- Organizer Information Fields -->
-		<?php if ( $organizer_fields ) : ?>
-			<h2 class="wpfm-form-title wpfm-heading-text"><?php _e( 'Organizer Details', 'wp-food-manager' ); ?></h2>
-			<?php do_action( 'submit_food_form_organizer_fields_start' ); ?>
-			<?php foreach ( $organizer_fields as $key => $field ) : ?>
-				<fieldset class="wpfm-form-group fieldset-<?php echo esc_attr( $key ); ?>">
-					<label for="<?php esc_attr_e( $key ); ?>"><?php echo $field['label'] . apply_filters( 'submit_food_form_required_label', $field['required'] ?'<span class="require-field">*</span>' : ' <small>' . __( '(optional)', 'wp-food-manager' ) . '</small>', $field ); ?></label>
-					<div class="field <?php echo $field['required'] ? 'required-field' : ''; ?>">
-						<?php get_food_manager_template( 'form-fields/' . $field['type'] . '-field.php', array( 'key' => $key, 'field' => $field ) ); ?>
-					</div>
-				</fieldset>
-			<?php endforeach; ?>
-			<?php do_action( 'submit_food_form_organizer_fields_end' ); ?>
-		<?php endif; ?>
-
-		<!-- Organizer Information Fields -->
-		<?php if ( $venue_fields ) : ?>
-			<h2 class="wpfm-form-title wpfm-heading-text"><?php _e( 'Venue Details', 'wp-food-manager' ); ?></h2>
-			<?php do_action( 'submit_food_form_organizer_fields_start' ); ?>
-			<?php foreach ( $venue_fields as $key => $field ) : ?>
-				<fieldset class="wpfm-form-group fieldset-<?php echo esc_attr( $key ); ?>">
-					<label for="<?php esc_attr_e( $key ); ?>"><?php echo $field['label'] . apply_filters( 'submit_food_form_required_label', $field['required'] ?'<span class="require-field">*</span>' : ' <small>' . __( '(optional)', 'wp-food-manager' ) . '</small>', $field ); ?></label>
-					<div class="field <?php echo $field['required'] ? 'required-field' : ''; ?>">
-						<?php get_food_manager_template( 'form-fields/' . $field['type'] . '-field.php', array( 'key' => $key, 'field' => $field ) ); ?>
-					</div>
-				</fieldset>
-			<?php endforeach; ?>
-			<?php do_action( 'submit_food_form_organizer_fields_end' ); ?>
-		<?php endif; ?>
 		
 		<div class="wpfm-form-footer">
 			<input type="hidden" name="food_manager_form" value="<?php echo $form; ?>" />

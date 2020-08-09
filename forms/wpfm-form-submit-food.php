@@ -99,22 +99,6 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
 			return;
 		}
 		
-		$allowed_registration_method = get_option( 'food_manager_allowed_registration_method', '' );
-		switch ( $allowed_registration_method ) {
-			case 'email' :
-				$registration_method_label       = __( 'Registration email', 'wp-food-manager' );
-				$registration_method_placeholder = __( 'you@yourdomain.com', 'wp-food-manager' );
-			break;
-			case 'url' :
-				$registration_method_label       = __( 'Registration URL', 'wp-food-manager' );
-				$registration_method_placeholder = __( 'http://', 'wp-food-manager' );
-			break;
-			default :
-				$registration_method_label       = __( 'Registration email/URL', 'wp-food-manager' );
-				$registration_method_placeholder = __( 'Enter an email address or website URL', 'wp-food-manager' );
-			break;
-		}
-		
 		$this->fields = apply_filters( 'submit_food_form_fields', array(
 			'food' => array(
 				'food_title' => array(
@@ -132,21 +116,8 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
 					'placeholder' => '',
 					'priority'    => 3,
 					'default'     => '',
-					'taxonomy'    => 'food_listing_category'
+					'taxonomy'    => 'food_manager_category'
 				),
-
-				'food_online' => array(
-			        'label'	=> __('Online food','wp-food-manager'),							      	
-			        'type'  => 'radio',
-				    'default'  => 'no',
-				    'options'  => array(
-							    'yes' => __( 'Yes', 'wp-food-manager' ),
-							    'no' => __( 'No', 'wp-food-manager' )
-				 		    ),
-				    'priority'    => 4,
-			        'required'=>true
-		 		),		
-		 		 
 		 	
 				'food_banner' => array(
 					'label'       => __( 'food Banner', 'wp-food-manager' ),
@@ -312,7 +283,7 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
 
 	private function food_types() {
 		$options = array();
-		$terms   = get_food_listing_types();
+		$terms   = get_food_type();
 		foreach ( $terms as $term ) {
 			$options[ $term->slug ] = $term->name;
 		}
@@ -347,17 +318,7 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
 						case 'food_description' :
 							$this->fields[ $group_key ][ $key ]['value'] = $food->post_content;
 						break;
-						case  'organizer_logo':
-							$this->fields[ $group_key ][ $key ]['value'] = has_post_thumbnail( $food->ID ) ? get_post_thumbnail_id( $food->ID ) : get_post_meta( $food->ID, '_' . $key, true );
-						break;
 						
-						case ($key ==  'food_start_date' ||  $key == 'food_end_date' ) :
-							$food_date = get_post_meta( $food->ID, '_' . $key, true );
-							$default_date_format = WP_food_Manager_Date_Time::get_datepicker_format();
-							$default_date_format = WP_food_Manager_Date_Time::get_view_date_format_from_datepicker_date_format( $default_date_format );
-						
-							$this->fields[ $group_key ][ $key ]['value'] = date($default_date_format ,strtotime($food_date) );
-						break;
 							
 						case 'food_type' :
 							$this->fields[ $group_key ][ $key ]['value'] = wp_get_object_terms( $food->ID, 'food_listing_type', array( 'fields' => 'ids' ) );
@@ -406,8 +367,8 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
 			'resume_edit'        => $this->resume_edit,
 			'action'             => $this->get_action(),
 			'food_fields'         => $this->get_fields( 'food' ),
-			'organizer_fields'     => $this->get_fields( 'organizer' ),
-			'venue_fields'     => $this->get_fields( 'venue' ),
+			//'organizer_fields'     => $this->get_fields( 'organizer' ),
+			//'venue_fields'     => $this->get_fields( 'venue' ),
 			'step'               => $this->get_step(),
 			'submit_button_text' => apply_filters( 'submit_food_form_submit_button_text', __( 'Preview', 'wp-food-manager' ) )
 		) );
@@ -438,7 +399,7 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
 			if ( ! is_user_logged_in() ) {
 				$create_account = false;
 				if ( food_manager_enable_registration() ) {
-					if ( food_manager_user_requires_account() ) {
+					if ( wpfm_user_requires_account() ) {
 						if ( ! food_manager_generate_username_from_email() && empty( $_POST['create_account_username'] ) ) {
 							throw new Exception( __( 'Please enter a username.', 'wp-food-manager' ) );
 						}
@@ -477,7 +438,7 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
 					throw new Exception( $create_account->get_error_message() );
 				}
 			}
-			if ( food_manager_user_requires_account() && ! is_user_logged_in() ) {
+			if ( wpfm_user_requires_account() && ! is_user_logged_in() ) {
 				throw new Exception( __( 'You must be signed in to post a new listing.','wp-food-manager' ) );
 			}
 
@@ -505,20 +466,12 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
 		$food_data = array(
 			'post_title'     => $post_title,
 			'post_content'   => $post_content,
-			'post_type'      => 'food_listing',
+			'post_type'      => 'food_manager',
 			'comment_status' => 'closed'
 		);
 
 	if ( $update_slug ) {
 			$food_slug   = array();
-			// Prepend with organizer name
-			/* if ( apply_filters( 'submit_food_form_prefix_post_name_with_organizer', true ) && ! empty( $values['organizer']['organizer_name'] ) ) {
-				$food_slug[] = $values['organizer']['organizer_name'];
-			}
-			// Prepend location
-			if ( apply_filters( 'submit_food_form_prefix_post_name_with_location', true ) && ! empty( $values['food']['food_location'] ) ) {
-				$food_slug[] = $values['food']['food_location'];
-			} */
 			// Prepend with food type
 			if ( apply_filters( 'submit_food_form_prefix_post_name_with_food_type', true ) && ! empty( $values['food']['food_type'] ) ) {
 				if ( food_manager_multiselect_food_type() && is_array($values['food']['food_type']) ) {
@@ -614,17 +567,14 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
 	 * @param  array $values
 	 */
 	protected function update_food_data( $values ) {
+		
 		// Set defaults
 		add_post_meta( $this->food_id, '_cancelled', 0, true );
 		add_post_meta( $this->food_id, '_featured', 0, true );
 		$maybe_attach = array();
 		
 		//get date and time setting defined in admin panel food listing -> Settings -> Date & Time formatting
-		$datepicker_date_format 	= WP_food_Manager_Date_Time::get_datepicker_format();
 		
-		//covert datepicker format  into php date() function date format
-		$php_date_format 		= WP_food_Manager_Date_Time::get_view_date_format_from_datepicker_date_format( $datepicker_date_format );
-
 		$ticket_type='';
 		$recurre_food='';
 		// Loop fields and save meta and term data
@@ -638,61 +588,6 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
 						wp_set_object_terms( $this->food_id, array( $values[ $group_key ][ $key ] ), $field['taxonomy'], false );
 					}				
 				// oragnizer logo is a featured image
-				}
-				elseif ( 'organizer_logo' === $key ) {
-					$attachment_id = is_numeric( $values[ $group_key ][ $key ] ) ? absint( $values[ $group_key ][ $key ] ) : $this->create_attachment( $values[ $group_key ][ $key ] );
-					if ( empty( $attachment_id ) ) {
-						delete_post_thumbnail( $this->food_id );
-					} else {
-						set_post_thumbnail( $this->food_id, $attachment_id );
-					}
-					update_user_meta( get_current_user_id(), '_organizer_logo', $attachment_id );
-					
-					// Save meta data
-				}
-				
-				//save food start date according to mysql date format with food start time
-				elseif( $key === 'food_start_date'  ){
-
-					if(isset( $values[ $group_key ][ $key ] )  && !empty($values[ $group_key ][ $key ])){
-						
-						if ( isset( $values[ $group_key ][ 'food_start_time' ] ) && !empty($values[ $group_key ][ 'food_start_time' ]))
-							$start_time = WP_food_Manager_Date_Time::get_db_formatted_time( $values[ $group_key ][ 'food_start_time' ] );
-						else
-							$start_time = '';
-						//combine food start date value with food start time 
-						$date =  $values[ $group_key ][ $key ].' '.$start_time ;
-						
-        				 //Convert date and time value into DB formatted format and save eg. 1970-01-01 00:00:00
-						$date_dbformatted = WP_food_Manager_Date_Time::date_parse_from_format($php_date_format . ' H:i:s'  , $date);
-						$date_dbformatted = !empty($date_dbformatted) ? $date_dbformatted : $date;
-
-						update_post_meta( $this->food_id, '_' . $key,$date_dbformatted);
-					}
-					else
-						update_post_meta( $this->food_id, '_' . $key, $values[ $group_key ][ $key ] );
-
-				}
-				elseif( $key ==='food_end_date' ){
-						//save food end date according to mysql date format with food end time
-						if(isset( $values[ $group_key ][ $key ] ) && isset( $values[ $group_key ][ 'food_end_time' ] )){
-							
-							if(isset( $values[ $group_key ][ 'food_end_time' ] ) && !empty($values[ $group_key ][ 'food_end_time' ] ))
-								$end_time = WP_food_Manager_Date_Time::get_db_formatted_time( $values[ $group_key ][ 'food_end_time' ] );
-							else
-								$end_time =  '';
-							
-							//combine food start date value with food start time 
-							$date =  $values[ $group_key ][ $key ].' '.$end_time ;
-
-	        				 //Convert date and time value into DB formatted format and save eg. 1970-01-01 00:00:00
-							$date_dbformatted = WP_food_Manager_Date_Time::date_parse_from_format($php_date_format . ' H:i:s'  , $date);
-							$date_dbformatted = !empty($date_dbformatted) ? $date_dbformatted : $date;
-
-							update_post_meta( $this->food_id, '_' . $key, $date_dbformatted );
-						}
-						else
-							update_post_meta( $this->food_id, '_' . $key, $values[ $group_key ][ $key ] );
 				}
 				elseif ( $field['type'] == 'date' ) {
 					$date = $values[ $group_key ][ $key ];	
@@ -709,9 +604,7 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
 				else { 
 
 					update_post_meta( $this->food_id, '_' . $key, $values[ $group_key ][ $key ] );
-					if('_' .$key=='_food_ticket_options' && $values[ $group_key ][ $key ]=='free'){
-					    $ticket_type=$values[ $group_key ][ $key ];
-					}
+					
 					// Handle attachments.
 					if ( 'file' === $field['type']  ) {
 						if ( is_array( $values[ $group_key ][ $key ] ) ) {
@@ -728,7 +621,7 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
 
 		$maybe_attach = array_filter( $maybe_attach );
 		// Handle attachments
-		if ( sizeof( $maybe_attach ) && apply_filters( 'food_manager_attach_uploaded_files', true ) ) {
+		if ( sizeof( $maybe_attach ) && apply_filters( 'wpfm_attach_uploaded_files', true ) ) {
 			
 			// Get attachments
 			$attachments     = get_posts( 'post_parent=' . $this->food_id . '&post_type=attachment&fields=ids&numberposts=-1' );
@@ -751,13 +644,9 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
 				}
 			}
 		}
-		// reset meta value if ticket type is free
-		if($ticket_type=='free'){
-		    update_post_meta( $this->food_id, '_food_ticket_price', '');
-		}
+		
 		// And user meta to save time in future
 		if ( is_user_logged_in() ) {
-			update_user_meta( get_current_user_id(), '_organizer_name', isset( $values['organizer']['organizer_name'] ) ? $values['organizer']['organizer_name'] : '' );
 			update_user_meta( get_current_user_id(), '_organizer_website', isset( $values['organizer']['organizer_website'] ) ? $values['organizer']['organizer_website'] : '' );
 			update_user_meta( get_current_user_id(), '_organizer_tagline', isset( $values['organizer']['organizer_tagline'] ) ? $values['organizer']['organizer_tagline'] : '' );
 			update_user_meta( get_current_user_id(), '_organizer_twitter', isset( $values['organizer']['organizer_twitter'] ) ? $values['organizer']['organizer_twitter'] : '' );

@@ -86,7 +86,6 @@ function get_food_listings( $args = array() ) {
 
 		'fields'                 => $args['fields']
 	);
-
 	if ( $args['posts_per_page'] < 0 ) {
 		$query_args['no_found_rows'] = true;
 	}
@@ -411,7 +410,7 @@ function get_food_listings( $args = array() ) {
 		$query_args['lang'] = pll_current_language();
 	}
 	/** This filter is documented in wp-food-manager.php */
-	$query_args['lang'] = apply_filters( 'wpjm_lang', null );
+	$query_args['lang'] = apply_filters( 'wpfm_lang', null );
 	// Filter args
 
 	$query_args = apply_filters( 'get_food_listings_query_args', $query_args, $args );
@@ -476,7 +475,7 @@ function get_food_listings( $args = array() ) {
 
 		set_transient( $query_args_hash, $result, DAY_IN_SECONDS * 30 );
 	}
-	
+
 	$result = apply_filters('get_food_listings_result_args',$result,$query_args );
 	
 	do_action( 'after_get_food_listings', $query_args, $args );
@@ -660,7 +659,7 @@ function food_manager_dropdown_selection( $args = '' ) {
 
 	$id = $r['id'] ? $r['id'] : $r['name'];
 
-	if($taxonomy=='food_listing_type'):
+	if($taxonomy=='food_manager_type'):
 
 		$placeholder=__( 'Choose a food type&hellip;', 'wp-food-manager' );
 
@@ -886,3 +885,230 @@ function get_food_manager_rss_link( $args = array() ) {
 	return $rss_link;
 }
 endif;
+
+
+/**
+ * Filters the upload dir when $event_manager_upload is true
+ * @param  array $pathdata
+ * @return array
+ */
+
+function wpfm_upload_dir( $pathdata ) {
+
+	global $food_manager_upload, $food_manager_uploading_file;
+
+	if ( ! empty( $food_manager_upload ) ) {
+
+		$dir = untrailingslashit( apply_filters( 'wpfm_upload_dir', 'wpfm-uploads/' . sanitize_key( $food_manager_uploading_file ), sanitize_key( $food_manager_uploading_file ) ) );
+
+		if ( empty( $pathdata['subdir'] ) ) {
+
+			$pathdata['path']   = $pathdata['path'] . '/' . $dir;
+
+			$pathdata['url']    = $pathdata['url'] . '/' . $dir;
+
+			$pathdata['subdir'] = '/' . $dir;
+
+		} else {
+
+			$new_subdir         = '/' . $dir . $pathdata['subdir'];
+
+			$pathdata['path']   = str_replace( $pathdata['subdir'], $new_subdir, $pathdata['path'] );
+
+			$pathdata['url']    = str_replace( $pathdata['subdir'], $new_subdir, $pathdata['url'] );
+
+			$pathdata['subdir'] = str_replace( $pathdata['subdir'], $new_subdir, $pathdata['subdir'] );
+		}
+	}
+	return $pathdata;
+}
+
+add_filter( 'upload_dir', 'wpfm_upload_dir' );
+
+/**
+ * Prepare files for upload by standardizing them into an array. This adds support for multiple file upload fields.
+ * @param  array $file_data
+ * @return array
+ */
+
+function wpfm_prepare_uploaded_files( $file_data ) {
+
+	$files_to_upload = array();
+	
+	if ( is_array( $file_data['name'] ) ) {
+		foreach( $file_data['name'] as $file_data_key => $file_data_value ) {
+			if ( $file_data['name'][ $file_data_key ] ) {
+				$type              = wp_check_filetype( $file_data['name'][ $file_data_key ] ); // Map mime types to those that WordPress knows.
+				$files_to_upload[] = array(
+					'name'     => $file_data['name'][ $file_data_key ],
+					'type'     => $type['type'],
+					'tmp_name' => $file_data['tmp_name'][ $file_data_key ],
+					'error'    => $file_data['error'][ $file_data_key ],
+					'size'     => $file_data['size'][ $file_data_key ]
+				);
+			}
+		}
+	} else {
+		$type              = wp_check_filetype( $file_data['name'] ); // Map mime types to those that WordPress knows.
+		$file_data['type'] = $type['type'];
+		$files_to_upload[] = $file_data;
+	}
+	return apply_filters( 'wpfm_prepare_uploaded_files', $files_to_upload );
+}
+
+/**
+ * Upload a file using WordPress file API.
+ * @param  array $file_data Array of $_FILE data to upload.
+ * @param  array $args Optional arguments
+ * @return array|WP_Error Array of objects containing either file information or an error
+ */
+
+function wpfm_upload_file( $file, $args = array() ) {
+
+	global $food_manager_upload, $food_manager_uploading_file;
+
+	include_once( ABSPATH . 'wp-admin/includes/file.php' );
+
+	include_once( ABSPATH . 'wp-admin/includes/media.php' );
+
+	$args = wp_parse_args( $args, array(
+
+		'file_key'           => '',
+
+		'file_label'         => '',
+
+		'allowed_mime_types' => ''
+
+	) );
+
+	$food_manager_upload         = true;
+
+	$food_manager_uploading_file = $args['file_key'];
+
+	$uploaded_file              = new stdClass();
+	
+    if ( '' === $args['allowed_mime_types'] ) {
+        $allowed_mime_types = wpfm_get_allowed_mime_types( $food_manager_uploading_file );
+        
+    } else {
+        $allowed_mime_types = $args['allowed_mime_types'];
+    }
+ 
+    /**
+     * Filter file configuration before upload
+     *
+     * This filter can be used to modify the file arguments before being uploaded, or return a WP_Error
+     * object to prevent the file from being uploaded, and return the error.
+     *
+     * @since 1.0
+     *
+     * @param array $file               Array of $_FILE data to upload.
+     * @param array $args               Optional file arguments
+     * @param array $allowed_mime_types Array of allowed mime types from field config or defaults
+     */
+    $file = apply_filters( 'wpfm_upload_file_pre_upload', $file, $args, $allowed_mime_types );
+   
+    if ( is_wp_error( $file ) ) {
+        return $file;
+    }
+    
+	if ( ! in_array( $file['type'], $allowed_mime_types ) ) {
+
+		if ( $args['file_label'] ) {
+
+			return new WP_Error( 'upload', sprintf( __( '"%s" (filetype %s) needs to be one of the following file types: %s', 'wp-food-manager' ), $args['file_label'], $file['type'], implode( ', ', array_keys( $args['allowed_mime_types'] ) ) ) );
+
+		} else {
+
+			return new WP_Error( 'upload', sprintf( __( 'Uploaded files need to be one of the following file types: %s', 'wp-food-manager' ), implode( ', ', array_keys( $args['allowed_mime_types'] ) ) ) );
+		}
+
+	} else {
+
+		$upload = wp_handle_upload( $file, apply_filters( 'submit_food_wp_handle_upload_overrides', array( 'test_form' => false ) ) );
+
+		if ( ! empty( $upload['error'] ) ) {
+
+			return new WP_Error( 'upload', $upload['error'] );
+
+		} else {
+
+			$uploaded_file->url       = $upload['url'];
+
+			$uploaded_file->file      = $upload['file'];
+
+			$uploaded_file->name      = basename( $upload['file'] );
+
+			$uploaded_file->type      = $upload['type'];
+
+			$uploaded_file->size      = $file['size'];
+
+			$uploaded_file->extension = substr( strrchr( $uploaded_file->name, '.' ), 1 );
+		}
+	}
+
+	$food_manager_upload         = false;
+
+	$food_manager_uploading_file = '';
+
+	return $uploaded_file;
+}
+
+/**
+ * Allowed Mime types specifically for WP Event Manager.
+ * @param   string $field Field used.
+ * @return  array  Array of allowed mime types
+ */
+function wpfm_get_allowed_mime_types( $field = '' ){
+	if ( 'organizer_logo' === $field ) {
+		$allowed_mime_types = array(
+				'jpg|jpeg|jpe' => 'image/jpeg',
+				'gif'          => 'image/gif',
+				'png'          => 'image/png',
+		);
+	} else {
+		$allowed_mime_types = array(
+				'jpg|jpeg|jpe' => 'image/jpeg',
+				'gif'          => 'image/gif',
+				'png'          => 'image/png',
+				'pdf'          => 'application/pdf',
+				'doc'          => 'application/msword',
+				'docx'         => 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+		);
+	}
+
+	/**
+	 * Mime types to accept in uploaded files.
+	 *
+	 * Default is image, pdf, and doc(x) files.
+	 *
+	 * @since 1.1
+	 *
+	 * @param array  {
+	 *     Array of allowed file extensions and mime types.
+	 *     Key is pipe-separated file extensions. Value is mime type.
+	 * }
+	 * @param string $field The field key for the upload.
+	 */
+	return apply_filters( 'wpfm_mime_types', $allowed_mime_types, $field );
+}
+
+
+
+/**
+ * True if only one type allowed per event
+ *
+ * @return bool
+ */
+function food_manager_multiselect_food_type() {
+	return apply_filters( 'food_manager_multiselect_food_type', get_option( 'food_manager_multiselect_food_type' ) == 1 ? true : false );
+}
+
+/**
+ * True if only one category allowed per food
+ *
+ * @return bool
+ */
+function food_manager_multiselect_food_category() {
+	return apply_filters( 'food_manager_multiselect_food_category', get_option( 'food_manager_multiselect_food_category' ) == 1 ? true : false );
+}
