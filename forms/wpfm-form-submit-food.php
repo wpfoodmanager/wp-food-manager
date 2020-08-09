@@ -102,7 +102,7 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
 		$this->fields = apply_filters( 'submit_food_form_fields', array(
 			'food' => array(
 				'food_title' => array(
-					'label'       => __( 'food Title', 'wp-food-manager' ),
+					'label'       => __( 'Food Title', 'wp-food-manager' ),
 					'type'        => 'text',
 					'required'    => true,
 					'placeholder' => __('food title','wp-food-manager'),
@@ -110,13 +110,40 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
 				),
 
 				'food_category' => array(
-					'label'       => __( 'food Category', 'wp-food-manager' ),
-					'type'        => get_option('food_manager_multiselect_food_category') ?  'term-multiselect' : 'term-select',
+					'label'       => __( 'Food Category', 'wp-food-manager' ),
+					'type'        => get_option('food_manager_multiselect_food_category',1) ?  'term-multiselect' : 'term-select',
 					'required'    => true,
 					'placeholder' => '',
 					'priority'    => 3,
 					'default'     => '',
 					'taxonomy'    => 'food_manager_category'
+				),
+				'food_type' => array(
+					'label'       => __( 'Food Type', 'wp-food-manager' ),
+					'type'        => get_option('food_manager_multiselect_food_type',1) ?  'term-multiselect' : 'term-select',
+					'required'    => true,
+					'placeholder' => '',
+					'priority'    => 3,
+					'default'     => '',
+					'taxonomy'    => 'food_manager_type'
+				),
+				'food_ingridient' => array(
+					'label'       => __( 'Food Ingridients', 'wp-food-manager' ),
+					'type'        =>  'term-multiselect' ,
+					'required'    => true,
+					'placeholder' => '',
+					'priority'    => 3,
+					'default'     => '',
+					'taxonomy'    => 'food_manager_ingredient'
+				),
+				'food_neutrition' => array(
+					'label'       => __( 'Food Neutrition', 'wp-food-manager' ),
+					'type'        => 'term-multiselect',
+					'required'    => true,
+					'placeholder' => '',
+					'priority'    => 3,
+					'default'     => '',
+					'taxonomy'    => 'food_manager_neutrition'
 				),
 		 	
 				'food_banner' => array(
@@ -150,28 +177,10 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
 			
 		) );
 
-		//unset organizer or venue if disabled
-		$organizer_enabled = get_option( 'enable_food_organizer');
-		$organizer_submit_page = get_option('food_manager_submit_organizer_form_page_id',false);
-		if(!$organizer_enabled || !$organizer_submit_page)
-			unset( $this->fields['organizer']['food_organizer_ids'] );
+		
+		
 
-		$venue_enabled = get_option( 'enable_food_venue');
-		$venue_submit_page = get_option('food_manager_submit_organizer_form_page_id',false);
-		if(!$venue_enabled || !$venue_submit_page)
-			unset( $this->fields['venue']['food_venue_ids'] );
-
-		//unset timezone field if setting is site wise timezone
-		$timezone_setting = get_option( 'food_manager_timezone_setting' ,'site_timezone' );
-		if ( $timezone_setting != 'each_food' ) {
-			unset( $this->fields['food']['food_timezone'] );
-		}
-
-		if(!is_user_logged_in())
-		{
-			unset( $this->fields['organizer']['food_organizer_ids'] );
-			unset( $this->fields['venue']['food_venue_ids'] );
-		}
+	
 	
 		return $this->fields;
 	}
@@ -242,38 +251,7 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
 			}
 		}
 		
-		// Registration method
-		if ( isset( $values['food']['registration'] ) && ! empty( $values['food']['registration'] ) ) {
-			$allowed_registration_method = get_option( 'food_manager_allowed_registration_method', '' );
-			$values['food']['registration'] = str_replace( ' ', '+', $values['food']['registration'] );
-			switch ( $allowed_registration_method ) {
-				case 'email' :
-					if ( ! is_email( $values['food']['registration'] ) ) {
-						throw new Exception( __( 'Please enter a valid registration email address', 'wp-food-manager' ) );
-					}
-				break;
-				case 'url' :
-					// Prefix http if needed
-					if ( ! strstr( $values['food']['registration'], 'http:' ) && ! strstr( $values['food']['registration'], 'https:' ) ) {
-						$values['food']['registration'] = 'http://' . $values['food']['registration'];
-					}
-					if ( ! filter_var( $values['food']['registration'], FILTER_VALIDATE_URL ) ) {
-						throw new Exception( __( 'Please enter a valid registration URL', 'wp-food-manager' ) );
-					}
-				break;
-				default :
-					if ( ! is_email( $values['food']['registration'] ) ) {
-						// Prefix http if needed
-						if ( ! strstr( $values['food']['registration'], 'http:' ) && ! strstr( $values['food']['registration'], 'https:' ) ) {
-							$values['food']['registration'] = 'http://' . $values['food']['registration'];
-						}
-						if ( ! filter_var( $values['food']['registration'], FILTER_VALIDATE_URL ) ) {
-							throw new Exception( __( 'Please enter a valid registration email address or URL', 'wp-food-manager' ) );
-						}
-					}
-				break;
-			}
-		}	
+			
 		return apply_filters( 'submit_food_form_validate_fields', true, $this->fields, $values );
 	}
 
@@ -300,11 +278,6 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
 			//Get merged fields from db and default fields.
 			$this->merge_with_custom_fields('frontend' );
 			
-			//get date and time setting defined in admin panel food listing -> Settings -> Date & Time formatting
-			//$datepicker_date_format 	= WP_food_Manager_Date_Time::get_datepicker_format();
-						
-			//covert datepicker format  into php date() function date format
-			//$php_date_format 		= WP_food_Manager_Date_Time::get_view_date_format_from_datepicker_date_format( $datepicker_date_format );
 			
 		// Load data if neccessary
 		if ( $this->food_id ) {
@@ -321,13 +294,13 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
 						
 							
 						case 'food_type' :
-							$this->fields[ $group_key ][ $key ]['value'] = wp_get_object_terms( $food->ID, 'food_listing_type', array( 'fields' => 'ids' ) );
+							$this->fields[ $group_key ][ $key ]['value'] = wp_get_object_terms( $food->ID, 'food_manager_type', array( 'fields' => 'ids' ) );
 							if ( ! food_manager_multiselect_food_type() ) {
 								$this->fields[ $group_key ][ $key ]['value'] = current( $this->fields[ $group_key ][ $key ]['value'] );
 							}
 						break;
 						case 'food_category' :
-							$this->fields[ $group_key ][ $key ]['value'] = wp_get_object_terms( $food->ID, 'food_listing_category', array( 'fields' => 'ids' ) );
+							$this->fields[ $group_key ][ $key ]['value'] = wp_get_object_terms( $food->ID, 'food_manager_category', array( 'fields' => 'ids' ) );
 						break;
 						default:
 							$this->fields[ $group_key ][ $key ]['value'] = get_post_meta( $food->ID, '_' . $key, true );

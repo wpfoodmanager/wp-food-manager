@@ -416,9 +416,9 @@ function get_food_listings( $args = array() ) {
 	$query_args = apply_filters( 'get_food_listings_query_args', $query_args, $args );
 	do_action( 'before_get_food_listings', $query_args, $args );
 	// Cache results.
-		if ( apply_filters( 'get_food_listings_cache_results', true ) ) {
+		if ( apply_filters( 'get_food_listings_cache_results', false ) ) {
 			$to_hash              = wp_json_encode( $query_args );
-			$query_args_hash      = 'em_' . md5( $to_hash . WPFM_VERSION ) . WPFM_Cache_Helper::get_transient_version( 'get_food_listings' );
+			$query_args_hash      = 'wpfm_' . md5( $to_hash . WPFM_VERSION ) . WPFM_Cache_Helper::get_transient_version( 'get_food_listings' );
 			$result               = false;
 			$cached_query_results = true;
 			$cached_query_posts   = get_transient( $query_args_hash );
@@ -461,6 +461,7 @@ function get_food_listings( $args = array() ) {
 				}
 			}
 		} else {
+			
 			$result = new WP_Query( $query_args );
 		}
 	// Generate hash

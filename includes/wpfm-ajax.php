@@ -211,14 +211,8 @@ class WPFM_Ajax {
 			'order'              => sanitize_text_field( $_REQUEST['order'] ),
 
 			'offset'             => ( absint( $_REQUEST['page'] ) - 1 ) * absint( $_REQUEST['per_page'] ),
-
 			'posts_per_page'     => absint( $_REQUEST['per_page'] )
 		);
-
-		if ( isset( $_REQUEST['cancelled'] ) && ( $_REQUEST['cancelled'] === 'true' || $_REQUEST['cancelled'] === 'false' ) ) {
-
-			$args['cancelled'] = $_REQUEST['cancelled'] === 'true' ? true : false;
-		}
 
 		if ( isset( $_REQUEST['featured'] ) && ( $_REQUEST['featured'] === 'true' || $_REQUEST['featured'] === 'false' ) ) {
 
@@ -258,10 +252,10 @@ class WPFM_Ajax {
 
 			foreach ( $search_categories as $category ) {
 
-				$category_object = get_term_by( is_numeric( $category ) ? 'id' : 'slug', $category, 'food_listing_category' );
+				$category_object = get_term_by( is_numeric( $category ) ? 'id' : 'slug', $category, 'food_manager_category' );
 
 				if ( ! is_wp_error( $category_object ) ) {
-
+					
 					$showing_categories[] = $category_object->name;
 				}
 			}
@@ -276,7 +270,7 @@ class WPFM_Ajax {
 
 			foreach ( $search_food_types as $food_type) {
 
-				$food_type_object = get_term_by( is_numeric( $food_type) ? 'id' : 'slug', $food_type, 'food_listing_type' );
+				$food_type_object = get_term_by( is_numeric( $food_type) ? 'id' : 'slug', $food_type, 'food_manager_type' );
 
 				if ( ! is_wp_error( $food_type_object ) ) {
 

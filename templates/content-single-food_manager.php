@@ -91,19 +91,6 @@ do_action('set_single_listing_view_count');
 
                                     <?php do_action('single_food_sidebar_start'); ?>
                                     <div class="clearfix">&nbsp;</div>
-                                    
-                                 
-
-                                    <div>
-                                        <div class="clearfix">&nbsp;</div>
-                                        <h3 class="wpfm-heading-text"><?php _e('Location', 'wp-food-manager'); ?></h3>
-                                        <div>
-                                            
-                                            <?php display_food_location(); ?>
-                                        </div>
-
-
-                                    </div>
 
                                     <?php if (get_option('food_manager_enable_food_types') && get_food_type()) :?>
                                         <div class="clearfix">&nbsp;</div>
@@ -117,16 +104,8 @@ do_action('set_single_listing_view_count');
                                         <div class="wpfm-food-category"><?php display_food_category(); ?></div>
                                     <?php endif; ?>
 
-                                  
-
-                                    
-                                   
-
                                     <?php do_action('single_food_sidebar_end'); ?>
-
                                 </div>
-
-
                                 <?php
                                 $is_friend_share = apply_filters('food_manager_food_friend_share', true);
 
