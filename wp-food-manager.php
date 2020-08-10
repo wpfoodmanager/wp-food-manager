@@ -14,9 +14,9 @@ Text Domain: wp-food-manager
 
 Domain Path: /languages
 
-Version: `1.0.0
+Version: 1.0.0
 
-Since: 1.0
+Since: 1.0.0
 
 Requires WordPress Version at least: 4.1
 
@@ -72,7 +72,7 @@ class WP_Food_Manager {
 	public function __construct() 
 	{
 		// Define constants
-		define( 'WPFM_VERSION', '0.1.1' );
+		define( 'WPFM_VERSION', '1.0.0' );
 		define( 'WPFM_PLUGIN_DIR', untrailingslashit( plugin_dir_path( __FILE__ ) ) );
 		define( 'WPFM_PLUGIN_URL', untrailingslashit( plugins_url( basename( plugin_dir_path( __FILE__ ) ), basename( __FILE__ ) ) ) );
 		//includes
@@ -170,18 +170,6 @@ class WP_Food_Manager {
 
 		$chosen_shortcodes   = array( 'submit_food_form', 'food_dashboard', 'foods' );
 		$chosen_used_on_page = has_wpfm_shortcode( null, $chosen_shortcodes );
-
-
-		// //jQuery Chosen - vendor
-		// if ( apply_filters( 'wpfm_chosen_enabled', $chosen_used_on_page ) ) {
-
-		// 	wp_register_script( 'chosen', WPFM_PLUGIN_URL . '/assets/js/jquery-chosen/chosen.jquery.min.js', array( 'jquery' ), '1.1.0', true );
-		// 	wp_register_script( 'wp-food-manager-term-multiselect', WPFM_PLUGIN_URL . '/assets/js/term-multiselect.min.js', array( 'jquery', 'chosen' ), EVENT_MANAGER_VERSION, true );
-		// 	wp_register_script( 'wp-food-manager-multiselect', EVENT_MANAGER_PLUGIN_URL . '/assets/js/multiselect.min.js', array( 'jquery', 'chosen' ), EVENT_MANAGER_VERSION, true );
-		// 	wp_enqueue_style( 'chosen', EVENT_MANAGER_PLUGIN_URL . '/assets/css/chosen.css' );
-
-		// 	$ajax_filter_deps[] = 'chosen';
-		// }
 	
 		//file upload - vendor
 		if ( apply_filters( 'wpfm_ajax_file_upload_enabled', true ) ) {
