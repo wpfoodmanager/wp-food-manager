@@ -42,7 +42,7 @@ abstract class WPFM_Form {
     			isset( $_GET[ 'new' ] ) &&
     			isset( $_COOKIE[ 'wpfm-submitting-food-id' ] ) &&
     			isset( $_COOKIE[ 'wpfm-submitting-food-key' ] ) &&
-    			get_post_meta( $_COOKIE[ 'wpfm-submitting-food-id' ], '_submitting_key', true ) == $_COOKIE['wpfm-submitting-food-key']
+    			get_post_meta( sanitize_text_field($_COOKIE[ 'wpfm-submitting-food-id' ]), '_submitting_key', true ) == $_COOKIE['wpfm-submitting-food-key']
     			) {
     				delete_post_meta( $_COOKIE[ 'wpfm-submitting-food-id' ], '_submitting_key' );
     				setcookie( 'wpfm-submitting-food-id', '', 0, COOKIEPATH, COOKIE_DOMAIN, false );
