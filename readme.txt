@@ -4,7 +4,7 @@ Contributors: wpeventmanager,ashokdudhat,hiteshmakvana
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=55FRYATTFLA5N
 Tags: food,menu,delivery food,order online,restaurant menu, restaurant order, online food, cafe
 Requires at least: 4.1
-Tested up to: 5.4
+Tested up to: 5.6
 Stable tag: 1.0.0
 Requires PHP: 5.4
 License: GNU General Public License v3.0
@@ -69,6 +69,6 @@ The manual installation method involves downloading the plugin and uploading it 
 
 == Changelog ==
 
-= 1.0 [Aug 19th, 2020] =
+= 1.0 [Jan 31st, 2021] =
 
 * First release.
