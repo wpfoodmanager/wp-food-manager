@@ -25,6 +25,7 @@ class WPFM_Shortcodes {
 		add_shortcode( 'submit_food_form', array( $this, 'submit_food_form' ) );
 		add_shortcode( 'food_dashboard', array( $this, 'food_dashboard' ) );
 		 add_shortcode( 'foods', array( $this, 'output_foods' ) );
+		 add_shortcode( 'food_menu', array( $this, 'output_food_menu' ) );
 	}
 
 	/**
@@ -1105,6 +1106,40 @@ class WPFM_Shortcodes {
         do_action('organizer_content_end');
 
         return ob_get_clean();
+	}
+
+	/**
+	 *  output food menu
+	 *
+	 * @access public
+	 * @param array $args
+	 * @return string
+	 */
+	public function output_food_menu($atts){
+		extract( shortcode_atts( array(		    
+			'id' => '',
+		), $atts ) );
+
+		$args = array(
+			'post_type'   => 'food_manager_menu',
+			'post_status' => 'publish',
+			//'p'           => $id
+		);
+
+		$food_menus = new WP_Query( $args );
+
+		if ( $food_menus->have_posts() ) : ?>
+
+			<?php while ( $food_menus->have_posts() ) : $food_menus->the_post(); ?>
+				
+				<div class="clearfix" />
+                <?php  get_food_manager_template_part( 'content', 'food_manager_menu' ); ?>
+
+			<?php endwhile; ?>
+
+		<?php endif;
+
+		wp_reset_postdata();
 	}
 
 }

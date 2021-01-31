@@ -653,6 +653,94 @@ class WPFM_Post_Types {
 		);
 
 
+
+/**
+		 * Post types
+		 */
+
+		$singular  = __( 'Menu', 'wp-food-manager' );
+
+		$plural    = __( 'Menus', 'wp-food-manager' );
+
+		
+
+		register_post_type( "food_manager_menu",
+
+			apply_filters( "register_post_type_food_manager_menu", array(
+
+				'labels' => array(
+
+					'name' 					=> $plural,
+
+					'singular_name' 		=> $singular,
+
+					'menu_name'             => __( 'Food Menu', 'wp-food-manager' ),
+
+					'all_items'             => sprintf( __( 'Food %s', 'wp-food-manager' ), $plural ),
+
+					'add_new' 				=> __( 'Add New', 'wp-food-manager' ),
+
+					'add_new_item' 			=> sprintf( __( 'Add %s', 'wp-food-manager' ), $singular ),
+
+					'edit' 					=> __( 'Edit', 'wp-food-manager' ),
+
+					'edit_item' 			=> sprintf( __( 'Edit %s', 'wp-food-manager' ), $singular ),
+
+					'new_item' 				=> sprintf( __( 'New %s', 'wp-food-manager' ), $singular ),
+
+					'view' 					=> sprintf( __( 'View %s', 'wp-food-manager' ), $singular ),
+
+					'view_item' 			=> sprintf( __( 'View %s', 'wp-food-manager' ), $singular ),
+
+					'search_items' 			=> sprintf( __( 'Search %s', 'wp-food-manager' ), $plural ),
+
+					'not_found' 			=> sprintf( __( 'No %s found', 'wp-food-manager' ), $plural ),
+
+					'not_found_in_trash' 	=> sprintf( __( 'No %s found in trash', 'wp-food-manager' ), $plural ),
+
+					'parent' 				=> sprintf( __( 'Parent %s', 'wp-food-manager' ), $singular ),
+					
+					'featured_image'        => __( 'Food Thumbnail', 'wp-food-manager' ),
+					
+					'set_featured_image'    => __( 'Set food thumbnail', 'wp-food-manager' ),
+					
+					'remove_featured_image' => __( 'Remove food thumbnail', 'wp-food-manager' ),
+					
+					'use_featured_image'    => __( 'Use as food thumbnail', 'wp-food-manager' ),
+				),
+
+				'description' => sprintf( __( 'This is where you can create and manage %s.', 'wp-food-manager' ), $plural ),
+
+				'public' 				=> true,
+
+				'show_ui' 				=> true,
+
+				//'capability_type' 		=> 'food_manager',
+
+				'map_meta_cap'          => true,
+
+				'publicly_queryable' 	=> true,
+
+				'exclude_from_search' 	=> false,
+
+				'hierarchical' 			=> false,
+
+				'rewrite' 				=> $rewrite,
+
+				'query_var' 			=> true,
+					
+				'show_in_rest' 			=> true,
+
+				'supports' 				=> array( 'title', 'editor', 'custom-fields', 'publicize' , 'thumbnail'),
+
+				'has_archive' 			=> $has_archive,
+
+				'show_in_menu' => 'edit.php?post_type=food_manager'
+
+				//'menu_icon' => 'dashicons-carrot' // It's use to display food manager icon at admin site. 
+			) )
+		);
+
 	   
 		/**
 		 * Feeds

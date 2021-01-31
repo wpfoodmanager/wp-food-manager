@@ -37,6 +37,9 @@ class WPFM_Writepanels {
 	public function __construct() {
 
 		add_action( 'add_meta_boxes', array( $this, 'add_meta_boxes' ) );
+		add_action( 'save_post', array( $this, 'save_post' ), 1, 2 );
+
+		add_action( 'food_manager_save_food_manager', array( $this, 'food_manager_save_food_manager' ), 20, 2 );
 	}
 
 
@@ -50,6 +53,7 @@ class WPFM_Writepanels {
 		global $wp_post_types;
 		
 		add_meta_box( 'food_manager_data', sprintf( __( '%s Data', 'wp-food-manager' ), $wp_post_types['food_manager']->labels->singular_name ), array( $this, 'food_manager_data' ), 'food_manager', 'normal', 'high' );
+		add_meta_box( 'food_manager_menu_data', sprintf( __( '%s Data', 'wp-food-manager' ), $wp_post_types['food_manager']->labels->singular_name ), array( $this, 'food_manager_menu_data' ), 'food_manager_menu', 'normal', 'high' );
 	}
 
 	/**
@@ -120,6 +124,34 @@ class WPFM_Writepanels {
 	}
 
 
+		/**
+	 * food_manager_data function.
+	 *
+	 * @access public
+	 * @param mixed $post
+	 * @return void
+	 */
+	public function food_manager_menu_data( $post ) {
+		global $post, $thepostid;
+		$thepostid = $post->ID;
+		wp_enqueue_script('wpfm-admin');
+
+		wp_nonce_field( 'save_meta_data', 'food_manager_menu_nonce' );
+		?>
+		<div class="wpfm-admin-food-menu-container">
+			<div class="wpfm-admin-menu-selection">
+			<?php food_manager_dropdown_selection(array('multiple' => false,'show_option_all'=> __('Select category','wp-food-manager'),'id' => 'wpfm-admin-food-selection'));?>
+		</div>
+		<div class="wpfm-admin-food-menu-items">
+			<ul class="wpfm-food-menu">
+			</ul>
+		</div>
+	</div>
+	<?php
+		
+	}
+
+
 	/**
 	 * Return array of tabs to show.
 	 *
@@ -135,19 +167,6 @@ class WPFM_Writepanels {
 					'class'    => array( '' ),
 					'priority' => 1,
 				),
-				// 'ingredient'      => array(
-				// 	'label'    => __( 'Ingredients', 'wp-food-manager' ),
-				// 	'target'   => 'ingredient_food_data_content',
-				// 	'class'    => array( '' ),
-				// 	'priority' => 2,
-				// ),
-				// 'neutritions'       => array(
-				// 	'label'    => __( 'Neutritions', 'wp-food-manager' ),
-				// 	'target'   => 'neutritions_food_data_content',
-				// 	'class'    => array( '' ),
-				// 	'priority' => 3,
-				// ),
-				
 			)
 		);
 
@@ -178,7 +197,6 @@ class WPFM_Writepanels {
 	public function food_listing_fields() {	    
 		global $post;
 		$current_user = wp_get_current_user();
-		
 		
 		$GLOBALS['food_manager']->forms->get_form( 'submit-food', array() );
 		$form_submit_food_instance = call_user_func( array( 'WPFM_Form_Submit_Food', 'instance' ) );
@@ -552,6 +570,137 @@ class WPFM_Writepanels {
 		</p>
 		<?php
 	}
+
+		/**
+	 * save_post function.
+	 *
+	 * @access public
+	 * @param mixed $post_id
+	 * @param mixed $post
+	 * @return void
+	 */
+	public function save_post( $post_id, $post ) {
+		if ( empty( $post_id ) || empty( $post ) || empty( $_POST ) ) return;
+		if ( defined('DOING_AUTOSAVE') && DOING_AUTOSAVE ) return;
+		if ( is_int( wp_is_post_revision( $post ) ) ) return;
+		if ( is_int( wp_is_post_autosave( $post ) ) ) return;
+		if ( empty($_POST['food_manager_nonce']) || ! wp_verify_nonce( $_POST['food_manager_nonce'], 'save_meta_data' ) ) return;
+		if ( ! current_user_can( 'edit_post', $post_id ) ) return;
+
+		if ( $post->post_type == 'food_manager'  )
+		do_action( 'food_manager_save_food_manager', $post_id, $post );
+
+		if ( $post->post_type == 'food_manager_menu'  )
+		do_action( 'food_manager_save_food_manager_menu', $post_id, $post );
+
+	}
+
+	/**
+	 * save_event_listing_data function.
+	 *
+	 * @access public
+	 * @param mixed $post_id
+	 * @param mixed $post
+	 * @return void
+	 */
+	public function save_event_listing_data( $post_id, $post ) {
+		global $wpdb;
+		
+		// Save fields
+		foreach ( $this->food_listing_fields() as $key => $field ) {
+	
+			// author
+			if ( '_food_author' === $key ) {
+				$wpdb->update( $wpdb->posts, array( 'post_author' => $_POST[ $key ] > 0 ? absint( $_POST[ $key ] ) : 0 ), array( 'ID' => $post_id ) );
+			}
+			elseif ( '_food_banner' === $key ) {
+				if ( is_array( $_POST[ $key ] ) ) {
+					$thumbnail_image = $_POST[ $key ][0];
+					update_post_meta( $post_id, $key, array_filter( array_map( 'sanitize_text_field', $_POST[ $key ] ) ) );
+				} else {
+					$thumbnail_image = $_POST[ $key ];
+					update_post_meta( $post_id, $key, sanitize_text_field( $_POST[ $key ] ) );
+				}
+
+				$image = get_the_post_thumbnail_url($post_id);
+
+				if(empty($image))
+				{
+					if( isset($thumbnail_image) && !empty($thumbnail_image) )
+					{
+						$wp_upload_dir = wp_get_upload_dir();
+
+						$baseurl = $wp_upload_dir['baseurl'] . '/';
+
+						$wp_attached_file = str_replace($baseurl, '', $thumbnail_image);
+
+						$args = array(
+					        'meta_key'         	=> '_wp_attached_file',
+					        'meta_value'       	=> $wp_attached_file,
+					        'post_type'        	=> 'attachment',
+					        'posts_per_page'	=> 1,
+					    );
+
+						$attachments = get_posts($args);
+
+						if(!empty($attachments))
+						{
+							foreach ($attachments as $attachment) 
+							{
+								set_post_thumbnail( $post_id, $attachment->ID );
+							}
+						}
+					}
+				}
+				
+			}
+			// Everything else		
+			else {
+				$type = ! empty( $field['type'] ) ? $field['type'] : '';
+				switch ( $type ) {
+					case 'textarea' :
+						update_post_meta( $post_id, $key,wp_kses_post( stripslashes( $_POST[ $key ] ) ) );
+					break;
+					case 'checkbox' :
+						if ( isset( $_POST[ $key ] ) ) {
+							update_post_meta( $post_id, $key, 1 );
+						} else {
+							update_post_meta( $post_id, $key, 0 );
+						}
+					break;
+					case 'date' :
+						if ( isset( $_POST[ $key ] ) ) {
+							$date = $_POST[ $key ];
+							
+							//Convert date and time value into DB formatted format and save eg. 1970-01-01
+							$date_dbformatted = WP_Event_Manager_Date_Time::date_parse_from_format($php_date_format   , $date );
+							$date_dbformatted = !empty($date_dbformatted) ? $date_dbformatted : $date;
+							update_post_meta( $post_id, $key, $date_dbformatted );
+
+						}
+					break;
+					default :
+						if ( ! isset( $_POST[ $key ] ) ) {
+							continue 2;
+						} elseif ( is_array( $_POST[ $key ] ) ) {
+							update_post_meta( $post_id, $key, array_filter( array_map( 'sanitize_text_field', $_POST[ $key ] ) ) );
+						} else {
+							update_post_meta( $post_id, $key, sanitize_text_field( $_POST[ $key ] ) );
+						}
+					break;
+				}
+			}
+		}
+
+			remove_action( 'food_manager_save_food_manager', array( $this, 'food_manager_save_food_manager' ), 20, 2 );
+			$food_data = array(
+					'ID'          => $post_id,
+					'post_status' => $post_status,
+			);
+			wp_update_post( $food_data);
+			add_action( 'food_manager_save_food_manager', array( $this, 'food_manager_save_food_manager' ), 20, 2 );
+	}
+
 
 }
 WPFM_Writepanels::instance();
