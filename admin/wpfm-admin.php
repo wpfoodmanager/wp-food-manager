@@ -85,29 +85,5 @@ class WPFM_Admin {
 				break;
 		}
 	}
-
-	public function wpfm_get_food_listings_by_category_id(){
-		if(isset($_POST['category_id']) && !empty($_POST['category_id'])){
-
-			
-			$food_listing = get_food_listings(array(
-												'category' => $_POST['category_id'],
-												'posts_per_page' => -1,
-											));
-			$html = '';
-			if( $food_listing->have_posts() ):
-			    while( $food_listing->have_posts() ): $food_listing->the_post();
-					$html = '<li data-food-id="'.get_the_ID().'">'.get_the_title().'<span><A href="#" class="wpfm-food-item-remove">Remove</a></span><input type="hidden" name="wpfm-food-listing-ids[]" value="'.get_the_ID().'" /></li>';
-			    endwhile;
-			endif;
-			 wp_reset_postdata();
-			
-			 wp_send_json(array('html' => $html,'success'=>true));
-											
-		}
-		wp_die();
-	}
-	  	
-	
 }
 new WPFM_Admin();
