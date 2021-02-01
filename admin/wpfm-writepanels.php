@@ -59,7 +59,8 @@ class WPFM_Writepanels {
 		global $wp_post_types;
 		
 		add_meta_box( 'food_manager_data', sprintf( __( '%s Data', 'wp-food-manager' ), $wp_post_types['food_manager']->labels->singular_name ), array( $this, 'food_manager_data' ), 'food_manager', 'normal', 'high' );
-		add_meta_box( 'food_manager_menu_data', sprintf( __( '%s Data', 'wp-food-manager' ), $wp_post_types['food_manager']->labels->singular_name ), array( $this, 'food_manager_menu_data' ), 'food_manager_menu', 'normal', 'high' );
+
+		add_meta_box( 'food_manager_menu_data',__( 'Menu items', 'wp-food-manager' ) , array( $this, 'food_manager_menu_data' ), 'food_manager_menu', 'normal', 'high' );
 	}
 
 	/**
@@ -77,14 +78,14 @@ class WPFM_Writepanels {
 		wp_nonce_field( 'save_meta_data', 'food_manager_nonce' );
 		?>
 		<div class="panel-wrap">
-			<ul class="wpfm-tabs">
+			<!-- <ul class="wpfm-tabs">
 				<?php foreach ( $this->get_food_data_tabs() as $key => $tab ) : ?>
 					<li class="<?php echo esc_attr( $key ); ?>_options <?php echo esc_attr( $key ); ?>_tab <?php echo esc_attr( isset( $tab['class'] ) ? implode( ' ', (array) $tab['class'] ) : '' ); ?>">
 						<a href="#<?php if(isset($tab['target'] )) echo $tab['target'];?>" class=""><span><?php echo esc_html( $tab['label'] ); ?></span></a>
 					</li>
 				<?php endforeach; ?>
 				<?php do_action( 'wpfm_food_write_panel_tabs' ); ?>
-			</ul>
+			</ul> -->
 
 			<?php
 				//output tab
@@ -92,39 +93,6 @@ class WPFM_Writepanels {
 			?>
 			<div class="clear"></div>
 		</div>
-		<style type="text/css">
-			.wpfm_panel {
-				  display: none;
-				  padding: 6px 12px;
-				  border: 1px solid #ccc;
-				  border-top: none;
-				  float: left;
-    			  width: 80%;
-				}
-				ul.wpfm-tabs{
-					margin: 0;
-				    width: 20%;
-				    float: left;
-				    line-height: 1em;
-				    padding: 0 0 10px;
-				    position: relative;
-				    background-color: #fafafa;
-				    border-right: 1px solid #eee;
-				    box-sizing: border-box;
-				}
-				ul.wpfm-tabs li a{
-				    color: #555;
-				    position: relative;
-				    background-color: #eee;
-				    margin: 0;
-				    padding: 10px;
-				    display: block;
-				    box-shadow: none;
-				    text-decoration: none;
-				    line-height: 20px!important;
-				    border-bottom: 1px solid #eee;
-				}
-		</style>
 	<?php
 		
 	}
@@ -145,29 +113,36 @@ class WPFM_Writepanels {
 		wp_nonce_field( 'save_meta_data', 'food_manager_nonce' );
 		?>
 
-		<div class="wpfm-admin-food-menu-container">
+		<div class="wpfm-admin-food-menu-container wpfm-flex-col wpfm-admin-postbox-meta-data">
 			<div class="wpfm-admin-menu-selection">
 				<?php food_manager_dropdown_selection(array('multiple' => false,'show_option_all'=> __('Select category','wp-food-manager'),'id' => 'wpfm-admin-food-selection'));?>
 				<input type="button" id="wpfm-admin-add-food" class="button button-small" value="<?php _e('Add food','wp-food-manager');?>" />
 			</div>
 			<div class="wpfm-admin-food-menu-items">
-				<ul class="wpfm-food-menu">
+				<ul class="wpfm-food-menu menu menu-item-bar tagchecklist ">
 					<?php $item_ids = get_post_meta($thepostid,'_food_item_ids',true);
 						if($item_ids && is_array($item_ids)){
 							foreach ($item_ids as $key => $id) {
-								# code...
-							
-					?>
-					<li data-food-id="<?=$id;?>"><?php echo get_the_title($id);?>'<span><a href="#" class="wpfm-food-item-remove">Remove</a></span><input type="hidden" name="wpfm_food_listing_ids[]" value="<?=$id;?>" /></li>
-				<?php }
-					} ?>
+							?>
+							<li class="menu-item-handle" data-food-id="<?= $id; ?>">
+								<div class="wpfm-admin-left-col">
+									<span class="dashicons dashicons-menu"></span>
+									<span class="item-title"><?php echo get_the_title($id); ?></span>
+								</div>
+								<div class="wpfm-admin-right-col">
+									<a href="#" class="wpfm-food-item-remove ntdelbutton">
+										<span class="dashicons dashicons-dismiss remove-tag-icon"></span>
+									</a>
+								</div>
+								<input type="hidden" name="wpfm_food_listing_ids[]" value="<?= $id; ?>" />
+							</li>
+							<?php }
+						} ?>
 				</ul>
 			</div>
 		</div>
 	<?php
-		
 	}
-
 
 	/**
 	 * Return array of tabs to show.
@@ -292,7 +267,7 @@ class WPFM_Writepanels {
 			$name = $key;
 		}
 	?>	
-		<p class="form-field">
+		<p class="wpfm-admin-postbox-form-field wpfm-admin-postbox-2-col">
 			<label for="<?php echo esc_attr( $key ); ?>"><?php echo esc_html( $field['label'] ) ; ?>: <?php if ( ! empty( $field['description'] ) ) : ?><span class="tips" data-tip="<?php echo esc_attr( $field['description'] ); ?>">[?]</span><?php endif; ?></label>
 			<?php
 			if ( ! empty( $field['multiple'] ) ) {
@@ -329,7 +304,7 @@ class WPFM_Writepanels {
 			$name = $key;
 		}
 		?>	
-		<p class="form-field">
+		<p class="wpfm-admin-postbox-form-field wpfm-admin-postbox-2-col">
 			<label for="<?php echo esc_attr( $key ); ?>"><?php echo esc_html( $field['label'] ) ; ?>: <?php if ( ! empty( $field['description'] ) ) : ?><span class="tips" data-tip="<?php echo esc_attr( $field['description'] ); ?>">[?]</span><?php endif; ?></label>
 			<input type="text" name="<?php echo esc_attr( $name ); ?>" id="<?php echo esc_attr( $key ); ?>" placeholder="<?php echo esc_attr( $field['placeholder'] ); ?>" value="<?php echo esc_attr( $field['value'] ); ?>" />
 		</p>
@@ -353,7 +328,7 @@ class WPFM_Writepanels {
 		} else {
 			$name = $key;
 			}?>
-			<p class="form-field">
+			<p class="wpfm-admin-postbox-form-field wpfm-admin-postbox-2-col">
 				<label for="<?php echo esc_attr( $key ); ?>"><?php echo esc_html( $field['label'] ) ; ?>: <?php if ( ! empty( $field['description'] ) ) : ?><span class="tips" data-tip="<?php echo esc_attr( $field['description'] ); ?>">[?]</span><?php endif; ?></label>
 			
 	
@@ -383,7 +358,7 @@ class WPFM_Writepanels {
 			$name = $key;
 		}
 	?>
-		<p class="form-field">
+		<p class="wpfm-admin-postbox-form-field wpfm-admin-postbox-2-col">
 			<label for="<?php echo esc_attr( $key ); ?>"><?php echo esc_html( $field['label'] ) ; ?>: <?php if ( ! empty( $field['description'] ) ) : ?><span class="tips" data-tip="<?php echo esc_attr( $field['description'] ); ?>">[?]</span><?php endif; ?></label>
 			<textarea name="<?php echo esc_attr( $name ); ?>" id="<?php echo esc_attr( $key ); ?>" placeholder="<?php echo esc_attr( $field['placeholder'] ); ?>"><?php echo esc_html( $field['value'] ); ?></textarea>
 		</p>
@@ -408,7 +383,7 @@ class WPFM_Writepanels {
 		}
 		?>
 
-		<p class="form-field">
+		<p class="wpfm-admin-postbox-form-field wpfm-admin-postbox-2-col">
 			<label for="<?php echo esc_attr( $key ); ?>"><?php echo esc_html( $field['label'] ) ; ?>: <?php if ( ! empty( $field['description'] ) ) : ?><span class="tips" data-tip="<?php echo esc_attr( $field['description'] ); ?>">[?]</span><?php endif; ?></label>
 			<select name="<?php echo esc_attr( $name ); ?>" id="<?php echo esc_attr( $key ); ?>" class="input-select <?php echo esc_attr( isset( $field['class'] ) ? $field['class'] : $key ); ?>">
 				<?php foreach ( $field['options'] as $key => $value ) : ?>
@@ -436,7 +411,7 @@ class WPFM_Writepanels {
 			$name = $key;
 		}
 		?>
-		<p class="form-field">
+		<p class="wpfm-admin-postbox-form-field wpfm-admin-postbox-2-col">
 			<label for="<?php echo esc_attr( $key ); ?>"><?php echo esc_html( $field['label'] ) ; ?>: <?php if ( ! empty( $field['description'] ) ) : ?><span class="tips" data-tip="<?php echo esc_attr( $field['description'] ); ?>">[?]</span><?php endif; ?></label>
 			<select multiple="multiple" name="<?php echo esc_attr( $name ); ?>[]" id="<?php echo esc_attr( $key ); ?>" class="input-select <?php echo esc_attr( isset( $field['class'] ) ? $field['class'] : $key ); ?>">
 				<?php foreach ( $field['options'] as $key => $value ) : ?>
@@ -464,7 +439,7 @@ class WPFM_Writepanels {
 			$name = $key;
 		}
 		?>
-		<p class="form-field form-field-checkbox">
+		<p class="wpfm-admin-postbox-form-field wpfm-admin-postbox-2-col form-field-checkbox">
 			<label for="<?php echo esc_attr( $key ); ?>"><?php echo esc_html( $field['label'] ) ; ?></label>
 			<input type="checkbox" class="checkbox" name="<?php echo esc_attr( $name ); ?>" id="<?php echo esc_attr( $key ); ?>" value="1" <?php checked( $field['value'], 1 ); ?> />
 			<?php if ( ! empty( $field['description'] ) ) : ?><span class="description"><?php echo $field['description']; ?></span><?php endif; ?>
@@ -493,7 +468,7 @@ class WPFM_Writepanels {
 				$name = $key;
 			}
 			?>
-				<p class="form-field">
+				<p class="wpfm-admin-postbox-form-field wpfm-admin-postbox-2-col">
 					<label for="<?php echo esc_attr( $key ); ?>"><?php echo esc_html( $field['label'] ) ; ?>: <?php if ( ! empty( $field['description'] ) ) : ?><span class="tips" data-tip="<?php echo esc_attr( $field['description'] ); ?>">[?]</span><?php endif; ?></label>
 					<input type="number" name="<?php echo esc_attr( $name ); ?>" id="<?php echo esc_attr( $key ); ?>" placeholder="<?php echo esc_attr( $field['placeholder'] ); ?>" value="<?php echo esc_attr( $field['value'] ); ?>" />
 				</p>
@@ -517,7 +492,7 @@ class WPFM_Writepanels {
 					$name = $key;
 				}
 				?>
-						<p class="form-field">
+						<p class="wpfm-admin-postbox-form-field wpfm-admin-postbox-2-col">
 							<label for="<?php echo esc_attr( $key ); ?>"><?php echo esc_html( $field['label'] ) ; ?>: <?php if ( ! empty( $field['description'] ) ) : ?><span class="tips" data-tip="<?php echo esc_attr( $field['description'] ); ?>">[?]</span><?php endif; ?></label>
 							<input type="button" class="button button-small" name="<?php echo esc_attr( $name ); ?>" id="<?php echo esc_attr( $key ); ?>" placeholder="<?php echo esc_attr( $field['placeholder'] ); ?>" value="<?php echo esc_attr( $field['value'] ); ?>" />
 						</p>

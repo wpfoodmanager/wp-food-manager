@@ -40,52 +40,6 @@ class WPFM_Post_Types {
 
 		add_filter('use_block_editor_for_post_type', array($this,'wpfm_disable_gutenberg'), 10, 2);
 
-
-
-
-
-		// add_filter( 'the_content', array( $this, 'neutritions_content' ) );
-	
-		// add_action( 'food_manager_check_for_expired_foods', array( $this, 'check_for_expired_foods' ) );
-		// add_action( 'food_manager_delete_old_previews', array( $this, 'delete_old_previews' ) );
-
-		// add_action( 'pending_to_publish', array( $this, 'set_food_expiry_date' ) );
-		// add_action( 'preview_to_publish', array( $this, 'set_food_expiry_date' ) );
-		// add_action( 'draft_to_publish', array( $this, 'set_food_expiry_date' ) );
-		// add_action( 'auto-draft_to_publish', array( $this, 'set_food_expiry_date' ) );
-		// add_action( 'expired_to_publish', array( $this, 'set_food_expiry_date' ) );
-		
-		// add_action( 'wp_footer', array( $this, 'output_structured_data' ) );
-		
-		// add_action( 'wp_head', array( $this, 'noindex_expired_cancelled_food_listings' ) );
-
-		// add_filter( 'display_food_description', 'wptexturize'        );
-		// add_filter( 'display_food_description', 'convert_smilies'    );
-		// add_filter( 'display_food_description', 'convert_chars'      );
-		// add_filter( 'display_food_description', 'wpautop'            );
-		// add_filter( 'display_food_description', 'shortcode_unautop'  );
-		// add_filter( 'display_food_description', 'prepend_attachment' );
-
-		// if ( ! empty( $GLOBALS['wp_embed'] ) ) {
-  //  			add_filter( 'display_food_description', array( $GLOBALS['wp_embed'], 'run_shortcode' ), 8 );
-  //    		add_filter( 'display_food_description', array( $GLOBALS['wp_embed'], 'autoembed' ), 8 );
-  //  		}
-		
-		// add_action( 'food_manager_registration_details_email', array( $this, 'registration_details_email' ) );
-		// add_action( 'food_manager_registration_details_url', array( $this, 'registration_details_url' ) );		
-
-		// add_filter( 'wp_insert_post_data', array( $this, 'fix_post_name' ), 10, 2 );
-		// add_action( 'add_post_meta', array( $this, 'maybe_add_geolocation_data' ), 10, 3 );
-		// add_action( 'update_post_meta', array( $this, 'update_post_meta' ), 10, 4 );
-		// add_action( 'wp_insert_post', array( $this, 'maybe_add_default_meta_data' ), 10, 2 );		
-		
-		// add_action( 'parse_query', array( $this, 'add_feed_query_args' ) );
-
-		// // WP ALL Import
-		// add_action( 'pmxi_saved_post', array( $this, 'pmxi_saved_post' ), 10, 1 );
- 
-  //       //view count action
-  //       add_action( 'set_single_listing_view_count', array( $this, 'set_single_listing_view_count' ));
 	}
 
 	/**
@@ -654,7 +608,7 @@ class WPFM_Post_Types {
 
 
 
-/**
+		/**
 		 * Post types
 		 */
 
@@ -751,22 +705,6 @@ class WPFM_Post_Types {
 		/**
 		 * Post status
 		 */
-
-		register_post_status( 'expired', array(
-
-			'label'                     => _x( 'Expired', 'post status', 'wp-food-manager' ),
-
-			'public'                    => true,
-
-			'exclude_from_search'       => true,
-
-			'show_in_admin_all_list'    => true,
-
-			'show_in_admin_status_list' => true,
-
-			'label_count'               => _n_noop( 'Expired <span class="count">(%s)</span>', 'Expired <span class="count">(%s)</span>', 'wp-food-manager' )
-		) );
-
 		register_post_status( 'preview', array(
 
 			'public'                    => true,
@@ -780,42 +718,7 @@ class WPFM_Post_Types {
 			'label_count'               => _n_noop( 'Preview <span class="count">(%s)</span>', 'Preview <span class="count">(%s)</span>', 'wp-food-manager' )
 		) );
 
-			if(get_option('enable_food_neutritions')){	
-	 	$singular  = __( 'Neutrition', 'wp-food-manager' );
-		$plural    = __( 'Neutritions', 'wp-food-manager' );
-	    register_post_type( 'food_neutritions', apply_filters('register_food_neutritions_post_type',array(
-				        'labels' => array(
-
-						'name' 					=> $plural,
-
-						'singular_name' 		=> $singular,
-
-						
-						'featured_image'        => __( 'Neutrition Logo', 'wp-food-manager' ),
-						
-						'set_featured_image'    => __( 'Set neutritions logo', 'wp-food-manager' ),
-						
-						'remove_featured_image' => __( 'Remove neutrition logo', 'wp-food-manager' ),
-						
-						'use_featured_image'    => __( 'Use as neutrition logo', 'wp-food-manager' ),
-					),
-
-				        'public'             => true,
-				        'publicly_queryable' => true,
-				        'show_ui'            => true,
-				        'show_in_menu'       => false,
-				        'query_var'          => true,
-				        'rewrite'            => array( 'slug' => 'food-neutritions' ),
-				        'capability_type'    => 'post',
-				        'has_archive'        => true,
-				        'hierarchical'       => false,
-				        'menu_position'      => null,
-				        'show_in_menu' => 'edit.php?post_type=food_manager',
-				        'supports'           => array( 'title', 'editor', 'author', 'thumbnail', 'excerpt', 'comments' ),
-				         
-	    		) )
-	    );
-	}
+			
 
 	}
 

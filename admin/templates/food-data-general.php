@@ -2,10 +2,10 @@
 /**
 *  Template general panel
 */
-	
-echo '<div id="general_food_data_content" class="panel wpfm_panel">
-<div class="wp_food_manager_meta_data">';
-
+?>			
+<div id="general_food_data_content" class="panel wpfm_panel">
+<div class="wp_food_manager_meta_data">
+<?php
 do_action( 'food_manager_food_data_start', $thepostid );
 foreach ( $this->food_listing_fields() as $key => $field ) {
 	$type = ! empty( $field['type'] ) ? $field['type'] : 'text';
@@ -18,4 +18,6 @@ foreach ( $this->food_listing_fields() as $key => $field ) {
 	}
 }
 do_action( 'food_manager_food_data_end', $thepostid );
-echo '</div></div>';
+?>
+</div>
+</div>

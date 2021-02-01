@@ -1,0 +1,72 @@
+.wpfm-admin-left-col,
+.wpfm-admin-right-col,
+a.wpfm-food-item-remove.ntdelbutton {
+  display: inline-flex;
+  align-items: center;
+}
+
+.wpfm-food-menu li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.wpfm-admin-postbox-meta-data .wpfm-admin-postbox-form-field label {
+  vertical-align: middle;
+  display: block;
+  font-weight: 700;
+  margin: 0;
+}
+.wpfm-admin-postbox-meta-data .wpfm-admin-postbox-2-col {
+  flex: 0 1 50%;
+}
+.wpfm-admin-postbox-meta-data .wpfm-admin-postbox-form-field {
+  line-height: 2em;
+  box-sizing: border-box;
+  padding: 0 12px 0 0;
+  margin: 0 0 12px;
+}
+
+.wpfm-admin-postbox-form-field .wpfm-admin-postbox-file_url input:first-child,
+.wpfm-admin-postbox-form-field .wpfm-admin-postbox-file_url select:first-child {
+  flex: 1;
+}
+
+.wpfm-admin-postbox-meta-data,
+.wpfm-admin-postbox-form-field .wpfm-admin-postbox-file_url {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.wpfm-admin-postbox-meta-data .wpfm-admin-postbox-form-field input,
+.wpfm-admin-postbox-meta-data .wpfm-admin-postbox-form-field select {
+  width: 100%;
+  max-width: 100%;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  vertical-align: middle;
+}
+
+.wpfm-admin-postbox-meta-data .wpfm-admin-postbox-form-field .checkbox {
+  width: 1em;
+}
+.wpfm-admin-postbox-drop-btn,
+.wpfm-food-item-remove span.dashicons.dashicons-dismiss {
+  display: flex;
+}
+
+.wpfm-admin-postbox-drop-btn input[type="button"] {
+  flex: 1;
+}
+.wpfm-admin-food-menu-container.wpfm-flex-col.wpfm-admin-postbox-meta-data {
+  flex-direction: column;
+}
+.wpfm-admin-menu-selection.wpfm-admin-postbox-form-field {
+  max-width: 500px;
+}
+.wpfm-admin-food-menu-items .wpfm-admin-left-col span.dashicons {
+  margin-right: 10px;
+}
+.wpfm-food-menu.menu li.menu-item-handle:last-child {
+  margin-bottom: 10px;
+}

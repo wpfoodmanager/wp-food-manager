@@ -48,6 +48,8 @@ class WPFM_Admin {
 
 		$screen = get_current_screen();	
 
+		wp_enqueue_style('wpfm-backend-css',WPFM_PLUGIN_URL.'/assets/css/backend.css');
+
 		wp_register_script( 'wpfm-admin', WPFM_PLUGIN_URL. '/assets/js/admin.js', array( 'jquery' ), WPFM_VERSION, true );
 
 		wp_localize_script( 'wpfm-admin', 'wpfm_admin',

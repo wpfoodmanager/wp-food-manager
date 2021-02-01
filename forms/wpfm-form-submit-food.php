@@ -146,8 +146,8 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
 					'taxonomy'    => 'food_manager_neutrition'
 				),
 		 	
-				'food_banner' => array(
-					'label'       => __( 'food Banner', 'wp-food-manager' ),
+				/*'food_banner' => array(
+					'label'       => __( 'Food Banner', 'wp-food-manager' ),
 					'type'        => 'file',
 					'required'    => true,
 					'placeholder' => '',
@@ -160,7 +160,7 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
 						'gif'  => 'image/gif',
 						'png'  => 'image/png'
 					)
-				),
+				),*/
 
 				'food_description' => array(
 					'label'       => __( 'Description', 'wp-food-manager' ),

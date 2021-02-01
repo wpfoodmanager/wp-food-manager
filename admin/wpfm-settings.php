@@ -120,7 +120,7 @@ class WPFM_Settings {
 							)
 					),
 
-				'food_submission' => array(
+				/*'food_submission' => array(
 
 					__( 'Food Submission', 'wp-food-manager' ),
 
@@ -175,9 +175,9 @@ class WPFM_Settings {
 								'attributes' => array()
 						),
 					)
-				),
+				),*/
 
-				'food_pages' => array(
+				/*'food_pages' => array(
 
 					__( 'Pages', 'wp-food-manager' ),
 
@@ -234,7 +234,7 @@ class WPFM_Settings {
 					        'type'      => 'text'
 					    ),
 					)
-				),
+				),*/
 			
 				
 			)
