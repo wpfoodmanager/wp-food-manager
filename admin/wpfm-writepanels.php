@@ -2,8 +2,9 @@
 /*
 * This file use to cretae fields of wp food manager at admin side.
 */
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
-class WPFM_Writepanels {
+if (!defined('ABSPATH')) exit; // Exit if accessed directly
+class WPFM_Writepanels
+{
 
 	/**
 	 * The single instance of the class.
@@ -20,8 +21,9 @@ class WPFM_Writepanels {
 	 * @static
 	 * @return self Main instance.
 	 */
-	public static function instance() {
-		if ( is_null( self::$_instance ) ) {
+	public static function instance()
+	{
+		if (is_null(self::$_instance)) {
 			self::$_instance = new self();
 		}
 		return self::$_instance;
@@ -34,18 +36,24 @@ class WPFM_Writepanels {
 	 * @access public
 	 * @return void
 	 */
-	public function __construct() {
+	public function __construct()
+	{
 
-		add_action( 'add_meta_boxes', array( $this, 'add_meta_boxes' ) );
-		add_action( 'save_post', array( $this, 'save_post' ), 1, 2 );
+		add_action('add_meta_boxes', array($this, 'add_meta_boxes'));
+		add_action('save_post', array($this, 'save_post'), 1, 2);
 
-		add_action( 'food_manager_save_food_manager', array( $this, 'food_manager_save_food_manager_data' ), 20, 2 );
-		
+		add_action('food_manager_save_food_manager', array($this, 'food_manager_save_food_manager_data'), 20, 2);
+
+		// save food attributes
+		add_action('wp_ajax_wpfm_update_food_attributes', array($this, 'wpfm_update_food_attributes'));
+
 		//food menu 
-		add_action( 'wp_ajax_wpfm_get_food_listings_by_category_id', array( $this, 'wpfm_get_food_listings_by_category_id' ) );
+		add_action('wp_ajax_wpfm_get_food_listings_by_category_id', array($this, 'wpfm_get_food_listings_by_category_id'));
 
-		add_action( 'food_manager_save_food_manager_menu', array( $this, 'food_manager_save_food_manager_menu_data' ), 20, 2 );
-
+		add_action('food_manager_save_food_manager_menu', array($this, 'food_manager_save_food_manager_menu_data'), 20, 2);
+		//add food menu column
+		add_filter('manage_food_manager_menu_posts_columns', array($this, 'set_shortcode_copy_columns'));
+		add_action('manage_food_manager_menu_posts_custom_column', array($this, 'shortcode_copy_content_column'), 10, 2);
 	}
 
 
@@ -55,12 +63,13 @@ class WPFM_Writepanels {
 	 * @access public
 	 * @return void
 	 */
-	public function add_meta_boxes() {
+	public function add_meta_boxes()
+	{
 		global $wp_post_types;
-		
-		add_meta_box( 'food_manager_data', sprintf( __( '%s Data', 'wp-food-manager' ), $wp_post_types['food_manager']->labels->singular_name ), array( $this, 'food_manager_data' ), 'food_manager', 'normal', 'high' );
 
-		add_meta_box( 'food_manager_menu_data',__( 'Menu items', 'wp-food-manager' ) , array( $this, 'food_manager_menu_data' ), 'food_manager_menu', 'normal', 'high' );
+		add_meta_box('food_manager_data', sprintf(__('%s Data', 'wp-food-manager'), $wp_post_types['food_manager']->labels->singular_name), array($this, 'food_manager_data'), 'food_manager', 'normal', 'high');
+
+		add_meta_box('food_manager_menu_data', __('Menu items', 'wp-food-manager'), array($this, 'food_manager_menu_data'), 'food_manager_menu', 'normal', 'high');
 	}
 
 	/**
@@ -70,74 +79,72 @@ class WPFM_Writepanels {
 	 * @param mixed $post
 	 * @return void
 	 */
-	public function food_manager_data( $post ) {
+	public function food_manager_data($post)
+	{
 		global $post, $thepostid;
 		$thepostid = $post->ID;
 		wp_enqueue_script('wpfm-admin');
 
-		wp_nonce_field( 'save_meta_data', 'food_manager_nonce' );
-		?>
-		<div class="panel-wrap">
-			<!-- <ul class="wpfm-tabs">
-				<?php foreach ( $this->get_food_data_tabs() as $key => $tab ) : ?>
-					<li class="<?php echo esc_attr( $key ); ?>_options <?php echo esc_attr( $key ); ?>_tab <?php echo esc_attr( isset( $tab['class'] ) ? implode( ' ', (array) $tab['class'] ) : '' ); ?>">
-						<a href="#<?php if(isset($tab['target'] )) echo $tab['target'];?>" class=""><span><?php echo esc_html( $tab['label'] ); ?></span></a>
-					</li>
-				<?php endforeach; ?>
-				<?php do_action( 'wpfm_food_write_panel_tabs' ); ?>
-			</ul> -->
+		wp_nonce_field('save_meta_data', 'food_manager_nonce');
 
-			<?php
-				//output tab
-				self::output_tabs();
-			?>
-			<div class="clear"></div>
-		</div>
-	<?php
-		
+
+		include('templates/food-data-tabs.php');
+
 	}
 
 
-		/**
+	/**
 	 * food_manager_data function.
 	 *
 	 * @access public
 	 * @param mixed $post
 	 * @return void
 	 */
-	public function food_manager_menu_data( $post ) {
+	public function food_manager_menu_data($post)
+	{
 		global $post, $thepostid;
 		$thepostid = $post->ID;
 		wp_enqueue_script('wpfm-admin');
 
-		wp_nonce_field( 'save_meta_data', 'food_manager_nonce' );
-		?>
+		wp_nonce_field('save_meta_data', 'food_manager_nonce');
+?>
 
 		<div class="wpfm-admin-food-menu-container wpfm-flex-col wpfm-admin-postbox-meta-data">
-			<div class="wpfm-admin-menu-selection">
-				<?php food_manager_dropdown_selection(array('multiple' => false,'show_option_all'=> __('Select category','wp-food-manager'),'id' => 'wpfm-admin-food-selection'));?>
-				<input type="button" id="wpfm-admin-add-food" class="button button-small" value="<?php _e('Add food','wp-food-manager');?>" />
+			<div class="wpfm-admin-menu-selection wpfm-admin-postbox-form-field">
+				<label for="_add_food"><?php _e('Select food category'); ?></label>
+				<div class="wpfm-admin-postbox-drop-btn">
+					<?php food_manager_dropdown_selection(array(
+						'multiple' => false, 'show_option_all' => __('Select category', 'wp-food-manager'),
+						'id' => 'wpfm-admin-food-selection',
+						'taxonomy' => 'food_manager_category',
+						'hide_empty' => false,
+						'pad_counts' => true,
+						'show_count' => true,
+						'hierarchical' => true,
+					)); ?>
+					<input type="button" id="wpfm-admin-add-food" class="button button-small" value="<?php _e('Add food', 'wp-food-manager'); ?>" />
+				</div>
 			</div>
 			<div class="wpfm-admin-food-menu-items">
-				<ul class="wpfm-food-menu menu menu-item-bar tagchecklist ">
-					<?php $item_ids = get_post_meta($thepostid,'_food_item_ids',true);
-						if($item_ids && is_array($item_ids)){
-							foreach ($item_ids as $key => $id) {
-							?>
+				<ul class="wpfm-food-menu menu menu-item-bar ">
+					<?php $item_ids = get_post_meta($thepostid, '_food_item_ids', true);
+					if ($item_ids && is_array($item_ids)) {
+						foreach ($item_ids as $key => $id) {
+					?>
 							<li class="menu-item-handle" data-food-id="<?= $id; ?>">
 								<div class="wpfm-admin-left-col">
 									<span class="dashicons dashicons-menu"></span>
 									<span class="item-title"><?php echo get_the_title($id); ?></span>
 								</div>
 								<div class="wpfm-admin-right-col">
-									<a href="#" class="wpfm-food-item-remove ntdelbutton">
-										<span class="dashicons dashicons-dismiss remove-tag-icon"></span>
+									<a href="#" class="wpfm-food-item-remove">
+										<span class="dashicons dashicons-dismiss"></span>
 									</a>
 								</div>
 								<input type="hidden" name="wpfm_food_listing_ids[]" value="<?= $id; ?>" />
 							</li>
-							<?php }
-						} ?>
+					<?php }
+					} ?>
 				</ul>
 			</div>
 		</div>
@@ -149,36 +156,54 @@ class WPFM_Writepanels {
 	 *
 	 * @return array
 	 */
-	private function get_food_data_tabs() {
+	private function get_food_data_tabs()
+	{
 		$tabs = apply_filters(
 			'wpfm_food_data_tabs',
 			array(
 				'general'        => array(
-					'label'    => __( 'General', 'wp-food-manager' ),
+					'label'    => __('General', 'wp-food-manager'),
 					'target'   => 'general_food_data_content',
-					'class'    => array( '' ),
+					'class'    => array(''),
+					'priority' => 1,
+				),
+				'extra-options'        => array(
+					'label'    => __('Extra options', 'wp-food-manager'),
+					'target'   => 'extra_options_food_data_content',
+					'class'    => array(),
+					'priority' => 1,
+				),
+				'ingredient'        => array(
+					'label'    => __('Ingredient', 'wp-food-manager'),
+					'target'   => 'ingredient_food_data_content',
+					'class'    => array(''),
+					'priority' => 1,
+				),
+				'neutritions'        => array(
+					'label'    => __('Neutritions', 'wp-food-manager'),
+					'target'   => 'neutritions_food_data_content',
+					'class'    => array(''),
 					'priority' => 1,
 				),
 			)
 		);
 
 		// Sort tabs based on priority.
-		uasort( $tabs, array( $this, 'sort_by_priority' ) );
+		uasort($tabs, array($this, 'sort_by_priority'));
 
 		return $tabs;
 	}
 
 
-	public function output_tabs(){
+	public function output_tabs()
+	{
 		global $post, $thepostid;
 		$thepostid = $post->ID;
 
 		include 'templates/food-data-general.php';
-		include 'templates/food-data-ingredient.php';
-		
+		include 'templates/food-data-extra-options.php';
+		;
 	}
-
-
 
 	/**
 	 * food_listing_fields function.
@@ -186,159 +211,39 @@ class WPFM_Writepanels {
 	 * @access public
 	 * @return void
 	 */
-	public function food_listing_fields() {	    
+	public function food_manager_data_fields()
+	{
 		global $post;
 		$current_user = wp_get_current_user();
-		
-		$GLOBALS['food_manager']->forms->get_form( 'submit-food', array() );
-		$form_submit_food_instance = call_user_func( array( 'WPFM_Form_Submit_Food', 'instance' ) );
-		$fields = $form_submit_food_instance->merge_with_custom_fields('backend');
-		
-		/** add _ (prefix) for all backend fields. 
-		* 	Field editor will only return fields without _(prefix).
-		**/
-		foreach ($fields as $group_key => $group_fields) {
-			foreach ($group_fields as $field_key => $field_value) {
-				
-				if( strpos($field_key, '_') !== 0 ) {
-					$fields['_'.$field_key]  = $field_value;	
-				}else{
-					$fields[$field_key]  = $field_value;	
-				}
-			}
-			unset($fields[$group_key]);
-		}
-		$fields = apply_filters( 'food_manager_food_data_fields', $fields );
 
-		if(isset($fields['_food_title']))
-			unset($fields['_food_title']);
+		$fields =  $GLOBALS['food_manager']->forms->get_form_fields('submit-food', 'backend');
 
-		if(isset( $fields['_food_description'] )) 
-			unset($fields['_food_description']);
-		
-		if ( $current_user->has_cap( 'manage_food_managers' ) ) {
-			$fields['_featured'] = array(
-				'label'       => __( 'Featured Listing', 'wp-food-manager' ),
-				'type'        => 'checkbox',
-				'description' => __( 'Featured listings will be sticky during searches, and can be styled differently.', 'wp-food-manager' ),
-				'priority'    => 39
-			);
-		}
+		$fields = apply_filters('food_manager_food_data_fields', $fields);
 
-		if ( $current_user->has_cap( 'edit_others_food_managers' ) ) {
-			$fields['_food_author'] = array(
-				'label'    => __( 'Posted by', 'wp-food-manager' ),
-				'type'     => 'author',
-				'priority' => 41
-			);
-		}
+		if (isset($fields['food']['food_title']))
+			unset($fields['food']['food_title']);
 
-		uasort( $fields, array( $this, 'sort_by_priority' ) );
+		if (isset($fields['food']['food_description']))
+			unset($fields['food']['food_description']);
+
+		uasort($fields, array($this, 'sort_by_priority'));
 		return $fields;
 	}
+
+
 
 	/**
 	 * Sort array by priority value
 	 */
-	protected function sort_by_priority( $a, $b ) {
-	    if ( ! isset( $a['priority'] ) || ! isset( $b['priority'] ) || $a['priority'] === $b['priority'] ) {
-	        return 0;
-	    }
-	    return ( $a['priority'] < $b['priority'] ) ? -1 : 1;
+	protected function sort_by_priority($a, $b)
+	{
+		if (!isset($a['priority']) || !isset($b['priority']) || $a['priority'] === $b['priority']) {
+			return 0;
+		}
+		return ($a['priority'] < $b['priority']) ? -1 : 1;
 	}
 
-	/**
-	 * input_file function.
-	 *
-	 * @param mixed $key
-	 * @param mixed $field
-	 */
-	public static function input_file( $key, $field ) {
-		global $thepostid;
-		if ( ! isset( $field['value'] ) ) {
-			$field['value'] = get_post_meta( $thepostid, $key, true );
-		}
-		if ( empty( $field['placeholder'] ) ) {
-			$field['placeholder'] = 'http://';
-		}
-		if ( ! empty( $field['name'] ) ) {
-			$name = $field['name'];
-		} else {
-			$name = $key;
-		}
-	?>	
-		<p class="wpfm-admin-postbox-form-field wpfm-admin-postbox-2-col">
-			<label for="<?php echo esc_attr( $key ); ?>"><?php echo esc_html( $field['label'] ) ; ?>: <?php if ( ! empty( $field['description'] ) ) : ?><span class="tips" data-tip="<?php echo esc_attr( $field['description'] ); ?>">[?]</span><?php endif; ?></label>
-			<?php
-			if ( ! empty( $field['multiple'] ) ) {
-				foreach ( (array) $field['value'] as $value ) {
-					?><span class="file_url"><input type="text" name="<?php echo esc_attr( $name ); ?>[]" placeholder="<?php echo esc_attr( $field['placeholder'] ); ?>" value="<?php echo esc_attr( $value ); ?>" /><button class="button button-small wp_food_manager_upload_file_button" data-uploader_button_text="<?php _e( 'Use file', 'wp-food-manager' ); ?>"><?php _e( 'Upload', 'wp-food-manager' ); ?></button></span><?php
-				}
-			} else {
-				if(isset($field['value']) && is_array($field['value']) )
-					$field['value'] = array_shift($field['value']);
-				?><span class="file_url"><input type="text" name="<?php echo esc_attr( $name ); ?>" id="<?php echo esc_attr( $key ); ?>" placeholder="<?php echo esc_attr( $field['placeholder'] ); ?>" value="<?php echo esc_attr( $field['value'] ); ?>" /><button class="button button-small wp_food_manager_upload_file_button" data-uploader_button_text="<?php _e( 'Use file', 'wp-food-manager' ); ?>"><?php _e( 'Upload', 'wp-food-manager' ); ?></button></span><?php
-			}
-			if ( ! empty( $field['multiple'] ) ) {
-				?><button class="button button-small wp_food_manager_add_another_file_button" data-field_name="<?php echo esc_attr( $key ); ?>" data-field_placeholder="<?php echo esc_attr( $field['placeholder'] ); ?>" data-uploader_button_text="<?php _e( 'Use file', 'wp-food-manager' ); ?>" data-uploader_button="<?php _e( 'Upload', 'wp-food-manager' ); ?>"><?php _e( 'Add file', 'wp-food-manager' ); ?></button><?php
-			}
-			?>
-		</p>
-		<?php
-	}
 
-	/**
-	 * input_text function.
-	 *
-	 * @param mixed $key
-	 * @param mixed $field
-	 */
-	public static function input_text( $key, $field ) {
-		global $thepostid;
-		if ( ! isset( $field['value'] ) ) {
-			$field['value'] = get_post_meta( $thepostid, $key, true );
-		}
-		if ( ! empty( $field['name'] ) ) {
-			$name = $field['name'];
-		} else {
-			$name = $key;
-		}
-		?>	
-		<p class="wpfm-admin-postbox-form-field wpfm-admin-postbox-2-col">
-			<label for="<?php echo esc_attr( $key ); ?>"><?php echo esc_html( $field['label'] ) ; ?>: <?php if ( ! empty( $field['description'] ) ) : ?><span class="tips" data-tip="<?php echo esc_attr( $field['description'] ); ?>">[?]</span><?php endif; ?></label>
-			<input type="text" name="<?php echo esc_attr( $name ); ?>" id="<?php echo esc_attr( $key ); ?>" placeholder="<?php echo esc_attr( $field['placeholder'] ); ?>" value="<?php echo esc_attr( $field['value'] ); ?>" />
-		</p>
-		<?php
-	}
-	
-	/**
-	 * input_wp_editor function.
-	 *
-	 * @param mixed $key
-	 * @param mixed $field
-	 * @since 2.8
-	 */
-	public static function input_wp_editor( $key, $field ) {
-		global $thepostid;
-		if ( ! isset( $field['value'] ) ) {
-			$field['value'] = get_post_meta( $thepostid, $key, true );
-		}
-		if ( ! empty( $field['name'] ) ) {
-			$name = $field['name'];
-		} else {
-			$name = $key;
-			}?>
-			<p class="wpfm-admin-postbox-form-field wpfm-admin-postbox-2-col">
-				<label for="<?php echo esc_attr( $key ); ?>"><?php echo esc_html( $field['label'] ) ; ?>: <?php if ( ! empty( $field['description'] ) ) : ?><span class="tips" data-tip="<?php echo esc_attr( $field['description'] ); ?>">[?]</span><?php endif; ?></label>
-			
-	
-			<?php
-			wp_editor( $field['value'], $name, array("media_buttons" => false) );
-			?>
-			</p>
-			<?php
-		}
-	
 	
 
 	/**
@@ -347,22 +252,50 @@ class WPFM_Writepanels {
 	 * @param mixed $key
 	 * @param mixed $field
 	 */
-	public static function input_textarea( $key, $field ) {
+	public static function input_text($key, $field)
+	{
 		global $thepostid;
-		if ( ! isset( $field['value'] ) ) {
-			$field['value'] = get_post_meta( $thepostid, $key, true );
+		if (!isset($field['value'])) {
+			$field['value'] = get_post_meta($thepostid, $key, true);
 		}
-		if ( ! empty( $field['name'] ) ) {
+		if (!empty($field['name'])) {
 			$name = $field['name'];
 		} else {
 			$name = $key;
 		}
 	?>
-		<p class="wpfm-admin-postbox-form-field wpfm-admin-postbox-2-col">
-			<label for="<?php echo esc_attr( $key ); ?>"><?php echo esc_html( $field['label'] ) ; ?>: <?php if ( ! empty( $field['description'] ) ) : ?><span class="tips" data-tip="<?php echo esc_attr( $field['description'] ); ?>">[?]</span><?php endif; ?></label>
-			<textarea name="<?php echo esc_attr( $name ); ?>" id="<?php echo esc_attr( $key ); ?>" placeholder="<?php echo esc_attr( $field['placeholder'] ); ?>"><?php echo esc_html( $field['value'] ); ?></textarea>
+		<p class="wpfm-admin-postbox-form-field <?=$name;?>">
+			<label for="<?php echo esc_attr($key); ?>"><?php echo esc_html($field['label']); ?>: <?php if (!empty($field['description'])) : ?><span class="tips" data-tip="<?php echo esc_attr($field['description']); ?>">[?]</span><?php endif; ?></label>
+			<input type="text" class="wpfm-small-field" name="<?php echo esc_attr($name); ?>" id="<?php echo esc_attr($key); ?>" placeholder="<?php echo esc_attr($field['placeholder']); ?>" value="<?php echo esc_attr($field['value']); ?>" />
 		</p>
-		<?php
+	<?php
+	}
+
+
+
+	/**
+	 * input_text function.
+	 *
+	 * @param mixed $key
+	 * @param mixed $field
+	 */
+	public static function input_textarea($key, $field)
+	{
+		global $thepostid;
+		if (!isset($field['value'])) {
+			$field['value'] = get_post_meta($thepostid, $key, true);
+		}
+		if (!empty($field['name'])) {
+			$name = $field['name'];
+		} else {
+			$name = $key;
+		}
+	?>
+		<p class="wpfm-admin-postbox-form-field <?=$name;?>">
+			<label for="<?php echo esc_attr($key); ?>"><?php echo esc_html($field['label']); ?>: <?php if (!empty($field['description'])) : ?><span class="tips" data-tip="<?php echo esc_attr($field['description']); ?>">[?]</span><?php endif; ?></label>
+			<textarea name="<?php echo esc_attr($name); ?>" id="<?php echo esc_attr($key); ?>" placeholder="<?php echo esc_attr($field['placeholder']); ?>"><?php echo esc_html($field['value']); ?></textarea>
+		</p>
+	<?php
 	}
 
 	/**
@@ -371,27 +304,28 @@ class WPFM_Writepanels {
 	 * @param mixed $key
 	 * @param mixed $field
 	 */
-	public static function input_select( $key, $field ) {	   
+	public static function input_select($key, $field)
+	{
 		global $thepostid;
-		if ( ! isset( $field['value'] ) ) {
-			$field['value'] = get_post_meta( $thepostid, $key, true );
+		if (!isset($field['value'])) {
+			$field['value'] = get_post_meta($thepostid, $key, true);
 		}
-		if ( ! empty( $field['name'] ) ) {
+		if (!empty($field['name'])) {
 			$name = $field['name'];
 		} else {
 			$name = $key;
 		}
-		?>
+	?>
 
-		<p class="wpfm-admin-postbox-form-field wpfm-admin-postbox-2-col">
-			<label for="<?php echo esc_attr( $key ); ?>"><?php echo esc_html( $field['label'] ) ; ?>: <?php if ( ! empty( $field['description'] ) ) : ?><span class="tips" data-tip="<?php echo esc_attr( $field['description'] ); ?>">[?]</span><?php endif; ?></label>
-			<select name="<?php echo esc_attr( $name ); ?>" id="<?php echo esc_attr( $key ); ?>" class="input-select <?php echo esc_attr( isset( $field['class'] ) ? $field['class'] : $key ); ?>">
-				<?php foreach ( $field['options'] as $key => $value ) : ?>
-				<option value="<?php echo esc_attr( $key ); ?>" <?php if ( isset( $field['value'] ) ) selected( $field['value'], $key ); ?>><?php echo esc_html( $value ); ?></option>
+		<p class="wpfm-admin-postbox-form-field <?=$name;?>">
+			<label for="<?php echo esc_attr($key); ?>"><?php echo esc_html($field['label']); ?>: <?php if (!empty($field['description'])) : ?><span class="tips" data-tip="<?php echo esc_attr($field['description']); ?>">[?]</span><?php endif; ?></label>
+			<select name="<?php echo esc_attr($name); ?>" id="<?php echo esc_attr($key); ?>" class="input-select wpfm-small-field <?php echo esc_attr(isset($field['class']) ? $field['class'] : $key); ?>">
+				<?php foreach ($field['options'] as $key => $value) : ?>
+					<option value="<?php echo esc_attr($key); ?>" <?php if (isset($field['value'])) selected($field['value'], $key); ?>><?php echo esc_html($value); ?></option>
 				<?php endforeach; ?>
 			</select>
 		</p>
-		<?php
+	<?php
 	}
 
 	/**
@@ -400,26 +334,27 @@ class WPFM_Writepanels {
 	 * @param mixed $key
 	 * @param mixed $field
 	 */
-	public static function input_multiselect( $key, $field ) {
+	public static function input_multiselect($key, $field)
+	{
 		global $thepostid;
-		if ( ! isset( $field['value'] ) ) {
-			$field['value'] = get_post_meta( $thepostid, $key, true );
+		if (!isset($field['value'])) {
+			$field['value'] = get_post_meta($thepostid, $key, true);
 		}
-		if ( ! empty( $field['name'] ) ) {
+		if (!empty($field['name'])) {
 			$name = $field['name'];
 		} else {
 			$name = $key;
 		}
-		?>
-		<p class="wpfm-admin-postbox-form-field wpfm-admin-postbox-2-col">
-			<label for="<?php echo esc_attr( $key ); ?>"><?php echo esc_html( $field['label'] ) ; ?>: <?php if ( ! empty( $field['description'] ) ) : ?><span class="tips" data-tip="<?php echo esc_attr( $field['description'] ); ?>">[?]</span><?php endif; ?></label>
-			<select multiple="multiple" name="<?php echo esc_attr( $name ); ?>[]" id="<?php echo esc_attr( $key ); ?>" class="input-select <?php echo esc_attr( isset( $field['class'] ) ? $field['class'] : $key ); ?>">
-				<?php foreach ( $field['options'] as $key => $value ) : ?>
-				<option value="<?php echo esc_attr( $key ); ?>" <?php if ( ! empty( $field['value'] ) && is_array( $field['value'] ) ) selected( in_array( $key, $field['value'] ), true ); ?>><?php echo esc_html( $value ); ?></option>
+	?>
+		<p class="wpfm-admin-postbox-form-field <?=$name;?>">
+			<label for="<?php echo esc_attr($key); ?>"><?php echo esc_html($field['label']); ?>: <?php if (!empty($field['description'])) : ?><span class="tips" data-tip="<?php echo esc_attr($field['description']); ?>">[?]</span><?php endif; ?></label>
+			<select multiple="multiple" name="<?php echo esc_attr($name); ?>[]" id="<?php echo esc_attr($key); ?>" class="input-select <?php echo esc_attr(isset($field['class']) ? $field['class'] : $key); ?>">
+				<?php foreach ($field['options'] as $key => $value) : ?>
+					<option value="<?php echo esc_attr($key); ?>" <?php if (!empty($field['value']) && is_array($field['value'])) selected(in_array($key, $field['value']), true); ?>><?php echo esc_html($value); ?></option>
 				<?php endforeach; ?>
 			</select>
 		</p>
-		<?php
+	<?php
 	}
 
 	/**
@@ -428,113 +363,55 @@ class WPFM_Writepanels {
 	 * @param mixed $key
 	 * @param mixed $field
 	 */
-	public static function input_checkbox( $key, $field ) {
+	public static function input_checkbox($key, $field)
+	{
 		global $thepostid;
-		if ( empty( $field['value'] ) ) {
-			$field['value'] = get_post_meta( $thepostid, $key, true );
+		if (empty($field['value'])) {
+			$field['value'] = get_post_meta($thepostid, $key, true);
 		}
-		if ( ! empty( $field['name'] ) ) {
+		if (!empty($field['name'])) {
 			$name = $field['name'];
 		} else {
 			$name = $key;
 		}
-		?>
-		<p class="wpfm-admin-postbox-form-field wpfm-admin-postbox-2-col form-field-checkbox">
-			<label for="<?php echo esc_attr( $key ); ?>"><?php echo esc_html( $field['label'] ) ; ?></label>
-			<input type="checkbox" class="checkbox" name="<?php echo esc_attr( $name ); ?>" id="<?php echo esc_attr( $key ); ?>" value="1" <?php checked( $field['value'], 1 ); ?> />
-			<?php if ( ! empty( $field['description'] ) ) : ?><span class="description"><?php echo $field['description']; ?></span><?php endif; ?>
+	?>
+		<p class="wpfm-admin-postbox-form-field <?=$name;?>">
+			<label for="<?php echo esc_attr($key); ?>"><?php echo esc_html($field['label']); ?></label>
+			<input type="checkbox" class="checkbox " name="<?php echo esc_attr($name); ?>" id="<?php echo esc_attr($key); ?>" value="1" <?php checked($field['value'], 1); ?> />
+			<?php if (!empty($field['description'])) : ?><span class="description"><?php echo $field['description']; ?></span><?php endif; ?>
 		</p>
-		<?php
+	<?php
 	}
 
-	
-		
-		
-		
-		/**
-		 * input_number function.
-		 *
-		 * @param mixed $key
-		 * @param mixed $field
-		 */
-		public static function input_number( $key, $field ) {
-			global $thepostid;
-			if ( ! isset( $field['value'] ) ) {
-				$field['value'] = get_post_meta( $thepostid, $key, true );
-			}
-			if ( ! empty( $field['name'] ) ) {
-				$name = $field['name'];
-			} else {
-				$name = $key;
-			}
-			?>
-				<p class="wpfm-admin-postbox-form-field wpfm-admin-postbox-2-col">
-					<label for="<?php echo esc_attr( $key ); ?>"><?php echo esc_html( $field['label'] ) ; ?>: <?php if ( ! empty( $field['description'] ) ) : ?><span class="tips" data-tip="<?php echo esc_attr( $field['description'] ); ?>">[?]</span><?php endif; ?></label>
-					<input type="number" name="<?php echo esc_attr( $name ); ?>" id="<?php echo esc_attr( $key ); ?>" placeholder="<?php echo esc_attr( $field['placeholder'] ); ?>" value="<?php echo esc_attr( $field['value'] ); ?>" />
-				</p>
-				<?php
-			}
-			/**
-			 * input_button function.
-			 *
-			 * @param mixed $key
-			 * @param mixed $field
-			 */
-			public static function input_button( $key, $field ) {
-				global $thepostid;
-				if ( ! isset( $field['value'] ) ) {
-					$field['value'] = $field['placeholder'];
-				}
-			
-				if ( ! empty( $field['name'] ) ) {
-					$name = $field['name'];
-				} else {
-					$name = $key;
-				}
-				?>
-						<p class="wpfm-admin-postbox-form-field wpfm-admin-postbox-2-col">
-							<label for="<?php echo esc_attr( $key ); ?>"><?php echo esc_html( $field['label'] ) ; ?>: <?php if ( ! empty( $field['description'] ) ) : ?><span class="tips" data-tip="<?php echo esc_attr( $field['description'] ); ?>">[?]</span><?php endif; ?></label>
-							<input type="button" class="button button-small" name="<?php echo esc_attr( $name ); ?>" id="<?php echo esc_attr( $key ); ?>" placeholder="<?php echo esc_attr( $field['placeholder'] ); ?>" value="<?php echo esc_attr( $field['value'] ); ?>" />
-						</p>
-						<?php
-		}	
-		
+
+
+
+
 	/**
-	 * Box to choose who posted the food
+	 * input_number function.
 	 *
 	 * @param mixed $key
 	 * @param mixed $field
-	 */	 
-	public static function input_author( $key, $field ) {
-		global $thepostid, $post;
-		if ( ! $post || $thepostid !== $post->ID ) {
-			$the_post  = get_post( $thepostid );
-			$author_id = $the_post->post_author;
-		} else {
-			$author_id = $post->post_author;
+	 */
+	public static function input_number($key, $field)
+	{
+		global $thepostid;
+		if (!isset($field['value'])) {
+			$field['value'] = get_post_meta($thepostid, $key, true);
 		}
-		$posted_by      = get_user_by( 'id', $author_id );
-		$field['value'] = ! isset( $field['value'] ) ? get_post_meta( $thepostid, $key, true ) : $field['value'];
-		$name           = ! empty( $field['name'] ) ? $field['name'] : $key;
-		?>
-		<p class="form-field form-field-author">
-			<label for="<?php echo esc_attr( $key ); ?>"><?php echo esc_html( $field['label'] ) ; ?>:</label>
-			<span class="current-author">
-				<?php
-					if ( $posted_by ) {
-						echo '<a href="' . admin_url( 'user-edit.php?user_id=' . absint( $author_id ) ) . '">#' . absint( $author_id ) . ' &ndash; ' . $posted_by->user_login . '</a>';
-					} else {
-						 _e( 'Guest User', 'wp-food-manager' );
-					}
-				?> <a href="#" class="change-author button button-small"><?php _e( 'Change', 'wp-food-manager' ); ?></a>
-			</span>
-			<span class="hidden change-author">
-				<input type="number" name="<?php echo esc_attr( $name ); ?>" id="<?php echo esc_attr( $key ); ?>" step="1" value="<?php echo esc_attr( $author_id ); ?>" style="width: 4em;" />
-				<span class="description"><?php _e( 'Enter the ID of the user, or leave blank if submitted by a guest.', 'wp-food-manager' ) ?></span>
-			</span>
+		if (!empty($field['name'])) {
+			$name = $field['name'];
+		} else {
+			$name = $key;
+		}
+	?>
+		<p class="wpfm-admin-postbox-form-field <?=$name;?>">
+			<label for="<?php echo esc_attr($key); ?>"><?php echo esc_html($field['label']); ?>: <?php if (!empty($field['description'])) : ?><span class="tips" data-tip="<?php echo esc_attr($field['description']); ?>">[?]</span><?php endif; ?></label>
+			<input type="number" class="wpfm-small-field" name="<?php echo esc_attr($name); ?>" id="<?php echo esc_attr($key); ?>" placeholder="<?php echo esc_attr($field['placeholder']); ?>" value="<?php echo esc_attr($field['value']); ?>" />
 		</p>
-		<?php
+	<?php
 	}
+	
 
 	/**
 	 * input_radio function.
@@ -542,28 +419,107 @@ class WPFM_Writepanels {
 	 * @param mixed $key
 	 * @param mixed $field
 	 */
-	public static function input_radio( $key, $field ) {
+	public static function input_radio($key, $field)
+	{
 		global $thepostid;
-		if ( empty( $field['value'] ) ) {
-			$field['value'] = get_post_meta( $thepostid, $key, true );
+		if (empty($field['value'])) {
+			$field['value'] = get_post_meta($thepostid, $key, true);
 		}
-		if ( ! empty( $field['name'] ) ) {
+		if (!empty($field['name'])) {
 			$name = $field['name'];
 		} else {
 			$name = $key;
 		}
-		?>
-		<p class="form-field form-field-checkbox">
-			<label><?php echo esc_html( $field['label'] ) ; ?></label>
-			<?php foreach ( $field['options'] as $option_key => $value ) : ?>
-				<label><input type="radio" class="radio" name="<?php echo esc_attr( isset( $field['name'] ) ? $field['name'] : $key ); ?>" value="<?php echo esc_attr( $option_key ); ?>" <?php checked( $field['value'], $option_key ); ?> /> <?php echo esc_html( $value ); ?></label>
+	?>
+		<p class="wpfm-admin-postbox-form-field <?=$name;?>">
+			<label><?php echo esc_html($field['label']); ?></label>
+			<?php foreach ($field['options'] as $option_key => $value) : ?>
+				<input type="radio" class="radio" name="<?php echo esc_attr(isset($field['name']) ? $field['name'] : $key); ?>" value="<?php echo esc_attr($option_key); ?>" <?php checked($field['value'], $option_key); ?> /> <?php echo esc_html($value); ?>
 			<?php endforeach; ?>
-			<?php if ( ! empty( $field['description'] ) ) : ?><span class="description"><?php echo $field['description']; ?></span><?php endif; ?>
+			<?php if (!empty($field['description'])) : ?><span class="description"><?php echo $field['description']; ?></span><?php endif; ?>
 		</p>
-		<?php
+<?php
 	}
 
-		/**
+
+	/**
+	 * input_options function.
+	 *
+	 * @param mixed $key
+	 * @param mixed $field
+	 */
+	public static function input_options($key, $field)
+	{
+		global $thepostid;
+if (empty($field['value'])) {
+			$field['value'] = get_post_meta($thepostid, $key, true);
+		}
+		if (!empty($field['name'])) {
+			$name = $field['name'];
+		} else {
+			$name = $key;
+		}
+	?>
+	<div class="wpfm-admin-options-table <?=$name;?>" >
+		<p class="wpfm-admin-postbox-form-field"><label><?php echo esc_html($field['label']); ?></label></p>
+		<table class="widefat">
+			<thead>
+				<th>#</th>
+				<th>Option name</th>
+				<th>Default</th>
+				<th>Price</th>
+				<th>Type of price</th>
+				<th></th>
+			</thead>
+			<tbody>
+				<?php if(isset($field['value']) && !empty($field['value']) && is_array($field['value'])){
+					$count = 1;
+						foreach ($field['value'] as $op_key => $op_value) { ?>
+
+					<tr>
+					<td>1</td>
+					<td><input type="text" name="option_value_name_<?php echo $count;?>" value="<?php if(isset($op_value['option_value_name']) ) echo $op_value['option_value_name']; ?>"></td>
+					<td><input type="checkbox" name="option_value_default_<?php echo $count;?>" value="1"<?php if(isset($op_value['option_value_default']) && $op_value['option_value_price_type'] == 'option_value_default') echo 'checked="checked"' ?>></td>
+
+					<td><input type="text" name="option_value_price_<?php echo $count;?>" value="<?php if(isset($op_value['option_value_price']) ) echo $op_value['option_value_price']; ?>"></td>
+
+					<td>
+						<select name="option_value_price_type_<?php echo $count;?>">
+						<option value="quantity_based" <?php if(isset($op_value['option_value_price_type']) && $op_value['option_value_price_type'] == 'quantity_based') echo 'selected="selected"' ?>>Quantity Based</option>
+						<option value="fixed_amount" <?php if(isset($op_value['option_value_price_type']) && $op_value['option_value_price_type'] == 'fixed_amount') echo 'selected="selected"' ?>>Fixed Amount</option>
+						</select>
+					</td>
+					<td>Remove</td>
+					<input type="hidden" name="option_value_count[]" value="<?php echo $count;?>">
+				</tr>
+					<?php 
+					$count++;
+					}
+
+					}else{ ?>
+				<tr>
+					<td>1</td>
+					<td><input type="text" name="option_value_name_1" value=""></td>
+					<td><input type="checkbox" name="option_value_default_1" value="1"></td>
+					<td><input type="text" name="option_value_price_1" value=""></td>
+					<td>
+						<select name="option_value_price_type_1">
+						<option value="quantity_based">Quantity Based</option>
+						<option value="fixed_amount">Fixed Amount</option>
+						</select>
+					</td>
+					<td>Remove</td>
+					<input type="hidden" name="option_value_count[]" value="1">
+				</tr>
+			<?php } ?>
+			</tbody>
+			<tfoot><td colspan="6"><a class="button wpfm-add-row">Add Row</a></td></tfoot>
+		</table>
+	</div>
+	<?php
+	}
+
+	/**
 	 * save_post function.
 	 *
 	 * @access public
@@ -571,20 +527,20 @@ class WPFM_Writepanels {
 	 * @param mixed $post
 	 * @return void
 	 */
-	public function save_post( $post_id, $post ) {
-		if ( empty( $post_id ) || empty( $post ) || empty( $_POST ) ) return;
-		if ( defined('DOING_AUTOSAVE') && DOING_AUTOSAVE ) return;
-		if ( is_int( wp_is_post_revision( $post ) ) ) return;
-		if ( is_int( wp_is_post_autosave( $post ) ) ) return;
-		if ( empty($_POST['food_manager_nonce']) || ! wp_verify_nonce( $_POST['food_manager_nonce'], 'save_meta_data' ) ) return;
-		if ( ! current_user_can( 'edit_post', $post_id ) ) return;
+	public function save_post($post_id, $post)
+	{
+		if (empty($post_id) || empty($post) || empty($_POST)) return;
+		if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) return;
+		if (is_int(wp_is_post_revision($post))) return;
+		if (is_int(wp_is_post_autosave($post))) return;
+		if (empty($_POST['food_manager_nonce']) || !wp_verify_nonce($_POST['food_manager_nonce'], 'save_meta_data')) return;
+		if (!current_user_can('edit_post', $post_id)) return;
 
-		if ( $post->post_type == 'food_manager'  )
-		do_action( 'food_manager_save_food_manager', $post_id, $post );
+		if ($post->post_type == 'food_manager')
+			do_action('food_manager_save_food_manager', $post_id, $post);
 
-		if ( $post->post_type == 'food_manager_menu'  )
-		do_action( 'food_manager_save_food_manager_menu', $post_id, $post );
-
+		if ($post->post_type == 'food_manager_menu')
+			do_action('food_manager_save_food_manager_menu', $post_id, $post);
 	}
 
 	/**
@@ -595,104 +551,113 @@ class WPFM_Writepanels {
 	 * @param mixed $post
 	 * @return void
 	 */
-	public function food_manager_save_food_manager_data( $post_id, $post ) {
+	public function food_manager_save_food_manager_data($post_id, $post)
+	{
 		global $wpdb;
-		
+
+		//error_log(print_r($_POST,true));
+
 		// Save fields
-		foreach ( $this->food_listing_fields() as $key => $field ) {
-	
+		foreach ($this->food_manager_data_fields() as $key => $field) {
+
 			// author
-			if ( '_food_author' === $key ) {
-				$wpdb->update( $wpdb->posts, array( 'post_author' => $_POST[ $key ] > 0 ? absint( $_POST[ $key ] ) : 0 ), array( 'ID' => $post_id ) );
-			}
-			elseif ( '_food_banner' === $key ) {
-				if ( is_array( $_POST[ $key ] ) ) {
-					$thumbnail_image = $_POST[ $key ][0];
-					update_post_meta( $post_id, $key, array_filter( array_map( 'sanitize_text_field', $_POST[ $key ] ) ) );
-				} else {
-					$thumbnail_image = $_POST[ $key ];
-					update_post_meta( $post_id, $key, sanitize_text_field( $_POST[ $key ] ) );
-				}
-
-				$image = get_the_post_thumbnail_url($post_id);
-
-				if(empty($image))
-				{
-					if( isset($thumbnail_image) && !empty($thumbnail_image) )
-					{
-						$wp_upload_dir = wp_get_upload_dir();
-
-						$baseurl = $wp_upload_dir['baseurl'] . '/';
-
-						$wp_attached_file = str_replace($baseurl, '', $thumbnail_image);
-
-						$args = array(
-					        'meta_key'         	=> '_wp_attached_file',
-					        'meta_value'       	=> $wp_attached_file,
-					        'post_type'        	=> 'attachment',
-					        'posts_per_page'	=> 1,
-					    );
-
-						$attachments = get_posts($args);
-
-						if(!empty($attachments))
-						{
-							foreach ($attachments as $attachment) 
-							{
-								set_post_thumbnail( $post_id, $attachment->ID );
-							}
-						}
-					}
-				}
-				
-			}
+			if ('_food_author' === $key) {
+				$wpdb->update($wpdb->posts, array('post_author' => $_POST[$key] > 0 ? absint($_POST[$key]) : 0), array('ID' => $post_id));
+			} 
 			// Everything else		
 			else {
-				$type = ! empty( $field['type'] ) ? $field['type'] : '';
-				switch ( $type ) {
-					case 'textarea' :
-						update_post_meta( $post_id, $key,wp_kses_post( stripslashes( $_POST[ $key ] ) ) );
-					break;
-					case 'checkbox' :
-						if ( isset( $_POST[ $key ] ) ) {
-							update_post_meta( $post_id, $key, 1 );
-						} else {
-							update_post_meta( $post_id, $key, 0 );
-						}
-					break;
-					case 'date' :
-						if ( isset( $_POST[ $key ] ) ) {
-							$date = $_POST[ $key ];
-							
-							//Convert date and time value into DB formatted format and save eg. 1970-01-01
-							$date_dbformatted = WP_Event_Manager_Date_Time::date_parse_from_format($php_date_format   , $date );
-							$date_dbformatted = !empty($date_dbformatted) ? $date_dbformatted : $date;
-							update_post_meta( $post_id, $key, $date_dbformatted );
+				$type = !empty($field['type']) ? $field['type'] : '';
+				$extra_options = array();
 
+				//find how many total reapeated extra option there then store it.
+				if(isset($_POST['repeated_options']) && is_array($_POST['repeated_options'])){
+					foreach ( $_POST['repeated_options'] as $option_count) {
+	
+						if(isset($_POST['_option_key_'.$option_count])){
+
+							$option_key = $_POST['_option_key_'.$option_count];
+							$option_name = $_POST['_option_name_'.$option_count];
+							$option_type = $_POST['_option_type_'.$option_count];
+							$option_required = $_POST['_option_required_'.$option_count];
+							$option_minimum = $_POST['_option_minimum_'.$option_count];
+							$option_maximum = $_POST['_option_maximum_'.$option_count];
+							$option_values = array();
+
+							if(isset($_POST['option_value_count'])){
+								foreach ( $_POST['option_value_count'] as $option_value_count) {
+									$option_values[] = array(
+															'option_value_name' => isset($_POST['option_value_name_'.$option_value_count]) ? $_POST['option_value_name_'.$option_value_count] : '',
+
+															'option_value_default' => isset($_POST['option_value_default_'.$option_value_count]) ? $_POST['option_value_default_'.$option_value_count] : '',
+
+															'option_value_price' => isset($_POST['option_value_price_'.$option_value_count]) ? $_POST['option_value_price_'.$option_value_count] : '',
+
+															'option_value_price_type' => isset($_POST['option_value_price_type_'.$option_value_count]) ? $_POST['option_value_price_type_'.$option_value_count] : ''
+														);
+								}
+							}
+
+							$extra_options[$option_key] = array(
+																'option_name' => $option_name,
+																'option_type' => $option_type,
+																'option_required' => $option_required,
+																'option_minimum' => $option_minimum,
+																'option_maximum' => $option_maximum,
+																'option_options' => $option_values,
+															);
 						}
-					break;
-					default :
-						if ( ! isset( $_POST[ $key ] ) ) {
-							continue 2;
-						} elseif ( is_array( $_POST[ $key ] ) ) {
-							update_post_meta( $post_id, $key, array_filter( array_map( 'sanitize_text_field', $_POST[ $key ] ) ) );
+
+					}
+
+				}
+
+				update_post_meta($post_id,'_wpfm_extra_options',$extra_options);
+				switch ($type) {
+					case 'textarea':
+						update_post_meta($post_id, $key, wp_kses_post(stripslashes($_POST[$key])));
+						break;
+					case 'checkbox':
+						if (isset($_POST[$key])) {
+							update_post_meta($post_id, $key, 1);
 						} else {
-							update_post_meta( $post_id, $key, sanitize_text_field( $_POST[ $key ] ) );
+							update_post_meta($post_id, $key, 0);
 						}
-					break;
+						break;
+					case 'date':
+						if (isset($_POST[$key])) {
+							$date = $_POST[$key];
+
+							//Convert date and time value into DB formatted format and save eg. 1970-01-01
+							$date_dbformatted = WP_Event_Manager_Date_Time::date_parse_from_format($php_date_format, $date);
+							$date_dbformatted = !empty($date_dbformatted) ? $date_dbformatted : $date;
+							update_post_meta($post_id, $key, $date_dbformatted);
+						}
+						break;
+					default:
+						if (!isset($_POST[$key])) {
+							continue 2;
+						} elseif (is_array($_POST[$key])) {
+							update_post_meta($post_id, $key, array_filter(array_map('sanitize_text_field', $_POST[$key])));
+						} else {
+							update_post_meta($post_id, $key, sanitize_text_field($_POST[$key]));
+						}
+						break;
 				}
 			}
+
+
 		}
 
-			remove_action( 'food_manager_save_food_manager', array( $this, 'food_manager_save_food_manager_data' ), 20, 2 );
-			$food_data = array(
-					'ID'          => $post_id,
-					//'post_status' => $post_status,
-			);
-			wp_update_post( $food_data);
-			add_action( 'food_manager_save_food_manager', array( $this, 'food_manager_save_food_manager_data' ), 20, 2 );
+		remove_action('food_manager_save_food_manager', array($this, 'food_manager_save_food_manager_data'), 20, 2);
+		$food_data = array(
+			'ID'          => $post_id,
+			//'post_status' => $post_status,
+		);
+		wp_update_post($food_data);
+		add_action('food_manager_save_food_manager', array($this, 'food_manager_save_food_manager_data'), 20, 2);
 	}
 
+	
 	/**
 	 * wpfm_get_food_listings_by_category_id function.
 	 *
@@ -700,24 +665,45 @@ class WPFM_Writepanels {
 	 * @param NULL
 	 * @return void
 	 */
-	public function wpfm_get_food_listings_by_category_id(){
-		if(isset($_POST['category_id']) && !empty($_POST['category_id'])){
+	public function wpfm_get_food_listings_by_category_id()
+	{
+		if (isset($_POST['category_id']) && !empty($_POST['category_id'])) {
 
-			
-			$food_listing = get_food_listings(array(
-												'category' => $_POST['category_id'],
-												'posts_per_page' => -1,
-											));
+			$args = [
+				'post_type' => 'food_manager',
+				'post_per_page' => -1,
+				'tax_query' => [
+					[
+						'taxonomy' => 'food_manager_category',
+						'terms' => $_POST['category_id'],
+					],
+				],
+				// Rest of your arguments
+			];
+
+			$food_listing = new WP_Query($args);
 			$html = '';
-			if( $food_listing->have_posts() ):
-			    while( $food_listing->have_posts() ): $food_listing->the_post();
-					$html = '<li data-food-id="'.get_the_ID().'">'.get_the_title().'<span><a href="#" class="wpfm-food-item-remove">Remove</a></span><input type="hidden" name="wpfm_food_listing_ids[]" value="'.get_the_ID().'" /></li>';
-			    endwhile;
+			if ($food_listing->have_posts()) :
+				while ($food_listing->have_posts()) : $food_listing->the_post();
+					$id = get_the_ID();
+					$html = '<li class="menu-item-handle" data-food-id="' . $id . '">
+			    										<div class="wpfm-admin-left-col">
+			    											<span class="dashicons dashicons-menu"></span>
+			    											<span class="item-title">' . get_the_title($id) . '</span>
+			    										</div>
+			    										<div class="wpfm-admin-right-col">
+			    											<a href="#" class="wpfm-food-item-remove">
+			    												<span class="dashicons dashicons-dismiss"></span>
+			    											</a>
+			    										</div>
+			    										<input type="hidden" name="wpfm_food_listing_ids[]" value="' . $id . '" />
+			    									</li>';
+
+				endwhile;
 			endif;
-			 wp_reset_postdata();
-			
-			 wp_send_json(array('html' => $html,'success'=>true));
-											
+			wp_reset_postdata();
+
+			wp_send_json(array('html' => $html, 'success' => true));
 		}
 		wp_die();
 	}
@@ -729,11 +715,25 @@ class WPFM_Writepanels {
 	 * @param post Object
 	 * @return void
 	 */
-	public function food_manager_save_food_manager_menu_data($post_id, $post ){
-		if(isset($_POST['wpfm_food_listing_ids'])){
-			$item_ids = array_map( 'esc_attr', $_POST['wpfm_food_listing_ids'] );
-			update_post_meta($post_id,'_food_item_ids',$item_ids);
+	public function food_manager_save_food_manager_menu_data($post_id, $post)
+	{
+		if (isset($_POST['wpfm_food_listing_ids'])) {
+			$item_ids = array_map('esc_attr', $_POST['wpfm_food_listing_ids']);
+			update_post_meta($post_id, '_food_item_ids', $item_ids);
 		}
+	}
+
+	public function set_shortcode_copy_columns($columns)
+	{
+		$columns['shortcode'] = __('Shortcode', 'wp-food-manager');
+		return  $columns;
+	}
+
+	public function shortcode_copy_content_column($column, $post_id)
+	{
+		echo '<code>';
+		printf(__('[food_menu id=%d]', 'wp-food-manager'), $post_id);
+		echo '</code>';
 	}
 }
 WPFM_Writepanels::instance();

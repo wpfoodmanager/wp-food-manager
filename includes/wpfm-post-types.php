@@ -237,6 +237,9 @@ class WPFM_Post_Types {
 	  }
 
 
+
+
+
 	if ( get_option( 'food_manager_enable_food_ingredients' ,true) ) {
 
 		        $singular  = __( 'Food ingredient', 'wp-food-manager' );

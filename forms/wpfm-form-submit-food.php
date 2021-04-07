@@ -145,23 +145,6 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
 					'default'     => '',
 					'taxonomy'    => 'food_manager_neutrition'
 				),
-		 	
-				/*'food_banner' => array(
-					'label'       => __( 'Food Banner', 'wp-food-manager' ),
-					'type'        => 'file',
-					'required'    => true,
-					'placeholder' => '',
-					'priority'    => 9,
-					'ajax'        => true,
-					'multiple'    => get_option( 'food_manager_user_can_add_multiple_banner' ) == 1 ? true : false,
-					'allowed_mime_types' => array(
-						'jpg'  => 'image/jpeg',
-						'jpeg' => 'image/jpeg',
-						'gif'  => 'image/gif',
-						'png'  => 'image/png'
-					)
-				),*/
-
 				'food_description' => array(
 					'label'       => __( 'Description', 'wp-food-manager' ),
 					'type'        => 'wp-editor',
@@ -169,19 +152,93 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
 					'placeholder' => '',
 					'priority'    => 10
 				),
+				
 				'food_price' => array(
 					'label'       => __( 'Price', 'wp-food-manager' ),
 					'type'        => 'number',
 					'required'    => true,
 					'placeholder' => '',
 					'priority'    => 11
-				),
-			
-										 
+				),							 
 			),
 
+			'extra_options' => array(
+				'option_name' => array(
+					'label'       => __( 'Name', 'wp-food-manager' ),
+					'type'        => 'text',
+					'required'    => true,
+					'placeholder' => __('Enter option name','wp-food-manager'),
+					'priority'    => 1
+				),
+				'option_type' => array(
+					'label'       => __( 'Option type', 'wp-food-manager' ),
+					'type'        => 'select',
+					'required'    => true,
+					'options' 	  => array(
+										'checkbox' => __('Checkbox','wp-food-manager'),
+										'radio' => __('Radio Buttons','wp-food-manager'),
+										'select' => __('Select Box','wp-food-manager'),
+										'text' => __('Text Box','wp-food-manager'),
+										'textarea' => __('Textarea Box','wp-food-manager'),
+										'quantity' => __('Quantity','wp-food-manager')
+									),
+					'priority'    => 2
+				),
+				'option_required' => array(
+					'label'       => __( 'Required', 'wp-food-manager' ),
+					'type'        => 'radio',
+					'required'    => true,
+					'placeholder' => __('Required','wp-food-manager'),
+					'default'	  => 'no',
+					'options' 	  => array(
+										'no' => __('No','wp-food-manager'),
+										'yes' => __('Yes','wp-food-manager'),
+									),
+					'priority'    => 3
+				),
+				'option_minimum' => array(
+					'label'       => __( 'Minimum selection', 'wp-food-manager' ),
+					'type'        => 'text',
+					'required'    => true,
+					'placeholder' => __('Enter option name','wp-food-manager'),
+					'priority'    => 4
+				),
+				'option_maximum' => array(
+					'label'       => __( 'Maximum selection', 'wp-food-manager' ),
+					'type'        => 'text',
+					'required'    => true,
+					'placeholder' => __('Enter option name','wp-food-manager'),
+					'priority'    => 5
+				),
+				'option_price_type' => array(
+					'label'       => __( 'Type of price', 'wp-food-manager' ),
+					'type'        => 'select',
+					'required'    => true,
+					'options' 	  => array(
+										'fixed' => __('Fixed amount','wp-food-manager'),
+										'quantity' => __('Quantity based','wp-food-manager'),
+									),
+					'priority'    => 6
+				),
+				'option_price' => array(
+					'label'       => __( 'Price', 'wp-food-manager' ),
+					'type'        => 'text',
+					'required'    => true,
+					'placeholder' => __('Enter option name','wp-food-manager'),
+					'priority'    => 6
+				),
 
-			
+
+
+				'option_options' => array(
+					'label'       => __( 'Options', 'wp-food-manager' ),
+					'type'        => 'options',
+					'required'    => true,
+					'placeholder' => __('Enter option name','wp-food-manager'),
+					'priority'    => 6
+				),
+
+			)
 		) );
 
 		
@@ -201,26 +258,7 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
 		$this->fields =  apply_filters( 'before_submit_food_form_validate_fields', $this->fields , $values );
 	      foreach ( $this->fields as $group_key => $group_fields )
     	  {     	      
-    	       //this filter need to apply for remove required attributes when option online food selected and ticket price.
-    	       if(isset($group_fields['food_online'] ) )
-				 {
-    				if($group_fields['food_online']['value']=='yes')
-    				{	  
-    				    $group_fields['food_venue_name']['required']=false;
-    					$group_fields['food_address']['required']=false;
-    					$group_fields['food_pincode']['required']=false;
-    					$group_fields['food_location']['required']=false;
-    				}
-				 }
-				 
-				 if(isset($group_fields['food_ticket_options']) )
-				{
-    				if($group_fields['food_ticket_options']['value']=='free')
-    				{	
-    					$group_fields['food_ticket_price']['required']=false;
-    				} 			
-				}
-		        foreach ( $group_fields as $key => $field ) 
+    	      foreach ( $group_fields as $key => $field ) 
               	{
     				if ( $field['required'] && empty( $values[ $group_key ][ $key ] ) ) {	    
     					return new WP_Error( 'validation-error', sprintf( __( '%s is a required field', 'wp-food-manager' ), $field['label'] ) );

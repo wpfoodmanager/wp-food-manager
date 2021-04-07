@@ -107,4 +107,23 @@ class WPFM_Forms {
 			return ob_get_clean();
 		}
 	}
+
+
+	/**
+	 * get_form function.
+	 *
+	 * @param string $form_name
+	 * @param  array $atts Optional passed attributes
+	 * @return string
+	 */
+	 
+	public function get_form_fields( $form_name, $field_types = 'frontend' ) {
+		
+
+		if ( $form = $this->load_form_class( $form_name ) ) {
+			 $form->init_fields();
+			$fields = $form->merge_with_custom_fields($field_types);
+			return $fields;
+		}
+	}
 }
