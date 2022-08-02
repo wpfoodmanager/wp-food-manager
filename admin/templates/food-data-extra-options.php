@@ -106,8 +106,8 @@ $extra_options = get_post_meta($thepostid,'_wpfm_extra_options',true);
 			<button type="button" class="wpfm-add-button button button-primary" id="wpfm-add-new-option" data-row='<div class="wpfm-options-wrap wpfm-metabox postbox wpfm-options-box-%%repeated-option-index%%">
 				<input type="hidden" name="repeated_options[]" value="%%repeated-option-index%%">
 				<h3 class="">
-					<a href="#" data-id="%%repeated-option-index%%" class="wpfm-delete-btn">Remove</a>
-					<div class="wpfm-togglediv" title="Click to toggle" aria-expanded="false"></div>
+					<a href="javascript: void(0);" data-id="%%repeated-option-index%%" class="wpfm-delete-btn">Remove</a>
+					<div class="wpfm-togglediv" title="Click to toggle" aria-expanded="true" data-row-count="%%repeated-option-index%%"></div>
 					<div class="tips wpfm-sort"></div>
 					<strong class="attribute_name"><?php _e("Option %%repeated-option-index%%","wp-food-manager");?></strong>
 					<span class="attribute_key"><input type="text" name="_option_key_%%repeated-option-index%%" value="_option_%%repeated-option-index%%" disabled="disabled">
