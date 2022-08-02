@@ -14,7 +14,7 @@ Text Domain: wp-food-manager
 
 Domain Path: /languages
 
-Version: 1.0.0
+Version: 1.0.1
 
 Since: 1.0.0
 
@@ -30,7 +30,7 @@ License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
 // Exit if accessed directly
 
-if ( ! defined( 'ABSPATH' ) ) { 
+if ( ! defined( 'ABSPATH' ) ) {
 	
 	exit;
 }
