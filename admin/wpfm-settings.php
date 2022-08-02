@@ -78,7 +78,7 @@ class WPFM_Settings {
 									),
 
 								array(
-											'name'       => 'enable_food_ingredients',
+											'name'       => 'food_manager_enable_food_ingredients',
 											'std'        => '1',
 											'label'      => __( 'Enable Food ingredients', 'wp-food-manager' ),
 											'cb_label'   => __( 'Display ingredients on food.', 'wp-food-manager' ),
@@ -88,7 +88,7 @@ class WPFM_Settings {
 									),
 
 								array(
-											'name'       => 'enable_food_nuetritions',
+											'name'       => 'food_manager_enable_food_neutritions',
 											'std'        => '1',
 											'label'      => __( 'Enable Food nuetritions', 'wp-food-manager' ),
 											'cb_label'   => __( 'Display nuetritions on food.', 'wp-food-manager' ),
@@ -97,7 +97,7 @@ class WPFM_Settings {
 											'attributes' => array(),
 									),
 								array(
-											'name'       => 'enable_food_units',
+											'name'       => 'food_manager_enable_food_units',
 											'std'        => '1',
 											'label'      => __( 'Enable Food units', 'wp-food-manager' ),
 											'cb_label'   => __( 'Display units on food.', 'wp-food-manager' ),
