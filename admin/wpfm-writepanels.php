@@ -497,7 +497,7 @@ if (empty($field['value'])) {
 					}
 
 					}else{ ?>
-				<tr>
+				<tr class="option-tr-1">
 					<td>1</td>
 					<td><input type="text" name="option_value_name_1" value=""></td>
 					<td><input type="checkbox" name="option_value_default_1" value="1"></td>
@@ -508,7 +508,7 @@ if (empty($field['value'])) {
 						<option value="fixed_amount">Fixed Amount</option>
 						</select>
 					</td>
-					<td>Remove</td>
+					<td><a href="javascript: void(0);" data-id="1" class="option-delete-btn">Remove</a></td>
 					<input type="hidden" name="option_value_count[]" value="1">
 				</tr>
 			<?php } ?>

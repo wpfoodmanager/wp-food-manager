@@ -20,7 +20,7 @@ var WPFMAdmin= function () {
 		  	 //show by default first Event Listings Settings Tab
             jQuery('.wpfm-tabs li a:first').click();	
 
-            jQuery('#wpfm-admin-add-food').on('click',WPFMAdmin.actions.updateFoodinMenu);	
+            jQuery(document).on('click', '#wpfm-admin-add-food', WPFMAdmin.actions.updateFoodinMenu);	
 
             //use body to call after dom update
             jQuery("body").on('click','a.wpfm-food-item-remove',WPFMAdmin.actions.removeFoodItem);						
@@ -34,10 +34,19 @@ var WPFMAdmin= function () {
             
             //food extra options
             jQuery('#wpfm-add-new-option').on('click', WPFMAdmin.actions.addNewOption);
-            jQuery('.wpfm-togglediv').on('click', function(){
-            
+            jQuery(document).on('click', '.wpfm-togglediv', function(e){
                 var row_count = jQuery(this).data('row-count');
-                jQuery(this).parents('.postbox').find('.wpfm-options-box-'+row_count).slideToggle("slow");
+                var menuItem = jQuery( e.currentTarget );
+
+                if (menuItem.attr( 'aria-expanded') === 'true') {
+                    jQuery('.wpfm-options-box-'+row_count).addClass("closed");
+                    jQuery(this).attr( 'aria-expanded', 'false');
+                } else {
+                    jQuery('.wpfm-options-box-'+row_count).removeClass("closed");
+                    jQuery(this).attr( 'aria-expanded', 'true');
+                }
+
+                jQuery(this).parents('.postbox').find('.wpfm-options-box-'+row_count+' .wpfm-metabox-content.wpfm-options-box').slideToggle("slow");
             });
 
             jQuery('input[name^="_option_name"]').on('change', WPFMAdmin.actions.updateOptionTitle);
@@ -50,10 +59,9 @@ var WPFMAdmin= function () {
             //jQuery(".wpfm-admin-postbox-form-field._option_price_type").hide();
             //jQuery(".wpfm-admin-postbox-form-field._option_price").hide();
 
-            jQuery(".wpfm-add-row").on('click',WPFMAdmin.actions.addElementRow)
-            jQuery(".wpfm-delete-btn").on('click',WPFMAdmin.actions.removeAttributes)
-
-
+            jQuery(document).on("click", ".wpfm-add-row", WPFMAdmin.actions.addElementRow)
+            jQuery(document).on("click", ".wpfm-delete-btn", WPFMAdmin.actions.removeAttributes)
+            jQuery(document).on("click", ".option-delete-btn", WPFMAdmin.actions.removeAttributesOptions)
 
 	   },
 
@@ -133,7 +141,11 @@ var WPFMAdmin= function () {
                 max_index = max_index + 1;
                 var html = jQuery(this).data('row').replace( /%%repeated-option-index%%/g, max_index );
 
-                jQuery('.wpfm-options-wrapper .wpfm-actions').before( html );
+                //Old before() function - Developer Kushang
+                //jQuery('.wpfm-options-wrapper .wpfm-actions').before( html );
+
+                //New insertBefore() function after update to latest version - Developer kushang
+                jQuery('#extra_options_food_data_content .wpfm-options-wrapper').append(html);
        },
 
         /// <summary>
@@ -187,7 +199,7 @@ var WPFMAdmin= function () {
                 total_rows = total_rows + 1;
                 var html = jQuery(this).parents('table').find('tbody tr:first').html().replace( /1/g, +total_rows );
                 html.replace('value="1"',total_rows);
-                jQuery(this).parents('table').find('tbody').append("<tr>"+ html +"</tr>");
+                jQuery(this).parents('table').find('tbody').append("<tr class='option-tr-"+total_rows+"'>"+ html +"</tr>");
 
 
        },
@@ -239,9 +251,13 @@ var WPFMAdmin= function () {
        /// <returns type="actions" />     
        /// <since>1.0.0</since>
        removeAttributes: function(event){
-        console.log(jQuery(this).data('id'));
       
         jQuery('.wpfm-options-box-'+jQuery(this).data('id')).remove();
+       },
+
+       removeAttributesOptions: function(event){
+
+        jQuery('div.wpfm-admin-options-table table tbody tr.option-tr-'+jQuery(this).data('id')).remove();
        },
 
         /// <summary>
