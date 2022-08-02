@@ -30,7 +30,7 @@ License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
 // Exit if accessed directly
 
-if ( ! defined( 'ABSPATH' ) ) {
+if ( ! defined( 'ABSPATH' ) ) { 
 	
 	exit;
 }
