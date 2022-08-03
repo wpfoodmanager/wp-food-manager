@@ -23,6 +23,7 @@ class WPFM_Admin {
 
 		include_once( 'wpfm-writepanels.php' );
 		include_once( 'wpfm-settings.php' );
+		include_once( 'wpfm-setup.php' );
 		
 		$this->settings_page = new WPFM_Settings();
 

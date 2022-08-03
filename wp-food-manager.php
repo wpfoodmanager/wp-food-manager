@@ -265,6 +265,17 @@ class WP_Food_Manager {
 
 }
 
+/**
+ * Create link on plugin page for food manager plugin settings
+ */
+function add_plugin_page_food_manager_settings_link( $links ) {
+    $links[] = '<a href="' .
+        admin_url( 'edit.php?post_type=food_manager&page=food-manager-settings' ) .
+        '">' . __('Settings', 'wp-event-manager') . '</a>';
+        return $links;
+}
+add_filter('plugin_action_links_'.plugin_basename(__FILE__), 'add_plugin_page_food_manager_settings_link');
+
 if(!function_exists('WPFM')){
 	/**
 	 * Main instance of WP Food Manager.

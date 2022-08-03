@@ -21,11 +21,11 @@ class WPFM_Shortcodes {
 	 */
 	public function __construct() {
 
-		 add_action( 'wp', array( $this, 'shortcode_action_handler' ) );
+		add_action( 'wp', array( $this, 'shortcode_action_handler' ) );
 		add_shortcode( 'submit_food_form', array( $this, 'submit_food_form' ) );
 		add_shortcode( 'food_dashboard', array( $this, 'food_dashboard' ) );
-		 add_shortcode( 'foods', array( $this, 'output_foods' ) );
-		 add_shortcode( 'food_menu', array( $this, 'output_food_menu' ) );
+		add_shortcode( 'foods', array( $this, 'output_foods' ) );
+		add_shortcode( 'food_menu', array( $this, 'output_food_menu' ) );
 	}
 
 	/**
