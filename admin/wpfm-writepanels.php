@@ -560,10 +560,16 @@ if (empty($field['value'])) {
 		// Save fields
 		foreach ($this->food_manager_data_fields() as $key => $field) {
 
+
+			// Food price
+			if( !add_post_meta($post_id,'_food_price', $_POST['_food_price'], true) ){
+				update_post_meta($post_id,'_food_price', $_POST['_food_price']);
+			}
+
 			// author
 			if ('_food_author' === $key) {
 				$wpdb->update($wpdb->posts, array('post_author' => $_POST[$key] > 0 ? absint($_POST[$key]) : 0), array('ID' => $post_id));
-			} 
+			}
 			// Everything else		
 			else {
 				$type = !empty($field['type']) ? $field['type'] : '';
