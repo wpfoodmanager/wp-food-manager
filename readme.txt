@@ -1,20 +1,20 @@
 === WP Food Manager ===
 
-Contributors: wpeventmanager,ashokdudhat,hiteshmakvana
+Contributors: wpeventmanager,ashokdudhat,hiteshmakvana,kushang78
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=55FRYATTFLA5N
-Tags: food,menu,delivery food,order online,restaurant menu, restaurant order, online food, cafe
+Tags: food, food manager, menu, delivery food, order online, restaurant menu, restaurant order, online food, cafe
 Requires at least: 4.1
-Tested up to: 5.4
+Tested up to: 6.0
 Stable tag: 1.0.1
-Requires PHP: 5.4
-License: GNU General Public License v3.0
+Requires PHP: 5.6
+License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
 == Description ==
 
 WP Food Manager is fully responsive and mobile friendly food menu display plugin for restaurant, cafes, bars, coffee house, fast food.  It is a standalone WordPress plugin which allows you to easily create food item with name, description, Excerpt (used as short description), image and price.
 
-= Be a contributor =
+== 👉🏻 Be a contributor ==
 
 If you want to contribute, go to our [WP Food Manager GitHub Repository](https://github.com/wpfoodmanager/wp-food-manager) and see where you can help.
 
@@ -23,16 +23,16 @@ You can also add a new language via [translate.wordpress.org](https://translate.
 Thanks to all of our contributors.
 
 
-= Feedback =
+== 👉🏻 Feedback ==
 
 * We are open for your suggestions and feedback - Thank you for using or trying out one of our plugins!
 * [Drop us a line](http://wpfoodmanager.com/contact).
 
  
-= More =
+== 👉🏻 More ==
 * [Also please have look our other plugins](http://wpfoodmanager.com/) or visit at [WordPress.org plugin page](https://wordpress.org/plugins/wp-food-manager/).
 
-= Connect With US =
+== 👉🏻 Connect With US ==
 
 To stay in touch and get latest update about WP User Profile Avatar's further releases and features, you can connect with us via:
 
@@ -42,6 +42,14 @@ To stay in touch and get latest update about WP User Profile Avatar's further re
 - [Linkedin](https://www.linkedin.com/company/wp-event-manager)
 - [Pinterest](https://www.pinterest.com/wpeventmanager/)
 - [Youtube](https://www.youtube.com/channel/UCnfYxg-fegS_n9MaPNU61bg)
+
+
+== Screenshots ==
+
+1. The submit Food Form.
+
+2. Submit Food Preview.
+
  
 == Installation ==
 
@@ -69,6 +77,11 @@ The manual installation method involves downloading the plugin and uploading it 
 
 == Changelog ==
 
-= 1.0 [Aug 19th, 2020] =
+= 1.0.1 [ ] =
+
+* Fixed - Add option button bug in food details page.
+* Fixed - Food price value fixes.
+
+= 1.0 [ Aug 19th, 2020 ] =
 
 * First release.

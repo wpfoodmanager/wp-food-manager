@@ -1,6 +1,6 @@
 <?php
 /**
-Plugin Name: WP Food Manager
+Plugin Name: WP Food Manager2
 
 Plugin URI: https://www.wpfoodmanager.com/
 
