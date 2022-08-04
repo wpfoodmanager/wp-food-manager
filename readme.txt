@@ -2,7 +2,7 @@
 
 Contributors: wpeventmanager,ashokdudhat,hiteshmakvana,kushang78
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=55FRYATTFLA5N
-Tags: food, food manager, menu, delivery food, order online, restaurant menu, restaurant order, online food, cafe
+Tags: food menu, food manager, food ordering, restaurant menu, cafe, restaurant order, online food, delivery food, order online
 Requires at least: 4.1
 Tested up to: 6.0
 Stable tag: 1.0.1
@@ -43,13 +43,6 @@ To stay in touch and get latest update about WP User Profile Avatar's further re
 - [Pinterest](https://www.pinterest.com/wpeventmanager/)
 - [Youtube](https://www.youtube.com/channel/UCnfYxg-fegS_n9MaPNU61bg)
 
-
-== Screenshots ==
-
-1. The submit Food Form.
-
-2. Submit Food Preview.
-
  
 == Installation ==
 
@@ -75,12 +68,26 @@ The manual installation method involves downloading the plugin and uploading it 
 
 * Activate the plugin from the Plugins menu within the WordPress admin.
 
+
+== Frequently Asked Questions ==
+
+= Can I list my foods? =
+
+Yes, You can list your food.
+
+= How can I add my foods? =
+
+You can add your foods from the front-end. And also you can add, update and delete your food from the front-end.
+
+
+== Screenshots ==
+
+1. The submit Food Form.
+
+2. Submit Food Preview.
+
+
 == Changelog ==
-
-= 1.0.1 [ ] =
-
-* Fixed - Add option button bug in food details page.
-* Fixed - Food price value fixes.
 
 = 1.0 [ Aug 19th, 2020 ] =
 
