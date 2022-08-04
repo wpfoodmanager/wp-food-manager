@@ -72,11 +72,15 @@ class WP_Food_Manager {
 	public function __construct() 
 	{
 		// Define constants
-		define( 'WPFM_VERSION', '1.0.0' );
+		define( 'WPFM_VERSION', '1.0.1' );
 		define( 'WPFM_PLUGIN_DIR', untrailingslashit( plugin_dir_path( __FILE__ ) ) );
 		define( 'WPFM_PLUGIN_URL', untrailingslashit( plugins_url( basename( plugin_dir_path( __FILE__ ) ), basename( __FILE__ ) ) ) );
+
+		//Core		
+		include( 'includes/wp-food-manager-install.php' );
+
 		//includes
-		include( 'includes/wpfm-install.php' );
+		//include( 'includes/wpfm-install.php' );
 		include( 'includes/wpfm-ajax.php' );
 		include( 'includes/wpfm-post-types.php' );
 		include( 'includes/wpfm-cache-helper.php' );
@@ -111,6 +115,9 @@ class WP_Food_Manager {
 		//actions
 		add_action( 'wp_enqueue_scripts', array( $this, 'frontend_scripts' ) );
 
+		// Schedule cron events
+		self::check_schedule_crons();
+
 	}
 
 
@@ -141,12 +148,23 @@ class WP_Food_Manager {
 		$this->post_types->register_post_types();
 		remove_filter( 'pre_option_wpfm_categories', '__return_true' );
 		remove_filter( 'pre_option_wpfm_enable_food_types', '__return_true' );
-		WPFM_Install::install();
+		WP_Food_Manager_Install::install();
 		flush_rewrite_rules();
+
 	}
 
 
+	/**
+	 * Handle Updates
+	 */
 
+	public function updater() {
+		if ( version_compare( WPFM_VERSION, get_option( 'wp_food_manager_version' ), '>' ) ) {
+
+			WP_Food_Manager_Install::update();
+			flush_rewrite_rules();
+		}
+	}
 
 	/**
 	 * Load functions
@@ -261,6 +279,21 @@ class WP_Food_Manager {
 		
 		wp_enqueue_style( 'wpfm-grid-style');
 		wp_enqueue_style( 'wpfm-font-style');
+	}
+	/**
+	 * Check cron status
+	 *
+	 **/
+	public function check_schedule_crons(){
+		if ( ! wp_next_scheduled( 'food_manager_check_for_expired_foods' ) ) {
+			wp_schedule_event( time(), 'hourly', 'food_manager_check_for_expired_foods' );
+		}
+		if ( ! wp_next_scheduled( 'food_manager_delete_old_previews' ) ) {
+			wp_schedule_event( time(), 'daily', 'food_manager_delete_old_previews' );
+		}
+		if ( ! wp_next_scheduled( 'food_manager_clear_expired_transients' ) ) {
+			wp_schedule_event( time(), 'twicedaily', 'food_manager_clear_expired_transients' );
+		}
 	}
 
 }

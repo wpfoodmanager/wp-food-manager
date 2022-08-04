@@ -24,14 +24,14 @@ class WPFM_Install {
 
 		// Redirect to setup screen for new installs
 
-		if ( ! get_option( 'wpfm_version' ) ) {
+		if ( ! get_option( 'wp_food_manager_version' ) ) {
 
 			set_transient( '_wpfm_activation_redirect', 1, HOUR_IN_SECONDS );
 		}
 
 		delete_transient( 'wpfm_addons_html' );
 
-		update_option( 'wpfm_version', WPFM_VERSION );
+		update_option( 'wp_food_manager_version', WPFM_VERSION );
 	}
 	
 	/**

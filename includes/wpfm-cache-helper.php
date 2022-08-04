@@ -135,7 +135,7 @@ class WPFM_Cache_Helper {
  				AND a.option_name NOT LIKE %s
  				AND b.option_name = CONCAT( '_transient_timeout_', SUBSTRING( a.option_name, 12 ) )
 				AND b.option_value < %s;";
-				$wpdb->query( $wpdb->prepare( $sql, $wpdb->esc_like( '_transient_em_' ) . '%', $wpdb->esc_like( '_transient_timeout_em_' ) . '%', time() ) );
+				$wpdb->query( $wpdb->prepare( $sql, $wpdb->esc_like( '_transient_fm_' ) . '%', $wpdb->esc_like( '_transient_timeout_fm_' ) . '%', time() ) );
  		}
 	}
 	
@@ -178,11 +178,11 @@ class WPFM_Cache_Helper {
 		$rlike = array();
 		// New status transient option name
 		if( in_array( $new_status, $valid_statuses ) ){
-			$rlike[] = "^_transient_em_{$new_status}_{$post->post_type}_count_user_";
+			$rlike[] = "^_transient_fm_{$new_status}_{$post->post_type}_count_user_";
 		}
 		// Old status transient option name
 		if( in_array( $old_status, $valid_statuses ) ){
-			$rlike[] = "^_transient_em_{$old_status}_{$post->post_type}_count_user_";
+			$rlike[] = "^_transient_fm_{$old_status}_{$post->post_type}_count_user_";
 		}
 		
 		if ( empty( $rlike ) ) {
