@@ -34,19 +34,44 @@ var WPFMAdmin= function () {
             
             //food extra options
             jQuery('#wpfm-add-new-option').on('click', WPFMAdmin.actions.addNewOption);
-            jQuery(document).on('click', '.wpfm-togglediv', function(e){
+            //jQuery('.wpfm-togglediv').each(function(e){
+                jQuery(document).on("click", ".wpfm-togglediv", function(e){
+                    var row_count = jQuery(this).data('row-count');
+                    var menuItem = jQuery( e.currentTarget );
+
+                    if (menuItem.attr( 'aria-expanded') === 'true') {
+                        jQuery('.wpfm-options-wrap.wpfm-options-box-'+row_count).removeClass("closed");
+                        jQuery(this).attr( 'aria-expanded', 'false');
+                    } else {
+                        jQuery('.wpfm-options-wrap.wpfm-options-box-'+row_count).addClass("closed");
+                        jQuery(this).attr( 'aria-expanded', 'true');
+                    }
+
+                    jQuery(this).parents('.postbox').find('.wpfm-options-box-'+row_count+' .wpfm-metabox-content').slideToggle("slow");
+                    /*if(jQuery('.wpfm-metabox-content').hasClass('.wpfm-options-box-'+row_count)){
+                    } else {
+                        jQuery(this).parents('.postbox').find('.wpfm-metabox-content.wpfm-options-box').slideToggle("slow");
+                    }*/
+                });
+            //});
+
+            jQuery(".wpfm-togglediv").each(function(){
                 var row_count = jQuery(this).data('row-count');
-                var menuItem = jQuery( e.currentTarget );
+                var html2 = jQuery(this).parents('.postbox').find('.wpfm-options-box-'+row_count+' .wpfm-metabox-content div.wpfm-admin-options-table tbody tr td .opt_name').attr('name');
+                var h4 = html2.replace( /%%repeated-option-index2%%/g, row_count );
+                jQuery(this).parents('.postbox').find('.wpfm-options-box-'+row_count+' .wpfm-metabox-content div.wpfm-admin-options-table tbody tr td .opt_name').attr('name', h4);
 
-                if (menuItem.attr( 'aria-expanded') === 'true') {
-                    jQuery('.wpfm-options-box-'+row_count).addClass("closed");
-                    jQuery(this).attr( 'aria-expanded', 'false');
-                } else {
-                    jQuery('.wpfm-options-box-'+row_count).removeClass("closed");
-                    jQuery(this).attr( 'aria-expanded', 'true');
-                }
+                var html3 = jQuery(this).parents('.postbox').find('.wpfm-options-box-'+row_count+' .wpfm-metabox-content div.wpfm-admin-options-table tbody tr td .opt_price').attr('name');
+                var h5 = html3.replace( /%%repeated-option-index2%%/g, row_count );
+                jQuery(this).parents('.postbox').find('.wpfm-options-box-'+row_count+' .wpfm-metabox-content div.wpfm-admin-options-table tbody tr td .opt_price').attr('name', h5);
 
-                jQuery(this).parents('.postbox').find('.wpfm-options-box-'+row_count+' .wpfm-metabox-content.wpfm-options-box').slideToggle("slow");
+                var html4 = jQuery(this).parents('.postbox').find('.wpfm-options-box-'+row_count+' .wpfm-metabox-content div.wpfm-admin-options-table tbody tr td .opt_default').attr('name');
+                var h6 = html4.replace( /%%repeated-option-index2%%/g, row_count );
+                jQuery(this).parents('.postbox').find('.wpfm-options-box-'+row_count+' .wpfm-metabox-content div.wpfm-admin-options-table tbody tr td .opt_default').attr('name', h6);
+
+                var html5 = jQuery(this).parents('.postbox').find('.wpfm-options-box-'+row_count+' .wpfm-metabox-content div.wpfm-admin-options-table tbody tr td .opt_select').attr('name');
+                var h7 = html5.replace( /%%repeated-option-index2%%/g, row_count );
+                jQuery(this).parents('.postbox').find('.wpfm-options-box-'+row_count+' .wpfm-metabox-content div.wpfm-admin-options-table tbody tr td .opt_select').attr('name', h7);
             });
 
             jQuery('input[name^="_option_name"]').on('change', WPFMAdmin.actions.updateOptionTitle);
@@ -145,7 +170,7 @@ var WPFMAdmin= function () {
                 //jQuery('.wpfm-options-wrapper .wpfm-actions').before( html );
 
                 //New insertBefore() function after update to latest version - Developer kushang
-                jQuery('#extra_options_food_data_content .wpfm-options-wrapper').append(html);
+                jQuery('#extra_options_food_data_content .wpfm-options-wrapper .wpfm-actions').before(html);
        },
 
         /// <summary>

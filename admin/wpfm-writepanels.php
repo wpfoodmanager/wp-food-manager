@@ -472,7 +472,8 @@ if (empty($field['value'])) {
 				<th></th>
 			</thead>
 			<tbody>
-				<?php if(isset($field['value']) && !empty($field['value']) && is_array($field['value'])){
+				<?php 
+				if(isset($field['value']) && !empty($field['value']) && is_array($field['value'])){
 					$count = 1;
 						foreach ($field['value'] as $op_key => $op_value) { ?>
 
@@ -609,6 +610,8 @@ if (empty($field['value'])) {
 																'option_required' => $option_required,
 																'option_minimum' => $option_minimum,
 																'option_maximum' => $option_maximum,
+																'option_price' => $option_price,
+																'option_price_type' => $option_price_type,
 																'option_options' => $option_values,
 															);
 						}
