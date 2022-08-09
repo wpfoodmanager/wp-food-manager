@@ -55,7 +55,8 @@ var WPFMAdmin= function () {
                 });
             //});
 
-            jQuery(".wpfm-togglediv").each(function(){
+            jQuery(".option-tr-1 td a.option-delete-btn").addClass("wpfm-disabled-link");
+            /*jQuery(".wpfm-togglediv").each(function(){
                 var row_count = jQuery(this).data('row-count');
                 var html2 = jQuery(this).parents('.postbox').find('.wpfm-options-box-'+row_count+' .wpfm-metabox-content div.wpfm-admin-options-table tbody tr td .opt_name').attr('name');
                 var h4 = html2.replace( /%%repeated-option-index2%%/g, row_count );
@@ -72,14 +73,14 @@ var WPFMAdmin= function () {
                 var html5 = jQuery(this).parents('.postbox').find('.wpfm-options-box-'+row_count+' .wpfm-metabox-content div.wpfm-admin-options-table tbody tr td .opt_select').attr('name');
                 var h7 = html5.replace( /%%repeated-option-index2%%/g, row_count );
                 jQuery(this).parents('.postbox').find('.wpfm-options-box-'+row_count+' .wpfm-metabox-content div.wpfm-admin-options-table tbody tr td .opt_select').attr('name', h7);
-            });
+            });*/
 
             jQuery('input[name^="_option_name"]').on('change', WPFMAdmin.actions.updateOptionTitle);
             jQuery('body').on('change', 'select[name^="_option_type"]' ,WPFMAdmin.actions.changeFieldType);
 
             //find all the options and hide price
-            jQuery('select[name^="_option_price_type"]').parent('.wpfm-admin-postbox-form-field').hide();
-            jQuery('input[name^="_option_price"]').parent('.wpfm-admin-postbox-form-field').hide();
+            /*jQuery('select[name^="_option_price_type"]').parent('.wpfm-admin-postbox-form-field').hide();
+            jQuery('input[name^="_option_price"]').parent('.wpfm-admin-postbox-form-field').hide();*/
 
             //jQuery(".wpfm-admin-postbox-form-field._option_price_type").hide();
             //jQuery(".wpfm-admin-postbox-form-field._option_price").hide();
@@ -218,14 +219,16 @@ var WPFMAdmin= function () {
        /// <since>1.0.0</since>
        addElementRow:function(event){
         
+            var total_rows = 0;
+            total_rows = jQuery(this).parents('table').find('tbody tr').length;
+            total_rows = total_rows + 1;
+            var row_count2 = jQuery(".wpfm-options-wrapper div.wpfm-options-wrap").length;
+            var html = jQuery(this).data('row').replace( /%%repeated-option-index%%/g, total_rows ).replace( /%%repeated-option-index2%%/g, row_count2 );
+            html.replace('value="1"',total_rows);
+            jQuery(this).parents('table').find('tbody').append(html);
 
-        var total_rows = 0;
-        total_rows = jQuery(this).parents('table').find('tbody tr').length;
-                total_rows = total_rows + 1;
-                var html = jQuery(this).parents('table').find('tbody tr:first').html().replace( /1/g, +total_rows );
-                html.replace('value="1"',total_rows);
-                jQuery(this).parents('table').find('tbody').append("<tr class='option-tr-"+total_rows+"'>"+ html +"</tr>");
-
+            /*var html = jQuery(this).parents('table').find('tbody tr:first').html().replace( /1/g, +total_rows );
+            jQuery(this).parents('table').find('tbody').append("<tr class='option-tr-"+total_rows+"'>"+ html +"</tr>");*/
 
        },
 

@@ -477,20 +477,21 @@ if (empty($field['value'])) {
 					$count = 1;
 						foreach ($field['value'] as $op_key => $op_value) { ?>
 
-					<tr>
-					<td>1</td>
-					<td><input type="text" name="option_value_name_<?php echo $count;?>" value="<?php if(isset($op_value['option_value_name']) ) echo $op_value['option_value_name']; ?>"></td>
-					<td><input type="checkbox" name="option_value_default_<?php echo $count;?>" value="1"<?php if(isset($op_value['option_value_default']) && $op_value['option_value_price_type'] == 'option_value_default') echo 'checked="checked"' ?>></td>
+					<tr class="option-tr-<?php echo $count;?>">
+					<td><?php echo $count;?></td>
+					<td><input type="text" name="1_option_value_name_<?php echo $count; ?>" value="<?php if(isset($op_value['1_option_value_name_'.$count]) ) echo $op_value['1_option_value_name_'.$count]; ?>" class="opt_name <?php echo $count;?>"></td>
+					<!-- <td><input type="checkbox" name="%%repeated-option-index2%%_option_value_default_<?php //echo $count;?>" value="1"<?php //if(isset($op_value['option_value_default']) && $op_value['option_value_price_type'] == 'option_value_default') echo 'checked="checked"' ?> class="opt_default"></td> -->
+					<td><input type="checkbox" name="1_option_value_default_<?php echo $count;?>" <?php if(isset($op_value['1_option_value_default_'.$count]) && $op_value['1_option_value_default_'.$count] == 'on') echo 'checked="checked"'; ?> class="opt_default"></td>
 
-					<td><input type="text" name="option_value_price_<?php echo $count;?>" value="<?php if(isset($op_value['option_value_price']) ) echo $op_value['option_value_price']; ?>"></td>
+					<td><input type="text" name="1_option_value_price_<?php echo $count;?>" value="<?php if(isset($op_value['1_option_value_price_'.$count]) ) echo $op_value['1_option_value_price_'.$count]; ?>" class="opt_price"></td>
 
 					<td>
-						<select name="option_value_price_type_<?php echo $count;?>">
-						<option value="quantity_based" <?php if(isset($op_value['option_value_price_type']) && $op_value['option_value_price_type'] == 'quantity_based') echo 'selected="selected"' ?>>Quantity Based</option>
-						<option value="fixed_amount" <?php if(isset($op_value['option_value_price_type']) && $op_value['option_value_price_type'] == 'fixed_amount') echo 'selected="selected"' ?>>Fixed Amount</option>
+						<select name="1_option_value_price_type_<?php echo $count;?>" class="opt_select">
+						<option value="quantity_based" <?php if(isset($op_value['1_option_value_price_type_'.$count]) && $op_value['1_option_value_price_type_'.$count] == 'quantity_based') echo 'selected="selected"' ?>>Quantity Based</option>
+						<option value="fixed_amount" <?php if(isset($op_value['1_option_value_price_type_'.$count]) && $op_value['1_option_value_price_type_'.$count] == 'fixed_amount') echo 'selected="selected"' ?>>Fixed Amount</option>
 						</select>
 					</td>
-					<td>Remove</td>
+					<td><a href="javascript: void(0);" data-id="<?php echo $count;?>" class="option-delete-btn">Remove</a></td>
 					<input type="hidden" name="option_value_count[]" value="<?php echo $count;?>">
 				</tr>
 					<?php 
@@ -500,11 +501,11 @@ if (empty($field['value'])) {
 					}else{ ?>
 				<tr class="option-tr-1">
 					<td>1</td>
-					<td><input type="text" name="option_value_name_1" value=""></td>
-					<td><input type="checkbox" name="option_value_default_1" value="1"></td>
-					<td><input type="text" name="option_value_price_1" value=""></td>
+					<td><input type="text" name="1_option_value_name_2" value=""></td>
+					<td><input type="checkbox" name="1_option_value_default_1"></td>
+					<td><input type="text" name="1_option_value_price_1" value=""></td>
 					<td>
-						<select name="option_value_price_type_1">
+						<select name="1_option_value_price_type_1">
 						<option value="quantity_based">Quantity Based</option>
 						<option value="fixed_amount">Fixed Amount</option>
 						</select>
@@ -514,7 +515,23 @@ if (empty($field['value'])) {
 				</tr>
 			<?php } ?>
 			</tbody>
-			<tfoot><td colspan="6"><a class="button wpfm-add-row">Add Row</a></td></tfoot>
+			<tfoot>
+				<td colspan="6"><a class="button wpfm-add-row" data-row="<tr class='option-tr-%%repeated-option-index%%'>
+					<td>%%repeated-option-index%%</td>
+					<td><input type='text' name='%%repeated-option-index2%%_option_value_name_%%repeated-option-index%%' value=''></td>
+					<td><input type='checkbox' name='%%repeated-option-index2%%_option_value_default_%%repeated-option-index%%'></td>
+					<td><input type='text' name='%%repeated-option-index2%%_option_value_price_%%repeated-option-index%%' value=''></td>
+					<td>
+						<select name='%%repeated-option-index2%%_option_value_price_type_%%repeated-option-index%%'>
+						<option value='quantity_based'>Quantity Based</option>
+						<option value='fixed_amount'>Fixed Amount</option>
+						</select>
+					</td>
+					<td><a href='javascript: void(0);' data-id='1' class='option-delete-btn'>Remove</a></td>
+					<input type='hidden' name='option_value_count[]' value='%%repeated-option-index%%'>
+				</tr>">Add Row</a>
+				</td>
+			</tfoot>
 		</table>
 	</div>
 	<?php
@@ -579,7 +596,7 @@ if (empty($field['value'])) {
 				//find how many total reapeated extra option there then store it.
 				if(isset($_POST['repeated_options']) && is_array($_POST['repeated_options'])){
 					foreach ( $_POST['repeated_options'] as $option_count) {
-	
+						$counter = 0;
 						if(isset($_POST['_option_key_'.$option_count])){
 
 							$option_key = $_POST['_option_key_'.$option_count];
@@ -588,22 +605,32 @@ if (empty($field['value'])) {
 							$option_required = $_POST['_option_required_'.$option_count];
 							$option_minimum = $_POST['_option_minimum_'.$option_count];
 							$option_maximum = $_POST['_option_maximum_'.$option_count];
+							$option_price = $_POST['_option_price_'.$option_count];
+							$option_price_type = $_POST['_option_price_type_'.$option_count];
 							$option_values = array();
 
 							if(isset($_POST['option_value_count'])){
+								$find_option = array_search('%%repeated-option-index%%', $_POST['option_value_count']);
+								if ($find_option !== false) {
+									// Remove from array
+    								unset($_POST['option_value_count'][$find_option]);
+								}
+								
 								foreach ( $_POST['option_value_count'] as $option_value_count) {
+
 									$option_values[] = array(
-															'option_value_name' => isset($_POST['option_value_name_'.$option_value_count]) ? $_POST['option_value_name_'.$option_value_count] : '',
+															$option_count.'_option_value_name_'.$option_value_count => isset($_POST[$option_count.'_option_value_name_'.$option_value_count]) ? $_POST[$option_count.'_option_value_name_'.$option_value_count] : '',
 
-															'option_value_default' => isset($_POST['option_value_default_'.$option_value_count]) ? $_POST['option_value_default_'.$option_value_count] : '',
+															$option_count.'_option_value_default_'.$option_value_count => isset($_POST[$option_count.'_option_value_default_'.$option_value_count]) ? $_POST[$option_count.'_option_value_default_'.$option_value_count] : '',
 
-															'option_value_price' => isset($_POST['option_value_price_'.$option_value_count]) ? $_POST['option_value_price_'.$option_value_count] : '',
+															$option_count.'_option_value_price_'.$option_value_count => isset($_POST[$option_count.'_option_value_price_'.$option_value_count]) ? $_POST[$option_count.'_option_value_price_'.$option_value_count] : '',
 
-															'option_value_price_type' => isset($_POST['option_value_price_type_'.$option_value_count]) ? $_POST['option_value_price_type_'.$option_value_count] : ''
+															$option_count.'_option_value_price_type_'.$option_value_count => isset($_POST[$option_count.'_option_value_price_type_'.$option_value_count]) ? $_POST[$option_count.'_option_value_price_type_'.$option_value_count] : ''
 														);
 								}
+								
 							}
-
+							
 							$extra_options[$option_key] = array(
 																'option_name' => $option_name,
 																'option_type' => $option_type,
@@ -617,10 +644,11 @@ if (empty($field['value'])) {
 						}
 
 					}
-
+					$counter++;
 				}
-
+				
 				update_post_meta($post_id,'_wpfm_extra_options',$extra_options);
+				
 				switch ($type) {
 					case 'textarea':
 						update_post_meta($post_id, $key, wp_kses_post(stripslashes($_POST[$key])));
