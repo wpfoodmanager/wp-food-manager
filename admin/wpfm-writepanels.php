@@ -451,7 +451,7 @@ class WPFM_Writepanels
 	public static function input_options($key, $field)
 	{
 		global $thepostid;
-if (empty($field['value'])) {
+		if (empty($field['value'])) {
 			$field['value'] = get_post_meta($thepostid, $key, true);
 		}
 		if (!empty($field['name'])) {
@@ -459,6 +459,9 @@ if (empty($field['value'])) {
 		} else {
 			$name = $key;
 		}
+
+		$wpfm_key_num = explode("_", $key)['3'];
+
 	?>
 	<div class="wpfm-admin-options-table <?=$name;?>" >
 		<p class="wpfm-admin-postbox-form-field"><label><?php echo esc_html($field['label']); ?></label></p>
@@ -474,61 +477,51 @@ if (empty($field['value'])) {
 			<tbody>
 				<?php 
 				if(isset($field['value']) && !empty($field['value']) && is_array($field['value'])){
-					$count = 1;
-						foreach ($field['value'] as $op_key => $op_value) { ?>
 
-					<tr class="option-tr-<?php echo $count;?>">
-					<td><?php echo $count;?></td>
-					<td><input type="text" name="1_option_value_name_<?php echo $count; ?>" value="<?php if(isset($op_value['1_option_value_name_'.$count]) ) echo $op_value['1_option_value_name_'.$count]; ?>" class="opt_name <?php echo $count;?>"></td>
-					<!-- <td><input type="checkbox" name="%%repeated-option-index2%%_option_value_default_<?php //echo $count;?>" value="1"<?php //if(isset($op_value['option_value_default']) && $op_value['option_value_price_type'] == 'option_value_default') echo 'checked="checked"' ?> class="opt_default"></td> -->
-					<td><input type="checkbox" name="1_option_value_default_<?php echo $count;?>" <?php if(isset($op_value['1_option_value_default_'.$count]) && $op_value['1_option_value_default_'.$count] == 'on') echo 'checked="checked"'; ?> class="opt_default"></td>
+					//$repeated_rows = array_unique(get_post_meta($thepostid ,'wpfm_repeated_options', true));
+						$count = 1;
+						foreach ($field['value'] as $op_key => $op_value) {
+							//for($i=1; $i <= count($repeated_rows); $i++){
+								?>
+								<tr class="option-tr-<?php echo $count;?>">
+									<td><?php echo $count;?></td>
+									<td><input type="text" name="<?php echo $wpfm_key_num;?>_option_value_name_<?php echo $count; ?>" value="<?php if(isset($op_value[$wpfm_key_num.'_option_value_name_'.$count]) ) echo $op_value[$wpfm_key_num.'_option_value_name_'.$count]; ?>" class="opt_name"></td>
+									<!-- <td><input type="checkbox" name="%%repeated-option-index2%%_option_value_default_<?php //echo $count;?>" value="1"<?php //if(isset($op_value['option_value_default']) && $op_value['option_value_price_type'] == 'option_value_default') echo 'checked="checked"' ?> class="opt_default"></td> -->
+									<td><input type="checkbox" name="<?php echo $wpfm_key_num;?>_option_value_default_<?php echo $count;?>" <?php if(isset($op_value[$wpfm_key_num.'_option_value_default_'.$count]) && $op_value[$wpfm_key_num.'_option_value_default_'.$count] == 'on') echo 'checked="checked"'; ?> class="opt_default"></td>
 
-					<td><input type="text" name="1_option_value_price_<?php echo $count;?>" value="<?php if(isset($op_value['1_option_value_price_'.$count]) ) echo $op_value['1_option_value_price_'.$count]; ?>" class="opt_price"></td>
+									<td><input type="text" name="<?php echo $wpfm_key_num;?>_option_value_price_<?php echo $count;?>" value="<?php if(isset($op_value[$wpfm_key_num.'_option_value_price_'.$count]) ) echo $op_value[$wpfm_key_num.'_option_value_price_'.$count]; ?>" class="opt_price"></td>
 
-					<td>
-						<select name="1_option_value_price_type_<?php echo $count;?>" class="opt_select">
-						<option value="quantity_based" <?php if(isset($op_value['1_option_value_price_type_'.$count]) && $op_value['1_option_value_price_type_'.$count] == 'quantity_based') echo 'selected="selected"' ?>>Quantity Based</option>
-						<option value="fixed_amount" <?php if(isset($op_value['1_option_value_price_type_'.$count]) && $op_value['1_option_value_price_type_'.$count] == 'fixed_amount') echo 'selected="selected"' ?>>Fixed Amount</option>
-						</select>
-					</td>
-					<td><a href="javascript: void(0);" data-id="<?php echo $count;?>" class="option-delete-btn">Remove</a></td>
-					<input type="hidden" name="option_value_count[]" value="<?php echo $count;?>">
-				</tr>
-					<?php 
-					$count++;
-					}
-
-					}else{ ?>
-				<tr class="option-tr-1">
-					<td>1</td>
-					<td><input type="text" name="1_option_value_name_2" value=""></td>
-					<td><input type="checkbox" name="1_option_value_default_1"></td>
-					<td><input type="text" name="1_option_value_price_1" value=""></td>
-					<td>
-						<select name="1_option_value_price_type_1">
-						<option value="quantity_based">Quantity Based</option>
-						<option value="fixed_amount">Fixed Amount</option>
-						</select>
-					</td>
-					<td><a href="javascript: void(0);" data-id="1" class="option-delete-btn">Remove</a></td>
-					<input type="hidden" name="option_value_count[]" value="1">
-				</tr>
-			<?php } ?>
+									<td>
+										<select name="<?php echo $wpfm_key_num;?>_option_value_price_type_<?php echo $count;?>" class="opt_select">
+										<option value="quantity_based" <?php if(isset($op_value[$wpfm_key_num.'_option_value_price_type_'.$count]) && $op_value[$wpfm_key_num.'_option_value_price_type_'.$count] == 'quantity_based') echo 'selected="selected"' ?>>Quantity Based</option>
+										<option value="fixed_amount" <?php if(isset($op_value[$wpfm_key_num.'_option_value_price_type_'.$count]) && $op_value[$wpfm_key_num.'_option_value_price_type_'.$count] == 'fixed_amount') echo 'selected="selected"' ?>>Fixed Amount</option>
+										</select>
+									</td>
+									<td><a href="javascript: void(0);" data-id="<?php echo $count;?>" class="option-delete-btn">Remove</a></td>
+									<input type="hidden" name="option_value_count[]" value="<?php echo $count;?>">
+								</tr>
+							<?php 
+							$count++;
+							//}
+						}
+				}else{
+					
+				} ?>
 			</tbody>
 			<tfoot>
-				<td colspan="6"><a class="button wpfm-add-row" data-row="<tr class='option-tr-%%repeated-option-index%%'>
-					<td>%%repeated-option-index%%</td>
-					<td><input type='text' name='%%repeated-option-index2%%_option_value_name_%%repeated-option-index%%' value=''></td>
-					<td><input type='checkbox' name='%%repeated-option-index2%%_option_value_default_%%repeated-option-index%%'></td>
-					<td><input type='text' name='%%repeated-option-index2%%_option_value_price_%%repeated-option-index%%' value=''></td>
+				<td colspan="6"><a class="button wpfm-add-row" data-row="<tr class=&apos;option-tr-%%repeated-option-index3%%&apos;>
+					<td>%%repeated-option-index3%%</td>
+					<td><input type=&apos;text&apos; name=&apos;%%repeated-option-index2%%_option_value_name_%%repeated-option-index3%%&apos; value=&apos;&apos;></td>
+					<td><input type=&apos;checkbox&apos; name=&apos;%%repeated-option-index2%%_option_value_default_%%repeated-option-index3%%&apos;></td>
+					<td><input type=&apos;text&apos; name=&apos;%%repeated-option-index2%%_option_value_price_%%repeated-option-index3%%&apos; value=&apos;&apos;></td>
 					<td>
-						<select name='%%repeated-option-index2%%_option_value_price_type_%%repeated-option-index%%'>
-						<option value='quantity_based'>Quantity Based</option>
-						<option value='fixed_amount'>Fixed Amount</option>
+						<select name=&apos;%%repeated-option-index2%%_option_value_price_type_%%repeated-option-index3%%&apos;>
+						<option value=&apos;quantity_based&apos;>Quantity Based</option>
+						<option value=&apos;fixed_amount&apos;>Fixed Amount</option>
 						</select>
 					</td>
-					<td><a href='javascript: void(0);' data-id='1' class='option-delete-btn'>Remove</a></td>
-					<input type='hidden' name='option_value_count[]' value='%%repeated-option-index%%'>
+					<td><a href=&apos;javascript: void(0);&apos; data-id=&apos;%%repeated-option-index3%%&apos; class=&apos;option-delete-btn&apos;>Remove</a></td>
+					<input type=&apos;hidden&apos; name=&apos;option_value_count[]&apos; value=&apos;%%repeated-option-index3%%&apos;>
 				</tr>">Add Row</a>
 				</td>
 			</tfoot>
@@ -584,6 +577,11 @@ if (empty($field['value'])) {
 				update_post_meta($post_id,'_food_price', $_POST['_food_price']);
 			}
 
+			// Repeated options
+			if( !add_post_meta($post_id,'wpfm_repeated_options', $_POST['repeated_options'], true) ){
+				update_post_meta($post_id,'wpfm_repeated_options', $_POST['repeated_options']);
+			}
+
 			// author
 			if ('_food_author' === $key) {
 				$wpdb->update($wpdb->posts, array('post_author' => $_POST[$key] > 0 ? absint($_POST[$key]) : 0), array('ID' => $post_id));
@@ -617,8 +615,8 @@ if (empty($field['value'])) {
 								}
 								
 								foreach ( $_POST['option_value_count'] as $option_value_count) {
-
-									$option_values[] = array(
+									if(!empty($_POST[$option_count.'_option_value_name_'.$option_value_count]) || !empty($_POST[$option_count.'_option_value_default_'.$option_value_count]) || !empty($_POST[$option_count.'_option_value_price_'.$option_value_count])){
+										$option_values[] = array(
 															$option_count.'_option_value_name_'.$option_value_count => isset($_POST[$option_count.'_option_value_name_'.$option_value_count]) ? $_POST[$option_count.'_option_value_name_'.$option_value_count] : '',
 
 															$option_count.'_option_value_default_'.$option_value_count => isset($_POST[$option_count.'_option_value_default_'.$option_value_count]) ? $_POST[$option_count.'_option_value_default_'.$option_value_count] : '',
@@ -627,20 +625,22 @@ if (empty($field['value'])) {
 
 															$option_count.'_option_value_price_type_'.$option_value_count => isset($_POST[$option_count.'_option_value_price_type_'.$option_value_count]) ? $_POST[$option_count.'_option_value_price_type_'.$option_value_count] : ''
 														);
+									} else {
+										return false;
+									}
 								}
 								
+								$extra_options[$option_key] = array(
+																	'option_name' => $option_name,
+																	'option_type' => $option_type,
+																	'option_required' => $option_required,
+																	'option_minimum' => $option_minimum,
+																	'option_maximum' => $option_maximum,
+																	'option_price' => $option_price,
+																	'option_price_type' => $option_price_type,
+																	'option_options' => $option_values,
+																);
 							}
-							
-							$extra_options[$option_key] = array(
-																'option_name' => $option_name,
-																'option_type' => $option_type,
-																'option_required' => $option_required,
-																'option_minimum' => $option_minimum,
-																'option_maximum' => $option_maximum,
-																'option_price' => $option_price,
-																'option_price_type' => $option_price_type,
-																'option_options' => $option_values,
-															);
 						}
 
 					}

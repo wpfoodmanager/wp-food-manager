@@ -139,19 +139,3 @@ $extra_options = get_post_meta($thepostid,'_wpfm_extra_options',true);
 		</div>
 	</div>
 </div>
-
-<!-- <td colspan="6"><a class="button wpfm-add-row" data-row="<tr class='option-tr-%%repeated-option-index%%'>
-		<td>%%repeated-option-index%%</td>
-		<td><input type='text' name='option_value_name_%%repeated-option-index%%' value=''></td>
-		<td><input type='checkbox' name='option_value_default_%%repeated-option-index%%' value='1'></td>
-		<td><input type='text' name='option_value_price_%%repeated-option-index%%' value=''></td>
-		<td>
-			<select name='option_value_price_type_%%repeated-option-index%%'>
-			<option value='quantity_based'>Quantity Based</option>
-			<option value='fixed_amount'>Fixed Amount</option>
-			</select>
-		</td>
-		<td><a href='javascript: void(0);' data-id='1' class='option-delete-btn'>Remove</a></td>
-		<input type='hidden' name='option_value_count[]' value='1'>
-	</tr>">Add Row</a>
-	</td> -->

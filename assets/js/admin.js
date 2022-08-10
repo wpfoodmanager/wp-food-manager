@@ -170,7 +170,7 @@ var WPFMAdmin= function () {
                 //Old before() function - Developer Kushang
                 //jQuery('.wpfm-options-wrapper .wpfm-actions').before( html );
 
-                //New insertBefore() function after update to latest version - Developer kushang
+                //New Before() function - Developer kushang
                 jQuery('#extra_options_food_data_content .wpfm-options-wrapper .wpfm-actions').before(html);
        },
 
@@ -223,7 +223,7 @@ var WPFMAdmin= function () {
             total_rows = jQuery(this).parents('table').find('tbody tr').length;
             total_rows = total_rows + 1;
             var row_count2 = jQuery(".wpfm-options-wrapper div.wpfm-options-wrap").length;
-            var html = jQuery(this).data('row').replace( /%%repeated-option-index%%/g, total_rows ).replace( /%%repeated-option-index2%%/g, row_count2 );
+            var html = jQuery(this).data('row').replace( /%%repeated-option-index3%%/g, total_rows ).replace( /%%repeated-option-index2%%/g, row_count2 );
             html.replace('value="1"',total_rows);
             jQuery(this).parents('table').find('tbody').append(html);
 
@@ -284,8 +284,9 @@ var WPFMAdmin= function () {
        },
 
        removeAttributesOptions: function(event){
+        var row_count3 = jQuery(".wpfm-options-wrapper div.wpfm-options-wrap").length;
 
-        jQuery('div.wpfm-admin-options-table table tbody tr.option-tr-'+jQuery(this).data('id')).remove();
+        jQuery('.wpfm-options-box-'+row_count3+' div.wpfm-admin-options-table table tbody tr.option-tr-'+jQuery(this).data('id')).remove();
        },
 
         /// <summary>
