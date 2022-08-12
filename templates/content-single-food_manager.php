@@ -51,20 +51,24 @@ do_action('set_single_listing_view_count');
                     <div class="wpfm-row">
                         <div class="wpfm-col-xs-12 wpfm-col-sm-7 wpfm-col-md-8 wpfm-single-food-left-content">
                             <?php do_action('single_food_overview_before'); ?>
-                            <div class="wpfm-food-details">
-                                <?php
-                                $view_count = get_food_views_count($post);
-                                if ($view_count) : ?>
-                                    <div class="clearfix">&nbsp;</div>
-                                    <div><i class="wpfm-icon-eye"></i> <?php printf(__('%d people viewed this food.', 'wp-food-manager'), $view_count); ?></div>
-                                <?php endif; ?>
-
+                            <div class="wpfm-single-food-short-info">
+                                <div class="wpfm-food-details">
+                                    <div class="wpfm-food-title">
+                                        <h3 class="wpfm-heading-text"><?php the_title(); ?> - <?php echo "$".get_post_meta($post->ID, '_food_price', true); ?></h3>
+                                    </div>
+                                    <div class="wpfm-food-organizer">
+                                        <div class="wpfm-food-organizer-name">by <?php echo get_the_author_link(); ?></div>
+                                    </div>
+                                    <?php
+                                    $view_count = get_food_views_count($post);
+                                    if ($view_count) : ?>
+                                        <div class="clearfix">&nbsp;</div>
+                                        <div class="wpfm-viewed-food wpfm-tooltip wpfm-tooltip-bottom"><i class="wpfm-icon-eye"></i><span class="wpem-tooltiptext"><?php printf(__('%d people viewed this food.', 'wp-food-manager'), $view_count); ?></span></div>
+                                    <?php endif; ?>
+                                </div>
                             </div>
                             <div class="wpfm-single-food-body-content">
                                 <?php do_action('single_food_overview_start'); ?>
-                                <div class="wpfm-food-title">
-                                    <h3 class="wpfm-heading-text"><?php the_title(); ?><b> - <?php echo "$".get_post_meta($post->ID, '_food_price', true); ?></b></h3>
-                                </div>
                                 <?php echo apply_filters('display_food_description', get_the_content()); ?>
                                 <?php do_action('single_food_overview_end'); ?>
                             </div>
