@@ -25,7 +25,7 @@ do_action('set_single_listing_view_count');
                 <div class="wpfm-single-food-header-top">
                     <div class="wpfm-row">
 
-                        <div class="wpfm-col-xs-12 wpfm-col-sm-7 wpfm-col-md-8 wpfm-single-food-images">
+                        <div class="wpfm-col-xs-12 wpfm-col-sm-12 wpfm-col-md-12 wpfm-single-food-images">
                             <?php
                             $food_banners = get_food_banner();
                             if (is_array($food_banners) && sizeof($food_banners) > 1):
@@ -45,17 +45,13 @@ do_action('set_single_listing_view_count');
                                 </div>
                             <?php endif; ?>
                         </div>
-                        <div class="wpfm-col-xs-12 wpfm-col-md-4 wpfm-single-food-short-info">
-                            <div class="wpfm-food-date">
-                        
-                            </div>
+                    </div>
+                </div>
+                <div class="wpfm-single-food-body">
+                    <div class="wpfm-row">
+                        <div class="wpfm-col-xs-12 wpfm-col-sm-7 wpfm-col-md-8 wpfm-single-food-left-content">
+                            <?php do_action('single_food_overview_before'); ?>
                             <div class="wpfm-food-details">
-                                <div class="wpfm-food-title">
-                                    <h3 class="wpfm-heading-text"><?php the_title(); ?></h3>
-                                </div>
-                                <div class="wpfm-food-organizer">
-                               
-                                </div>
                                 <?php
                                 $view_count = get_food_views_count($post);
                                 if ($view_count) : ?>
@@ -64,15 +60,11 @@ do_action('set_single_listing_view_count');
                                 <?php endif; ?>
 
                             </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="wpfm-single-food-body">
-                    <div class="wpfm-row">
-                        <div class="wpfm-col-xs-12 wpfm-col-sm-7 wpfm-col-md-8 wpfm-single-food-left-content">
-                            <?php do_action('single_food_overview_before'); ?>
                             <div class="wpfm-single-food-body-content">
                                 <?php do_action('single_food_overview_start'); ?>
+                                <div class="wpfm-food-title">
+                                    <h3 class="wpfm-heading-text"><?php the_title(); ?> <b>- <?php echo "$".get_post_meta($post->ID, '_food_price', true); ?></b></h3>
+                                </div>
                                 <?php echo apply_filters('display_food_description', get_the_content()); ?>
                                 <?php do_action('single_food_overview_end'); ?>
                             </div>
@@ -90,18 +82,33 @@ do_action('set_single_listing_view_count');
                                 <div class="wpfm-single-food-sidebar-info">
 
                                     <?php do_action('single_food_sidebar_start'); ?>
-                                    <div class="clearfix">&nbsp;</div>
-
                                     <?php if (get_option('food_manager_enable_food_types') && get_food_type()) :?>
-                                        <div class="clearfix">&nbsp;</div>
-                                        <h3 class="wpfm-heading-text"><?php _e('food Types', 'wp-food-manager'); ?></h3>
+                                        <h3 class="wpfm-heading-text"><?php _e('Food Types', 'wp-food-manager'); ?></h3>
                                         <div class="wpfm-food-type"><?php display_food_type(); ?></div>
                                     <?php endif; ?>
 
                                     <?php if (get_option('food_manager_enable_categories') && get_food_category()) : ?>
                                         <div class="clearfix">&nbsp;</div>
-                                        <h3 class="wpfm-heading-text"><?php _e('food Category', 'wp-food-manager'); ?></h3>
+                                        <h3 class="wpfm-heading-text"><?php _e('Food Category', 'wp-food-manager'); ?></h3>
                                         <div class="wpfm-food-category"><?php display_food_category(); ?></div>
+                                    <?php endif; ?>
+
+                                    <?php if (get_option('food_manager_enable_food_ingredients') && get_food_ingredients()) : ?>
+                                        <div class="clearfix">&nbsp;</div>
+                                        <h3 class="wpfm-heading-text"><?php _e('Food Ingredients', 'wp-food-manager'); ?></h3>
+                                        <div class="wpfm-food-ingredients"><?php display_food_ingredients(); ?></div>
+                                    <?php endif; ?>
+
+                                    <?php if (get_option('food_manager_enable_food_neutritions') && get_food_neutritions()) : ?>
+                                        <div class="clearfix">&nbsp;</div>
+                                        <h3 class="wpfm-heading-text"><?php _e('Food Neutritions', 'wp-food-manager'); ?></h3>
+                                        <div class="wpfm-food-neutritions"><?php display_food_neutritions(); ?></div>
+                                    <?php endif; ?>
+
+                                    <?php if (get_option('food_manager_enable_food_units') && get_food_units()) : ?>
+                                        <div class="clearfix">&nbsp;</div>
+                                        <h3 class="wpfm-heading-text"><?php _e('Food Units', 'wp-food-manager'); ?></h3>
+                                        <div class="wpfm-food-units"><?php display_food_units(); ?></div>
                                     <?php endif; ?>
 
                                     <?php do_action('single_food_sidebar_end'); ?>

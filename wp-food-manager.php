@@ -116,7 +116,7 @@ class WP_Food_Manager {
 		add_action( 'wp_enqueue_scripts', array( $this, 'frontend_scripts' ) );
 
 		// Schedule cron events
-		self::check_schedule_crons();
+		//self::check_schedule_crons();
 
 	}
 

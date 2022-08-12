@@ -206,10 +206,13 @@ function get_food_banner( $post = null ) {
 	if ( $post->post_type !== 'food_manager' )
 		return;
 
-	if(isset($post->_food_banner) && empty($post->_food_banner))
+	if(isset($post->_food_banner) && empty($post->_food_banner)){
 		$food_banner = apply_filters( 'wpfm_default_food_banner', WPFM_PLUGIN_URL . '/assets/images/wpfm-placeholder.jpg' );
-	else
-		$food_banner = $post->_food_banner;			
+	} else {
+		//$food_banner = $post->_food_banner;
+		//the_post_thumbnail('large');
+		$food_banner = get_the_post_thumbnail_url($post->ID, 'full');
+	}
 	
 	return apply_filters( 'display_food_banner', $food_banner, $post );
 }
@@ -300,7 +303,7 @@ function display_food_type( $post = null, $after = '') {
 		if (! empty( $food_type ) ) {
 		    $numType = count($food_type);
 		    $i = 0;
-			foreach ( $food_type as $type ) {
+		    foreach ( $food_type as $type ) {
 				echo '<span class="wpem-food-type-text food-type '. esc_attr( sanitize_title( $type->slug ) ).' ">'. $type->name.'</span>';
 				if($numType > ++$i){
 				    echo $after;
@@ -328,11 +331,13 @@ function get_food_type( $post = null ) {
 	$types = wp_get_post_terms( $post->ID, 'food_manager_type' );
 
 	// Return single if not enabled.
-	if ( ! empty( $types ) ) {
+	/*if ( ! empty( $types ) ) {
 		$types = array( current( $types ) );
-	}
+	}*/
+
 	if(empty($types))
 		$types = '';
+
 	return apply_filters( 'display_food_type', $types, $post );
 }
 /**
@@ -349,7 +354,7 @@ function display_food_category( $post = null, $after = '' ) {
 		    $numCategory = count($food_category);
 		    $i = 0;
 			foreach ( $food_category as $cat ) {
-				echo '<span class="event-category '. esc_attr( sanitize_title( $cat->slug ) ).' ">'. $cat->name.'</span>';
+				echo '<span class="event-category '. esc_attr( sanitize_title( $cat->slug ) ).' ">'. $cat->name.', </br></span>';
 				if($numCategory > ++$i){
 				    echo $after;
 				}
@@ -376,10 +381,137 @@ function get_food_category( $post = null ) {
 	$categories = wp_get_post_terms( $post->ID, 'food_manager_category' );
 
 	// Return single if not enabled.
-	if ( !empty( $categories ) && ! food_manager_multiselect_food_category() ) {
+	/*if ( !empty( $categories ) && ! food_manager_multiselect_food_category() ) {
 		$categories = array( current( $categories ) );
-	}
+	}*/
+
 	return apply_filters( 'display_food_category', $categories, $post );
+}
+/**
+ * display_food_ingredients function.
+ *
+ * @access public
+ * @return void
+ */
+function display_food_ingredients( $post = null, $after = '' ) {
+
+	if ( $food_ingredients = get_food_ingredients( $post ) ) {
+
+		if (! empty( $food_ingredients ) ) {
+		    $numIngredient = count($food_ingredients);
+		    $i = 0;
+			foreach ( $food_ingredients as $ingredient ) {
+				echo '<span class="event-category '. esc_attr( sanitize_title( $ingredient->slug ) ).' ">'. $ingredient->name.', </br></span>';
+				if($numIngredient > ++$i){
+				    echo $after;
+				}
+			}
+		}
+	}
+}
+
+/**
+ * get_food_ingredients function.
+ *
+ * @access public
+ * @param mixed $post (default: null)
+ * @return void
+ */
+function get_food_ingredients( $post = null ) {
+
+	$post = get_post( $post );
+
+	if ( $post->post_type !== 'food_manager' || !get_option( 'food_manager_enable_food_ingredients' ) ) {
+		return;
+	}
+
+	$ingredients = wp_get_post_terms( $post->ID, 'food_manager_ingredient' );
+
+	return apply_filters( 'display_food_ingredients', $ingredients, $post );
+}
+/**
+ * display_food_neutritions function.
+ *
+ * @access public
+ * @return void
+ */
+function display_food_neutritions( $post = null, $after = '' ) {
+
+	if ( $food_neutritions = get_food_neutritions( $post ) ) {
+
+		if (! empty( $food_neutritions ) ) {
+		    $numNeutrition = count($food_neutritions);
+		    $i = 0;
+			foreach ( $food_neutritions as $neutrition ) {
+				echo '<span class="event-category '. esc_attr( sanitize_title( $neutrition->slug ) ).' ">'. $neutrition->name.', </br></span>';
+				if($numNeutrition > ++$i){
+				    echo $after;
+				}
+			}
+		}
+	}
+}
+
+/**
+ * get_food_neutritions function.
+ *
+ * @access public
+ * @param mixed $post (default: null)
+ * @return void
+ */
+function get_food_neutritions( $post = null ) {
+
+	$post = get_post( $post );
+
+	if ( $post->post_type !== 'food_manager' || !get_option( 'food_manager_enable_food_neutritions' ) ) {
+		return;
+	}
+
+	$neutritions = wp_get_post_terms( $post->ID, 'food_manager_neutrition' );
+
+	return apply_filters( 'display_food_neutritions', $neutritions, $post );
+}
+/**
+ * display_food_units function.
+ *
+ * @access public
+ * @return void
+ */
+function display_food_units( $post = null, $after = '' ) {
+
+	if ( $food_units = get_food_units( $post ) ) {
+
+		if (! empty( $food_units ) ) {
+		    $numUnit = count($food_units);
+		    $i = 0;
+			foreach ( $food_units as $unit ) {
+				echo '<span class="event-category '. esc_attr( sanitize_title( $unit->slug ) ).' ">'. $unit->name.', </br></span>';
+				if($numUnit > ++$i){
+				    echo $after;
+				}
+			}
+		}
+	}
+}
+
+/**
+ * get_food_units function.
+ *
+ * @access public
+ * @param mixed $post (default: null)
+ * @return void
+ */
+function get_food_units( $post = null ) {
+
+	$post = get_post( $post );
+
+	if ( $post->post_type !== 'food_manager' || !get_option( 'food_manager_enable_food_units' ) ) {
+		return;
+	}
+
+	$units = wp_get_post_terms( $post->ID, 'food_manager_unit' );
+
+	return apply_filters( 'display_food_units', $units, $post );
 }
 /**
  * display_food_permalink function.
