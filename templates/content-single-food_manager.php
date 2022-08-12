@@ -63,7 +63,7 @@ do_action('set_single_listing_view_count');
                             <div class="wpfm-single-food-body-content">
                                 <?php do_action('single_food_overview_start'); ?>
                                 <div class="wpfm-food-title">
-                                    <h3 class="wpfm-heading-text"><?php the_title(); ?> <b>- <?php echo "$".get_post_meta($post->ID, '_food_price', true); ?></b></h3>
+                                    <h3 class="wpfm-heading-text"><?php the_title(); ?><b> - <?php echo "$".get_post_meta($post->ID, '_food_price', true); ?></b></h3>
                                 </div>
                                 <?php echo apply_filters('display_food_description', get_the_content()); ?>
                                 <?php do_action('single_food_overview_end'); ?>
