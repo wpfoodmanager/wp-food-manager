@@ -354,7 +354,7 @@ function display_food_category( $post = null, $after = '' ) {
 		    $numCategory = count($food_category);
 		    $i = 0;
 			foreach ( $food_category as $cat ) {
-				echo '<span class="event-category '. esc_attr( sanitize_title( $cat->slug ) ).' ">'. $cat->name.', </br></span>';
+				echo '<span class="food-category '. esc_attr( sanitize_title( $cat->slug ) ).' ">'. $cat->name.'</span>';
 				if($numCategory > ++$i){
 				    echo $after;
 				}
@@ -401,7 +401,7 @@ function display_food_ingredients( $post = null, $after = '' ) {
 		    $numIngredient = count($food_ingredients);
 		    $i = 0;
 			foreach ( $food_ingredients as $ingredient ) {
-				echo '<span class="event-category '. esc_attr( sanitize_title( $ingredient->slug ) ).' ">'. $ingredient->name.', </br></span>';
+				echo '<span class="food-ingredients '. esc_attr( sanitize_title( $ingredient->slug ) ).' ">'. $ingredient->name.'</span>';
 				if($numIngredient > ++$i){
 				    echo $after;
 				}
@@ -443,7 +443,7 @@ function display_food_neutritions( $post = null, $after = '' ) {
 		    $numNeutrition = count($food_neutritions);
 		    $i = 0;
 			foreach ( $food_neutritions as $neutrition ) {
-				echo '<span class="event-category '. esc_attr( sanitize_title( $neutrition->slug ) ).' ">'. $neutrition->name.', </br></span>';
+				echo '<span class="food-neutritions '. esc_attr( sanitize_title( $neutrition->slug ) ).' ">'. $neutrition->name.'</span>';
 				if($numNeutrition > ++$i){
 				    echo $after;
 				}
@@ -485,7 +485,7 @@ function display_food_units( $post = null, $after = '' ) {
 		    $numUnit = count($food_units);
 		    $i = 0;
 			foreach ( $food_units as $unit ) {
-				echo '<span class="event-category '. esc_attr( sanitize_title( $unit->slug ) ).' ">'. $unit->name.', </br></span>';
+				echo '<span class="food-units '. esc_attr( sanitize_title( $unit->slug ) ).' ">'. $unit->name.'</span>';
 				if($numUnit > ++$i){
 				    echo $after;
 				}

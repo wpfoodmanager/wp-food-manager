@@ -278,7 +278,7 @@ class WP_Food_Manager {
 		wp_register_style( 'wp-food-manager-font-style', WPFM_PLUGIN_URL . '/assets/fonts/style.css');
 		
 		wp_enqueue_style( 'wpfm-grid-style');
-		wp_enqueue_style( 'wpfm-font-style');
+		wp_enqueue_style( 'wp-food-manager-font-style');
 	}
 	/**
 	 * Check cron status
@@ -304,7 +304,7 @@ class WP_Food_Manager {
 function add_plugin_page_food_manager_settings_link( $links ) {
     $links[] = '<a href="' .
         admin_url( 'edit.php?post_type=food_manager&page=food-manager-settings' ) .
-        '">' . __('Settings', 'wp-event-manager') . '</a>';
+        '">' . __('Settings', 'wp-food-manager') . '</a>';
         return $links;
 }
 add_filter('plugin_action_links_'.plugin_basename(__FILE__), 'add_plugin_page_food_manager_settings_link');
