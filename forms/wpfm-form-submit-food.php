@@ -56,7 +56,7 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
 		}
 
 		$this->food_id = ! empty( $_REQUEST['food_id'] ) ? absint( $_REQUEST[ 'food_id' ] ) : 0;
-		if ( ! wpfm_user_can_edit_food( $this->food_id ) ) {
+		if ( ! food_manager_user_can_edit_food( $this->food_id ) ) {
 			$this->food_id = 0;
 		}
 		
@@ -166,14 +166,14 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
 				'option_name' => array(
 					'label'       => __( 'Name', 'wp-food-manager' ),
 					'type'        => 'text',
-					'required'    => true,
+					'required'    => false,
 					'placeholder' => __('Enter option name','wp-food-manager'),
 					'priority'    => 1
 				),
 				'option_type' => array(
 					'label'       => __( 'Option type', 'wp-food-manager' ),
 					'type'        => 'select',
-					'required'    => true,
+					'required'    => false,
 					'options' 	  => array(
 										'checkbox' => __('Checkbox','wp-food-manager'),
 										'radio' => __('Radio Buttons','wp-food-manager'),
@@ -187,7 +187,7 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
 				'option_required' => array(
 					'label'       => __( 'Required', 'wp-food-manager' ),
 					'type'        => 'radio',
-					'required'    => true,
+					'required'    => false,
 					'placeholder' => __('Required','wp-food-manager'),
 					'default'	  => 'no',
 					'options' 	  => array(
@@ -199,21 +199,21 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
 				'option_minimum' => array(
 					'label'       => __( 'Minimum selection', 'wp-food-manager' ),
 					'type'        => 'text',
-					'required'    => true,
+					'required'    => false,
 					'placeholder' => __('Enter option name','wp-food-manager'),
 					'priority'    => 4
 				),
 				'option_maximum' => array(
 					'label'       => __( 'Maximum selection', 'wp-food-manager' ),
 					'type'        => 'text',
-					'required'    => true,
+					'required'    => false,
 					'placeholder' => __('Enter option name','wp-food-manager'),
 					'priority'    => 5
 				),
 				'option_price_type' => array(
 					'label'       => __( 'Type of price', 'wp-food-manager' ),
 					'type'        => 'select',
-					'required'    => true,
+					'required'    => false,
 					'options' 	  => array(
 										'fixed' => __('Fixed amount','wp-food-manager'),
 										'quantity' => __('Quantity based','wp-food-manager'),
@@ -223,7 +223,7 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
 				'option_price' => array(
 					'label'       => __( 'Price', 'wp-food-manager' ),
 					'type'        => 'text',
-					'required'    => true,
+					'required'    => false,
 					'placeholder' => __('Enter option name','wp-food-manager'),
 					'priority'    => 6
 				),
@@ -233,7 +233,7 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
 				'option_options' => array(
 					'label'       => __( 'Options', 'wp-food-manager' ),
 					'type'        => 'options',
-					'required'    => true,
+					'required'    => false,
 					'placeholder' => __('Enter option name','wp-food-manager'),
 					'priority'    => 6
 				),
