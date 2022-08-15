@@ -15,17 +15,17 @@ $extra_options = get_post_meta($thepostid,'_wpfm_extra_options',true);
 				$count = 1;
 					foreach ($extra_options as $option_key => $option) {
 						?>
-						<div class="wpfm-options-wrap wpfm-metabox postbox wpfm-options-box-<?php echo $count;?>">
-							<input type="hidden" name="repeated_options[]" value="<?php echo $count;?>" class="repeated-options">
+						<div class="wpfm-options-wrap wpfm-metabox postbox wpfm-options-box-<?php echo esc_attr($count);?>">
+							<input type="hidden" name="repeated_options[]" value="<?php echo esc_attr($count);?>" class="repeated-options">
 							<h3 class="">
-								<a href="javascript: void(0);"  data-id="<?php echo $count;?>" class="wpfm-delete-btn">Remove</a>
-								<div class="wpfm-togglediv" title="Click to toggle" aria-expanded="false" data-row-count="<?php echo $count;?>"></div>
+								<a href="javascript: void(0);"  data-id="<?php echo esc_attr($count);?>" class="wpfm-delete-btn">Remove</a>
+								<div class="wpfm-togglediv" title="Click to toggle" aria-expanded="false" data-row-count="<?php echo esc_attr($count);?>"></div>
 								<div class="tips wpfm-sort"></div>
 								<strong class="attribute_name"><?php printf(__('%s','wp-food-manager'),$option_key);?></strong>
-								<span class="attribute_key"> <input type="text" name="_option_key_<?php echo $count;?>" value="<?php echo $option_key;?>" readonly>
+								<span class="attribute_key"> <input type="text" name="_option_key_<?php echo esc_attr($count);?>" value="<?php echo $option_key;?>" readonly>
 									</span>
 							</h3>
-							<div class="wpfm-metabox-content wpfm-options-box-<?php echo $count;?>">
+							<div class="wpfm-metabox-content wpfm-options-box-<?php echo esc_attr($count);?>">
 								<div class="wpfm-content">
 									<?php
 										do_action('food_manager_food_data_start', $thepostid);

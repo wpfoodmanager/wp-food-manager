@@ -62,7 +62,7 @@ do_action('set_single_listing_view_count');
                                     <?php
                                     $view_count = get_food_views_count($post);
                                     if ($view_count) : ?>
-                                        <div class="wpfm-viewed-food wpfm-tooltip wpfm-tooltip-bottom"><i class="wpfm-icon-eye"></i> <?php echo $view_count; ?> <span class="wpfm-tooltiptext"><?php printf(__('%d people viewed this food.', 'wp-food-manager'), $view_count); ?></span></div>
+                                        <div class="wpfm-viewed-food wpfm-tooltip wpfm-tooltip-bottom"><i class="wpfm-icon-eye"></i> <?php echo esc_html($view_count); ?> <span class="wpfm-tooltiptext"><?php printf(__('%d people viewed this food.', 'wp-food-manager'), $view_count); ?></span></div>
                                     <?php endif; ?>
                                 </div>
                             </div>
