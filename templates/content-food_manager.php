@@ -3,7 +3,7 @@ $food_type = get_food_type();
 if (is_array($food_type) && isset($food_type[0]))
     $food_type = $food_type[0]->slug;
 
-$thumbnail  = get_food_thumbnail();
+$thumbnail  = get_food_banner();
 ?>
 
 <div class="wpfm-food-box-col wpfm-col wpfm-col-12 wpfm-col-md-6 wpfm-col-lg-<?php echo apply_filters('food_manager_food_wpfm_column', '4'); ?>">

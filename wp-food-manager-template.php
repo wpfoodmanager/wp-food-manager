@@ -206,7 +206,9 @@ function get_food_banner( $post = null ) {
 	if ( $post->post_type !== 'food_manager' )
 		return;
 
-	if(isset($post->_food_banner) && empty($post->_food_banner)){
+	$food_banner = get_the_post_thumbnail_url( $post );
+
+	if(isset($food_banner) && empty($food_banner)){
 		$food_banner = apply_filters( 'wpfm_default_food_banner', WPFM_PLUGIN_URL . '/assets/images/wpfm-placeholder.jpg' );
 	} else {
 		//$food_banner = $post->_food_banner;
@@ -234,7 +236,7 @@ function get_food_thumbnail( $post = null ) {
 	$food_thumbnail = get_the_post_thumbnail_url( $post );
 
 	if( isset($food_thumbnail) && empty($food_thumbnail) )
-		$food_thumbnail = apply_filters( 'wpfm_default_food_banner', WPFM_PLUGIN_URL . '/assets/images/wpfm-placeholder.jpg' );	
+		$food_thumbnail = apply_filters( 'wpfm_default_food_banner', WPFM_PLUGIN_URL . '/assets/images/wpfm-placeholder.jpg' );
 	
 	return apply_filters( 'display_food_thumbnail', $food_thumbnail, $post );
 }
