@@ -246,7 +246,7 @@ class WP_Food_Manager_Setup
 
 						<p><?php esc_attr_e('This setup wizard will help you get started by creating various pages for food type, food management, and listing your foods, along with setting up Ingredients and Neutritions pages.'); ?></p>
 
-						<p><?php printf(esc_attr__('The process is still relatively simple if you want to skip the wizard and manually set up the pages and shortcodes yourself. Please refer to the %1$sdocumentation%2$s for support.', 'wp-food-manager'), '<a href="https://wp-eventmanager.com/help-center/">', '</a>'); ?></p>
+						<p><?php printf(esc_attr__('The process is still relatively simple if you want to skip the wizard and manually set up the pages and shortcodes yourself. Please refer to the %1$sdocumentation%2$s for support.', 'wp-food-manager'), '<a href="https://wpfoodmanager.com/">', '</a>'); ?></p>
 					</div>
 					<p class="submit">
 
@@ -262,7 +262,7 @@ class WP_Food_Manager_Setup
 
 					<h3><?php esc_attr_e('Page Setup', 'wp-food-manager'); ?></h3>
 
-					<p><?php printf(__('The <em>WP Food Manager</em> includes %1$sshortcodes%2$s which can be used to output content within your %3$spages%2$s. These can be generated directly as mentioned below. Check the shortcode documentation for more information on food %4$sshortcodes%2$s.', 'wp-food-manager'), '<a href="https://wp-eventmanager.com/knowledge-base/" title="What is a shortcode?" target="_blank" class="help-page-link">', '</a>', '<a href="https://wordpress.org/support/article/pages/" target="_blank" class="help-page-link">', '<a href="https://wp-eventmanager.com/knowledge-base/" target="_blank" class="help-page-link">'); ?></p>
+					<p><?php printf(__('The <em>WP Food Manager</em> includes %1$sshortcodes%2$s which can be used to output content within your %3$spages%2$s. These can be generated directly as mentioned below. Check the shortcode documentation for more information on food %4$sshortcodes%2$s.', 'wp-food-manager'), '<a href="https://wpfoodmanager.com/" title="What is a shortcode?" target="_blank" class="help-page-link">', '</a>', '<a href="https://wordpress.org/support/article/pages/" target="_blank" class="help-page-link">', '<a href="https://wpfoodmanager.com/" target="_blank" class="help-page-link">'); ?></p>
 
 					<form action="<?php echo esc_url(add_query_arg('step', 3)); ?>" method="post">
 						<?php wp_nonce_field('step_3', 'setup_wizard'); ?>
@@ -424,7 +424,7 @@ class WP_Food_Manager_Setup
 										<div class="wpfm-setup-help-center-block-content">
 											<div class="wpfm-setup-help-center-block-heading"><?php esc_attr_e('Knowledge Base', 'wp-food-manager'); ?></div>
 											<div class="wpfm-setup-help-center-block-desc"><?php esc_attr_e('Solve your queries by browsing our documentation.', 'wp-food-manager'); ?></div>
-											<a href="https://wp-eventmanager.com/knowledge-base" target="_blank" class="wpfm-setup-help-center-block-link"><span class="wpfm-setup-help-center-box-target-text"><?php esc_attr_e('Browse More', 'wp-food-manager'); ?> »</span></a>
+											<a href="https://wpfoodmanager.com/" target="_blank" class="wpfm-setup-help-center-block-link"><span class="wpfm-setup-help-center-box-target-text"><?php esc_attr_e('Browse More', 'wp-food-manager'); ?> »</span></a>
 										</div>
 									</div>
 									<div class="wpfm-setup-help-center-block">
@@ -434,7 +434,7 @@ class WP_Food_Manager_Setup
 										<div class="wpfm-setup-help-center-block-content">
 											<div class="wpfm-setup-help-center-block-heading"><?php esc_attr_e('FAQs', 'wp-food-manager'); ?></div>
 											<div class="wpfm-setup-help-center-block-desc"><?php esc_attr_e('Explore through the frequently asked questions.', 'wp-food-manager'); ?></div>
-											<a href="https://wp-eventmanager.com/faqs" target="_blank" class="wpfm-setup-help-center-block-link"><span class="wpfm-setup-help-center-box-target-text"><?php esc_attr_e('Get Answers', 'wp-food-manager'); ?> »</span></a>
+											<a href="https://wpfoodmanager.com/" target="_blank" class="wpfm-setup-help-center-block-link"><span class="wpfm-setup-help-center-box-target-text"><?php esc_attr_e('Get Answers', 'wp-food-manager'); ?> »</span></a>
 										</div>
 									</div>
 									<div class="wpfm-setup-help-center-block">
@@ -456,7 +456,7 @@ class WP_Food_Manager_Setup
 										<div class="wpfm-setup-help-center-block-content">
 											<div class="wpfm-setup-help-center-block-heading"><?php esc_attr_e('Add ons Support', 'wp-food-manager'); ?></div>
 											<div class="wpfm-setup-help-center-block-desc"><?php esc_attr_e('Get support for all the Add ons related queries with our experienced/ talented support team.', 'wp-food-manager'); ?></div>
-											<a href="https://support.wp-eventmanager.com/" target="_blank" class="wpfm-setup-help-center-block-link"><span class="wpfm-setup-help-center-box-target-text"><?php esc_attr_e('Get Add ons Support', 'wp-food-manager'); ?> »</span></a>
+											<a href="https://wpfoodmanager.com/" target="_blank" class="wpfm-setup-help-center-block-link"><span class="wpfm-setup-help-center-box-target-text"><?php esc_attr_e('Get Add ons Support', 'wp-food-manager'); ?> »</span></a>
 										</div>
 									</div>
 								</div>

@@ -18,7 +18,7 @@ WP Food Manager is fully responsive and mobile friendly food menu display plugin
 
 If you want to contribute, go to our [WP Food Manager GitHub Repository](https://github.com/wpfoodmanager/wp-food-manager) and see where you can help.
 
-You can also add a new language via [translate.wordpress.org](https://translate.wordpress.org/projects/wp-plugins/wp-food-manager). We've built a short guide explaining [how to translate and localize the plugin](https://www.wp-eventmanager.com/documentation/translating-wp-event-manager/).
+You can also add a new language via [translate.wordpress.org](https://translate.wordpress.org/projects/wp-plugins/wp-food-manager). We've built a short guide explaining [how to translate and localize the plugin](https://www.wpfoodmanager.com/documentation/translating-wp-food-manager/).
 
 Thanks to all of our contributors.
 

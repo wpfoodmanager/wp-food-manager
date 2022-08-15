@@ -4,7 +4,7 @@
  *
  * This template can be overridden by copying it to yourtheme/wp-event-manager/event-preview.php.
  *
- * @see         https://www.wp-eventmanager.com/template-files-override/
+ * @see         https://www.wpfoodmanager.com/
  * @author      WP Event Manager
  * @category    template
  * @version     1.0.0
