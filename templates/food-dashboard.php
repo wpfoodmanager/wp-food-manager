@@ -93,15 +93,8 @@
 
 
 
-elseif ('food_location' === $key) :
-								if (get_food_location ( $food ) == 'Online food') :
-									echo __ ( 'Online food', 'wp-food-manager' );
-								else :
-									display_food_location ( false, $food );
-								endif;
-
-								?>
-						<?php
+elseif ('food_categories' === $key) :
+								display_food_category($food);
 
 elseif ('view_count' === $key) :
 								echo get_food_views_count ( $food );

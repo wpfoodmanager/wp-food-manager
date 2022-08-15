@@ -233,9 +233,9 @@ class WPFM_Shortcodes {
 		$food_dashboard_columns = apply_filters( 'food_manager_food_dashboard_columns', array(
 
 			'food_title' => __( 'Title', 'wp-food-manager' ),
-			'food_location' => __( 'Location', 'wp-food-manager' ),
-			'food_start_date' => __( 'Start Date', 'wp-food-manager' ),
-			'food_end_date' => __( 'End Date', 'wp-food-manager' ),
+			'food_categories' => __( 'Category', 'wp-food-manager' ),
+			/*'food_start_date' => __( 'Start Date', 'wp-food-manager' ),
+			'food_end_date' => __( 'End Date', 'wp-food-manager' ),*/
 			'view_count' => __( 'Viewed', 'wp-food-manager' ),
 			'food_action' => __( 'Action', 'wp-food-manager' ), 
 		) );
