@@ -10,7 +10,7 @@ global $food_manager;
 	<?php if ( apply_filters( 'submit_food_form_show_signin', true ) ) : ?>
 		<?php get_food_manager_template( 'account-signin.php' ); ?>
 	<?php endif; ?>
-	<?php if ( wpfm_user_can_post_food() || wpfm_user_can_edit_food( $food_id )   ) : ?>
+	<?php if ( wpfm_user_can_post_food() || food_manager_user_can_edit_food( $food_id )   ) : ?>
 		<!-- Event Information Fields -->
     	<h2 class="wpfm-form-title wpfm-heading-text"><?php _e( 'Food Details', 'wp-food-manager' ); ?></h2>
     <?php
