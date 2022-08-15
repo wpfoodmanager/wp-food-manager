@@ -173,7 +173,7 @@ class WPFM_Writepanels
 					'class'    => array(),
 					'priority' => 1,
 				),
-				'ingredient'        => array(
+				/*'ingredient'        => array(
 					'label'    => __('Ingredient', 'wp-food-manager'),
 					'target'   => 'ingredient_food_data_content',
 					'class'    => array(''),
@@ -184,7 +184,7 @@ class WPFM_Writepanels
 					'target'   => 'neutritions_food_data_content',
 					'class'    => array(''),
 					'priority' => 1,
-				),
+				),*/
 			)
 		);
 
@@ -202,7 +202,8 @@ class WPFM_Writepanels
 
 		include 'templates/food-data-general.php';
 		include 'templates/food-data-extra-options.php';
-		;
+		//include 'templates/food-data-ingredient.php';
+
 	}
 
 	/**
