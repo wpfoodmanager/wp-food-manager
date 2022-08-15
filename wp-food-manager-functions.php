@@ -513,7 +513,7 @@ function wpfm_user_can_post_food() {
  * @return bool
  */
 
-function wpfm_user_can_edit_food( $food_id ) {
+function food_manager_user_can_edit_food( $food_id ) {
 
 	$can_edit = true;
 	
@@ -527,7 +527,7 @@ function wpfm_user_can_edit_food( $food_id ) {
 		}
 	}
 	
-	return apply_filters( 'wpfm_user_can_edit_food', $can_edit, $food_id );
+	return apply_filters( 'food_manager_user_can_edit_food', $can_edit, $food_id );
 }
 /**
  * True if an account is required to post a food.
@@ -546,9 +546,9 @@ function wpfm_user_requires_account() {
  * @return bool
  */
 
-function wpfm_user_can_edit_pending_submissions() {
+function food_manager_user_can_edit_pending_submissions() {
 
-	return apply_filters( 'wpfm_user_can_edit_pending_submissions', get_option( 'wpfm_user_can_edit_pending_submissions' ) == 1 ? true : false );
+	return apply_filters( 'food_manager_user_can_edit_pending_submissions', get_option( 'food_manager_user_can_edit_pending_submissions' ) == 1 ? true : false );
 }
 
 /**
@@ -1112,4 +1112,103 @@ function food_manager_multiselect_food_type() {
  */
 function food_manager_multiselect_food_category() {
 	return apply_filters( 'food_manager_multiselect_food_category', get_option( 'food_manager_multiselect_food_category' ) == 1 ? true : false );
+}
+
+/**
+ * Get the page ID of a page if set, with PolyLang compat.
+ * @param  string $page e.g. food_dashboard, submit_food_form, foods
+ * @return int
+ */
+function food_manager_get_page_id( $page ) 
+{	
+	$page_id = get_option( 'food_manager_' . $page . '_page_id', false );
+	if ( $page_id ) {
+		return apply_filters( 'wpml_object_id', absint( function_exists( 'pll_get_post' ) ? pll_get_post( $page_id ) : $page_id ), 'page', TRUE );
+	} else {
+		return 0;
+	}
+	
+}
+
+/**
+ * Get the permalink of a page if set
+ * @param  string $page e.g. food_dashboard, submit_food_form, foods
+ * @return string|bool
+ */
+
+function food_manager_get_permalink( $page ) {
+
+	if ( $page_id = food_manager_get_page_id( $page ) ) {
+		return get_permalink( $page_id );
+	} else {
+		return false;
+	}
+}
+
+/**
+ * Duplicate a listing.
+ * @param  int $post_id
+ * @return int 0 on fail or the post ID.
+ */
+function food_manager_duplicate_listing( $post_id ) {
+	if ( empty( $post_id ) || ! ( $post = get_post( $post_id ) ) ) {
+		return 0;
+	}
+
+	global $wpdb;
+
+	/**
+	 * Duplicate the post.
+	 */
+
+	$new_post_id = wp_insert_post( array(
+			'comment_status' => $post->comment_status,
+			'ping_status'    => $post->ping_status,
+			'post_author'    => $post->post_author,
+			'post_content'   => $post->post_content,
+			'post_excerpt'   => $post->post_excerpt,
+			'post_name'      => $post->post_name,
+			'post_parent'    => $post->post_parent,
+			'post_password'  => $post->post_password,
+			'post_status'    => 'preview',
+			'post_title'     => $post->post_title,
+			'post_type'      => $post->post_type,
+			'to_ping'        => $post->to_ping,
+			'menu_order'     => $post->menu_order
+	) );
+
+	
+	/**
+	 * Copy taxonomies.
+	 */
+	$taxonomies = get_object_taxonomies( $post->post_type );
+
+	foreach ( $taxonomies as $taxonomy ) {
+		$post_terms = wp_get_object_terms( $post_id, $taxonomy, array( 'fields' => 'slugs' ) );
+		wp_set_object_terms( $new_post_id, $post_terms, $taxonomy, false );
+	}
+
+	/*
+	 * Duplicate post meta, aside from some reserved fields.
+	 */
+	$post_meta = $wpdb->get_results( $wpdb->prepare( "SELECT meta_key, meta_value FROM {$wpdb->postmeta} WHERE post_id=%d", $post_id ) );
+
+	do_action('food_manager_duplicate_listing_meta_start',$post_meta,$post,$new_post_id);
+
+	if ( ! empty( $post_meta ) ) {
+		$post_meta = wp_list_pluck( $post_meta, 'meta_value', 'meta_key' );
+		foreach ( $post_meta as $meta_key => $meta_value ) {
+			if ( in_array( $meta_key, apply_filters( 'food_manager_duplicate_listing_ignore_keys', array( '_cancelled', '_featured', '_event_expires', '_event_duration' ) ) ) ) {
+				continue;
+			}
+			update_post_meta( $new_post_id, $meta_key, maybe_unserialize( $meta_value ) );
+		}
+	}
+
+	update_post_meta( $new_post_id, '_cancelled', 0 );
+	update_post_meta( $new_post_id, '_featured', 0 );
+
+	do_action('food_manager_duplicate_listing_meta_end',$post_meta,$post,$new_post_id);
+
+	return $new_post_id;
 }
