@@ -362,6 +362,8 @@ function display_food_category( $post = null, $after = '' ) {
 				}
 			}
 		}
+	} else {
+		echo "-";
 	}
 }
 
