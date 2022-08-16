@@ -193,6 +193,10 @@ class WP_Food_Manager_Setup
 
 				'foods'                => '[foods]',
 
+				'food_categories'      => '[food_categories]',
+
+				'food_type'            => '[food_type]',
+
 				/*'neutritions_dashboard' => '[neutritions_dashboard]',
 
 				'ingredients_dashboard'   => '[ingredients_dashboard]',*/
@@ -399,7 +403,7 @@ class WP_Food_Manager_Setup
 				<?php if (3 === $step) : ?>
 					<div class="wpfm-setup-next-block-wrap">
 						<div class="wpfm-setup-intro-block">
-							<div class="wpfm-setup-done"><i class="wpem-icon-checkmark"></i>
+							<div class="wpfm-setup-done"><i class="wpfm-icon-checkmark"></i>
 								<h3><?php esc_attr_e('All Done!', 'wp-food-manager'); ?></h3>
 							</div>
 							<div class="wpfm-setup-intro-block-welcome">
