@@ -719,7 +719,7 @@ function has_wpfm_shortcode( $content = null, $tag = null ) {
 	}
 
 	if ( ! empty( $content ) ) {
-		$has_wpfm_shortcode = array( 'submit_food_form', 'food_dashboard', 'foods', 'food', 'food_summary', 'food_apply' );
+		$has_wpfm_shortcode = array( 'submit_food_form', 'food_dashboard', 'foods', 'food_categories', 'food_type', 'food', 'food_summary', 'food_apply' );
 		/**
 		 * Filters a list of all shortcodes associated with WPEM.
 		 *

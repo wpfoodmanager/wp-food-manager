@@ -186,7 +186,7 @@ class WP_Food_Manager {
 		$ajax_url         = WPFM_Ajax::get_endpoint();
 		$ajax_filter_deps = array( 'jquery', 'jquery-deserialize' );
 
-		$chosen_shortcodes   = array( 'submit_food_form', 'food_dashboard', 'foods' );
+		$chosen_shortcodes   = array( 'submit_food_form', 'food_dashboard', 'foods', 'food_categories', 'food_type' );
 		$chosen_used_on_page = has_wpfm_shortcode( null, $chosen_shortcodes );
 	
 		//file upload - vendor
@@ -258,7 +258,7 @@ class WP_Food_Manager {
 		) );
 
 		//dashboard
-		wp_register_script( 'wpfm-food-dashboard', WPFM_PLUGIN_URL . '/assets/js/food-dashboard.min.js', array( 'jquery' ), WPFM_VERSION, true );	
+		wp_register_script( 'wp-food-manager-food-dashboard', WPFM_PLUGIN_URL . '/assets/js/food-dashboard.min.js', array( 'jquery' ), WPFM_VERSION, true );	
 		wp_localize_script( 'wp-food-manager-food-dashboard', 'food_manager_food_dashboard', array(
 
 			'i18n_btnOkLabel' => __( 'Delete', 'wp-food-manager' ),

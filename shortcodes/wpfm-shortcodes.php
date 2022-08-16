@@ -25,6 +25,8 @@ class WPFM_Shortcodes {
 		add_shortcode( 'submit_food_form', array( $this, 'submit_food_form' ) );
 		add_shortcode( 'food_dashboard', array( $this, 'food_dashboard' ) );
 		add_shortcode( 'foods', array( $this, 'output_foods' ) );
+		add_shortcode( 'food_categories', array( $this, 'output_foods_categories' ) );
+		add_shortcode( 'food_type', array( $this, 'output_foods_type' ) );
 		add_shortcode( 'food_menu', array( $this, 'output_food_menu' ) );
 	}
 
@@ -127,11 +129,15 @@ class WPFM_Shortcodes {
 
 					case 'delete' :
 
+						$foods_status = get_post_status($food_id);
+
 						// Trash it
 						wp_trash_post( $food_id );
 
 						// Message
-						$this->food_dashboard_message = '<div class="food-manager-message wpfm-alert wpfm-alert-danger">' . sprintf( __( '%s has been deleted', 'wp-food-manager' ), esc_html( $food->post_title ) ) . '</div>';
+						if (!in_array($foods_status, ['trash'])) {
+							$this->food_dashboard_message = '<div class="food-manager-message wpfm-alert wpfm-alert-danger">' . sprintf( __( '%s has been deleted', 'wp-food-manager' ), esc_html( $food->post_title ) ) . '</div>';
+						}
 
 						break;
 					case 'duplicate' :
@@ -192,7 +198,7 @@ class WPFM_Shortcodes {
 
 		), $atts ) );
 
-		wp_enqueue_script( 'wpfm-food-dashboard' );
+		wp_enqueue_script( 'wp-food-manager-food-dashboard' );
 
 		ob_start();
 
