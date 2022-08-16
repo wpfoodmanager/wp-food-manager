@@ -51,9 +51,18 @@ class WPFM_Writepanels
 		add_action('wp_ajax_wpfm_get_food_listings_by_category_id', array($this, 'wpfm_get_food_listings_by_category_id'));
 
 		add_action('food_manager_save_food_manager_menu', array($this, 'food_manager_save_food_manager_menu_data'), 20, 2);
+
 		//add food menu column
 		add_filter('manage_food_manager_menu_posts_columns', array($this, 'set_shortcode_copy_columns'));
 		add_action('manage_food_manager_menu_posts_custom_column', array($this, 'shortcode_copy_content_column'), 10, 2);
+
+		//add food image column
+		add_filter('manage_food_manager_posts_columns', array($this, 'set_image_copy_columns'));
+		add_action('manage_food_manager_posts_custom_column', array($this, 'image_copy_content_column'), 10, 2);
+
+		//add food price column
+		add_filter('manage_food_manager_posts_columns', array($this, 'set_price_copy_columns'));
+		add_action('manage_food_manager_posts_custom_column', array($this, 'price_copy_content_column'), 10, 2);
 	}
 
 
@@ -773,6 +782,36 @@ class WPFM_Writepanels
 		echo '<code>';
 		printf(__('[food_menu id=%d]', 'wp-food-manager'), $post_id);
 		echo '</code>';
+	}
+
+	public function set_image_copy_columns($columns)
+	{
+		$columns['image'] = __('Image', 'wp-food-manager');
+		return  $columns;
+	}
+
+	public function image_copy_content_column($column, $post_id)
+	{
+		$food_thumbnail = get_the_post_thumbnail( $post_id, 'thumbnail', array( 'class' => 'alignleft' ) );
+		if(empty($food_thumbnail) || $food_thumbnail == ''){
+			$food_thumbnail_url = apply_filters( 'wpfm_default_food_banner', WPFM_PLUGIN_URL . '/assets/images/wpfm-placeholder.jpg' );
+			$food_thumbnail = '<img src='.esc_url($food_thumbnail_url).' height="60px" width="60px">';
+		} else {
+			$food_thumbnail = get_the_post_thumbnail( $post_id, array( 60, 60), array( 'class' => 'alignleft' ) );
+		}
+		echo $food_thumbnail;
+	}
+
+	public function set_price_copy_columns($columns)
+	{
+		$columns['price'] = __('Price', 'wp-food-manager');
+		return  $columns;
+	}
+
+	public function price_copy_content_column($column, $post_id)
+	{
+		$food_price = get_post_meta($post_id, '_food_price', true);
+		echo esc_html($food_price);
 	}
 }
 WPFM_Writepanels::instance();
