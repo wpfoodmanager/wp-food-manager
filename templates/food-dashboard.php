@@ -44,10 +44,10 @@
 													'nonce' => true
 											);
 										} else {
-											$actions ['mark_cancelled'] = array (
+											/*$actions ['mark_cancelled'] = array (
 													'label' => __ ( 'Mark cancelled', 'wp-food-manager' ),
 													'nonce' => true
-											);
+											);*/
 										}
 										$actions ['duplicate'] = array (
 												'label' => __ ( 'Duplicate', 'wp-food-manager' ),
