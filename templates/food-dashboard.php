@@ -31,7 +31,7 @@
 								<?php elseif ('food_action' === $key ) :?>
 		                            <div class="wpfm-dboard-food-action">
 									<?php
-								$actions = array ();
+								$actions = array();
 								switch ($food->post_status) {
 									case 'publish' :
 										$actions ['edit'] = array (
