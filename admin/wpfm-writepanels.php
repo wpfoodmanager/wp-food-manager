@@ -57,8 +57,8 @@ class WPFM_Writepanels
 		add_action('manage_food_manager_menu_posts_custom_column', array($this, 'shortcode_copy_content_column'), 10, 2);
 
 		//add food image column
-		add_filter('manage_food_manager_posts_columns', array($this, 'set_image_copy_columns'));
-		add_action('manage_food_manager_posts_custom_column', array($this, 'image_copy_content_column'), 10, 2);
+		add_filter('manage_food_manager_posts_columns', array($this, 'set_custom_food_columns'));
+		add_action('manage_food_manager_posts_custom_column', array($this, 'custom_food_content_column'), 10, 2);
 
 		//add food price column
 		/*add_filter('manage_food_manager_posts_columns', array($this, 'set_price_copy_columns'));
@@ -176,12 +176,12 @@ class WPFM_Writepanels
 					'class'    => array(''),
 					'priority' => 1,
 				),
-				'extra-options'        => array(
+				/*'extra-options'        => array(
 					'label'    => __('Extra options', 'wp-food-manager'),
 					'target'   => 'extra_options_food_data_content',
 					'class'    => array(),
 					'priority' => 1,
-				),
+				),*/
 				/*'ingredient'        => array(
 					'label'    => __('Ingredient', 'wp-food-manager'),
 					'target'   => 'ingredient_food_data_content',
@@ -784,14 +784,25 @@ class WPFM_Writepanels
 		echo '</code>';
 	}
 
-	public function set_image_copy_columns($columns)
+	public function set_custom_food_columns($columns)
 	{
-		$columns['image'] = __('Image', 'wp-food-manager');
+		$custom_col_order = array(
+	        'cb' => $columns['cb'],
+	        'title' => $columns['title'],
+	        'image' => __( 'Image', 'wp-food-manager' ),
+	        'price' => __( 'Price', 'wp-food-manager' ),
+	        'fm_categories' => __( 'Categories', 'wp-food-manager' ),
+	        'date' => $columns['date']
+	    );
+	    return $custom_col_order;
+
+		/*$columns['image'] = __('Image', 'wp-food-manager');
 		$columns['price'] = __('Price', 'wp-food-manager');
-		return  $columns;
+		$columns['fm_categories'] = __('Categories', 'wp-food-manager');
+		return  $columns;*/
 	}
 
-	public function image_copy_content_column($column, $post_id)
+	public function custom_food_content_column($column, $post_id)
 	{
 		if($column == 'image'){
 			$food_thumbnail = get_the_post_thumbnail( $post_id, 'thumbnail', array( 'class' => 'alignleft' ) );
@@ -805,7 +816,10 @@ class WPFM_Writepanels
 		}
 		if($column == 'price'){
 			$food_price = get_post_meta($post_id, '_food_price', true);
-			echo esc_html("$".$food_price);
+			echo esc_html($food_price);
+		}
+		if($column == 'fm_categories'){
+			echo display_food_category();
 		}
 	}
 }
