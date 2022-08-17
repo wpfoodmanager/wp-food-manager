@@ -500,7 +500,7 @@ function wpfm_user_can_post_food() {
 
 	if ( ! is_user_logged_in() ) {
 
-		if ( wpfm_user_requires_account() ) {
+		if ( wpfm_user_requires_account() && ! food_manager_enable_registration() ) {
 
 			$can_post = false;
 		}
@@ -538,6 +538,17 @@ function food_manager_user_can_edit_food( $food_id ) {
 function wpfm_user_requires_account() {
 
 	return apply_filters( 'wpfm_user_requires_account', get_option( 'wpfm_user_requires_account' ) == 1 ? true : false );
+}
+
+/**
+ * True if registration is enabled.
+ *
+ * @return bool
+ */
+
+function food_manager_enable_registration() {
+
+	return apply_filters( 'food_manager_enable_registration', get_option( 'food_manager_enable_registration' ) == 1 ? true : false );
 }
 
 /**
