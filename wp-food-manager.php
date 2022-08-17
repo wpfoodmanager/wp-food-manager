@@ -223,16 +223,17 @@ class WP_Food_Manager {
 		wp_enqueue_script('wp-food-manager-common'); 		
 
 		//food submission forms and validation js
-		wp_register_script( 'wpfm-food-submission', WPFM_PLUGIN_URL . '/assets/js/food-submission.min.js', array('jquery','jquery-ui-core','jquery-ui-datepicker') , WPFM_VERSION, true );
-		wp_localize_script( 'wpfm-food-submission', 'wpfm_food_submission', array(
+		wp_register_script( 'wp-food-manager-food-submission', WPFM_PLUGIN_URL . '/assets/js/food-submission.min.js', array('jquery', 'wp-food-manager-submission') , WPFM_VERSION, true );
+		/*wp_localize_script( 'wp-food-manager-food-submission', 'wp_food_manager_food_submission', array(
 			
-		// 'i18n_datepicker_format' => WP_Event_Manager_Date_Time::get_datepicker_format(),
+		'i18n_datepicker_format' => WP_Food_Manager_Date_Time::get_datepicker_format(),
 		
-		// 'i18n_timepicker_format' => WP_Event_Manager_Date_Time::get_timepicker_format(),
+		'i18n_timepicker_format' => WP_Food_Manager_Date_Time::get_timepicker_format(),
 		
-		// 'i18n_timepicker_step' => WP_Event_Manager_Date_Time::get_timepicker_step(),
+		'i18n_timepicker_step' => WP_Food_Manager_Date_Time::get_timepicker_step(),
+		'ajax_url' 	 => admin_url( 'admin-ajax.php' ),
 		
-		) );
+		) );*/
 		
 		wp_register_script( 'wpfm-content-food-listing', WPFM_PLUGIN_URL . '/assets/js/content-food-listing.min.js', array('jquery','wp-food-manager-common'), WPFM_VERSION, true );					
 		wp_localize_script( 'wpfm-content-food-listing', 'wpfm_content_food_listing', array(
