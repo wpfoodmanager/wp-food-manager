@@ -176,12 +176,12 @@ class WPFM_Writepanels
 					'class'    => array(''),
 					'priority' => 1,
 				),
-				/*'extra-options'        => array(
+				'extra-options'        => array(
 					'label'    => __('Extra options', 'wp-food-manager'),
 					'target'   => 'extra_options_food_data_content',
 					'class'    => array(),
 					'priority' => 1,
-				),*/
+				),
 				/*'ingredient'        => array(
 					'label'    => __('Ingredient', 'wp-food-manager'),
 					'target'   => 'ingredient_food_data_content',
@@ -606,10 +606,10 @@ class WPFM_Writepanels
 				if(isset($_POST['repeated_options']) && is_array($_POST['repeated_options'])){
 					foreach ( $_POST['repeated_options'] as $option_count) {
 						$counter = 0;
-						if(isset($_POST['_option_key_'.$option_count])){
+						if(isset($_POST['option_key_'.$option_count])){
 
-							$option_key = $_POST['_option_key_'.$option_count];
-							$option_name = $_POST['_option_name_'.$option_count];
+							$option_key = $_POST['option_key_'.$option_count];
+							$option_name = $_POST['option_name_'.$option_count];
 							$option_type = $_POST['_option_type_'.$option_count];
 							$option_required = $_POST['_option_required_'.$option_count];
 							$option_minimum = $_POST['_option_minimum_'.$option_count];
@@ -617,7 +617,7 @@ class WPFM_Writepanels
 							$option_price = $_POST['_option_price_'.$option_count];
 							$option_price_type = $_POST['_option_price_type_'.$option_count];
 							$option_values = array();
-
+							
 							if(isset($_POST['option_value_count'])){
 								$find_option = array_search('%%repeated-option-index%%', $_POST['option_value_count']);
 								if ($find_option !== false) {
@@ -639,17 +639,17 @@ class WPFM_Writepanels
 									}
 								}
 								
-								$extra_options[$option_key] = array(
-																	'option_name' => $option_name,
-																	'option_type' => $option_type,
-																	'option_required' => $option_required,
-																	'option_minimum' => $option_minimum,
-																	'option_maximum' => $option_maximum,
-																	'option_price' => $option_price,
-																	'option_price_type' => $option_price_type,
-																	'option_options' => $option_values,
-																);
 							}
+							$extra_options[$option_key] = array(
+																'option_name' => $option_name,
+																'option_type' => $option_type,
+																'option_required' => $option_required,
+																'option_minimum' => $option_minimum,
+																'option_maximum' => $option_maximum,
+																'option_price' => $option_price,
+																'option_price_type' => $option_price_type,
+																'option_options' => $option_values,
+															);
 						}
 
 					}

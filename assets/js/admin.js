@@ -75,7 +75,7 @@ var WPFMAdmin= function () {
                 jQuery(this).parents('.postbox').find('.wpfm-options-box-'+row_count+' .wpfm-metabox-content div.wpfm-admin-options-table tbody tr td .opt_select').attr('name', h7);
             });*/
 
-            jQuery('input[name^="_option_name"]').on('change', WPFMAdmin.actions.updateOptionTitle);
+            jQuery('input[name^="option_name"]').on('change', WPFMAdmin.actions.updateOptionTitle);
             jQuery('body').on('change', 'select[name^="_option_type"]' ,WPFMAdmin.actions.changeFieldType);
 
             //find all the options and hide price
@@ -186,7 +186,7 @@ var WPFMAdmin= function () {
 
          //convert text into key
          var option_key = this.value.replace(/\s/g,'_').toLowerCase();
-         jQuery(this).parents('.postbox').find('span.attribute_key input').attr('value','_'+option_key);
+         jQuery(this).parents('.postbox').find('span.attribute_key input').attr('value',option_key);
        },
 
        /// <summary>

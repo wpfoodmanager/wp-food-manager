@@ -21,8 +21,8 @@ $extra_options = get_post_meta($thepostid,'_wpfm_extra_options',true);
 								<a href="javascript: void(0);"  data-id="<?php echo esc_attr($count);?>" class="wpfm-delete-btn">Remove</a>
 								<div class="wpfm-togglediv" title="Click to toggle" aria-expanded="false" data-row-count="<?php echo esc_attr($count);?>"></div>
 								<div class="tips wpfm-sort"></div>
-								<strong class="attribute_name"><?php printf(__('%s','wp-food-manager'),$option_key);?></strong>
-								<span class="attribute_key"> <input type="text" name="_option_key_<?php echo esc_attr($count);?>" value="<?php echo $option_key;?>" readonly>
+								<strong class="attribute_name"><?php printf(__('%s','wp-food-manager'),$option['option_name']);?></strong>
+								<span class="attribute_key"> <input type="text" name="option_key_<?php echo esc_attr($count);?>" value="<?php echo $option_key;?>" readonly>
 									</span>
 							</h3>
 							<div class="wpfm-metabox-content wpfm-options-box-<?php echo esc_attr($count);?>">
@@ -36,10 +36,17 @@ $extra_options = get_post_meta($thepostid,'_wpfm_extra_options',true);
 											if(!isset($field['value']) || empty($field['value'])){
 												$field['value'] = isset($option[$key]) ? $option[$key] : '';
 											} 
-
-											if( strpos($key, '_') !== 0 ) {
+											
+											if($key == "option_name"){
+												if( strpos($key, '_') !== 0 ) {
+													$key  = $key.'_'.$count;	
+												}
+											} else {
+												if( strpos($key, '_') !== 0 ) {
 													$key  = '_'.$key.'_'.$count;	
 												}
+											}
+
 
 											$type = !empty($field['type']) ? $field['type'] : 'text';
 											
@@ -106,7 +113,7 @@ $extra_options = get_post_meta($thepostid,'_wpfm_extra_options',true);
 						<div class="wpfm-togglediv" title="Click to toggle" aria-expanded="false" data-row-count="%%repeated-option-index%%"></div>
 						<div class="tips wpfm-sort"></div>
 						<strong class="attribute_name"><?php _e("Option %%repeated-option-index%%","wp-food-manager");?></strong>
-						<span class="attribute_key"><input type="text" name="_option_key_%%repeated-option-index%%" value="_option_%%repeated-option-index%%" readonly>
+						<span class="attribute_key"><input type="text" name="option_key_%%repeated-option-index%%" value="option_%%repeated-option-index%%" readonly>
 							</span>
 					</h3>
 					<div class="wpfm-metabox-content wpfm-options-box">
@@ -116,9 +123,17 @@ $extra_options = get_post_meta($thepostid,'_wpfm_extra_options',true);
 								$food_fields = $this->food_manager_data_fields();
 								if(isset($food_fields["extra_options"]))
 								foreach ($food_fields["extra_options"] as $key => $field) {
-									if( strpos($key, '_') !== 0 ) {
-											$key  = "_".$key."_%%repeated-option-index%%";	
+
+									if($key == "option_name"){
+										if( strpos($key, '_') !== 0 ) {
+											$key  = $key.'_%%repeated-option-index%%';
 										}
+									} else {
+										if( strpos($key, '_') !== 0 ) {
+											$key  = "_".$key."_%%repeated-option-index%%";
+										}
+									}
+
 
 									$type = !empty($field["type"]) ? $field["type"] : "text";
 									if ($type == "wp-editor") $type = "textarea";

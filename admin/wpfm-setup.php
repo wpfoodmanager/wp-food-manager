@@ -193,9 +193,9 @@ class WP_Food_Manager_Setup
 
 				'foods'                => '[foods]',
 
-				'food_categories'      => '[food_categories]',
+				/*'food_categories'      => '[food_categories]',
 
-				'food_type'            => '[food_type]',
+				'food_type'            => '[food_type]',*/
 
 				/*'neutritions_dashboard' => '[neutritions_dashboard]',
 
@@ -327,7 +327,7 @@ class WP_Food_Manager_Setup
 									<td><code>[foods]</code></td>
 								</tr>
 
-								<tr>
+								<!-- <tr>
 									<td><input type="checkbox" checked="checked" name="wp-food-manager-create-page[food_categories]" /></td>
 
 									<td><input type="text" value="<?php echo esc_attr(_x('Food Categories', 'Default page title (wizard)', 'wp-food-manager')); ?>" name="wp-food-manager-page-title[food_categories]" /></td>
@@ -353,7 +353,7 @@ class WP_Food_Manager_Setup
 									</td>
 
 									<td><code>[food_type]</code></td>
-								</tr>
+								</tr> -->
 
 								<!-- <tr>
 									<td><input type="checkbox" checked="checked" name="wp-food-manager-create-page[neutritions_dashboard]" /></td>
