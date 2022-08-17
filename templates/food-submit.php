@@ -1,6 +1,6 @@
 <?php
 /**
- * Event Submission Form
+ * Food Submission Form
  */
 if ( ! defined( 'ABSPATH' ) ) exit;
 
@@ -11,11 +11,11 @@ global $food_manager;
 		<?php get_food_manager_template( 'account-signin.php' ); ?>
 	<?php endif; ?>
 	<?php if ( wpfm_user_can_post_food() || food_manager_user_can_edit_food( $food_id )   ) : ?>
-		<!-- Event Information Fields -->
+		<!-- Food Information Fields -->
     	<h2 class="wpfm-form-title wpfm-heading-text"><?php _e( 'Food Details', 'wp-food-manager' ); ?></h2>
     <?php
 	if ( isset( $resume_edit ) && $resume_edit ) {
-		printf( '<p class="wpfm-alert wpfm-alert-info"><strong>' . __( "You are editing an existing food. %s","wp-food-manager" ) . '</strong></p>', '<a href="?new=1&key=' . $resume_edit . '">' . __( 'Create A New Event','wp-food-manager' ) . '</a>' );
+		printf( '<p class="wpfm-alert wpfm-alert-info"><strong>' . __( "You are editing an existing food. %s","wp-food-manager" ) . '</strong></p>', '<a href="?new=1&key=' . $resume_edit . '">' . __( 'Create A New Food','wp-food-manager' ) . '</a>' );
 	}
 	?>
 	
