@@ -58,10 +58,7 @@ class WP_Food_Manager_Install {
 		update_option( 'wp_food_manager_version', WPFM_VERSION );
 	}
 
-	/**
-	 * Install WP Food Manager
-	 */
-	public static function update() {
+	/*public static function update() {
 
 		global $wpdb;
 
@@ -120,7 +117,7 @@ class WP_Food_Manager_Install {
 		delete_transient( 'wp_food_manager_addons_html' );
 
 		update_option( 'wp_food_manager_version', WPFM_VERSION );
-	}
+	}*/
 	
 	/**
 	 * Init user roles
@@ -167,44 +164,44 @@ class WP_Food_Manager_Install {
 
 			'core' => array(
 
-				'manage_food_listings'
+				'manage_food_managers'
 			),
 
-			'food_listing' => array(
+			'food_manager' => array(
 
-				"edit_food_listing",
+				"edit_food_manager",
 
-				"read_food_listing",
+				"read_food_manager",
 
-				"delete_food_listing",
+				"delete_food_manager",
 
-				"edit_food_listings",
+				"edit_food_managers",
 
-				"edit_others_food_listings",
+				"edit_others_food_managers",
 
-				"publish_food_listings",
+				"publish_food_managers",
 
-				"read_private_food_listings",
+				"read_private_food_managers",
 
-				"delete_food_listings",
+				"delete_food_managers",
 
-				"delete_private_food_listings",
+				"delete_private_food_managers",
 
-				"delete_published_food_listings",
+				"delete_published_food_managers",
 
-				"delete_others_food_listings",
+				"delete_others_food_managers",
 
-				"edit_private_food_listings",
+				"edit_private_food_managers",
 
-				"edit_published_food_listings",
+				"edit_published_food_managers",
 
-				"manage_food_listing_terms",
+				"manage_food_manager_terms",
 				
-				"edit_food_listing_terms",
+				"edit_food_manager_terms",
 
-				"delete_food_listing_terms",
+				"delete_food_manager_terms",
 
-				"assign_food_listing_terms"
+				"assign_food_manager_terms"
 			)
 		);
 	}
@@ -217,7 +214,7 @@ class WP_Food_Manager_Install {
 	private static function get_default_taxonomy_terms() {
 		return array(
 
-			'food_listing_type' => array(
+			'food_manager_ingredient' => array(
 
 				'Appearance or Signing',
 
@@ -229,61 +226,18 @@ class WP_Food_Manager_Install {
 
 				'Concert or Performance',
 
-				'Conference',
-
-				'Convention',
-
-				'Dinner or Gala',
-
-				'Festival or Fair',
-
-				'Game or Competition',
-
-				'Meeting or Networking Event',
-
-				'Other',
-
-				'Party or Social Gathering',
-				
-				'Race or Endurance Event',
-
-				'Rally',
-
-				'Screening',
-
-				'Seminar or Talk',
-
-				'Tour',
-
-				'Tournament',
-
-				'Tradeshow, Consumer Show or Expo'
 			),
-			'food_listing_category' => array(
+			'food_manager_category' => array(
 			
-					'Business & Professional',
+				'Appetizers/Starters',
 			
-					'Charity & Causes',
+				'Breakfast',
 			
-					'Community & Culture',
+				'Dessert',
 			
-					'Family & Education',
+				'Beverage',
 			
-					'Fashion & Beauty',
-			
-					'Film, Media & Entertainment',
-			
-					'Food & Drink',
-			
-					'Game or Competition',
-			
-					'Other',
-			
-					'Performing & Visual Arts',
-			
-					'Science & Technology',
-			
-					'Sports & Fitness'
+				'Main dishes',
 			)
 		);
 	}
@@ -316,10 +270,10 @@ class WP_Food_Manager_Install {
 	 */
 	private static function add_food_types() {
 		$taxonomies = self::get_default_taxonomy_terms();
-		$terms      = $taxonomies['food_listing_type'];
+		$terms      = $taxonomies['food_manager_type'];
 
 		foreach ( $terms as $term => $meta ) {
-			$term = get_term_by( 'slug', sanitize_title( $term ), 'food_listing_type' );
+			$term = get_term_by( 'slug', sanitize_title( $term ), 'food_manager_type' );
 			if ( $term ) {
 				foreach ( $meta as $meta_key => $meta_value ) {
 					if ( ! get_term_meta( (int) $term->term_id, $meta_key, true ) ) {
@@ -333,7 +287,7 @@ class WP_Food_Manager_Install {
 	/**
 	 * create_page function.
 	 */
-	private static function create_page( $title, $content, $option ) 
+	/*private static function create_page( $title, $content, $option ) 
 	{
 		if(get_option($option) == '')
 		{
@@ -363,6 +317,6 @@ class WP_Food_Manager_Install {
 				update_option( $option, $page_id );
 			}
 		}		
-	}
+	}*/
 
 }
