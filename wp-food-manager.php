@@ -158,13 +158,13 @@ class WP_Food_Manager {
 	 * Handle Updates
 	 */
 
-	public function updater() {
+	/*public function updater() {
 		if ( version_compare( WPFM_VERSION, get_option( 'wp_food_manager_version' ), '>' ) ) {
 
 			WP_Food_Manager_Install::update();
 			flush_rewrite_rules();
 		}
-	}
+	}*/
 
 	/**
 	 * Load functions
