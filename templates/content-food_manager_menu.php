@@ -1,15 +1,23 @@
 <div class="wpfm-col-12">
 	<div class="wpfm-row">
 		<div>
-			<?php _e('Food Menu');?>
-		</div>
-		<div>
+			<h3>
+				<?php _e('Food Lists');?>
+			</h3>
 			<?php
-			// $food_listing = get_food_listings(array(
-			// 					'category'	=> get_the_ID()
-			// 				));
-			// print_r($food_listing);
-			?>
+            $po_ids = get_post_meta($post->ID, '_food_item_ids', true);
+            if(!empty($po_ids)){
+                $food_listings = get_posts( array(
+                    'include'   => implode(",", $po_ids),
+                    'post_type' => 'food_manager',
+                    'orderby'   => 'post__in',
+                ) );
+                
+                foreach ($food_listings as $food_listing) {    
+                    echo wp_kses_post("<a href='".get_permalink($food_listing->ID)."' class='food-list-box'>".esc_html($food_listing->post_title)."</a>");
+                }
+            }
+            ?>
 		</div>
 	</div>
 </div>

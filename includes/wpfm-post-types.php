@@ -38,6 +38,8 @@ class WPFM_Post_Types {
 
 		add_filter( 'the_content', array( $this, 'food_content' ) );
 
+		add_filter( 'the_content', array( $this, 'food_menu_content' ) );
+
 		add_filter('use_block_editor_for_post_type', array($this,'wpfm_disable_gutenberg'), 10, 2);
 
 	}
@@ -784,6 +786,38 @@ class WPFM_Post_Types {
 		add_filter( 'the_content', array( $this, 'food_content' ) );
 
 		return apply_filters( 'food_manager_single_food_content', $content, $post );
+	}
+
+	/**
+	 * Add Food menu content
+	 */
+	public function food_menu_content( $content ) {
+
+		global $post;
+
+		if ( ! is_singular( 'food_manager_menu' ) || ! in_the_loop() ) {
+
+			return $content;
+		}
+
+		remove_filter( 'the_content', array( $this, 'food_menu_content' ) );
+
+		if ( 'food_manager_menu' === $post->post_type ) {
+
+			ob_start();
+
+			do_action( 'food_content_start' );
+
+			get_food_manager_template_part( 'content-single', 'food_manager_menu' );
+
+			do_action( 'food_content_end' );
+
+			$content = ob_get_clean();
+		}
+
+		add_filter( 'the_content', array( $this, 'food_menu_content' ) );
+
+		return apply_filters( 'food_manager_single_food_menu_content', $content, $post );
 	}
 
 	/**

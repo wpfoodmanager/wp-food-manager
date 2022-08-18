@@ -1129,7 +1129,7 @@ class WPFM_Shortcodes {
 		$args = array(
 			'post_type'   => 'food_manager_menu',
 			'post_status' => 'publish',
-			//'p'           => $id
+			'p'           => $id
 		);
 
 		$food_menus = new WP_Query( $args );
