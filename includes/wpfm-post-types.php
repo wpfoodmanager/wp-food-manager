@@ -66,9 +66,9 @@ class WPFM_Post_Types {
 
 		if ( get_option( 'food_manager_enable_categories' ,true) ) {
 
-			$singular  = __( 'Food category', 'wp-food-manager' );
+			$singular  = __( 'Food Category', 'wp-food-manager' );
 
-			$plural    = __( 'Food categories', 'wp-food-manager' );
+			$plural    = __( 'Categories', 'wp-food-manager' );
 
 			if ( current_theme_supports( 'food-manager-templates' ) ) {
 
@@ -155,9 +155,9 @@ class WPFM_Post_Types {
 
 		if ( get_option( 'food_manager_enable_food_types' ,true) ) {
 
-		        $singular  = __( 'Food type', 'wp-food-manager' );
+		        $singular  = __( 'Food Type', 'wp-food-manager' );
 
-				$plural    = __( 'Food type', 'wp-food-manager' );
+				$plural    = __( 'Types', 'wp-food-manager' );
 
 			if ( current_theme_supports( 'food-manager-templates' ) ) {
 
@@ -244,9 +244,9 @@ class WPFM_Post_Types {
 
 	if ( get_option( 'food_manager_enable_food_ingredients' ,true) ) {
 
-		        $singular  = __( 'Food ingredient', 'wp-food-manager' );
+		        $singular  = __( 'Food Ingredient', 'wp-food-manager' );
 
-				$plural    = __( 'Food ingredients', 'wp-food-manager' );
+				$plural    = __( 'Ingredients', 'wp-food-manager' );
 
 			if ( current_theme_supports( 'food-manager-templates' ) ) {
 
@@ -329,9 +329,9 @@ class WPFM_Post_Types {
 
 	if ( get_option( 'food_manager_enable_food_neutritions' ,true) ) {
 
-		        $singular  = __( 'Food neutrition', 'wp-food-manager' );
+		        $singular  = __( 'Food Nutritions', 'wp-food-manager' );
 
-				$plural    = __( 'Food neutritions', 'wp-food-manager' );
+				$plural    = __( 'Nutritions', 'wp-food-manager' );
 
 			if ( current_theme_supports( 'food-manager-templates' ) ) {
 
@@ -548,7 +548,7 @@ class WPFM_Post_Types {
 
 					'all_items'             => sprintf( __( 'All %s', 'wp-food-manager' ), $plural ),
 
-					'add_new' 				=> __( 'Add New', 'wp-food-manager' ),
+					'add_new' 				=> __( 'Add Food', 'wp-food-manager' ),
 
 					'add_new_item' 			=> sprintf( __( 'Add %s', 'wp-food-manager' ), $singular ),
 
@@ -635,7 +635,7 @@ class WPFM_Post_Types {
 
 					'menu_name'             => __( 'Food Menu', 'wp-food-manager' ),
 
-					'all_items'             => sprintf( __( 'Food %s', 'wp-food-manager' ), $plural ),
+					'all_items'             => sprintf( __( '%s', 'wp-food-manager' ), $plural ),
 
 					'add_new' 				=> __( 'Add New', 'wp-food-manager' ),
 
