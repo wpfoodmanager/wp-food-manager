@@ -6,7 +6,7 @@ if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 // Cleanup all data.
 require 'includes/wp-food-manager-data-cleaner.php';
 
-/*if ( ! is_multisite() ) {
+if ( ! is_multisite() ) {
 
 	// Only do deletion if the setting is true.
 	$do_deletion = get_option( 'food_manager_delete_data_on_uninstall' );
@@ -30,7 +30,7 @@ require 'includes/wp-food-manager-data-cleaner.php';
 	}
 
 	switch_to_blog( $original_blog_id );
-}*/
+}
 
 $options = array(
 		'food_manager_installed_terms',

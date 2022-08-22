@@ -35,7 +35,6 @@ class WP_Food_Manager_Data_Cleaner {
 	 */
 	private static $taxonomies = array(
 		'food_manager_type',
-		'food_listing_category',
 		'food_manager_ingredient',
 		'food_manager_neutrition',
 		'food_manager_unit',
@@ -78,7 +77,7 @@ class WP_Food_Manager_Data_Cleaner {
 	 */
 	private static $transients = array(
 		'_food_manager_activation_redirect',
-		'get_food_listings-transient-version',
+		'get_food_manager-transient-version',
 		'fm_.*',
 	);
 
@@ -95,24 +94,22 @@ class WP_Food_Manager_Data_Cleaner {
 	 * @var $caps
 	 */
 	private static $caps = array(
-		'manage_food_listings',
-		'edit_food_listing',
-		'read_food_listing',
-		'delete_food_listing',
-		'edit_food_listings',
-		'edit_others_food_listings',
-		'publish_food_listings',
-		'read_private_food_listings',
-		'delete_food_listings',
-		'delete_private_food_listings',
-		'delete_published_food_listings',
-		'delete_others_food_listings',
-		'edit_private_food_listings',
-		'edit_published_food_listings',
-		'manage_food_listing_terms',
-		'edit_food_listing_terms',
-		'delete_food_listing_terms',
-		'assign_food_listing_terms',
+		'manage_food_manager',
+		'edit_food_manager',
+		'read_food_manager',
+		'delete_food_manager',
+		'edit_others_food_manager',
+		'publish_food_manager',
+		'read_private_food_manager',
+		'delete_private_food_manager',
+		'delete_published_food_manager',
+		'delete_others_food_manager',
+		'edit_private_food_manager',
+		'edit_published_food_manager',
+		'manage_food_manager_terms',
+		'edit_food_manager_terms',
+		'delete_food_manager_terms',
+		'assign_food_manager_terms',
 	);
 
 	/**
