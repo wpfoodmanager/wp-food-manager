@@ -130,7 +130,7 @@ class WPFM_Post_Types {
 
 		            'show_ui' 				=> true,
 	       	 		'show_in_rest'          => true,
-	       	 		'hierarchical'        => false, // Hierarchical causes memory issues
+	       	 		//'hierarchical'        => false, // Hierarchical causes memory issues
 		            'public' 	     		=> $public,
 
 		            'capabilities'			=> array(
