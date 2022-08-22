@@ -216,15 +216,32 @@ class WP_Food_Manager_Install {
 
 			'food_manager_ingredient' => array(
 
-				'Appearance or Signing',
+				'Vegetables',
 
-				'Attraction',
+				'Spices and Herbs',
 
-				'Camp, Trip, or Retreat',
+				'Cereals and Pulses',
 
-				'Class, Training, or Workshop',
+				'Meat',
 
-				'Concert or Performance',
+				'Seafood',
+
+			),
+			'food_manager_nutrition' => array(
+
+				'Calcium',
+
+				'Potassium',
+
+				'Fiber',
+
+				'Magnesium',
+
+				'Vitamin A',
+
+				'Vitamin C',
+
+				'Vitamin E',
 
 			),
 			'food_manager_category' => array(
@@ -238,6 +255,34 @@ class WP_Food_Manager_Install {
 				'Beverage',
 			
 				'Main dishes',
+			),
+			'food_manager_type' => array(
+			
+				'Fruit and vegetables',
+			
+				'Starchy food',
+			
+				'Dairy',
+			
+				'Protein',
+			
+				'Fat',
+			),
+			'food_manager_unit' => array(
+			
+				'10 grams',
+			
+				'50 grams',
+			
+				'100 grams',
+			
+				'500 grams',
+			
+				'1 kg',
+
+				'2 kg',
+
+				'3 kg',
 			)
 		);
 	}
