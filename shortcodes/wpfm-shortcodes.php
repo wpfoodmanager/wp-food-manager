@@ -13,7 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 class WPFM_Shortcodes {
 
 	private $food_dashboard_message = '';
-	private $neutrition_dashboard_message = '';
+	private $nutrition_dashboard_message = '';
 	private $venue_dashboard_message = '';
 	
 	/**
@@ -22,6 +22,9 @@ class WPFM_Shortcodes {
 	public function __construct() {
 
 		add_action( 'wp', array( $this, 'shortcode_action_handler' ) );
+
+		add_action('food_manager_food_dashboard_content_edit', array($this, 'edit_food'));
+
 		add_shortcode( 'submit_food_form', array( $this, 'submit_food_form' ) );
 		add_shortcode( 'food_dashboard', array( $this, 'food_dashboard' ) );
 		add_shortcode( 'foods', array( $this, 'output_foods' ) );
@@ -40,8 +43,8 @@ class WPFM_Shortcodes {
 		if ( is_page() && strstr( $post->post_content, '[food_dashboard' ) ) {
 			$this->food_dashboard_handler();
 		}
-		elseif ( is_page() && strstr( $post->post_content, '[neutritions_dashboard' )) {
-			$this->neutritions_dashboard_handler();
+		elseif ( is_page() && strstr( $post->post_content, '[nutritions_dashboard' )) {
+			$this->nutritions_dashboard_handler();
 		}
 		elseif ( is_page() && strstr( $post->post_content, '[ingredients_dashboard' )) {
 			$this->ingredients_dashboard_handler();
@@ -62,7 +65,7 @@ class WPFM_Shortcodes {
 	 */
 	public function submit_organizer_form( $atts = array() ) {
 
-		return $GLOBALS['food_manager']->forms->get_form( 'submit-neutritions', $atts );
+		return $GLOBALS['food_manager']->forms->get_form( 'submit-nutritions', $atts );
 	}
 
 
@@ -257,7 +260,7 @@ class WPFM_Shortcodes {
 	public function edit_food() {
 
 		global $food_manager;
-
+		
 		echo $food_manager->forms->get_form( 'edit-food' );
 	}
 

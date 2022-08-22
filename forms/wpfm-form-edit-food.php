@@ -6,7 +6,7 @@ include_once( 'wpfm-form-submit-food.php' );
  * WP_Food_Manager_Form_Edit_Food class.
  */
 
-class WP_Food_Manager_Form_Edit_Food extends WP_Food_Manager_Form_Submit_Food {
+class WPFM_Form_Edit_Food extends WPFM_Form_Submit_Food {
 
 	public $form_name           = 'edit-food';
 
