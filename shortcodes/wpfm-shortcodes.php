@@ -293,6 +293,7 @@ class WPFM_Shortcodes {
 
 			'show_food_types'          => true,
 
+			'show_food_tags'          => true,
 			
 			'show_category_multiselect' => get_option( 'food_manager_enable_default_category_multiselect', false ),
 
@@ -342,6 +343,14 @@ class WPFM_Shortcodes {
 
 		}
 
+		//food tags
+
+		if ( ! get_option( 'food_manager_enable_food_tags' ) ) {
+
+			$show_food_tags = false;
+
+		}
+
 		//food ticket prices		
 
 		if ( ! get_option( 'food_manager_enable_food_ticket_prices' ) ) {
@@ -357,6 +366,8 @@ class WPFM_Shortcodes {
 		$show_categories           = $this->string_to_bool( $show_categories );
 
 		$show_food_types          = $this->string_to_bool( $show_food_types );
+
+		$show_food_tags          = $this->string_to_bool( $show_food_tags );
 
 		$show_ticket_prices        = $this->string_to_bool( $show_ticket_prices );
 
@@ -447,6 +458,8 @@ class WPFM_Shortcodes {
 										'selected_category' => $selected_category, 
 
 										'show_food_types' => $show_food_types ,
+
+										'show_food_tags' => $show_food_tags ,
 
 										'show_food_type_multiselect' => $show_food_type_multiselect,
 

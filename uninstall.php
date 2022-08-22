@@ -37,6 +37,7 @@ $options = array(
 		'wp_food_manager_db_version',
 		'food_manager_enable_categories',
 		'food_manager_enable_food_types',
+		'food_manager_enable_food_tags',
 		'food_manager_submit_food_form_page_id',
 		'food_manager_food_dashboard_page_id',
 		'food_manager_foods_page_id',

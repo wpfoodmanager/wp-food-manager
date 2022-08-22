@@ -342,6 +342,57 @@ function get_food_type( $post = null ) {
 
 	return apply_filters( 'display_food_type', $types, $post );
 }
+
+/**
+ * display_food_tag function.
+ *
+ * @access public
+ * @return void
+ */
+function display_food_tag( $post = null, $after = '') {
+
+	if ( $food_tag = get_food_tag( $post ) ) {
+		if (! empty( $food_tag ) ) {
+		    $numTag = count($food_tag);
+		    $i = 0;
+		    foreach ( $food_tag as $tag ) {
+				echo '<span class="wpem-food-tag-text food-tag '. esc_attr( sanitize_title( $tag->slug ) ).' ">'. $tag->name.'</span>';
+				if($numTag > ++$i){
+				    echo $after;
+				}
+			}
+		}
+	}
+}
+
+/**
+ * get_food_tag function.
+ *
+ * @access public
+ * @param mixed $post (default: null)
+ * @return void
+ */
+function get_food_tag( $post = null ) {
+
+	$post = get_post( $post );
+
+	if ( $post->post_type !== 'food_manager' || !get_option( 'food_manager_enable_food_tags' ) ) {
+		return;
+	}
+
+	$tags = wp_get_post_terms( $post->ID, 'food_manager_tag' );
+
+	// Return single if not enabled.
+	/*if ( ! empty( $tags ) ) {
+		$tags = array( current( $tags ) );
+	}*/
+
+	if(empty($tags))
+		$tags = '';
+
+	return apply_filters( 'display_food_tag', $tags, $post );
+}
+
 /**
  * display_food_category function.
  *

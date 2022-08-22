@@ -123,6 +123,15 @@
 #food_manager_data ul.wpfm-tabs li.general_options a::before {
   content: "\f107";
 }
+#food_manager_data ul.wpfm-tabs li.advanced_tab a::before {
+  content: "\f111";
+}
+#food_manager_data ul.wpfm-tabs li.nutritions_tab a::before {
+  content: "\f511";
+}
+#food_manager_data ul.wpfm-tabs li.ingredient_tab a::before {
+  content: "\f175";
+}
 #food_manager_data ul.wpfm-tabs li a::before {
   font-family: Dashicons;
   speak: none;

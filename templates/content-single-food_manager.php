@@ -89,6 +89,11 @@ do_action('set_single_listing_view_count');
                                         <h3 class="wpfm-heading-text"><?php _e('Food Types', 'wp-food-manager'); ?></h3>
                                         <div class="wpfm-food-type"><?php display_food_type(); ?></div>
                                     <?php endif; ?>
+                                    <?php if (get_option('food_manager_enable_food_tags') && get_food_tag()) :?>
+                                        <div class="clearfix">&nbsp;</div>
+                                        <h3 class="wpfm-heading-text"><?php _e('Food Tags', 'wp-food-manager'); ?></h3>
+                                        <div class="wpfm-food-tag"><?php display_food_tag(); ?></div>
+                                    <?php endif; ?>
 
                                     <?php if (get_option('food_manager_enable_categories') && get_food_category()) : ?>
                                         <div class="clearfix">&nbsp;</div>

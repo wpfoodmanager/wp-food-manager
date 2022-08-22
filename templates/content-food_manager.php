@@ -26,6 +26,12 @@ $thumbnail  = get_food_banner();
                             ?>
                             <div class="wpfm-food-type"><?php display_food_type(); ?></div>
                         <?php } ?>
+                        <?php
+                        if (get_option('food_manager_enable_food_tags') && get_food_tag())
+                        {
+                            ?>
+                            <div class="wpfm-food-tag"><?php display_food_tag(); ?></div>
+                        <?php } ?>
                     </div>
                 </div>   
             </a>

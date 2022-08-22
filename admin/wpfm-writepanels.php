@@ -177,12 +177,12 @@ class WPFM_Writepanels
 					'priority' => 1,
 				),
 				'extra-options'        => array(
-					'label'    => __('Extra options', 'wp-food-manager'),
+					'label'    => __('Options / Add ons / Toppings', 'wp-food-manager'),
 					'target'   => 'extra_options_food_data_content',
 					'class'    => array(),
 					'priority' => 1,
 				),
-				/*'ingredient'        => array(
+				'ingredient'        => array(
 					'label'    => __('Ingredient', 'wp-food-manager'),
 					'target'   => 'ingredient_food_data_content',
 					'class'    => array(''),
@@ -193,7 +193,13 @@ class WPFM_Writepanels
 					'target'   => 'nutritions_food_data_content',
 					'class'    => array(''),
 					'priority' => 1,
-				),*/
+				),
+				'advanced'        => array(
+					'label'    => __('Advanced', 'wp-food-manager'),
+					'target'   => 'advanced_food_data_content',
+					'class'    => array(''),
+					'priority' => 1,
+				),
 			)
 		);
 

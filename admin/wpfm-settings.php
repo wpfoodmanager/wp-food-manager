@@ -76,6 +76,15 @@ class WPFM_Settings {
 											'type'       => 'checkbox',
 											'attributes' => array(),
 									),
+								array(
+											'name'       => 'food_manager_enable_food_tags',
+											'std'        => '1',
+											'label'      => __( 'Enable Food tags', 'wp-food-manager' ),
+											'cb_label'   => __( 'Display tags on food.', 'wp-food-manager' ),
+											'desc'       => '',
+											'type'       => 'checkbox',
+											'attributes' => array(),
+									),
 
 								array(
 											'name'       => 'food_manager_enable_food_ingredients',
