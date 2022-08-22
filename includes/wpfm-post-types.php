@@ -327,7 +327,7 @@ class WPFM_Post_Types {
 		    );
 	 }
 
-	if ( get_option( 'food_manager_enable_food_neutritions' ,true) ) {
+	if ( get_option( 'food_manager_enable_food_nutritions' ,true) ) {
 
 		        $singular  = __( 'Food Nutritions', 'wp-food-manager' );
 
@@ -355,11 +355,11 @@ class WPFM_Post_Types {
 
 			}
 
-			register_taxonomy( "food_manager_neutrition",
+			register_taxonomy( "food_manager_nutrition",
 
-			apply_filters( 'register_taxonomy_food_manager_neutritions_object_type', array( 'food_manager' ) ),
+			apply_filters( 'register_taxonomy_food_manager_nutritions_object_type', array( 'food_manager' ) ),
 
-		        apply_filters( 'register_taxonomy_food_manager_neutritions_args', array(
+		        apply_filters( 'register_taxonomy_food_manager_nutritions_args', array(
 
 		            'hierarchical' 			=> true,
 
@@ -823,25 +823,25 @@ class WPFM_Post_Types {
 	/**
 	 * Add extra content when showing organizer content
 	 */
-	public function neutritions_content( $content ) {
+	public function nutritions_content( $content ) {
 
 		global $post;
 
-		if ( ! is_singular( 'food_neutritions' ) || ! in_the_loop() ) 
+		if ( ! is_singular( 'food_nutritions' ) || ! in_the_loop() ) 
 		{
 			return $content;
 		}
 
-		remove_filter( 'the_content', array( $this, 'neutritions_content' ) );
+		remove_filter( 'the_content', array( $this, 'nutritions_content' ) );
 
-		if ( 'food_neutritions' === $post->post_type ) {
+		if ( 'food_nutritions' === $post->post_type ) {
 
 			ob_start();
 
 			$paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
             $per_page = 10;
             $today_date=date("Y-m-d");
-            $neutritions_id = get_the_ID();
+            $nutritions_id = get_the_ID();
             $show_pagination = true;
 
             $args_upcoming = array(
@@ -854,8 +854,8 @@ class WPFM_Post_Types {
             $args_upcoming['meta_query'] = array( 
                 'relation' => 'AND', 
                 array(
-                        'key'     => '_food_neutritions_ids',
-                        'value'   => $neutritions_id, 
+                        'key'     => '_food_nutritions_ids',
+                        'value'   => $nutritions_id, 
                         'compare' => 'LIKE',
                     )
             );
@@ -868,8 +868,8 @@ class WPFM_Post_Types {
             $args_current['meta_query'] = array(
                 'relation' => 'AND',
                 array(
-                    'key'     => '_food_neutritions_ids',
-                    'value'   => $neutritions_id, 
+                    'key'     => '_food_nutritions_ids',
+                    'value'   => $nutritions_id, 
                     'compare' => 'LIKE',
                 )
             );
@@ -888,7 +888,7 @@ class WPFM_Post_Types {
                 'relation' => 'AND', 
                 array(
                     'key'     => '_food_organizer_ids',
-                    'value'   => $neutritions_id, 
+                    'value'   => $nutritions_id, 
                     'compare' => 'LIKE',
                 ),
                 array(
@@ -908,7 +908,7 @@ class WPFM_Post_Types {
 			get_food_manager_template( 
 			    'content-single-food_organizer.php', 
 			    array(
-			        'organizer_id'	=> $neutritions_id,
+			        'organizer_id'	=> $nutritions_id,
 			        'per_page'		=> $per_page,
 			        'show_pagination'	=> $show_pagination,
 			        'upcomingEvents' => $upcomingEvents,

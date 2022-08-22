@@ -102,10 +102,10 @@ do_action('set_single_listing_view_count');
                                         <div class="wpfm-food-ingredients"><?php display_food_ingredients(); ?></div>
                                     <?php endif; ?>
 
-                                    <?php if (get_option('food_manager_enable_food_neutritions') && get_food_neutritions()) : ?>
+                                    <?php if (get_option('food_manager_enable_food_nutritions') && get_food_nutritions()) : ?>
                                         <div class="clearfix">&nbsp;</div>
-                                        <h3 class="wpfm-heading-text"><?php _e('Food Neutritions', 'wp-food-manager'); ?></h3>
-                                        <div class="wpfm-food-neutritions"><?php display_food_neutritions(); ?></div>
+                                        <h3 class="wpfm-heading-text"><?php _e('Food Nutritions', 'wp-food-manager'); ?></h3>
+                                        <div class="wpfm-food-nutritions"><?php display_food_nutritions(); ?></div>
                                     <?php endif; ?>
 
                                     <?php if (get_option('food_manager_enable_food_units') && get_food_units()) : ?>

@@ -197,7 +197,7 @@ class WP_Food_Manager_Setup
 
 				'food_type'            => '[food_type]',*/
 
-				/*'neutritions_dashboard' => '[neutritions_dashboard]',
+				/*'nutritions_dashboard' => '[nutritions_dashboard]',
 
 				'ingredients_dashboard'   => '[ingredients_dashboard]',*/
 
@@ -248,7 +248,7 @@ class WP_Food_Manager_Setup
 
 						<p><?php printf(esc_attr_e('Thanks for installing WP Food Manager!', 'wp-food-manager')); ?></p>
 
-						<p><?php esc_attr_e('This setup wizard will help you get started by creating various pages for food type, food management, and listing your foods, along with setting up Ingredients and Neutritions pages.'); ?></p>
+						<p><?php esc_attr_e('This setup wizard will help you get started by creating various pages for food type, food management, and listing your foods, along with setting up Ingredients and Nutritions pages.'); ?></p>
 
 						<p><?php printf(esc_attr__('The process is still relatively simple if you want to skip the wizard and manually set up the pages and shortcodes yourself. Please refer to the %1$sdocumentation%2$s for support.', 'wp-food-manager'), '<a href="https://wpfoodmanager.com/">', '</a>'); ?></p>
 					</div>
@@ -356,17 +356,17 @@ class WP_Food_Manager_Setup
 								</tr> -->
 
 								<!-- <tr>
-									<td><input type="checkbox" checked="checked" name="wp-food-manager-create-page[neutritions_dashboard]" /></td>
+									<td><input type="checkbox" checked="checked" name="wp-food-manager-create-page[nutritions_dashboard]" /></td>
 
-									<td><input type="text" value="<?php echo esc_attr(_x('Neutritions Dashboard', 'Default page title (wizard)', 'wp-food-manager')); ?>" name="wp-food-manager-page-title[neutritions_dashboard]" /></td>
+									<td><input type="text" value="<?php echo esc_attr(_x('Nutritions Dashboard', 'Default page title (wizard)', 'wp-food-manager')); ?>" name="wp-food-manager-page-title[nutritions_dashboard]" /></td>
 
 									<td>
-										<p><?php esc_attr_e('This page allows peoples to manage and edit their own neutritions from the front-end.', 'wp-food-manager'); ?></p>
+										<p><?php esc_attr_e('This page allows peoples to manage and edit their own nutritions from the front-end.', 'wp-food-manager'); ?></p>
 
 										<p><?php esc_attr_e('In case if you do not want to allow your users to show menus from the frontend, you can uncheck this and skip creating this page.', 'wp-food-manager'); ?></p>
 									</td>
 
-									<td><code>[neutritions_dashboard]</code></td>
+									<td><code>[nutritions_dashboard]</code></td>
 								</tr>
 
 								<tr>

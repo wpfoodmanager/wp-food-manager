@@ -434,21 +434,21 @@ function get_food_ingredients( $post = null ) {
 	return apply_filters( 'display_food_ingredients', $ingredients, $post );
 }
 /**
- * display_food_neutritions function.
+ * display_food_nutritions function.
  *
  * @access public
  * @return void
  */
-function display_food_neutritions( $post = null, $after = '' ) {
+function display_food_nutritions( $post = null, $after = '' ) {
 
-	if ( $food_neutritions = get_food_neutritions( $post ) ) {
+	if ( $food_nutritions = get_food_nutritions( $post ) ) {
 
-		if (! empty( $food_neutritions ) ) {
-		    $numNeutrition = count($food_neutritions);
+		if (! empty( $food_nutritions ) ) {
+		    $numNutrition = count($food_nutritions);
 		    $i = 0;
-			foreach ( $food_neutritions as $neutrition ) {
-				echo '<span class="food-neutritions '. esc_attr( sanitize_title( $neutrition->slug ) ).' ">'. $neutrition->name.'</span>';
-				if($numNeutrition > ++$i){
+			foreach ( $food_nutritions as $nutrition ) {
+				echo '<span class="food-nutritions '. esc_attr( sanitize_title( $nutrition->slug ) ).' ">'. $nutrition->name.'</span>';
+				if($numNutrition > ++$i){
 				    echo $after;
 				}
 			}
@@ -457,23 +457,23 @@ function display_food_neutritions( $post = null, $after = '' ) {
 }
 
 /**
- * get_food_neutritions function.
+ * get_food_nutritions function.
  *
  * @access public
  * @param mixed $post (default: null)
  * @return void
  */
-function get_food_neutritions( $post = null ) {
+function get_food_nutritions( $post = null ) {
 
 	$post = get_post( $post );
 
-	if ( $post->post_type !== 'food_manager' || !get_option( 'food_manager_enable_food_neutritions' ) ) {
+	if ( $post->post_type !== 'food_manager' || !get_option( 'food_manager_enable_food_nutritions' ) ) {
 		return;
 	}
 
-	$neutritions = wp_get_post_terms( $post->ID, 'food_manager_neutrition' );
+	$nutritions = wp_get_post_terms( $post->ID, 'food_manager_nutrition' );
 
-	return apply_filters( 'display_food_neutritions', $neutritions, $post );
+	return apply_filters( 'display_food_nutritions', $nutritions, $post );
 }
 /**
  * display_food_units function.

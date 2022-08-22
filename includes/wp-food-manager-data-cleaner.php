@@ -36,7 +36,7 @@ class WP_Food_Manager_Data_Cleaner {
 	private static $taxonomies = array(
 		'food_manager_type',
 		'food_manager_ingredient',
-		'food_manager_neutrition',
+		'food_manager_nutrition',
 		'food_manager_unit',
 		'food_manager_category'
 	);
@@ -113,20 +113,6 @@ class WP_Food_Manager_Data_Cleaner {
 	);
 
 	/**
-	 * User meta key names to be deleted.
-	 *
-	 * @var array $user_meta_keys
-	 */
-	private static $user_meta_keys = array(
-		'_organizer_logo',
-		'_organizer_name',
-		'_organizer_website',
-		'_organizer_tagline',
-		'_organizer_twitter',
-		'_organizer_video',
-	);
-
-	/**
 	 * Cleanup all data.
 	 *
 	 * @access public
@@ -138,7 +124,6 @@ class WP_Food_Manager_Data_Cleaner {
 		self::cleanup_cron_jobs();
 		self::cleanup_roles_and_caps();
 		self::cleanup_transients();
-		self::cleanup_user_meta();
 		self::cleanup_options();
 		self::cleanup_site_options();
 	}
@@ -294,7 +279,7 @@ class WP_Food_Manager_Data_Cleaner {
 		}
 
 		// Trash the submit organizer page.
-		$submit_organizer_form_page_id = get_option( 'neutritions_dashboard' );
+		$submit_organizer_form_page_id = get_option( 'nutritions_dashboard' );
 		if ( $submit_organizer_form_page_id ) {
 			wp_delete_post( $submit_organizer_form_page_id, true );
 		}
@@ -383,19 +368,6 @@ class WP_Food_Manager_Data_Cleaner {
 	private static function remove_all_food_manager_caps( $object ) {
 		foreach ( self::$caps as $cap ) {
 			$object->remove_cap( $cap );
-		}
-	}
-
-	/**
-	 * Cleanup user meta from the database.
-	 *
-	 * @access private
-	 */
-	private static function cleanup_user_meta() {
-		global $wpdb;
-
-		foreach ( self::$user_meta_keys as $meta_key ) {
-			$wpdb->delete( $wpdb->usermeta, array( 'meta_key' => $meta_key ) );
 		}
 	}
 

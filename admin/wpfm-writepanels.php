@@ -188,9 +188,9 @@ class WPFM_Writepanels
 					'class'    => array(''),
 					'priority' => 1,
 				),
-				'neutritions'        => array(
-					'label'    => __('Neutritions', 'wp-food-manager'),
-					'target'   => 'neutritions_food_data_content',
+				'nutritions'        => array(
+					'label'    => __('Nutritions', 'wp-food-manager'),
+					'target'   => 'nutritions_food_data_content',
 					'class'    => array(''),
 					'priority' => 1,
 				),*/

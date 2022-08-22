@@ -88,10 +88,10 @@ class WPFM_Settings {
 									),
 
 								array(
-											'name'       => 'food_manager_enable_food_neutritions',
+											'name'       => 'food_manager_enable_food_nutritions',
 											'std'        => '1',
-											'label'      => __( 'Enable Food nuetritions', 'wp-food-manager' ),
-											'cb_label'   => __( 'Display nuetritions on food.', 'wp-food-manager' ),
+											'label'      => __( 'Enable Food nutritions', 'wp-food-manager' ),
+											'cb_label'   => __( 'Display nutritions on food.', 'wp-food-manager' ),
 											'desc'       => '',
 											'type'       => 'checkbox',
 											'attributes' => array(),

@@ -136,14 +136,38 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
 					'default'     => '',
 					'taxonomy'    => 'food_manager_ingredient'
 				),
-				'food_neutrition' => array(
-					'label'       => __( 'Food Neutrition', 'wp-food-manager' ),
+				'food_nutrition' => array(
+					'label'       => __( 'Food Nutrition', 'wp-food-manager' ),
 					'type'        => 'term-multiselect',
 					'required'    => true,
 					'placeholder' => '',
 					'priority'    => 3,
 					'default'     => '',
-					'taxonomy'    => 'food_manager_neutrition'
+					'taxonomy'    => 'food_manager_nutrition'
+				),
+				'food_unit' => array(
+					'label'       => __( 'Food Unit', 'wp-food-manager' ),
+					'type'        => 'term-multiselect',
+					'required'    => true,
+					'placeholder' => '',
+					'priority'    => 3,
+					'default'     => '',
+					'taxonomy'    => 'food_manager_unit'
+				),
+				'food_banner' => array(
+					'label'       => __( 'Food Banner', 'wp-food-manager' ),
+					'type'        => 'file',
+					'required'    => true,
+					'placeholder' => '',
+					'priority'    => 9,
+					'ajax'        => true,
+					'multiple'    => false,
+					'allowed_mime_types' => array(
+						'jpg'  => 'image/jpeg',
+						'jpeg' => 'image/jpeg',
+						'gif'  => 'image/gif',
+						'png'  => 'image/png'
+					)
 				),
 				'food_description' => array(
 					'label'       => __( 'Description', 'wp-food-manager' ),
