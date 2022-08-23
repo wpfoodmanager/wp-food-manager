@@ -54,7 +54,7 @@ do_action('set_single_listing_view_count');
                             <div class="wpfm-single-food-short-info">
                                 <div class="wpfm-food-details">
                                     <div class="wpfm-food-title">
-                                        <h3 class="wpfm-heading-text"><?php the_title(); ?> - <?php echo "$".get_post_meta($post->ID, '_food_price', true); ?></h3>
+                                        <h3 class="wpfm-heading-text"><?php the_title(); ?> - <?php display_food_price_tag(); ?></h3>
                                     </div>
                                     <div class="wpfm-food-organizer">
                                         <div class="wpfm-food-organizer-name">by <?php echo get_the_author_link(); ?></div>

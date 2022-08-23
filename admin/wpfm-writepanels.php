@@ -594,6 +594,12 @@ class WPFM_Writepanels
 				update_post_meta($post_id,'_food_price', $fd_price);
 			}
 
+			// Food sale price
+			$fd_sale_price = sanitize_text_field($_POST['_food_sale_price']);
+			if( !add_post_meta($post_id,'_food_sale_price', $fd_sale_price, true) ){
+				update_post_meta($post_id,'_food_sale_price', $fd_sale_price);
+			}
+
 			// Repeated options
 			if( !add_post_meta($post_id,'wpfm_repeated_options', $_POST['repeated_options'], true) ){
 				update_post_meta($post_id,'wpfm_repeated_options', $_POST['repeated_options']);
@@ -821,9 +827,9 @@ class WPFM_Writepanels
 			echo $food_thumbnail;
 		}
 		if($column == 'price'){
-			$food_price = get_post_meta($post_id, '_food_price', true);
-			echo esc_html($food_price);
+			display_food_price_tag();
 		}
+		
 		if($column == 'fm_categories'){
 			echo display_food_category();
 		}

@@ -19,7 +19,7 @@ $thumbnail  = get_food_banner();
 
                 <div class="wpfm-food-infomation">
                     <div class="wpfm-food-details">
-                        <div class="wpfm-food-title"><h3 class="wpfm-heading-text"><?php echo esc_html(get_the_title()); ?> - <?php echo esc_html("$".$food_price); ?></h3></div>
+                        <div class="wpfm-food-title"><h3 class="wpfm-heading-text"><?php echo esc_html(get_the_title()); ?> - <?php display_food_price_tag(); ?></h3></div>
                         <?php
                         if (get_option('food_manager_enable_food_types') && get_food_type())
                         {

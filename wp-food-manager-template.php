@@ -242,6 +242,32 @@ function get_food_thumbnail( $post = null ) {
 }
 
 /**
+ * display_food_price_tag function.
+ *
+ * @access public
+ * @param mixed $post (default: null)
+ * @return string
+ */
+function display_food_price_tag( $post = null ) {
+
+	$post = get_post( $post );
+
+	if ( $post->post_type !== 'food_manager' )
+		return;
+
+	if(!empty(get_post_meta($post->ID, '_food_price', true)) && !empty(get_post_meta($post->ID, '_food_sale_price', true))){
+		echo "<del> $".get_post_meta($post->ID, '_food_price', true)."</del><ins> $".get_post_meta($post->ID, '_food_sale_price', true)."</ins>"; 
+	}
+	if(empty(get_post_meta($post->ID, '_food_price', true)) && empty(get_post_meta($post->ID, '_food_sale_price', true))){
+		return false;
+	}
+	if(empty(get_post_meta($post->ID, '_food_sale_price', true))){
+		echo "$".get_post_meta($post->ID, '_food_price', true);
+	}
+
+}
+
+/**
  * display_food_banner function.
  *
  * @access public
@@ -356,7 +382,7 @@ function display_food_tag( $post = null, $after = '') {
 		    $numTag = count($food_tag);
 		    $i = 0;
 		    foreach ( $food_tag as $tag ) {
-				echo '<span class="wpem-food-tag-text food-tag '. esc_attr( sanitize_title( $tag->slug ) ).' ">'. $tag->name.'</span>';
+				echo '<span class="wpfm-food-tag-text food-tag '. esc_attr( sanitize_title( $tag->slug ) ).' ">'. $tag->name.'</span>';
 				if($numTag > ++$i){
 				    echo $after;
 				}
