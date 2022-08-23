@@ -129,7 +129,7 @@ class WPFM_Writepanels
 						'hide_empty' => false,
 						'pad_counts' => true,
 						'show_count' => true,
-						'hierarchical' => true,
+						'hierarchical' => false,
 					)); ?>
 					<input type="button" id="wpfm-admin-add-food" class="button button-small" value="<?php _e('Add food', 'wp-food-manager'); ?>" />
 				</div>
