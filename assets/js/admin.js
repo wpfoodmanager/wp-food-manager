@@ -196,7 +196,6 @@ var WPFMAdmin= function () {
        /// <returns type="actions" />     
        /// <since>1.0.0</since>
        changeFieldType:function(event){
-        console.log('change field type');
          var field_type = this.value;
          if(jQuery.inArray(field_type, ["checkbox","select","radio"]) !== -1){
             jQuery(this).parents('.postbox').find(".wpfm-admin-options-table").show();
@@ -212,7 +211,7 @@ var WPFMAdmin= function () {
         }
        },
         /// <summary>
-       /// changeFieldType
+       /// addElementRow
        /// </summary>
        /// <param name="parent" type="Event"></param> 
        /// <returns type="actions" />     
@@ -222,7 +221,9 @@ var WPFMAdmin= function () {
             var total_rows = 0;
             total_rows = jQuery(this).parents('table').find('tbody tr').length;
             total_rows = total_rows + 1;
-            var row_count2 = jQuery(".wpfm-options-wrapper div.wpfm-options-wrap").length;
+            //var row_count2 = jQuery(".wpfm-options-wrapper div.wpfm-options-wrap").length;
+            var row_count2 = jQuery(this).parents(".postbox").find(".repeated-options").val();
+            alert(row_count2);
             var html = jQuery(this).data('row').replace( /%%repeated-option-index3%%/g, total_rows ).replace( /%%repeated-option-index2%%/g, row_count2 );
             html.replace('value="1"',total_rows);
             jQuery(this).parents('table').find('tbody').append(html);
@@ -284,7 +285,8 @@ var WPFMAdmin= function () {
        },
 
        removeAttributesOptions: function(event){
-        var row_count3 = jQuery(".wpfm-options-wrapper div.wpfm-options-wrap").length;
+        //var row_count3 = jQuery(".wpfm-options-wrapper div.wpfm-options-wrap").length;
+        var row_count3 = jQuery(this).parents(".postbox").find(".repeated-options").val();
 
         jQuery('.wpfm-options-box-'+row_count3+' div.wpfm-admin-options-table table tbody tr.option-tr-'+jQuery(this).data('id')).remove();
        },
