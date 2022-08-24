@@ -49,84 +49,409 @@ class WPFM_Settings {
 			$account_roles[ $key ] = $role['name'];
 		}
 
-		$this->settings = apply_filters( 'food_manager_settings',
+		$currency_code_options = get_woocommerce_currencies();
 
+		foreach ( $currency_code_options as $code => $name ) {
+			$currency_code_options[ $code ] = $name . ' (' . get_woocommerce_currency_symbol( $code ) . ')';
+		}
+
+		$this->settings = apply_filters( 'food_manager_settings',
 			array(
-					'general_settings' => array(
-							
-							__( 'General', 'wp-food-manager' ),
-							
+				'general_settings' => array(
+					__( 'General', 'wp-food-manager' ),
+						array(
+							array(
+									'name'       => 'food_manager_enable_categories',
+									'std'        => '1',
+									'label'      => __( 'Enable Food categories', 'wp-food-manager' ),
+									'cb_label'   => __( 'Display categories on food.', 'wp-food-manager' ),
+									'desc'       => '',
+									'type'       => 'checkbox',
+									'attributes' => array(),
+								),
+							array(
+									'name'       => 'food_manager_enable_food_types',
+									'std'        => '1',
+									'label'      => __( 'Enable Food types', 'wp-food-manager' ),
+									'cb_label'   => __( 'Display types on food.', 'wp-food-manager' ),
+									'desc'       => '',
+									'type'       => 'checkbox',
+									'attributes' => array(),
+								),
+							array(
+									'name'       => 'food_manager_enable_food_tags',
+									'std'        => '1',
+									'label'      => __( 'Enable Food tags', 'wp-food-manager' ),
+									'cb_label'   => __( 'Display tags on food.', 'wp-food-manager' ),
+									'desc'       => '',
+									'type'       => 'checkbox',
+									'attributes' => array(),
+								),
+							array(
+									'name'       => 'food_manager_enable_food_ingredients',
+									'std'        => '1',
+									'label'      => __( 'Enable Food ingredients', 'wp-food-manager' ),
+									'cb_label'   => __( 'Display ingredients on food.', 'wp-food-manager' ),
+									'desc'       => '',
+									'type'       => 'checkbox',
+									'attributes' => array(),
+								),
+							array(
+									'name'       => 'food_manager_enable_food_nutritions',
+									'std'        => '1',
+									'label'      => __( 'Enable Food nutritions', 'wp-food-manager' ),
+									'cb_label'   => __( 'Display nutritions on food.', 'wp-food-manager' ),
+									'desc'       => '',
+									'type'       => 'checkbox',
+									'attributes' => array(),
+								),
+							array(
+									'name'       => 'food_manager_enable_food_units',
+									'std'        => '1',
+									'label'      => __( 'Enable Food units', 'wp-food-manager' ),
+									'cb_label'   => __( 'Display units on food.', 'wp-food-manager' ),
+									'desc'       => '',
+									'type'       => 'checkbox',
+									'attributes' => array(),
+								),
+							array(
+									'name'       => 'food_manager_delete_data_on_uninstall',
+									'std'        => '0',
+									'label'      => __( 'Delete Data On Uninstall', 'wp-food-manager' ),
+									'cb_label'   => __( 'Delete WP Food Manager data when the plugin is deleted. Once removed, this data cannot be restored.', 'wp-food-manager' ),
+									'desc'       => '',
+									'type'       => 'checkbox',
+									'attributes' => array(),
+								),
+							)
+					),
+					'food_listings'       => array(
+
+						__('Food Listings', 'wp-food-manager'),
+
+						array(
+
 							array(
 
-								array(
-											'name'       => 'food_manager_enable_categories',
-											'std'        => '1',
-											'label'      => __( 'Enable Food categories', 'wp-food-manager' ),
-											'cb_label'   => __( 'Display categories on food.', 'wp-food-manager' ),
-											'desc'       => '',
-											'type'       => 'checkbox',
-											'attributes' => array(),
-									),
-								array(
-											'name'       => 'food_manager_enable_food_types',
-											'std'        => '1',
-											'label'      => __( 'Enable Food types', 'wp-food-manager' ),
-											'cb_label'   => __( 'Display types on food.', 'wp-food-manager' ),
-											'desc'       => '',
-											'type'       => 'checkbox',
-											'attributes' => array(),
-									),
-								array(
-											'name'       => 'food_manager_enable_food_tags',
-											'std'        => '1',
-											'label'      => __( 'Enable Food tags', 'wp-food-manager' ),
-											'cb_label'   => __( 'Display tags on food.', 'wp-food-manager' ),
-											'desc'       => '',
-											'type'       => 'checkbox',
-											'attributes' => array(),
-									),
+								'name'        => 'food_manager_per_page',
 
-								array(
-											'name'       => 'food_manager_enable_food_ingredients',
-											'std'        => '1',
-											'label'      => __( 'Enable Food ingredients', 'wp-food-manager' ),
-											'cb_label'   => __( 'Display ingredients on food.', 'wp-food-manager' ),
-											'desc'       => '',
-											'type'       => 'checkbox',
-											'attributes' => array(),
-									),
+								'std'         => '10',
 
-								array(
-											'name'       => 'food_manager_enable_food_nutritions',
-											'std'        => '1',
-											'label'      => __( 'Enable Food nutritions', 'wp-food-manager' ),
-											'cb_label'   => __( 'Display nutritions on food.', 'wp-food-manager' ),
-											'desc'       => '',
-											'type'       => 'checkbox',
-											'attributes' => array(),
-									),
-								array(
-											'name'       => 'food_manager_enable_food_units',
-											'std'        => '1',
-											'label'      => __( 'Enable Food units', 'wp-food-manager' ),
-											'cb_label'   => __( 'Display units on food.', 'wp-food-manager' ),
-											'desc'       => '',
-											'type'       => 'checkbox',
-											'attributes' => array(),
-									),
-								
-								
+								'placeholder' => '',
 
-									array(
-											'name'       => 'food_manager_delete_data_on_uninstall',
-											'std'        => '0',
-											'label'      => __( 'Delete Data On Uninstall', 'wp-food-manager' ),
-											'cb_label'   => __( 'Delete WP Food Manager data when the plugin is deleted. Once removed, this data cannot be restored.', 'wp-food-manager' ),
-											'desc'       => '',
-											'type'       => 'checkbox',
-											'attributes' => array(),
-									),
-							)
+								'label'       => __('Listings Per Page', 'wp-food-manager'),
+
+								'desc'        => __('How many listings should be shown per page by default?', 'wp-food-manager'),
+
+								'type'        => 'number',
+
+								'attributes'  => array(),
+							),
+
+							array(
+
+								'name'       => 'food_manager_enable_default_category_multiselect',
+
+								'std'        => '0',
+
+								'label'      => __('Multi-select Categories', 'wp-food-manager'),
+
+								'cb_label'   => __('Enable category multiselect by default.', 'wp-food-manager'),
+
+								'desc'       => __('If enabled, the category select box will default to a multi select on the [foods] shortcode.', 'wp-food-manager'),
+
+								'type'       => 'checkbox',
+
+								'attributes' => array(),
+							),
+
+							array(
+
+								'name'       => 'food_manager_enable_default_food_type_multiselect',
+
+								'std'        => '0',
+
+								'label'      => __('Multi-select Food Types', 'wp-food-manager'),
+
+								'cb_label'   => __('Enable event type multiselect by default.', 'wp-food-manager'),
+
+								'desc'       => __('If enabled, the event type select box will default to a multi select on the [foods] shortcode.', 'wp-food-manager'),
+
+								'type'       => 'checkbox',
+
+								'attributes' => array(),
+							),
+						),
+					),
+					'food_submission'     => array(
+
+						__('Food Submission', 'wp-food-manager'),
+
+						array(
+
+							array(
+
+								'name'       => 'food_manager_user_requires_account',
+
+								'std'        => '1',
+
+								'label'      => __('Account Required', 'wp-food-manager'),
+
+								'cb_label'   => __('Submitting listings requires an account.', 'wp-food-manager'),
+
+								'desc'       => __('If disabled, non-logged in users will be able to submit listings without creating an account.', 'wp-food-manager'),
+
+								'type'       => 'checkbox',
+
+								'attributes' => array(),
+							),
+
+							array(
+
+								'name'       => 'food_manager_enable_registration',
+
+								'std'        => '1',
+
+								'label'      => __('Account Creation', 'wp-food-manager'),
+
+								'cb_label'   => __('Allow account creation.', 'wp-food-manager'),
+
+								'desc'       => __('If enabled, non-logged in users will be able to create an account by entering their email address on the submission form.', 'wp-food-manager'),
+
+								'type'       => 'checkbox',
+
+								'attributes' => array(),
+							),
+
+							array(
+
+								'name'       => 'food_manager_generate_username_from_email',
+
+								'std'        => '1',
+
+								'label'      => __('Account Username', 'wp-food-manager'),
+
+								'cb_label'   => __('Automatically Generate Username from Email Address.', 'wp-food-manager'),
+
+								'desc'       => __('If enabled, a username will be generated from the first part of the user email address. Otherwise, a username field will be shown.', 'wp-food-manager'),
+
+								'type'       => 'checkbox',
+
+								'attributes' => array(),
+							),
+							array(
+								'name'       => 'food_manager_use_standard_password_setup_email',
+								'std'        => '1',
+								'label'      => __('Account Password', 'wp-food-manager'),
+								'cb_label'   => __('Use WordPress\' default behavior and email new users link to set a password.', 'wp-food-manager'),
+								'desc'       => __('If enabled, an email will be sent to the user with their username and a link to set their password. Otherwise, a password field will be shown and their email address won\'t be verified.', 'wp-food-manager'),
+								'type'       => 'checkbox',
+								'attributes' => array(),
+							),
+
+							array(
+
+								'name'    => 'food_manager_registration_role',
+
+								'std'     => 'organizer',
+
+								'label'   => __('Account Role', 'wp-food-manager'),
+
+								'desc'    => __('If you enable user registration on your submission form, choose a role for the new user.', 'wp-food-manager'),
+
+								'type'    => 'select',
+
+								'options' => $account_roles,
+							),
+
+							array(
+
+								'name'       => 'food_manager_submission_requires_approval',
+
+								'std'        => '1',
+
+								'label'      => __('Moderate New Listings', 'wp-food-manager'),
+
+								'cb_label'   => __('New listing submissions require admin approval.', 'wp-food-manager'),
+
+								'desc'       => __('If enabled, new submissions will be inactive, pending admin approval.', 'wp-food-manager'),
+
+								'type'       => 'checkbox',
+
+								'attributes' => array(),
+							),
+
+							array(
+
+								'name'       => 'food_manager_enable_categories',
+
+								'std'        => '1',
+
+								'label'      => __('Categories', 'wp-food-manager'),
+
+								'cb_label'   => __('Enable Categories for listing and submission form.', 'wp-food-manager'),
+
+								'desc'       => __('Choose whether to enable categories on the event listing and submission page. If enabled, it needs to be prior created at the backend.', 'wp-food-manager'),
+
+								'type'       => 'checkbox',
+
+								'attributes' => array(),
+							),
+
+							array(
+
+								'name'       => 'food_manager_enable_food_types',
+
+								'std'        => '1',
+
+								'label'      => __('Food Types', 'wp-food-manager'),
+
+								'cb_label'   => __('Enable Food types for listing and submission form.', 'wp-food-manager'),
+
+								'desc'       => __('Choose whether to enable event types on the event listing and submission page. If enabled, it needs to be prior created at the backend.', 'wp-food-manager'),
+
+								'type'       => 'checkbox',
+
+								'attributes' => array(),
+							),
+
+						),
+					),
+					'food_pages' => array(
+
+						__('Pages', 'wp-food-manager'),
+
+						array(
+
+							array(
+
+								'name'  => 'food_manager_submit_food_form_page_id',
+
+								'std'   => '',
+
+								'label' => __('Submit a Food', 'wp-food-manager'),
+
+								'desc'  => __('Select the page where you have placed the [submit_food_form] shortcode. This lets the plugin know where the form is located.', 'wp-food-manager'),
+
+								'type'  => 'page',
+							),
+
+							array(
+
+								'name'  => 'food_manager_food_dashboard_page_id',
+
+								'std'   => '',
+
+								'label' => __('Food Dashboard', 'wp-food-manager'),
+
+								'desc'  => __('Select the page where you have placed the [food_dashboard] shortcode. This lets the plugin know where the dashboard is located.', 'wp-food-manager'),
+
+								'type'  => 'page',
+							),
+
+							array(
+
+								'name'  => 'food_manager_foods_page_id',
+
+								'std'   => '',
+
+								'label' => __('Foods', 'wp-food-manager'),
+
+								'desc'  => __('Select the page where you have placed the [foods] shortcode. This lets the plugin know where the event listings page is located.', 'wp-food-manager'),
+
+								'type'  => 'page',
+							),
+							array(
+
+								'name'  => 'food_manager_categories',
+
+								'std'   => wp_login_url(),
+
+								'label' => __('Food Categories', 'wp-food-manager'),
+
+								'desc'  => __('Select the page where you have placed the [food_categories] shortcode. This lets the plugin know where the form is located.', 'wp-food-manager'),
+
+								'type'  => 'page',
+							),
+
+							array(
+
+								'name'  => 'food_manager_types',
+
+								'std'   => '',
+
+								'label' => __('Food Types', 'wp-food-manager'),
+
+								'desc'  => __('Select the page where you have placed the [food_types] shortcode. This lets the plugin know where the form is located.', 'wp-food-manager'),
+
+								'type'  => 'page',
+							),
+							
+						),
+					),
+					'food_currency' => array(
+
+						__('Currency', 'wp-food-manager'),
+
+						array(
+
+							array(
+								'label'    => __( 'Currency', 'woocommerce' ),
+								'desc'     => __( 'This controls what currency prices are listed at in the catalog and which currency gateways will take payments in.', 'woocommerce' ),
+								'name'       => 'wpfm_currency',
+								'default'  => 'USD',
+								'type'     => 'select',
+								'class'    => 'wc-enhanced-select',
+								'options'  => $currency_code_options,
+							),
+
+							array(
+								'label'    => __( 'Currency position', 'woocommerce' ),
+								'desc'     => __( 'This controls the position of the currency symbol.', 'woocommerce' ),
+								'name'       => 'wpfm_currency_pos',
+								'class'    => 'wc-enhanced-select',
+								'default'  => 'left',
+								'type'     => 'select',
+								'options'  => array(
+									'left'        => __( 'Left', 'woocommerce' ),
+									'right'       => __( 'Right', 'woocommerce' ),
+									'left_space'  => __( 'Left with space', 'woocommerce' ),
+									'right_space' => __( 'Right with space', 'woocommerce' ),
+								),
+							),
+
+							array(
+								'label'    => __( 'Thousand separator', 'woocommerce' ),
+								'desc'     => __( 'This sets the thousand separator of displayed prices.', 'woocommerce' ),
+								'name'       => 'wpfm_price_thousand_sep',
+								'css'      => 'width:50px;',
+								'default'  => ',',
+								'type'     => 'text',
+							),
+
+							array(
+								'label'    => __( 'Decimal separator', 'woocommerce' ),
+								'desc'     => __( 'This sets the decimal separator of displayed prices.', 'woocommerce' ),
+								'name'       => 'wpfm_price_decimal_sep',
+								'css'      => 'width:50px;',
+								'default'  => '.',
+								'type'     => 'text',
+							),
+
+							array(
+								'label'             => __( 'Number of decimals', 'woocommerce' ),
+								'desc'              => __( 'This sets the number of decimal points shown in displayed prices.', 'woocommerce' ),
+								'name'                => 'wpfm_price_num_decimals',
+								'css'               => 'width:50px;',
+								'default'           => '2',
+								'type'              => 'text',
+								'custom_attributes' => array(
+									'min'  => 0,
+									'step' => 1,
+								),
+							),
+
+						),
 					),
 
 				/*'food_submission' => array(
@@ -198,7 +523,7 @@ class WPFM_Settings {
 
 							'std' 		=> '',
 
-							'label' 	=> __( 'Submit Event Form Page', 'wp-food-manager' ),
+							'label' 	=> __( 'Submit Food Form Page', 'wp-food-manager' ),
 
 							'desc'		=> __( 'Select the page where you have placed the [submit_food_form] shortcode. This lets the plugin know where the form is located.', 'wp-food-manager' ),
 
@@ -211,7 +536,7 @@ class WPFM_Settings {
 
 							'std' 		=> '',
 
-							'label' 	=> __( 'Event Dashboard Page', 'wp-food-manager' ),
+							'label' 	=> __( 'Food Dashboard Page', 'wp-food-manager' ),
 
 							'desc'		=> __( 'Select the page where you have placed the [food_dashboard] shortcode. This lets the plugin know where the dashboard is located.', 'wp-food-manager' ),
 
@@ -224,7 +549,7 @@ class WPFM_Settings {
 
 							'std' 		=> '',
 
-							'label' 	=> __( 'Event Listings Page', 'wp-food-manager' ),
+							'label' 	=> __( 'Food Listings Page', 'wp-food-manager' ),
 
 							'desc'		=> __( 'Select the page where you have placed the [foods] shortcode. This lets the plugin know where the food listings page is located.', 'wp-food-manager' ),
 
