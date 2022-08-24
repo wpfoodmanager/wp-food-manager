@@ -15,9 +15,9 @@ var WPFMAdmin= function () {
         /// <since>1.0.0</since> 
         init: function() 
         {			
-		        //Bind on click event of the settings section
-			     jQuery(".wpfm-tabs li a").on('click',WPFMAdmin.actions.tabClick);
-		  	 //show by default first Event Listings Settings Tab
+            //Bind on click event of the settings section
+			jQuery(".wpfm-tabs li a").on('click',WPFMAdmin.actions.tabClick);
+		  	//show by default first Event Listings Settings Tab
             jQuery('.wpfm-tabs li a:first').click();	
 
             jQuery(document).on('click', '#wpfm-admin-add-food', WPFMAdmin.actions.updateFoodinMenu);	
@@ -54,6 +54,55 @@ var WPFMAdmin= function () {
                     }*/
                 });
             //});
+            jQuery('body').on("keyup", ".wpfm-item-search input[type=text]", (function() {
+                var t = jQuery(this),
+                    i = t.parents("ul.wpfm-available-list").find("li.available-item"),
+                    a = new RegExp(t.val(), "gi");
+                a ? i.each((function() {
+                    var t = jQuery(this);
+                    t.find("label").text().match(a) ? t.show() : t.hide()
+                })) : item.show()
+            }));
+            jQuery("#wpfm-ingredient-container .wpfm-sortable-list").sortable({
+                connectWith: ".wpfm-sortable-list",
+                update: function(t, i) {
+                    var a = jQuery(this),
+                        n = jQuery(i.item);
+                    console.log(this);
+                    if (a.hasClass("wpfm-active-list")) {
+                        if (n.find("input").length < 1) {
+                            var r = n.data("id"),
+                                o = wpfm_var.units,
+                                l = "";
+                            o && jQuery.map(o, (function(e, t) {
+                                l = l + "<option value='" + t + "'>" + e + "</option>"
+                            }));
+                            var s = "<input type='text' name='_ingredient[" + r + "][value]'><select name='_ingredient[" + r + "][unit_id]'><option value=''>Unit</option>" + l + "</select>";
+                            n.find(".wpfm-sortable-item-values").html(s), n.removeClass("available-item").addClass("active-item")
+                        }
+                    } else n.find(".wpfm-sortable-item-values").html(""), n.removeClass("active-item").addClass("available-item")
+                }
+            }).disableSelection();
+
+            jQuery("#wpfm-nutrition-container .wpfm-sortable-list").sortable({
+                connectWith: ".wpfm-sortable-list",
+                update: function(t, i) {
+                    var a = jQuery(this),
+                        n = jQuery(i.item);
+                    if (a.hasClass("wpfm-active-list")) {
+                        if (n.find("input").length < 1) {
+                            var r = n.data("id"),
+                                o = wpfm_var.units,
+                                l = "";
+                            o && jQuery.map(o, (function(e, t) {
+                                l = l + "<option value='" + t + "'>" + e + "</option>"
+                            }));
+                            var s = "<input type='text' name='_nutrition[" + r + "][value]'><select name='_nutrition[" + r + "][unit_id]'><option value=''>Unit</option>" + l + "</select>";
+                            n.find(".wpfm-sortable-item-values").html(s), n.removeClass("available-item").addClass("active-item")
+                        }
+                    } else n.find(".wpfm-sortable-item-values").html(""), n.removeClass("active-item").addClass("available-item")
+                }
+            }).disableSelection()
 
             jQuery(".option-tr-1 td a.option-delete-btn").addClass("wpfm-disabled-link");
             /*jQuery(".wpfm-togglediv").each(function(){
@@ -105,7 +154,7 @@ var WPFMAdmin= function () {
 	   	jQuery('.wpfm_panel').hide();
 		jQuery('.nav-tab-active').removeClass('nav-tab-active');
 		jQuery( jQuery(this).attr('href') ).show();
-		jQuery(this).addClass('nav-tab-active');				
+		jQuery(this).addClass('nav-tab-active');
 		var option= jQuery( "#setting-event_manager_submission_expire_options:last option:selected" ).val();	
 		if ( option =='days' ) 
 		   jQuery('#setting-event_manager_submission_duration').closest('tr').show();
@@ -181,12 +230,14 @@ var WPFMAdmin= function () {
        /// <returns type="actions" />     
        /// <since>1.0.0</since>
        updateOptionTitle:function(event){
-
-         jQuery(this).parents('.postbox').find('.attribute_name').text(this.value);
+         //console.log(jQuery(this).closest('.postbox').children('h3').children('.attribute_name').text(this.value));
+         //jQuery(this).parents('.postbox').find('.attribute_name').text(this.value);
+         jQuery(this).closest('.postbox').children('h3').children('.attribute_name').text(this.value);
 
          //convert text into key
          var option_key = this.value.replace(/\s/g,'_').toLowerCase();
-         jQuery(this).parents('.postbox').find('span.attribute_key input').attr('value',option_key);
+         //jQuery(this).parents('.postbox').find('span.attribute_key input').val(option_key);
+         jQuery(this).closest('.postbox').children('h3').children('.attribute_key').children('input').val(this.value);
        },
 
        /// <summary>
@@ -197,17 +248,28 @@ var WPFMAdmin= function () {
        /// <since>1.0.0</since>
        changeFieldType:function(event){
          var field_type = this.value;
+         var row_count = jQuery(this).closest(".postbox").children(".repeated-options").val();
          if(jQuery.inArray(field_type, ["checkbox","select","radio"]) !== -1){
-            jQuery(this).parents('.postbox').find(".wpfm-admin-options-table").show();
+            /*jQuery(this).parents('.postbox').find(".wpfm-admin-options-table").show();
  
             jQuery(this).parents('.postbox').find(".wpfm-admin-postbox-form-field._option_price_type").hide();
-            jQuery(this).parents('.postbox').find(".wpfm-admin-postbox-form-field._option_price").hide();
+            jQuery(this).parents('.postbox').find(".wpfm-admin-postbox-form-field._option_price").hide();*/
+            jQuery(this).closest('.postbox').children('.wpfm-metabox-content').children('.wpfm-content').children('.wpfm-admin-options-table').show();
+
+            jQuery(this).closest('.postbox').children('.wpfm-metabox-content').children('.wpfm-content').children('.wpfm-admin-postbox-form-field._option_price_type_'+row_count).hide();
+            jQuery(this).closest('.postbox').children('.wpfm-metabox-content').children('.wpfm-content').children('.wpfm-admin-postbox-form-field._option_price_'+row_count).hide();
+
          }
          else{
-             jQuery(this).parents('.postbox').find(".wpfm-admin-options-table").hide();
+            /*jQuery(this).parents('.postbox').find(".wpfm-admin-options-table").hide();
 
             jQuery(this).parents('.postbox').find(".wpfm-admin-postbox-form-field._option_price_type").show();
-            jQuery(this).parents('.postbox').find(".wpfm-admin-postbox-form-field._option_price").show();
+            jQuery(this).parents('.postbox').find(".wpfm-admin-postbox-form-field._option_price").show();*/
+
+            jQuery(this).closest('.postbox').children('.wpfm-metabox-content').children('.wpfm-content').children('.wpfm-admin-options-table').hide();
+
+            jQuery(this).closest('.postbox').children('.wpfm-metabox-content').children('.wpfm-content').children('.wpfm-admin-postbox-form-field._option_price_type_'+row_count).show();
+            jQuery(this).closest('.postbox').children('.wpfm-metabox-content').children('.wpfm-content').children('.wpfm-admin-postbox-form-field._option_price_'+row_count).show();            
         }
        },
         /// <summary>

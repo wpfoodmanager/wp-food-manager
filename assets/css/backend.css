@@ -413,6 +413,129 @@ td.fm_categories.column-fm_categories span.food-category {
   border-radius: 4px;
 }
 
+#wpfm-ingredient-container, #wpfm-nutrition-container {
+  padding: 5px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+.wpfm-lists-container .wpfm-active-list.wpfm-sortable-list {
+  -webkit-box-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  margin-right: 5px;
+}
+.wpfm-lists-container .wpfm-sortable-list {
+  position: relative;
+  padding: 50px 10px 10px 10px;
+  border: 1px solid #d9e3ed;
+  margin: 0;
+  min-height: 50px;
+  -webkit-box-flex: 2;
+  -ms-flex: 2;
+  flex: 2;
+}
+.wpfm-sortable-list:before {
+  content: attr(data-title);
+  background: #f6f7f7; /*#f7fafc*/
+  padding: 10px 0;
+  text-align: center;
+  font-weight: bold;
+  position: absolute;
+  display: block;
+  width: 100%;
+  top: 0;
+  margin-left: -10px;
+  border-bottom: 1px solid #d9e3ed;
+}
+.wpfm-active-list .wpfm-sortable-item {
+  background: #f6f7f7;
+  padding: 10px 5px 10px 10px;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  margin: 0;
+  border: 1px solid #d9e3ed;
+}
+.wpfm-sortable-list .wpfm-sortable-item {
+  cursor: move;
+}
+.wpfm-sortable-list .wpfm-sortable-item label {
+  cursor: move;
+  width: auto;
+  float: none;
+  margin: 0;
+}
+.wpfm-clear::after {
+  clear: both;
+  content: "";
+  display: block;
+}
+.wpfm-sortable-list .wpfm-item-search.with-title {
+  margin-bottom: 30px;
+  padding: 15px;
+  background: #f6f7f7;
+  padding-left: 20px;
+  margin-left: 5px;
+  border: 1px solid #d9e3ed;
+}
+.wpfm-sortable-list .wpfm-item-search.with-title .wpfm-search-label {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  float: none;
+  margin: 0;
+  width: auto;
+}
+.wpfm-sortable-list .wpfm-item-search.with-title .wpfm-search-label span {
+  margin-right: 30px;
+  font-size: 15px;
+}
+.wpfm-sortable-list .wpfm-item-search.with-title .wpfm-search-label input {
+  min-height: 36px;
+  min-width: 250px;
+}
+.wpfm-available-list .wpfm-sortable-item {
+  width: 150px;
+  float: left;
+  background: #f6f7f7;
+  padding: 8px 5px;
+  margin: 5px;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  line-height: 1.4;
+  border: 1px solid #d9e3ed;
+}
+.wpfm-sortable-item-values>* {
+    width: 48%;
+    box-sizing: border-box;
+}
+.wpfm-active-list .wpfm-sortable-item {
+  background: #f6f7f7;
+  padding: 10px 5px 10px 10px;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  margin: 0;
+  border: 1px solid #d9e3ed;
+}
+.wpfm-active-list .wpfm-sortable-item+li {
+  margin-top: 6px;
+}
+.wrap.food-manager-settings-wrap h2.nav-tab-wrapper{
+  margin-bottom: 20px;
+}
+
 @media only screen and (max-width: 1280px) {
   .wpfm_panel .wpfm-small-field,
   .wpfm_panel input[type="email"].wpfm-small-field,

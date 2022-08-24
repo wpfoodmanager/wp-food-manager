@@ -53,6 +53,26 @@ class WPFM_Admin {
 
 		wp_enqueue_style('wpfm-font-style',WPFM_PLUGIN_URL.'/assets/fonts/style.css');
 
+		wp_enqueue_script( 'jquery' );
+		wp_enqueue_script( 'jquery-ui-core' );
+		wp_enqueue_script( 'jquery-ui-sortable' );
+
+		$units    = get_terms(
+			[
+				'taxonomy'   => 'food_manager_unit',
+				'hide_empty' => false,
+				'orderby'    => 'name',
+				'order'      => 'ASC',
+			]
+		);
+		$unitList = [];
+
+		if ( ! empty( $units ) ) {
+			foreach ( $units as $unit ) {
+				$unitList[ $unit->term_id ] = $unit->name;
+			}
+		}
+
 		wp_register_script( 'wpfm-admin', WPFM_PLUGIN_URL. '/assets/js/admin.js', array( 'jquery' ), WPFM_VERSION, true );
 
 		wp_localize_script( 'wpfm-admin', 'wpfm_admin',
@@ -61,6 +81,11 @@ class WPFM_Admin {
 					            'security' =>wp_create_nonce( 'wpfm-admin-security' ),
 					        )
 					    );
+		wp_localize_script( 'wpfm-admin', 'wpfm_var',
+							[
+								'units'   => $unitList,
+							],
+						);
 		wp_register_script( 'wp-food-manager-admin-settings', WPFM_PLUGIN_URL. '/assets/js/admin-settings.min.js', array( 'jquery' ), WPFM_VERSION, true );	
 	}
 

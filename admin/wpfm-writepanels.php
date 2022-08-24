@@ -217,8 +217,9 @@ class WPFM_Writepanels
 
 		include 'templates/food-data-general.php';
 		include 'templates/food-data-extra-options.php';
-		//include 'templates/food-data-ingredient.php';
-
+		include 'templates/food-data-ingredient.php';
+		include 'templates/food-data-nutrition.php';
+		include 'templates/food-data-advanced.php';
 	}
 
 	/**
@@ -585,6 +586,37 @@ class WPFM_Writepanels
 		//error_log(print_r($_POST,true));
 
 		// Save fields
+
+		// Ingredients.
+		delete_post_meta( $post_id, '_ingredient' );
+
+		if ( ! empty( $_POST['_ingredient'] ) ) {
+			foreach ( $_POST['_ingredient'] as $id => $ingredient ) {
+				$item = [
+					'id'      => $id,
+					'unit_id' => ! empty( $ingredient['unit_id'] ) ? $ingredient['unit_id'] : null,
+					'value'   => ! empty( $ingredient['value'] ) ? $ingredient['value'] : null,
+				];
+
+				add_post_meta( $post_id, '_ingredient', $item );
+			}
+		}
+
+		// Nutritions.
+		delete_post_meta( $post_id, '_nutrition' );
+
+		if ( ! empty( $_POST['_nutrition'] ) ) {
+			foreach ( $_POST['_nutrition'] as $id => $ingredient ) {
+				$item = [
+					'id'      => $id,
+					'unit_id' => ! empty( $ingredient['unit_id'] ) ? $ingredient['unit_id'] : null,
+					'value'   => ! empty( $ingredient['value'] ) ? $ingredient['value'] : null,
+				];
+
+				add_post_meta( $post_id, '_nutrition', $item );
+			}
+		}
+
 		foreach ($this->food_manager_data_fields() as $key => $field) {
 
 

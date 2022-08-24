@@ -270,19 +270,15 @@ class WP_Food_Manager_Install {
 			),
 			'food_manager_unit' => array(
 			
-				'10 grams',
+				'Gram',
 			
-				'50 grams',
+				'MG',
 			
-				'100 grams',
+				'PC',
 			
-				'500 grams',
+				'KG',
 			
-				'1 kg',
-
-				'2 kg',
-
-				'3 kg',
+				'Dozen',
 			)
 		);
 	}
