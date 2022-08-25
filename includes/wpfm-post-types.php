@@ -1252,7 +1252,7 @@ class WPFM_Post_Types {
 
 			$query_args['tax_query'][] = array(
 
-				'taxonomy'         => 'food_listing_category',
+				'taxonomy'         => 'food_manager_category',
 
 				'field'            => $field,
 

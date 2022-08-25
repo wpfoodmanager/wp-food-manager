@@ -286,7 +286,7 @@ function get_food_listings( $args = array() ) {
 
 		$query_args['tax_query'][] = array(
 
-								'taxonomy'         => 'food_listing_category',
+								'taxonomy'         => 'food_manager_category',
 
 								'field'            => $field,
 
@@ -306,7 +306,7 @@ function get_food_listings( $args = array() ) {
 
 		$query_args['tax_query'][] = array(
 
-								'taxonomy'         => 'food_listing_type',
+								'taxonomy'         => 'food_manager_type',
 
 								'field'            => $field,
 

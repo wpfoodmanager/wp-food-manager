@@ -6,7 +6,7 @@
     <div class="wpfm-row">
         <div class="wpfm-col wpfm-col-12 wpfm-col-sm-6 wpfm-col-md-6 wpfm-col-lg-8">
             <div class="wpfm-food-listing-header-title">
-                <h2 class="wpfm-heading-text"><?php _e( 'Recent foods', 'wp-food-manager' ); ?></h2> </div>
+                <h2 class="wpfm-heading-text"><?php _e( 'Foods', 'wp-food-manager' ); ?></h2> </div>
         </div>
         <div class="wpfm-col wpfm-col-12 wpfm-col-sm-6 wpfm-col-md-6 wpfm-col-lg-4">
             <div class="wpfm-food-layout-action-wrapper">

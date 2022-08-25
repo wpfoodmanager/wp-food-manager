@@ -145,7 +145,11 @@ class WPFM_Settings {
 
 								'type'        => 'number',
 
-								'attributes'  => array(),
+								'custom_attributes'  => array(
+									'min'  => '',
+									'step' => '',
+								),
+
 							),
 
 							array(
@@ -399,7 +403,7 @@ class WPFM_Settings {
 								'label'    => __( 'Currency', 'woocommerce' ),
 								'desc'     => __( 'This controls what currency prices are listed at in the catalog and which currency gateways will take payments in.', 'woocommerce' ),
 								'name'       => 'wpfm_currency',
-								'default'  => 'USD',
+								'std'  => 'USD',
 								'type'     => 'select',
 								'class'    => 'wc-enhanced-select',
 								'options'  => $currency_code_options,
@@ -410,7 +414,7 @@ class WPFM_Settings {
 								'desc'     => __( 'This controls the position of the currency symbol.', 'woocommerce' ),
 								'name'       => 'wpfm_currency_pos',
 								'class'    => 'wc-enhanced-select',
-								'default'  => 'left',
+								'std'  => 'left',
 								'type'     => 'select',
 								'options'  => array(
 									'left'        => __( 'Left', 'woocommerce' ),
@@ -425,7 +429,7 @@ class WPFM_Settings {
 								'desc'     => __( 'This sets the thousand separator of displayed prices.', 'woocommerce' ),
 								'name'       => 'wpfm_price_thousand_sep',
 								'css'      => 'width:50px;',
-								'default'  => ',',
+								'std'  => ',',
 								'type'     => 'text',
 							),
 
@@ -434,7 +438,7 @@ class WPFM_Settings {
 								'desc'     => __( 'This sets the decimal separator of displayed prices.', 'woocommerce' ),
 								'name'       => 'wpfm_price_decimal_sep',
 								'css'      => 'width:50px;',
-								'default'  => '.',
+								'std'  => '.',
 								'type'     => 'text',
 							),
 
@@ -443,8 +447,8 @@ class WPFM_Settings {
 								'desc'              => __( 'This sets the number of decimal points shown in displayed prices.', 'woocommerce' ),
 								'name'                => 'wpfm_price_num_decimals',
 								'css'               => 'width:50px;',
-								'default'           => '2',
-								'type'              => 'text',
+								'std'           => '2',
+								'type'              => 'number',
 								'custom_attributes' => array(
 									'min'  => 0,
 									'step' => 1,
@@ -780,7 +784,19 @@ class WPFM_Settings {
 										echo ' <p class="description">' . $option['desc'] . '</p>';
 								}
 
-								break;		
+								break;
+
+								case 'number':
+								?>
+								<input id="setting-<?php echo esc_attr($option['name']); ?>" class="regular-text" type="number" min="<?php echo esc_attr($option['custom_attributes']['min']); ?>" step="<?php echo esc_attr($option['custom_attributes']['step']); ?>" name="<?php echo esc_attr($option['name']); ?>" value="<?php esc_attr_e($value); ?>" <?php echo implode(' ', $attributes); ?> <?php echo esc_attr($placeholder); ?> />
+								<?php
+
+								if ($option['desc']) {
+
+									echo wp_kses_post(' <p class="description">' . sprintf(__('%s', 'wp-food-manager'), $option['desc']) . '</p>');
+								}
+
+								break;	
 								
 								case "multi-select-checkbox":
 								    $this->create_multi_select_checkbox($option);
