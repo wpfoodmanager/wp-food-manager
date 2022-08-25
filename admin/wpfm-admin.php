@@ -56,6 +56,8 @@ class WPFM_Admin {
 		wp_enqueue_script( 'jquery' );
 		wp_enqueue_script( 'jquery-ui-core' );
 		wp_enqueue_script( 'jquery-ui-sortable' );
+		wp_enqueue_script( 'wpfm-accounting' );
+		wp_enqueue_script( 'wp-food-manager-admin-settings' );
 
 		$units    = get_terms(
 			[
@@ -86,7 +88,16 @@ class WPFM_Admin {
 								'units'   => $unitList,
 							],
 						);
-		wp_register_script( 'wp-food-manager-admin-settings', WPFM_PLUGIN_URL. '/assets/js/admin-settings.min.js', array( 'jquery' ), WPFM_VERSION, true );	
+		wp_register_script( 'wp-food-manager-admin-settings', WPFM_PLUGIN_URL. '/assets/js/admin-settings.min.js', array( 'jquery' ), WPFM_VERSION, true );
+
+		wp_register_script( 'wpfm-accounting', WPFM_PLUGIN_URL. '/assets/js/accounting.min.js', array( 'jquery' ), WPFM_VERSION, true );	
+		wp_localize_script(
+			'wpfm-accounting',
+			'wpfm_accounting_params',
+			array(
+				'wpfm_sale_less_than_regular_error' => __( 'Please enter in a value less than the regular price.', 'woocommerce' ),
+			)
+		);
 	}
 
 	/**

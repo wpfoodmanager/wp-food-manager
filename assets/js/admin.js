@@ -54,6 +54,64 @@ var WPFMAdmin= function () {
                     }*/
                 });
             //});
+
+            /*General tab - Regular and Sale price validation*/
+            jQuery('body').on( 'wpfm_add_error_tip', function( e, element, error_type ) {
+                var offset = element.position();
+
+                if ( element.parent().find( '.wpfm_error_tip' ).length === 0 ) {
+                    element.after( '<div class="wpfm_error_tip ' + error_type + '">' + wpfm_accounting_params[error_type] + '</div>' );
+                    element.parent().find( '.wpfm_error_tip' )
+                        .css( 'left', offset.left + element.width() - ( element.width() / 2 ) - ( jQuery( '.wpfm_error_tip' ).width() / 2 ) )
+                        .css( 'top', offset.top + element.height() )
+                        .fadeIn( '100' );
+                }
+            });
+            jQuery('body').on( 'wpfm_remove_error_tip', function( e, element, error_type ) {
+                element.parent().find( '.wpfm_error_tip.' + error_type ).fadeOut( '100', function() { jQuery( this ).remove(); } );
+            });
+
+            jQuery('body').on( 'click', function() {
+                jQuery( '.wpfm_error_tip' ).fadeOut( '100', function() { jQuery( this ).remove(); } );
+            });
+
+            jQuery('body').on( 'blur', '#_food_sale_price', function() {
+                jQuery( '.wpfm_error_tip' ).fadeOut( '100', function() { jQuery( this ).remove(); } );
+            });
+            jQuery('body').on( 'keyup', '#_food_sale_price', function(s, l) {
+                var sale_price_field = jQuery( this ), regular_price_field;
+                regular_price_field = jQuery( '#_food_price' );
+
+                var sale_price    = parseFloat(
+                    window.accounting.unformat( sale_price_field.val())
+                );
+                var regular_price = parseFloat(
+                    window.accounting.unformat( regular_price_field.val())
+                );
+
+                if ( sale_price >= regular_price ) {
+                    jQuery( document.body ).triggerHandler( 'wpfm_add_error_tip', [ jQuery(this), 'wpfm_sale_less_than_regular_error' ] );
+                } else {
+                    jQuery( document.body ).triggerHandler( 'wpfm_remove_error_tip', [ jQuery(this), 'wpfm_sale_less_than_regular_error' ] );
+                }
+            });
+            jQuery('body').on( 'change', '#_food_sale_price', function() {
+                var sale_price_field = jQuery( this ), regular_price_field;
+                regular_price_field = jQuery( '#_food_price' );
+
+                var sale_price    = parseFloat(
+                    window.accounting.unformat( sale_price_field.val())
+                );
+                var regular_price = parseFloat(
+                    window.accounting.unformat( regular_price_field.val())
+                );
+
+                if ( sale_price >= regular_price ) {
+                    jQuery( this ).val( '' );
+                }
+            });
+
+            /*For Ingredient and Nutrition tab*/
             jQuery('body').on("keyup", ".wpfm-item-search input[type=text]", (function() {
                 var t = jQuery(this),
                     i = t.parents("ul.wpfm-available-list").find("li.available-item"),
@@ -284,7 +342,7 @@ var WPFMAdmin= function () {
             total_rows = jQuery(this).parents('table').find('tbody tr').length;
             total_rows = total_rows + 1;
             //var row_count2 = jQuery(".wpfm-options-wrapper div.wpfm-options-wrap").length;
-            var row_count2 = jQuery(this).parents(".postbox").find(".repeated-options").val();
+            var row_count2 = jQuery(this).closest('.postbox').children('.repeated-options').val();
             alert(row_count2);
             var html = jQuery(this).data('row').replace( /%%repeated-option-index3%%/g, total_rows ).replace( /%%repeated-option-index2%%/g, row_count2 );
             html.replace('value="1"',total_rows);
@@ -348,7 +406,7 @@ var WPFMAdmin= function () {
 
        removeAttributesOptions: function(event){
         //var row_count3 = jQuery(".wpfm-options-wrapper div.wpfm-options-wrap").length;
-        var row_count3 = jQuery(this).parents(".postbox").find(".repeated-options").val();
+        var row_count3 = jQuery(this).closest('.postbox').children('.repeated-options').val();
 
         jQuery('.wpfm-options-box-'+row_count3+' div.wpfm-admin-options-table table tbody tr.option-tr-'+jQuery(this).data('id')).remove();
        },

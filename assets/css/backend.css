@@ -536,6 +536,40 @@ td.fm_categories.column-fm_categories span.food-category {
   margin-bottom: 20px;
 }
 
+.wpfm_error_tip {
+  color: #fff;
+  font-size: 0.8em;
+  max-width: 150px;
+  background: #333;
+  text-align: center;
+  border-radius: 3px;
+  padding: 0.618em 1em;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.wpfm_error_tip {
+  max-width: 20em;
+  line-height: 1.8em;
+  position: absolute;
+  white-space: normal;
+  background: #d82223;
+  margin: 1.5em 1px 0 -1em;
+  z-index: 9999999;
+}
+.wpfm_error_tip::after{
+  content: "";
+  display: block;
+  border: 8px solid #d82223;
+  border-right-color: transparent;
+  border-left-color: transparent;
+  border-top-color: transparent;
+  position: absolute;
+  top: -3px;
+  left: 50%;
+  margin: -1em 0 0 -3px;
+}
+
+
 @media only screen and (max-width: 1280px) {
   .wpfm_panel .wpfm-small-field,
   .wpfm_panel input[type="email"].wpfm-small-field,
