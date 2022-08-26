@@ -177,9 +177,9 @@ class WPFM_Settings {
 
 								'label'      => __('Multi-select Food Types', 'wp-food-manager'),
 
-								'cb_label'   => __('Enable event type multiselect by default.', 'wp-food-manager'),
+								'cb_label'   => __('Enable food type multiselect by default.', 'wp-food-manager'),
 
-								'desc'       => __('If enabled, the event type select box will default to a multi select on the [foods] shortcode.', 'wp-food-manager'),
+								'desc'       => __('If enabled, the food type select box will default to a multi select on the [foods] shortcode.', 'wp-food-manager'),
 
 								'type'       => 'checkbox',
 
@@ -295,7 +295,7 @@ class WPFM_Settings {
 
 								'cb_label'   => __('Enable Categories for listing and submission form.', 'wp-food-manager'),
 
-								'desc'       => __('Choose whether to enable categories on the event listing and submission page. If enabled, it needs to be prior created at the backend.', 'wp-food-manager'),
+								'desc'       => __('Choose whether to enable categories on the food listing and submission page. If enabled, it needs to be prior created at the backend.', 'wp-food-manager'),
 
 								'type'       => 'checkbox',
 
@@ -312,7 +312,7 @@ class WPFM_Settings {
 
 								'cb_label'   => __('Enable Food types for listing and submission form.', 'wp-food-manager'),
 
-								'desc'       => __('Choose whether to enable event types on the event listing and submission page. If enabled, it needs to be prior created at the backend.', 'wp-food-manager'),
+								'desc'       => __('Choose whether to enable food types on the food listing and submission page. If enabled, it needs to be prior created at the backend.', 'wp-food-manager'),
 
 								'type'       => 'checkbox',
 
@@ -361,7 +361,7 @@ class WPFM_Settings {
 
 								'label' => __('Foods', 'wp-food-manager'),
 
-								'desc'  => __('Select the page where you have placed the [foods] shortcode. This lets the plugin know where the event listings page is located.', 'wp-food-manager'),
+								'desc'  => __('Select the page where you have placed the [foods] shortcode. This lets the plugin know where the food listings page is located.', 'wp-food-manager'),
 
 								'type'  => 'page',
 							),

@@ -77,7 +77,7 @@ class WP_Food_Manager {
 		define( 'WPFM_PLUGIN_URL', untrailingslashit( plugins_url( basename( plugin_dir_path( __FILE__ ) ), basename( __FILE__ ) ) ) );
 
 		//Core		
-		include( 'includes/wp-food-manager-install.php' );
+		include( 'includes/wpfm-install.php' );
 
 		//includes
 		//include( 'includes/wpfm-install.php' );

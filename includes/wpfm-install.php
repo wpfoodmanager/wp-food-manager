@@ -4,15 +4,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * WP_Event_Manager_Install
+ * WP_Food_Manager_Install
  */
 
-class WPFM_Install {
+class WP_Food_Manager_Install {
 
 	/**
-	 * Install WP Event Manager
+	 * Install WP Food Manager
 	 */
-
 	public static function install() {
 
 		global $wpdb;
@@ -23,21 +22,106 @@ class WPFM_Install {
 
 
 		// Redirect to setup screen for new installs
-
 		if ( ! get_option( 'wp_food_manager_version' ) ) {
 
-			set_transient( '_wpfm_activation_redirect', 1, HOUR_IN_SECONDS );
+			set_transient( '_food_manager_activation_redirect', 1, HOUR_IN_SECONDS );
+		}
+		
+		// Update featured posts ordering.
+		if ( version_compare( get_option( 'wp_food_manager_version', WPFM_VERSION ), '2.5', '<' ) ) {
+			$wpdb->query( "UPDATE {$wpdb->posts} p SET p.menu_order = 0 WHERE p.post_type='food_manager';" );
+			$wpdb->query( "UPDATE {$wpdb->posts} p LEFT JOIN {$wpdb->postmeta} pm ON p.ID = pm.post_id SET p.menu_order = -1 WHERE pm.meta_key = '_featured' AND pm.meta_value='1' AND p.post_type='food_manager';" );
 		}
 
-		delete_transient( 'wpfm_addons_html' );
+		// Update legacy options
+		if ( false === get_option( 'food_manager_submit_food_form_page_id', false ) && get_option( 'food_manager_submit_page_slug' ) ) {
+
+			$page_id = get_page_by_path( get_option( 'food_manager_submit_page_slug' ) )->ID;
+
+			update_option( 'food_manager_submit_food_form_page_id', $page_id );
+		}
+
+		if ( false === get_option( 'food_manager_food_dashboard_page_id', false ) && get_option( 'food_manager_food_dashboard_page_slug' ) ) {
+
+			$page_id = get_page_by_path( get_option( 'food_manager_food_dashboard_page_slug' ) )->ID;
+
+			update_option( 'food_manager_food_dashboard_page_id', $page_id );
+		}
+
+		if ( false === get_option( 'wp_food_manager_db_version', false ) )
+		{
+			update_option( 'wp_food_manager_db_version', '3.1.13' );
+		}
+
+		delete_transient( 'wp_food_manager_addons_html' );
 
 		update_option( 'wp_food_manager_version', WPFM_VERSION );
 	}
+
+	/*public static function update() {
+
+		global $wpdb;
+
+		// 3.1.14 change field option name
+		if ( !empty(get_option( 'food_manager_form_fields', true )) ) 
+		{
+			$all_fields = get_option( 'food_manager_form_fields', true );
+
+			if(isset($all_fields) && !empty($all_fields) && is_array($all_fields))
+			{
+				if(isset($all_fields['food']['food_address']))
+					unset($all_fields['food']['food_address']);
+
+				if(isset($all_fields['food']['food_venue_name']))
+					unset($all_fields['food']['food_venue_name']);
+
+				update_option( 'food_manager_submit_food_form_fields', array('event' =>$all_fields['event']) );
+
+				update_option( 'food_manager_submit_organizer_form_fields', array('organizer' =>$all_fields['organizer']) );	
+			}			
+		}
+
+		// 3.1.14 add organizer pages
+		$pages_to_create = [
+			'submit_organizer_form' => [
+				'page_title' => 'Submit Organizer Form',
+				'page_content' => '[submit_organizer_form]',
+			],
+			'organizer_dashboard' => [
+				'page_title' => 'Organizer Dashboard',
+				'page_content' => '[organizer_dashboard]',
+			],
+			'food_organizers' => [
+				'page_title' => 'Event Organizers',
+				'page_content' => '[food_organizers]',
+			],
+			'submit_venue_form' => [
+				'page_title' => 'Submit Venue Form',
+				'page_content' => '[submit_venue_form]',
+			],
+			'venue_dashboard' => [
+				'page_title' => 'Venue Dashboard',
+				'page_content' => '[venue_dashboard]',
+			],
+			'food_venues' => [
+				'page_title' => 'Event Venues',
+				'page_content' => '[food_venues]',
+			],
+		];
+
+		foreach ( $pages_to_create as $page_slug => $page ) 
+		{
+			self::create_page( sanitize_text_field( $page['page_title'] ), $page['page_content'], 'food_manager_' . $page_slug . '_page_id' );
+		}
+
+		delete_transient( 'wp_food_manager_addons_html' );
+
+		update_option( 'wp_food_manager_version', WPFM_VERSION );
+	}*/
 	
 	/**
 	 * Init user roles
 	 */
-
 	private static function init_user_roles() {
 
 		global $wp_roles;
@@ -49,7 +133,7 @@ class WPFM_Install {
 
 		if ( is_object( $wp_roles ) ) {
 
-			add_role( 'store_owner', __( 'Store owner', 'wp-food-manager' ), array(
+			add_role( 'organizer', __( 'Organizer', 'wp-event-manager' ), array(
 
 				'read'         => true,
 
@@ -73,8 +157,7 @@ class WPFM_Install {
 	/**
 	 * Get capabilities
 	 * @return array
-	 */
-	 
+	 */	 
 	private static function get_core_capabilities() {
 
 		return array(
@@ -122,10 +205,9 @@ class WPFM_Install {
 			)
 		);
 	}
-
 	
 	/**
-	 * Default taxonomy terms to set up in WP Event Manager.
+	 * Default taxonomy terms to set up in WP Food Manager.
 	 *
 	 * @return array Default taxonomy terms.
 	 */
@@ -134,37 +216,78 @@ class WPFM_Install {
 
 			'food_manager_ingredient' => array(
 
-				'Appearance or Signing',
+				'Vegetables',
 
-				'Attraction',
+				'Spices and Herbs',
 
-				'Camp, Trip, or Retreat',
+				'Cereals and Pulses',
 
-				'Class, Training, or Workshop',
+				'Meat',
 
-				'Concert or Performance',
+				'Seafood',
+
+			),
+			'food_manager_nutrition' => array(
+
+				'Calcium',
+
+				'Potassium',
+
+				'Fiber',
+
+				'Magnesium',
+
+				'Vitamin A',
+
+				'Vitamin C',
+
+				'Vitamin E',
 
 			),
 			'food_manager_category' => array(
 			
-					'Appetizers/Starters',
+				'Appetizers/Starters',
 			
-					'Breakfast',
+				'Breakfast',
 			
-					'Dessert',
+				'Dessert',
 			
-					'Beverage',
+				'Beverage',
 			
-					'Main dishes',
+				'Main dishes',
+			),
+			'food_manager_type' => array(
+			
+				'Fruit and vegetables',
+			
+				'Starchy food',
+			
+				'Dairy',
+			
+				'Protein',
+			
+				'Fat',
+			),
+			'food_manager_unit' => array(
+			
+				'Gram',
+			
+				'MG',
+			
+				'PC',
+			
+				'KG',
+			
+				'Dozen',
 			)
 		);
 	}
+
 	/**
 	 * default_terms function.
 	 */
-
 	private static function default_terms() {
-		if ( get_option( 'wpfm_installed_terms' ) == 1 ) {
+		if ( get_option( 'food_manager_installed_terms' ) == 1 ) {
 			return;
 		}
 		
@@ -180,11 +303,11 @@ class WPFM_Install {
 			}
 		}
 		
-		update_option( 'wpfm_installed_terms', 1 );
+		update_option( 'food_manager_installed_terms', 1 );
 	}
 
 	/**
-	 * Adds the employment type to default food types when updating from a previous WP Event Manager version.
+	 * Adds the employment type to default event types when updating from a previous WP Food Manager version.
 	 */
 	private static function add_food_types() {
 		$taxonomies = self::get_default_taxonomy_terms();
@@ -201,4 +324,40 @@ class WPFM_Install {
 			}
 		}
 	}
+
+	/**
+	 * create_page function.
+	 */
+	/*private static function create_page( $title, $content, $option ) 
+	{
+		if(get_option($option) == '')
+		{
+			$page_data = array(
+
+				'post_status'    => 'publish',
+
+				'post_type'      => 'page',
+
+				'post_author'    => 1,
+
+				'post_name'      => sanitize_title( $title ),
+
+				'post_title'     => $title,
+
+				'post_content'   => $content,
+
+				'post_parent'    => 0,
+
+				'comment_status' => 'closed'
+			);
+
+			$page_id = wp_insert_post( $page_data );
+
+			if ( $option ) {
+
+				update_option( $option, $page_id );
+			}
+		}		
+	}*/
+
 }

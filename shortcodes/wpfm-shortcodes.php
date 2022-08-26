@@ -29,7 +29,7 @@ class WPFM_Shortcodes {
 		add_shortcode( 'food_dashboard', array( $this, 'food_dashboard' ) );
 		add_shortcode( 'foods', array( $this, 'output_foods' ) );
 		add_shortcode( 'food_categories', array( $this, 'output_foods_categories' ) );
-		add_shortcode( 'food_type', array( $this, 'output_foods_type' ) );
+		add_shortcode( 'food_type', array( $this, 'output_foods_types' ) );
 		add_shortcode( 'food_menu', array( $this, 'output_food_menu' ) );
 	}
 
@@ -351,14 +351,6 @@ class WPFM_Shortcodes {
 
 		}
 
-		//food ticket prices		
-
-		if ( ! get_option( 'food_manager_enable_food_ticket_prices' ) ) {
-
-			$show_ticket_prices = false;
-
-		}
-
 		// String and bool handling
 
 		$show_filters              = $this->string_to_bool( $show_filters );
@@ -369,7 +361,7 @@ class WPFM_Shortcodes {
 
 		$show_food_tags          = $this->string_to_bool( $show_food_tags );
 
-		$show_ticket_prices        = $this->string_to_bool( $show_ticket_prices );
+		/*$show_ticket_prices        = $this->string_to_bool( $show_ticket_prices );*/
 
 		$show_category_multiselect = $this->string_to_bool( $show_category_multiselect );
 
@@ -467,7 +459,7 @@ class WPFM_Shortcodes {
 
 										'selected_food_type' => $selected_food_type, 
 
-										'show_ticket_prices' => $show_ticket_prices ,
+										//'show_ticket_prices' => $show_ticket_prices ,
 
 										
 							
@@ -600,6 +592,30 @@ class WPFM_Shortcodes {
 
 		return '<div class="food_listings" ' . $data_attributes_string . '>' . $food_managers_output . '</div>';
 	}
+
+	/**
+	 * Output content of food categories
+	 */
+	public function output_foods_categories(){ ?>
+		<h2>
+		    <?php _e('Food Categories');?>
+		</h2>
+		<div id="food-listing-view" class="wpfm-main wpfm-food-listings food_listings wpfm-row wpfm-food-listing-box-view">
+			<?php get_food_manager_template( 'content-food-categories.php' ); ?>
+		</div>
+	<?php }
+
+	/**
+	 * Output content of food types
+	 */
+	public function output_foods_types(){ ?>
+		<h2>
+		    <?php _e('Food Types');?>
+		</h2>
+		<div id="food-listing-view" class="wpfm-main wpfm-food-listings food_listings wpfm-row wpfm-food-listing-box-view">
+			<?php get_food_manager_template( 'content-food-types.php' ); ?>
+		</div>
+	<?php }
 
 	/**
 	 * Output some content when no results were found

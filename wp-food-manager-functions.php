@@ -52,17 +52,17 @@ function get_food_listings( $args = array() ) {
 		do_action( 'get_food_listings_init', $args );
 
 
-	if ( false == get_option( 'food_manager_hide_expired', get_option( 'food_manager_hide_expired_content', 1 ) ) ) {
+	/*if ( false == get_option( 'food_manager_hide_expired', get_option( 'food_manager_hide_expired_content', 1 ) ) ) {
 		$post_status = array( 'publish', 'expired' );
 	} else {
 		$post_status = 'publish';
-	}
+	}*/
 	
 	$query_args = array(
 
 		'post_type'              => 'food_manager',
 
-		'post_status'            => $post_status,
+		'post_status'            => 'publish',
 
 		'ignore_sticky_posts'    => 1,
 
@@ -500,13 +500,162 @@ function wpfm_user_can_post_food() {
 
 	if ( ! is_user_logged_in() ) {
 
-		if ( wpfm_user_requires_account() && ! food_manager_enable_registration() ) {
+		if ( food_manager_user_requires_account() && ! food_manager_enable_registration() ) {
 
 			$can_post = false;
 		}
 	}
 	return apply_filters( 'wpfm_user_can_post_food', $can_post );
 }
+
+if ( ! function_exists( 'wp_food_manager_create_account' ) ) :
+
+/**
+ * Handle account creation.
+ *
+ * @param  array $args containing username, email, role
+ * @param  string $deprecated role string
+ * @return WP_error | bool was an account created?
+ */
+
+function wp_food_manager_create_account( $args, $deprecated = '' ) {
+
+	global $current_user;
+	global $wp_version;
+	
+	// Soft Deprecated in 1.0
+	
+	if ( ! is_array( $args ) ) {
+		$args = array(
+					'username' => '',
+					'password' => false,
+					'email'    => $args,
+					'role'     => $deprecated,
+				);
+	} else {
+		
+		$defaults = array(
+				
+				'username' => '',
+				
+				'email'    => '',
+				
+				'password' => false,
+				
+				'role'     => get_option( 'default_role' )
+		);
+		
+		$args = wp_parse_args( $args, $defaults );
+		
+		extract( $args );
+	}
+	
+	$username = sanitize_user( $args['username'], true );
+	
+	$email    = apply_filters( 'user_registration_email', sanitize_email( $args['email'] ) );
+	
+	if ( empty( $email ) ) {
+		
+		return new WP_Error( 'validation-error', __( 'Invalid email address.', 'wp-food-manager' ) );
+	}
+	
+	if ( empty( $username ) ) {
+		
+		$username = sanitize_user( current( explode( '@', $email ) ) );
+	}
+	
+	if ( ! is_email( $email ) ) {
+		
+		return new WP_Error( 'validation-error', __( 'Your email address isn&#8217;t correct.', 'wp-food-manager' ) );
+	}
+	
+	if ( email_exists( $email ) ) {
+		
+		return new WP_Error( 'validation-error', __( 'This email is already registered, please choose another one.', 'wp-food-manager' ) );
+	}
+	
+	// Ensure username is unique
+	
+	$append     = 1;
+	
+	$o_username = $username;
+	
+	while ( username_exists( $username ) ) {
+		
+		$username = $o_username . $append;
+		
+		$append ++;
+	}
+	
+	// Final error checking
+	
+	$reg_errors = new WP_Error();
+	
+	$reg_errors = apply_filters( 'food_manager_registration_errors', $reg_errors, $username, $email );
+	
+	do_action( 'food_manager_register_post', $username, $email, $reg_errors );
+	
+	if ( $reg_errors->get_error_code() ) {
+		
+		return $reg_errors;
+	}
+	
+	// Create account
+	
+	$new_user = array(
+			
+			'user_login' => $username,
+			
+			'user_pass'  => $password,
+			
+			'user_email' => $email,
+			
+			'role'       => $role
+	);
+	
+	// User is forced to set up account with email sent to them. This password will remain a secret.
+	if ( empty( $new_user['user_pass'] ) ) {
+		$new_user['user_pass'] = wp_generate_password();
+	}
+	
+	$user_id = wp_insert_user( apply_filters( 'food_manager_create_account_data', $new_user ) );
+	
+	if ( is_wp_error( $user_id ) ) {
+		
+		return $user_id;
+	}
+	
+	// Notify
+	/**
+	 * Send notification to new users.
+	 *
+	 * @since 1.8
+	 *
+	 * @param  int         $user_id
+	 * @param  string|bool $password
+	 * @param  array       $new_user {
+	 *     Information about the new user.
+	 *
+	 *     @type string $user_login Username for the user.
+	 *     @type string $user_pass  Password for the user (may be blank).
+	 *     @type string $user_email Email for the new user account.
+	 *     @type string $role       New user's role.
+	 * }
+	 */
+	do_action( 'food_manager_notify_new_user', $user_id, $password, $new_user );
+	
+	// Login
+	if(!is_user_logged_in()){
+		wp_set_auth_cookie( $user_id, true, is_ssl() );
+		$current_user = get_user_by( 'id', $user_id );
+	}
+	
+	
+	return true;
+}
+
+endif;
+
 /**
  * True if an the user can edit a food.
  *
@@ -529,16 +678,6 @@ function food_manager_user_can_edit_food( $food_id ) {
 	
 	return apply_filters( 'food_manager_user_can_edit_food', $can_edit, $food_id );
 }
-/**
- * True if an account is required to post a food.
- *
- * @return bool
- */
-
-function wpfm_user_requires_account() {
-
-	return apply_filters( 'wpfm_user_requires_account', get_option( 'wpfm_user_requires_account' ) == 1 ? true : false );
-}
 
 /**
  * True if registration is enabled.
@@ -549,6 +688,28 @@ function wpfm_user_requires_account() {
 function food_manager_enable_registration() {
 
 	return apply_filters( 'food_manager_enable_registration', get_option( 'food_manager_enable_registration' ) == 1 ? true : false );
+}
+
+/**
+ * True if usernames are generated from email addresses.
+ *
+ * @return bool
+ */
+
+function food_manager_generate_username_from_email() {
+
+	return apply_filters( 'food_manager_generate_username_from_email', get_option( 'food_manager_generate_username_from_email' ) == 1 ? true : false );
+}
+
+/**
+ * True if an account is required to post a food.
+ *
+ * @return bool
+ */
+
+function food_manager_user_requires_account() {
+
+	return apply_filters( 'food_manager_user_requires_account', get_option( 'food_manager_user_requires_account' ) == 1 ? true : false );
 }
 
 /**
@@ -885,7 +1046,7 @@ endif;
 if ( ! function_exists( 'get_food_manager_rss_link' ) ) :
 
 /**
- * Get the Event Listing RSS link
+ * Get the Food Listing RSS link
  *
  * @return string
  */
@@ -1223,3 +1384,167 @@ function food_manager_duplicate_listing( $post_id ) {
 
 	return $new_post_id;
 }
+
+/**
+ * Checks to see if the standard password setup email should be used.
+ *
+ * @since 1.8
+ *
+ * @return bool True if they are to use standard email, false to allow user to set password at first event creation.
+ */
+function food_manager_use_standard_password_setup_email() {
+	$use_standard_password_setup_email = false;
+	
+	// If username is being automatically generated, force them to send password setup email.
+	if ( food_manager_generate_username_from_email() ) {
+		$use_standard_password_setup_email = get_option( 'food_manager_use_standard_password_setup_email', 1 ) == 1 ? true : false;
+	}
+	
+	/**
+	 * Allows an override of the setting for if a password should be auto-generated for new users.
+	 *
+	 * @since 1.8
+	 *
+	 * @param bool $use_standard_password_setup_email True if a standard account setup email should be sent.
+	 */
+	return apply_filters( 'food_manager_use_standard_password_setup_email', $use_standard_password_setup_email );
+}
+
+/**
+ * Checks if a password should be auto-generated for new users.
+ *
+ * @since 1.8
+ *
+ * @param string $password Password to validate.
+ * @return bool True if password meets rules.
+ */
+function food_manager_validate_new_password( $password ) {
+	// Password must be at least 8 characters long. Trimming here because `wp_hash_password()` will later on.
+	$is_valid_password = strlen( trim ( $password ) ) >= 8;
+	
+	/**
+	 * Allows overriding default food Manager password validation rules.
+	 *
+	 * @since 1.8
+	 *
+	 * @param bool   $is_valid_password True if new password is validated.
+	 * @param string $password          Password to validate.
+	 */
+	return apply_filters( 'food_manager_validate_new_password', $is_valid_password, $password );
+}
+
+/**
+ * Returns the password rules hint.
+ *
+ * @return string
+ */
+function food_manager_get_password_rules_hint() {
+	/**
+	 * Allows overriding the hint shown below the new password input field. Describes rules set in `food_manager_validate_new_password`.
+	 *
+	 * @since 1.8
+	 *
+	 * @param string $password_rules Password rules description.
+	 */
+	return apply_filters( 'food_manager_password_rules_hint', __( 'Passwords must be at least 8 characters long.', 'wp-food-manager') );
+}
+
+if ( ! function_exists( 'get_food_listing_post_statuses' ) ) :
+
+/**
+ * Get post statuses used for foods
+ *
+ * @access public
+ * @return array
+ */
+
+function get_food_listing_post_statuses() {
+
+	return apply_filters( 'food_listing_post_statuses', array(
+
+		'draft'           => _x( 'Draft', 'post status', 'wp-food-manager' ),
+
+		'expired'         => _x( 'Expired', 'post status', 'wp-food-manager' ),
+
+		'preview'         => _x( 'Preview', 'post status', 'wp-food-manager' ),
+
+		'pending'         => _x( 'Pending approval', 'post status', 'wp-food-manager' ),
+
+		'pending_payment' => _x( 'Pending payment', 'post status', 'wp-food-manager' ),
+
+		'publish'         => _x( 'Active', 'post status', 'wp-food-manager' ),
+	) );
+}
+
+endif;
+
+if ( ! function_exists( 'get_food_listing_types' ) ) :
+
+/**
+ * Get food listing types
+ *
+ * @access public
+ * @return array
+ */
+
+function get_food_listing_types($fields = 'all') {
+
+	if ( ! get_option( 'food_manager_enable_food_types' ) ) 
+	{
+	     return array();
+	}
+	else 
+	{	
+		$args = array(
+				'fields'     => $fields,
+				'hide_empty' => false,
+				'order'      => 'ASC',
+				'orderby'    => 'name'
+		);
+		$args = apply_filters( 'get_food_listing_types_args', $args );
+		// Prevent users from filtering the taxonomy
+		$args['taxonomy'] = 'food_manager_type';
+		return get_terms( $args );
+	}
+}
+
+endif;
+
+if ( ! function_exists( 'get_food_listing_categories' ) ) :
+
+/**
+ * Get food categories
+ *
+ * @access public
+ * @return array
+ */
+
+function get_food_listing_categories() {
+
+	if ( ! get_option( 'food_manager_enable_categories' ) ) {
+		
+		return array();
+	}
+
+	$args = array(
+			'orderby'    => 'name',
+			'order'      => 'ASC',
+			'hide_empty' => false,
+		);
+
+		/**
+		 * Change the category query arguments.
+		 *
+		 * @since 2.5
+		 *
+		 * @param array $args
+		 */
+		$args = apply_filters( 'get_food_listing_category_args', $args );
+
+		// Prevent users from filtering the taxonomy.
+		$args['taxonomy'] = 'food_manager_category';
+
+		return get_terms( $args );
+}
+
+endif;

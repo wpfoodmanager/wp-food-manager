@@ -6,7 +6,7 @@
 		</div>
 	</div>
 <?php else :
-	$account_required             = wpfm_user_requires_account();
+	$account_required             = food_manager_user_requires_account();
 	$registration_enabled         = food_manager_enable_registration();
 	$registration_fields          = wp_food_manager_get_registration_fields();
 	$generate_username_from_email = food_manager_generate_username_from_email();	?>
@@ -21,7 +21,7 @@
 			<?php endif; ?>
 		</div>
 	</div>
-	<?php /*if ($registration_enabled) :
+	<?php if ($registration_enabled) :
 		if (!empty($registration_fields)) {
 			foreach ($registration_fields as $key => $field) {			?>
 				<div class="wpfm-form-group fieldset-<?php echo esc_attr($key); ?>">
@@ -34,6 +34,6 @@
 			}
 			do_action('food_manager_register_form');
 		}
-	endif;*/
+	endif;
 endif;
 ?>

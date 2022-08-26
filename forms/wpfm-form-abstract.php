@@ -544,7 +544,7 @@ abstract class WPFM_Form {
 		$custom_fields  = $this->get_food_manager_fieldeditor_fields();
 		$default_fields = $this->get_default_fields( );
 		
-		if(!get_option('food_manager_enable_food_ticket_prices', false)){
+		/*if(!get_option('food_manager_enable_food_ticket_prices', false)){
 		    if(isset($custom_fields['food']['food_ticket_options']))
 		        $custom_fields['food']['food_ticket_options']['visibility']=false;
 		    if(isset($custom_fields['food']['food_ticket_price']))
@@ -554,7 +554,7 @@ abstract class WPFM_Form {
 		        unset($default_fields['food']['food_ticket_options']);
 		    if(isset($default_fields['food']['food_ticket_price']))
 		        unset($default_fields['food']['food_ticket_price']);
-		}
+		}*/
 		if ( !get_option( 'food_manager_enable_categories') || (wp_count_terms( 'food_manager_category' ) == 0 && isset($custom_fields['food']['food_category'])) ) {
 			
 			if(isset( $custom_fields['food']['food_category']))

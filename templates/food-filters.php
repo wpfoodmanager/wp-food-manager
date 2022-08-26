@@ -75,22 +75,22 @@ wp_enqueue_script( 'wpfm-ajax-filters' );
 			<?php endif; ?>		        
 			<!-- Search by food type section end -->
 			<!-- Search by any ticket price section start -->			
-			<?php if ( $show_ticket_prices && $ticket_prices) : ?>				
-				<div class="wpfm-col">
+			<?php //if ( $show_ticket_prices && $ticket_prices) : ?>				
+				<!-- <div class="wpfm-col">
 				<div class="wpfm-form-group">
-					<label for="search_ticket_prices" class="wpfm-form-label"><?php _e( 'Ticket Prices', 'wp-food-manager' ); ?></label>
-					<select name="search_ticket_prices[]" id="search_ticket_prices" class="food-manager-category-dropdown" data-placeholder="Choose any ticket price…" data-no_results_text="<?php _e('No results match','wp-food-manager'); ?>" data-multiple_text="<?php __('Select Some Options','wp-food-manager'); ?>" >
-					<?php foreach ( $ticket_prices as $key => $value ) :
-						if(!strcasecmp($selected_ticket_price, $value) || $selected_ticket_price==$key) : ?>
-							<option selected=selected value="<?php echo $key !='ticket_price_any' ? $key : ""; ?>" ><?php echo  $value; ?></option>
-						<?php else : ?>
-							<option value="<?php echo $key !='ticket_price_any' ? $key : ""; ?>" ><?php echo  $value; ?></option>
-						<?php endif;
-					endforeach; ?>
+					<label for="search_ticket_prices" class="wpfm-form-label"><?php //_e( 'Ticket Prices', 'wp-food-manager' ); ?></label>
+					<select name="search_ticket_prices[]" id="search_ticket_prices" class="food-manager-category-dropdown" data-placeholder="Choose any ticket price…" data-no_results_text="<?php //_e('No results match','wp-food-manager'); ?>" data-multiple_text="<?php //__('Select Some Options','wp-food-manager'); ?>" >
+					<?php //foreach ( $ticket_prices as $key => $value ) :
+						//if(!strcasecmp($selected_ticket_price, $value) || $selected_ticket_price==$key) : ?>
+							<option selected=selected value="<?php //echo $key !='ticket_price_any' ? $key : ""; ?>" ><?php //echo  $value; ?></option>
+						<?php //else : ?>
+							<option value="<?php //echo $key !='ticket_price_any' ? $key : ""; ?>" ><?php //echo  $value; ?></option>
+						<?php //endif;
+					//endforeach; ?>
 					</select>
 					</div>
-				</div>
-			<?php endif; ?>	  
+				</div> -->
+			<?php //endif; ?>	  
 			<!-- Search by any ticket price section end -->  
     </div> <!-- /row -->
 

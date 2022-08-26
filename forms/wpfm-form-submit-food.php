@@ -227,7 +227,7 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
 									),
 					'priority'    => 3
 				),
-				'option_minimum' => array(
+				/*'option_minimum' => array(
 					'label'       => __( 'Minimum selection', 'wp-food-manager' ),
 					'type'        => 'text',
 					'required'    => false,
@@ -240,7 +240,7 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
 					'required'    => false,
 					'placeholder' => __('Enter option name','wp-food-manager'),
 					'priority'    => 5
-				),
+				),*/
 				'option_price_type' => array(
 					'label'       => __( 'Type of price', 'wp-food-manager' ),
 					'type'        => 'select',
@@ -448,7 +448,7 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
 			if ( ! is_user_logged_in() ) {
 				$create_account = false;
 				if ( food_manager_enable_registration() ) {
-					if ( wpfm_user_requires_account() ) {
+					if ( food_manager_user_requires_account() ) {
 						if ( ! food_manager_generate_username_from_email() && empty( $_POST['create_account_username'] ) ) {
 							throw new Exception( __( 'Please enter a username.', 'wp-food-manager' ) );
 						}
@@ -487,7 +487,7 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
 					throw new Exception( $create_account->get_error_message() );
 				}
 			}
-			if ( wpfm_user_requires_account() && ! is_user_logged_in() ) {
+			if ( food_manager_user_requires_account() && ! is_user_logged_in() ) {
 				throw new Exception( __( 'You must be signed in to post a new listing.','wp-food-manager' ) );
 			}
 

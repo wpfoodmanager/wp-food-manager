@@ -4,7 +4,7 @@ if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 }
 
 // Cleanup all data.
-require 'includes/wp-food-manager-data-cleaner.php';
+require 'includes/wpfm-data-cleaner.php';
 
 if ( ! is_multisite() ) {
 
@@ -38,6 +38,11 @@ $options = array(
 		'food_manager_enable_categories',
 		'food_manager_enable_food_types',
 		'food_manager_enable_food_tags',
+		'food_manager_user_requires_account',
+		'food_manager_generate_username_from_email',
+		'food_manager_enable_registration',
+		'food_manager_user_can_edit_pending_submissions',
+		'food_manager_use_standard_password_setup_email',
 		'food_manager_submit_food_form_page_id',
 		'food_manager_food_dashboard_page_id',
 		'food_manager_foods_page_id',
