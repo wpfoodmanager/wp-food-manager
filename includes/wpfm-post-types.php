@@ -60,11 +60,13 @@ class WPFM_Post_Types {
 		$admin_capability = 'manage_food_managers';
 		$permalink_structure = WPFM_Post_Types::get_permalink_structure();
 
+		include_once( WPFM_PLUGIN_DIR . '/includes/wpfm-post-types-taxonomy.php' );
+
 		/**
 		 * Taxonomies
 		 */
 
-		if ( get_option( 'food_manager_enable_categories' ,true) ) {
+		/*if ( get_option( 'food_manager_enable_categories' ,true) ) {
 
 			$singular  = __( 'Food Category', 'wp-food-manager' );
 
@@ -580,7 +582,7 @@ class WPFM_Post_Types {
 		           'rewrite' 				=> $rewrite,
 		        ) )
 		    );
-	   }
+	   }*/
 
 
 
