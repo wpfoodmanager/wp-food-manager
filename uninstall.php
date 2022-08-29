@@ -46,6 +46,8 @@ $options = array(
 		'food_manager_submit_food_form_page_id',
 		'food_manager_food_dashboard_page_id',
 		'food_manager_foods_page_id',
+		'food_manager_categories',
+		'food_manager_types',
 		'food_manager_nutritions_dashboard_page_id',
 		'food_manager_ingredients_dashboard_page_id',
 		'food_manager_enable_food_ingredients',

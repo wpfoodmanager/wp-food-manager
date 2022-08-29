@@ -86,7 +86,7 @@ class WPFM_Admin {
 		wp_localize_script( 'wpfm-admin', 'wpfm_var',
 							[
 								'units'   => $unitList,
-							],
+							]
 						);
 		wp_register_script( 'wp-food-manager-admin-settings', WPFM_PLUGIN_URL. '/assets/js/admin-settings.min.js', array( 'jquery' ), WPFM_VERSION, true );
 
