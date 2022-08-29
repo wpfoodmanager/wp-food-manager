@@ -49,10 +49,10 @@ class WPFM_Settings {
 			$account_roles[ $key ] = $role['name'];
 		}
 
-		$currency_code_options = get_woocommerce_currencies();
+		$currency_code_options = get_food_manager_currencies();
 
 		foreach ( $currency_code_options as $code => $name ) {
-			$currency_code_options[ $code ] = $name . ' (' . get_woocommerce_currency_symbol( $code ) . ')';
+			$currency_code_options[ $code ] = $name . ' (' . get_food_manager_currency_symbol( $code ) . ')';
 		}
 
 		$this->settings = apply_filters( 'food_manager_settings',
@@ -367,9 +367,9 @@ class WPFM_Settings {
 							),
 							array(
 
-								'name'  => 'food_manager_categories',
+								'name'  => 'food_manager_food_categories_page_id',
 
-								'std'   => wp_login_url(),
+								'std'   => '',
 
 								'label' => __('Food Categories', 'wp-food-manager'),
 
@@ -380,7 +380,7 @@ class WPFM_Settings {
 
 							array(
 
-								'name'  => 'food_manager_types',
+								'name'  => 'food_manager_food_type_page_id',
 
 								'std'   => '',
 
@@ -400,8 +400,8 @@ class WPFM_Settings {
 						array(
 
 							array(
-								'label'    => __( 'Currency', 'woocommerce' ),
-								'desc'     => __( 'This controls what currency prices are listed at in the catalog and which currency gateways will take payments in.', 'woocommerce' ),
+								'label'    => __( 'Currency', 'wp-food-manager' ),
+								'desc'     => __( 'This controls what currency prices are listed at in the catalog and which currency gateways will take payments in.', 'wp-food-manager' ),
 								'name'       => 'wpfm_currency',
 								'std'  => 'USD',
 								'type'     => 'select',
@@ -410,23 +410,23 @@ class WPFM_Settings {
 							),
 
 							array(
-								'label'    => __( 'Currency position', 'woocommerce' ),
-								'desc'     => __( 'This controls the position of the currency symbol.', 'woocommerce' ),
+								'label'    => __( 'Currency position', 'wp-food-manager' ),
+								'desc'     => __( 'This controls the position of the currency symbol.', 'wp-food-manager' ),
 								'name'       => 'wpfm_currency_pos',
 								'class'    => 'wc-enhanced-select',
 								'std'  => 'left',
 								'type'     => 'select',
 								'options'  => array(
-									'left'        => __( 'Left', 'woocommerce' ),
-									'right'       => __( 'Right', 'woocommerce' ),
-									'left_space'  => __( 'Left with space', 'woocommerce' ),
-									'right_space' => __( 'Right with space', 'woocommerce' ),
+									'left'        => __( 'Left', 'wp-food-manager' ),
+									'right'       => __( 'Right', 'wp-food-manager' ),
+									'left_space'  => __( 'Left with space', 'wp-food-manager' ),
+									'right_space' => __( 'Right with space', 'wp-food-manager' ),
 								),
 							),
 
 							array(
-								'label'    => __( 'Thousand separator', 'woocommerce' ),
-								'desc'     => __( 'This sets the thousand separator of displayed prices.', 'woocommerce' ),
+								'label'    => __( 'Thousand separator', 'wp-food-manager' ),
+								'desc'     => __( 'This sets the thousand separator of displayed prices.', 'wp-food-manager' ),
 								'name'       => 'wpfm_price_thousand_sep',
 								'css'      => 'width:50px;',
 								'std'  => ',',
@@ -434,8 +434,8 @@ class WPFM_Settings {
 							),
 
 							array(
-								'label'    => __( 'Decimal separator', 'woocommerce' ),
-								'desc'     => __( 'This sets the decimal separator of displayed prices.', 'woocommerce' ),
+								'label'    => __( 'Decimal separator', 'wp-food-manager' ),
+								'desc'     => __( 'This sets the decimal separator of displayed prices.', 'wp-food-manager' ),
 								'name'       => 'wpfm_price_decimal_sep',
 								'css'      => 'width:50px;',
 								'std'  => '.',
@@ -443,8 +443,8 @@ class WPFM_Settings {
 							),
 
 							array(
-								'label'             => __( 'Number of decimals', 'woocommerce' ),
-								'desc'              => __( 'This sets the number of decimal points shown in displayed prices.', 'woocommerce' ),
+								'label'             => __( 'Number of decimals', 'wp-food-manager' ),
+								'desc'              => __( 'This sets the number of decimal points shown in displayed prices.', 'wp-food-manager' ),
 								'name'                => 'wpfm_price_num_decimals',
 								'css'               => 'width:50px;',
 								'std'           => '2',
@@ -749,7 +749,7 @@ class WPFM_Settings {
 										'selected'         => absint( $value )
 
 									);
-
+									
 									echo str_replace(' id=', " data-placeholder='" . __( 'Select a page&hellip;', 'wp-food-manager' ) .  "' id=", wp_dropdown_pages( $args ) );
 
 									if ( $option['desc'] ) {

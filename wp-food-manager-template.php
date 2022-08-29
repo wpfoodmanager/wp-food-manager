@@ -311,14 +311,32 @@ function display_food_price_tag( $post = null ) {
 	if ( $post->post_type !== 'food_manager' )
 		return;
 
-	if(!empty(get_post_meta($post->ID, '_food_price', true)) && !empty(get_post_meta($post->ID, '_food_sale_price', true))){
-		echo "<del> $".get_post_meta($post->ID, '_food_price', true)."</del><ins> $".get_post_meta($post->ID, '_food_sale_price', true)."</ins>"; 
+	$price_decimals = wpfm_get_price_decimals();
+	$price_format = get_food_manager_price_format();
+	$price_thousand_separator = wpfm_get_price_thousand_separator();
+	$price_decimal_separator = wpfm_get_price_decimal_separator();
+
+
+	$sale_price = get_post_meta($post->ID, '_food_sale_price', true);
+	$regular_price = get_post_meta($post->ID, '_food_price', true);
+
+	if(!empty($sale_price)){
+		$formatted_sale_price = number_format($sale_price, $price_decimals, $price_decimal_separator, $price_thousand_separator);
 	}
-	if(empty(get_post_meta($post->ID, '_food_price', true)) && empty(get_post_meta($post->ID, '_food_sale_price', true))){
+	if(!empty($regular_price)){
+		$formatted_regular_price = number_format($regular_price, $price_decimals, $price_decimal_separator, $price_thousand_separator);
+	}
+
+	if(!empty($regular_price) && !empty($sale_price)){
+		$abc = sprintf($price_format, '<span class="food-manager-Price-currencySymbol">'.get_food_manager_currency_symbol().'</span>', $formatted_sale_price);
+		$xyz = sprintf($price_format, '<span class="food-manager-Price-currencySymbol">'.get_food_manager_currency_symbol().'</span>', $formatted_regular_price);
+		echo "<del> ".$xyz."</del><ins> <span class='food-manager-Price-currencySymbol'>".$abc."</ins>"; 
+	}
+	if(empty($regular_price) && empty($sale_price)){
 		return false;
 	}
-	if(empty(get_post_meta($post->ID, '_food_sale_price', true))){
-		echo "$".get_post_meta($post->ID, '_food_price', true);
+	if(empty($sale_price)){
+		echo "<span class='food-manager-Price-currencySymbol'>".get_food_manager_currency_symbol()."</span>".$formatted_regular_price;
 	}
 
 }
