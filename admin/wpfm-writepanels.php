@@ -421,9 +421,13 @@ class WPFM_Writepanels
 		} else {
 			$name = $key;
 		}
+
+		if($name == '_food_price' || $name == '_food_sale_price'){
+			$cur_symbol = get_food_manager_currency_symbol();
+		}
 	?>
 		<p class="wpfm-admin-postbox-form-field <?=$name;?>">
-			<label for="<?php echo esc_attr($key); ?>"><?php echo esc_html($field['label']); ?>: <?php if (!empty($field['description'])) : ?><span class="tips" data-tip="<?php echo esc_attr($field['description']); ?>">[?]</span><?php endif; ?></label>
+			<label for="<?php echo esc_attr($key); ?>"><?php echo esc_html($field['label']); ?> (<?php echo esc_html($cur_symbol); ?>) : <?php if (!empty($field['description'])) : ?><span class="tips" data-tip="<?php echo esc_attr($field['description']); ?>">[?]</span><?php endif; ?></label>
 			<input type="number" class="wpfm-small-field" name="<?php echo esc_attr($name); ?>" id="<?php echo esc_attr($key); ?>" placeholder="<?php echo esc_attr($field['placeholder']); ?>" value="<?php echo esc_attr($field['value']); ?>" />
 		</p>
 	<?php
