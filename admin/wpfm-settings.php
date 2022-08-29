@@ -285,7 +285,7 @@ class WPFM_Settings {
 								'attributes' => array(),
 							),
 
-							array(
+							/*array(
 
 								'name'       => 'food_manager_enable_categories',
 
@@ -317,7 +317,7 @@ class WPFM_Settings {
 								'type'       => 'checkbox',
 
 								'attributes' => array(),
-							),
+							),*/
 
 						),
 					),
@@ -613,11 +613,8 @@ class WPFM_Settings {
 	public function output() {
 
 		$this->init_settings();
-		wp_enqueue_script( 'wpfm-admin-settings');
 		?>
-		
-	
-       
+   
 		<div class="wrap food-manager-settings-wrap">	
 
 			<form method="post" name="food-manager-settings-form" action="options.php">	
