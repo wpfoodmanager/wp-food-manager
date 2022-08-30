@@ -1,7 +1,7 @@
-.wpfm-disabled-link{
+/*.wpfm-disabled-link{
   pointer-events: none;
   opacity: 0.6;
-}
+}*/
 .wpfm-admin-left-col,
 .wpfm-admin-right-col {
   display: inline-flex;

@@ -55,7 +55,7 @@ var WPFMAdmin= function () {
                 });
             //});
 
-            /*General tab - Regular and Sale price validation*/
+            /* General tab - Regular and Sale price validation */
             jQuery('body').on( 'wpfm_add_error_tip', function( e, element, error_type ) {
                 var offset = element.position();
 
@@ -162,7 +162,7 @@ var WPFMAdmin= function () {
                 }
             }).disableSelection()
 
-            jQuery(".option-tr-1 td a.option-delete-btn").addClass("wpfm-disabled-link");
+            //jQuery(".option-tr-1 td a.option-delete-btn").addClass("wpfm-disabled-link");
             /*jQuery(".wpfm-togglediv").each(function(){
                 var row_count = jQuery(this).data('row-count');
                 var html2 = jQuery(this).parents('.postbox').find('.wpfm-options-box-'+row_count+' .wpfm-metabox-content div.wpfm-admin-options-table tbody tr td .opt_name').attr('name');
@@ -182,8 +182,8 @@ var WPFMAdmin= function () {
                 jQuery(this).parents('.postbox').find('.wpfm-options-box-'+row_count+' .wpfm-metabox-content div.wpfm-admin-options-table tbody tr td .opt_select').attr('name', h7);
             });*/
 
-            jQuery('input[name^="option_name"]').on('change', WPFMAdmin.actions.updateOptionTitle);
-            jQuery('body').on('change', 'select[name^="_option_type"]' ,WPFMAdmin.actions.changeFieldType);
+            jQuery('body').on('change', 'input[name^="option_name"]', WPFMAdmin.actions.updateOptionTitle);
+            jQuery('body').on('change', 'select[name^="_option_type"]', WPFMAdmin.actions.changeFieldType);
 
             //find all the options and hide price
             /*jQuery('select[name^="_option_price_type"]').parent('.wpfm-admin-postbox-form-field').hide();
@@ -295,7 +295,12 @@ var WPFMAdmin= function () {
          //convert text into key
          var option_key = this.value.replace(/\s/g,'_').toLowerCase();
          //jQuery(this).parents('.postbox').find('span.attribute_key input').val(option_key);
-         jQuery(this).closest('.postbox').children('h3').children('.attribute_key').children('input').val(this.value);
+         jQuery(this).closest('.postbox').children('h3').children('.attribute_key').children('input').val(option_key);
+
+         if(this.value == ''){
+            jQuery(this).closest('.postbox').children('h3').children('.attribute_name').text("Option Key");
+            jQuery(this).closest('.postbox').children('h3').children('.attribute_key').children('input').val("option_key");
+         }
        },
 
        /// <summary>

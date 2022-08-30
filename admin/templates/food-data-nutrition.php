@@ -11,10 +11,13 @@ do_action( 'food_manager_food_data_nutrition_start', $thepostid );
 $metaNutritions = get_post_meta( $post->ID, '_nutrition' );
 $excludeNutritions = [];
 if ( ! empty( $metaNutritions ) ) {
-	foreach ( $metaNutritions as $item ) {
-		$excludeNutritions[] = $item['id'];
+	foreach ( $metaNutritions as $items ) {
+		foreach ( $items as $item ) {
+			$excludeNutritions[] = $item['id'];
+		}
 	}
 }
+
 $nutrition_terms = get_terms(
 					[
 						'taxonomy'   => 'food_manager_nutrition',
@@ -35,40 +38,41 @@ $units = get_terms(
 ?>
 <div class="wpfm-nutrition-fields wpfm-metaboxes">
 	<div id="wpfm-nutrition-container" class="wpfm-clear wpfm-lists-container">
-		<ul id="wpfm-active-ing-list" class="wpfm-active-list wpfm-sortable-list wpfm-clear ui-sortable"
+		<ul id="wpfm-active-nutri-list" class="wpfm-active-list wpfm-sortable-list wpfm-clear ui-sortable"
 			data-title="Active Nutrition">
 			<?php
 			if ( ! empty( $metaNutritions ) ) {
-				foreach ( $metaNutritions as $nutrition ) {
-
-					$nutriTerm = get_term(
-									! empty( $nutrition['id'] ) ? absint( $nutrition['id'] ) : 0,
-									'food_manager_nutrition'
-								);
-					$unit_id     = ! empty( $nutrition['unit_id'] ) ? absint( $nutrition['unit_id'] ) : 0;
-					$nutriValue    = ! empty( $nutrition['value'] ) ? absint( $nutrition['value'] ) : null;
-					$nutriTermID   = ! empty( $nutriTerm->term_id ) ? $nutriTerm->term_id : null;
-					$nutriTermName = ! empty( $nutriTerm->name ) ? $nutriTerm->name : null;
-					echo "<li class='wpfm-sortable-item active-item' data-id='{$nutriTermID}'>" .
-						"<label>{$nutriTermName}</label>" .
-						"<div class='wpfm-sortable-item-values'>" .
-						"<input type='text' class='item-value' name='_nutrition[{$nutriTermID}][value]' value='{$nutriValue}'>" .
-						"<select name='_nutrition[{$nutriTermID}][unit_id]' class='item-unit'>" .
-						"<option value=''>Unit</option>";
-					if ( ! empty( $units ) ) {
-						foreach ( $units as $unit ) {
-							$sel = ( $unit_id == $unit->term_id ? ' selected' : null );
-							echo "<option value='{$unit->term_id}'{$sel}>{$unit->name}</option>";
+				foreach ( $metaNutritions as $nutritions ) {
+					foreach ( $nutritions as $nutrition ) {
+						$nutriTerm = get_term(
+										! empty( $nutrition['id'] ) ? absint( $nutrition['id'] ) : 0,
+										'food_manager_nutrition'
+									);
+						$unit_id     = ! empty( $nutrition['unit_id'] ) ? absint( $nutrition['unit_id'] ) : 0;
+						$nutriValue    = ! empty( $nutrition['value'] ) ? absint( $nutrition['value'] ) : null;
+						$nutriTermID   = ! empty( $nutriTerm->term_id ) ? $nutriTerm->term_id : null;
+						$nutriTermName = ! empty( $nutriTerm->name ) ? $nutriTerm->name : null;
+						echo "<li class='wpfm-sortable-item active-item' data-id='{$nutriTermID}'>" .
+							"<label>{$nutriTermName}</label>" .
+							"<div class='wpfm-sortable-item-values'>" .
+							"<input type='text' class='item-value' name='_nutrition[{$nutriTermID}][value]' value='{$nutriValue}'>" .
+							"<select name='_nutrition[{$nutriTermID}][unit_id]' class='item-unit'>" .
+							"<option value=''>Unit</option>";
+						if ( ! empty( $units ) ) {
+							foreach ( $units as $unit ) {
+								$sel = ( $unit_id == $unit->term_id ? ' selected' : null );
+								echo "<option value='{$unit->term_id}'{$sel}>{$unit->name}</option>";
+							}
 						}
+						echo '</select>' .
+							'</div>' .
+							'</li>';
 					}
-					echo '</select>' .
-						'</div>' .
-						'</li>';
 				}
 			}
 			?>
 		</ul>
-		<ul id="wpfm-available-ing-list"
+		<ul id="wpfm-available-nutri-list"
 			class="wpfm-available-list wpfm-sortable-list wpfm-clear ui-sortable"
 			data-title="Available Nutrition">
 			<li class="wpfm-item-search with-title">

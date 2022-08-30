@@ -550,19 +550,25 @@ function get_food_category( $post = null ) {
  */
 function display_food_ingredients( $post = null, $after = '' ) {
 
-	if ( $food_ingredients = get_food_ingredients( $post ) ) {
+	/*if ( $food_ingredients = get_food_ingredients( $post ) ) {
 
 		if (! empty( $food_ingredients ) ) {
 		    $numIngredient = count($food_ingredients);
+
 		    $i = 0;
 			foreach ( $food_ingredients as $ingredient ) {
-				echo '<span class="food-ingredients '. esc_attr( sanitize_title( $ingredient->slug ) ).' ">'. $ingredient->name.'</span>';
+				echo '<span class="food-ingredients '. esc_attr( sanitize_title( $ingredient->slug ) ).' ">'. $ingredient->name.' - '.$ing_val['value'].'</span>';
 				if($numIngredient > ++$i){
 				    echo $after;
 				}
 			}
 		}
-	}
+	}*/
+	$food_ingredients = get_post_meta(get_the_ID(), '_ingredient', true);
+    foreach ( $food_ingredients as $ingredient ) {
+    	$ingredient_slug = strtolower(str_replace(" ", "_", $ingredient['term_name']));
+	    echo '<span class="food-ingredients '. esc_attr( sanitize_title( $ingredient_slug ) ).'">'. $ingredient['term_name'].' - '.$ingredient['value'].' '.$ingredient['unit_name'].'</span>';
+    }
 }
 
 /**
@@ -592,7 +598,7 @@ function get_food_ingredients( $post = null ) {
  */
 function display_food_nutritions( $post = null, $after = '' ) {
 
-	if ( $food_nutritions = get_food_nutritions( $post ) ) {
+	/*if ( $food_nutritions = get_food_nutritions( $post ) ) {
 
 		if (! empty( $food_nutritions ) ) {
 		    $numNutrition = count($food_nutritions);
@@ -604,7 +610,12 @@ function display_food_nutritions( $post = null, $after = '' ) {
 				}
 			}
 		}
-	}
+	}*/
+	$food_nutritions = get_post_meta(get_the_ID(), '_nutrition', true);
+	foreach ( $food_nutritions as $nutrition ) {
+    	$nutrition_slug = strtolower(str_replace(" ", "_", $nutrition['term_name']));
+	    echo '<span class="food-nutritions '. esc_attr( sanitize_title( $nutrition_slug ) ).'">'. $nutrition['term_name'].' - '.$nutrition['value'].' '.$nutrition['unit_name'].'</span>';
+    }
 }
 
 /**

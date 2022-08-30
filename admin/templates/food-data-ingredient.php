@@ -11,10 +11,13 @@ do_action( 'food_manager_food_data_ingredient_start', $thepostid );
 $metaIngredients = get_post_meta( $post->ID, '_ingredient' );
 $excludeIngredients = [];
 if ( ! empty( $metaIngredients ) ) {
-	foreach ( $metaIngredients as $item ) {
-		$excludeIngredients[] = $item['id'];
+	foreach ( $metaIngredients as $items ) {
+		foreach ( $items as $item ) {
+			$excludeIngredients[] = $item['id'];
+		}
 	}
 }
+
 $ingredient_terms = get_terms(
 					[
 						'taxonomy'   => 'food_manager_ingredient',
@@ -39,31 +42,32 @@ $units = get_terms(
 			data-title="Active Ingredient">
 			<?php
 			if ( ! empty( $metaIngredients ) ) {
-				foreach ( $metaIngredients as $ingredient ) {
-
-					$ingTerm = get_term(
-									! empty( $ingredient['id'] ) ? absint( $ingredient['id'] ) : 0,
-									'food_manager_ingredient'
-								);
-					$unit_id     = ! empty( $ingredient['unit_id'] ) ? absint( $ingredient['unit_id'] ) : 0;
-					$ingValue    = ! empty( $ingredient['value'] ) ? absint( $ingredient['value'] ) : null;
-					$ingTermID   = ! empty( $ingTerm->term_id ) ? $ingTerm->term_id : null;
-					$ingTermName = ! empty( $ingTerm->name ) ? $ingTerm->name : null;
-					echo "<li class='wpfm-sortable-item active-item' data-id='{$ingTermID}'>" .
-						"<label>{$ingTermName}</label>" .
-						"<div class='wpfm-sortable-item-values'>" .
-						"<input type='text' class='item-value' name='_ingredient[{$ingTermID}][value]' value='{$ingValue}'>" .
-						"<select name='_ingredient[{$ingTermID}][unit_id]' class='item-unit'>" .
-						"<option value=''>Unit</option>";
-					if ( ! empty( $units ) ) {
-						foreach ( $units as $unit ) {
-							$sel = ( $unit_id == $unit->term_id ? ' selected' : null );
-							echo "<option value='{$unit->term_id}'{$sel}>{$unit->name}</option>";
+				foreach ( $metaIngredients as $ingredients ) {
+					foreach ( $ingredients as $ingredient ) {
+						$ingTerm = get_term(
+										! empty( $ingredient['id'] ) ? absint( $ingredient['id'] ) : 0,
+										'food_manager_ingredient'
+									);
+						$unit_id     = ! empty( $ingredient['unit_id'] ) ? absint( $ingredient['unit_id'] ) : 0;
+						$ingValue    = ! empty( $ingredient['value'] ) ? absint( $ingredient['value'] ) : null;
+						$ingTermID   = ! empty( $ingTerm->term_id ) ? $ingTerm->term_id : null;
+						$ingTermName = ! empty( $ingTerm->name ) ? $ingTerm->name : null;
+						echo "<li class='wpfm-sortable-item active-item' data-id='{$ingTermID}'>" .
+							"<label>{$ingTermName}</label>" .
+							"<div class='wpfm-sortable-item-values'>" .
+							"<input type='text' class='item-value' name='_ingredient[{$ingTermID}][value]' value='{$ingValue}'>" .
+							"<select name='_ingredient[{$ingTermID}][unit_id]' class='item-unit'>" .
+							"<option value=''>Unit</option>";
+						if ( ! empty( $units ) ) {
+							foreach ( $units as $unit ) {
+								$sel = ( $unit_id == $unit->term_id ? ' selected' : null );
+								echo "<option value='{$unit->term_id}'{$sel}>{$unit->name}</option>";
+							}
 						}
+						echo '</select>' .
+							'</div>' .
+							'</li>';
 					}
-					echo '</select>' .
-						'</div>' .
-						'</li>';
 				}
 			}
 			?>

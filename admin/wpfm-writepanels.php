@@ -180,25 +180,25 @@ class WPFM_Writepanels
 					'label'    => __('Options / Add ons / Toppings', 'wp-food-manager'),
 					'target'   => 'extra_options_food_data_content',
 					'class'    => array(),
-					'priority' => 1,
+					'priority' => 2,
 				),
 				'ingredient'        => array(
 					'label'    => __('Ingredient', 'wp-food-manager'),
 					'target'   => 'ingredient_food_data_content',
 					'class'    => array(''),
-					'priority' => 1,
+					'priority' => 3,
 				),
 				'nutritions'        => array(
 					'label'    => __('Nutritions', 'wp-food-manager'),
 					'target'   => 'nutritions_food_data_content',
 					'class'    => array(''),
-					'priority' => 1,
+					'priority' => 4,
 				),
 				'advanced'        => array(
 					'label'    => __('Advanced', 'wp-food-manager'),
 					'target'   => 'advanced_food_data_content',
 					'class'    => array(''),
-					'priority' => 1,
+					'priority' => 5,
 				),
 			)
 		);
@@ -594,36 +594,66 @@ class WPFM_Writepanels
 		// Ingredients.
 		delete_post_meta( $post_id, '_ingredient' );
 
+		$multiArrayIng = array();
 		if ( ! empty( $_POST['_ingredient'] ) ) {
 			foreach ( $_POST['_ingredient'] as $id => $ingredient ) {
+				$term_name = get_term( $id )->name;
+				$unit_name = "Unit";
+				if($ingredient['unit_id'] == '' && empty($ingredient['unit_id'])){
+					$unit_name = "Unit";
+				} else {
+					$unit_name = get_term( $ingredient['unit_id'] )->name;
+				}
+
 				$item = [
 					'id'      => $id,
 					'unit_id' => ! empty( $ingredient['unit_id'] ) ? $ingredient['unit_id'] : null,
 					'value'   => ! empty( $ingredient['value'] ) ? $ingredient['value'] : null,
+					'term_name' => $term_name,
+					'unit_name' => $unit_name
 				];
-
-				add_post_meta( $post_id, '_ingredient', $item );
+				$multiArrayIng[$id] = $item;
+				//add_post_meta( $post_id, '_ingredient', $item );
+			}
+			if( !add_post_meta($post_id,'_ingredient', $multiArrayIng, true) ){
+				update_post_meta($post_id,'_ingredient', $multiArrayIng);
 			}
 		}
 
 		// Nutritions.
 		delete_post_meta( $post_id, '_nutrition' );
 
+		$multiArrayNutri = array();
 		if ( ! empty( $_POST['_nutrition'] ) ) {
-			foreach ( $_POST['_nutrition'] as $id => $ingredient ) {
+			foreach ( $_POST['_nutrition'] as $id => $nutrition ) {
+				echo "<pre>";
+				print_r($nutrition);
+				echo "</pre>";
+				$term_name = get_term( $id )->name;
+				$unit_name = "Unit";
+				if($nutrition['unit_id'] == '' && empty($nutrition['unit_id'])){
+					$unit_name = "Unit";
+				} else {
+					$unit_name = get_term( $nutrition['unit_id'] )->name;
+				}
+
 				$item = [
 					'id'      => $id,
-					'unit_id' => ! empty( $ingredient['unit_id'] ) ? $ingredient['unit_id'] : null,
-					'value'   => ! empty( $ingredient['value'] ) ? $ingredient['value'] : null,
+					'unit_id' => ! empty( $nutrition['unit_id'] ) ? $nutrition['unit_id'] : null,
+					'value'   => ! empty( $nutrition['value'] ) ? $nutrition['value'] : null,
+					'term_name' => $term_name,
+					'unit_name' => $unit_name
 				];
-
-				add_post_meta( $post_id, '_nutrition', $item );
+				$multiArrayNutri[$id] = $item;
+				//add_post_meta( $post_id, '_ingredient', $item );
+			}
+			if( !add_post_meta($post_id,'_nutrition', $multiArrayNutri, true) ){
+				update_post_meta($post_id,'_nutrition', $multiArrayNutri);
 			}
 		}
 
+
 		foreach ($this->food_manager_data_fields() as $key => $field) {
-
-
 			// Food price
 			$fd_price = sanitize_text_field($_POST['_food_price']);
 			if( !add_post_meta($post_id,'_food_price', $fd_price, true) ){
@@ -665,7 +695,7 @@ class WPFM_Writepanels
 							$option_price = $_POST['_option_price_'.$option_count];
 							$option_price_type = $_POST['_option_price_type_'.$option_count];
 							$option_values = array();
-							
+
 							if(isset($_POST['option_value_count'])){
 								$find_option = array_search('%%repeated-option-index%%', $_POST['option_value_count']);
 								if ($find_option !== false) {
@@ -675,7 +705,7 @@ class WPFM_Writepanels
 								
 								foreach ( $_POST['option_value_count'] as $option_value_count) {
 									if(!empty($_POST[$option_count.'_option_value_name_'.$option_value_count]) || !empty($_POST[$option_count.'_option_value_default_'.$option_value_count]) || !empty($_POST[$option_count.'_option_value_price_'.$option_value_count])){
-										$option_values[] = array(
+										$option_values[$option_count.'_option_value_name_'.$option_value_count] = array(
 															$option_count.'_option_value_name_'.$option_value_count => isset($_POST[$option_count.'_option_value_name_'.$option_value_count]) ? $_POST[$option_count.'_option_value_name_'.$option_value_count] : '',
 
 															$option_count.'_option_value_default_'.$option_value_count => isset($_POST[$option_count.'_option_value_default_'.$option_value_count]) ? $_POST[$option_count.'_option_value_default_'.$option_value_count] : '',
@@ -688,6 +718,7 @@ class WPFM_Writepanels
 								}
 								
 							}
+
 							$extra_options[$option_key] = array(
 																'option_name' => $option_name,
 																'option_type' => $option_type,
@@ -703,7 +734,7 @@ class WPFM_Writepanels
 					}
 					$counter++;
 				}
-				
+
 				update_post_meta($post_id,'_wpfm_extra_options',$extra_options);
 				
 				switch ($type) {
