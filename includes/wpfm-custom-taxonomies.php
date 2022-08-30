@@ -1,5 +1,4 @@
 <?php
-//require WPFM_PLUGIN_DIR . '/includes/wpfm-post-types.php';
 
 /**
  * Taxonomies
@@ -335,6 +334,8 @@ if ( get_option( 'food_manager_enable_food_ingredients' ,true) ) {
         		
         	'show_in_rest'          => true,
 
+        	'meta_box_cb'		    => false,
+
             'public' 			    => $public,
 
             'capabilities'			=> array(
@@ -420,6 +421,8 @@ if ( get_option( 'food_manager_enable_food_nutritions' ,true) ) {
         		
         	'show_in_rest'          => true,
 
+        	'meta_box_cb'		    => false,
+
             'public' 			    => $public,
 
             'capabilities'			=> array(
@@ -504,6 +507,8 @@ if ( get_option( 'food_manager_enable_food_units' ,true) ) {
             'show_ui' 				=> true,
         		
         	'show_in_rest'          => true,
+
+        	'meta_box_cb'		    => false,
 
             'public' 			    => $public,
 
