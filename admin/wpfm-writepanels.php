@@ -78,7 +78,7 @@ class WPFM_Writepanels
 
 		add_meta_box('food_manager_data', sprintf(__('%s Data', 'wp-food-manager'), $wp_post_types['food_manager']->labels->singular_name), array($this, 'food_manager_data'), 'food_manager', 'normal', 'high');
 
-		add_meta_box('food_manager_menu_data', __('Menu items', 'wp-food-manager'), array($this, 'food_manager_menu_data'), 'food_manager_menu', 'normal', 'high');
+		//add_meta_box('food_manager_menu_data', __('Menu items', 'wp-food-manager'), array($this, 'food_manager_menu_data'), 'food_manager_menu', 'normal', 'high');
 	}
 
 	/**
@@ -422,12 +422,13 @@ class WPFM_Writepanels
 			$name = $key;
 		}
 
+
 		if($name == '_food_price' || $name == '_food_sale_price'){
-			$cur_symbol = get_food_manager_currency_symbol();
+			$cur_symbol = "(".get_food_manager_currency_symbol().")";
 		}
 	?>
 		<p class="wpfm-admin-postbox-form-field <?=$name;?>">
-			<label for="<?php echo esc_attr($key); ?>"><?php echo esc_html($field['label']); ?> (<?php echo esc_html($cur_symbol); ?>) : <?php if (!empty($field['description'])) : ?><span class="tips" data-tip="<?php echo esc_attr($field['description']); ?>">[?]</span><?php endif; ?></label>
+			<label for="<?php echo esc_attr($key); ?>"><?php echo esc_html($field['label']); ?> <?php echo esc_html($cur_symbol); ?> : <?php if (!empty($field['description'])) : ?><span class="tips" data-tip="<?php echo esc_attr($field['description']); ?>">[?]</span><?php endif; ?></label>
 			<input type="number" class="wpfm-small-field" name="<?php echo esc_attr($name); ?>" id="<?php echo esc_attr($key); ?>" placeholder="<?php echo esc_attr($field['placeholder']); ?>" value="<?php echo esc_attr($field['value']); ?>" />
 		</p>
 	<?php
@@ -534,7 +535,7 @@ class WPFM_Writepanels
 					<td>%%repeated-option-index3%%</td>
 					<td><input type=&apos;text&apos; name=&apos;%%repeated-option-index2%%_option_value_name_%%repeated-option-index3%%&apos; value=&apos;&apos;></td>
 					<td><input type=&apos;checkbox&apos; name=&apos;%%repeated-option-index2%%_option_value_default_%%repeated-option-index3%%&apos;></td>
-					<td><input type=&apos;text&apos; name=&apos;%%repeated-option-index2%%_option_value_price_%%repeated-option-index3%%&apos; value=&apos;&apos;></td>
+					<td><input type=&apos;number&apos; name=&apos;%%repeated-option-index2%%_option_value_price_%%repeated-option-index3%%&apos; value=&apos;&apos;></td>
 					<td>
 						<select name=&apos;%%repeated-option-index2%%_option_value_price_type_%%repeated-option-index3%%&apos;>
 						<option value=&apos;quantity_based&apos;>Quantity Based</option>

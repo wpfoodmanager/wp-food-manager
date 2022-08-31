@@ -893,11 +893,11 @@ class WPFM_Post_Types {
 
 			ob_start();
 
-			do_action( 'food_content_start' );
+			do_action( 'food_menu_content_start' );
 
 			get_food_manager_template_part( 'content-single', 'food_manager_menu' );
 
-			do_action( 'food_content_end' );
+			do_action( 'food_menu_content_end' );
 
 			$content = ob_get_clean();
 		}

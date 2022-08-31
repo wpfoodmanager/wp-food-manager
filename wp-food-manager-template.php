@@ -328,9 +328,9 @@ function display_food_price_tag( $post = null ) {
 	}
 
 	if(!empty($regular_price) && !empty($sale_price)){
-		$abc = sprintf($price_format, '<span class="food-manager-Price-currencySymbol">'.get_food_manager_currency_symbol().'</span>', $formatted_sale_price);
-		$xyz = sprintf($price_format, '<span class="food-manager-Price-currencySymbol">'.get_food_manager_currency_symbol().'</span>', $formatted_regular_price);
-		echo "<del> ".$xyz."</del><ins> <span class='food-manager-Price-currencySymbol'>".$abc."</ins>"; 
+		$f_regular_price = sprintf($price_format, '<span class="food-manager-Price-currencySymbol">'.get_food_manager_currency_symbol().'</span>', $formatted_sale_price);
+		$f_sale_price = sprintf($price_format, '<span class="food-manager-Price-currencySymbol">'.get_food_manager_currency_symbol().'</span>', $formatted_regular_price);
+		echo "<del> ".$f_sale_price."</del><ins> <span class='food-manager-Price-currencySymbol'>".$f_regular_price."</ins>"; 
 	}
 	if(empty($regular_price) && empty($sale_price)){
 		return false;
@@ -550,25 +550,28 @@ function get_food_category( $post = null ) {
  */
 function display_food_ingredients( $post = null, $after = '' ) {
 
-	/*if ( $food_ingredients = get_food_ingredients( $post ) ) {
+	if ( $food_ingredients = get_food_ingredients( $post ) ) {
 
 		if (! empty( $food_ingredients ) ) {
 		    $numIngredient = count($food_ingredients);
 
 		    $i = 0;
 			foreach ( $food_ingredients as $ingredient ) {
-				echo '<span class="food-ingredients '. esc_attr( sanitize_title( $ingredient->slug ) ).' ">'. $ingredient->name.' - '.$ing_val['value'].'</span>';
+				$ingredient_slug = strtolower(str_replace(" ", "_", $ingredient['term_name']));
+				echo '<span class="food-ingredients '. esc_attr( sanitize_title( $ingredient_slug ) ).' ">'. $ingredient['term_name'].' - '.$ingredient['value'].' '.$ingredient['unit_name'].'</span>';
 				if($numIngredient > ++$i){
 				    echo $after;
 				}
 			}
 		}
+	}
+	/*$food_ingredients = get_post_meta(get_the_ID(), '_ingredient', true);
+	if (! empty( $food_ingredients ) ) {
+	    foreach ( $food_ingredients as $ingredient ) {
+	    	$ingredient_slug = strtolower(str_replace(" ", "_", $ingredient['term_name']));
+		    echo '<span class="food-ingredients '. esc_attr( sanitize_title( $ingredient_slug ) ).'">'. $ingredient['term_name'].' - '.$ingredient['value'].' '.$ingredient['unit_name'].'</span>';
+	    }
 	}*/
-	$food_ingredients = get_post_meta(get_the_ID(), '_ingredient', true);
-    foreach ( $food_ingredients as $ingredient ) {
-    	$ingredient_slug = strtolower(str_replace(" ", "_", $ingredient['term_name']));
-	    echo '<span class="food-ingredients '. esc_attr( sanitize_title( $ingredient_slug ) ).'">'. $ingredient['term_name'].' - '.$ingredient['value'].' '.$ingredient['unit_name'].'</span>';
-    }
 }
 
 /**
@@ -586,7 +589,8 @@ function get_food_ingredients( $post = null ) {
 		return;
 	}
 
-	$ingredients = wp_get_post_terms( $post->ID, 'food_manager_ingredient' );
+	//$ingredients = wp_get_post_terms( $post->ID, 'food_manager_ingredient' );
+	$ingredients = get_post_meta(get_the_ID(), '_ingredient', true);
 
 	return apply_filters( 'display_food_ingredients', $ingredients, $post );
 }
@@ -598,24 +602,27 @@ function get_food_ingredients( $post = null ) {
  */
 function display_food_nutritions( $post = null, $after = '' ) {
 
-	/*if ( $food_nutritions = get_food_nutritions( $post ) ) {
+	if ( $food_nutritions = get_food_nutritions( $post ) ) {
 
 		if (! empty( $food_nutritions ) ) {
 		    $numNutrition = count($food_nutritions);
 		    $i = 0;
 			foreach ( $food_nutritions as $nutrition ) {
-				echo '<span class="food-nutritions '. esc_attr( sanitize_title( $nutrition->slug ) ).' ">'. $nutrition->name.'</span>';
+				$nutrition_slug = strtolower(str_replace(" ", "_", $nutrition['term_name']));
+				echo '<span class="food-nutritions '. esc_attr( sanitize_title( $nutrition_slug ) ).' ">'. $nutrition['term_name'].' - '.$nutrition['value'].' '.$nutrition['unit_name'].'</span>';
 				if($numNutrition > ++$i){
 				    echo $after;
 				}
 			}
 		}
+	}
+	/*$food_nutritions = get_post_meta(get_the_ID(), '_nutrition', true);
+	if (! empty( $food_nutritions ) ) {
+		foreach ( $food_nutritions as $nutrition ) {
+	    	$nutrition_slug = strtolower(str_replace(" ", "_", $nutrition['term_name']));
+		    echo '<span class="food-nutritions '. esc_attr( sanitize_title( $nutrition_slug ) ).'">'. $nutrition['term_name'].' - '.$nutrition['value'].' '.$nutrition['unit_name'].'</span>';
+	    }
 	}*/
-	$food_nutritions = get_post_meta(get_the_ID(), '_nutrition', true);
-	foreach ( $food_nutritions as $nutrition ) {
-    	$nutrition_slug = strtolower(str_replace(" ", "_", $nutrition['term_name']));
-	    echo '<span class="food-nutritions '. esc_attr( sanitize_title( $nutrition_slug ) ).'">'. $nutrition['term_name'].' - '.$nutrition['value'].' '.$nutrition['unit_name'].'</span>';
-    }
 }
 
 /**
@@ -633,7 +640,8 @@ function get_food_nutritions( $post = null ) {
 		return;
 	}
 
-	$nutritions = wp_get_post_terms( $post->ID, 'food_manager_nutrition' );
+	//$nutritions = wp_get_post_terms( $post->ID, 'food_manager_nutrition' );
+	$nutritions = get_post_meta(get_the_ID(), '_nutrition', true);
 
 	return apply_filters( 'display_food_nutritions', $nutritions, $post );
 }
