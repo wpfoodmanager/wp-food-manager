@@ -90,7 +90,7 @@ class WPFM_Admin {
 						);
 		wp_register_script( 'wp-food-manager-admin-settings', WPFM_PLUGIN_URL. '/assets/js/admin-settings.min.js', array( 'jquery' ), WPFM_VERSION, true );
 
-		wp_register_script( 'wpfm-accounting', WPFM_PLUGIN_URL. '/assets/js/accounting.min.js', array( 'jquery' ), WPFM_VERSION, true );	
+		wp_register_script( 'wpfm-accounting', WPFM_PLUGIN_URL. '/assets/js/accounting/accounting.min.js', array( 'jquery' ), WPFM_VERSION, true );	
 		wp_localize_script(
 			'wpfm-accounting',
 			'wpfm_accounting_params',

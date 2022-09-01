@@ -426,6 +426,12 @@ class WPFM_Writepanels
 		if($name == '_food_price' || $name == '_food_sale_price'){
 			$cur_symbol = "(".get_food_manager_currency_symbol().")";
 		}
+
+		if($name == '_food_menu_order'){
+			$field['value'] = (empty($field['value']) ? '0' : $field['value']);
+		} else {
+			$field['value'] = $field['value'];
+		}
 	?>
 		<p class="wpfm-admin-postbox-form-field <?=$name;?>">
 			<label for="<?php echo esc_attr($key); ?>"><?php echo esc_html($field['label']); ?> <?php echo esc_html($cur_symbol); ?> : <?php if (!empty($field['description'])) : ?><span class="tips" data-tip="<?php echo esc_attr($field['description']); ?>">[?]</span><?php endif; ?></label>
@@ -591,6 +597,24 @@ class WPFM_Writepanels
 		//error_log(print_r($_POST,true));
 
 		// Save fields
+
+		// Advanced tab fields
+		if ( ! empty( $_POST['_food_menu_order'] ) ) {
+			$fd_menu_order = sanitize_text_field($_POST['_food_menu_order']);
+			if( !add_post_meta($post_id,'_food_menu_order', $fd_menu_order, true) ){
+				update_post_meta($post_id,'_food_menu_order', $fd_menu_order);
+			}
+		}
+		
+		$fd_food_ingre = sanitize_text_field($_POST['_enable_food_ingre']);
+		if( !add_post_meta($post_id,'_enable_food_ingre', $fd_food_ingre, true) ){
+			update_post_meta($post_id,'_enable_food_ingre', $fd_food_ingre);
+		}
+		
+		$fd_food_nutri = sanitize_text_field($_POST['_enable_food_nutri']);
+		if( !add_post_meta($post_id,'_enable_food_nutri', $fd_food_nutri, true) ){
+			update_post_meta($post_id,'_enable_food_nutri', $fd_food_nutri);
+		}
 
 		// Ingredients.
 		delete_post_meta( $post_id, '_ingredient' );
