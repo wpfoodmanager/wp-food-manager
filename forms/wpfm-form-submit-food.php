@@ -190,7 +190,17 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
 					'required'    => true,
 					'placeholder' => '',
 					'priority'    => 12
-				),						 
+				),
+				'food_stock_status' => array(
+					'label'       => __( 'Stock Status', 'wp-food-manager' ),
+					'type'        => 'select',
+					'required'    => true,
+					'options' 	  => array(
+										'fm_instock' => __('In stock','wp-food-manager'),
+										'fm_outofstock' => __('Out of stock','wp-food-manager'),
+									),
+					'priority'    => 13
+				),
 			),
 
 			'extra_options' => array(

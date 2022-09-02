@@ -813,3 +813,41 @@ function get_food_status($post = null)
 	}
 	return apply_filters('display_food_status', $status, $post);
 }
+
+/**
+ * display_stock_status function.
+ *
+ * @access public
+ * @return void
+ */
+function display_stock_status( $post = null, $after = '' ) {
+
+	if ( $food_stock_status = get_stock_status( $post ) ) {
+
+		if (! empty( $food_stock_status ) ) {
+			$food_stock_status_label = "";
+			if($food_stock_status == 'fm_instock'){
+				$food_stock_status_label = 'In stock';
+			}
+			if($food_stock_status == 'fm_outofstock'){
+				$food_stock_status_label = 'Out of stock';
+			}
+			echo '<mark class="'.$food_stock_status.'">'.esc_html($food_stock_status_label).'</mark>';
+		}
+	}
+}
+/**
+ * get_stock_status function.
+ *
+ * @access public
+ * @param mixed $post (default: null)
+ * @return void
+ */
+function get_stock_status( $post = null ) {
+
+	$post = get_post( $post );
+
+	$stock_status = get_post_meta(get_the_ID(), '_food_stock_status', true);
+
+	return apply_filters( 'display_stock_status', $stock_status, $post );
+}

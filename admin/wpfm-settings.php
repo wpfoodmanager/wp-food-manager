@@ -123,6 +123,17 @@ class WPFM_Settings {
 									'type'       => 'checkbox',
 									'attributes' => array(),
 								),
+							array(
+									'name'       => 'food_manager_food_item_show_hide',
+									'label'      => __( 'Hide Food Items', 'wp-food-manager' ),
+									'type'       => 'radio',
+									'desc'       => '',
+									'std'        => '1',
+									'options'  => array(
+										'0' => 'Completely hide Food Item which has stock status out of stock.',
+								 		'1' => 'Display Out of Stock label for the food item which has stock status out of stock.'
+									)
+								),
 							)
 					),
 					'food_listings'       => array(

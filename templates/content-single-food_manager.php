@@ -53,6 +53,11 @@ do_action('set_single_listing_view_count');
                             <?php do_action('single_food_overview_before'); ?>
                             <div class="wpfm-single-food-short-info">
                                 <div class="wpfm-food-details">
+                                    <?php if (get_option('food_manager_food_item_show_hide') && get_stock_status()) : ?>
+                                        <div class="food-stock-status">
+                                            <?php display_stock_status(); ?>
+                                        </div>
+                                    <?php endif; ?>
                                     <div class="wpfm-food-title">
                                         <h3 class="wpfm-heading-text"><?php the_title(); ?> - <?php display_food_price_tag(); ?></h3>
                                     </div>

@@ -338,11 +338,13 @@ class WPFM_Writepanels
 
 		<p class="wpfm-admin-postbox-form-field <?=$name;?>">
 			<label for="<?php echo esc_attr($key); ?>"><?php echo esc_html($field['label']); ?>: <?php if (!empty($field['description'])) : ?><span class="tips" data-tip="<?php echo esc_attr($field['description']); ?>">[?]</span><?php endif; ?></label>
-			<select name="<?php echo esc_attr($name); ?>" id="<?php echo esc_attr($key); ?>" class="input-select wpfm-small-field <?php echo esc_attr(isset($field['class']) ? $field['class'] : $key); ?>">
-				<?php foreach ($field['options'] as $key => $value) : ?>
-					<option value="<?php echo esc_attr($key); ?>" <?php if (isset($field['value'])) selected($field['value'], $key); ?>><?php echo esc_html($value); ?></option>
-				<?php endforeach; ?>
-			</select>
+			<span class="rt-field">
+                <select name="<?php echo esc_attr($name); ?>" id="<?php echo esc_attr($key); ?>" class="input-select wpfm-small-field <?php echo esc_attr(isset($field['class']) ? $field['class'] : $key); ?>">
+    				<?php foreach ($field['options'] as $key => $value) : ?>
+    					<option value="<?php echo esc_attr($key); ?>" <?php if (isset($field['value'])) selected($field['value'], $key); ?>><?php echo esc_html($value); ?></option>
+    				<?php endforeach; ?>
+    			</select>
+            </span>
 		</p>
 	<?php
 	}
@@ -708,6 +710,12 @@ class WPFM_Writepanels
 				update_post_meta($post_id,'_food_sale_price', $fd_sale_price);
 			}
 
+			// Food stock status
+			$fd_stock_status = sanitize_text_field($_POST['_food_stock_status']);
+			if( !add_post_meta($post_id,'_food_stock_status', $fd_stock_status, true) ){
+				update_post_meta($post_id,'_food_stock_status', $fd_stock_status);
+			}
+
 			// Repeated options
 			if( !add_post_meta($post_id,'wpfm_repeated_options', $_POST['repeated_options'], true) ){
 				update_post_meta($post_id,'wpfm_repeated_options', $_POST['repeated_options']);
@@ -911,6 +919,7 @@ class WPFM_Writepanels
 	        'cb' => $columns['cb'],
 	        'title' => $columns['title'],
 	        'image' => __( 'Image', 'wp-food-manager' ),
+	        'fm_stock_status' => __( 'Stock Status', 'wp-food-manager' ),
 	        'price' => __( 'Price', 'wp-food-manager' ),
 	        'fm_categories' => __( 'Categories', 'wp-food-manager' ),
 	        'date' => $columns['date']
@@ -942,6 +951,10 @@ class WPFM_Writepanels
 		if($column == 'fm_categories'){
 			echo display_food_category();
 		}
+
+		if($column == 'fm_stock_status'){
+			echo display_stock_status();
+		}				
 	}
 }
 WPFM_Writepanels::instance();
