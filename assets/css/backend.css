@@ -166,12 +166,16 @@
 }
 .wpfm_panel p.wpfm-admin-postbox-form-field {
   padding: 5px 20px 5px 162px !important;
+  display: flex;
+  align-items: center;
+  column-gap: 5px;
 }
 
 #advanced_product_data p.wpfm-admin-postbox-form-field {
-  display: block;
-  overflow: hidden;
-  position: relative;
+  display: flex;
+  /* overflow: hidden; */
+  /* position: relative; */
+  align-items: center;
 }
 
 .wpfm_panel label {
@@ -179,6 +183,8 @@
   width: 150px;
   padding: 0;
   margin: 0 0 0 -150px;
+  font-size: 14px;
+  color: #555;
 }
 
 .wpfm_panel .wpfm-small-field,
@@ -574,6 +580,79 @@ td.fm_categories.column-fm_categories span.food-category {
   left: 50%;
   margin: -1em 0 0 -3px;
 }
+.wpfm_panel  label.rtfm-switch {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 24px;
+  float: none;
+  margin: 0;
+}
+.rt-field {
+  /*-webkit-box-flex: 0;
+  -ms-flex: 0 0 calc(100% - 235px);
+  flex: 0 0 calc(100% - 235px);*/
+  background: #f7fafc;
+  padding: 15px;
+  position: relative;
+  border-radius: 4px;
+  border: 1px solid #d9e3ed;
+  margin: 0;
+  width: 100%;
+  display: inline-block;
+  vertical-align: top;
+  box-sizing: border-box;
+}
+.rtfm-switch-slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #d3d6df;
+  -webkit-transition: .4s;
+  -o-transition: .4s;
+  transition: .4s;
+}
+.rtfm-switch-slider.round {
+  border-radius: 34px;
+}
+.rtfm-switch-slider.round:before {
+  border-radius: 50%;
+}
+.rtfm-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+.rtfm-switch input[type=checkbox]:checked::before {
+  content: url("data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%270%200%2020%2020%27%3E%3Cpath%20d%3D%27M14.83%204.89l1.34.94-5.81%208.38H9.02L5.78%209.67l1.34-1.25%202.57%202.4z%27%20fill%3D%27%233582c4%27%2F%3E%3C%2Fsvg%3E");
+  margin: -.1875rem 0 0 -.25rem;
+  height: 1.3125rem;
+  width: 1.3125rem;
+}
+.rtfm-switch-slider:before {
+  position: absolute;
+  content: "";
+  height: 16px;
+  width: 16px;
+  left: 4px;
+  bottom: 4px;
+  background-color: #fff;
+  -webkit-transition: .4s;
+  -o-transition: .4s;
+  transition: .4s;
+}
+input:checked+.rtfm-switch-slider {
+  background-color: #5d3dfd;
+}
+input:checked+.rtfm-switch-slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
 
 
 @media only screen and (max-width: 1280px) {

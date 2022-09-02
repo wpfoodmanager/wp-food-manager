@@ -2004,3 +2004,40 @@ function wpfm_get_price_decimal_separator() {
 function wpfm_get_price_decimals() {
 	return absint( apply_filters( 'wpfm_get_price_decimals', get_option( 'wpfm_price_num_decimals', 2 ) ) );
 }
+
+/**
+ * Return fields of Advanced tab in Food data section.
+ */
+function get_advanced_tab_fields() {
+	$adv_fields = apply_filters( 'advanced_food_form_fields', array(
+		'food' => array(
+			/*'food_menu_order' => array(
+				'label'       => __( 'Menu Order', 'wp-food-manager' ),
+				'type'        => 'number',
+				'required'    => true,
+				'placeholder' => '0',
+				'priority'    => 3
+			),*/
+
+			'enable_food_ingre' => array(
+				'label'       => __( 'Enable Ingredient', 'wp-food-manager' ),
+				'type'        => 'checkbox',
+				'required'    => true,
+				'placeholder' => '1',
+				'default' => 1,
+				'priority'    => 1
+			),
+
+			'enable_food_nutri' => array(
+				'label'       => __( 'Enable Nutrition', 'wp-food-manager' ),
+				'default'         => 1,
+				'type'        => 'checkbox',
+				'required'    => true,
+				'placeholder' => '1',
+				'priority'    => 2
+			),
+		)
+	) );
+
+	return $adv_fields;
+}

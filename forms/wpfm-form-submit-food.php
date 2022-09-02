@@ -209,9 +209,9 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
 										'checkbox' => __('Checkbox','wp-food-manager'),
 										'radio' => __('Radio Buttons','wp-food-manager'),
 										'select' => __('Select Box','wp-food-manager'),
-										'text' => __('Text Box','wp-food-manager'),
+										/*'text' => __('Text Box','wp-food-manager'),
 										'textarea' => __('Textarea Box','wp-food-manager'),
-										'quantity' => __('Quantity','wp-food-manager')
+										'quantity' => __('Quantity','wp-food-manager')*/
 									),
 					'priority'    => 2
 				),
@@ -241,7 +241,7 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
 					'placeholder' => __('Enter option name','wp-food-manager'),
 					'priority'    => 5
 				),*/
-				'option_price_type' => array(
+				/*'option_price_type' => array(
 					'label'       => __( 'Type of price', 'wp-food-manager' ),
 					'type'        => 'select',
 					'required'    => false,
@@ -257,7 +257,7 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
 					'required'    => false,
 					'placeholder' => __('Enter option name','wp-food-manager'),
 					'priority'    => 6
-				),
+				),*/
 
 
 
@@ -271,11 +271,6 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
 
 			)
 		) );
-
-		
-		
-
-	
 	
 		return $this->fields;
 	}

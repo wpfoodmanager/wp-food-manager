@@ -26,11 +26,6 @@
 		}
 		do_action('food_manager_food_data_end', $thepostid);
 		?>
-		<hr/>
-		 <div class="wpfm-actions">
-		 	
-			<!-- <button type="button" id="save-wpfm-attributes" class="wpfm-add-button button button-primary">Save</button>  -->
-		</div>
 	</div>
 	</div>
 </div>

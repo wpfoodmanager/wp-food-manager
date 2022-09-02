@@ -479,7 +479,7 @@ class WPFM_Shortcodes {
 
 			if ( ! $show_pagination && $show_more ) {
 
-				echo '<a class="load_more_foods" id="load_more_foods" href="#" style="display:none;"><strong>' . __( 'Load more foods', 'wp-food-manager' ) . '</strong></a>';
+				echo '<a class="load_more_foods" id="load_more_foods" href="javascript:void(0);" style="display:none;"><strong>' . __( 'Load more foods', 'wp-food-manager' ) . '</strong></a>';
 			}
 			
 		} else {
@@ -532,7 +532,7 @@ class WPFM_Shortcodes {
 
 					<?php else : ?>
 
-						<a class="load_more_foods" id="load_more_foods" href="#"><strong><?php _e( 'Load more listings', 'wp-food-manager' ); ?></strong></a>
+						<a class="load_more_foods" id="load_more_foods" href="javascript:void(0);"><strong><?php _e( 'Load more listings', 'wp-food-manager' ); ?></strong></a>
 
 					<?php endif; ?>
 

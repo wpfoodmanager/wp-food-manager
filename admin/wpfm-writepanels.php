@@ -283,7 +283,9 @@ class WPFM_Writepanels
 	?>
 		<p class="wpfm-admin-postbox-form-field <?=$name;?>">
 			<label for="<?php echo esc_attr($key); ?>"><?php echo esc_html($field['label']); ?>: <?php if (!empty($field['description'])) : ?><span class="tips" data-tip="<?php echo esc_attr($field['description']); ?>">[?]</span><?php endif; ?></label>
-			<input type="text" class="wpfm-small-field" name="<?php echo esc_attr($name); ?>" id="<?php echo esc_attr($key); ?>" placeholder="<?php echo esc_attr($field['placeholder']); ?>" value="<?php echo esc_attr($field['value']); ?>" />
+			<span class="rt-field">
+				<input type="text" class="wpfm-small-field" name="<?php echo esc_attr($name); ?>" id="<?php echo esc_attr($key); ?>" placeholder="<?php echo esc_attr($field['placeholder']); ?>" value="<?php echo esc_attr($field['value']); ?>" />
+			</span>
 		</p>
 	<?php
 	}
@@ -394,8 +396,19 @@ class WPFM_Writepanels
 	?>
 		<p class="wpfm-admin-postbox-form-field <?=$name;?>">
 			<label for="<?php echo esc_attr($key); ?>"><?php echo esc_html($field['label']); ?></label>
-			<input type="checkbox" class="checkbox " name="<?php echo esc_attr($name); ?>" id="<?php echo esc_attr($key); ?>" value="1" <?php checked($field['value'], 1); ?> />
-			<?php if (!empty($field['description'])) : ?><span class="description"><?php echo $field['description']; ?></span><?php endif; ?>
+			<?php
+			if($key == '_enable_food_ingre' || $key == '_enable_food_nutri') { ?>
+				<span class="rt-field">
+					<label class="rtfm-switch" for="<?php echo esc_attr($key); ?>">
+						<input type="checkbox" checked="" id="<?php echo esc_attr($key); ?>" name="<?php echo esc_attr($name); ?>" value="1"
+						<?php checked($field['value'], 1); ?>>
+						<span class="rtfm-switch-slider round"></span>
+					</label>
+				</span>
+			<?php } else { ?>
+				<input type="checkbox" class="checkbox " name="<?php echo esc_attr($name); ?>" id="<?php echo esc_attr($key); ?>" value="1" <?php checked($field['value'], 1); ?> />
+				<?php if (!empty($field['description'])) : ?><span class="description"><?php echo $field['description']; ?></span><?php endif; 
+			} ?>
 		</p>
 	<?php
 	}
@@ -435,7 +448,9 @@ class WPFM_Writepanels
 	?>
 		<p class="wpfm-admin-postbox-form-field <?=$name;?>">
 			<label for="<?php echo esc_attr($key); ?>"><?php echo esc_html($field['label']); ?> <?php echo esc_html($cur_symbol); ?> : <?php if (!empty($field['description'])) : ?><span class="tips" data-tip="<?php echo esc_attr($field['description']); ?>">[?]</span><?php endif; ?></label>
-			<input type="number" class="wpfm-small-field" name="<?php echo esc_attr($name); ?>" id="<?php echo esc_attr($key); ?>" placeholder="<?php echo esc_attr($field['placeholder']); ?>" value="<?php echo esc_attr($field['value']); ?>" />
+			<span class="rt-field">
+				<input type="number" class="wpfm-small-field" name="<?php echo esc_attr($name); ?>" id="<?php echo esc_attr($key); ?>" placeholder="<?php echo esc_attr($field['placeholder']); ?>" value="<?php echo esc_attr($field['value']); ?>" />
+			</span>
 		</p>
 	<?php
 	}
@@ -461,10 +476,12 @@ class WPFM_Writepanels
 	?>
 		<p class="wpfm-admin-postbox-form-field <?=$name;?>">
 			<label><?php echo esc_html($field['label']); ?></label>
-			<?php foreach ($field['options'] as $option_key => $value) : ?>
-				<input type="radio" class="radio" name="<?php echo esc_attr(isset($field['name']) ? $field['name'] : $key); ?>" value="<?php echo esc_attr($option_key); ?>" <?php checked($field['value'], $option_key); ?> /> <?php echo esc_html($value); ?>
-			<?php endforeach; ?>
-			<?php if (!empty($field['description'])) : ?><span class="description"><?php echo $field['description']; ?></span><?php endif; ?>
+			<span class="rt-field">
+				<?php foreach ($field['options'] as $option_key => $value) : ?>
+					<input type="radio" class="radio" name="<?php echo esc_attr(isset($field['name']) ? $field['name'] : $key); ?>" value="<?php echo esc_attr($option_key); ?>" <?php checked($field['value'], $option_key); ?> /> <?php echo esc_html($value); ?>
+				<?php endforeach; ?>
+				<?php if (!empty($field['description'])) : ?><span class="description"><?php echo $field['description']; ?></span><?php endif; ?>
+			</span>
 		</p>
 <?php
 	}
