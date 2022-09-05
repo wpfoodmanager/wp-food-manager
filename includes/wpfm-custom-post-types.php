@@ -688,7 +688,7 @@ class WPFM_Post_Types {
 					
 				'show_in_rest' 			=> true,
 
-				'supports' 				=> array( 'title', 'editor', 'custom-fields', 'publicize' , 'thumbnail'),
+				'supports' 				=> array( 'title', 'editor', 'custom-fields', 'publicize' , 'thumbnail', 'page-attributes'),
 
 				'has_archive' 			=> $has_archive,
 

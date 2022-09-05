@@ -59,8 +59,59 @@ class WPFM_Ajax {
 		add_action( 'wp_ajax_nopriv_food_manager_upload_file', array( $this, 'upload_file' ) );
 
 		add_action( 'wp_ajax_food_manager_upload_file', array( $this, 'upload_file' ) );
+
+		add_action( 'wp_ajax_wpfm_extra_option_tab', array( $this, 'get_fieldtype_action' ) );
+
+		add_action( 'wp_ajax_fmp-logo-update-menu-order', array( $this, 'catUpdateOrder' ) );
+
 	}
 	
+	/**
+	 * Category order update.
+	 *
+	 * @return void|bool
+	 */
+	public function catUpdateOrder() {
+		global $wpdb;
+		$data = ( ! empty( $_POST['post'] ) ? $_POST['post'] : [] );
+
+		if ( ! is_array( $data ) ) {
+			return false;
+		}
+
+		$id_arr = [];
+
+		foreach ( $data as $position => $id ) {
+			$id_arr[] = $id;
+		}
+
+		$menu_order_arr = [];
+
+		foreach ( $id_arr as $key => $id ) {
+			$results = $wpdb->get_results( "SELECT menu_order FROM $wpdb->posts WHERE ID = " . intval( $id ) );
+
+			foreach ( $results as $result ) {
+				$menu_order_arr[] = $result->menu_order;
+			}
+		}
+		sort( $menu_order_arr );
+
+		array_unshift($data, "");
+		unset($data[0]);
+		
+		foreach ( $data as $key => $id ) {
+			$wpdb->update( $wpdb->posts, [ 'menu_order' => $key ], [ 'ID' => intval( $id ) ] );
+			?>
+			<script type="text/javascript">
+				jQuery(".post-<?php echo $id;?> .food_menu_order").text("<?php echo $key; ?>");
+			</script>
+			<?php
+		}
+		
+		wp_send_json_success();
+	}
+
+
 	/**
 	 * Add our endpoint for frontend ajax requests
 	*/

@@ -142,6 +142,32 @@ var WPFMAdmin= function () {
                 }
             }).disableSelection();
 
+            jQuery(".post-type-food_manager table.posts #the-list").length && jQuery(".post-type-food_manager table.posts #the-list").sortable({
+                items: "tr",
+                axis: "y",
+                helper: function(t, i) {
+                    return i.children().children().each((function() {
+                        jQuery(this).width(jQuery(this).width())
+                    })), i
+                },
+                placeholder: "placeholder",
+                opacity: .65,
+                update: function(t, i) {
+                    var a = jQuery("#the-list").sortable("serialize");
+                    jQuery.ajax({
+                        type: "post",
+                        url: ajaxurl,
+                        data: a + "&action=fmp-logo-update-menu-order",
+                        beforeSend: function() {
+                            jQuery("body").append(jQuery("<div id='fmp-loading'><span class='fmp-loading'>Updating ...</span></div>"))
+                        },
+                        success: function(e) {
+                            jQuery("#fmp-loading").remove()
+                        }
+                    })
+                }
+            });
+
             jQuery("#wpfm-nutrition-container .wpfm-sortable-list").sortable({
                 connectWith: ".wpfm-sortable-list",
                 update: function(t, i) {

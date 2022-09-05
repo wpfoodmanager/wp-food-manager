@@ -467,15 +467,15 @@ function get_food_listings( $args = array() ) {
 	// Generate hash
 	$to_hash  = json_encode( $query_args ) . apply_filters( 'wpml_current_language', '' );
 
-	$query_args_hash = 'em_' . md5( $to_hash ) . WPFM_Cache_Helper::get_transient_version( 'get_food_listings' );
+	//$query_args_hash = 'em_' . md5( $to_hash ) . WPFM_Cache_Helper::get_transient_version( 'get_food_listings' );
 
 	
 
-	if ( false === ( $result = get_transient( $query_args_hash ) ) ) {
+	/*if ( false === ( $result = get_transient( $query_args_hash ) ) ) {
 		$result = new WP_Query( $query_args );
 
 		set_transient( $query_args_hash, $result, DAY_IN_SECONDS * 30 );
-	}
+	}*/
 
 	$result = apply_filters('get_food_listings_result_args',$result,$query_args );
 	

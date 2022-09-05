@@ -58,6 +58,7 @@ class WPFM_Admin {
 		wp_enqueue_script( 'jquery-ui-sortable' );
 		wp_enqueue_script( 'wpfm-accounting' );
 		wp_enqueue_script( 'wp-food-manager-admin-settings' );
+		wp_enqueue_script( 'wpfm-admin' );
 
 		$units    = get_terms(
 			[

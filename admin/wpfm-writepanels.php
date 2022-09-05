@@ -58,6 +58,7 @@ class WPFM_Writepanels
 
 		//add food image column
 		add_filter('manage_food_manager_posts_columns', array($this, 'set_custom_food_columns'));
+		add_filter('manage_edit-food_manager_sortable_columns', array($this, 'set_custom_food_sortable_columns'));
 		add_action('manage_food_manager_posts_custom_column', array($this, 'custom_food_content_column'), 10, 2);
 
 		//add food price column
@@ -922,6 +923,7 @@ class WPFM_Writepanels
 	        'fm_stock_status' => __( 'Stock Status', 'wp-food-manager' ),
 	        'price' => __( 'Price', 'wp-food-manager' ),
 	        'fm_categories' => __( 'Categories', 'wp-food-manager' ),
+	        'food_menu_order' => __( 'Order', 'wp-food-manager' ),
 	        'date' => $columns['date']
 	    );
 	    return $custom_col_order;
@@ -930,6 +932,13 @@ class WPFM_Writepanels
 		$columns['price'] = __('Price', 'wp-food-manager');
 		$columns['fm_categories'] = __('Categories', 'wp-food-manager');
 		return  $columns;*/
+	}
+
+	public function set_custom_food_sortable_columns($columns)
+	{
+		$columns['food_menu_order'] = 'menu_order';
+		
+		return  $columns;
 	}
 
 	public function custom_food_content_column($column, $post_id)
@@ -954,7 +963,12 @@ class WPFM_Writepanels
 
 		if($column == 'fm_stock_status'){
 			echo display_stock_status();
-		}				
+		}
+
+		if($column == 'food_menu_order'){
+			$thispost = get_post($post_id);
+			echo $thispost->menu_order;
+		}
 	}
 }
 WPFM_Writepanels::instance();

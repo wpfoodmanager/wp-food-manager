@@ -281,7 +281,7 @@ class WPFM_Shortcodes {
 
 			'per_page'                  => get_option( 'food_manager_per_page' ),
 
-			'orderby'                   => 'meta_value', // meta_value
+			'orderby'                   => 'menu_order', // meta_value
 
 			'order'                     => 'ASC',
 
@@ -373,7 +373,7 @@ class WPFM_Shortcodes {
 		
 		//order by meta value and it will take default sort order by start date of food
 		if ( is_null( $orderby ) ||  empty($orderby ) ) {
-			$orderby  = 'meta_value';
+			$orderby  = 'menu_order'; //meta_value
 		}
 		
 		if ( ! is_null( $featured ) ) {
@@ -439,7 +439,6 @@ class WPFM_Shortcodes {
 										'orderby' => $orderby, 
 
 										'order' => $order, 
-
 										
 										'show_categories' => $show_categories, 
 
@@ -459,11 +458,6 @@ class WPFM_Shortcodes {
 
 										'selected_food_type' => $selected_food_type, 
 
-										//'show_ticket_prices' => $show_ticket_prices ,
-
-										
-							
-
 										'atts' => $atts, 
 
 										'location' => $location, 
@@ -474,13 +468,13 @@ class WPFM_Shortcodes {
 
 			get_food_manager_template( 'food-listings-start.php',array('layout_type'=>$layout_type) );
 			
-
 			get_food_manager_template( 'food-listings-end.php' );
 
 			if ( ! $show_pagination && $show_more ) {
 
 				echo '<a class="load_more_foods" id="load_more_foods" href="javascript:void(0);" style="display:none;"><strong>' . __( 'Load more foods', 'wp-food-manager' ) . '</strong></a>';
 			}
+
 			
 		} else {
 		    
@@ -849,7 +843,7 @@ class WPFM_Shortcodes {
 
 			'order'                     => 'DESC',
 
-			'orderby'                   => 'meta_value', // meta_value
+			'orderby'                   => 'menu_order', // meta_value
 
 			'meta_key'  				=> 'food_start_date',
 
