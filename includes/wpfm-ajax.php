@@ -108,7 +108,8 @@ class WPFM_Ajax {
 			<?php
 		}
 		
-		wp_send_json_success();
+		wp_send_json($data);
+		//wp_send_json_success();
 	}
 
 

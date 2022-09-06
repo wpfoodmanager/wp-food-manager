@@ -155,16 +155,36 @@ var WPFMAdmin= function () {
                 update: function(t, i) {
                     var a = jQuery("#the-list").sortable("serialize");
                     jQuery.ajax({
-                        type: "post",
+                        type: "POST",
                         url: ajaxurl,
-                        data: a + "&action=fmp-logo-update-menu-order",
+                        data: {
+                            action: 'fmp-logo-update-menu-order',
+                        },
                         beforeSend: function() {
                             jQuery("body").append(jQuery("<div id='fmp-loading'><span class='fmp-loading'>Updating ...</span></div>"))
                         },
-                        success: function(e) {
+                        success: function(response) {
                             jQuery("#fmp-loading").remove()
-                        }
+                        },
                     })
+                }
+            });
+
+            jQuery(".post-type-food_manager .wpfm-admin-options-table table.widefat tbody").sortable({
+                update: function (event, ui) {
+                    var repeater_row_count = jQuery(this).closest(".postbox").children(".repeated-options").val();
+                    jQuery('.post-type-food_manager .wpfm-admin-options-table._option_options_'+repeater_row_count+' table.widefat tbody tr').each(function (i) {
+                        var humanNum = i + 1;
+                        //var repeater_row_count = jQuery(this).closest(".postbox").children(".repeated-options").val();
+                        jQuery(this).children('td:first').html(humanNum);
+                        jQuery(this).attr('class', 'option-tr-'+humanNum);
+                        jQuery(this).children('.option-value-class').val(humanNum);
+                        jQuery(this).children('td').children('.opt_name').attr('name', repeater_row_count+'_option_value_name_'+humanNum);
+                        jQuery(this).children('td').children('.opt_default').attr('name', repeater_row_count+'_option_value_default_'+humanNum);
+                        jQuery(this).children('td').children('.opt_price').attr('name', repeater_row_count+'_option_value_price_'+humanNum);
+                        jQuery(this).children('td').children('.opt_select').attr('name', repeater_row_count+'_option_value_price_type_'+humanNum);
+                        jQuery(this).children('td').children('.option-delete-btn').attr('data-id', humanNum);
+                    });
                 }
             });
 
@@ -374,7 +394,7 @@ var WPFMAdmin= function () {
             total_rows = total_rows + 1;
             //var row_count2 = jQuery(".wpfm-options-wrapper div.wpfm-options-wrap").length;
             var row_count2 = jQuery(this).closest('.postbox').children('.repeated-options').val();
-            alert(row_count2);
+            
             var html = jQuery(this).data('row').replace( /%%repeated-option-index3%%/g, total_rows ).replace( /%%repeated-option-index2%%/g, row_count2 );
             html.replace('value="1"',total_rows);
             jQuery(this).parents('table').find('tbody').append(html);

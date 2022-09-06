@@ -399,11 +399,10 @@ class WPFM_Writepanels
 	?>
 		<p class="wpfm-admin-postbox-form-field <?=$name;?>">
 			<label for="<?php echo esc_attr($key); ?>"><?php echo esc_html($field['label']); ?></label>
-			<?php
-			if($key == '_enable_food_ingre' || $key == '_enable_food_nutri') { ?>
+			<?php if($key == '_enable_food_ingre' || $key == '_enable_food_nutri') { ?>
 				<span class="rt-field">
 					<label class="rtfm-switch" for="<?php echo esc_attr($key); ?>">
-						<input type="checkbox" checked="" id="<?php echo esc_attr($key); ?>" name="<?php echo esc_attr($name); ?>" value="1"
+						<input type="checkbox" id="<?php echo esc_attr($key); ?>" name="<?php echo esc_attr($name); ?>" value="1"
 						<?php checked($field['value'], 1); ?>>
 						<span class="rtfm-switch-slider round"></span>
 					</label>
@@ -546,7 +545,7 @@ class WPFM_Writepanels
 										</select>
 									</td>
 									<td><a href="javascript: void(0);" data-id="<?php echo esc_attr($count);?>" class="option-delete-btn">Remove</a></td>
-									<input type="hidden" name="option_value_count[]" value="<?php echo esc_attr($count);?>">
+									<input type="hidden" class="option-value-class" name="option_value_count[]" value="<?php echo esc_attr($count);?>">
 								</tr>
 							<?php 
 							$count++;
