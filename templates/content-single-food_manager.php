@@ -76,6 +76,44 @@ do_action('set_single_listing_view_count');
                                 <?php echo apply_filters('display_food_description', get_the_content()); ?>
                                 <?php do_action('single_food_overview_end'); ?>
                             </div>
+                            <div class="wpfm-single-food-body-content wpfm-extra-options">
+                                <h1>Extra Options</h1>
+                                <?php
+                                $ext_options = get_post_meta(get_the_ID(), '_wpfm_extra_options', true);
+
+                                foreach($ext_options as $key => $ext_option){
+                                    /*foreach ($ext_option['option_options'] as $opt_key => $opt_value) {
+                                        echo "<pre>";
+                                        print_r(get_post_meta(get_the_ID(), 'wpfm_repeated_options', true));
+                                        echo "</pre>";
+
+                                        echo "<pre>";
+                                        print_r(get_post_meta(get_the_ID(), 'wpfm_option_value_count', true));
+                                        echo "</pre>";
+                                    }*/
+                                    ?>
+                                    <?php if($ext_option['option_type'] == 'select'){ ?>
+                                        <label for="<?php echo esc_attr($key); ?>"><?php echo esc_html($ext_option['option_name']); ?></label>
+                                        <select name="<?php echo esc_attr($key); ?>" id="<?php echo esc_attr($key); ?>" <?php echo ($ext_option['option_required'] == "yes") ? "required" : ""; ?>>
+                                            <?php foreach ($ext_option['option_options'] as $opt_key => $opt_value) { ?>
+                                              <option value="<?php echo esc_attr($opt_key); ?>"><?php echo esc_html($opt_value); ?></option>
+                                            <?php } ?>
+                                        </select>
+                                    <?php } ?>
+                                    <?php if($ext_option['option_type'] == 'radio'){ ?>
+                                        <?php foreach ($ext_option['option_options'] as $opt_key => $opt_value) { ?>
+                                            <input type="radio" id="<?php echo esc_attr($key); ?>" name="<?php echo esc_attr($key); ?>" value="<?php echo esc_attr($opt_value); ?>">
+                                            <label for="<?php echo esc_attr($key); ?>"><?php echo esc_html($opt_value); ?></label><br>
+                                        <?php } ?>
+                                    <?php } ?>
+                                    <?php if($ext_option['option_type'] == 'checkbox'){ ?>
+                                        <?php foreach ($ext_option['option_options'] as $opt_key => $opt_value) { ?>
+                                            <input type="checkbox" id="<?php echo esc_attr($key); ?>" name="<?php echo esc_attr($key); ?>" value="<?php echo esc_attr($opt_value); ?>">
+                                            <label for="<?php echo esc_attr($key); ?>"><?php echo esc_html($opt_value); ?></label><br>
+                                        <?php } ?>
+                                    <?php } ?>
+                                <?php } ?>
+                            </div>
                             <?php do_action('single_food_overview_after'); ?>
                         </div>
                         <div class="wpfm-col-xs-12 wpfm-col-sm-5 wpfm-col-md-4 wpfm-single-food-right-content">

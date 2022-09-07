@@ -721,6 +721,11 @@ class WPFM_Writepanels
 				update_post_meta($post_id,'wpfm_repeated_options', $_POST['repeated_options']);
 			}
 
+			// Options value count
+			if( !add_post_meta($post_id,'wpfm_option_value_count', $_POST['option_value_count'], true) ){
+				update_post_meta($post_id,'wpfm_option_value_count', $_POST['option_value_count']);
+			}
+
 			// author
 			if ('_food_author' === $key) {
 				$wpdb->update($wpdb->posts, array('post_author' => $_POST[$key] > 0 ? absint($_POST[$key]) : 0), array('ID' => $post_id));
@@ -740,10 +745,10 @@ class WPFM_Writepanels
 							$option_name = $_POST['option_name_'.$option_count];
 							$option_type = $_POST['_option_type_'.$option_count];
 							$option_required = $_POST['_option_required_'.$option_count];
-							$option_minimum = $_POST['_option_minimum_'.$option_count];
+							/*$option_minimum = $_POST['_option_minimum_'.$option_count];
 							$option_maximum = $_POST['_option_maximum_'.$option_count];
 							$option_price = $_POST['_option_price_'.$option_count];
-							$option_price_type = $_POST['_option_price_type_'.$option_count];
+							$option_price_type = $_POST['_option_price_type_'.$option_count];*/
 							$option_values = array();
 
 							if(isset($_POST['option_value_count'])){
@@ -773,10 +778,10 @@ class WPFM_Writepanels
 																'option_name' => $option_name,
 																'option_type' => $option_type,
 																'option_required' => $option_required,
-																'option_minimum' => $option_minimum,
+																/*'option_minimum' => $option_minimum,
 																'option_maximum' => $option_maximum,
 																'option_price' => $option_price,
-																'option_price_type' => $option_price_type,
+																'option_price_type' => $option_price_type,*/
 																'option_options' => $option_values,
 															);
 						}

@@ -33,7 +33,7 @@ if (get_option('food_manager_food_item_show_hide') == 0 && get_stock_status() !=
     </div>
 </div>
 <?php
-} elseif(get_option('food_manager_food_item_show_hide') == 1 || get_stock_status() == 'fm_outofstock') { ?>
+} elseif(get_option('food_manager_food_item_show_hide') == 1 && get_stock_status()) { ?>
 <div class="wpfm-food-box-col wpfm-col wpfm-col-12 wpfm-col-md-6 wpfm-col-lg-<?php echo apply_filters('food_manager_food_wpfm_column', '4'); ?>">
     <!----- wpfm-col-lg-4 value can be change by admin settings ------->
     <div class="wpfm-food-layout-wrapper">
