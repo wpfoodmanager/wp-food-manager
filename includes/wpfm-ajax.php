@@ -101,15 +101,10 @@ class WPFM_Ajax {
 		
 		foreach ( $data as $key => $id ) {
 			$wpdb->update( $wpdb->posts, [ 'menu_order' => $key ], [ 'ID' => intval( $id ) ] );
-			?>
-			<script type="text/javascript">
-				jQuery(".post-<?php echo $id;?> .food_menu_order").text("<?php echo $key; ?>");
-			</script>
-			<?php
 		}
 		
-		wp_send_json($data);
-		//wp_send_json_success();
+		//wp_send_json($data);
+		wp_send_json_success();
 	}
 
 

@@ -157,9 +157,7 @@ var WPFMAdmin= function () {
                     jQuery.ajax({
                         type: "POST",
                         url: ajaxurl,
-                        data: {
-                            action: 'fmp-logo-update-menu-order',
-                        },
+                        data: a+"&action=fmp-logo-update-menu-order",
                         beforeSend: function() {
                             jQuery("body").append(jQuery("<div id='fmp-loading'><span class='fmp-loading'>Updating ...</span></div>"))
                         },
@@ -171,6 +169,17 @@ var WPFMAdmin= function () {
             });
 
             jQuery(".post-type-food_manager .wpfm-admin-options-table table.widefat tbody").sortable({
+                connectWith: ".post-type-food_manager .wpfm-admin-options-table table.widefat tbody",
+                items:"tr",
+                axis:"y",
+                helper:function(t,i){
+                    return i.children().children().each((function(){
+                        jQuery(this).width(jQuery(this).width())
+                    }
+                    )),i
+                },
+                placeholder:"placeholder",
+                opacity:.65,
                 update: function (event, ui) {
                     var repeater_row_count = jQuery(this).closest(".postbox").children(".repeated-options").val();
                     jQuery('.post-type-food_manager .wpfm-admin-options-table._option_options_'+repeater_row_count+' table.widefat tbody tr').each(function (i) {
@@ -186,7 +195,7 @@ var WPFMAdmin= function () {
                         jQuery(this).children('td').children('.option-delete-btn').attr('data-id', humanNum);
                     });
                 }
-            });
+            }).disableSelection();
 
             jQuery("#wpfm-nutrition-container .wpfm-sortable-list").sortable({
                 connectWith: ".wpfm-sortable-list",
@@ -325,6 +334,35 @@ var WPFMAdmin= function () {
 
                 //New Before() function - Developer kushang
                 jQuery('#extra_options_food_data_content .wpfm-options-wrapper .wpfm-actions').before(html);
+
+                jQuery(".post-type-food_manager .wpfm-admin-options-table table.widefat tbody").sortable({
+                    connectWith: ".post-type-food_manager .wpfm-admin-options-table table.widefat tbody",
+                    items:"tr",
+                    axis:"y",
+                    helper:function(t,i){
+                        return i.children().children().each((function(){
+                            jQuery(this).width(jQuery(this).width())
+                        }
+                        )),i
+                    },
+                    placeholder:"placeholder",
+                    opacity:.65,
+                    update: function (event, ui) {
+                        var repeater_row_count = jQuery(this).closest(".postbox").children(".repeated-options").val();
+                        jQuery('.post-type-food_manager .wpfm-admin-options-table._option_options_'+repeater_row_count+' table.widefat tbody tr').each(function (i) {
+                            var humanNum = i + 1;
+                            //var repeater_row_count = jQuery(this).closest(".postbox").children(".repeated-options").val();
+                            jQuery(this).children('td:first').html(humanNum);
+                            jQuery(this).attr('class', 'option-tr-'+humanNum);
+                            jQuery(this).children('.option-value-class').val(humanNum);
+                            jQuery(this).children('td').children('.opt_name').attr('name', repeater_row_count+'_option_value_name_'+humanNum);
+                            jQuery(this).children('td').children('.opt_default').attr('name', repeater_row_count+'_option_value_default_'+humanNum);
+                            jQuery(this).children('td').children('.opt_price').attr('name', repeater_row_count+'_option_value_price_'+humanNum);
+                            jQuery(this).children('td').children('.opt_select').attr('name', repeater_row_count+'_option_value_price_type_'+humanNum);
+                            jQuery(this).children('td').children('.option-delete-btn').attr('data-id', humanNum);
+                        });
+                    }
+                }).disableSelection();
        },
 
         /// <summary>
