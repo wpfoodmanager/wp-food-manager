@@ -284,7 +284,7 @@ class WPFM_Writepanels
 	?>
 		<p class="wpfm-admin-postbox-form-field <?=$name;?>">
 			<label for="<?php echo esc_attr($key); ?>"><?php echo esc_html($field['label']); ?>: <?php if (!empty($field['description'])) : ?><span class="tips" data-tip="<?php echo esc_attr($field['description']); ?>">[?]</span><?php endif; ?></label>
-			<span class="rt-field">
+			<span class="wpfm-input-field">
 				<input type="text" class="wpfm-small-field" name="<?php echo esc_attr($name); ?>" id="<?php echo esc_attr($key); ?>" placeholder="<?php echo esc_attr($field['placeholder']); ?>" value="<?php echo esc_attr($field['value']); ?>" />
 			</span>
 		</p>
@@ -400,11 +400,11 @@ class WPFM_Writepanels
 		<p class="wpfm-admin-postbox-form-field <?=$name;?>">
 			<label for="<?php echo esc_attr($key); ?>"><?php echo esc_html($field['label']); ?></label>
 			<?php if($key == '_enable_food_ingre' || $key == '_enable_food_nutri') { ?>
-				<span class="rt-field">
-					<label class="rtfm-switch" for="<?php echo esc_attr($key); ?>">
+				<span class="wpfm-input-field">
+					<label class="wpfm-field-switch" for="<?php echo esc_attr($key); ?>">
 						<input type="checkbox" id="<?php echo esc_attr($key); ?>" name="<?php echo esc_attr($name); ?>" value="1"
 						<?php checked($field['value'], 1); ?>>
-						<span class="rtfm-switch-slider round"></span>
+						<span class="wpfm-field-switch-slider round"></span>
 					</label>
 				</span>
 			<?php } else { ?>
@@ -450,7 +450,7 @@ class WPFM_Writepanels
 	?>
 		<p class="wpfm-admin-postbox-form-field <?=$name;?>">
 			<label for="<?php echo esc_attr($key); ?>"><?php echo esc_html($field['label']); ?> <?php echo esc_html($cur_symbol); ?> : <?php if (!empty($field['description'])) : ?><span class="tips" data-tip="<?php echo esc_attr($field['description']); ?>">[?]</span><?php endif; ?></label>
-			<span class="rt-field">
+			<span class="wpfm-input-field">
 				<input type="number" class="wpfm-small-field" name="<?php echo esc_attr($name); ?>" id="<?php echo esc_attr($key); ?>" placeholder="<?php echo esc_attr($field['placeholder']); ?>" value="<?php echo esc_attr($field['value']); ?>" />
 			</span>
 		</p>
@@ -478,7 +478,7 @@ class WPFM_Writepanels
 	?>
 		<p class="wpfm-admin-postbox-form-field <?=$name;?>">
 			<label><?php echo esc_html($field['label']); ?></label>
-			<span class="rt-field">
+			<span class="wpfm-input-field">
 				<?php foreach ($field['options'] as $option_key => $value) : ?>
 					<input type="radio" class="radio" name="<?php echo esc_attr(isset($field['name']) ? $field['name'] : $key); ?>" value="<?php echo esc_attr($option_key); ?>" <?php checked($field['value'], $option_key); ?> /> <?php echo esc_html($value); ?>
 				<?php endforeach; ?>
@@ -532,16 +532,16 @@ class WPFM_Writepanels
 								?>
 								<tr class="option-tr-<?php echo esc_attr($count);?>">
 									<td><?php echo esc_html($count);?></td>
-									<td><input type="text" name="<?php echo esc_attr($wpfm_key_num);?>_option_value_name_<?php echo esc_attr($count); ?>" value="<?php if(isset($op_value[$wpfm_key_num.'_option_value_name_'.$count]) ) echo $op_value[$wpfm_key_num.'_option_value_name_'.$count]; ?>" class="opt_name"></td>
+									<td><input type="text" name="<?php echo esc_attr($wpfm_key_num);?>_option_value_name_<?php echo esc_attr($count); ?>" value="<?php if(isset($op_value['option_value_name']) ) echo $op_value['option_value_name']; ?>" class="opt_name"></td>
 									<!-- <td><input type="checkbox" name="%%repeated-option-index2%%_option_value_default_<?php //echo esc_attr($count);?>" value="1"<?php //if(isset($op_value['option_value_default']) && $op_value['option_value_price_type'] == 'option_value_default') echo 'checked="checked"' ?> class="opt_default"></td> -->
-									<td><input type="checkbox" name="<?php echo esc_attr($wpfm_key_num);?>_option_value_default_<?php echo esc_attr($count);?>" <?php if(isset($op_value[$wpfm_key_num.'_option_value_default_'.$count]) && $op_value[$wpfm_key_num.'_option_value_default_'.$count] == 'on') echo 'checked="checked"'; ?> class="opt_default"></td>
+									<td><input type="checkbox" name="<?php echo esc_attr($wpfm_key_num);?>_option_value_default_<?php echo esc_attr($count);?>" <?php if(isset($op_value['option_value_default']) && $op_value['option_value_default'] == 'on') echo 'checked="checked"'; ?> class="opt_default"></td>
 
-									<td><input type="text" name="<?php echo esc_attr($wpfm_key_num);?>_option_value_price_<?php echo esc_attr($count);?>" value="<?php if(isset($op_value[$wpfm_key_num.'_option_value_price_'.$count]) ) echo $op_value[$wpfm_key_num.'_option_value_price_'.$count]; ?>" class="opt_price"></td>
+									<td><input type="text" name="<?php echo esc_attr($wpfm_key_num);?>_option_value_price_<?php echo esc_attr($count);?>" value="<?php if(isset($op_value['option_value_price']) ) echo $op_value['option_value_price']; ?>" class="opt_price"></td>
 
 									<td>
 										<select name="<?php echo esc_attr($wpfm_key_num);?>_option_value_price_type_<?php echo esc_attr($count);?>" class="opt_select">
-										<option value="quantity_based" <?php if(isset($op_value[$wpfm_key_num.'_option_value_price_type_'.$count]) && $op_value[$wpfm_key_num.'_option_value_price_type_'.$count] == 'quantity_based') echo 'selected="selected"' ?>>Quantity Based</option>
-										<option value="fixed_amount" <?php if(isset($op_value[$wpfm_key_num.'_option_value_price_type_'.$count]) && $op_value[$wpfm_key_num.'_option_value_price_type_'.$count] == 'fixed_amount') echo 'selected="selected"' ?>>Fixed Amount</option>
+										<option value="quantity_based" <?php if(isset($op_value['option_value_price_type']) && $op_value['option_value_price_type'] == 'quantity_based') echo 'selected="selected"' ?>>Quantity Based</option>
+										<option value="fixed_amount" <?php if(isset($op_value['option_value_price_type']) && $op_value['option_value_price_type'] == 'fixed_amount') echo 'selected="selected"' ?>>Fixed Amount</option>
 										</select>
 									</td>
 									<td><a href="javascript: void(0);" data-id="<?php echo esc_attr($count);?>" class="option-delete-btn">Remove</a></td>
@@ -722,8 +722,17 @@ class WPFM_Writepanels
 			}
 
 			// Options value count
-			if( !add_post_meta($post_id,'wpfm_option_value_count', $_POST['option_value_count'], true) ){
-				update_post_meta($post_id,'wpfm_option_value_count', $_POST['option_value_count']);
+			$array = $_POST['option_value_count'];
+			$food_data_option_value_count = array();
+			$index = 0;
+			foreach ($array as $number) {
+			    if ($number == 1) {
+			        $index++;
+			    }
+			    $food_data_option_value_count[$index][] = $number;
+			}
+			if( !add_post_meta($post_id,'wpfm_option_value_count', $food_data_option_value_count, true) ){
+				update_post_meta($post_id,'wpfm_option_value_count', $food_data_option_value_count);
 			}
 
 			// author
@@ -760,7 +769,9 @@ class WPFM_Writepanels
 								
 								foreach ( $_POST['option_value_count'] as $option_value_count) {
 									if(!empty($_POST[$option_count.'_option_value_name_'.$option_value_count]) || !empty($_POST[$option_count.'_option_value_default_'.$option_value_count]) || !empty($_POST[$option_count.'_option_value_price_'.$option_value_count])){
-										$option_values[$option_count.'_option_value_name_'.$option_value_count] = array(
+										
+										// Old Logic
+										/*$option_values[$option_count.'_option_value_name_'.$option_value_count] = array(
 															$option_count.'_option_value_name_'.$option_value_count => isset($_POST[$option_count.'_option_value_name_'.$option_value_count]) ? $_POST[$option_count.'_option_value_name_'.$option_value_count] : '',
 
 															$option_count.'_option_value_default_'.$option_value_count => isset($_POST[$option_count.'_option_value_default_'.$option_value_count]) ? $_POST[$option_count.'_option_value_default_'.$option_value_count] : '',
@@ -768,7 +779,19 @@ class WPFM_Writepanels
 															$option_count.'_option_value_price_'.$option_value_count => isset($_POST[$option_count.'_option_value_price_'.$option_value_count]) ? $_POST[$option_count.'_option_value_price_'.$option_value_count] : '',
 
 															$option_count.'_option_value_price_type_'.$option_value_count => isset($_POST[$option_count.'_option_value_price_type_'.$option_value_count]) ? $_POST[$option_count.'_option_value_price_type_'.$option_value_count] : ''
+														);*/
+
+										// New Logic
+										$option_values[$option_value_count] = array(
+															'option_value_name' => isset($_POST[$option_count.'_option_value_name_'.$option_value_count]) ? $_POST[$option_count.'_option_value_name_'.$option_value_count] : '',
+
+															'option_value_default' => isset($_POST[$option_count.'_option_value_default_'.$option_value_count]) ? $_POST[$option_count.'_option_value_default_'.$option_value_count] : '',
+
+															'option_value_price' => isset($_POST[$option_count.'_option_value_price_'.$option_value_count]) ? $_POST[$option_count.'_option_value_price_'.$option_value_count] : '',
+
+															'option_value_price_type' => isset($_POST[$option_count.'_option_value_price_type_'.$option_value_count]) ? $_POST[$option_count.'_option_value_price_type_'.$option_value_count] : ''
 														);
+
 									}
 								}
 								

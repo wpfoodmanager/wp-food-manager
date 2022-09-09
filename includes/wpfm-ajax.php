@@ -62,7 +62,7 @@ class WPFM_Ajax {
 
 		add_action( 'wp_ajax_wpfm_extra_option_tab', array( $this, 'get_fieldtype_action' ) );
 
-		add_action( 'wp_ajax_fmp-logo-update-menu-order', array( $this, 'catUpdateOrder' ) );
+		add_action( 'wp_ajax_wpfm-logo-update-menu-order', array( $this, 'menuUpdateOrder' ) );
 
 	}
 	
@@ -71,7 +71,7 @@ class WPFM_Ajax {
 	 *
 	 * @return void|bool
 	 */
-	public function catUpdateOrder() {
+	public function menuUpdateOrder() {
 		global $wpdb;
 		$data = ( ! empty( $_POST['post'] ) ? $_POST['post'] : [] );
 

@@ -157,12 +157,12 @@ var WPFMAdmin= function () {
                     jQuery.ajax({
                         type: "POST",
                         url: ajaxurl,
-                        data: a+"&action=fmp-logo-update-menu-order",
+                        data: a+"&action=wpfm-logo-update-menu-order",
                         beforeSend: function() {
-                            jQuery("body").append(jQuery("<div id='fmp-loading'><span class='fmp-loading'>Updating ...</span></div>"))
+                            jQuery("body").append(jQuery("<div id='wpfm-loading'><span class='wpfm-loading'>Updating ...</span></div>"))
                         },
                         success: function(response) {
-                            jQuery("#fmp-loading").remove()
+                            jQuery("#wpfm-loading").remove()
                         },
                     })
                 }
