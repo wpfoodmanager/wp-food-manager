@@ -339,7 +339,7 @@ class WPFM_Writepanels
 
 		<p class="wpfm-admin-postbox-form-field <?=$name;?>">
 			<label for="<?php echo esc_attr($key); ?>"><?php echo esc_html($field['label']); ?>: <?php if (!empty($field['description'])) : ?><span class="tips" data-tip="<?php echo esc_attr($field['description']); ?>">[?]</span><?php endif; ?></label>
-			<span class="rt-field">
+			<span class="wpfm-input-field">
                 <select name="<?php echo esc_attr($name); ?>" id="<?php echo esc_attr($key); ?>" class="input-select wpfm-small-field <?php echo esc_attr(isset($field['class']) ? $field['class'] : $key); ?>">
     				<?php foreach ($field['options'] as $key => $value) : ?>
     					<option value="<?php echo esc_attr($key); ?>" <?php if (isset($field['value'])) selected($field['value'], $key); ?>><?php echo esc_html($value); ?></option>
