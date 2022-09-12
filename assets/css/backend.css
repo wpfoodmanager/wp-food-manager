@@ -294,6 +294,21 @@
   font-weight: 700;
   margin-right: 10px;
 }
+#extra_options_food_data_content .wpfm-admin-options-table .widefat thead,
+#extra_options_food_data_content .wpfm-admin-options-table .widefat tfoot {
+  background: #f7fafc;
+}
+a.button.wpfm-add-row {
+  float: right;
+}
+.wpfm-input-field.parent-option-description{
+  display: flex;
+  flex-flow: column;
+  row-gap: 12px;
+}
+.wpfm-metaboxes-wrapper .wpfm-metabox:nth-child(2n) h3 {
+  background: #ebebeb;
+}
 .wpfm-metaboxes .wpfm-metabox .wpfm-togglediv::before {
   content: "\f142" !important;
   cursor: pointer;

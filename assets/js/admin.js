@@ -14,7 +14,9 @@ var WPFMAdmin= function () {
         ///<returns type="initialization AdminSettings" />   
         /// <since>1.0.0</since> 
         init: function() 
-        {			
+        {
+            jQuery(".option-desc-common").hide();
+
             //Bind on click event of the settings section
 			jQuery(".wpfm-tabs li a").on('click',WPFMAdmin.actions.tabClick);
 		  	//show by default first Event Listings Settings Tab
@@ -185,7 +187,7 @@ var WPFMAdmin= function () {
                     jQuery('.post-type-food_manager .wpfm-admin-options-table._option_options_'+repeater_row_count+' table.widefat tbody tr').each(function (i) {
                         var humanNum = i + 1;
                         //var repeater_row_count = jQuery(this).closest(".postbox").children(".repeated-options").val();
-                        jQuery(this).children('td:first').html(humanNum);
+                        jQuery(this).children('td:nth-child(2)').html(humanNum);
                         jQuery(this).attr('class', 'option-tr-'+humanNum);
                         jQuery(this).children('.option-value-class').val(humanNum);
                         jQuery(this).children('td').children('.opt_name').attr('name', repeater_row_count+'_option_value_name_'+humanNum);
@@ -240,6 +242,10 @@ var WPFMAdmin= function () {
             jQuery('body').on('change', 'input[name^="option_name"]', WPFMAdmin.actions.updateOptionTitle);
             jQuery('body').on('change', 'select[name^="_option_type"]', WPFMAdmin.actions.changeFieldType);
 
+            jQuery('body').on('change', 'input[name^="_option_enable_desc"]', WPFMAdmin.actions.changeFieldDescription);
+
+            jQuery('body').on('keyup', '.wpfm-input-field textarea', WPFMAdmin.actions.keyupTextareaDesc);
+            
             //find all the options and hide price
             /*jQuery('select[name^="_option_price_type"]').parent('.wpfm-admin-postbox-form-field').hide();
             jQuery('input[name^="_option_price"]').parent('.wpfm-admin-postbox-form-field').hide();*/
@@ -352,7 +358,7 @@ var WPFMAdmin= function () {
                         jQuery('.post-type-food_manager .wpfm-admin-options-table._option_options_'+repeater_row_count+' table.widefat tbody tr').each(function (i) {
                             var humanNum = i + 1;
                             //var repeater_row_count = jQuery(this).closest(".postbox").children(".repeated-options").val();
-                            jQuery(this).children('td:first').html(humanNum);
+                            jQuery(this).children('td:nth-child(2)').html(humanNum);
                             jQuery(this).attr('class', 'option-tr-'+humanNum);
                             jQuery(this).children('.option-value-class').val(humanNum);
                             jQuery(this).children('td').children('.opt_name').attr('name', repeater_row_count+'_option_value_name_'+humanNum);
@@ -363,6 +369,7 @@ var WPFMAdmin= function () {
                         });
                     }
                 }).disableSelection();
+                jQuery(this).closest(".postbox").find(".option-desc-common").hide();
        },
 
         /// <summary>
@@ -419,6 +426,22 @@ var WPFMAdmin= function () {
             jQuery(this).closest('.postbox').children('.wpfm-metabox-content').children('.wpfm-content').children('.wpfm-admin-postbox-form-field._option_price_'+row_count).show();            
         }
        },
+
+        changeFieldDescription:function(event){
+            jQuery(this).closest(".wpfm-admin-postbox-form-field").next().slideToggle(this.checked);
+            jQuery(this).closest(".wpfm-admin-postbox-form-field").next().children(".wpfm-input-field").children("textarea").val("Please enter a Description of field.");
+        },
+
+        keyupTextareaDesc:function(event){
+            var textarea_value = jQuery(this).val();
+            
+            if(textarea_value.length == 0) {
+                jQuery(this).closest(".wpfm-admin-postbox-form-field").prev().children(".wpfm-input-field").children(".wpfm-field-switch").children('input[type="checkbox"]').removeAttr("checked");
+            } else {
+                jQuery(this).closest(".wpfm-admin-postbox-form-field").prev().children(".wpfm-input-field").children(".wpfm-field-switch").children('input[type="checkbox"]').prop("checked", true);
+            }
+        },
+
         /// <summary>
        /// addElementRow
        /// </summary>

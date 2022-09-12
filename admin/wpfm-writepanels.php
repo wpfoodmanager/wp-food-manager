@@ -310,10 +310,19 @@ class WPFM_Writepanels
 		} else {
 			$name = $key;
 		}
+
+		$descClass = "";
+		if(!empty($field['value'])){
+			$descClass = "";
+		} else {
+			$descClass = "option-desc-common";
+		}
 	?>
-		<p class="wpfm-admin-postbox-form-field <?=$name;?>">
-			<label for="<?php echo esc_attr($key); ?>"><?php echo esc_html($field['label']); ?>: <?php if (!empty($field['description'])) : ?><span class="tips" data-tip="<?php echo esc_attr($field['description']); ?>">[?]</span><?php endif; ?></label>
-			<textarea name="<?php echo esc_attr($name); ?>" id="<?php echo esc_attr($key); ?>" placeholder="<?php echo esc_attr($field['placeholder']); ?>"><?php echo esc_html($field['value']); ?></textarea>
+		<p class="wpfm-admin-postbox-form-field <?=$name;?> <?=$descClass;?>">
+			<label for="<?php echo esc_attr($key); ?>"><?php echo esc_html($field['label']); ?> <?php if (!empty($field['description'])) : ?>: <span class="tips" data-tip="<?php echo esc_attr($field['description']); ?>">[?]</span><?php endif; ?></label>
+			<span class="wpfm-input-field">
+				<textarea name="<?php echo esc_attr($name); ?>" id="<?php echo esc_attr($key); ?>" rows="4" cols="63" placeholder="<?php echo esc_attr($field['placeholder']); ?>"><?php echo esc_html($field['value']); ?></textarea>
+			</span>
 		</p>
 	<?php
 	}
@@ -396,10 +405,12 @@ class WPFM_Writepanels
 		} else {
 			$name = $key;
 		}
+
+		$exp_arr = explode("_", $key);
 	?>
 		<p class="wpfm-admin-postbox-form-field <?=$name;?>">
 			<label for="<?php echo esc_attr($key); ?>"><?php echo esc_html($field['label']); ?></label>
-			<?php if($key == '_enable_food_ingre' || $key == '_enable_food_nutri') { ?>
+			<?php if($key == '_enable_food_ingre' || $key == '_enable_food_nutri' || $key == '_option_enable_desc_'.end($exp_arr)) { ?>
 				<span class="wpfm-input-field">
 					<label class="wpfm-field-switch" for="<?php echo esc_attr($key); ?>">
 						<input type="checkbox" id="<?php echo esc_attr($key); ?>" name="<?php echo esc_attr($name); ?>" value="1"
@@ -514,6 +525,7 @@ class WPFM_Writepanels
 		<p class="wpfm-admin-postbox-form-field"><label><?php echo esc_html($field['label']); ?></label></p>
 		<table class="widefat">
 			<thead>
+				<th> </th>
 				<th>#</th>
 				<th>Option name</th>
 				<th>Default</th>
@@ -531,6 +543,7 @@ class WPFM_Writepanels
 							//for($i=1; $i <= count($repeated_rows); $i++){
 								?>
 								<tr class="option-tr-<?php echo esc_attr($count);?>">
+									<td><span class="wpfm-option-sort">☰</span></td>
 									<td><?php echo esc_html($count);?></td>
 									<td><input type="text" name="<?php echo esc_attr($wpfm_key_num);?>_option_value_name_<?php echo esc_attr($count); ?>" value="<?php if(isset($op_value['option_value_name']) ) echo $op_value['option_value_name']; ?>" class="opt_name"></td>
 									<!-- <td><input type="checkbox" name="%%repeated-option-index2%%_option_value_default_<?php //echo esc_attr($count);?>" value="1"<?php //if(isset($op_value['option_value_default']) && $op_value['option_value_price_type'] == 'option_value_default') echo 'checked="checked"' ?> class="opt_default"></td> -->
@@ -556,7 +569,8 @@ class WPFM_Writepanels
 				} ?>
 			</tbody>
 			<tfoot>
-				<td colspan="6"><a class="button wpfm-add-row" data-row="<tr class=&apos;option-tr-%%repeated-option-index3%%&apos;>
+				<td colspan="7"><a class="button wpfm-add-row" data-row="<tr class=&apos;option-tr-%%repeated-option-index3%%&apos;>
+					<td><span class=&apos;wpfm-option-sort&apos;>☰</span></td>
 					<td>%%repeated-option-index3%%</td>
 					<td><input type=&apos;text&apos; name=&apos;%%repeated-option-index2%%_option_value_name_%%repeated-option-index3%%&apos; value=&apos;&apos; class=&apos;opt_name&apos;></td>
 					<td><input type=&apos;checkbox&apos; name=&apos;%%repeated-option-index2%%_option_value_default_%%repeated-option-index3%%&apos; class=&apos;opt_default&apos;></td>
@@ -754,6 +768,8 @@ class WPFM_Writepanels
 							$option_name = $_POST['option_name_'.$option_count];
 							$option_type = $_POST['_option_type_'.$option_count];
 							$option_required = $_POST['_option_required_'.$option_count];
+							$option_enable_desc = $_POST['_option_enable_desc_'.$option_count];
+							$option_description = $_POST['_option_description_'.$option_count];
 							/*$option_minimum = $_POST['_option_minimum_'.$option_count];
 							$option_maximum = $_POST['_option_maximum_'.$option_count];
 							$option_price = $_POST['_option_price_'.$option_count];
@@ -801,6 +817,8 @@ class WPFM_Writepanels
 																'option_name' => $option_name,
 																'option_type' => $option_type,
 																'option_required' => $option_required,
+																'option_enable_desc' => $option_enable_desc,
+																'option_description' => $option_description,
 																/*'option_minimum' => $option_minimum,
 																'option_maximum' => $option_maximum,
 																'option_price' => $option_price,

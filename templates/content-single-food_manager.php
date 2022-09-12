@@ -88,11 +88,11 @@ do_action('set_single_listing_view_count');
                                         if($ext_option['option_type'] == 'radio'){
                                             echo "<div class='wpfm-radio-options wpfm-input-field-common'>";
                                                 echo '<label for="'.str_replace(" ", "-", strtolower($ext_option['option_name'])).'"><strong>'.$ext_option['option_name'].'</strong></label>';
+                                                if(!empty($ext_option['option_description'])){
+                                                    echo '<div class="wpfm-input-description">'.$ext_option['option_description'].'</div>';
+                                                }
                                                 echo '<div class="wpfm-inner-field-content">';
                                                     foreach ($ext_option['option_options'] as $key2 => $value2) {
-                                                        // echo "<pre>";
-                                                        // print_r($value2);
-                                                        // echo "</pre>";
                                                         $checked = ($value2['option_value_default']) == 'on' ? 'checked' : '';
                                                         echo "<div class='wpfm-input-singular'>";
                                                             echo '<input type="radio" id="'.esc_attr(str_replace(" ", "-", strtolower($value2['option_value_name']))).'" name="'.esc_attr($key).'" value="'.esc_attr($value2['option_value_name']).'" '.$checked.'>';                                                
@@ -106,6 +106,9 @@ do_action('set_single_listing_view_count');
                                         if($ext_option['option_type'] == 'checkbox'){
                                             echo "<div class='wpfm-checkbox-options wpfm-input-field-common'>";
                                                 echo '<label for="'.str_replace(" ", "-", strtolower($ext_option['option_name'])).'"><strong>'.$ext_option['option_name'].'</strong></label>';
+                                                if(!empty($ext_option['option_description'])){
+                                                    echo '<div class="wpfm-input-description">'.$ext_option['option_description'].'</div>';
+                                                }
                                                 echo '<div class="wpfm-inner-field-content">';
                                                     foreach ($ext_option['option_options'] as $key2 => $value2) {
                                                         // echo "<pre>";
@@ -124,6 +127,9 @@ do_action('set_single_listing_view_count');
                                         if($ext_option['option_type'] == 'select'){
                                             echo "<div class='wpfm-select-options wpfm-input-field-common'>";
                                                 echo '<label for="'.str_replace(" ", "-", strtolower($ext_option['option_name'])).'"><strong>'.$ext_option['option_name'].'</strong></label>';
+                                                if(!empty($ext_option['option_description'])){
+                                                    echo '<div class="wpfm-input-description">'.$ext_option['option_description'].'</div>';
+                                                }
                                                 echo '<select name="'.esc_attr($key).'">';
                                                     foreach ($ext_option['option_options'] as $key2 => $value2) {
                                                         // echo "<pre>";

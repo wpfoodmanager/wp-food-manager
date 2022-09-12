@@ -237,6 +237,22 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
 									),
 					'priority'    => 3
 				),
+				'option_enable_desc' => array(
+					'label'       => __( 'Description', 'wp-food-manager' ),
+					'type'        => 'checkbox',
+					'required'    => true,
+					'placeholder' => '1',
+					'default' => 1,
+					'priority'    => 4
+				),
+				'option_description' => array(
+					'label'       => __( '', 'wp-food-manager' ),
+					'type'        => 'textarea',
+					'required'    => true,
+					'placeholder' => 'Enter the field description',
+					'default' => 1,
+					'priority'    => 5
+				),
 				/*'option_minimum' => array(
 					'label'       => __( 'Minimum selection', 'wp-food-manager' ),
 					'type'        => 'text',
