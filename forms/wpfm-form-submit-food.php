@@ -240,7 +240,7 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
 				'option_enable_desc' => array(
 					'label'       => __( 'Description', 'wp-food-manager' ),
 					'type'        => 'checkbox',
-					'required'    => true,
+					'required'    => false,
 					'placeholder' => '1',
 					'default' => 1,
 					'priority'    => 4
@@ -248,7 +248,7 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
 				'option_description' => array(
 					'label'       => __( '', 'wp-food-manager' ),
 					'type'        => 'textarea',
-					'required'    => true,
+					'required'    => false,
 					'placeholder' => 'Enter the field description',
 					'default' => 1,
 					'priority'    => 5
@@ -437,7 +437,7 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
 			'resume_edit'        => $this->resume_edit,
 			'action'             => $this->get_action(),
 			'food_fields'         => $this->get_fields( 'food' ),
-			//'organizer_fields'     => $this->get_fields( 'organizer' ),
+			'food_extra_fields'     => $this->get_fields( 'extra_options' ),
 			//'venue_fields'     => $this->get_fields( 'venue' ),
 			'step'               => $this->get_step(),
 			'submit_button_text' => apply_filters( 'submit_food_form_submit_button_text', __( 'Preview', 'wp-food-manager' ) )

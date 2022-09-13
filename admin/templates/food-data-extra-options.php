@@ -29,9 +29,9 @@ $extra_options = get_post_meta($thepostid,'_wpfm_extra_options',true);
 								<div class="wpfm-content">
 									<?php
 										do_action('food_manager_food_data_start', $thepostid);
-										$food_fields = $this->food_manager_data_fields();
-										if(isset($food_fields['extra_options']))
-										foreach ($food_fields['extra_options'] as $key => $field) {
+										$food_extra_fields = $this->food_manager_data_fields();
+										if(isset($food_extra_fields['extra_options']))
+										foreach ($food_extra_fields['extra_options'] as $key => $field) {
 
 											if(!isset($field['value']) || empty($field['value'])){
 												$field['value'] = isset($option[$key]) ? $option[$key] : '';
@@ -83,9 +83,9 @@ $extra_options = get_post_meta($thepostid,'_wpfm_extra_options',true);
 						<div class="wpfm-content">
 							<?php
 								/*do_action('food_manager_food_data_start', $thepostid);
-								$food_fields = $this->food_manager_data_fields();
-								if(isset($food_fields['extra_options']))
-								foreach ($food_fields['extra_options'] as $key => $field) {
+								$food_extra_fields = $this->food_manager_data_fields();
+								if(isset($food_extra_fields['extra_options']))
+								foreach ($food_extra_fields['extra_options'] as $key => $field) {
 									if( strpos($key, '_') !== 0 ) {
 											$key  = '_'.$key.'_1';	
 										}
@@ -120,9 +120,9 @@ $extra_options = get_post_meta($thepostid,'_wpfm_extra_options',true);
 						<div class="wpfm-content">
 							<?php
 								do_action("food_manager_food_data_start", $thepostid);
-								$food_fields = $this->food_manager_data_fields();
-								if(isset($food_fields["extra_options"]))
-								foreach ($food_fields["extra_options"] as $key => $field) {
+								$food_extra_fields = $this->food_manager_data_fields();
+								if(isset($food_extra_fields["extra_options"]))
+								foreach ($food_extra_fields["extra_options"] as $key => $field) {
 
 									if($key == "option_name"){
 										if( strpos($key, '_') !== 0 ) {

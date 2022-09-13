@@ -41,7 +41,6 @@
 <?php endforeach; ?>
 <?php endif; ?>
 <button class="button">Add field</button>
-dsfsdfsdf
 <a href="#" class="wpfm-theme-text-button wpfm_repeated_add_field" data-row="<?php
 	ob_start();
 	?>
