@@ -78,6 +78,67 @@ do_action('set_single_listing_view_count');
                             </div>
                             <div class="wpfm-single-food-body-content wpfm-extra-options">
                                 <?php
+                                echo "<h1>Extra Toppings</h1>";
+                                /*echo "<pre>";
+                                print_r($_POST);
+                                echo "</pre>";*/
+                                foreach($_POST['repeated_options'] as $key => $row_nums){
+                                    if($_POST['_option_type_'.$row_nums] == 'radio'){
+                                        echo "<div class='wpfm-radio-options wpfm-input-field-common'>";
+                                            echo '<label for="'.str_replace(" ", "-", strtolower($_POST['option_name_'.$row_nums])).'"><strong>'.$_POST['option_name_'.$row_nums].'</strong></label>';
+                                            if(!empty($_POST['_option_description_'.$row_nums])){
+                                                echo '<div class="wpfm-input-description">'.$_POST['_option_description_'.$row_nums].'</div>';
+                                            }
+                                            echo '<div class="wpfm-inner-field-content">';
+                                                foreach ($_POST['option_value_count'] as $key2 => $sub_row_nums) {
+                                                    $checked = ($_POST[$row_nums.'_option_value_default_'.$sub_row_nums]) == 'on' ? 'checked' : '';
+                                                    echo "<div class='wpfm-input-singular'>";
+                                                        echo '<input type="radio" id="'.esc_attr(str_replace(" ", "-", strtolower($_POST['_option_value_name_'.$sub_row_nums]))).'" name="'.esc_attr($key).'" value="'.esc_attr($_POST[$row_nums.'_option_value_name_'.$sub_row_nums]).'" '.$checked.'>';                                                
+                                                        echo '<label for="'.esc_attr(str_replace(" ", "-", strtolower($_POST[$row_nums.'_option_value_name_'.$sub_row_nums]))).'"> '.esc_html($_POST[$row_nums.'_option_value_name_'.$sub_row_nums]).' - '.get_food_manager_currency_symbol().$_POST[$row_nums.'_option_value_price_'.$sub_row_nums].'</label>';
+                                                    echo "</div>";
+                                                }
+                                            echo "</div>";
+                                        echo "</div>";
+                                    }
+
+                                    if($_POST['_option_type_'.$row_nums] == 'checkbox'){
+                                        echo "<div class='wpfm-checkbox-options wpfm-input-field-common'>";
+                                            echo '<label for="'.str_replace(" ", "-", strtolower($_POST['option_name_'.$row_nums])).'"><strong>'.$_POST['option_name_'.$row_nums].'</strong></label>';
+                                            if(!empty($_POST['_option_description_'.$row_nums])){
+                                                echo '<div class="wpfm-input-description">'.$_POST['_option_description_'.$row_nums].'</div>';
+                                            }
+                                            echo '<div class="wpfm-inner-field-content">';
+                                                foreach ($_POST['option_value_count'] as $key2 => $sub_row_nums) {
+                                                    $checked = ($_POST[$row_nums.'_option_value_default_'.$sub_row_nums]) == 'on' ? 'checked' : '';
+                                                    echo "<div class='wpfm-input-singular'>";
+                                                        echo '<input type="checkbox" id="'.esc_attr(str_replace(" ", "-", strtolower($_POST[$row_nums.'_option_value_name_'.$sub_row_nums]))).'" name="'.esc_attr($key).'" value="'.esc_attr($_POST[$row_nums.'_option_value_name_'.$sub_row_nums]).'" '.$checked.'>';                                                
+                                                        echo '<label for="'.esc_attr(str_replace(" ", "-", strtolower($_POST[$row_nums.'_option_value_name_'.$sub_row_nums]))).'"> '.esc_html($_POST[$row_nums.'_option_value_name_'.$sub_row_nums]).' - '.get_food_manager_currency_symbol().$_POST[$row_nums.'_option_value_price_'.$sub_row_nums].'</label>';
+                                                    echo "</div>";
+                                                }
+                                            echo "</div>";
+                                        echo "</div>";
+                                    }
+
+                                    if($_POST['_option_type_'.$row_nums] == 'select'){
+                                        echo "<div class='wpfm-select-options wpfm-input-field-common'>";
+                                            echo '<label for="'.str_replace(" ", "-", strtolower($_POST['option_name_'.$row_nums])).'"><strong>'.$_POST['option_name_'.$row_nums].'</strong></label>';
+                                            if(!empty($_POST['_option_description_'.$row_nums])){
+                                                echo '<div class="wpfm-input-description">'.$_POST['_option_description_'.$row_nums].'</div>';
+                                            }
+                                            echo '<select name="'.esc_attr($key).'">';
+                                                foreach ($_POST['option_value_count'] as $key2 => $sub_row_nums) {
+                                                    $selected = ($_POST[$row_nums.'_option_value_default_'.$sub_row_nums]) == 'on' ? 'selected' : '';
+                                                    
+                                                    echo '<option value="'.esc_attr($_POST[$row_nums.'_option_value_name_'.$sub_row_nums]).'" '.$selected.'>'.esc_attr($_POST[$row_nums.'_option_value_name_'.$sub_row_nums]).' - '.get_food_manager_currency_symbol().$_POST[$row_nums.'_option_value_price_'.$sub_row_nums].'</option>';
+                                                }
+                                            echo '</select>';
+                                        echo "</div>";
+                                    }
+                                }
+
+
+
+                                
                                 $ext_options = get_post_meta(get_the_ID(), '_wpfm_extra_options', true);
                                 $food_data_option_value_count = get_post_meta(get_the_ID(), 'wpfm_option_value_count', true);
                                 $repeated_count = get_post_meta(get_the_ID(), 'wpfm_repeated_options', true);

@@ -40,7 +40,7 @@ global $food_manager;
 				    <button type="button" class="wpfm-add-button button button-primary" id="wpfm-add-new-option" data-row='<div class="wpfm-options-wrap wpfm-metabox postbox wpfm-options-box-%%repeated-option-index%%">
 				        <input type="hidden" name="repeated_options[]" value="%%repeated-option-index%%" class="repeated-options">
 				        <h3 class="">
-				            <a href="javascript: void(0);" data-id="%%repeated-option-index%%" class="wpfm-delete-btn">Remove</a>
+				            <a href="javascript: void(0);" data-id="%%repeated-option-index%%" class="wpfm-delete-btn dashicons dashicons-dismiss">Remove</a>
 				            <div class="wpfm-togglediv" title="Click to toggle" aria-expanded="false" data-row-count="%%repeated-option-index%%"></div>
 				            <div class="tips wpfm-sort"></div>
 				            <strong class="attribute_name"><?php _e("Option %%repeated-option-index%%","wp-food-manager");?></strong>
@@ -49,10 +49,15 @@ global $food_manager;
 				        </h3>
 				        <div class="wpfm-metabox-content wpfm-options-box">
 				            <div class="wpfm-content">
-				                <?php foreach ($food_extra_fields as $key => $field) : ?>
-								<?php
-								if($key == 'option_enable_desc'){ ?>
-									<fieldset class="wpfm-form-group fieldset-<?php echo esc_attr($key); ?>">
+				                <?php
+				                foreach ($food_extra_fields as $key => $field) :
+
+								if($key == 'option_enable_desc'){
+				                	if( strpos($key, '_') !== 0 ) {
+										$key  = "_".$key."_%%repeated-option-index%%";
+									}
+									?>
+									<fieldset class="wpfm-form-group fieldset<?php echo esc_attr($key); ?>">
 										<label for="<?php esc_attr_e($key); ?>"><?php echo esc_attr($field['label']) . apply_filters('submit_food_form_required_label', $field['required'] ? '<span class="require-field">*</span>' : ' <small>' . __('(optional)', 'wp-food-manager') . '</small>', $field); ?></label>
 										<span class="wpfm-input-field">
 											<label class="wpfm-field-switch" for="<?php esc_attr_e($key); ?>">
@@ -61,9 +66,25 @@ global $food_manager;
 											</label>
 										</span>
 									</fieldset>
-								<?php } else { ?>
-									<fieldset class="wpfm-form-group fieldset-<?php echo esc_attr($key); ?>">
-										<?php if($key !== 'option_description'){ ?>
+								<?php } else {
+									if($key == "option_name"){
+										if( strpos($key, '_') !== 0 ) {
+											$key  = $key.'_%%repeated-option-index%%';
+										}
+									} else {
+										if( strpos($key, '_') !== 0 ) {
+											$key  = "_".$key."_%%repeated-option-index%%";
+										}
+									}
+									$descClass = "";
+									if(!empty($field['value'])){
+										$descClass = "";
+									} else {
+										$descClass = "option-desc-common";
+									} ?>
+									<fieldset class="wpfm-form-group fieldset<?php echo esc_attr($key); ?> <?php if(str_contains($key, 'description')){ echo esc_attr($descClass); } ?>">
+										<?php 
+										if(!str_contains($key, 'description')){ ?>
 											<label for="<?php esc_attr_e($key); ?>"><?php echo esc_attr($field['label']) . apply_filters('submit_food_form_required_label', $field['required'] ? '<span class="require-field">*</span>' : ' <small>' . __('(optional)', 'wp-food-manager') . '</small>', $field); ?></label>
 										<?php } ?>
 										<div class="field <?php echo esc_attr($field['required'] ? 'required-field' : ''); ?>">

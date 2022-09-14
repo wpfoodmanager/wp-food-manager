@@ -437,6 +437,7 @@ var WPFMAdmin= function () {
             
             if(textarea_value.length == 0) {
                 jQuery(this).closest(".wpfm-admin-postbox-form-field").prev().children(".wpfm-input-field").children(".wpfm-field-switch").children('input[type="checkbox"]').removeAttr("checked");
+                jQuery(this).closest(".wpfm-admin-postbox-form-field").slideUp();
             } else {
                 jQuery(this).closest(".wpfm-admin-postbox-form-field").prev().children(".wpfm-input-field").children(".wpfm-field-switch").children('input[type="checkbox"]').prop("checked", true);
             }

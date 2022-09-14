@@ -65,14 +65,30 @@ var WPFMFront= function () {
                 }
             });
 
-            jQuery('body').on('change', 'input[name^="option_enable_desc"]', WPFMFront.actions.changeFieldDescription);
+            jQuery('body').on('change', 'input[name^="_option_enable_desc"]', WPFMFront.actions.changeFieldDescription);
 
-            jQuery('body').on('keyup', '.fieldset-option_description textarea', WPFMFront.actions.keyupTextareaDesc);
+            jQuery('body').on('keyup', '.wpfm-form-group.option-desc-common textarea', WPFMFront.actions.keyupTextareaDesc);
             
             jQuery(document).on("click", ".wpfm-add-row", WPFMFront.actions.addElementRow)
             jQuery(document).on("click", ".option-delete-btn", WPFMFront.actions.removeAttributesOptions)
             jQuery(document).on("click", ".wpfm-delete-btn", WPFMFront.actions.removeAttributes)
             jQuery('#wpfm-add-new-option').on('click', WPFMFront.actions.addNewOption);
+            jQuery('body').on('change', 'input[name^="option_name"]', WPFMFront.actions.updateOptionTitle);
+
+            jQuery(document).on("click", ".wpfm-togglediv", function(e){
+                var row_count = jQuery(this).data('row-count');
+                var menuItem = jQuery( e.currentTarget );
+
+                if (menuItem.attr( 'aria-expanded') === 'true') {
+                    jQuery('.wpfm-options-wrap.wpfm-options-box-'+row_count).removeClass("closed");
+                    jQuery(this).attr( 'aria-expanded', 'false');
+                } else {
+                    jQuery('.wpfm-options-wrap.wpfm-options-box-'+row_count).addClass("closed");
+                    jQuery(this).attr( 'aria-expanded', 'true');
+                }
+
+                jQuery(this).parents('.postbox').find('.wpfm-options-box').slideToggle("slow");
+            });
 
 	   },
 
@@ -83,18 +99,19 @@ var WPFMFront= function () {
             },
 
             changeFieldDescription:function(event){
-                jQuery(this).closest(".fieldset-option_enable_desc").next().slideToggle(this.checked);
-                jQuery(this).closest(".fieldset-option_enable_desc").next().children(".field").children("textarea").val("Please enter a Description of field.");
+                var row_count = jQuery(this).closest('.postbox').children('.repeated-options').val();
+                jQuery(this).closest(".fieldset_option_enable_desc_"+row_count).next().slideToggle(this.checked);
+                jQuery(this).closest(".fieldset_option_enable_desc_"+row_count).next().children(".field").children("textarea").val("Please enter a Description of field.");
             },
 
             keyupTextareaDesc:function(event){
                 var textarea_value = jQuery(this).val();
-                
+                var row_count = jQuery(this).closest('.postbox').children('.repeated-options').val();
                 if(textarea_value.length == 0) {
-                    jQuery(this).closest(".fieldset-option_description").prev().children(".wpfm-input-field").children(".wpfm-field-switch").children('input[type="checkbox"]').removeAttr("checked");
-                    jQuery(this).closest(".fieldset-option_description").slideUp();
+                    jQuery(this).closest(".fieldset_option_description_"+row_count).prev().children(".wpfm-input-field").children(".wpfm-field-switch").children('input[type="checkbox"]').removeAttr("checked");
+                    jQuery(this).closest(".fieldset_option_description_"+row_count).slideUp();
                 } else {
-                    jQuery(this).closest(".fieldset-option_description").prev().children(".wpfm-input-field").children(".wpfm-field-switch").children('input[type="checkbox"]').prop("checked", true);
+                    jQuery(this).closest(".fieldset_option_description_"+row_count).prev().children(".wpfm-input-field").children(".wpfm-field-switch").children('input[type="checkbox"]').prop("checked", true);
                 }
             },
 
@@ -103,11 +120,12 @@ var WPFMFront= function () {
                 var total_rows = 0;
                 total_rows = jQuery(this).parents('table').find('tbody tr').length;
                 total_rows = total_rows + 1;
+                //var row_count2 = jQuery(".wpfm-options-wrapper div.wpfm-options-wrap").length;
+                var row_count2 = jQuery(this).closest('.postbox').children('.repeated-options').val();
                 
-                var html = jQuery(this).data('row').replace( /%%repeated-option-index3%%/g, total_rows );
+                var html = jQuery(this).data('row').replace( /%%repeated-option-index3%%/g, total_rows ).replace( /%%repeated-option-index2%%/g, row_count2 );
                 html.replace('value="1"',total_rows);
-                jQuery(this).parents('table').find('tbody').append(html);        
-
+                jQuery(this).parents('table').find('tbody').append(html);
             },
 
             removeAttributesOptions: function(event){
@@ -118,6 +136,17 @@ var WPFMFront= function () {
                 jQuery('.wpfm-options-box-'+jQuery(this).data('id')).remove();
             },
 
+            updateOptionTitle:function(event){
+                jQuery(this).closest('.postbox').children('h3').children('.attribute_name').text(this.value);
+
+                var option_key = this.value.replace(/\s/g,'_').toLowerCase();
+                jQuery(this).closest('.postbox').children('h3').children('.attribute_key').children('input').val(option_key);
+
+                if(this.value == ''){
+                    jQuery(this).closest('.postbox').children('h3').children('.attribute_name').text("Option Key");
+                    jQuery(this).closest('.postbox').children('h3').children('.attribute_key').children('input').val("option_key");
+                }
+            },
             addNewOption:function(event){
                 var max_index = 0;
                     if(jQuery('.wpfm-form-wrapper').find('div.wpfm-options-wrap').length){
@@ -148,7 +177,7 @@ var WPFMFront= function () {
                     opacity:.65,
                     update: function (event, ui) {
                         var repeater_row_count = jQuery(this).closest(".postbox").children(".repeated-options").val();
-                        jQuery('.post-type-food_manager .wpfm-admin-options-table._option_options_'+repeater_row_count+' table.widefat tbody tr').each(function (i) {
+                        jQuery('.container .wpfm-form-group.fieldset_option_options_'+repeater_row_count+' table.widefat tbody tr').each(function (i) {
                             var humanNum = i + 1;
                             //var repeater_row_count = jQuery(this).closest(".postbox").children(".repeated-options").val();
                             jQuery(this).children('td:nth-child(2)').html(humanNum);
@@ -162,7 +191,7 @@ var WPFMFront= function () {
                         });
                     }
                 }).disableSelection();
-                jQuery(this).closest(".postbox").find(".option-desc-common").hide();
+                jQuery(this).closest(".wpfm-actions").prev().find(".option-desc-common").hide();
             },
     	},
     }
