@@ -639,14 +639,18 @@ class WPFM_Writepanels
 			}
 		}
 		
-		$fd_food_ingre = sanitize_text_field($_POST['_enable_food_ingre']);
-		if( !add_post_meta($post_id,'_enable_food_ingre', $fd_food_ingre, true) ){
-			update_post_meta($post_id,'_enable_food_ingre', $fd_food_ingre);
+		if(isset($_POST['_enable_food_ingre'])){
+			$fd_food_ingre = sanitize_text_field($_POST['_enable_food_ingre']);
+			if( !add_post_meta($post_id,'_enable_food_ingre', $fd_food_ingre, true) ){
+				update_post_meta($post_id,'_enable_food_ingre', $fd_food_ingre);
+			}
 		}
 		
-		$fd_food_nutri = sanitize_text_field($_POST['_enable_food_nutri']);
-		if( !add_post_meta($post_id,'_enable_food_nutri', $fd_food_nutri, true) ){
-			update_post_meta($post_id,'_enable_food_nutri', $fd_food_nutri);
+		if(isset($_POST['_enable_food_nutri'])){
+			$fd_food_nutri = sanitize_text_field($_POST['_enable_food_nutri']);
+			if( !add_post_meta($post_id,'_enable_food_nutri', $fd_food_nutri, true) ){
+				update_post_meta($post_id,'_enable_food_nutri', $fd_food_nutri);
+			}
 		}
 
 		// Ingredients.
@@ -765,7 +769,7 @@ class WPFM_Writepanels
 							$option_name = $_POST['option_name_'.$option_count];
 							$option_type = $_POST['_option_type_'.$option_count];
 							$option_required = $_POST['_option_required_'.$option_count];
-							$option_enable_desc = $_POST['_option_enable_desc_'.$option_count];
+							$option_enable_desc = isset($_POST['_option_enable_desc_'.$option_count]) ? $_POST['_option_enable_desc_'.$option_count] : '';
 							$option_description = $_POST['_option_description_'.$option_count];
 							/*$option_minimum = $_POST['_option_minimum_'.$option_count];
 							$option_maximum = $_POST['_option_maximum_'.$option_count];

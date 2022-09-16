@@ -449,7 +449,7 @@ function get_food_listings( $args = array() ) {
 				$cacheable_result['posts']         = array_values( $result->posts );
 				$cacheable_result['found_posts']   = $result->found_posts;
 				$cacheable_result['max_num_pages'] = $result->max_num_pages;
-				set_transient( $query_args_hash, wp_json_encode( $cacheable_result ), DAY_IN_SECONDS );
+				//set_transient( $query_args_hash, wp_json_encode( $cacheable_result ), DAY_IN_SECONDS );
 			}
 
 			if ( $cached_query_results ) {
@@ -802,9 +802,9 @@ function food_manager_dropdown_selection( $args = '' ) {
 
 	// Store in a transient to help sites with many cats
 
-	$categories_hash = 'wpfm_cats_' . md5( json_encode( $r ) . WPFM_Cache_Helper::get_transient_version( 'wpfm_get_' . $r['taxonomy'] ) );
+	//$categories_hash = 'wpfm_cats_' . md5( json_encode( $r ) . WPFM_Cache_Helper::get_transient_version( 'wpfm_get_' . $r['taxonomy'] ) );
 
-	$categories      = get_transient( $categories_hash );
+	//$categories      = get_transient( $categories_hash );
 
 	if ( empty( $categories ) ) {
 
@@ -823,7 +823,7 @@ function food_manager_dropdown_selection( $args = '' ) {
 			'hierarchical'    => $r['hierarchical']
 		) );
 
-		set_transient( $categories_hash, $categories, DAY_IN_SECONDS * 30 );
+		//set_transient( $categories_hash, $categories, DAY_IN_SECONDS * 30 );
 	}
 
 	$name       = esc_attr( $name );

@@ -89,7 +89,7 @@ do_action('set_single_listing_view_count');
                                                 }
                                                 echo '<div class="wpfm-inner-field-content">';
                                                     foreach ($row_nums as $key2 => $sub_row_nums) {
-                                                        $checked = ($_POST[$key.'_option_value_default_'.$sub_row_nums]) == 'on' ? 'checked' : '';
+                                                        $checked = (isset($_POST[$key.'_option_value_default_'.$sub_row_nums])) == 'on' ? 'checked' : '';
                                                         echo "<div class='wpfm-input-singular'>";
                                                             echo '<input type="radio" id="'.esc_attr(str_replace(" ", "-", strtolower($_POST[$key.'_option_value_name_'.$sub_row_nums]))).'" name="'.esc_attr($key).'" value="'.esc_attr($_POST[$key.'_option_value_name_'.$sub_row_nums]).'" '.$checked.'>';                                                
                                                             echo '<label for="'.esc_attr(str_replace(" ", "-", strtolower($_POST[$key.'_option_value_name_'.$sub_row_nums]))).'"> '.esc_html($_POST[$key.'_option_value_name_'.$sub_row_nums]).' - '.get_food_manager_currency_symbol().$_POST[$key.'_option_value_price_'.$sub_row_nums].'</label>';

@@ -240,31 +240,90 @@ abstract class WPFM_Form {
 
 	protected function get_posted_fields() {
 	    
-			// Init fields
-			//$this->init_fields(); We dont need to initialize with this function because of field edior
-			// Now field editor function will return all the fields 
-			//Get merged fields from db and default fields.
-			$this->merge_with_custom_fields('frontend' );
+	    global $post;
+		// Init fields
+		//$this->init_fields(); We dont need to initialize with this function because of field edior
+		// Now field editor function will return all the fields 
+		//Get merged fields from db and default fields.
+		$this->merge_with_custom_fields('frontend' );
 
 		$values = array();
-		foreach ( $_POST['repeated_options'] as $option_count) {
+
+		if(isset($_POST['option_value_count']) && is_array($_POST['option_value_count']) || isset($_POST['repeated_options']) && is_array($_POST['repeated_options'])){
+			foreach ( $_POST['option_value_count'] || $_POST['repeated_options'] as $option_count => $option_value) {
+
+				foreach ( $this->fields as $group_key => $group_fields ) {
+
+					foreach ( $group_fields as $key => $field ) {
+
+						// Get the value
+						
+						$field_type = str_replace( '-', '_', $field['type'] );
+
+						if ( $handler = apply_filters( "food_manager_get_posted_{$field_type}_field", false ) ) {
+
+							$values[ $group_key ][ $key ] = call_user_func( $handler, $key, $field );
+
+						} elseif($group_key == "extra_options"){
+							$key2 = "";
+							if($key == "option_name"){
+								$first_key = $key."_".$option_count;
+								$key2 = $key."_".$option_count;
+							} else {
+								$key2 = "_".$key."_".$option_count;
+							}
+							$first_out = str_replace(" ", "_", strtolower($this->get_posted_field( $first_key, $field )));
+							$output = $this->get_posted_field( $key2, $field );
+							$values[ $group_key ][$first_out][ $key ] = $output;
+
+
+							if($key == "option_options"){
+								foreach($option_value as $option_value_count){
+									$output2[$option_value_count] = 
+										array(
+											'option_value_name' => isset($_POST[$option_count.'_option_value_name_'.$option_value_count]) ? $_POST[$option_count.'_option_value_name_'.$option_value_count] : '',
+
+											'option_value_default' => isset($_POST[$option_count.'_option_value_default_'.$option_value_count]) ? $_POST[$option_count.'_option_value_default_'.$option_value_count] : '',
+
+											'option_value_price' => isset($_POST[$option_count.'_option_value_price_'.$option_value_count]) ? $_POST[$option_count.'_option_value_price_'.$option_value_count] : '',
+
+											'option_value_price_type' => isset($_POST[$option_count.'_option_value_price_type_'.$option_value_count]) ? $_POST[$option_count.'_option_value_price_type_'.$option_value_count] : ''
+										);
+
+									$values[ $group_key ][$first_out][ $key ] = $output2;
+
+								}
+							}
+						} elseif ( method_exists( $this, "get_posted_{$field_type}_field" ) ) {
+
+							$values[ $group_key ][ $key ] = call_user_func( array( $this, "get_posted_{$field_type}_field" ), $key, $field );
+
+						} else {
+
+							$values[ $group_key ][ $key ] = $this->get_posted_field( $key, $field );
+						}
+
+						// Set fields value
+
+						$this->fields[ $group_key ][ $key ]['value'] = $values[ $group_key ][ $key ];
+
+					}
+				}
+			}
+			update_post_meta($post->ID,'_wpfm_extra_options',$values);
+		} else {
 			foreach ( $this->fields as $group_key => $group_fields ) {
 
 				foreach ( $group_fields as $key => $field ) {
 
 					// Get the value
-					if($group_key == "extra_options"){
-						if($key == "option_name"){
-							$key = $key."_".$option_count;
-						} else {
-							$key = $key."_".$option_count;
-						}
-					}
 
 					$field_type = str_replace( '-', '_', $field['type'] );
 
 					if ( $handler = apply_filters( "food_manager_get_posted_{$field_type}_field", false ) ) {
+
 						$values[ $group_key ][ $key ] = call_user_func( $handler, $key, $field );
+
 					} elseif ( method_exists( $this, "get_posted_{$field_type}_field" ) ) {
 
 						$values[ $group_key ][ $key ] = call_user_func( array( $this, "get_posted_{$field_type}_field" ), $key, $field );
@@ -273,7 +332,6 @@ abstract class WPFM_Form {
 
 						$values[ $group_key ][ $key ] = $this->get_posted_field( $key, $field );
 					}
-
 
 					// Set fields value
 
