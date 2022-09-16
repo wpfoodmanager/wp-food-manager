@@ -247,31 +247,38 @@ abstract class WPFM_Form {
 			$this->merge_with_custom_fields('frontend' );
 
 		$values = array();
+		foreach ( $_POST['repeated_options'] as $option_count) {
+			foreach ( $this->fields as $group_key => $group_fields ) {
 
-		foreach ( $this->fields as $group_key => $group_fields ) {
+				foreach ( $group_fields as $key => $field ) {
 
-			foreach ( $group_fields as $key => $field ) {
+					// Get the value
+					if($group_key == "extra_options"){
+						if($key == "option_name"){
+							$key = $key."_".$option_count;
+						} else {
+							$key = $key."_".$option_count;
+						}
+					}
 
-				// Get the value
+					$field_type = str_replace( '-', '_', $field['type'] );
 
-				$field_type = str_replace( '-', '_', $field['type'] );
+					if ( $handler = apply_filters( "food_manager_get_posted_{$field_type}_field", false ) ) {
+						$values[ $group_key ][ $key ] = call_user_func( $handler, $key, $field );
+					} elseif ( method_exists( $this, "get_posted_{$field_type}_field" ) ) {
 
-				if ( $handler = apply_filters( "food_manager_get_posted_{$field_type}_field", false ) ) {
+						$values[ $group_key ][ $key ] = call_user_func( array( $this, "get_posted_{$field_type}_field" ), $key, $field );
 
-					$values[ $group_key ][ $key ] = call_user_func( $handler, $key, $field );
+					} else {
 
-				} elseif ( method_exists( $this, "get_posted_{$field_type}_field" ) ) {
+						$values[ $group_key ][ $key ] = $this->get_posted_field( $key, $field );
+					}
 
-					$values[ $group_key ][ $key ] = call_user_func( array( $this, "get_posted_{$field_type}_field" ), $key, $field );
 
-				} else {
+					// Set fields value
 
-					$values[ $group_key ][ $key ] = $this->get_posted_field( $key, $field );
+					$this->fields[ $group_key ][ $key ]['value'] = $values[ $group_key ][ $key ];
 				}
-
-				// Set fields value
-
-				$this->fields[ $group_key ][ $key ]['value'] = $values[ $group_key ][ $key ];
 			}
 		}
 		
@@ -382,7 +389,7 @@ abstract class WPFM_Form {
 
 	protected function get_posted_field( $key, $field ) {
 	    
-		return isset( $_POST[ $key ] ) ? $this->sanitize_posted_field( $_POST[ $key ] ) : '';
+	    return isset( $_POST[ $key ] ) ? $this->sanitize_posted_field( $_POST[ $key ] ) : '';
 	}
 	
 	/**

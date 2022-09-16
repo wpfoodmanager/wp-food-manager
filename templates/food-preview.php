@@ -1,11 +1,11 @@
 <?php
 /**
- * Event listing preview when submitting food listing.
+ * Food listing preview when submitting food listing.
  *
- * This template can be overridden by copying it to yourtheme/wp-event-manager/event-preview.php.
+ * This template can be overridden by copying it to yourtheme/wp-food-manager/food-preview.php.
  *
  * @see         https://www.wpfoodmanager.com/
- * @author      WP Event Manager
+ * @author      WP Food Manager
  * @category    template
  * @version     1.0.0
  */

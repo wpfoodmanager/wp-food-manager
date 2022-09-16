@@ -34,7 +34,7 @@
                         </select>
                     </td>
                     <td><a href=&apos;javascript: void(0);&apos; data-id=&apos;%%repeated-option-index3%%&apos; class=&apos;option-delete-btn dashicons dashicons-dismiss&apos;>Remove</a></td>
-                    <input type=&apos;hidden&apos; class=&apos;option-value-class&apos; name=&apos;%%repeated-option-index2%%_option_value_count_%%repeated-option-index3%%&apos; value=&apos;%%repeated-option-index3%%&apos;>
+                    <input type=&apos;hidden&apos; class=&apos;option-value-class&apos; name=&apos;option_value_count[%%repeated-option-index2%%][]&apos; value=&apos;%%repeated-option-index3%%&apos;>
                 </tr>">Add Row</a>
             </td>
         </tr>

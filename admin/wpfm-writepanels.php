@@ -684,9 +684,6 @@ class WPFM_Writepanels
 		$multiArrayNutri = array();
 		if ( ! empty( $_POST['_nutrition'] ) ) {
 			foreach ( $_POST['_nutrition'] as $id => $nutrition ) {
-				echo "<pre>";
-				print_r($nutrition);
-				echo "</pre>";
 				$term_name = get_term( $id )->name;
 				$unit_name = "Unit";
 				if($nutrition['unit_id'] == '' && empty($nutrition['unit_id'])){
