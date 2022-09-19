@@ -62,6 +62,7 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
 		
 		// Allow resuming from cookie.
 		$this->resume_edit = false;
+		
 		if ( ! isset( $_GET[ 'new' ] ) && ( 'before' === get_option( 'food_manager_paid_listings_flow' ) || !$this->food_id  ) && ! empty( $_COOKIE['wp-food-manager-submitting-food-id'] ) && ! empty( $_COOKIE['wp-food-manager-submitting-food-key'] ) ){
 			$food_id     = absint( $_COOKIE['wp-food-manager-submitting-food-id'] );
 			$food_status = get_post_status( $food_id );
@@ -551,7 +552,7 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
 						$food_type_taxonomy = get_term( $values['food']['food_type'][0]);
 						$food_type = $food_type_taxonomy->name;
 					}
-					$food_slug[] = $food_type;
+					$food_slug = $food_type;
 				}
 				else{
 
@@ -561,9 +562,10 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
 						$food_type_taxonomy = get_term( $values['food']['food_type']);
 						$food_type = $food_type_taxonomy->name;
 					}
-					$food_slug[] = $food_type;
+					$food_slug = $food_type;
 				}
 			}
+			
 			$food_slug[]            	= $post_title;
 			$food_slugs				= implode( '-', $food_slug ) ;
 			$food_data['post_name'] 	= apply_filters('submit_food_form_save_slug_data', $food_slugs);
@@ -671,13 +673,14 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
 						update_post_meta( $this->food_id, '_' . $key, '' );
 					
 				}
-				else { 
-
-					update_post_meta( $this->food_id, '_' . $key, $values[ $group_key ][ $key ] );
+				else {
+					$values_ext = isset($values[ $group_key ][ $key ]) ? $values[ $group_key ][ $key ] : '';
+					
+					update_post_meta( $this->food_id, '_' . $key, $values_ext );
 					
 					// Handle attachments.
 					if ( 'file' === $field['type']  ) {
-						if ( is_array( $values[ $group_key ][ $key ] ) ) {
+						if ( isset($values[ $group_key ][ $key ]) && is_array( $values[ $group_key ][ $key ] ) ) {
 							foreach ( $values[ $group_key ][ $key ] as $file_url ) {
 								$maybe_attach[] = $file_url;
 							}

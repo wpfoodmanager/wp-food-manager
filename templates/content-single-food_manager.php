@@ -78,7 +78,7 @@ do_action('set_single_listing_view_count');
                             </div>
                             <div class="wpfm-single-food-body-content wpfm-extra-options">
                                 <?php
-                                echo "<h1>Extra Toppings</h1>";
+                                /*echo "<h1>Extra Toppings</h1>";
                                 if(isset($_POST['option_value_count'])){
                                     foreach($_POST['option_value_count'] as $key => $row_nums){
                                         if($_POST['_option_type_'.$key] == 'radio'){
@@ -107,7 +107,7 @@ do_action('set_single_listing_view_count');
                                                 }
                                                 echo '<div class="wpfm-inner-field-content">';
                                                     foreach ($row_nums as $key2 => $sub_row_nums) {
-                                                        $checked = ($_POST[$key.'_option_value_default_'.$sub_row_nums]) == 'on' ? 'checked' : '';
+                                                        $checked = isset($_POST[$key.'_option_value_default_'.$sub_row_nums]) && $_POST[$key.'_option_value_default_'.$sub_row_nums] == 'on' ? 'checked' : '';
                                                         echo "<div class='wpfm-input-singular'>";
                                                             echo '<input type="checkbox" id="'.esc_attr(str_replace(" ", "-", strtolower($_POST[$key.'_option_value_name_'.$sub_row_nums]))).'" name="'.esc_attr($key).'" value="'.esc_attr($_POST[$key.'_option_value_name_'.$sub_row_nums]).'" '.$checked.'>';                                                
                                                             echo '<label for="'.esc_attr(str_replace(" ", "-", strtolower($_POST[$key.'_option_value_name_'.$sub_row_nums]))).'"> '.esc_html($_POST[$key.'_option_value_name_'.$sub_row_nums]).' - '.get_food_manager_currency_symbol().$_POST[$key.'_option_value_price_'.$sub_row_nums].'</label>';
@@ -133,7 +133,7 @@ do_action('set_single_listing_view_count');
                                             echo "</div>";
                                         }
                                     }
-                                }
+                                }*/
 
 
                                 

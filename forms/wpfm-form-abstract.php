@@ -248,9 +248,20 @@ abstract class WPFM_Form {
 		$this->merge_with_custom_fields('frontend' );
 
 		$values = array();
+		$option_value_count = isset($_POST['option_value_count']) ? $_POST['option_value_count'] : '';
+		$repeated_options = isset($_POST['repeated_options']) ? $_POST['repeated_options'] : '';
+		$food_id = isset($_POST['food_id']) ? $_POST['food_id'] : '';
 
-		if(isset($_POST['option_value_count']) && is_array($_POST['option_value_count']) || isset($_POST['repeated_options']) && is_array($_POST['repeated_options'])){
-			foreach ( $_POST['option_value_count'] || $_POST['repeated_options'] as $option_count => $option_value) {
+		$ext_multi_options = '';
+		if(!empty($repeated_options) && empty($option_value_count)){
+			$ext_multi_options = isset($_POST['repeated_options']) ? $_POST['repeated_options'] : '';
+		}
+		if(!empty($repeated_options) && !empty($option_value_count)){
+			$ext_multi_options = isset($_POST['option_value_count']) ? $_POST['option_value_count'] : '';
+		}
+
+		if(($option_value_count && is_array($option_value_count)) && ($repeated_options && is_array($repeated_options))){
+			foreach ( $ext_multi_options as $option_count => $option_value ) {
 
 				foreach ( $this->fields as $group_key => $group_fields ) {
 
@@ -305,12 +316,12 @@ abstract class WPFM_Form {
 
 						// Set fields value
 
-						$this->fields[ $group_key ][ $key ]['value'] = $values[ $group_key ][ $key ];
+						//$this->fields[ $group_key ][ $key ]['value'] = $values[ $group_key ][ $key ];
 
 					}
+					update_post_meta($food_id,'_wpfm_extra_options',$values[ $group_key ]);
 				}
 			}
-			update_post_meta($post->ID,'_wpfm_extra_options',$values);
 		} else {
 			foreach ( $this->fields as $group_key => $group_fields ) {
 
@@ -338,6 +349,7 @@ abstract class WPFM_Form {
 					$this->fields[ $group_key ][ $key ]['value'] = $values[ $group_key ][ $key ];
 				}
 			}
+			update_post_meta($food_id,'_wpfm_extra_options','');
 		}
 		
 		return $values;
