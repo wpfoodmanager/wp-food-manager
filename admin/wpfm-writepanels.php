@@ -420,8 +420,8 @@ class WPFM_Writepanels
 				</span>
 			<?php } else { ?>
 				<input type="checkbox" class="checkbox " name="<?php echo esc_attr($name); ?>" id="<?php echo esc_attr($key); ?>" value="1" <?php checked($field['value'], 1); ?> />
-				<?php if (!empty($field['description'])) : ?><span class="description"><?php echo $field['description']; ?></span><?php endif; 
-			} ?>
+				<?php if (!empty($field['description'])) : ?><span class="description"><?php echo $field['description']; ?></span>
+			<?php endif; } ?>
 		</p>
 	<?php
 	}
@@ -644,6 +644,8 @@ class WPFM_Writepanels
 			if( !add_post_meta($post_id,'_enable_food_ingre', $fd_food_ingre, true) ){
 				update_post_meta($post_id,'_enable_food_ingre', $fd_food_ingre);
 			}
+		} else {
+			update_post_meta($post_id,'_enable_food_ingre', '');
 		}
 		
 		if(isset($_POST['_enable_food_nutri'])){
@@ -651,6 +653,8 @@ class WPFM_Writepanels
 			if( !add_post_meta($post_id,'_enable_food_nutri', $fd_food_nutri, true) ){
 				update_post_meta($post_id,'_enable_food_nutri', $fd_food_nutri);
 			}
+		} else {
+			update_post_meta($post_id,'_enable_food_nutri', '');
 		}
 
 		// Ingredients.

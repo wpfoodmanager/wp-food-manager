@@ -101,7 +101,7 @@ class WPFM_Form_Edit_Food extends WPFM_Form_Submit_Food {
 						$this->fields[ $group_key ][ $key ]['value'] = date($php_date_format ,strtotime($food_end_date));
 					}*/ elseif ( ! empty( $field['taxonomy'] ) ) {
 
-						$this->fields[ $group_key ][ $key ]['value'] = wp_get_object_terms( $food->ID, $field['taxonomy'], array( 'fields' => 'ids' ) );
+						$this->fields[ $group_key ][ $key ]['value'] = wp_get_object_terms( $food->ID, $field['taxonomy'], array( 'fields' => 'ids' ) );						
 
 					} else {
 
@@ -132,6 +132,8 @@ class WPFM_Form_Edit_Food extends WPFM_Form_Submit_Food {
 			'action'             => $this->get_action(),
 
 			'food_fields'         => $this->get_fields( 'food' ),
+
+			'food_extra_fields'     => $this->get_fields( 'extra_options' ),
 
 			'step'               => $this->get_step(),
 

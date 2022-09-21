@@ -90,6 +90,92 @@ var WPFMFront= function () {
                 jQuery(this).parents('.postbox').find('.wpfm-options-box').slideToggle("slow");
             });
 
+            jQuery(".container .wpfm-form-wrapper table.widefat tbody").sortable({
+                connectWith: ".container .wpfm-form-wrapper table.widefat tbody",
+                items:"tr",
+                axis:"y",
+                helper:function(t,i){
+                    return i.children().children().each((function(){
+                        jQuery(this).width(jQuery(this).width())
+                    }
+                    )),i
+                },
+                placeholder:"placeholder",
+                opacity:.65,
+                update: function (event, ui) {
+                    var repeater_row_count = jQuery(this).closest(".postbox").children(".repeated-options").val();
+                    jQuery('.container .wpfm-form-group.fieldset_option_options_'+repeater_row_count+' table.widefat tbody tr').each(function (i) {
+                        var humanNum = i + 1;
+                        //var repeater_row_count = jQuery(this).closest(".postbox").children(".repeated-options").val();
+                        jQuery(this).children('td:nth-child(2)').html(humanNum);
+                        jQuery(this).attr('class', 'option-tr-'+humanNum);
+                        jQuery(this).children('.option-value-class').val(humanNum);
+                        jQuery(this).children('td').children('.opt_name').attr('name', repeater_row_count+'_option_value_name_'+humanNum);
+                        jQuery(this).children('td').children('.opt_default').attr('name', repeater_row_count+'_option_value_default_'+humanNum);
+                        jQuery(this).children('td').children('.opt_price').attr('name', repeater_row_count+'_option_value_price_'+humanNum);
+                        jQuery(this).children('td').children('.opt_select').attr('name', repeater_row_count+'_option_value_price_type_'+humanNum);
+                        jQuery(this).children('td').children('.option-delete-btn').attr('data-id', humanNum);
+                    });
+                }
+            }).disableSelection();
+
+
+            /* General tab - Regular and Sale price validation */
+            jQuery('body').on( 'wpfm_add_error_tip', function( e, element, error_type ) {
+                var offset = element.position();
+
+                if ( element.parent().find( '.wpfm_error_tip' ).length === 0 ) {
+                    element.after( '<div class="wpfm_error_tip ' + error_type + '">' + wpfm_accounting_params[error_type] + '</div>' );
+                    element.parent().find( '.wpfm_error_tip' )
+                        .css( 'left', offset.left + element.width() - ( element.width() / 2 ) - ( jQuery( '.wpfm_error_tip' ).width() / 2 ) )
+                        .css( 'top', offset.top + element.height() )
+                        .fadeIn( '100' );
+                }
+            });
+            jQuery('body').on( 'wpfm_remove_error_tip', function( e, element, error_type ) {
+                element.parent().find( '.wpfm_error_tip.' + error_type ).fadeOut( '100', function() { jQuery( this ).remove(); } );
+            });
+
+            jQuery('body').on( 'click', function() {
+                jQuery( '.wpfm_error_tip' ).fadeOut( '100', function() { jQuery( this ).remove(); } );
+            });
+
+            jQuery('body').on( 'blur', '#food_sale_price', function() {
+                jQuery( '.wpfm_error_tip' ).fadeOut( '100', function() { jQuery( this ).remove(); } );
+            });
+            jQuery('body').on( 'keyup', '#food_sale_price', function(s, l) {
+                var sale_price_field = jQuery( this ), regular_price_field;
+                regular_price_field = jQuery( '#food_price' );
+
+                var sale_price    = parseFloat(
+                    window.accounting.unformat( sale_price_field.val())
+                );
+                var regular_price = parseFloat(
+                    window.accounting.unformat( regular_price_field.val())
+                );
+
+                if ( sale_price >= regular_price ) {
+                    jQuery( document.body ).triggerHandler( 'wpfm_add_error_tip', [ jQuery(this), 'wpfm_sale_less_than_regular_error' ] );
+                } else {
+                    jQuery( document.body ).triggerHandler( 'wpfm_remove_error_tip', [ jQuery(this), 'wpfm_sale_less_than_regular_error' ] );
+                }
+            });
+            jQuery('body').on( 'change', '#food_sale_price', function() {
+                var sale_price_field = jQuery( this ), regular_price_field;
+                regular_price_field = jQuery( '#food_price' );
+
+                var sale_price    = parseFloat(
+                    window.accounting.unformat( sale_price_field.val())
+                );
+                var regular_price = parseFloat(
+                    window.accounting.unformat( regular_price_field.val())
+                );
+
+                if ( sale_price >= regular_price ) {
+                    jQuery( this ).val( '' );
+                }
+            });
+
 	   },
 
     	actions :

@@ -261,31 +261,31 @@ class WP_Food_Manager_Data_Cleaner {
 	 */
 	private static function cleanup_pages() {
 		// Trash the Submit Food page.
-		$submit_food_form_page_id = get_option( 'submit_food_form' );
+		$submit_food_form_page_id = get_option( 'food_manager_submit_food_form_page_id' );
 		if ( $submit_food_form_page_id ) {
 			wp_delete_post( $submit_food_form_page_id, true );
 		}
 
 		// Trash the Food Dashboard page.
-		$food_dashboard_page_id = get_option( 'food_dashboard' );
+		$food_dashboard_page_id = get_option( 'food_manager_food_dashboard_page_id' );
 		if ( $food_dashboard_page_id ) {
 			wp_delete_post( $food_dashboard_page_id, true );
 		}
 
 		// Trash the foods page.
-		$foods_page_id = get_option( 'foods' );
+		$foods_page_id = get_option( 'food_manager_foods_page_id' );
 		if ( $foods_page_id ) {
 			wp_delete_post( $foods_page_id, true );
 		}
 
-		// Trash the submit organizer page.
-		$submit_organizer_form_page_id = get_option( 'nutritions_dashboard' );
+		// Trash the Food Categories page.
+		$submit_organizer_form_page_id = get_option( 'food_manager_food_categories_page_id' );
 		if ( $submit_organizer_form_page_id ) {
 			wp_delete_post( $submit_organizer_form_page_id, true );
 		}
 
-		// Trash the organizer dashboard page.
-		$organizer_dashboard_page_id = get_option( 'ingredients_dashboard' );
+		// Trash the Food Type page.
+		$organizer_dashboard_page_id = get_option( 'food_manager_food_type_page_id' );
 		if ( $organizer_dashboard_page_id ) {
 			wp_delete_post( $organizer_dashboard_page_id, true );
 		}

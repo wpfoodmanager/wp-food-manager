@@ -128,10 +128,10 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
 					'default'     => '',
 					'taxonomy'    => 'food_manager_type'
 				),
-				'food_ingridient' => array(
+				/*'food_ingridient' => array(
 					'label'       => __( 'Food Ingridients', 'wp-food-manager' ),
 					'type'        =>  'term-multiselect' ,
-					'required'    => true,
+					'required'    => false,
 					'placeholder' => '',
 					'priority'    => 3,
 					'default'     => '',
@@ -140,7 +140,7 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
 				'food_nutrition' => array(
 					'label'       => __( 'Food Nutrition', 'wp-food-manager' ),
 					'type'        => 'term-multiselect',
-					'required'    => true,
+					'required'    => false,
 					'placeholder' => '',
 					'priority'    => 3,
 					'default'     => '',
@@ -149,12 +149,12 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
 				'food_unit' => array(
 					'label'       => __( 'Food Unit', 'wp-food-manager' ),
 					'type'        => 'term-multiselect',
-					'required'    => true,
+					'required'    => false,
 					'placeholder' => '',
 					'priority'    => 3,
 					'default'     => '',
 					'taxonomy'    => 'food_manager_unit'
-				),
+				),*/
 				'food_banner' => array(
 					'label'       => __( 'Food Banner', 'wp-food-manager' ),
 					'type'        => 'file',
@@ -574,7 +574,8 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
 			$food_data['post_status'] = $status;
 		}
 		$food_data = apply_filters( 'submit_food_form_save_food_data', $food_data, $post_title, $post_content, $status, $values );
-		if ( $this->food_id ) {
+		
+		if ( $this->food_id ) { //$this->food_id
 			$food_data['ID'] = $this->food_id;
 			wp_update_post( $food_data );
 		} else {

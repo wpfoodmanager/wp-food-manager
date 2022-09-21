@@ -250,7 +250,25 @@ abstract class WPFM_Form {
 		$values = array();
 		$option_value_count = isset($_POST['option_value_count']) ? $_POST['option_value_count'] : '';
 		$repeated_options = isset($_POST['repeated_options']) ? $_POST['repeated_options'] : '';
+
+
+		$submit_food_form_page_id = get_option( 'food_manager_submit_food_form_page_id' );
+		$food_dashboard_page_id = get_option( 'food_manager_food_dashboard_page_id' );
+
+		$food_id = '';
+		if($submit_food_form_page_id){
+			if($submit_food_form_page_id == get_the_ID()){
+				$food_id = isset($_POST['food_id']) ? $_POST['food_id'] : '';
+			}
+		}
+
+		if($food_dashboard_page_id){
+			if($food_dashboard_page_id == get_the_ID()){
+				$food_id = isset($_GET['food_id']) ? $_GET['food_id'] : '';
+			}
+		}
 		$food_id = isset($_POST['food_id']) ? $_POST['food_id'] : '';
+
 
 		$ext_multi_options = '';
 		if(!empty($repeated_options) && empty($option_value_count)){

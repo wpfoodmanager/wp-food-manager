@@ -242,6 +242,16 @@ class WP_Food_Manager {
 		'ajax_url' 	 => admin_url( 'admin-ajax.php' ),
 		
 		) );*/
+
+		wp_enqueue_script( 'wpfm-accounting' );
+		wp_register_script( 'wpfm-accounting', WPFM_PLUGIN_URL. '/assets/js/accounting/accounting.min.js', array( 'jquery' ), WPFM_VERSION, true );	
+		wp_localize_script(
+			'wpfm-accounting',
+			'wpfm_accounting_params',
+			array(
+				'wpfm_sale_less_than_regular_error' => __( 'Please enter in a value less than the regular price.', 'woocommerce' ),
+			)
+		);
 		
 		wp_register_script( 'wpfm-content-food-listing', WPFM_PLUGIN_URL . '/assets/js/content-food-listing.min.js', array('jquery','wp-food-manager-common'), WPFM_VERSION, true );					
 		wp_localize_script( 'wpfm-content-food-listing', 'wpfm_content_food_listing', array(
