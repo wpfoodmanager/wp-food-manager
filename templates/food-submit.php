@@ -25,16 +25,49 @@ if($food_dashboard_page_id){
 $extra_fields_options = get_post_meta($food_id, '_wpfm_extra_options', true) ? get_post_meta($food_id, '_wpfm_extra_options', true) : '';
 
 if(!empty($extra_fields_options)){
-	$option_value_counts = array();
+	$option_value_counts1 = array();
 	for($i=1; $i <= count($extra_fields_options); $i++){
 		foreach ($extra_fields_options as $key => $value) {
 			for($j=1; $j <= count($value['option_options']); $j++){
-				$option_value_counts[$i][] = $j;
+				$option_value_counts1[$key][] = $j;
 			}
 		}
 	}
+
+	$option_value_counts = array();
+	foreach($option_value_counts1 as $option_value_count){
+		$option_value_counts[] = array_unique($option_value_count);
+	}
+	array_unshift($option_value_counts,"");
+	unset($option_value_counts[0]);
+
+
+	$option_value_counts2 = array();
+	for($i=1; $i <= count($extra_fields_options); $i++){
+		foreach ($extra_fields_options as $key => $value) {
+			for($j=1; $j <= count($value['option_options']); $j++){
+				$option_value_counts2[$key] = $value;
+			}
+		}
+	}
+
+	$option_value_counts3 = array();
+	foreach($option_value_counts2 as $option_value2_count){
+		$option_value_counts3[] = $option_value2_count;
+	}
+	array_unshift($option_value_counts3,"");
+	unset($option_value_counts3[0]);
 }
 
+
+/*if(!empty($extra_fields_options)){
+	$option_value_counts = array();
+	foreach($extra_fields_options as $key12 => $value){
+		for($j=1; $j <= count($value['option_options']); $j++){
+			$option_value_counts[$key12][] = $j;
+		}
+	}
+}*/
 ?>
 <form action="<?php echo esc_url( $action ); ?>" method="post" id="submit-food-form" class="wpfm-form-wrapper wpfm-main food-manager-form" enctype="multipart/form-data">
 	<?php if ( apply_filters( 'submit_food_form_show_signin', true ) ) : ?>
@@ -67,12 +100,8 @@ if(!empty($extra_fields_options)){
 				<?php do_action('submit_food_form_food_extra_fields_start'); ?>
 				<h2 class="wpfm-form-title wpfm-heading-text"><?php _e('Extra Toppings', 'wp-food-manager'); ?></h2>
 				<?php if(!empty($extra_fields_options)){
-				foreach($option_value_counts as $key => $option_value_count){
-					foreach($extra_fields_options as $option_key => $extra_fields_option){
-						/*echo "<pre>";
-						print_r($extra_fields_option);
-						echo "</pre>";*/
-
+				//foreach($option_value_counts as $key => $option_value_count){
+					foreach($option_value_counts3 as $key => $extra_fields_option){
 						$selected_check = ($extra_fields_option['option_type'] === 'checkbox') ? 'selected' : '';
 						$selected_radio = ($extra_fields_option['option_type'] === 'radio') ? 'selected' : '';
 						$selected_select = ($extra_fields_option['option_type'] === 'select') ? 'selected' : '';
@@ -80,6 +109,8 @@ if(!empty($extra_fields_options)){
 						$option_required = ($extra_fields_option['option_required'] === 'yes') ? 'checked' : '';
 
 						$option_enable_desc = ($extra_fields_option['option_enable_desc'] === '1') ? 'checked' : '';
+
+						$option_key = str_replace(" ", "_", strtolower($extra_fields_option['option_name']));
 					?>
 						<div class="wpfm-options-wrap wpfm-metabox postbox wpfm-options-box-<?php echo $key; ?>">
 							<input type="hidden" name="repeated_options[]" value="<?php echo $key; ?>" class="repeated-options">
@@ -150,22 +181,23 @@ if(!empty($extra_fields_options)){
 													</tr>
 												</thead>
 												<tbody class="ui-sortable">
-													<?php foreach($option_value_count as $key2 => $sub_value_count){
-														$option_value_default = ($extra_fields_option['option_options'][$sub_value_count]['option_value_default'] === 'on') ? 'checked' : '';
-														$option_fixed_amount = ($extra_fields_option['option_options'][$sub_value_count]['option_value_price_type'] === 'fixed_amount') ? 'selected' : '';
-														$option_quantity_based = ($extra_fields_option['option_options'][$sub_value_count]['option_value_price_type'] === 'quantity_based') ? 'selected' : '';
+													<?php
+													foreach($extra_fields_option['option_options'] as $sub_value_count => $values){
+														$option_value_default = ($values['option_value_default'] === 'on') ? 'checked' : '';
+														$option_fixed_amount = ($values['option_value_price_type'] === 'fixed_amount') ? 'selected' : '';
+														$option_quantity_based = ($values['option_value_price_type'] === 'quantity_based') ? 'selected' : '';
 													 ?>
 														<tr class="option-tr-<?php echo $sub_value_count; ?>">
 															<td><span class="wpfm-option-sort">☰</span></td>
 															<td><?php echo $sub_value_count; ?></td>
 															<td>
-																<input type="text" name="<?php echo $key; ?>_option_value_name_<?php echo $sub_value_count; ?>" value="<?php echo $extra_fields_option['option_options'][$sub_value_count]['option_value_name']; ?>" class="opt_name">
+																<input type="text" name="<?php echo $key; ?>_option_value_name_<?php echo $sub_value_count; ?>" value="<?php echo $values['option_value_name']; ?>" class="opt_name">
 															</td>
 															<td>
 																<input type="checkbox" name="<?php echo $key; ?>_option_value_default_<?php echo $sub_value_count; ?>" class="opt_default" <?php echo $option_value_default; ?>>
 															</td>
 															<td>
-																<input type="number" name="<?php echo $key; ?>_option_value_price_<?php echo $sub_value_count; ?>" value="<?php echo $extra_fields_option['option_options'][$sub_value_count]['option_value_price']; ?>" class="opt_price">
+																<input type="number" name="<?php echo $key; ?>_option_value_price_<?php echo $sub_value_count; ?>" value="<?php echo $values['option_value_price']; ?>" class="opt_price">
 															</td>
 															<td>
 																<select name="<?php echo $key; ?>_option_value_price_type_<?php echo $sub_value_count; ?>" class="opt_select">
@@ -206,7 +238,7 @@ if(!empty($extra_fields_options)){
 						</div>
 					<?php } 
 					}
-				} ?>
+				//} ?>
 				<div class="wpfm-actions">
 				    <button type="button" class="wpfm-add-button button button-primary" id="wpfm-add-new-option" data-row='<div class="wpfm-options-wrap wpfm-metabox postbox wpfm-options-box-%%repeated-option-index%%">
 				        <input type="hidden" name="repeated_options[]" value="%%repeated-option-index%%" class="repeated-options">

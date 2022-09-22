@@ -215,7 +215,8 @@ var WPFMFront= function () {
             },
 
             removeAttributesOptions: function(event){
-                jQuery('tbody tr.option-tr-'+jQuery(this).data('id')).remove();
+                var repeater_row_count = jQuery(this).closest(".postbox").children(".repeated-options").val();
+                jQuery('.wpfm-options-box-'+repeater_row_count+' tbody tr.option-tr-'+jQuery(this).data('id')).remove();
             },
 
             removeAttributes: function(event){
