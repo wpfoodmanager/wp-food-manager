@@ -50,7 +50,9 @@ if (get_option('food_manager_food_item_show_hide') == 0 && get_stock_status() !=
                                 <?php display_stock_status(); ?>
                             </div>
                         <?php } ?>
-                        <div class="wpfm-food-title"><h3 class="wpfm-heading-text"><?php echo esc_html(get_the_title()); ?> - <?php display_food_price_tag(); ?></h3></div>
+                        <div class="wpfm-food-title"><h3 class="wpfm-heading-text"><?php echo esc_html(get_the_title()); ?> - <?php display_food_price_tag(); ?> </h3>
+                            <?php display_food_veg_nonveg_icon_tag(); ?>
+                        </div>
                         <?php
                         if (get_option('food_manager_enable_food_types') && get_food_type())
                         {

@@ -2027,13 +2027,13 @@ function get_advanced_tab_fields() {
 				'type'        => 'checkbox',
 				'required'    => true,
 				'placeholder' => '1',
-				'default' => 1,
+				'value' => 1,
 				'priority'    => 1
 			),
 
 			'enable_food_nutri' => array(
 				'label'       => __( 'Enable Nutrition', 'wp-food-manager' ),
-				'default'         => 1,
+				'value'         => 1,
 				'type'        => 'checkbox',
 				'required'    => true,
 				'placeholder' => '1',

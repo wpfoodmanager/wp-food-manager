@@ -60,6 +60,7 @@ do_action('set_single_listing_view_count');
                                     <?php endif; ?>
                                     <div class="wpfm-food-title">
                                         <h3 class="wpfm-heading-text"><?php the_title(); ?> - <?php display_food_price_tag(); ?></h3>
+                                        <?php display_food_veg_nonveg_icon_tag(); ?>
                                     </div>
                                     <div class="wpfm-food-organizer">
                                         <div class="wpfm-food-organizer-name">by <?php echo get_the_author_link(); ?></div>

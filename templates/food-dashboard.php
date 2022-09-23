@@ -25,6 +25,21 @@
 							<?php if ('food_title' === $key ) : ?>
 								<?php if ( $food->post_status == 'publish' ) : ?>
 									<a href="<?php echo get_permalink( $food->ID ); ?>"><?php echo esc_html( $food->post_title ); ?></a>
+									<?php 
+									$wpfm_veg_nonveg_tag = get_post_meta( $food->ID, '_food_veg_nonveg', true);
+								    if(!empty($wpfm_veg_nonveg_tag)){
+								    	$imagePath = '';
+								        if($wpfm_veg_nonveg_tag === 'veg'){
+								            $imagePath = WPFM_PLUGIN_URL."/assets/images/wpfm-veg-organic.png";
+								        }
+								        if($wpfm_veg_nonveg_tag === 'non-veg'){
+								            $imagePath = WPFM_PLUGIN_URL."/assets/images/wpfm-non-veg-organic.png";
+								        }
+								        if(!empty($imagePath)){
+								        	echo '<img alt="'.$wpfm_veg_nonveg_tag.'" src="'.$imagePath.'" class="wpfm-organic-tag-icon '.$wpfm_veg_nonveg_tag.'">';
+								        }
+								    }
+									?>
 								<?php else : ?>
 									<?php echo $food->post_title; ?> <small>(<?php display_food_status( $food ); ?>)</small>
 								<?php endif; ?>

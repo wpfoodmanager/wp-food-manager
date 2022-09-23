@@ -178,19 +178,31 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
 					'priority'    => 10
 				),
 				
+				'food_veg_nonveg' => array(
+					'label'       => __( 'Food Type', 'wp-food-manager' ),
+					'type'        => 'radio',
+					'required'    => true,
+					'value'     => 'none',
+					'options' 	  => array(
+										'none' => __('N/A','wp-food-manager'),
+										'veg' => __('Veg','wp-food-manager'),
+										'non-veg' => __('Non Veg','wp-food-manager'),
+									),
+					'priority'    => 11
+				),
 				'food_price' => array(
 					'label'       => __( 'Regular Price', 'wp-food-manager' ),
 					'type'        => 'number',
 					'required'    => true,
 					'placeholder' => '',
-					'priority'    => 11
+					'priority'    => 12
 				),
 				'food_sale_price' => array(
 					'label'       => __( 'Sale Price', 'wp-food-manager' ),
 					'type'        => 'number',
 					'required'    => true,
 					'placeholder' => '',
-					'priority'    => 12
+					'priority'    => 13
 				),
 				'food_stock_status' => array(
 					'label'       => __( 'Stock Status', 'wp-food-manager' ),
@@ -200,7 +212,7 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
 										'fm_instock' => __('In stock','wp-food-manager'),
 										'fm_outofstock' => __('Out of stock','wp-food-manager'),
 									),
-					'priority'    => 13
+					'priority'    => 14
 				),
 			),
 
@@ -805,7 +817,6 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
 	
 		return $this->fields;
 	}
-
 
 	/**
 	 * This function will set food id for invoking food object

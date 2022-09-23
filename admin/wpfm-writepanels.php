@@ -419,9 +419,13 @@ class WPFM_Writepanels
 	public static function input_checkbox($key, $field)
 	{
 		global $thepostid;
-		if (empty($field['value'])) {
+
+		$field_val = get_post_meta($thepostid, $key, true);
+
+		if (empty($field['value']) || empty($field_val)) {
 			$field['value'] = get_post_meta($thepostid, $key, true);
 		}
+
 		if (!empty($field['name'])) {
 			$name = $field['name'];
 		} else {
@@ -500,20 +504,26 @@ class WPFM_Writepanels
 	public static function input_radio($key, $field)
 	{
 		global $thepostid;
-		if (empty($field['value'])) {
+		
+		$field_val = get_post_meta($thepostid, $key, true);
+
+		if (empty($field['value']) || !empty($field_val)) {
 			$field['value'] = get_post_meta($thepostid, $key, true);
 		}
+		
 		if (!empty($field['name'])) {
 			$name = $field['name'];
 		} else {
 			$name = $key;
 		}
+		
 	?>
 		<p class="wpfm-admin-postbox-form-field <?=$name;?>">
-			<label><?php echo esc_html($field['label']); ?></label>
+			<label><?php echo esc_html($field['label']); ?> :</label>
 			<span class="wpfm-input-field">
 				<?php foreach ($field['options'] as $option_key => $value) : ?>
-					<input type="radio" class="radio" name="<?php echo esc_attr(isset($field['name']) ? $field['name'] : $key); ?>" value="<?php echo esc_attr($option_key); ?>" <?php checked($field['value'], $option_key); ?> /> <?php echo esc_html($value); ?>
+					<input type="radio" id="<?php echo esc_attr($option_key); ?>" class="radio <?php echo esc_attr($option_key); ?>" name="<?php echo esc_attr(isset($field['name']) ? $field['name'] : $key); ?>" value="<?php echo esc_attr($option_key); ?>" <?php checked($field['value'], $option_key); ?> />
+					<label for="<?php echo esc_attr($option_key); ?>"><?php echo esc_html($value); ?></label>
 				<?php endforeach; ?>
 				<?php if (!empty($field['description'])) : ?><span class="description"><?php echo $field['description']; ?></span><?php endif; ?>
 			</span>
@@ -739,6 +749,13 @@ class WPFM_Writepanels
 
 
 		foreach ($this->food_manager_data_fields() as $key => $field) {
+
+			// Food type
+			$fd_type = sanitize_text_field($_POST['_food_veg_nonveg']);
+			if( !add_post_meta($post_id,'_food_veg_nonveg', $fd_type, true) ){
+				update_post_meta($post_id,'_food_veg_nonveg', $fd_type);
+			}
+
 			// Food price
 			$fd_price = sanitize_text_field($_POST['_food_price']);
 			if( !add_post_meta($post_id,'_food_price', $fd_price, true) ){
@@ -1024,6 +1041,7 @@ class WPFM_Writepanels
 				$food_thumbnail = get_the_post_thumbnail( $post_id, array( 60, 60), array( 'class' => 'alignleft' ) );
 			}
 			echo $food_thumbnail;
+			display_food_veg_nonveg_icon_tag();
 		}
 		if($column == 'price'){
 			display_food_price_tag();

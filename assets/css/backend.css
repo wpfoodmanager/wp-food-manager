@@ -442,6 +442,42 @@ td.fm_categories.column-fm_categories span.food-category {
   border-radius: 4px;
 }
 
+input[name="_food_veg_nonveg"]{
+  border-radius: 0;
+}
+
+._food_veg_nonveg .radio.veg{
+  border-color: #22aa00;
+}
+._food_veg_nonveg .radio.veg:focus{
+  box-shadow: 0 0 0 1px #22aa00;
+}
+._food_veg_nonveg .radio.veg:checked::before {
+  background-color: #22aa00;
+}
+
+._food_veg_nonveg .radio.non-veg{
+  border-color: #ff0000;
+}
+._food_veg_nonveg .radio.non-veg:focus{
+  box-shadow: 0 0 0 1px #ff0000;
+}
+._food_veg_nonveg .radio.non-veg:checked::before {
+  background-color: #ff0000;
+}
+.wpfm_panel .wpfm-admin-postbox-form-field._food_veg_nonveg span.wpfm-input-field label {
+  float: none;
+  margin: 0 5px 0 0;
+}
+.wpfm_panel .wpfm-admin-postbox-form-field span.wpfm-input-field label {
+  float: none;
+  margin: 0;
+}
+
+#the-list .column-image img.wpfm-organic-tag-icon {
+  margin-left: 10px;
+}
+
 #wpfm-ingredient-container, #wpfm-nutrition-container {
   padding: 5px;
   display: -webkit-box;
