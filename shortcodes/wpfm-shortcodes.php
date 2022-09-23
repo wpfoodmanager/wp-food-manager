@@ -109,7 +109,7 @@ class WPFM_Shortcodes {
 
 						// Message
 
-						$this->food_dashboard_message = '<div class="food-manager-message wpfm-alert wpfm-alert-success">' . sprintf( __( '%s has been cancelled', 'wp-food-manager' ), esc_html( $food->post_title ) ) . '</div>';
+						$this->food_dashboard_message = '<div class="food-manager-message wpfm-alert wpfm-alert-success">' . sprintf( __( '%s has been cancelled.', 'wp-food-manager' ), esc_html( $food->post_title ) ) . '</div>';
 
 						break;
 
@@ -126,7 +126,7 @@ class WPFM_Shortcodes {
 						update_post_meta( $food_id, '_cancelled', 0 );
 						
 						// Message
-						$this->food_dashboard_message = '<div class="food-manager-message wpfm-alert wpfm-alert-success">' . sprintf( __( '%s has been marked as not cancelled', 'wp-food-manager' ), esc_html( $food->post_title ) ) . '</div>';
+						$this->food_dashboard_message = '<div class="food-manager-message wpfm-alert wpfm-alert-success">' . sprintf( __( '%s has been marked as not cancelled.', 'wp-food-manager' ), esc_html( $food->post_title ) ) . '</div>';
 
 						break;
 
@@ -139,7 +139,7 @@ class WPFM_Shortcodes {
 
 						// Message
 						if (!in_array($foods_status, ['trash'])) {
-							$this->food_dashboard_message = '<div class="food-manager-message wpfm-alert wpfm-alert-danger">' . sprintf( __( '%s has been deleted', 'wp-food-manager' ), esc_html( $food->post_title ) ) . '</div>';
+							$this->food_dashboard_message = '<div class="food-manager-message wpfm-alert wpfm-alert-danger">' . sprintf( __( '%s has been deleted.', 'wp-food-manager' ), esc_html( $food->post_title ) ) . '</div>';
 						}
 
 						break;
