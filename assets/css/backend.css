@@ -474,6 +474,18 @@ input[name="_food_veg_nonveg"]{
   margin: 0;
 }
 
+mark.fm_outofstock {
+  color: #aa4444;
+  background: transparent;
+  font-weight: bold;
+}
+mark.fm_instock {
+  color: #7ad03a;
+  background: transparent;
+  font-weight: bold;
+}
+
+
 #the-list .column-image img.wpfm-organic-tag-icon {
   margin-left: 10px;
 }
