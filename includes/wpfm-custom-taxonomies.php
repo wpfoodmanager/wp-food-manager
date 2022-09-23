@@ -32,7 +32,7 @@ if ( get_option( 'food_manager_enable_categories' ,true) ) {
 
 	register_taxonomy( "food_manager_category",
 		
-	apply_filters( 'register_taxonomy_food_manager_category_object_type', array( 'food_manager', 'food_manager_menu' ) ),
+	apply_filters( 'register_taxonomy_food_manager_category_object_type', array( 'food_manager' ) ), //'food_manager_menu'
 
    	 	apply_filters( 'register_taxonomy_food_manager_category_args', array(
 

@@ -1165,7 +1165,7 @@ class WPFM_Shortcodes {
 			<?php while ( $food_menus->have_posts() ) : $food_menus->the_post(); ?>
 				
 				<div class="clearfix" />
-                <?php  get_food_manager_template_part( 'content', 'food_manager_menu' ); ?>
+                <?php  get_food_manager_template_part( 'content-single', 'food_manager_menu' ); //content ?>
 
 			<?php endwhile; ?>
 

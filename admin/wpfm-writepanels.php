@@ -80,6 +80,8 @@ class WPFM_Writepanels
 		add_meta_box('food_manager_data', sprintf(__('%s Data', 'wp-food-manager'), $wp_post_types['food_manager']->labels->singular_name), array($this, 'food_manager_data'), 'food_manager', 'normal', 'high');
 
 		//add_meta_box('food_manager_menu_data', __('Menu items', 'wp-food-manager'), array($this, 'food_manager_menu_data'), 'food_manager_menu', 'normal', 'high');
+
+		add_meta_box('food_manager_menu_data_icons', __('Menu items', 'wp-food-manager'), array($this, 'food_manager_menu_data_icons'), 'food_manager_menu', 'normal', 'high');
 	}
 
 	/**
@@ -104,27 +106,27 @@ class WPFM_Writepanels
 
 
 	/**
-	 * food_manager_data function.
+	 * food_manager_data_icons function.
 	 *
 	 * @access public
 	 * @param mixed $post
 	 * @return void
 	 */
-	public function food_manager_menu_data($post)
+	public function food_manager_menu_data_icons($post)
 	{
 		global $post, $thepostid;
 		$thepostid = $post->ID;
 		wp_enqueue_script('wpfm-admin');
 
 		wp_nonce_field('save_meta_data', 'food_manager_nonce');
-?>
+		?>
 
 		<div class="wpfm-admin-food-menu-container wpfm-flex-col wpfm-admin-postbox-meta-data">
 			<div class="wpfm-admin-menu-selection wpfm-admin-postbox-form-field">
 				<label for="_add_food"><?php _e('Select food category'); ?></label>
 				<div class="wpfm-admin-postbox-drop-btn">
 					<?php food_manager_dropdown_selection(array(
-						'multiple' => false, 'show_option_all' => __('Select category', 'wp-food-manager'),
+						'multiple' => false, 'show_option_all' => __('All category', 'wp-food-manager'),
 						'id' => 'wpfm-admin-food-selection',
 						'taxonomy' => 'food_manager_category',
 						'hide_empty' => false,
@@ -160,6 +162,26 @@ class WPFM_Writepanels
 		</div>
 	<?php
 	}
+
+	/**
+	 * food_manager_data function.
+	 *
+	 * @access public
+	 * @param mixed $post
+	 * @return void
+	 */
+	/*public function food_manager_menu_data($post)
+	{
+		global $post, $thepostid;
+		$thepostid = $post->ID;
+		wp_enqueue_script('wpfm-admin');
+
+		wp_nonce_field('save_meta_data', 'food_manager_nonce');
+		?>
+
+		
+	<?php
+	}*/
 
 	/**
 	 * Return array of tabs to show.

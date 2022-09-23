@@ -746,11 +746,11 @@ class WPFM_Post_Types {
 
 					'parent' 				=> sprintf( __( 'Parent %s', 'wp-food-manager' ), $singular ),
 					
-					'featured_image'        => __( 'Food Thumbnail', 'wp-food-manager' ),
+					'featured_image'        => __( 'Food Category Image', 'wp-food-manager' ),
 					
-					'set_featured_image'    => __( 'Set food thumbnail', 'wp-food-manager' ),
+					'set_featured_image'    => __( 'Add Image', 'wp-food-manager' ),
 					
-					'remove_featured_image' => __( 'Remove food thumbnail', 'wp-food-manager' ),
+					'remove_featured_image' => __( 'Remove Image', 'wp-food-manager' ),
 					
 					'use_featured_image'    => __( 'Use as food thumbnail', 'wp-food-manager' ),
 				),
@@ -777,7 +777,7 @@ class WPFM_Post_Types {
 					
 				'show_in_rest' 			=> true,
 
-				'supports' 				=> array( 'title', 'editor', 'custom-fields', 'publicize' , 'thumbnail'),
+				'supports' 				=> array( 'title', 'thumbnail', 'custom-fields', 'publicize'), //'editor'
 
 				'has_archive' 			=> $has_archive,
 
