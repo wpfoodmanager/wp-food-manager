@@ -51,7 +51,9 @@ class WPFM_Admin {
 
 		wp_enqueue_style('wpfm-backend-css',WPFM_PLUGIN_URL.'/assets/css/backend.css');
 
-		wp_enqueue_style('wpfm-font-style',WPFM_PLUGIN_URL.'/assets/fonts/style.css');
+		wp_enqueue_style('wpfm-font-awesome-css', WPFM_PLUGIN_URL.'/assets/font-awesome/css/font-awesome.css');
+
+		wp_enqueue_style('wpfm-font-style', WPFM_PLUGIN_URL.'/assets/fonts/style.css');
 
 		wp_enqueue_script( 'jquery' );
 		wp_enqueue_script( 'jquery-ui-core' );

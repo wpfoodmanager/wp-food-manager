@@ -79,9 +79,9 @@ class WPFM_Writepanels
 
 		add_meta_box('food_manager_data', sprintf(__('%s Data', 'wp-food-manager'), $wp_post_types['food_manager']->labels->singular_name), array($this, 'food_manager_data'), 'food_manager', 'normal', 'high');
 
-		//add_meta_box('food_manager_menu_data', __('Menu items', 'wp-food-manager'), array($this, 'food_manager_menu_data'), 'food_manager_menu', 'normal', 'high');
+		add_meta_box('food_manager_menu_data', __('Menu Icon', 'wp-food-manager'), array($this, 'food_manager_menu_data'), 'food_manager_menu', 'normal', 'high');
 
-		add_meta_box('food_manager_menu_data_icons', __('Menu items', 'wp-food-manager'), array($this, 'food_manager_menu_data_icons'), 'food_manager_menu', 'normal', 'high');
+		add_meta_box('food_manager_menu_data_icons', __('All Food', 'wp-food-manager'), array($this, 'food_manager_menu_data_icons'), 'food_manager_menu', 'normal', 'high');
 	}
 
 	/**
@@ -170,18 +170,23 @@ class WPFM_Writepanels
 	 * @param mixed $post
 	 * @return void
 	 */
-	/*public function food_manager_menu_data($post)
+	public function food_manager_menu_data($post)
 	{
 		global $post, $thepostid;
 		$thepostid = $post->ID;
 		wp_enqueue_script('wpfm-admin');
 
 		wp_nonce_field('save_meta_data', 'food_manager_nonce');
-		?>
 
+		$icon_arrs = wpfm_get_font_icons();
 		
-	<?php
-	}*/
+		echo '<input type="search" id="wpfm_icon_search" name="wpfm_icon_search" placeholder="Icon Search">';
+		echo "<div class='wpfm-font-wesome-class'>";
+			foreach($icon_arrs as $key => $icon_arr){
+				echo '<div class="sub-font-icon"><input type="radio" id="'.$key.'" name="radio_icons" value="'.$key.'"><label for="'.$key.'"><i class="fa '.$key.'"></i></label></div>';
+			}
+		echo "</div>";
+	}
 
 	/**
 	 * Return array of tabs to show.

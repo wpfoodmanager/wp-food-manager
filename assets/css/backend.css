@@ -2,6 +2,49 @@
   pointer-events: none;
   opacity: 0.6;
 }*/
+
+.wpfm-font-wesome-class {
+  display: grid;
+  grid-template-columns: auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto;
+  height: 200px;
+  overflow-y: auto;
+}
+.wpfm-font-wesome-class i.fa{
+  font-size: 18px;
+}
+.sub-font-icon {
+  border: 1px solid #ddd;
+  padding: 10px 5px;
+  text-align: center;
+  position: relative;
+  z-index: 9;
+}
+.sub-font-icon input[type=radio] {
+  opacity: 0;
+}
+.sub-font-icon input[type=radio] + label {
+  margin-left: -20px;
+}
+.sub-font-icon input[type=radio]:checked + label::after {
+  background: #333;
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  z-index: -1;
+}
+.sub-font-icon input[type=radio]:checked + label i{
+  color: #fff;
+}
+.sub-font-icon input[type=radio]:checked - .sub-font-icon{
+  border-color: #333;
+}
+#wpfm_icon_search{
+  margin: 10px 0 15px;
+}
+
 .wpfm-admin-left-col,
 .wpfm-admin-right-col {
   display: inline-flex;
