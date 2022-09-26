@@ -4,7 +4,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * WP_Event_Manager_Install
+ * WP_Food_Manager_Install
  */
 
 class WPFM_Install {

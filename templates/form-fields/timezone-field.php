@@ -5,8 +5,8 @@
  * This template can be overridden by copying it to yourtheme/wp-food-manager/form-fields/timezone-field.php.
  *
  * @see         https://www.wp-foodmanager.com/documentation/template-files-override/
- * @author      WP Event Manager
- * @package     WP Event Manager
+ * @author      WP Food Manager
+ * @package     WP Food Manager
  * @category    Template
  * @since 		3.0
  * @version     3.0
@@ -15,6 +15,6 @@
  <select name="<?php echo esc_attr( isset( $field['name'] ) ? $field['name'] : $key ); ?>" id="<?php echo isset( $field['id'] ) ? esc_attr( $field['id'] ) :  esc_attr( $key ); ?>" class="input-select <?php echo esc_attr( isset( $field['class'] ) ? $field['class'] : $key ); ?>">
  			<?php 
  			$value = isset($field['value']) ? $field['value'] : $field['default'];	
- 			echo WP_Event_Manager_Date_Time::wp_food_manager_timezone_choice($value);
+ 			echo WP_Food_Manager_Date_Time::wp_food_manager_timezone_choice($value);
  			?>
  </select>

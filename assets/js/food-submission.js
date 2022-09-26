@@ -17,22 +17,22 @@ EventSubmission = function () {
 
             if (jQuery('#event_start_time').length > 0) {
                 jQuery('#event_start_time').timepicker({
-                    'timeFormat': wp_event_manager_event_submission.i18n_timepicker_format,
-                    'step': wp_event_manager_event_submission.i18n_timepicker_step,
+                    'timeFormat': wp_food_manager_event_submission.i18n_timepicker_format,
+                    'step': wp_food_manager_event_submission.i18n_timepicker_step,
                 });
             }
 
             if (jQuery('#event_end_time').length > 0) {
                 jQuery('#event_end_time').timepicker({
-                    'timeFormat': wp_event_manager_event_submission.i18n_timepicker_format,
-                    'step': wp_event_manager_event_submission.i18n_timepicker_step,
+                    'timeFormat': wp_food_manager_event_submission.i18n_timepicker_format,
+                    'step': wp_food_manager_event_submission.i18n_timepicker_step,
                 });
             }
 
             if (jQuery('input[data-picker="timepicker"]').length > 0) {
                 jQuery('input[data-picker="timepicker"]').timepicker({
-                    'timeFormat': wp_event_manager_event_submission.i18n_timepicker_format,
-                    'step': wp_event_manager_event_submission.i18n_timepicker_step,
+                    'timeFormat': wp_food_manager_event_submission.i18n_timepicker_format,
+                    'step': wp_food_manager_event_submission.i18n_timepicker_step,
                 });
             }
 
@@ -40,13 +40,13 @@ EventSubmission = function () {
             //EventSubmission.timeFormatSettings();
 
             if (jQuery('input[data-picker="datepicker"]#event_start_date').length > 0) {
-                wp_event_manager_event_submission.start_of_week = parseInt(wp_event_manager_event_submission.start_of_week);
+                wp_food_manager_event_submission.start_of_week = parseInt(wp_food_manager_event_submission.start_of_week);
 
-                if (wp_event_manager_event_submission.show_past_date) {
+                if (wp_food_manager_event_submission.show_past_date) {
                     jQuery('input[data-picker="datepicker"]#event_start_date').datepicker({
-                        dateFormat: wp_event_manager_event_submission.i18n_datepicker_format,
-                        firstDay: wp_event_manager_event_submission.start_of_week,
-                        monthNames: wp_event_manager_event_submission.monthNames,
+                        dateFormat: wp_food_manager_event_submission.i18n_datepicker_format,
+                        firstDay: wp_food_manager_event_submission.start_of_week,
+                        monthNames: wp_food_manager_event_submission.monthNames,
                     }).on('change', function () {
                         // set the "event_start_date" end to not be later than "event_end_date" starts:
                         //jQuery('#event_start_date').datepicker('minDate', new Date(jQuery(this).val()));
@@ -55,9 +55,9 @@ EventSubmission = function () {
 
                         jQuery('input[data-picker="datepicker"]#event_end_date').datepicker({
                             minDate: jQuery('#event_start_date').val(),
-                            dateFormat: wp_event_manager_event_submission.i18n_datepicker_format,
-                            firstDay: wp_event_manager_event_submission.start_of_week,
-                            monthNames: wp_event_manager_event_submission.monthNames,
+                            dateFormat: wp_food_manager_event_submission.i18n_datepicker_format,
+                            firstDay: wp_food_manager_event_submission.start_of_week,
+                            monthNames: wp_food_manager_event_submission.monthNames,
                         });
 
                     });
@@ -65,9 +65,9 @@ EventSubmission = function () {
                 else {
                     jQuery('input[data-picker="datepicker"]#event_start_date').datepicker({
                         minDate: 0,
-                        dateFormat: wp_event_manager_event_submission.i18n_datepicker_format,
-                        firstDay: wp_event_manager_event_submission.start_of_week,
-                        monthNames: wp_event_manager_event_submission.monthNames,
+                        dateFormat: wp_food_manager_event_submission.i18n_datepicker_format,
+                        firstDay: wp_food_manager_event_submission.start_of_week,
+                        monthNames: wp_food_manager_event_submission.monthNames,
                     }).on('change', function () {
                         // set the "event_start_date" end to not be later than "event_end_date" starts:
                         //jQuery('#event_start_date').datepicker('minDate', new Date(jQuery(this).val()));
@@ -76,9 +76,9 @@ EventSubmission = function () {
 
                         jQuery('input[data-picker="datepicker"]#event_end_date').datepicker({
                             minDate: jQuery('#event_start_date').val(),
-                            dateFormat: wp_event_manager_event_submission.i18n_datepicker_format,
-                            firstDay: wp_event_manager_event_submission.start_of_week,
-                            monthNames: wp_event_manager_event_submission.monthNames,
+                            dateFormat: wp_food_manager_event_submission.i18n_datepicker_format,
+                            firstDay: wp_food_manager_event_submission.start_of_week,
+                            monthNames: wp_food_manager_event_submission.monthNames,
                         });
 
                     });
@@ -87,9 +87,9 @@ EventSubmission = function () {
 
             if (jQuery('input[data-picker="datepicker"]#event_end_date').length > 0) {
                 jQuery('input[data-picker="datepicker"]#event_end_date').datepicker({
-                    dateFormat: wp_event_manager_event_submission.i18n_datepicker_format,
-                    firstDay: wp_event_manager_event_submission.start_of_week,
-                    monthNames: wp_event_manager_event_submission.monthNames,
+                    dateFormat: wp_food_manager_event_submission.i18n_datepicker_format,
+                    firstDay: wp_food_manager_event_submission.start_of_week,
+                    monthNames: wp_food_manager_event_submission.monthNames,
                     beforeShow: function (input, inst) {
                         var mindate = jQuery('input[data-picker="datepicker"]#event_start_date').datepicker('getDate');
                         jQuery(this).datepicker('option', 'minDate', mindate);
@@ -100,60 +100,60 @@ EventSubmission = function () {
 
                     jQuery("#event_registration_deadline").datepicker("destroy");
 
-                    if (wp_event_manager_event_submission.show_past_date) {
+                    if (wp_food_manager_event_submission.show_past_date) {
                         jQuery('input[data-picker="datepicker"]#event_registration_deadline').datepicker({
                             maxDate: jQuery('#event_end_date').val(),
-                            dateFormat: wp_event_manager_event_submission.i18n_datepicker_format,
-                            firstDay: wp_event_manager_event_submission.start_of_week,
-                            monthNames: wp_event_manager_event_submission.monthNames,
+                            dateFormat: wp_food_manager_event_submission.i18n_datepicker_format,
+                            firstDay: wp_food_manager_event_submission.start_of_week,
+                            monthNames: wp_food_manager_event_submission.monthNames,
                         });
                     }
                     else {
                         jQuery('input[data-picker="datepicker"]#event_registration_deadline').datepicker({
                             minDate: 0,
                             maxDate: jQuery('#event_end_date').val(),
-                            dateFormat: wp_event_manager_event_submission.i18n_datepicker_format,
-                            firstDay: wp_event_manager_event_submission.start_of_week,
-                            monthNames: wp_event_manager_event_submission.monthNames,
+                            dateFormat: wp_food_manager_event_submission.i18n_datepicker_format,
+                            firstDay: wp_food_manager_event_submission.start_of_week,
+                            monthNames: wp_food_manager_event_submission.monthNames,
                         });
                     }
                 });
             }
 
             if (jQuery('input[data-picker="datepicker"]#event_registration_deadline').length > 0) {
-                if (wp_event_manager_event_submission.show_past_date) {
+                if (wp_food_manager_event_submission.show_past_date) {
                     jQuery('input[data-picker="datepicker"]#event_registration_deadline').datepicker({
                         maxDate: jQuery('#event_end_date').val(),
-                        dateFormat: wp_event_manager_event_submission.i18n_datepicker_format,
-                        firstDay: wp_event_manager_event_submission.start_of_week,
-                        monthNames: wp_event_manager_event_submission.monthNames,
+                        dateFormat: wp_food_manager_event_submission.i18n_datepicker_format,
+                        firstDay: wp_food_manager_event_submission.start_of_week,
+                        monthNames: wp_food_manager_event_submission.monthNames,
                     });
                 }
                 else {
                     jQuery('input[data-picker="datepicker"]#event_registration_deadline').datepicker({
                         minDate: 0,
                         maxDate: jQuery('#event_end_date').val(),
-                        dateFormat: wp_event_manager_event_submission.i18n_datepicker_format,
-                        firstDay: wp_event_manager_event_submission.start_of_week,
-                        monthNames: wp_event_manager_event_submission.monthNames,
+                        dateFormat: wp_food_manager_event_submission.i18n_datepicker_format,
+                        firstDay: wp_food_manager_event_submission.start_of_week,
+                        monthNames: wp_food_manager_event_submission.monthNames,
                     });
                 }
             }
 
             if (jQuery('input[data-picker="datepicker"]').length > 0) {
-                if (wp_event_manager_event_submission.show_past_date) {
+                if (wp_food_manager_event_submission.show_past_date) {
                     jQuery('input[data-picker="datepicker"]').datepicker({
-                        dateFormat: wp_event_manager_event_submission.i18n_datepicker_format,
-                        firstDay: wp_event_manager_event_submission.start_of_week,
-                        monthNames: wp_event_manager_event_submission.monthNames,
+                        dateFormat: wp_food_manager_event_submission.i18n_datepicker_format,
+                        firstDay: wp_food_manager_event_submission.start_of_week,
+                        monthNames: wp_food_manager_event_submission.monthNames,
                     });
                 }
                 else {
                     jQuery('input[data-picker="datepicker"]').datepicker({
                         minDate: 0,
-                        dateFormat: wp_event_manager_event_submission.i18n_datepicker_format,
-                        firstDay: wp_event_manager_event_submission.start_of_week,
-                        monthNames: wp_event_manager_event_submission.monthNames,
+                        dateFormat: wp_food_manager_event_submission.i18n_datepicker_format,
+                        firstDay: wp_food_manager_event_submission.start_of_week,
+                        monthNames: wp_food_manager_event_submission.monthNames,
                     });
                 }
             }
@@ -247,15 +247,15 @@ EventSubmission = function () {
 
                 if ($wrap.find('input[data-picker="datepicker"]').length > 0) {
                     $wrap.find('input[data-picker="datepicker"]').datepicker({
-                        dateFormat: wp_event_manager_event_submission.i18n_datepicker_format,
-                        firstDay: wp_event_manager_event_submission.start_of_week
+                        dateFormat: wp_food_manager_event_submission.i18n_datepicker_format,
+                        firstDay: wp_food_manager_event_submission.start_of_week
                     });
                 }
 
                 if ($wrap.find('input[data-picker="timepicker"]').length > 0) {
                     $wrap.find('input[data-picker="timepicker"]').timepicker({
-                        'timeFormat': wp_event_manager_event_submission.i18n_timepicker_format,
-                        'step': wp_event_manager_event_submission.i18n_timepicker_step,
+                        'timeFormat': wp_food_manager_event_submission.i18n_timepicker_format,
+                        'step': wp_food_manager_event_submission.i18n_timepicker_step,
                     });
                 }
 
@@ -412,7 +412,7 @@ EventSubmission = function () {
                 fd.append("organizer_description", organizer_description);
 
                 jQuery.ajax({
-                    url: wp_event_manager_event_submission.ajax_url,
+                    url: wp_food_manager_event_submission.ajax_url,
                     type: 'POST',
                     dataType: 'JSON',
                     processData: false,
@@ -463,7 +463,7 @@ EventSubmission = function () {
                 fd.append("venue_description", venue_description);
 
                 jQuery.ajax({
-                    url: wp_event_manager_event_submission.ajax_url,
+                    url: wp_food_manager_event_submission.ajax_url,
                     type: 'POST',
                     dataType: 'JSON',
                     processData: false,

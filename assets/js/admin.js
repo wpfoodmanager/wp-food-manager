@@ -621,7 +621,7 @@ var WPFMAdmin= function () {
                         var field_placeholder = jQuery(this).data('field_placeholder');
                         var button_text = jQuery(this).data('uploader_button_text');
                         var button = jQuery(this).data('uploader_button');
-                        jQuery(this).before('<span class="file_url"><input type="text" name="' + field_name + '[]" placeholder="' + field_placeholder + '" /><button class="button button-small wp_event_manager_upload_file_button" data-uploader_button_text="' + button_text + '">' + button + '</button></span>');
+                        jQuery(this).before('<span class="file_url"><input type="text" name="' + field_name + '[]" placeholder="' + field_placeholder + '" /><button class="button button-small wp_food_manager_upload_file_button" data-uploader_button_text="' + button_text + '">' + button + '</button></span>');
                     }
                 }
     } //enf of return

@@ -1705,9 +1705,9 @@ class WPFM_Post_Types {
 
 			$this->maybe_add_default_meta_data( $post_id );
 
-			if ( ! WP_Event_Manager_Geocode::has_location_data( $post_id ) && ( $location = get_post_meta( $post_id, '_food_location', true ) ) ) {
+			if ( ! WP_Food_Manager_Geocode::has_location_data( $post_id ) && ( $location = get_post_meta( $post_id, '_food_location', true ) ) ) {
 
-				WP_Event_Manager_Geocode::generate_location_data( $post_id, $location );
+				WP_Food_Manager_Geocode::generate_location_data( $post_id, $location );
 			}
 		}
 	}

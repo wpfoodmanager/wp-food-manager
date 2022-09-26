@@ -1,6 +1,6 @@
 <?php
 /**
- * WP_Event_Manager_Forms class.
+ * WP_Food_Manager_Forms class.
  */
 
 class WPFM_Forms {

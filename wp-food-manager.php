@@ -36,7 +36,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * WP_Event_Manager class.
+ * WP_Food_Manager class.
  */
 
 class WP_Food_Manager {
@@ -115,7 +115,7 @@ class WP_Food_Manager {
 		//actions
 		add_action( 'wp_enqueue_scripts', array( $this, 'frontend_scripts' ) );
 
-		// Schedule cron events
+		// Schedule cron foods
 		self::check_schedule_crons();
 
 	}
@@ -335,7 +335,7 @@ if(!function_exists('WPFM')){
 	 * Returns the main instance of WP Food Manager to prfood the need to use globals.
 	 *
 	 * @since  1.0
-	 * @return WP_Event_Manager
+	 * @return WP_Food_Manager
 	 */
 	function WPFM() { // phpcs:ignore WordPress.NamingConventions.ValidFunctionName
 		return WP_Food_Manager::instance();

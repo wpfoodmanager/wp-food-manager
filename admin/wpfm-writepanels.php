@@ -893,7 +893,7 @@ class WPFM_Writepanels
 							$date = $_POST[$key];
 
 							//Convert date and time value into DB formatted format and save eg. 1970-01-01
-							$date_dbformatted = WP_Event_Manager_Date_Time::date_parse_from_format($php_date_format, $date);
+							$date_dbformatted = WP_Food_Manager_Date_Time::date_parse_from_format($php_date_format, $date);
 							$date_dbformatted = !empty($date_dbformatted) ? $date_dbformatted : $date;
 							update_post_meta($post_id, $key, $date_dbformatted);
 						}

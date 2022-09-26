@@ -1231,7 +1231,7 @@ function wpfm_upload_file( $file, $args = array() ) {
 }
 
 /**
- * Allowed Mime types specifically for WP Event Manager.
+ * Allowed Mime types specifically for WP Food Manager.
  * @param   string $field Field used.
  * @return  array  Array of allowed mime types
  */
@@ -1393,7 +1393,7 @@ function food_manager_duplicate_listing( $post_id ) {
  *
  * @since 1.8
  *
- * @return bool True if they are to use standard email, false to allow user to set password at first event creation.
+ * @return bool True if they are to use standard email, false to allow user to set password at first food creation.
  */
 function food_manager_use_standard_password_setup_email() {
 	$use_standard_password_setup_email = false;

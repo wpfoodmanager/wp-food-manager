@@ -821,7 +821,7 @@ function get_food_manager_class( $class = '', $post_id = null ) {
 }
 
 /**
- * Outputs the events status
+ * Outputs the Foods status
  *
  * @return void
  */
