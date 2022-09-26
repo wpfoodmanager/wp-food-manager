@@ -2044,3 +2044,64 @@ function get_advanced_tab_fields() {
 
 	return $adv_fields;
 }
+
+if ( ! function_exists( 'get_food_listings_keyword_search' ) ) :
+
+	/**
+	 * Join and where query for keywords
+	 *
+	 * @param array $search
+	 * @return array
+	 */
+
+function get_food_listings_keyword_search( $search) {
+		
+		global $wpdb, $food_manager_keyword;
+		// Searchable Meta Keys: set to empty to search all meta keys
+		$searchable_meta_keys = array(
+				'_food_location',
+				'_organizer_name',
+				'_food_tags',
+		);
+		$searchable_meta_keys = apply_filters( 'food_listing_searchable_meta_keys', $searchable_meta_keys );
+		
+		$conditions   = array();
+		
+		// Search Post Meta
+		if( apply_filters( 'food_listing_search_post_meta', true ) ) {
+			// Only selected meta keys
+			if( $searchable_meta_keys ) {
+				$conditions[] = "{$wpdb->posts}.ID IN ( SELECT post_id FROM {$wpdb->postmeta} WHERE meta_key IN ( '" . implode( "','", array_map( 'esc_sql', $searchable_meta_keys ) ) . "' ) AND meta_value LIKE '%" . esc_sql( $food_manager_keyword ) . "%' )";
+			} else {
+				// No meta keys defined, search all post meta value
+				$conditions[] = "{$wpdb->posts}.ID IN ( SELECT post_id FROM {$wpdb->postmeta} WHERE meta_value LIKE '%" . esc_sql( $food_manager_keyword ) . "%' )";
+			}
+		}
+		
+		// Search taxonomy
+		$conditions[] = "{$wpdb->posts}.ID IN ( SELECT object_id FROM {$wpdb->term_relationships} AS tr LEFT JOIN {$wpdb->term_taxonomy} AS tt ON tr.term_taxonomy_id = tt.term_taxonomy_id LEFT JOIN {$wpdb->terms} AS t ON tt.term_id = t.term_id WHERE t.name LIKE '%" . esc_sql( $food_manager_keyword ) . "%' )";
+		
+		/**
+ 		 * Filters the conditions to use when querying food listings. Resulting array is joined with OR statements.
+ 		 *
+ 		 * @since 1.5
+ 		 *
+ 		 * @param array  $conditions          Conditions to join by OR when querying food listings.
+ 		 * @param string $food_manager_keyword Search query.
+ 		 */
+		$conditions = apply_filters( 'food_listing_search_conditions', $conditions, $food_manager_keyword );
+		if ( empty( $conditions ) ) {
+				return $search;			
+		}
+		$conditions_str = implode( ' OR ', $conditions );
+		
+		if ( ! empty( $search ) ) {
+			$search = preg_replace( '/^ AND /', '', $search );
+			$search = " AND ( {$search} OR ( {$conditions_str} ) )";
+		} else {
+			$search = " AND ( {$conditions_str} )";
+		}
+		return $search;
+	}
+
+endif;
