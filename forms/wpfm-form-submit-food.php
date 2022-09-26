@@ -179,7 +179,7 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
 				),
 				
 				'food_veg_nonveg' => array(
-					'label'       => __( 'Food Type', 'wp-food-manager' ),
+					'label'       => __( 'Food Symbol / Tag', 'wp-food-manager' ),
 					'type'        => 'radio',
 					'required'    => true,
 					'value'     => 'none',

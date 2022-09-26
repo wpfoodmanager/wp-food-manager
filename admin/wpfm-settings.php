@@ -130,7 +130,7 @@ class WPFM_Settings {
 									'desc'       => '',
 									'std'        => '1',
 									'options'  => array(
-										'0' => 'Completely hide Food Item which has stock status out of stock.',
+										'0' => 'Completely hide Food Item which has stock status out of stock from the food listing page.',
 								 		'1' => 'Display Out of Stock label for the food item which has stock status out of stock.'
 									)
 								),
@@ -171,7 +171,7 @@ class WPFM_Settings {
 
 								'label'      => __('Multi-select Categories', 'wp-food-manager'),
 
-								'cb_label'   => __('Enable category multiselect by default.', 'wp-food-manager'),
+								'cb_label'   => __('Enable food category multiselect by default.', 'wp-food-manager'),
 
 								'desc'       => __('If enabled, the category select box will default to a multi select on the [foods] shortcode.', 'wp-food-manager'),
 
