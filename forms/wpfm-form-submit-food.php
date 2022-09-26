@@ -250,16 +250,16 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
 									),
 					'priority'    => 3
 				),
-				'option_enable_desc' => array(
+				/*'option_enable_desc' => array(
 					'label'       => __( 'Description', 'wp-food-manager' ),
 					'type'        => 'checkbox',
 					'required'    => false,
 					'placeholder' => '1',
 					'default' => 1,
 					'priority'    => 4
-				),
+				),*/
 				'option_description' => array(
-					'label'       => __( '', 'wp-food-manager' ),
+					'label'       => __( 'Description', 'wp-food-manager' ),
 					'type'        => 'textarea',
 					'required'    => false,
 					'placeholder' => 'Enter the field description',

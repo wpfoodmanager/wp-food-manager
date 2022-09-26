@@ -110,7 +110,7 @@ if(!empty($extra_fields_options)){
 
 						$option_required = ($extra_fields_option['option_required'] === 'yes') ? 'checked' : '';
 
-						$option_enable_desc = ($extra_fields_option['option_enable_desc'] === '1') ? 'checked' : '';
+						//$option_enable_desc = ($extra_fields_option['option_enable_desc'] === '1') ? 'checked' : '';
 
 						$option_key = str_replace(" ", "_", strtolower($extra_fields_option['option_name']));
 					?>
@@ -150,7 +150,7 @@ if(!empty($extra_fields_options)){
 												<input type="radio" name="_option_required_<?php echo $key; ?>" id="_option_required_<?php echo $key; ?>" attribute="" value="yes" <?php echo $option_required; ?>> Yes</label>
 										</div>
 									</fieldset>
-									<fieldset class="wpfm-form-group fieldset_option_enable_desc_<?php echo $key; ?>">
+									<!-- <fieldset class="wpfm-form-group fieldset_option_enable_desc_<?php echo $key; ?>">
 										<label for="_option_enable_desc_<?php echo $key; ?>">Description <small>(optional)</small></label>
 										<span class="wpfm-input-field">
 											<label class="wpfm-field-switch" for="_option_enable_desc_<?php echo $key; ?>">
@@ -159,9 +159,10 @@ if(!empty($extra_fields_options)){
 												<span class="wpfm-field-switch-slider round"></span>
 											</label>
 										</span>
-									</fieldset>
+									</fieldset> -->
 									
-									<fieldset class="wpfm-form-group fieldset_option_description_<?php echo $key; ?> option-desc-common" style="<?php echo ($extra_fields_option['option_enable_desc'] !== '1') ? 'display: none;' : '';?>">
+									<fieldset class="wpfm-form-group fieldset_option_description_<?php echo $key; ?> option-desc-common" style="<?php //echo ($extra_fields_option['option_enable_desc'] !== '1') ? 'display: none;' : '';?>">
+										<label for="_option_enable_desc_<?php echo $key; ?>">Description <small>(optional)</small></label>
 										<div class="field ">
 											<textarea cols="20" rows="3" class="input-text" name="_option_description_<?php echo $key; ?>" id="_option_description_<?php echo $key; ?>" attribute="" placeholder="Enter the field description" maxlength=""><?php echo $extra_fields_option['option_description']; ?></textarea>
 										</div>
@@ -257,7 +258,7 @@ if(!empty($extra_fields_options)){
 				                <?php
 				                foreach ($food_extra_fields as $key => $field) :
 
-								if($key == 'option_enable_desc'){
+								/*if($key == 'option_enable_desc'){
 				                	if( strpos($key, '_') !== 0 ) {
 										$key  = "_".$key."_%%repeated-option-index%%";
 									}
@@ -271,7 +272,7 @@ if(!empty($extra_fields_options)){
 											</label>
 										</span>
 									</fieldset>
-								<?php } else {
+								<?php } else {*/
 									if($key == "option_name"){
 										if( strpos($key, '_') !== 0 ) {
 											$key  = $key.'_%%repeated-option-index%%';
@@ -289,14 +290,15 @@ if(!empty($extra_fields_options)){
 									} ?>
 									<fieldset class="wpfm-form-group fieldset<?php echo esc_attr($key); ?> <?php if(str_contains($key, 'description')){ echo esc_attr($descClass); } ?>">
 										<?php 
-										if(!str_contains($key, 'description')){ ?>
+										//if(!str_contains($key, 'description')){ ?>
 											<label for="<?php esc_attr_e($key); ?>"><?php echo esc_attr($field['label']) . apply_filters('submit_food_form_required_label', $field['required'] ? '<span class="require-field">*</span>' : ' <small>' . __('(optional)', 'wp-food-manager') . '</small>', $field); ?></label>
-										<?php } ?>
+										<?php //} ?>
 										<div class="field <?php echo esc_attr($field['required'] ? 'required-field' : ''); ?>">
 											<?php get_food_manager_template('form-fields/' . $field['type'] . '-field.php', array('key' => $key, 'field' => $field)); ?>
 										</div>
 									</fieldset>
-								<?php } endforeach; ?>
+								<?php //} 
+								endforeach; ?>
 				            </div>
 				        </div>
 				    </div>'>+ Add Option 

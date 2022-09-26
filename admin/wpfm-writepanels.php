@@ -436,7 +436,7 @@ class WPFM_Writepanels
 	?>
 		<p class="wpfm-admin-postbox-form-field <?=$name;?>">
 			<label for="<?php echo esc_attr($key); ?>"><?php echo esc_html($field['label']); ?></label>
-			<?php if($key == '_enable_food_ingre' || $key == '_enable_food_nutri' || $key == '_option_enable_desc_'.end($exp_arr)) { ?>
+			<?php if($key == '_enable_food_ingre' || $key == '_enable_food_nutri') { //$key == '_option_enable_desc_'.end($exp_arr) ?>
 				<span class="wpfm-input-field">
 					<label class="wpfm-field-switch" for="<?php echo esc_attr($key); ?>">
 						<input type="checkbox" id="<?php echo esc_attr($key); ?>" name="<?php echo esc_attr($name); ?>" value="1"

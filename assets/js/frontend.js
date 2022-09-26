@@ -65,9 +65,9 @@ var WPFMFront= function () {
                 }
             });
 
-            jQuery('body').on('change', 'input[name^="_option_enable_desc"]', WPFMFront.actions.changeFieldDescription);
+            //jQuery('body').on('change', 'input[name^="_option_enable_desc"]', WPFMFront.actions.changeFieldDescription);
 
-            jQuery('body').on('keyup', '.wpfm-form-group.option-desc-common textarea', WPFMFront.actions.keyupTextareaDesc);
+            //jQuery('body').on('keyup', '.wpfm-form-group.option-desc-common textarea', WPFMFront.actions.keyupTextareaDesc);
             
             jQuery(document).on("click", ".wpfm-add-row", WPFMFront.actions.addElementRow)
             jQuery(document).on("click", ".option-delete-btn", WPFMFront.actions.removeAttributesOptions)
@@ -184,7 +184,7 @@ var WPFMFront= function () {
     	   	   jQuery(this).parents('li').remove();
             },
 
-            changeFieldDescription:function(event){
+            /*changeFieldDescription:function(event){
                 var row_count = jQuery(this).closest('.postbox').children('.repeated-options').val();
                 jQuery(this).closest(".fieldset_option_enable_desc_"+row_count).next().slideToggle(this.checked);
                 jQuery(this).closest(".fieldset_option_enable_desc_"+row_count).next().children(".field").children("textarea").val("Please enter a Description of field.");
@@ -199,7 +199,7 @@ var WPFMFront= function () {
                 } else {
                     jQuery(this).closest(".fieldset_option_description_"+row_count).prev().children(".wpfm-input-field").children(".wpfm-field-switch").children('input[type="checkbox"]').prop("checked", true);
                 }
-            },
+            },*/
 
             
             addElementRow:function(event){
@@ -278,7 +278,7 @@ var WPFMFront= function () {
                         });
                     }
                 }).disableSelection();
-                jQuery(this).closest(".wpfm-actions").prev().find(".option-desc-common").hide();
+                //jQuery(this).closest(".wpfm-actions").prev().find(".option-desc-common").hide();
             },
     	},
     }

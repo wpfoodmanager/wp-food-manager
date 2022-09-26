@@ -15,7 +15,7 @@ var WPFMAdmin= function () {
         /// <since>1.0.0</since> 
         init: function() 
         {
-            jQuery(".option-desc-common").hide();
+            //jQuery(".option-desc-common").hide();
 
             //Bind on click event of the settings section
 			jQuery(".wpfm-tabs li a").on('click',WPFMAdmin.actions.tabClick);
@@ -242,9 +242,9 @@ var WPFMAdmin= function () {
             jQuery('body').on('change', 'input[name^="option_name"]', WPFMAdmin.actions.updateOptionTitle);
             jQuery('body').on('change', 'select[name^="_option_type"]', WPFMAdmin.actions.changeFieldType);
 
-            jQuery('body').on('change', 'input[name^="_option_enable_desc"]', WPFMAdmin.actions.changeFieldDescription);
+            //jQuery('body').on('change', 'input[name^="_option_enable_desc"]', WPFMAdmin.actions.changeFieldDescription);
 
-            jQuery('body').on('keyup', '.wpfm-input-field textarea', WPFMAdmin.actions.keyupTextareaDesc);
+            //jQuery('body').on('keyup', '.wpfm-input-field textarea', WPFMAdmin.actions.keyupTextareaDesc);
             
             //find all the options and hide price
             /*jQuery('select[name^="_option_price_type"]').parent('.wpfm-admin-postbox-form-field').hide();
@@ -369,7 +369,7 @@ var WPFMAdmin= function () {
                         });
                     }
                 }).disableSelection();
-                jQuery(this).closest(".postbox").find(".option-desc-common").hide();
+                //jQuery(this).closest(".postbox").find(".option-desc-common").hide();
        },
 
         /// <summary>
@@ -427,12 +427,12 @@ var WPFMAdmin= function () {
         }
        },
 
-        changeFieldDescription:function(event){
+        /*changeFieldDescription:function(event){
             jQuery(this).closest(".wpfm-admin-postbox-form-field").next().slideToggle(this.checked);
             jQuery(this).closest(".wpfm-admin-postbox-form-field").next().children(".wpfm-input-field").children("textarea").val("Please enter a Description of field.");
-        },
+        },*/
 
-        keyupTextareaDesc:function(event){
+        /*keyupTextareaDesc:function(event){
             var textarea_value = jQuery(this).val();
             
             if(textarea_value.length == 0) {
@@ -441,7 +441,7 @@ var WPFMAdmin= function () {
             } else {
                 jQuery(this).closest(".wpfm-admin-postbox-form-field").prev().children(".wpfm-input-field").children(".wpfm-field-switch").children('input[type="checkbox"]').prop("checked", true);
             }
-        },
+        },*/
 
         /// <summary>
        /// addElementRow
