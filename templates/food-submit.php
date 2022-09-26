@@ -9,7 +9,7 @@ global $food_manager;
 $submit_food_form_page_id = get_option( 'food_manager_submit_food_form_page_id' );
 $food_dashboard_page_id = get_option( 'food_manager_food_dashboard_page_id' );
 
-$food_id = '';
+/*$food_id = '';
 if($submit_food_form_page_id){
 	if($submit_food_form_page_id == get_the_ID()){
 		$food_id = isset($_POST['food_id']) ? $_POST['food_id'] : '';
@@ -20,7 +20,9 @@ if($food_dashboard_page_id){
 	if($food_dashboard_page_id == get_the_ID()){
 		$food_id = isset($_GET['food_id']) ? $_GET['food_id'] : '';
 	}
-}
+}*/
+
+$food_id = isset($_GET['food_id']) ? $_GET['food_id'] : '';
 
 $extra_fields_options = get_post_meta($food_id, '_wpfm_extra_options', true) ? get_post_meta($food_id, '_wpfm_extra_options', true) : '';
 
