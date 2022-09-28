@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 class WPFM_Install {
 
 	/**
-	 * Install WP Event Manager
+	 * Install WP Food Manager
 	 */
 
 	public static function install() {
@@ -125,7 +125,7 @@ class WPFM_Install {
 
 	
 	/**
-	 * Default taxonomy terms to set up in WP Event Manager.
+	 * Default taxonomy terms to set up in WP Food Manager.
 	 *
 	 * @return array Default taxonomy terms.
 	 */
@@ -182,7 +182,7 @@ class WPFM_Install {
 	}
 
 	/**
-	 * Adds the employment type to default food types when updating from a previous WP Event Manager version.
+	 * Adds the employment type to default food types when updating from a previous WP Food Manager version.
 	 */
 	private static function add_food_types() {
 		$taxonomies = self::get_default_taxonomy_terms();

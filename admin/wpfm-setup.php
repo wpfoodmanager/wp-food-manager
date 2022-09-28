@@ -410,9 +410,9 @@ class WP_Food_Manager_Setup
 
 								<img src="<?php echo WPFM_PLUGIN_URL; ?>/assets/images/wpfm-logo.svg" alt="WP Food Manager">
 								<p><?php esc_attr_e('Thanks for installing WP Food Manager! Here are some valuable resources that will assist you in getting started with our plugins.', 'wp-food-manager'); ?></p>
-								<div class="wpfm-backend-video-wrap">
+								<!-- <div class="wpfm-backend-video-wrap">
 									<iframe width="560" height="315" src="https://www.youtube.com/embed/hlDVYtEDOgQ" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-								</div>
+								</div> -->
 								<div class="wpfm-setup-intro-block-btn">
 									<a href="<?php echo esc_url(admin_url('post-new.php?post_type=food_manager')); ?>" class="button button-primary button-hero"><?php esc_attr_e('Create Your First Food', 'wp-food-manager'); ?></a>
 									<a href="<?php echo esc_url(admin_url('edit.php?post_type=food_manager&page=food-manager-settings')); ?>" class="button button-secondary button-hero"><?php esc_attr_e('Settings', 'wp-food-manager'); ?></a>
@@ -447,8 +447,8 @@ class WP_Food_Manager_Setup
 										</div>
 										<div class="wpfm-setup-help-center-block-content">
 											<div class="wpfm-setup-help-center-block-heading"><?php esc_attr_e('Video Tutorials', 'wp-food-manager'); ?></div>
-											<div class="wpfm-setup-help-center-block-desc"><?php esc_attr_e('Learn different skills by examining attractive video tutorials.', 'wp-food-manager'); ?></div>
-											<a href="https://www.youtube.com/channel/UCnfYxg-fegS_n9MaPNU61bg" target="_blank" class="wpfm-setup-help-center-block-link"><span class="wpfm-setup-help-center-box-target-text"><?php esc_attr_e('Watch all', 'wp-food-manager'); ?> »</span></a>
+											<div class="wpfm-setup-help-center-block-desc"><?php esc_attr_e('Coming Soon...', 'wp-food-manager'); ?></div>
+											<!-- <a href="https://www.youtube.com/channel/UCnfYxg-fegS_n9MaPNU61bg" target="_blank" class="wpfm-setup-help-center-block-link"><span class="wpfm-setup-help-center-box-target-text"><?php esc_attr_e('Watch all', 'wp-food-manager'); ?> »</span></a> -->
 										</div>
 									</div>
 								</div>
