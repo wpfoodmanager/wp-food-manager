@@ -106,7 +106,7 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
 					'label'       => __( 'Food Title', 'wp-food-manager' ),
 					'type'        => 'text',
 					'required'    => true,
-					'placeholder' => __('food title','wp-food-manager'),
+					'placeholder' => __('Food title','wp-food-manager'),
 					'priority'    => 1
 				),
 
