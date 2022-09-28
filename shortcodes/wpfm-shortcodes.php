@@ -24,6 +24,7 @@ class WPFM_Shortcodes {
 		add_action( 'wp', array( $this, 'shortcode_action_handler' ) );
 
 		add_action('food_manager_food_dashboard_content_edit', array($this, 'edit_food'));
+		add_action('food_manager_output_foods_no_results', array($this, 'output_no_results'));
 
 		add_shortcode( 'submit_food_form', array( $this, 'submit_food_form' ) );
 		add_shortcode( 'food_dashboard', array( $this, 'food_dashboard' ) );
@@ -236,8 +237,16 @@ class WPFM_Shortcodes {
 
 		) );
 
-		$foods = new WP_Query;
-		echo $this->food_dashboard_message;
+		$food_manager_keyword = isset($_GET['search_keywords']) ? sanitize_text_field($_GET['search_keywords']) : '';
+		if (!empty($food_manager_keyword) && strlen($food_manager_keyword) >= apply_filters('food_manager_get_listings_keyword_length_threshold', 2)) {
+			$args['s'] = $food_manager_keyword;
+
+			add_filter('posts_search', 'get_food_listings_keyword_search');
+		}
+
+		$foods = new WP_Query($args);
+		//echo $this->food_dashboard_message;
+		echo  wp_kses($this->food_dashboard_message, wp_kses_allowed_html($this->food_dashboard_message));
 
 		$food_dashboard_columns = apply_filters( 'food_manager_food_dashboard_columns', array(
 
@@ -902,7 +911,7 @@ class WPFM_Shortcodes {
 			];
 		}
 
-		if(!empty($selected_datetime))
+		/*if(!empty($selected_datetime))
 		{
 			$datetimes = explode(',', $selected_datetime);
 
@@ -921,7 +930,7 @@ class WPFM_Shortcodes {
 				'value'  	=> $location,
 				'compare'	=> 'LIKE'
 			];
-		}
+		}*/
 
 		$past_foods = new WP_Query( $args_past );
 
