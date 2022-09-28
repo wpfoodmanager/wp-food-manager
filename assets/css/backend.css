@@ -44,7 +44,12 @@
 #wpfm_icon_search{
   margin: 10px 0 15px;
 }
-
+.menu-icon-food_manager .wp-menu-image img{
+  width: 28px;
+  margin-top: 0;
+  padding-top: 3px !important;
+  max-width: 100%;
+}
 .wpfm-admin-left-col,
 .wpfm-admin-right-col {
   display: inline-flex;

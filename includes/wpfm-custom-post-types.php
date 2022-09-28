@@ -694,7 +694,9 @@ class WPFM_Post_Types {
 
 				'show_in_nav_menus' 	=> false,
 
-				'menu_icon' => 'dashicons-carrot' // It's use to display food manager icon at admin site. 
+				//'menu_icon' => 'dashicons-carrot' // It's use to display food manager icon at admin site.
+
+				'menu_icon' => WPFM_PLUGIN_URL . '/assets/images/wpfm-icon.png' // It's use to display food manager icon at admin site. 
 			) )
 		);
 
