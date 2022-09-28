@@ -216,7 +216,7 @@ class WP_Food_Manager {
 		wp_enqueue_script( 'jquery' );
 		wp_enqueue_script( 'jquery-ui-core' );
 		wp_enqueue_script( 'jquery-ui-sortable' );
-		
+
 		//jQuery Deserialize - vendor
 		wp_register_script( 'jquery-deserialize', WPFM_PLUGIN_URL . '/assets/js/jquery-deserialize/jquery.deserialize.js', array( 'jquery' ), '1.2.1', true );						
 	
@@ -231,7 +231,8 @@ class WP_Food_Manager {
 		wp_enqueue_script('wp-food-manager-common');
 
 		//food submission forms and validation js
-		wp_register_script( 'wp-food-manager-food-submission', WPFM_PLUGIN_URL . '/assets/js/food-submission.min.js', array('jquery', 'wp-food-manager-submission') , WPFM_VERSION, true );
+		wp_register_script( 'wp-food-manager-food-submission', WPFM_PLUGIN_URL . '/assets/js/food-submission.min.js', array('jquery') , WPFM_VERSION, true );
+		wp_enqueue_script('wp-food-manager-food-submission');
 		/*wp_localize_script( 'wp-food-manager-food-submission', 'wp_food_manager_food_submission', array(
 			
 		'i18n_datepicker_format' => WP_Food_Manager_Date_Time::get_datepicker_format(),
