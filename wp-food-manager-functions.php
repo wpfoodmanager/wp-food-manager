@@ -1192,11 +1192,11 @@ function wpfm_upload_file( $file, $args = array() ) {
 
 		if ( $args['file_label'] ) {
 
-			return new WP_Error( 'upload', sprintf( __( '"%s" (filetype %s) needs to be one of the following file types: %s', 'wp-food-manager' ), $args['file_label'], $file['type'], implode( ', ', array_keys( $args['allowed_mime_types'] ) ) ) );
+			return new WP_Error( 'upload', sprintf( __( '"%s" (filetype %s) needs to be one of the following file types: %s.', 'wp-food-manager' ), $args['file_label'], $file['type'], implode( ', ', array_keys( $args['allowed_mime_types'] ) ) ) );
 
 		} else {
 
-			return new WP_Error( 'upload', sprintf( __( 'Uploaded files need to be one of the following file types: %s', 'wp-food-manager' ), implode( ', ', array_keys( $args['allowed_mime_types'] ) ) ) );
+			return new WP_Error( 'upload', sprintf( __( 'Uploaded files need to be one of the following file types: %s.', 'wp-food-manager' ), implode( ', ', array_keys( $args['allowed_mime_types'] ) ) ) );
 		}
 
 	} else {

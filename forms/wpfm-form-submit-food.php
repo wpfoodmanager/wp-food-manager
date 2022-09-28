@@ -326,7 +326,7 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
     	      foreach ( $group_fields as $key => $field ) 
               	{
     				if ( $field['required'] && empty( $values[ $group_key ][ $key ] ) ) {	    
-    					return new WP_Error( 'validation-error', sprintf( __( '%s is a required field', 'wp-food-manager' ), $field['label'] ) );
+    					return new WP_Error( 'validation-error', sprintf( __( '%s is a required field.', 'wp-food-manager' ), $field['label'] ) );
     				}
 
 				    if ( ! empty( $field['taxonomy'] ) && in_array( $field['type'], array( 'term-checklist', 'term-select', 'term-multiselect' ) ) ) {
@@ -337,7 +337,7 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
     					}
     					foreach ( $check_value as $term ) {    
     						if ( ! term_exists( $term, $field['taxonomy'] ) ) {
-    							return new WP_Error( 'validation-error', sprintf( __( '%s is invalid', 'wp-food-manager' ), $field['label'] ) );    
+    							return new WP_Error( 'validation-error', sprintf( __( '%s is invalid.', 'wp-food-manager' ), $field['label'] ) );    
     						}
     					}
     				}
@@ -353,7 +353,7 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
 							$file_url = current( explode( '?', $file_url ) );
 							$file_info = wp_check_filetype( $file_url );
 							if ( ! is_numeric( $file_url ) && $file_info && ! in_array( $file_info['type'], $field['allowed_mime_types'] ) ) {
-								throw new Exception( sprintf( __( '"%s" (filetype %s) needs to be one of the following file types: %s', 'wp-food-manager' ), $field['label'], $info['ext'], implode( ', ', array_keys( $field['allowed_mime_types'] ) ) ) );
+								throw new Exception( sprintf( __( '"%s" (filetype %s) needs to be one of the following file types: %s.', 'wp-food-manager' ), $field['label'], $info['ext'], implode( ', ', array_keys( $field['allowed_mime_types'] ) ) ) );
 							}
 						}
 					}
