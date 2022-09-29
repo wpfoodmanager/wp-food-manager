@@ -508,6 +508,30 @@ function wpfm_user_can_post_food() {
 	return apply_filters( 'wpfm_user_can_post_food', $can_post );
 }
 
+if ( ! function_exists( 'wp_food_manager_notify_new_user' ) ) :
+
+/**
+ * Handle account creation.
+*
+* @param  int $user_id
+* @param  string $password
+*/
+function wp_food_manager_notify_new_user( $user_id, $password ) {
+	global $wp_version;
+	
+	if ( version_compare( $wp_version, '4.3.1', '<' ) ) {
+		wp_new_user_notification( $user_id, $password );
+	} else {
+		$notify = 'admin';
+		if ( empty( $password ) ) {
+			$notify = 'both';
+		}
+		
+		wp_new_user_notification( $user_id, null, $notify );
+	}
+}
+endif;
+
 if ( ! function_exists( 'wp_food_manager_create_account' ) ) :
 
 /**

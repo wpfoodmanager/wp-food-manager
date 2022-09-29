@@ -115,6 +115,9 @@ class WP_Food_Manager {
 		//actions
 		add_action( 'wp_enqueue_scripts', array( $this, 'frontend_scripts' ) );
 
+		// Defaults for core actions
+		add_action( 'food_manager_notify_new_user', 'wp_food_manager_notify_new_user', 10, 2 );
+
 		// Schedule cron foods
 		self::check_schedule_crons();
 
