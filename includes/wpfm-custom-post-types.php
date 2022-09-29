@@ -42,6 +42,8 @@ class WPFM_Post_Types {
 
 		add_filter('use_block_editor_for_post_type', array($this,'wpfm_disable_gutenberg'), 10, 2);
 
+		//view count action
+    add_action( 'set_single_listing_view_count', array( $this, 'set_single_listing_view_count' ));
 	}
 
 	/**

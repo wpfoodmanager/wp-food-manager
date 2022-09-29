@@ -393,6 +393,15 @@ function get_food_views_count($post)
 }
 
 /**
+ * Count event view on the single event page
+ */
+function get_single_food_listing_view_count($post)
+{
+
+	get_food_views_count($post);
+}
+
+/**
  * display_food_veg_nonveg_icon_tag function.
  *
  * @access public
