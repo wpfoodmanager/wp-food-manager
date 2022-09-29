@@ -780,22 +780,25 @@ class WPFM_Writepanels
 			}
 
 			// Repeated options
-			if( !add_post_meta($post_id,'wpfm_repeated_options', $_POST['repeated_options'], true) ){
-				update_post_meta($post_id,'wpfm_repeated_options', $_POST['repeated_options']);
+			$repeated_options = isset($_POST['repeated_options']) ? $_POST['repeated_options'] : '';
+			if( !add_post_meta($post_id,'wpfm_repeated_options', $repeated_options, true) ){
+				update_post_meta($post_id,'wpfm_repeated_options', $repeated_options);
 			}
 
 			// Options value count
-			$array = $_POST['option_value_count'];
-			$food_data_option_value_count = array();
-			$index = 0;
-			foreach ($array as $number) {
-			    if ($number == 1) {
-			        $index++;
-			    }
-			    $food_data_option_value_count[$index][] = $number;
-			}
-			if( !add_post_meta($post_id,'wpfm_option_value_count', $food_data_option_value_count, true) ){
-				update_post_meta($post_id,'wpfm_option_value_count', $food_data_option_value_count);
+			$array_cnt = $_POST['option_value_count'];
+			if(isset($array_cnt) && !empty($array_cnt)){
+				$food_data_option_value_count = array();
+				$index = 0;
+				foreach ($array_cnt as $number) {
+				    if ($number == 1) {
+				        $index++;
+				    }
+				    $food_data_option_value_count[$index][] = $number;
+				}
+				if( !add_post_meta($post_id,'wpfm_option_value_count', $food_data_option_value_count, true) ){
+					update_post_meta($post_id,'wpfm_option_value_count', $food_data_option_value_count);
+				}
 			}
 
 			// author
