@@ -252,12 +252,12 @@ abstract class WPFM_Form {
 		$repeated_options = isset($_POST['repeated_options']) ? $_POST['repeated_options'] : '';
 
 
-		$submit_food_form_page_id = get_option( 'food_manager_submit_food_form_page_id' );
+		$add_food_page_id = get_option( 'food_manager_add_food_page_id' );
 		$food_dashboard_page_id = get_option( 'food_manager_food_dashboard_page_id' );
 
 		$food_id = '';
-		if($submit_food_form_page_id){
-			if($submit_food_form_page_id == get_the_ID()){
+		if($add_food_page_id){
+			if($add_food_page_id == get_the_ID()){
 				$food_id = isset($_POST['food_id']) ? $_POST['food_id'] : '';
 			}
 		}
@@ -700,7 +700,7 @@ abstract class WPFM_Form {
 		/**
 		 * If default field is removed via field editor then we can not removed this field from the code because it is hardcode in the file so we need to set flag to identify to keep the record which perticular field is removed by the user.
 		 * Using visibility flag we can identify those fields need to remove or keep in the Field Editor based on visibility flag value. if visibility true then we will keep the field and if visibility flag false then we will not show this default field in the field editor. (As action of user removed this field from the field editor but not removed from the code so we have to set this flag)
-		 * We are getting several default fields from the addons and using theme side customization via 'submit_food_form_fields' filter.
+		 * We are getting several default fields from the addons and using theme side customization via 'add_food_fields' filter.
 		 * Now, Not easy to manage filter fields and default fields of plugin in this case so we need to set this flag for identify wheather field show  or not in the field editor.
 		 *
 		 * If user selected admin only fields then we need to unset that fields from the frontend user.

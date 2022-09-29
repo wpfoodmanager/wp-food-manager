@@ -340,13 +340,13 @@ class WPFM_Settings {
 
 							array(
 
-								'name'  => 'food_manager_submit_food_form_page_id',
+								'name'  => 'food_manager_add_food_page_id',
 
 								'std'   => '',
 
 								'label' => __('Submit a Food', 'wp-food-manager'),
 
-								'desc'  => __('Select the page where you have placed the [submit_food_form] shortcode. This lets the plugin know where the form is located.', 'wp-food-manager'),
+								'desc'  => __('Select the page where you have placed the [add_food] shortcode. This lets the plugin know where the form is located.', 'wp-food-manager'),
 
 								'type'  => 'page',
 							),
@@ -534,13 +534,13 @@ class WPFM_Settings {
 
 						array(
 
-							'name' 		=> 'food_manager_submit_food_form_page_id',
+							'name' 		=> 'food_manager_add_food_page_id',
 
 							'std' 		=> '',
 
 							'label' 	=> __( 'Submit Food Form Page', 'wp-food-manager' ),
 
-							'desc'		=> __( 'Select the page where you have placed the [submit_food_form] shortcode. This lets the plugin know where the form is located.', 'wp-food-manager' ),
+							'desc'		=> __( 'Select the page where you have placed the [add_food] shortcode. This lets the plugin know where the form is located.', 'wp-food-manager' ),
 
 							'type'      => 'page'
 						),

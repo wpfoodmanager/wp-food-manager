@@ -34,11 +34,11 @@ class WP_Food_Manager_Install {
 		}
 
 		// Update legacy options
-		if ( false === get_option( 'food_manager_submit_food_form_page_id', false ) && get_option( 'food_manager_submit_page_slug' ) ) {
+		if ( false === get_option( 'food_manager_add_food_page_id', false ) && get_option( 'food_manager_submit_page_slug' ) ) {
 
 			$page_id = get_page_by_path( get_option( 'food_manager_submit_page_slug' ) )->ID;
 
-			update_option( 'food_manager_submit_food_form_page_id', $page_id );
+			update_option( 'food_manager_add_food_page_id', $page_id );
 		}
 
 		if ( false === get_option( 'food_manager_food_dashboard_page_id', false ) && get_option( 'food_manager_food_dashboard_page_slug' ) ) {
@@ -75,7 +75,7 @@ class WP_Food_Manager_Install {
 				if(isset($all_fields['food']['food_venue_name']))
 					unset($all_fields['food']['food_venue_name']);
 
-				update_option( 'food_manager_submit_food_form_fields', array('event' =>$all_fields['event']) );
+				update_option( 'food_manager_add_food_fields', array('event' =>$all_fields['event']) );
 
 				update_option( 'food_manager_submit_organizer_form_fields', array('organizer' =>$all_fields['organizer']) );	
 			}			

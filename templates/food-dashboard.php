@@ -70,7 +70,7 @@
 										);
 										break;
 									case 'expired' :
-										if (food_manager_get_permalink ( 'submit_food_form' )) {
+										if (food_manager_get_permalink ( 'add_food' )) {
 											$actions ['relist'] = array (
 													'label' => __ ( 'Relist', 'wp-food-manager' ),
 													'nonce' => true

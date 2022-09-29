@@ -43,7 +43,7 @@ $options = array(
 		'food_manager_enable_registration',
 		'food_manager_user_can_edit_pending_submissions',
 		'food_manager_use_standard_password_setup_email',
-		'food_manager_submit_food_form_page_id',
+		'food_manager_add_food_page_id',
 		'food_manager_food_dashboard_page_id',
 		'food_manager_foods_page_id',
 		'food_manager_categories',

@@ -100,7 +100,7 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
 			return;
 		}
 		
-		$this->fields = apply_filters( 'submit_food_form_fields', array(
+		$this->fields = apply_filters( 'add_food_fields', array(
 			'food' => array(
 				'food_title' => array(
 					'label'       => __( 'Food Title', 'wp-food-manager' ),
@@ -320,7 +320,7 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
 	 * @return bool on success, WP_ERROR on failure
 	 */
 	protected function validate_fields( $values ) {
-		$this->fields =  apply_filters( 'before_submit_food_form_validate_fields', $this->fields , $values );
+		$this->fields =  apply_filters( 'before_add_food_validate_fields', $this->fields , $values );
 	      foreach ( $this->fields as $group_key => $group_fields )
     	  {     	      
     	      foreach ( $group_fields as $key => $field ) 
@@ -362,7 +362,7 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
 		}
 		
 			
-		return apply_filters( 'submit_food_form_validate_fields', true, $this->fields, $values );
+		return apply_filters( 'add_food_validate_fields', true, $this->fields, $values );
 	}
 
 	/**
@@ -427,7 +427,7 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
 				}
 			}
 
-			$this->fields = apply_filters( 'submit_food_form_fields_get_food_data', $this->fields, $food );
+			$this->fields = apply_filters( 'add_food_fields_get_food_data', $this->fields, $food );
 		// Get user meta
 		} elseif ( is_user_logged_in() && empty( $_POST['submit_food'] ) ) {
 			
@@ -440,7 +440,7 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
 			}
 			
 			
-			$this->fields = apply_filters( 'submit_food_form_fields_get_user_data', $this->fields, get_current_user_id() );
+			$this->fields = apply_filters( 'add_food_fields_get_user_data', $this->fields, get_current_user_id() );
 		}
 
 		wp_enqueue_script( 'wp-food-manager-food-submission' );
@@ -453,7 +453,7 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
 			'food_extra_fields'     => $this->get_fields( 'extra_options' ),
 			//'venue_fields'     => $this->get_fields( 'venue' ),
 			'step'               => $this->get_step(),
-			'submit_button_text' => apply_filters( 'submit_food_form_submit_button_text', __( 'Preview', 'wp-food-manager' ) )
+			'submit_button_text' => apply_filters( 'add_food_submit_button_text', __( 'Preview', 'wp-food-manager' ) )
 		) );
 	}
 
@@ -556,7 +556,7 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
 	if ( $update_slug ) {
 			$food_slug   = array();
 			// Prepend with food type
-			if ( apply_filters( 'submit_food_form_prefix_post_name_with_food_type', true ) && ! empty( $values['food']['food_type'] ) ) {
+			if ( apply_filters( 'add_food_prefix_post_name_with_food_type', true ) && ! empty( $values['food']['food_type'] ) ) {
 				if ( food_manager_multiselect_food_type() && is_array($values['food']['food_type']) ) {
 					
 					$food_type = array_values($values['food']['food_type'])[0];
@@ -580,12 +580,12 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
 			
 			$food_slug[]            	= $post_title;
 			$food_slugs				= implode( '-', $food_slug ) ;
-			$food_data['post_name'] 	= apply_filters('submit_food_form_save_slug_data', $food_slugs);
+			$food_data['post_name'] 	= apply_filters('add_food_save_slug_data', $food_slugs);
 		}
 		if ( $status ) {
 			$food_data['post_status'] = $status;
 		}
-		$food_data = apply_filters( 'submit_food_form_save_food_data', $food_data, $post_title, $post_content, $status, $values );
+		$food_data = apply_filters( 'add_food_save_food_data', $food_data, $post_title, $post_content, $status, $values );
 		
 		if ( $this->food_id ) { //$this->food_id
 			$food_data['ID'] = $this->food_id;
@@ -802,7 +802,7 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
 	 * @return fields Array
 	 */
 	public  function get_food_manager_fieldeditor_fields(){
-		return apply_filters('food_manager_submit_food_form_fields', get_option( 'food_manager_submit_food_form_fields', false ) );
+		return apply_filters('food_manager_add_food_fields', get_option( 'food_manager_add_food_fields', false ) );
 	}
 	
 	/**

@@ -261,9 +261,9 @@ class WP_Food_Manager_Data_Cleaner {
 	 */
 	private static function cleanup_pages() {
 		// Trash the Submit Food page.
-		$submit_food_form_page_id = get_option( 'food_manager_submit_food_form_page_id' );
-		if ( $submit_food_form_page_id ) {
-			wp_delete_post( $submit_food_form_page_id, true );
+		$add_food_page_id = get_option( 'food_manager_add_food_page_id' );
+		if ( $add_food_page_id ) {
+			wp_delete_post( $add_food_page_id, true );
 		}
 
 		// Trash the Food Dashboard page.

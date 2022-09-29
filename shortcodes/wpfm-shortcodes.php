@@ -26,7 +26,7 @@ class WPFM_Shortcodes {
 		add_action('food_manager_food_dashboard_content_edit', array($this, 'edit_food'));
 		add_action('food_manager_output_foods_no_results', array($this, 'output_no_results'));
 
-		add_shortcode( 'submit_food_form', array( $this, 'submit_food_form' ) );
+		add_shortcode( 'add_food', array( $this, 'add_food' ) );
 		add_shortcode( 'food_dashboard', array( $this, 'food_dashboard' ) );
 		add_shortcode( 'foods', array( $this, 'output_foods' ) );
 		add_shortcode( 'food_categories', array( $this, 'output_foods_categories' ) );
@@ -55,7 +55,7 @@ class WPFM_Shortcodes {
 	/**
 	 * Show the food submission form
 	*/
-	public function submit_food_form( $atts = array() ) {
+	public function add_food( $atts = array() ) {
 		
 
 		return $GLOBALS['food_manager']->forms->get_form( 'submit-food', $atts );
@@ -145,14 +145,14 @@ class WPFM_Shortcodes {
 
 						break;
 					case 'duplicate' :
-						if ( ! food_manager_get_permalink( 'submit_food_form' ) ) {
+						if ( ! food_manager_get_permalink( 'add_food' ) ) {
 							throw new Exception( __( 'Missing submission page.', 'wp-food-manager' ) );
 						}
 					
 						$new_food_id = food_manager_duplicate_listing( $food_id );
 					
 						if ( $new_food_id ) {
-							wp_redirect( add_query_arg( array( 'food_id' => absint( $new_food_id ) ), food_manager_get_permalink( 'submit_food_form' ) ) );
+							wp_redirect( add_query_arg( array( 'food_id' => absint( $new_food_id ) ), food_manager_get_permalink( 'add_food' ) ) );
 							exit;
 						}
 					
@@ -162,7 +162,7 @@ class WPFM_Shortcodes {
 
 						// redirect to post page
 
-						wp_redirect( add_query_arg( array( 'food_id' => absint( $food_id ) ), food_manager_get_permalink( 'submit_food_form' ) ) );
+						wp_redirect( add_query_arg( array( 'food_id' => absint( $food_id ) ), food_manager_get_permalink( 'add_food' ) ) );
 
 						break;
 

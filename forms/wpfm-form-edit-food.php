@@ -117,7 +117,7 @@ class WPFM_Form_Edit_Food extends WPFM_Form_Submit_Food {
 			}
 		}
 
-		$this->fields = apply_filters( 'submit_food_form_fields_get_user_data', $this->fields, $food );
+		$this->fields = apply_filters( 'add_food_fields_get_user_data', $this->fields, $food );
 
 		
 

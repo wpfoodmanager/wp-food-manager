@@ -918,7 +918,7 @@ function has_wpfm_shortcode( $content = null, $tag = null ) {
 	}
 
 	if ( ! empty( $content ) ) {
-		$has_wpfm_shortcode = array( 'submit_food_form', 'food_dashboard', 'foods', 'food_categories', 'food_type', 'food', 'food_summary', 'food_apply' );
+		$has_wpfm_shortcode = array( 'add_food', 'food_dashboard', 'foods', 'food_categories', 'food_type', 'food', 'food_summary', 'food_apply' );
 		/**
 		 * Filters a list of all shortcodes associated with WPEM.
 		 *
@@ -1315,7 +1315,7 @@ function food_manager_multiselect_food_category() {
 
 /**
  * Get the page ID of a page if set, with PolyLang compat.
- * @param  string $page e.g. food_dashboard, submit_food_form, foods
+ * @param  string $page e.g. food_dashboard, add_food, foods
  * @return int
  */
 function food_manager_get_page_id( $page ) 
@@ -1331,7 +1331,7 @@ function food_manager_get_page_id( $page )
 
 /**
  * Get the permalink of a page if set
- * @param  string $page e.g. food_dashboard, submit_food_form, foods
+ * @param  string $page e.g. food_dashboard, add_food, foods
  * @return string|bool
  */
 
