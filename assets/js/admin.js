@@ -113,6 +113,17 @@ var WPFMAdmin= function () {
                 }
             });
 
+            /*For Food menu icon search*/
+            jQuery('body').on("keyup", "#wpfm_icon_search", (function() {
+                var t = jQuery(this),
+                    i = t.parents("div.inside").find(".wpfm-font-wesome-class .sub-font-icon"),
+                    a = new RegExp(t.val(), "gi");
+                a ? i.each((function() {
+                    var t = jQuery(this);
+                    t.find("label").text().match(a) ? t.show() : t.hide()
+                })) : item.show()
+            }));
+
             /*For Ingredient and Nutrition tab*/
             jQuery('body').on("keyup", ".wpfm-item-search input[type=text]", (function() {
                 var t = jQuery(this),
@@ -292,8 +303,8 @@ var WPFMAdmin= function () {
 	   updateFoodinMenu: function(event){
 	   	
 	   	var category_id = jQuery('.wpfm-admin-menu-selection #wpfm-admin-food-selection').val();
-	   	if(category_id.length > 0)
-	   	jQuery.ajax({
+	   	if(category_id.length > 0){
+            jQuery.ajax({
                     type: 'POST',
                     url: wpfm_admin.ajax_url,
                     data: {
@@ -301,12 +312,26 @@ var WPFMAdmin= function () {
                     	category_id: category_id,
                     },
                     success: function(response) {
-                    	jQuery('ul.wpfm-food-menu').append(response.html);
+                        jQuery('ul.wpfm-food-menu').append(response.html);
 
                     },
                     error: function(result) {}
                 });
+        } else {
+            jQuery.ajax({
+                    type: 'POST',
+                    url: wpfm_admin.ajax_url,
+                    data: {
+                        action: 'wpfm_get_food_listings_by_category_id',                        
+                    },
+                    success: function(response) {
+                        console.log(response.html);
+                        jQuery('ul.wpfm-food-menu').append(response.html);
 
+                    },
+                    error: function(result) {}
+                });
+        }
 	   },
 
 	   /// <summary>

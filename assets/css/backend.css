@@ -8,6 +8,7 @@
   grid-template-columns: auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto;
   height: 200px;
   overflow-y: auto;
+  grid-auto-rows: 43px;
 }
 .wpfm-font-wesome-class i.fa{
   font-size: 18px;
@@ -18,12 +19,14 @@
   text-align: center;
   position: relative;
   z-index: 9;
+  height: 22px;
 }
 .sub-font-icon input[type=radio] {
   opacity: 0;
 }
 .sub-font-icon input[type=radio] + label {
   margin-left: -20px;
+  font-size: 0;
 }
 .sub-font-icon input[type=radio]:checked + label::after {
   background: #333;
@@ -71,7 +74,17 @@
   line-height: 2em;
   box-sizing: border-box;
   padding: 0 12px 0 0;
-  margin: 0 0 12px;
+  margin: 0 -1px 0; /*0 0 12px*/
+}
+.wpfm-admin-postbox-drop-btn {
+  width: 80px;
+}
+.wpfm-admin-postbox-drop-btn input#wpfm-admin-add-food {
+  font-size: 13px;
+}
+label.add-food-small {
+  font-weight: 500 !important;
+  color: #787c82;
 }
 
 .wpfm-admin-postbox-form-field .wpfm-admin-postbox-file_url input:first-child,
@@ -110,7 +123,7 @@
   flex-direction: column;
 }
 .wpfm-admin-menu-selection.wpfm-admin-postbox-form-field {
-  max-width: 500px;
+  max-width: 270px;
 }
 .wpfm-admin-food-menu-items .wpfm-admin-left-col span.dashicons {
   margin-right: 10px;

@@ -122,42 +122,32 @@ class WPFM_Writepanels
 		?>
 
 		<div class="wpfm-admin-food-menu-container wpfm-flex-col wpfm-admin-postbox-meta-data">
-			<div class="wpfm-admin-menu-selection wpfm-admin-postbox-form-field">
-				<label for="_add_food"><?php _e('Select food category'); ?></label>
-				<div class="wpfm-admin-postbox-drop-btn">
-					<?php food_manager_dropdown_selection(array(
-						'multiple' => false, 'show_option_all' => __('All category', 'wp-food-manager'),
-						'id' => 'wpfm-admin-food-selection',
-						'taxonomy' => 'food_manager_category',
-						'hide_empty' => false,
-						'pad_counts' => true,
-						'show_count' => true,
-						'hierarchical' => false,
-					)); ?>
-					<input type="button" id="wpfm-admin-add-food" class="button button-small" value="<?php _e('Add food', 'wp-food-manager'); ?>" />
-				</div>
-			</div>
 			<div class="wpfm-admin-food-menu-items">
 				<ul class="wpfm-food-menu menu menu-item-bar ">
 					<?php $item_ids = get_post_meta($thepostid, '_food_item_ids', true);
-					if ($item_ids && is_array($item_ids)) {
-						foreach ($item_ids as $key => $id) {
-					?>
-							<li class="menu-item-handle" data-food-id="<?= $id; ?>">
-								<div class="wpfm-admin-left-col">
-									<span class="dashicons dashicons-menu"></span>
-									<span class="item-title"><?php echo esc_html(get_the_title($id)); ?></span>
-								</div>
-								<div class="wpfm-admin-right-col">
-									<a href="javascript:void(0);" class="wpfm-food-item-remove">
-										<span class="dashicons dashicons-dismiss"></span>
-									</a>
-								</div>
-								<input type="hidden" name="wpfm_food_listing_ids[]" value="<?= $id; ?>" />
-							</li>
-					<?php }
-					} ?>
+					if ($item_ids && is_array($item_ids)) { ?>
+							<?php foreach ($item_ids as $key => $id) { ?>
+								<li class="menu-item-handle" data-food-id="<?= $id; ?>">
+									<div class="wpfm-admin-left-col">
+										<span class="dashicons dashicons-menu"></span>
+										<span class="item-title"><?php echo esc_html(get_the_title($id)); ?></span>
+									</div>
+									<div class="wpfm-admin-right-col">
+										<a href="javascript:void(0);" class="wpfm-food-item-remove">
+											<span class="dashicons dashicons-dismiss"></span>
+										</a>
+									</div>
+									<input type="hidden" name="wpfm_food_listing_ids[]" value="<?= $id; ?>" />
+								</li>
+						<?php } ?>
+					<?php } ?>
 				</ul>
+			</div>
+			<div class="wpfm-admin-menu-selection wpfm-admin-postbox-form-field">
+				<div class="wpfm-admin-postbox-drop-btn">
+					<input type="button" id="wpfm-admin-add-food" class="button button-small" value="<?php _e('Add', 'wp-food-manager'); ?>" />
+				</div>
+				<label for="_add_food" class="add-food-small"><i><?php _e('Add your food item'); ?></i></label>
 			</div>
 		</div>
 	<?php
@@ -180,10 +170,33 @@ class WPFM_Writepanels
 
 		$icon_arrs = wpfm_get_font_icons();
 		
-		echo '<input type="search" id="wpfm_icon_search" name="wpfm_icon_search" placeholder="Icon Search">';
+		?>
+
+		<div class="wpfm-admin-food-menu-container wpfm-flex-col wpfm-admin-postbox-meta-data">
+			<div class="wpfm-admin-menu-selection wpfm-admin-postbox-form-field">
+				<!-- <label for="_add_food"><?php _e('Select food category'); ?></label> -->
+				<?php food_manager_dropdown_selection(array(
+					'multiple' => false, 'show_option_all' => __('All category', 'wp-food-manager'),
+					'id' => 'wpfm-admin-food-selection',
+					'taxonomy' => 'food_manager_category',
+					'hide_empty' => false,
+					'pad_counts' => true,
+					'show_count' => true,
+					'hierarchical' => false,
+				)); ?>
+				<!--<div class="wpfm-admin-postbox-drop-btn">
+					<input type="button" id="wpfm-admin-add-food" class="button button-small" value="<?php _e('Add food', 'wp-food-manager'); ?>" />
+				</div> -->
+			</div>
+		</div>
+		<?php
+
+		echo '<input type="text" id="wpfm_icon_search" name="wpfm_icon_search" placeholder="Icon Search">';
 		echo "<div class='wpfm-font-wesome-class'>";
 			foreach($icon_arrs as $key => $icon_arr){
-				echo '<div class="sub-font-icon"><input type="radio" id="'.$key.'" name="radio_icons" value="'.$key.'"><label for="'.$key.'"><i class="fa '.$key.'"></i></label></div>';
+				$radio_checked = (get_post_meta($thepostid, 'wpfm_radio_icons', true) === $key) ? "checked" : "";
+				$key_name = str_replace("fa-", "", $key);
+				echo '<div class="sub-font-icon"><input type="radio" id="'.$key.'" name="radio_icons" value="'.$key.'" '.$radio_checked.'><label for="'.$key.'">'.$key_name.'<i class="fa '.$key.'"></i></label></div>';
 			}
 		echo "</div>";
 	}
@@ -310,7 +323,7 @@ class WPFM_Writepanels
 		}
 	?>
 		<p class="wpfm-admin-postbox-form-field <?=$name;?>">
-			<label for="<?php echo esc_attr($key); ?>"><?php echo esc_html($field['label']); ?>: <?php if (!empty($field['description'])) : ?><span class="tips" data-tip="<?php echo esc_attr($field['description']); ?>">[?]</span><?php endif; ?></label>
+			<label for="<?php echo esc_attr($key); ?>"><?php echo esc_html($field['label']); ?> : <?php if (!empty($field['description'])) : ?><span class="tips" data-tip="<?php echo esc_attr($field['description']); ?>">[?]</span><?php endif; ?></label>
 			<span class="wpfm-input-field">
 				<input type="text" class="wpfm-small-field" name="<?php echo esc_attr($name); ?>" id="<?php echo esc_attr($key); ?>" placeholder="<?php echo esc_attr($field['placeholder']); ?>" value="<?php echo esc_attr($field['value']); ?>" />
 			</span>
@@ -346,7 +359,7 @@ class WPFM_Writepanels
 		}
 	?>
 		<p class="wpfm-admin-postbox-form-field <?=$name;?> <?=$descClass;?>">
-			<label for="<?php echo esc_attr($key); ?>"><?php echo esc_html($field['label']); ?> <?php if (!empty($field['description'])) : ?>: <span class="tips" data-tip="<?php echo esc_attr($field['description']); ?>">[?]</span><?php endif; ?></label>
+			<label for="<?php echo esc_attr($key); ?>"><?php echo esc_html($field['label']); ?> : <?php if (!empty($field['description'])) : ?>: <span class="tips" data-tip="<?php echo esc_attr($field['description']); ?>">[?]</span><?php endif; ?></label>
 			<span class="wpfm-input-field">
 				<textarea name="<?php echo esc_attr($name); ?>" id="<?php echo esc_attr($key); ?>" rows="4" cols="63" placeholder="<?php echo esc_attr($field['placeholder']); ?>"><?php echo esc_html($field['value']); ?></textarea>
 			</span>
@@ -374,7 +387,7 @@ class WPFM_Writepanels
 	?>
 
 		<p class="wpfm-admin-postbox-form-field <?=$name;?>">
-			<label for="<?php echo esc_attr($key); ?>"><?php echo esc_html($field['label']); ?>: <?php if (!empty($field['description'])) : ?><span class="tips" data-tip="<?php echo esc_attr($field['description']); ?>">[?]</span><?php endif; ?></label>
+			<label for="<?php echo esc_attr($key); ?>"><?php echo esc_html($field['label']); ?> : <?php if (!empty($field['description'])) : ?><span class="tips" data-tip="<?php echo esc_attr($field['description']); ?>">[?]</span><?php endif; ?></label>
 			<span class="wpfm-input-field">
                 <select name="<?php echo esc_attr($name); ?>" id="<?php echo esc_attr($key); ?>" class="input-select wpfm-small-field <?php echo esc_attr(isset($field['class']) ? $field['class'] : $key); ?>">
     				<?php foreach ($field['options'] as $key => $value) : ?>
@@ -405,7 +418,7 @@ class WPFM_Writepanels
 		}
 	?>
 		<p class="wpfm-admin-postbox-form-field <?=$name;?>">
-			<label for="<?php echo esc_attr($key); ?>"><?php echo esc_html($field['label']); ?>: <?php if (!empty($field['description'])) : ?><span class="tips" data-tip="<?php echo esc_attr($field['description']); ?>">[?]</span><?php endif; ?></label>
+			<label for="<?php echo esc_attr($key); ?>"><?php echo esc_html($field['label']); ?> : <?php if (!empty($field['description'])) : ?><span class="tips" data-tip="<?php echo esc_attr($field['description']); ?>">[?]</span><?php endif; ?></label>
 			<select multiple="multiple" name="<?php echo esc_attr($name); ?>[]" id="<?php echo esc_attr($key); ?>" class="input-select <?php echo esc_attr(isset($field['class']) ? $field['class'] : $key); ?>">
 				<?php foreach ($field['options'] as $key => $value) : ?>
 					<option value="<?php echo esc_attr($key); ?>" <?php if (!empty($field['value']) && is_array($field['value'])) selected(in_array($key, $field['value']), true); ?>><?php echo esc_html($value); ?></option>
@@ -954,12 +967,13 @@ class WPFM_Writepanels
 				// Rest of your arguments
 			];
 
+
 			$food_listing = new WP_Query($args);
-			$html = '';
+			$html = [];
 			if ($food_listing->have_posts()) :
 				while ($food_listing->have_posts()) : $food_listing->the_post();
 					$id = get_the_ID();
-					$html = '<li class="menu-item-handle" data-food-id="' . $id . '">
+					$html[] = '<li class="menu-item-handle" data-food-id="' . $id . '">
 			    										<div class="wpfm-admin-left-col">
 			    											<span class="dashicons dashicons-menu"></span>
 			    											<span class="item-title">' . get_the_title($id) . '</span>
@@ -977,6 +991,41 @@ class WPFM_Writepanels
 			wp_reset_postdata();
 
 			wp_send_json(array('html' => $html, 'success' => true));
+		} else {
+			$args = [
+				'post_type' => 'food_manager',
+				'post_per_page' => -1,
+				// Rest of your arguments
+			];
+
+			$food_listing = new WP_Query($args);
+			$html = [];
+			if ($food_listing->have_posts()) :
+				while ($food_listing->have_posts()) : $food_listing->the_post();
+					$id = get_the_ID();
+					$html[] = '<li class="menu-item-handle" data-food-id="' . $id . '">
+			    										<div class="wpfm-admin-left-col">
+			    											<span class="dashicons dashicons-menu"></span>
+			    											<span class="item-title">' . get_the_title($id) . '</span>
+			    										</div>
+			    										<div class="wpfm-admin-right-col">
+			    											<a href="javascript:void(0);" class="wpfm-food-item-remove">
+			    												<span class="dashicons dashicons-dismiss"></span>
+			    											</a>
+			    										</div>
+			    										<input type="hidden" name="wpfm_food_listing_ids[]" value="' . $id . '" />
+			    									</li>';
+
+				endwhile;
+			endif;
+			wp_reset_postdata();
+
+			/*foreach($html as $htm){
+				echo "<pre>";
+				print_r($htm);
+				echo "</pre>";
+			}*/
+			wp_send_json(array('html' => $html, 'success' => true));
 		}
 		wp_die();
 	}
@@ -990,6 +1039,13 @@ class WPFM_Writepanels
 	 */
 	public function food_manager_save_food_manager_menu_data($post_id, $post)
 	{
+		$wpfm_radio_icon = $_POST['radio_icons'];
+		if (isset($wpfm_radio_icon)) {
+			if( !add_post_meta($post_id,'wpfm_radio_icons', $wpfm_radio_icon, true) ){
+				update_post_meta($post_id,'wpfm_radio_icons', $wpfm_radio_icon);
+			}
+		}
+
 		if (isset($_POST['wpfm_food_listing_ids'])) {
 			$item_ids = array_map('esc_attr', $_POST['wpfm_food_listing_ids']);
 			update_post_meta($post_id, '_food_item_ids', $item_ids);
