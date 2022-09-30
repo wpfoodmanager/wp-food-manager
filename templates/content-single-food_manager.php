@@ -145,7 +145,7 @@ do_action('set_single_listing_view_count');
                                 $repeated_count = get_post_meta(get_the_ID(), 'wpfm_repeated_options', true);
 
                                 if(!empty($repeated_count) || !empty($ext_options)){
-                                    echo "<h1>Extra Toppings</h1>";
+                                    echo "<h3 class='wpfm-heading-text'>Extra Toppings</h3>";
                                     foreach ($ext_options as $key => $ext_option) {
                                         if($ext_option['option_type'] == 'radio'){
                                             echo "<div class='wpfm-radio-options wpfm-input-field-common'>";

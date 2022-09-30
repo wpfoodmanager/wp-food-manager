@@ -100,7 +100,7 @@ if(!empty($extra_fields_options)){
 		<?php //if (empty($extra_fields_options)) { ?>
 			<?php if ($food_extra_fields) : ?>
 				<?php do_action('add_food_extra_fields_start'); ?>
-				<h2 class="wpfm-form-title wpfm-heading-text"><?php _e('Extra Toppings', 'wp-food-manager'); ?></h2>
+				<h3 class="wpfm-form-title wpfm-heading-text"><?php _e('Extra Toppings', 'wp-food-manager'); ?></h3>
 				<?php if(!empty($extra_fields_options)){
 				//foreach($option_value_counts as $key => $option_value_count){
 					foreach($option_value_counts3 as $key => $extra_fields_option){
