@@ -586,7 +586,7 @@ class WPFM_Writepanels
 									<!-- <td><input type="checkbox" name="%%repeated-option-index2%%_option_value_default_<?php //echo esc_attr($count);?>" value="1"<?php //if(isset($op_value['option_value_default']) && $op_value['option_value_price_type'] == 'option_value_default') echo 'checked="checked"' ?> class="opt_default"></td> -->
 									<td><input type="checkbox" name="<?php echo esc_attr($wpfm_key_num);?>_option_value_default_<?php echo esc_attr($count);?>" <?php if(isset($op_value['option_value_default']) && $op_value['option_value_default'] == 'on') echo 'checked="checked"'; ?> class="opt_default"></td>
 
-									<td><input type="text" name="<?php echo esc_attr($wpfm_key_num);?>_option_value_price_<?php echo esc_attr($count);?>" value="<?php if(isset($op_value['option_value_price']) ) echo $op_value['option_value_price']; ?>" class="opt_price"></td>
+									<td><input type="number" name="<?php echo esc_attr($wpfm_key_num);?>_option_value_price_<?php echo esc_attr($count);?>" value="<?php if(isset($op_value['option_value_price']) ) echo $op_value['option_value_price']; ?>" class="opt_price"></td>
 
 									<td>
 										<select name="<?php echo esc_attr($wpfm_key_num);?>_option_value_price_type_<?php echo esc_attr($count);?>" class="opt_select">

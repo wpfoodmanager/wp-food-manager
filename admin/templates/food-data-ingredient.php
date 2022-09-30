@@ -55,7 +55,7 @@ $units = get_terms(
 						echo "<li class='wpfm-sortable-item active-item' data-id='{$ingTermID}'>" .
 							"<label>{$ingTermName}</label>" .
 							"<div class='wpfm-sortable-item-values'>" .
-							"<input type='text' class='item-value' name='_ingredient[{$ingTermID}][value]' value='{$ingValue}'>" .
+							"<input type='number' class='item-value' name='_ingredient[{$ingTermID}][value]' value='{$ingValue}'>" .
 							"<select name='_ingredient[{$ingTermID}][unit_id]' class='item-unit'>" .
 							"<option value=''>Unit</option>";
 						if ( ! empty( $units ) ) {
