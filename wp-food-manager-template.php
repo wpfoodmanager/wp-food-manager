@@ -516,7 +516,7 @@ function display_food_type( $post = null, $after = '') {
 		    $numType = count($food_type);
 		    $i = 0;
 		    foreach ( $food_type as $type ) {
-				echo '<span class="wpem-food-type-text food-type '. esc_attr( sanitize_title( $type->slug ) ).' ">'. $type->name.'</span>';
+				echo '<span class="wpfm-food-type-text food-type '. esc_attr( sanitize_title( $type->slug ) ).' ">'. $type->name.'</span>';
 				if($numType > ++$i){
 				    echo $after;
 				}

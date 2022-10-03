@@ -208,11 +208,6 @@ EventSubmission = function () {
             jQuery('input[name=event_online]').on('change', EventSubmission.actions.onlineEvent);
             jQuery('input[name=event_ticket_options]').on('change', EventSubmission.actions.eventTicketOptions);
 
-
-            jQuery('body').on('click', '.wpem_add_organizer', EventSubmission.actions.addOrganizer);
-
-            jQuery('body').on('click', '.wpem_add_venue', EventSubmission.actions.addVenue);
-
             //add links for paid and free tickets   
             jQuery('.add-group-row').on('click', EventSubmission.actions.addGroupField);
 
@@ -388,108 +383,6 @@ EventSubmission = function () {
                     }
                 }
             },
-
-
-            /// <summary>
-            /// add organizer.
-            /// </summary>
-            /// <returns type="initialization ticket price settings" />
-            /// <since>3.1.16</since>
-            addOrganizer: function (event) {
-                jQuery('.wpem_add_organizer').css('pointer-events', 'none');
-                jQuery('#wpem_add_organizer_popup .wpem-modal-header-close .wpem-modal-close').trigger("click");
-                jQuery('body #submit-organizer-form .wpem-form-footer .wpem-alert-danger').remove();
-
-                var formData = jQuery('body #submit-organizer-form').serialize();
-                var organizer_description = tinyMCE.get('organizer_description').getContent();
-
-                var fd = new FormData();
-                if (jQuery('#organizer_logo').length > 0)
-                    fd.append("organizer_logo", jQuery('#organizer_logo')[0].files[0]);
-
-                fd.append("action", 'add_organizer');
-                fd.append("form_data", formData);
-                fd.append("organizer_description", organizer_description);
-
-                jQuery.ajax({
-                    url: wp_food_manager_event_submission.ajax_url,
-                    type: 'POST',
-                    dataType: 'JSON',
-                    processData: false,
-                    contentType: false,
-                    data: fd,
-                    success: function (responce) {
-                        if (responce.code == 200) {
-
-
-                            jQuery('select#event_organizer_ids').prepend('<option selected="selected" value="' + responce.organizer.organizer_id + '">' + responce.organizer.organizer_name + '</option>');
-
-                            jQuery('#event_organizer_ids').trigger("chosen:updated");
-
-                            jQuery('body #submit-organizer-form .event-manager-uploaded-files').remove();
-                            jQuery('body #submit-organizer-form')[0].reset();
-                            jQuery('.wpem_add_organizer').css('pointer-events', 'auto');
-                        }
-                        else {
-                            jQuery('.wpem_add_organizer').css('pointer-events', 'auto');
-                            jQuery('body #submit-organizer-form .wpem-form-footer .wpem_add_organizer').after(responce.message);
-                        }
-                    }
-                });
-            },
-
-
-            /// <summary>
-            /// add venue.
-            /// </summary>
-            /// <returns type="initialization ticket price settings" />
-            /// <since>3.1.16</since>
-            addVenue: function (event) {
-                jQuery('.wpem_add_venue').css('pointer-events', 'none');
-                jQuery('#wpem_add_venue_popup .wpem-modal-header-close .wpem-modal-close').trigger("click");
-                jQuery('body #submit-venue-form .wpem-form-footer .wpem-alert-danger').remove();
-
-                var formData = jQuery('body #submit-venue-form').serialize();
-                var venue_description = tinyMCE.get('venue_description').getContent();
-
-                var fd = new FormData();
-                console.log(jQuery('#venue_logo')[0]);
-                if(jQuery('#venue_logo')[0] !== undefined){
-                    fd.append("venue_logo", jQuery('#venue_logo')[0].files[0]);
-                    }
-               
-                fd.append("action", 'add_venue');
-                fd.append("form_data", formData);
-                fd.append("venue_description", venue_description);
-
-                jQuery.ajax({
-                    url: wp_food_manager_event_submission.ajax_url,
-                    type: 'POST',
-                    dataType: 'JSON',
-                    processData: false,
-                    contentType: false,
-                    data: fd,
-                    success: function (responce) {
-                        if (responce.code == 200) {
-
-
-                            jQuery('select#event_venue_ids').append('<option selected="selected" value="' + responce.venue.venue_id + '">' + responce.venue.venue_name + '</option>');
-
-                            jQuery('#event_venue_ids').trigger("chosen:updated");
-
-                            jQuery('body #submit-venue-form .event-manager-uploaded-files').remove();
-                            jQuery('body #submit-venue-form')[0].reset();
-                            jQuery('.wpem_add_venue').css('pointer-events', 'auto');
-                        }
-                        else {
-                            jQuery('.wpem_add_venue').css('pointer-events', 'auto');
-                            jQuery('body #submit-venue-form .wpem-form-footer .wpem_add_venue').after(responce.message);
-                        }
-                    }
-                });
-            },
-
-
         } //end of action
 
 

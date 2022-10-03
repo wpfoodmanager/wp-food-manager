@@ -901,7 +901,7 @@ function food_manager_dropdown_selection( $args = '' ) {
 }
 
 /**
- * Checks if the provided content or the current single page or post has a WPEM shortcode.
+ * Checks if the provided content or the current single page or post has a WPFM shortcode.
  *
  * @param string|null       $content   Content to check. If not provided, it uses the current post content.
  * @param string|array|null $tag Check specifically for one or more shortcodes. If not provided, checks for any WPJM shortcode.
@@ -920,7 +920,7 @@ function has_wpfm_shortcode( $content = null, $tag = null ) {
 	if ( ! empty( $content ) ) {
 		$has_wpfm_shortcode = array( 'add_food', 'food_dashboard', 'foods', 'food_categories', 'food_type', 'food', 'food_summary', 'food_apply' );
 		/**
-		 * Filters a list of all shortcodes associated with WPEM.
+		 * Filters a list of all shortcodes associated with WPFM.
 		 *
 		 * @since 2.5
 		 *

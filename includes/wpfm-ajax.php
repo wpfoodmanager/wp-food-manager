@@ -44,7 +44,7 @@ class WPFM_Ajax {
 
 		add_action( 'template_redirect', array( __CLASS__, 'do_wpfm_ajax'), 0 );
 
-		// WPEM Ajax endpoints
+		// WPFM Ajax endpoints
 
 		add_action( 'wpfm_ajax_get_listings', array( $this, 'get_listings' ) );
 

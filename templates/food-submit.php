@@ -22,7 +22,7 @@ if($food_dashboard_page_id){
 	}
 }*/
 
-$food_id = isset($_GET['food_id']) ? $_GET['food_id'] : '';
+//$food_id = isset($_GET['food_id']) ? $_GET['food_id'] : '';
 
 $extra_fields_options = get_post_meta($food_id, '_wpfm_extra_options', true) ? get_post_meta($food_id, '_wpfm_extra_options', true) : '';
 
