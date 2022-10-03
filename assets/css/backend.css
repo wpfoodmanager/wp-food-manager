@@ -8,7 +8,7 @@
   grid-template-columns: auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto;
   height: 200px;
   overflow-y: auto;
-  grid-auto-rows: 43px;
+  grid-auto-rows: 48px;
 }
 .wpfm-font-wesome-class i.fa{
   font-size: 18px;
@@ -31,7 +31,7 @@ span.wpfm-searh-clear {
 }
 .sub-font-icon {
   border: 1px solid #ddd;
-  padding: 10px 5px;
+  padding: 12px 5px;
   text-align: center;
   position: relative;
   z-index: 9;
@@ -40,13 +40,14 @@ span.wpfm-searh-clear {
 .sub-font-icon input[type=radio]:hover + label span.wpfm-icon-key-name {
   font-size: 10px;
   position: absolute;
-  top: -9px;
+  top: 1px;
   background: #000;
   color: #fff;
   border-radius: 5px;
   left: 5px;
   right: 5px;
   width: auto;
+  z-index: 99;
 }
 .sub-font-icon input[type=radio]:hover + label span.wpfm-icon-key-name::before {
   background: #000;
