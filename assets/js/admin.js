@@ -122,6 +122,11 @@ var WPFMAdmin= function () {
                     var t = jQuery(this);
                     t.find("label").text().match(a) ? t.show() : t.hide()
                 })) : item.show()
+                if(i.find("label").text().match(a) === null){
+                    jQuery(".no-radio-icons").show();
+                } else {
+                    jQuery(".no-radio-icons").hide();
+                }
             }));
 
             /*For Ingredient and Nutrition tab*/

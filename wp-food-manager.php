@@ -225,6 +225,9 @@ class WP_Food_Manager {
 	
 		wp_enqueue_style( 'wpfm-frontend', WPFM_PLUGIN_URL . '/assets/css/frontend.min.css');
 
+		//Font awesome
+		wp_enqueue_style('wpfm-font-awesome-front-css', WPFM_PLUGIN_URL.'/assets/font-awesome/css/font-awesome.css');
+
 		//common js
 		wp_register_script('wp-food-manager-frontend', WPFM_PLUGIN_URL . '/assets/js/frontend.js', array('jquery'), WPFM_VERSION, true);	
 		wp_enqueue_script('wp-food-manager-frontend');

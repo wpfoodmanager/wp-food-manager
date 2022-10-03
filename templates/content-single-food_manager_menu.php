@@ -33,7 +33,12 @@ if(isset($featured_img_url) && empty($featured_img_url)){
                             <?php the_content(); ?>
                             
                             <h3>
-                                <?php _e('Food Lists');?>
+                                <?php _e('Food Lists'); 
+                                $wpfm_radio_icons = get_post_meta(get_the_ID(), 'wpfm_radio_icons', true);
+                                if($wpfm_radio_icons){
+                                    echo "<span class='wpfm-front-radio-icon'><i class='fa ".$wpfm_radio_icons."'></i></span>";
+                                }
+                                ?>
                             </h3>
                             <?php
                             //$term_list = get_the_terms($post->ID, 'food_manager_category');

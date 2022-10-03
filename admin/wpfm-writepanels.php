@@ -192,6 +192,7 @@ class WPFM_Writepanels
 		<?php
 
 		echo '<input type="text" id="wpfm_icon_search" name="wpfm_icon_search" placeholder="Icon Search">';
+		echo '<div class="no-radio-icons"><strong>No icons found!</strong></div>';
 		echo "<div class='wpfm-font-wesome-class'>";
 			foreach($icon_arrs as $key => $icon_arr){
 				$radio_checked = (get_post_meta($thepostid, 'wpfm_radio_icons', true) === $key) ? "checked" : "";
@@ -958,6 +959,7 @@ class WPFM_Writepanels
 			$args = [
 				'post_type' => 'food_manager',
 				'post_per_page' => -1,
+				'post_status' => 'publish',
 				'tax_query' => [
 					[
 						'taxonomy' => 'food_manager_category',

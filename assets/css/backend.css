@@ -13,6 +13,9 @@
 .wpfm-font-wesome-class i.fa{
   font-size: 18px;
 }
+.no-radio-icons{
+  display: none;
+}
 .sub-font-icon {
   border: 1px solid #ddd;
   padding: 10px 5px;
