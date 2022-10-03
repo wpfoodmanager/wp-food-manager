@@ -197,7 +197,7 @@ class WPFM_Writepanels
 			foreach($icon_arrs as $key => $icon_arr){
 				$radio_checked = (get_post_meta($thepostid, 'wpfm_radio_icons', true) === $key) ? "checked" : "";
 				$key_name = str_replace("fa-", "", $key);
-				echo '<div class="sub-font-icon"><input type="radio" id="'.$key.'" name="radio_icons" value="'.$key.'" '.$radio_checked.'><label for="'.$key.'">'.$key_name.'<i class="fa '.$key.'"></i></label></div>';
+				echo '<div class="sub-font-icon"><input type="radio" id="'.$key.'" name="radio_icons" value="'.$key.'" '.$radio_checked.'><label for="'.$key.'"><span class="wpfm-icon-key-name">'.$key_name.'</span><i class="fa '.$key.'"></i></label></div>';
 			}
 		echo "</div>";
 	}

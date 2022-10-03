@@ -37,6 +37,30 @@ span.wpfm-searh-clear {
   z-index: 9;
   height: 22px;
 }
+.sub-font-icon input[type=radio]:hover + label span.wpfm-icon-key-name {
+  font-size: 10px;
+  position: absolute;
+  top: -9px;
+  background: #000;
+  color: #fff;
+  border-radius: 5px;
+  left: 5px;
+  right: 5px;
+  width: auto;
+}
+.sub-font-icon input[type=radio]:hover + label span.wpfm-icon-key-name::before {
+  background: #000;
+  content: '';
+  height: 10px;
+  width: 10px;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -3px;
+  transform: rotate(45deg);
+  margin: 0 auto;
+  z-index: -1;
+}
 .sub-font-icon input[type=radio] {
   opacity: 0;
 }
