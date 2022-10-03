@@ -16,6 +16,19 @@
 .no-radio-icons{
   display: none;
 }
+.wpfm-parent-icons {
+  display: inline-block;
+  vertical-align: top;
+  position: relative;
+}
+span.wpfm-searh-clear {
+  position: absolute;
+  right: 10px;
+  left: auto;
+  top: 15px;
+  cursor: pointer;
+  display: none;
+}
 .sub-font-icon {
   border: 1px solid #ddd;
   padding: 10px 5px;

@@ -191,7 +191,7 @@ class WPFM_Writepanels
 		</div>
 		<?php
 
-		echo '<input type="text" id="wpfm_icon_search" name="wpfm_icon_search" placeholder="Icon Search">';
+		echo '<div class="wpfm-parent-icons"><input type="text" id="wpfm_icon_search" name="wpfm_icon_search" placeholder="Icon Search"><span class="wpfm-searh-clear"><i class="fa fa-times"></i></span></div>';
 		echo '<div class="no-radio-icons"><strong>No icons found!</strong></div>';
 		echo "<div class='wpfm-font-wesome-class'>";
 			foreach($icon_arrs as $key => $icon_arr){

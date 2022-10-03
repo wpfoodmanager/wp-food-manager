@@ -115,6 +115,7 @@ var WPFMAdmin= function () {
 
             /*For Food menu icon search*/
             jQuery('body').on("keyup", "#wpfm_icon_search", (function() {
+                jQuery(this).next().show();
                 var t = jQuery(this),
                     i = t.parents("div.inside").find(".wpfm-font-wesome-class .sub-font-icon"),
                     a = new RegExp(t.val(), "gi");
@@ -128,6 +129,14 @@ var WPFMAdmin= function () {
                     jQuery(".no-radio-icons").hide();
                 }
             }));
+
+            /*For Clear food icon search text*/
+            jQuery('body').on("click", "span.wpfm-searh-clear", function() {
+                jQuery(this).prev().val("");
+                jQuery(this).hide();
+                jQuery("div.inside").find(".wpfm-font-wesome-class .sub-font-icon").show();
+                jQuery(".no-radio-icons").hide();
+            });
 
             /*For Ingredient and Nutrition tab*/
             jQuery('body').on("keyup", ".wpfm-item-search input[type=text]", (function() {
