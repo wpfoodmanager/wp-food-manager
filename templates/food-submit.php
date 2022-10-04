@@ -169,7 +169,7 @@ if(!empty($extra_fields_options)){
 									</fieldset>
 
 									<fieldset class="wpfm-form-group fieldset_option_options_<?php echo $key; ?> ">
-										<label for="_option_options_<?php echo $key; ?>">Options <span class="require-field">*</span></label>
+										<label for="_option_options_<?php echo $key; ?>">Options <small>(optional)</small></label>
 										<div class="field ">
 											<table class="widefat">
 												<thead>
@@ -194,13 +194,13 @@ if(!empty($extra_fields_options)){
 															<td><span class="wpfm-option-sort">☰</span></td>
 															<td><?php echo $sub_value_count; ?></td>
 															<td>
-																<input type="text" name="<?php echo $key; ?>_option_value_name_<?php echo $sub_value_count; ?>" value="<?php echo $values['option_value_name']; ?>" class="opt_name">
+																<input type="text" name="<?php echo $key; ?>_option_value_name_<?php echo $sub_value_count; ?>" value="<?php echo $values['option_value_name']; ?>" class="opt_name" required>
 															</td>
 															<td>
 																<input type="checkbox" name="<?php echo $key; ?>_option_value_default_<?php echo $sub_value_count; ?>" class="opt_default" <?php echo $option_value_default; ?>>
 															</td>
 															<td>
-																<input type="number" name="<?php echo $key; ?>_option_value_price_<?php echo $sub_value_count; ?>" value="<?php echo $values['option_value_price']; ?>" class="opt_price">
+																<input type="number" name="<?php echo $key; ?>_option_value_price_<?php echo $sub_value_count; ?>" value="<?php echo $values['option_value_price']; ?>" class="opt_price" required>
 															</td>
 															<td>
 																<select name="<?php echo $key; ?>_option_value_price_type_<?php echo $sub_value_count; ?>" class="opt_select">
@@ -218,9 +218,9 @@ if(!empty($extra_fields_options)){
 														<td colspan="7"> <a class="button wpfm-add-row" data-row="<tr class='option-tr-%%repeated-option-index3%%'>
 						                    <td><span class='wpfm-option-sort'>☰</span></td>
 						                    <td>%%repeated-option-index3%%</td>
-						                    <td><input type='text' name='%%repeated-option-index2%%_option_value_name_%%repeated-option-index3%%' value='' class='opt_name'></td>
+						                    <td><input type='text' name='%%repeated-option-index2%%_option_value_name_%%repeated-option-index3%%' value='' class='opt_name' required></td>
 						                    <td><input type='checkbox' name='%%repeated-option-index2%%_option_value_default_%%repeated-option-index3%%' class='opt_default'></td>
-						                    <td><input type='number' name='%%repeated-option-index2%%_option_value_price_%%repeated-option-index3%%' value='' class='opt_price'></td>
+						                    <td><input type='number' name='%%repeated-option-index2%%_option_value_price_%%repeated-option-index3%%' value='' class='opt_price' required></td>
 						                    <td>
 						                        <select name='%%repeated-option-index2%%_option_value_price_type_%%repeated-option-index3%%' class='opt_select'>
 						                        <option value='quantity_based'>Quantity Based</option>
