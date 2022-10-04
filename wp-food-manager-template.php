@@ -480,7 +480,7 @@ function display_food_veg_nonveg_icon_tag( $post = null, $after = '' ) {
             $imagePath = WPFM_PLUGIN_URL."/assets/images/wpfm-non-veg-organic.png";
         }
         if(!empty($imagePath)){
-        	echo '<img alt="'.$wpfm_veg_nonveg_tag.'" src="'.$imagePath.'" class="wpfm-organic-tag-icon '.$wpfm_veg_nonveg_tag.'">';
+        	echo '<div class="parent-organic-tag '.$wpfm_veg_nonveg_tag.'"><img alt="'.$wpfm_veg_nonveg_tag.'" src="'.$imagePath.'" class="wpfm-organic-tag-icon '.$wpfm_veg_nonveg_tag.'"></div>';
         }
     }
 }
