@@ -24,6 +24,8 @@ class WPFM_Shortcodes {
 		add_action( 'wp', array( $this, 'shortcode_action_handler' ) );
 
 		add_action('food_manager_food_dashboard_content_edit', array($this, 'edit_food'));
+		add_action('food_manager_food_filters_end', array($this, 'food_filter_results'), 30);
+
 		add_action('food_manager_output_foods_no_results', array($this, 'output_no_results'));
 
 		add_shortcode( 'add_food', array( $this, 'add_food' ) );

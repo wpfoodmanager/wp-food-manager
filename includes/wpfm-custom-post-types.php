@@ -796,7 +796,7 @@ class WPFM_Post_Types {
 		 * Feeds
 		 */
 
-		//add_feed( 'food_feed', array( $this, 'food_feed' ) );
+		add_feed( 'food_feed', array( $this, 'food_feed' ) );
 
 		/**
 		 * Post status
@@ -1044,7 +1044,7 @@ class WPFM_Post_Types {
 			'meta_query'          => array()
 		);		
 
-		if ( ! empty( $_GET['search_location'] ) ) {
+		/*if ( ! empty( $_GET['search_location'] ) ) {
 
 			$location_meta_keys = array( 'geolocation_formatted_address', '_food_location', 'geolocation_state_long' );
 
@@ -1063,9 +1063,9 @@ class WPFM_Post_Types {
 			}
 			
 			$query_args['meta_query'][] = $location_search;
-		}
+		}*/
 		
-		if ( ! empty( $_GET['search_datetimes'] ) ) 
+		/*if ( ! empty( $_GET['search_datetimes'] ) ) 
 		{
 			if($_GET['search_datetimes'] == 'datetime_today')
 			{	
@@ -1206,9 +1206,9 @@ class WPFM_Post_Types {
 			}
 
 			$query_args['meta_query'][] = $date_search;
-		}
+		}*/
 		
-		if ( ! empty( $_GET['search_ticket_prices'] ) ) {
+		/*if ( ! empty( $_GET['search_ticket_prices'] ) ) {
 		    
 			if($_GET['search_ticket_prices'] =='ticket_price_paid')
 			{  
@@ -1224,7 +1224,7 @@ class WPFM_Post_Types {
 							'compare' => '=',
 						);
 			$query_args['meta_query'][] = $ticket_search;			
-		}
+		}*/
 		
 		if ( ! empty( $_GET['search_food_types'] ) ) {
 		    

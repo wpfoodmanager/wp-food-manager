@@ -1041,8 +1041,7 @@ function wpfm_get_filtered_links( $args = array() ) {
 
 				'search_keywords' => $args['search_keywords'],
 
-				'search_location' => $args['search_location'],	
-
+				//'search_location' => $args['search_location'],	
 
 				'search_categories'  => implode( ',', $search_categories ),
 
@@ -1058,10 +1057,16 @@ function wpfm_get_filtered_links( $args = array() ) {
 	}
 
 	$return = '';
-	
+
+	$i = 1;
 	foreach ( $links as $key => $link ) {
 
+		if($i > 1)
+			$return .= ' <a href="#">|</a> ';
+
 		$return .= '<a href="' . esc_url( $link['url'] ) . '" class="' . esc_attr( $key ) . '">' . $link['name'] . '</a>';
+
+		$i++;
 	}
 	
 	return $return;

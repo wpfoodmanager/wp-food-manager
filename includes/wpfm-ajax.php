@@ -245,13 +245,13 @@ class WPFM_Ajax {
 
 			'search_keywords'    => $search_keywords,
 
-			'search_datetimes'  => $search_datetimes,
+			//'search_datetimes'  => $search_datetimes,
 
 			'search_categories'  => $search_categories,
 
 			'search_food_types'  => $search_food_types,
 
-			'search_ticket_prices'  => $search_ticket_prices,			
+			//'search_ticket_prices'  => $search_ticket_prices,			
 
 			'orderby'            => $orderby,
 
@@ -330,7 +330,7 @@ class WPFM_Ajax {
 		
 		//datetimes
 
-		if ($search_datetimes) 
+		/*if ($search_datetimes) 
 		{	
 			$showing_datetimes= array();			
 
@@ -341,7 +341,7 @@ class WPFM_Ajax {
 			}
 
 			$result['filter_value'][] = implode( ', ', $showing_datetimes);		
-		}
+		}*/
 		
 		//ticket prices	
 		if ($search_ticket_prices) 
@@ -359,7 +359,7 @@ class WPFM_Ajax {
 		    
 			$result['filter_value'][] = '&ldquo;' . $search_keywords . '&rdquo;'; 	
 		}		
-       
+       	
         $last_filter_value = array_pop($result['filter_value']);   
         $result_implode=implode(', ', $result['filter_value']);
         if(  count($result['filter_value']) >= 1 )
@@ -378,10 +378,10 @@ class WPFM_Ajax {
 
 			$result['filter_value'][] = sprintf( __( 'located in &ldquo;%s&rdquo;', 'wp-food-manager' ), $search_location );
 		}
-
+		
 		if(sizeof( $result['filter_value'] ) > 1 ) 
         {	    
-        	$message = sprintf( _n( 'Search completed. Found %d matching record.', 'Search completed. Found %d matching records.', $foods->found_posts, 'wp-food-manager' ), $foods->found_posts);
+	       	$message = sprintf( _n( 'Search completed. Found %d matching record.', 'Search completed. Found %d matching records.', $foods->found_posts, 'wp-food-manager' ), $foods->found_posts);
 			$result['showing_applied_filters'] = true;
 		} else {
 		   
