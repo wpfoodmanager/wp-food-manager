@@ -41,7 +41,7 @@
 								    }
 									?>
 								<?php else : ?>
-									<?php echo $food->post_title; ?> <small>(<?php display_food_status( $food ); ?>)</small>
+									<?php echo $food->post_title; ?> <small class="wpfm-food-status-pending-approval"><?php display_food_status( $food ); ?></small>
 								<?php endif; ?>
 								<?php elseif ('food_action' === $key ) :?>
 		                            <div class="wpfm-dboard-food-action">
