@@ -200,7 +200,7 @@ if(!empty($extra_fields_options)){
 																<input type="checkbox" name="<?php echo $key; ?>_option_value_default_<?php echo $sub_value_count; ?>" class="opt_default" <?php echo $option_value_default; ?>>
 															</td>
 															<td>
-																<input type="number" name="<?php echo $key; ?>_option_value_price_<?php echo $sub_value_count; ?>" value="<?php echo $values['option_value_price']; ?>" class="opt_price" required>
+																<input type="number" name="<?php echo $key; ?>_option_value_price_<?php echo $sub_value_count; ?>" value="<?php echo $values['option_value_price']; ?>" class="opt_price" step="any" required>
 															</td>
 															<td>
 																<select name="<?php echo $key; ?>_option_value_price_type_<?php echo $sub_value_count; ?>" class="opt_select">

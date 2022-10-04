@@ -607,7 +607,7 @@ class WPFM_Writepanels
 		<p class="wpfm-admin-postbox-form-field <?=$name;?>">
 			<label for="<?php echo esc_attr($key); ?>"><?php echo esc_html($field['label']); ?> <?php echo esc_html($cur_symbol); ?> : <?php if (!empty($field['description'])) : ?><span class="tips" data-tip="<?php echo esc_attr($field['description']); ?>">[?]</span><?php endif; ?></label>
 			<span class="wpfm-input-field">
-				<input type="number" class="wpfm-small-field" name="<?php echo esc_attr($name); ?>" id="<?php echo esc_attr($key); ?>" placeholder="<?php echo esc_attr($field['placeholder']); ?>" value="<?php echo esc_attr($field['value']); ?>" />
+				<input type="number" class="wpfm-small-field" name="<?php echo esc_attr($name); ?>" id="<?php echo esc_attr($key); ?>" placeholder="<?php echo esc_attr($field['placeholder']); ?>" value="<?php echo esc_attr($field['value']); ?>" step="any"/>
 			</span>
 		</p>
 	<?php
@@ -700,7 +700,7 @@ class WPFM_Writepanels
 									<!-- <td><input type="checkbox" name="%%repeated-option-index2%%_option_value_default_<?php //echo esc_attr($count);?>" value="1"<?php //if(isset($op_value['option_value_default']) && $op_value['option_value_price_type'] == 'option_value_default') echo 'checked="checked"' ?> class="opt_default"></td> -->
 									<td><input type="checkbox" name="<?php echo esc_attr($wpfm_key_num);?>_option_value_default_<?php echo esc_attr($count);?>" <?php if(isset($op_value['option_value_default']) && $op_value['option_value_default'] == 'on') echo 'checked="checked"'; ?> class="opt_default" ></td>
 
-									<td><input type="number" name="<?php echo esc_attr($wpfm_key_num);?>_option_value_price_<?php echo esc_attr($count);?>" value="<?php if(isset($op_value['option_value_price']) ) echo $op_value['option_value_price']; ?>" class="opt_price" required></td>
+									<td><input type="number" name="<?php echo esc_attr($wpfm_key_num);?>_option_value_price_<?php echo esc_attr($count);?>" value="<?php if(isset($op_value['option_value_price']) ) echo $op_value['option_value_price']; ?>" class="opt_price" step="any" required></td>
 
 									<td>
 										<select name="<?php echo esc_attr($wpfm_key_num);?>_option_value_price_type_<?php echo esc_attr($count);?>" class="opt_select">
@@ -725,7 +725,7 @@ class WPFM_Writepanels
 					<td>%%repeated-option-index3%%</td>
 					<td><input type=&apos;text&apos; name=&apos;%%repeated-option-index2%%_option_value_name_%%repeated-option-index3%%&apos; value=&apos;&apos; class=&apos;opt_name&apos; required></td>
 					<td><input type=&apos;checkbox&apos; name=&apos;%%repeated-option-index2%%_option_value_default_%%repeated-option-index3%%&apos; class=&apos;opt_default&apos;></td>
-					<td><input type=&apos;number&apos; name=&apos;%%repeated-option-index2%%_option_value_price_%%repeated-option-index3%%&apos; value=&apos;&apos; class=&apos;opt_price&apos; required></td>
+					<td><input type=&apos;number&apos; name=&apos;%%repeated-option-index2%%_option_value_price_%%repeated-option-index3%%&apos; value=&apos;&apos; class=&apos;opt_price&apos; step=&apos;any&apos; required></td>
 					<td>
 						<select name=&apos;%%repeated-option-index2%%_option_value_price_type_%%repeated-option-index3%%&apos; class=&apos;opt_select&apos;>
 						<option value=&apos;quantity_based&apos;>Quantity Based</option>
