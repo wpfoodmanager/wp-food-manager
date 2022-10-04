@@ -826,7 +826,7 @@ class WPFM_Post_Types {
 
 		global $menu;
 
-		$plural     = __( 'Food Listings', 'wp-food-manager' );
+		$plural     = __( 'Food Manager', 'wp-food-manager' );
 
 		$count_foods = wp_count_posts( 'food_manager', 'readable' );
 

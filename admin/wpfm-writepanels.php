@@ -41,6 +41,11 @@ class WPFM_Writepanels
 
 		add_action('add_meta_boxes', array($this, 'add_meta_boxes'));
 		add_action('save_post', array($this, 'save_post'), 1, 2);
+		add_action('admin_init', array($this, 'approve_food'));
+
+		add_action('load-edit.php', array($this, 'do_bulk_actions'));
+
+		add_action('admin_footer-edit.php', array($this, 'add_bulk_actions'));
 
 		add_action('food_manager_save_food_manager', array($this, 'food_manager_save_food_manager_data'), 20, 2);
 
@@ -60,6 +65,7 @@ class WPFM_Writepanels
 		add_filter('manage_food_manager_posts_columns', array($this, 'set_custom_food_columns'));
 		add_filter('manage_edit-food_manager_sortable_columns', array($this, 'set_custom_food_sortable_columns'));
 		add_action('manage_food_manager_posts_custom_column', array($this, 'custom_food_content_column'), 10, 2);
+		add_filter('post_row_actions', array($this, 'row_actions'));
 
 		//add food price column
 		/*add_filter('manage_food_manager_posts_columns', array($this, 'set_price_copy_columns'));
@@ -472,7 +478,101 @@ class WPFM_Writepanels
 	}
 
 
+	/**
+	 * Edit bulk actions
+	 */
 
+	public function add_bulk_actions()
+	{
+
+		global $post_type, $wp_post_types;
+
+		if ($post_type == 'food_manager') { ?>
+			<script type="text/javascript">
+				jQuery(document).ready(function() {
+
+					jQuery('<option>').val('approve_food').text('<?php printf(__('Approve %s', 'wp-event-manager'), esc_attr($wp_post_types['food_manager']->labels->name)); ?>').appendTo("select[name='action']");
+
+					jQuery('<option>').val('approve_food').text('<?php printf(__('Approve %s', 'wp-event-manager'), esc_attr($wp_post_types['food_manager']->labels->name)); ?>').appendTo("select[name='action2']");
+
+				});
+			</script>
+
+		<?php
+		}
+	}
+
+	/**
+	 * Do custom bulk actions
+	 */
+
+	public function do_bulk_actions()
+	{
+
+		$wp_list_table = _get_list_table('WP_Posts_List_Table');
+
+		$action = $wp_list_table->current_action();
+
+		switch ($action) {
+
+			case 'approve_food':
+				check_admin_referer('bulk-posts');
+
+				$post_ids = array_map('absint', array_filter((array) $_GET['post']));
+
+				$published_foods = array();
+
+				if (!empty($post_ids)) {
+
+					foreach ($post_ids as $post_id) {
+
+						$event_data = array(
+
+							'ID'          => $post_id,
+
+							'post_status' => 'publish',
+						);
+
+						if (in_array(get_post_status($post_id), array('pending', 'pending_payment')) && current_user_can('publish_post', $post_id) && wp_update_post($event_data)) {
+
+							$published_foods[] = $post_id;
+						}
+					}
+				}
+
+				wp_redirect(add_query_arg('published_foods', $published_foods, remove_query_arg(array('published_foods', 'expired_events'), admin_url('edit.php?post_type=food_manager'))));
+
+				exit;
+
+				break;
+		}
+
+		return;
+	}
+
+	/**
+	 * Approve a single food
+	 */
+
+	public function approve_food()
+	{
+
+		if (!empty($_GET['approve_food']) && wp_verify_nonce($_REQUEST['_wpnonce'], 'approve_food') && current_user_can('publish_post', $_GET['approve_food'])) {
+
+			$post_id = absint($_GET['approve_food']);
+
+			$food_data = array(
+				'ID'          => $post_id,
+				'post_status' => 'publish',
+			);
+
+			wp_update_post($food_data);
+
+			wp_redirect(remove_query_arg('approve_food', add_query_arg('published_foods', $post_id, admin_url('edit.php?post_type=food_manager'))));
+
+			exit;
+		}
+	}
 
 
 	/**
@@ -1031,6 +1131,24 @@ class WPFM_Writepanels
 		}
 		wp_die();
 	}
+
+	/**
+	 * Removes all action links because WordPress add it to primary column.
+	 * Note: Removing all actions also remove mobile "Show more details" toggle button.
+	 * So the button need to be added manually in custom_columns callback for primary column.
+	 *
+	 * @access public
+	 * @param array $actions
+	 * @return array
+	 */
+	public function row_actions($actions)
+	{
+		if ('food_manager' == get_post_type()) {
+			return array();
+		}
+		return $actions;
+	}
+
 	/**
 	 * wpfm_get_food_listings_by_category_id function.
 	 *
@@ -1079,14 +1197,10 @@ class WPFM_Writepanels
 	        'price' => __( 'Price', 'wp-food-manager' ),
 	        'fm_categories' => __( 'Categories', 'wp-food-manager' ),
 	        'food_menu_order' => __( 'Order', 'wp-food-manager' ),
-	        'date' => $columns['date']
+	        'date' => $columns['date'],
+	        'food_actions' => __( 'Actions', 'wp-food-manager' )
 	    );
 	    return $custom_col_order;
-
-		/*$columns['image'] = __('Image', 'wp-food-manager');
-		$columns['price'] = __('Price', 'wp-food-manager');
-		$columns['fm_categories'] = __('Categories', 'wp-food-manager');
-		return  $columns;*/
 	}
 
 	public function set_custom_food_sortable_columns($columns)
@@ -1098,32 +1212,117 @@ class WPFM_Writepanels
 
 	public function custom_food_content_column($column, $post_id)
 	{
-		if($column == 'image'){
-			$food_thumbnail = get_the_post_thumbnail( $post_id, 'thumbnail', array( 'class' => 'alignleft' ) );
-			if(empty($food_thumbnail) || $food_thumbnail == ''){
-				$food_thumbnail_url = apply_filters( 'wpfm_default_food_banner', WPFM_PLUGIN_URL . '/assets/images/wpfm-placeholder.jpg' );
-				$food_thumbnail = '<img src='.esc_url($food_thumbnail_url).' height="60px" width="60px">';
-			} else {
-				$food_thumbnail = get_the_post_thumbnail( $post_id, array( 60, 60), array( 'class' => 'alignleft' ) );
-			}
-			echo $food_thumbnail;
-			display_food_veg_nonveg_icon_tag();
-		}
-		if($column == 'price'){
-			display_food_price_tag();
-		}
-		
-		if($column == 'fm_categories'){
-			echo display_food_category();
-		}
+		global $post;
 
-		if($column == 'fm_stock_status'){
-			echo display_stock_status();
-		}
+		switch ($column) {
 
-		if($column == 'food_menu_order'){
-			$thispost = get_post($post_id);
-			echo $thispost->menu_order;
+			case 'image':
+				$food_thumbnail = get_the_post_thumbnail( $post_id, 'thumbnail', array( 'class' => 'alignleft' ) );
+				if(empty($food_thumbnail) || $food_thumbnail == ''){
+					$food_thumbnail_url = apply_filters( 'wpfm_default_food_banner', WPFM_PLUGIN_URL . '/assets/images/wpfm-placeholder.jpg' );
+					$food_thumbnail = '<img src='.esc_url($food_thumbnail_url).' height="60px" width="60px">';
+				} else {
+					$food_thumbnail = get_the_post_thumbnail( $post_id, array( 60, 60), array( 'class' => 'alignleft' ) );
+				}
+				echo $food_thumbnail;
+				display_food_veg_nonveg_icon_tag();
+
+				break;
+
+			case 'price':
+				display_food_price_tag();
+
+				break;
+
+			case 'fm_categories':
+				echo display_food_category();
+
+				break;
+
+			case 'fm_stock_status':
+				echo display_stock_status();
+
+				break;
+
+			case 'food_menu_order':
+				$thispost = get_post($post_id);
+				echo $thispost->menu_order;
+
+				break;
+
+			case 'food_actions':
+				echo wp_kses_post('<div class="actions">');
+
+				$admin_actions = apply_filters('post_row_actions', array(), $post);
+
+				if (in_array($post->post_status, array('pending', 'pending_payment')) && current_user_can('publish_post', $post->ID)) {
+
+					$admin_actions['publish'] = array(
+
+						'action' => 'publish',
+
+						'name'   => __('Publish', 'wp-food-manager'),
+
+						'url'    => wp_nonce_url(add_query_arg('approve_food', $post->ID), 'approve_food'),
+					);
+				}
+
+				if ($post->post_status !== 'trash') {
+
+					if (current_user_can('read_post', $post->ID)) {
+
+						$admin_actions['view'] = array(
+
+							'action' => 'view',
+
+							'name'   => __('View', 'wp-food-manager'),
+
+							'url'    => get_permalink($post->ID),
+						);
+					}
+
+					if (current_user_can('edit_post', $post->ID)) {
+
+						$admin_actions['edit'] = array(
+
+							'action' => 'edit',
+
+							'name'   => __('Edit', 'wp-food-manager'),
+
+							'url'    => get_edit_post_link($post->ID),
+						);
+					}
+
+					if (current_user_can('delete_post', $post->ID)) {
+
+						$admin_actions['delete'] = array(
+
+							'action' => 'delete',
+
+							'name'   => __('Delete', 'wp-food-manager'),
+
+							'url'    => get_delete_post_link($post->ID),
+						);
+					}
+				}
+
+				$admin_actions = apply_filters('food_manager_admin_actions', $admin_actions, $post);
+
+				foreach ($admin_actions as $action) {
+
+					if (is_array($action)) {
+
+						printf('<a class="button button-icon tips icon-%1$s" href="%2$s" data-tip="%3$s">%4$s</a>', $action['action'], esc_url($action['url']), esc_attr($action['name']), esc_html($action['name']));
+					} else {
+
+						echo esc_attr(str_replace('class="', 'class="button ', $action));
+					}
+				}
+
+				echo wp_kses_post('</div>');
+				
+				break;
+
 		}
 	}
 }

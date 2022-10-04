@@ -840,6 +840,52 @@ div#wpfm-loading {
   width: 100%;
   text-align: center;
 }
+.widefat .column-food_actions {
+  text-align: right;
+  width: 120px;
+}
+.widefat .column-food_actions .actions {
+  padding-top: 2px;
+}
+.widefat .column-food_actions a.button {
+  display: inline-block;
+  margin: 0 0 2px 4px;
+  cursor: pointer;
+  padding: 0 6px!important;
+  font-size: 1em!important;
+  line-height: 2em!important;
+  overflow: hidden;
+}
+.widefat .column-food_actions a.button-icon {
+  width: 2em!important;
+  padding: 0!important;
+}
+.widefat .column-food_actions a.button-icon:before {
+  font-family: wp-food-manager!important;
+  font-style: normal;
+  font-weight: 400;
+  speak: none;
+  display: inline-block;
+  text-decoration: inherit;
+  text-align: center;
+  font-variant: normal;
+  text-transform: none;
+  float: left;
+  width: 2em!important;
+  line-height: 2em;
+}
+.widefat .column-food_actions .icon-view:before {
+  content: "\e9ce";
+}
+.widefat .column-food_actions .icon-publish:before {
+  content: "\ea10";
+}
+.widefat .column-food_actions .icon-edit:before {
+  content: "\e905";
+}
+.widefat .column-food_actions .icon-delete:before {
+  content: "\e9ac";
+}
 
 
 
