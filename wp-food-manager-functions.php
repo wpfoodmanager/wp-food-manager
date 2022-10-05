@@ -1260,6 +1260,48 @@ function wpfm_upload_file( $file, $args = array() ) {
 }
 
 /**
+ * 
+ * @since 3.1.18
+ * @param null
+ * @return array
+ */
+function get_food_order_by() 
+{
+	$args = [
+				'title'   => [
+					'label' => __('Food Title', 'wp-food-manager'),
+					'type' => [
+						'title|asc' => __('Ascending (ASC)', 'wp-food-manager'),
+						'title|desc' => __('Descending (DESC)', 'wp-food-manager'),
+					]
+				],
+				'food_category'   => [
+					'label' => __('Food Category', 'wp-food-manager'),
+					'type' => [
+						'food_category|asc' => __('Ascending (ASC)', 'wp-food-manager'),
+						'food_category|desc' => __('Descending (DESC)', 'wp-food-manager'),
+					]
+				],
+				'food_type'   => [
+					'label' => __('Food Type', 'wp-food-manager'),
+					'type' => [
+						'food_type|asc' => __('Ascending (ASC)', 'wp-food-manager'),
+						'food_type|desc' => __('Descending (DESC)', 'wp-food-manager'),
+					]
+				],
+				/*'event_location'   => [
+					'label' => __('Event Location', 'wp-food-manager'),
+					'type' => [
+						'event_location|asc' => __('Ascending (ASC)', 'wp-food-manager'),
+						'event_location|desc' => __('Descending (DESC)', 'wp-food-manager'),
+					]
+				],*/
+			];
+
+	return apply_filters('get_food_order_by_args', $args);
+}
+
+/**
  * Allowed Mime types specifically for WP Food Manager.
  * @param   string $field Field used.
  * @return  array  Array of allowed mime types

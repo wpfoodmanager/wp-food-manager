@@ -223,6 +223,18 @@ class WPFM_Shortcodes {
 				return ob_get_clean();
 			}
 		}
+
+		$search_order_by = 	isset($_GET['search_order_by']) ? sanitize_text_field($_GET['search_order_by']) : '';
+
+		if (isset($search_order_by) && !empty($search_order_by)) {
+			$search_order_by = explode('|', $search_order_by);
+
+			$orderby = $search_order_by[0];
+			$order = $search_order_by[1];
+		} else {
+			$orderby = 'date';
+			$order = 'desc';
+		}
 		
 		// ....If not show the food dashboard
 
@@ -244,6 +256,27 @@ class WPFM_Shortcodes {
 			$args['s'] = $food_manager_keyword;
 
 			add_filter('posts_search', 'get_food_listings_keyword_search');
+		}
+
+		if (isset($args['orderby']) && !empty($args['orderby'])) {
+			if ($args['orderby'] == 'food_manager') {
+				
+				$args['meta_query'] = array(
+					'relation' => 'AND',
+					'food_manager_type_clause' => array(
+						'key'     => '_food_manager',
+						'compare' => 'EXISTS',
+					),
+					'food_manager_clause' => array(
+						'key'     => '_food_manager',
+						'compare' => 'EXISTS',
+					), 
+				);
+				$args['orderby'] = array(
+					'food_manager_type_clause' => ($search_order_by[1]==='desc') ? 'asc' : 'desc',
+					'food_manager_clause' => $search_order_by[1],
+				);	
+			}
 		}
 
 		$foods = new WP_Query($args);
