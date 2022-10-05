@@ -43,7 +43,17 @@ class WPFM_Post_Types {
 		add_filter('use_block_editor_for_post_type', array($this,'wpfm_disable_gutenberg'), 10, 2);
 
 		//view count action
-    add_action( 'set_single_listing_view_count', array( $this, 'set_single_listing_view_count' ));
+		add_action( 'set_single_listing_view_count', array( $this, 'set_single_listing_view_count' ));
+
+		if (get_option('food_manager_enable_categories')) {
+
+			add_action('restrict_manage_posts', array($this, 'foods_by_category'));
+		}
+
+		if (get_option('food_manager_enable_food_types') && get_option('food_manager_enable_categories')) {
+
+			add_action('restrict_manage_posts', array($this, 'foods_by_food_type'));
+		}
 	}
 
 	/**
@@ -819,6 +829,88 @@ class WPFM_Post_Types {
 	}
 
 	/**
+	 * Show category dropdown
+	 */
+	public function foods_by_category()
+	{
+
+		global $typenow, $wp_query;
+
+		if ($typenow != 'food_manager' || !taxonomy_exists('food_manager_category')) {
+
+			return;
+		}
+
+		include_once WPFM_PLUGIN_DIR . '/includes/wpfm-category-walker.php';
+
+		$r = array();
+
+		$r['pad_counts'] = 1;
+
+		$r['hierarchical'] = 1;
+
+		$r['hide_empty'] = 0;
+
+		$r['show_count'] = 1;
+
+		$r['selected'] = (isset($wp_query->query['food_manager_category'])) ? $wp_query->query['food_manager_category'] : '';
+
+		$r['menu_order'] = false;
+
+		$terms = get_terms('food_manager_category', $r);
+
+		$walker = new WPFM_Category_Walker();
+
+		if (!$terms) {
+
+			return;
+		}
+
+		$output = "<select name='food_manager_category' id='dropdown_food_manager_category'>";
+
+		$output .= '<option value="" ' . selected(isset($_GET['food_manager_category']) ? $_GET['food_manager_category'] : '', '', false) . '>' . __('Select Food Category', 'wp-food-manager') . '</option>';
+
+		$output .= $walker->walk($terms, 0, $r);
+
+		$output .= '</select>';
+
+		printf($output);
+	}
+
+	/**
+	 * Show Food type dropdown
+	 */
+	public function foods_by_food_type()
+	{
+		global $typenow, $wp_query;
+
+		if ($typenow != 'food_manager' || !taxonomy_exists('food_manager_type')) {
+			return;
+		}
+
+		$r                 = array();
+		$r['pad_counts']   = 1;
+		$r['hierarchical'] = 1;
+		$r['hide_empty']   = 0;
+		$r['show_count']   = 1;
+		$r['selected']     = (isset($wp_query->query['food_manager_type'])) ? $wp_query->query['food_manager_type'] : '';
+		$r['menu_order']   = false;
+		$terms             = get_terms('food_manager_type', $r);
+		$walker            = new WPFM_Category_Walker();
+
+		if (!$terms) {
+			return;
+		}
+
+		$output  = "<select name='food_manager_type' id='dropdown_food_manager_type'>";
+		$output .= '<option value="" ' . selected(isset($_GET['food_manager_type']) ? $_GET['food_manager_type'] : '', '', false) . '>' . __('Select Food Type', 'wp-food-manager') . '</option>';
+		$output .= $walker->walk($terms, 0, $r);
+		$output .= '</select>';
+
+		printf($output);
+	}
+
+	/**
 	 * Change label
 	 */
 
@@ -1024,7 +1116,7 @@ class WPFM_Post_Types {
 	}
 
 	/**
-	 * Event listing feeds
+	 * Food listing feeds
 	 */
 
 	public function food_feed() {
