@@ -1033,7 +1033,7 @@ function wpfm_get_filtered_links( $args = array() ) {
 			'url'  => '#'
 		),
 
-		'rss_link' => array(
+		/*'rss_link' => array(
 
 			'name' => __( 'RSS', 'wp-food-manager' ),
 
@@ -1048,7 +1048,7 @@ function wpfm_get_filtered_links( $args = array() ) {
 				'search_food_types'  => implode( ',', $search_food_types),
 
 			) ) )
-		)
+		)*/
 	), $args );
 
 	if ( ! $args['search_keywords'] && ! $args['search_location'] && ! $args['search_categories'] && ! $args['search_food_types']  && ! apply_filters( 'wpfm_get_listings_custom_filter', false ) ) {
