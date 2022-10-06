@@ -194,7 +194,7 @@ if(!empty($extra_fields_options)){
 															<td><span class="wpfm-option-sort">☰</span></td>
 															<td><?php echo $sub_value_count; ?></td>
 															<td>
-																<input type="text" name="<?php echo $key; ?>_option_value_name_<?php echo $sub_value_count; ?>" value="<?php echo $values['option_value_name']; ?>" class="opt_name" required>
+																<input type="text" name="<?php echo $key; ?>_option_value_name_<?php echo $sub_value_count; ?>" value="<?php echo $values['option_value_name']; ?>" class="opt_name" pattern=".*\S+.*" required>
 															</td>
 															<td>
 																<input type="checkbox" name="<?php echo $key; ?>_option_value_default_<?php echo $sub_value_count; ?>" class="opt_default" <?php echo $option_value_default; ?>>
@@ -218,7 +218,7 @@ if(!empty($extra_fields_options)){
 														<td colspan="7"> <a class="button wpfm-add-row" data-row="<tr class='option-tr-%%repeated-option-index3%%'>
 						                    <td><span class='wpfm-option-sort'>☰</span></td>
 						                    <td>%%repeated-option-index3%%</td>
-						                    <td><input type='text' name='%%repeated-option-index2%%_option_value_name_%%repeated-option-index3%%' value='' class='opt_name' required></td>
+						                    <td><input type='text' name='%%repeated-option-index2%%_option_value_name_%%repeated-option-index3%%' value='' class='opt_name' pattern='.*\S+.*' required></td>
 						                    <td><input type='checkbox' name='%%repeated-option-index2%%_option_value_default_%%repeated-option-index3%%' class='opt_default'></td>
 						                    <td><input type='number' name='%%repeated-option-index2%%_option_value_price_%%repeated-option-index3%%' value='' class='opt_price' required></td>
 						                    <td>
