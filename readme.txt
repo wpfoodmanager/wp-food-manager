@@ -193,6 +193,26 @@ You can also find us on GitHub: see the [WP Food Manager GitHub Repository](http
 
 == Changelog ==
 
+= 1.0.1 [ Oct 6th, 2022 ] =
+
+New - Food manager install process steps added.
+New - Food Details page added.
+New - Restaurant manager can add food from fronted side.
+New - Add Food topping functionalities implemented.
+New - Add a food page added so now the restaurant manager can add food from the fronted side.
+New - Food type fields added so now the restaurant manager can select the food type.
+New - Food Data Section added in add food form.
+New - General setting implemented for an admin at admin panel.
+New - Menu Name corrections on the admin side.
+Fix - The user can not able to delete food images.
+Fix - Warning messages from add food page.
+Fix - Food view count showing zero.
+Fix - Food listing page not showing correctly in other browsers.
+Fix - In food listing Keyword type search is not working.
+Fix - Warning messages in add food and food listing page.
+Fix - Add food pricing issues.
+
+
 = 1.0 [ Aug 19th, 2020 ] =
 
 * First release.
