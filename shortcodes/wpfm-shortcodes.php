@@ -202,7 +202,7 @@ class WPFM_Shortcodes {
 		
 		extract( shortcode_atts( array(
 
-			'posts_per_page' => '25',
+			'posts_per_page' => '10',
 
 		), $atts ) );
 
