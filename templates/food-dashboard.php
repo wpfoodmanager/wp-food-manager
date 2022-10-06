@@ -1,6 +1,73 @@
 <?php do_action('food_manager_food_dashboard_before'); ?>
 <p></p>
 <div id="food-manager-food-dashboard">
+	<div class="wpfm-dashboard-main-header">
+		<div class="wpfm-dashboard-main-title wpfm-dashboard-main-filter">
+			<h3 class="wpfm-theme-text"><?php _e('Food Dashboard', 'wp-food-manager'); ?></h3>
+
+			<div class="wpfm-d-inline-block wpfm-dashboard-i-block-btn">
+
+				<?php do_action('food_manager_food_dashboard_button_action_start'); ?>
+
+				<?php $submit_food = get_option('food_manager_add_food_page_id');
+				if (!empty($submit_food)) : ?>
+					<a class="wpfm-dashboard-header-btn wpfm-dashboard-header-add-btn" title="<?php _e('Add Food', 'wp-food-manager'); ?>" href="<?php echo get_permalink($submit_food); ?>"><i class="wpfm-icon-plus"></i></a>
+				<?php endif; ?>
+
+				<?php do_action('food_manager_food_dashboard_button_action_end'); ?>
+
+				<a href="javascript:void(0)" title="<?php _e('Filter', 'wp-food-manager'); ?>" class="wpfm-dashboard-food-filter wpfm-dashboard-header-btn"><i class="wpfm-icon-filter"></i></a>
+			</div>
+		</div>
+
+		<?php
+		$_GET = array_map('stripslashes_deep', $_GET);
+		$search_keywords = isset($_GET['search_keywords']) ? sanitize_text_field($_GET['search_keywords']) : '';
+		$search_order_by = isset($_GET['search_order_by']) ? sanitize_text_field($_GET['search_order_by']) : '';
+
+		$display_block = '';
+		if (!empty($search_keywords) || !empty($search_order_by)) {
+			$display_block = 'wpfm-d-block';
+		}
+		?>
+
+		<form action="<?php echo esc_url(get_permalink( get_the_ID()));?>" method="get" class="wpfm-form-wrapper wpfm-food-dashboard-filter-toggle wpfm-dashboard-main-filter-block <?php printf($display_block); ?>">
+			<div class="wpfm-foods-filter">
+
+				<?php do_action('food_manager_food_dashboard_food_filter_start'); ?>
+
+				<div class="wpfm-foods-filter-block">
+					<?php $search_keywords = isset($_GET['search_keywords']) ? $_GET['search_keywords'] : ''; ?>
+					<div class="wpfm-form-group"><input name="search_keywords" id="search_keywords" type="text" value="<?php echo esc_attr($search_keywords); ?>" placeholder="<?php _e('Keywords', 'wp-food-manager'); ?>"></div>
+				</div>
+				<div class="wpfm-foods-filter-block">
+					<div class="wpfm-form-group">
+						<select name="search_order_by" id="search_order_by">
+							<option value=""><?php _e('Order by', 'wp-food-manager'); ?></option>
+							<?php
+							foreach (get_food_order_by() as $order_by) : ?>
+								<?php if (isset($order_by['type']) && !empty($order_by['type'])) : ?>
+									<optgroup label="<?php echo esc_html($order_by['label']); ?>">
+										<?php foreach ($order_by['type'] as $order_key => $order_value) : ?>
+											<option value="<?php echo esc_html($order_key); ?>" <?php selected($order_key, $search_order_by); ?>><?php echo esc_html($order_value); ?></option>
+										<?php endforeach; ?>
+									</optgroup>
+								<?php endif; ?>
+							<?php endforeach; ?>
+						</select>
+					</div>
+				</div>
+
+				<?php do_action('food_manager_food_dashboard_food_filter_end'); ?>
+
+				<div class="wpfm-foods-filter-block wpfm-foods-filter-submit">
+					<div class="wpfm-form-group">
+						<button type="submit" class="wpfm-theme-button"><?php _e('Filter', 'wp-food-manager'); ?></button>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
 	<div class="wpfm-responsive-table-block">
 		<table class="wpfm-main wpfm-responsive-table-wrapper">
 			<thead>

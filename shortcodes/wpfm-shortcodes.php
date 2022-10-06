@@ -189,6 +189,8 @@ class WPFM_Shortcodes {
 	 */	 
 	public function food_dashboard( $atts ) {
 
+		global $wpdb, $food_manager_keyword;
+
 		if ( ! is_user_logged_in() ) {
 
 			ob_start();
