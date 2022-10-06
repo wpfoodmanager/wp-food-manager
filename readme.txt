@@ -1,6 +1,6 @@
 === WP Food Manager WordPress Restaurant Menu Plugin ===
 
-Contributors: wpfoodmanager,ashokdudhat,krinay, kushang78
+Contributors: wpfoodmanager,ashokdudhat,krinay
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=55FRYATTFLA5N
 Tags: wordpress restaurant menu plugin (primary kw), restaurant menu plugin, wordpress restaurant plugin, wordpress food menu plugin, elementor restaurant menu
 Requires at least: 4.1
