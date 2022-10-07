@@ -278,7 +278,7 @@ class WPFM_Writepanels
 	 */
 	public function food_manager_data_fields()
 	{
-		global $post;
+		/*global $post;
 		$current_user = wp_get_current_user();
 
 		$fields =  $GLOBALS['food_manager']->forms->get_form_fields('submit-food', 'backend');
@@ -290,6 +290,54 @@ class WPFM_Writepanels
 
 		if (isset($fields['food']['food_description']))
 			unset($fields['food']['food_description']);
+
+		uasort($fields, array($this, 'sort_by_priority'));
+		return $fields;*/
+
+
+		global $post;
+		$current_user = wp_get_current_user();
+		
+		$GLOBALS['food_manager']->forms->get_form('submit-food', array());
+		$form_submit_food_instance = call_user_func(array('WPFM_Form_Submit_Food', 'instance'));
+		$fields                     = $form_submit_food_instance->merge_with_custom_fields('backend');
+
+		/** add _ (prefix) for all backend fields.
+		 *   Field editor will only return fields without _(prefix).
+		 */
+		foreach ($fields as $group_key => $group_fields) {
+			foreach ($group_fields as $field_key => $field_value) {
+
+				if ($field_key === 'registration') {
+					$field_value['value'] = $registration;
+				}
+
+				if (strpos($field_key, '_') !== 0) {
+					$fields['_' . $field_key] = $field_value;
+				} else {
+					$fields[$field_key] = $field_value;
+				}
+			}
+			unset($fields[$group_key]);
+		}
+
+		$fields = apply_filters('food_manager_food_listing_data_fields', $fields);
+
+		if (isset($fields['food_title'])) {
+			unset($fields['food_title']);
+		}
+
+		if (isset($fields['food_description'])) {
+			unset($fields['food_description']);
+		}
+
+		if ($current_user->has_cap('edit_others_food_manager')) {
+			$fields['food_author'] = array(
+				'label'    => __('Posted by', 'wp-food-manager'),
+				'type'     => 'author',
+				'priority' => 41,
+			);
+		}
 
 		uasort($fields, array($this, 'sort_by_priority'));
 		return $fields;
@@ -491,9 +539,9 @@ class WPFM_Writepanels
 			<script type="text/javascript">
 				jQuery(document).ready(function() {
 
-					jQuery('<option>').val('approve_food').text('<?php printf(__('Approve %s', 'wp-event-manager'), esc_attr($wp_post_types['food_manager']->labels->name)); ?>').appendTo("select[name='action']");
+					jQuery('<option>').val('approve_food').text('<?php printf(__('Approve %s', 'wp-food-manager'), esc_attr($wp_post_types['food_manager']->labels->name)); ?>').appendTo("select[name='action']");
 
-					jQuery('<option>').val('approve_food').text('<?php printf(__('Approve %s', 'wp-event-manager'), esc_attr($wp_post_types['food_manager']->labels->name)); ?>').appendTo("select[name='action2']");
+					jQuery('<option>').val('approve_food').text('<?php printf(__('Approve %s', 'wp-food-manager'), esc_attr($wp_post_types['food_manager']->labels->name)); ?>').appendTo("select[name='action2']");
 
 				});
 			</script>

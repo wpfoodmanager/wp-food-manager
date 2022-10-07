@@ -1460,6 +1460,58 @@ function food_manager_duplicate_listing( $post_id ) {
 }
 
 /**
+ * True if only one type allowed per food
+ *
+ * @return bool
+ */
+function wpfm_multiselect_food_type() {
+
+	if(!class_exists('WPFM_Form_Submit_Food') ) 
+    {
+        include_once( WPFM_PLUGIN_DIR . '/forms/wpfm-form-abstract.php' );
+        include_once( WPFM_PLUGIN_DIR . '/forms/wpfm-form-submit-food.php' );
+    }
+
+    $form_submit_food_instance = call_user_func( array( 'WPFM_Form_Submit_Food', 'instance' ) );
+    $food_fields = $form_submit_food_instance->merge_with_custom_fields();
+
+    if( isset($food_fields['food']['food_type']['type']) && $food_fields['food']['food_type']['type'] === 'term-multiselect' )
+    {
+    	return apply_filters( 'wpfm_multiselect_food_type', true );
+    }
+    else
+    {
+    	return apply_filters( 'wpfm_multiselect_food_type', false );
+    }
+}
+
+/**
+ * True if only one category allowed per event
+ *
+ * @return bool
+ */
+function wpfm_multiselect_food_category() {
+
+	if(!class_exists('WPFM_Form_Submit_Food') ) 
+    {
+        include_once( WPFM_PLUGIN_DIR . '/forms/wpfm-form-abstract.php' );
+        include_once( WPFM_PLUGIN_DIR . '/forms/wpfm-form-submit-food.php' );
+    }
+
+    $form_submit_food_instance = call_user_func( array( 'WPFM_Form_Submit_Food', 'instance' ) );
+    $event_fields = $form_submit_food_instance->merge_with_custom_fields();
+
+    if( isset($event_fields['food']['food_category']['type']) && $event_fields['food']['food_category']['type'] === 'term-multiselect' )
+    {
+    	return apply_filters( 'wpfm_multiselect_food_category', true );
+    }
+    else
+    {
+    	return apply_filters( 'wpfm_multiselect_food_category', false );
+    }
+}
+
+/**
  * Checks to see if the standard password setup email should be used.
  *
  * @since 1.8

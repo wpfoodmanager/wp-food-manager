@@ -1,6 +1,6 @@
 <?php
 /**
- * WP_food_Manager_Form_Submit_food class.
+ * WPFM_Form_Submit_Food class.
  */
 
 class WPFM_Form_Submit_Food extends WPFM_Form {
@@ -8,7 +8,7 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
 	public    $form_name = 'submit-food';
 	protected $food_id;
 	protected $preview_food;
-	/** @var WP_food_Manager_Form_Submit_food The single instance of the class */
+	/** @var WPFM_Form_Submit_Food The single instance of the class */
 	protected static $_instance = null;
 	/**
 	 * Main Instance
