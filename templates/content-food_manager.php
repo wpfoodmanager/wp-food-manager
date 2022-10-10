@@ -50,7 +50,10 @@ if (get_option('food_manager_food_item_show_hide') == 0 && get_stock_status() !=
                                 <?php display_stock_status(); ?>
                             </div>
                         <?php } ?>
-                        <div class="wpfm-food-title"><h3 class="wpfm-heading-text"><?php echo esc_html(get_the_title()); ?> - <?php display_food_price_tag(); ?> </h3>
+                        <div class="wpfm-food-title">
+                            <h3 class="wpfm-heading-text"><?php
+                            $out = strlen(get_the_title()) > 50 ? substr(get_the_title(),0,50)."..." : get_the_title();
+                            echo esc_html($out); ?> - <?php display_food_price_tag(); ?> </h3>
                             <?php display_food_veg_nonveg_icon_tag(); ?>
                         </div>
                         <?php
