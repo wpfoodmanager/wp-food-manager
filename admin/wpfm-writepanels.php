@@ -278,7 +278,7 @@ class WPFM_Writepanels
 	 */
 	public function food_manager_data_fields()
 	{
-		/*global $post;
+		global $post;
 		$current_user = wp_get_current_user();
 
 		$fields =  $GLOBALS['food_manager']->forms->get_form_fields('submit-food', 'backend');
@@ -292,19 +292,16 @@ class WPFM_Writepanels
 			unset($fields['food']['food_description']);
 
 		uasort($fields, array($this, 'sort_by_priority'));
-		return $fields;*/
+		return $fields;
 
 
-		global $post;
+		/*global $post;
 		$current_user = wp_get_current_user();
 		
-		$GLOBALS['food_manager']->forms->get_form('submit-food', array());
+		$GLOBALS['food_manager']->forms->get_form_fields('submit-food', array());
 		$form_submit_food_instance = call_user_func(array('WPFM_Form_Submit_Food', 'instance'));
 		$fields                     = $form_submit_food_instance->merge_with_custom_fields('backend');
 
-		/** add _ (prefix) for all backend fields.
-		 *   Field editor will only return fields without _(prefix).
-		 */
 		foreach ($fields as $group_key => $group_fields) {
 			foreach ($group_fields as $field_key => $field_value) {
 
@@ -340,7 +337,7 @@ class WPFM_Writepanels
 		}
 
 		uasort($fields, array($this, 'sort_by_priority'));
-		return $fields;
+		return $fields;*/
 	}
 
 
