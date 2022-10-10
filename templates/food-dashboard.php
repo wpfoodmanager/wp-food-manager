@@ -9,7 +9,10 @@
 
 				<?php do_action('food_manager_food_dashboard_button_action_start'); ?>
 
-				<?php $submit_food = get_option('food_manager_add_food_page_id');
+				<?php if(isset($_GET['search_keywords']) || !empty($_GET['search_keywords'])){ ?>
+					<a href="<?php echo esc_url(get_permalink());?>" class="reset" title="Reset Filter" style="margin-right: 5px;">Reset</a>
+				<?php }
+				$submit_food = get_option('food_manager_add_food_page_id');
 				if (!empty($submit_food)) : ?>
 					<a class="wpfm-dashboard-header-btn wpfm-dashboard-header-add-btn" title="<?php _e('Add Food', 'wp-food-manager'); ?>" href="<?php echo get_permalink($submit_food); ?>"><i class="wpfm-icon-plus"></i></a>
 				<?php endif; ?>
