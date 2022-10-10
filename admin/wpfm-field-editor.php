@@ -121,13 +121,8 @@ class WP_Food_Manager_Field_Editor
 			echo wp_kses_post('<div class="updated"><p>' . esc_attr('The fields were successfully reset.', 'wp-food-manager') . '</p></div>');
 		}
 
-		if (!empty($_GET['organizer-reset-fields']) && !empty($_GET['_wpnonce']) && wp_verify_nonce($_GET['_wpnonce'], 'reset')) {
-			delete_option('food_manager_submit_organizer_form_fields');
-			echo wp_kses_post('<div class="updated"><p>' . esc_attr('The fields were successfully reset.', 'wp-food-manager') . '</p></div>');
-		}
-
-		if (!empty($_GET['venue-reset-fields']) && !empty($_GET['_wpnonce']) && wp_verify_nonce($_GET['_wpnonce'], 'reset')) {
-			delete_option('food_manager_submit_venue_form_fields');
+		if (!empty($_GET['extra_options-reset-fields']) && !empty($_GET['_wpnonce']) && wp_verify_nonce($_GET['_wpnonce'], 'reset')) {
+			delete_option('food_manager_submit_extra_options_form_fields');
 			echo wp_kses_post('<div class="updated"><p>' . esc_attr('The fields were successfully reset.', 'wp-food-manager') . '</p></div>');
 		}
 
@@ -318,15 +313,14 @@ class WP_Food_Manager_Field_Editor
 		if (wp_verify_nonce($_POST['_wpnonce'], 'save-wp-food-manager-form-field-editor')) {
 
 			$food_field     = !empty($_POST['food']) ? $this->sanitize_array($_POST['food']) : array();
-			$food_organizer = !empty($_POST['organizer']) ? $this->sanitize_array($_POST['organizer']) : array();
-			$food_venue     = !empty($_POST['venue']) ? $this->sanitize_array($_POST['venue']) : array();
+			$extra_options = !empty($_POST['extra_options']) ? $this->sanitize_array($_POST['extra_options']) : array();
 			$index           = 0;
+
 
 			if (!empty($food_field)) {
 				$new_fields = array(
 					'food'     => $food_field,
-					'organizer' => $food_organizer,
-					'venue'     => $food_venue,
+					'extra_options'     => $extra_options,
 				);
 				// find the numers keys from the fields array and replace with lable if label not exist remove that field
 				foreach ($new_fields as $group_key => $group_fields) {
@@ -386,28 +380,12 @@ class WP_Food_Manager_Field_Editor
 
 				// merge field with default fields
 
-				$GLOBALS['food_manager']->forms->get_form('add-food', array());
+				$GLOBALS['food_manager']->forms->get_form('submit-food', array());
 				$form_submit_food_instance = call_user_func(array('WPFM_Form_Submit_Food', 'instance'));
 				// $food_fields =   $form_submit_food_instance->get_default_fields('backend');
-				$food_fields = $form_submit_food_instance->get_default_food_fields();
+				$food_fields = $form_submit_food_instance->get_default_fields();
 
-				if (get_option('enable_food_organizer')) {
-					$GLOBALS['food_manager']->forms->get_form('submit-organizer', array());
-					$form_submit_organizer_instance = call_user_func(array('WP_Food_Manager_Form_Submit_Organizer', 'instance'));
-					$organizer_fields               = $form_submit_organizer_instance->init_fields();
-				} else {
-					$organizer_fields = array();
-				}
-
-				if (get_option('enable_food_venue')) {
-					$GLOBALS['food_manager']->forms->get_form('submit-venue', array());
-					$form_submit_venue_instance = call_user_func(array('WP_Food_Manager_Form_Submit_Venue', 'instance'));
-					$venue_fields               = $form_submit_venue_instance->init_fields();
-				} else {
-					$venue_fields = array();
-				}
-
-				$default_fields = array_merge($food_fields, $organizer_fields, $venue_fields);
+				$default_fields = array_merge($food_fields);
 
 				// if field in not exist in new fields array then make visiblity false
 				if (!empty($default_fields)) {
@@ -425,12 +403,8 @@ class WP_Food_Manager_Field_Editor
 					update_option('food_manager_submit_food_form_fields', array('food' => $new_fields['food']));
 				}
 
-				if (isset($new_fields['organizer'])) {
-					update_option('food_manager_submit_organizer_form_fields', array('organizer' => $new_fields['organizer']));
-				}
-
-				if (isset($new_fields['venue'])) {
-					update_option('food_manager_submit_venue_form_fields', array('venue' => $new_fields['venue']));
+				if (isset($new_fields['extra_options'])) {
+					update_option('food_manager_submit_extra_options_form_fields', array('extra_options' => $new_fields['extra_options']));
 				}
 
 				// this will be removed in future

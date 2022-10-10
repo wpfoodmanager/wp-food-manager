@@ -102,6 +102,10 @@ class WPFM_Admin {
 				'wpfm_sale_less_than_regular_error' => __( 'Please enter in a value less than the regular price.', 'woocommerce' ),
 			)
 		);
+
+		wp_register_script('chosen', WPFM_PLUGIN_URL . '/assets/js/jquery-chosen/chosen.jquery.min.js', array('jquery'), '1.1.0', true);
+		wp_enqueue_script('chosen');
+		wp_enqueue_style('chosen', WPFM_PLUGIN_URL . '/assets/css/chosen.css');
 	}
 
 	/**

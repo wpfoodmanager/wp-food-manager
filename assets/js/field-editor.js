@@ -8,18 +8,18 @@ var FieldEditor = function() {
         /// <since>1.0.0</since> 
         init: function() {
 			
-            jQuery('.wp-event-manager-event-form-field-editor').on( 'init',FieldEditor.actions.initSortable );
-			jQuery(	'.wp-event-manager-event-form-field-editor').trigger( 'init' );
+            jQuery('.wp-food-manager-food-form-field-editor').on( 'init',FieldEditor.actions.initSortable );
+			jQuery(	'.wp-food-manager-food-form-field-editor').trigger( 'init' );
 			
 
 			jQuery('.add-field').on( 'click', FieldEditor.actions.addNewFields); //add new field
 			jQuery('body').on('click', '.child-add-field', FieldEditor.actions.addNewChildFields);
-			jQuery(	'.wp-event-manager-event-form-field-editor').on( 'change', '.field-type select', FieldEditor.actions.changeFieldTypeOptions);
+			jQuery(	'.wp-food-manager-food-form-field-editor').on( 'change', '.field-type select', FieldEditor.actions.changeFieldTypeOptions);
 			jQuery('.delete-field').on( 'click', FieldEditor.actions.deleteField); //delete field
 			jQuery('.reset').on( 'click', FieldEditor.actions.resetFields); //reset field
 			
-			jQuery('.wp-event-manager-organizer-form-field-editor').on( 'init',FieldEditor.actions.initSortable );
-			jQuery(	'.wp-event-manager-organizer-form-field-editor').trigger( 'init' );
+			jQuery('.wp-food-manager-organizer-form-field-editor').on( 'init',FieldEditor.actions.initSortable );
+			jQuery(	'.wp-food-manager-organizer-form-field-editor').trigger( 'init' );
         },
         actions: {
 			
@@ -59,7 +59,7 @@ var FieldEditor = function() {
 			///<returns type="initialization settings" />   
 			/// <since>1.0</since> 
 			deleteField :function() {
-				if ( window.confirm( wp_event_manager_form_editor.cofirm_delete_i18n ) ) 
+				if ( window.confirm( wp_food_manager_form_editor.cofirm_delete_i18n ) ) 
 				{
 					var field_type    = jQuery(this).closest('tr').data( 'field-type' );
 
@@ -82,7 +82,7 @@ var FieldEditor = function() {
 			///<returns type="initialization settings" />   
 			/// <since>1.0</since> 
 			resetFields :function() {
-				if ( window.confirm( wp_event_manager_form_editor.cofirm_reset_i18n ) ) {
+				if ( window.confirm( wp_food_manager_form_editor.cofirm_reset_i18n ) ) {
 					return true;
 				}
 				return false;
@@ -99,7 +99,7 @@ var FieldEditor = function() {
 				row = row.replace( /\[-1\]/g, "[" + $tbody.find('tr').size() + "]");
 				$tbody.append( row );
 				
-				jQuery('.wp-event-manager-event-form-field-editor').trigger( 'init' );
+				jQuery('.wp-food-manager-food-form-field-editor').trigger( 'init' );
 				jQuery('.delete-field').on( 'click', FieldEditor.actions.deleteField); //delete field
 				return false;
 			},
@@ -120,7 +120,7 @@ var FieldEditor = function() {
 
 				$tbody.append( row );
 				
-				jQuery('.wp-event-manager-event-form-field-editor').trigger( 'init' );
+				jQuery('.wp-food-manager-food-form-field-editor').trigger( 'init' );
 				jQuery('.delete-field').on( 'click', FieldEditor.actions.deleteField); //delete field
 				return false;
 			},
@@ -131,7 +131,6 @@ var FieldEditor = function() {
 			///<returns type="initialization settings" />   
 			/// <since>1.0</since> 
 			changeFieldTypeOptions: function(){
-
 				jQuery(this).closest('tr').find('.field-options .placeholder').hide();
 				jQuery(this).closest('tr').find('.field-options .options').hide();
 				jQuery(this).closest('tr').find('.field-options .na').hide();
@@ -159,12 +158,12 @@ var FieldEditor = function() {
 						var obj = jQuery(this);
 
 						jQuery.ajax({
-	                        url: wp_event_manager_form_editor.ajax_url,
+	                        url: wp_food_manager_form_editor.ajax_url,
 	                        type: 'POST',
 	                        dataType: 'HTML',
 	                        data: {
 	                            action: 'get_group_field_html',
-	                            security: wp_event_manager_form_editor.wp_event_manager_form_editor_security,
+	                            security: wp_food_manager_form_editor.wp_food_manager_form_editor_security,
 	                        },
 	                        success: function (responce)
 	                        {

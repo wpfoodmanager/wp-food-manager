@@ -191,7 +191,18 @@ class WP_Food_Manager {
 
 		$chosen_shortcodes   = array( 'add_food', 'food_dashboard', 'foods', 'food_categories', 'food_type' );
 		$chosen_used_on_page = has_wpfm_shortcode( null, $chosen_shortcodes );
-	
+		
+		//jQuery Chosen - vendor
+		if ( apply_filters( 'food_manager_chosen_enabled', $chosen_used_on_page ) ) {
+
+			wp_register_script( 'chosen', WPFM_PLUGIN_URL . '/assets/js/jquery-chosen/chosen.jquery.min.js', array( 'jquery' ), '1.1.0', true );
+			wp_register_script( 'wp-food-manager-term-multiselect', WPFM_PLUGIN_URL . '/assets/js/term-multiselect.min.js', array( 'jquery', 'chosen' ), WPFM_VERSION, true );
+			wp_register_script( 'wp-food-manager-multiselect', WPFM_PLUGIN_URL . '/assets/js/multiselect.min.js', array( 'jquery', 'chosen' ), WPFM_VERSION, true );
+			wp_enqueue_style( 'chosen', WPFM_PLUGIN_URL . '/assets/css/chosen.css' );
+
+			$ajax_filter_deps[] = 'chosen';
+		}
+
 		//file upload - vendor
 		if ( apply_filters( 'wpfm_ajax_file_upload_enabled', true ) ) {
 

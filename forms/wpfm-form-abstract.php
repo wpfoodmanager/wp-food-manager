@@ -636,7 +636,17 @@ abstract class WPFM_Form {
 	 */
 	public function merge_with_custom_fields( $field_view = 'frontend' ) {
 	
-		$custom_fields  = $this->get_food_manager_fieldeditor_fields();
+		$custom_food_fields  = $this->get_food_manager_fieldeditor_fields();
+
+		$custom_extra_options_fields  = $this->get_food_manager_fieldeditor_extra_options_fields();
+
+		$custom_fields = '';
+		if(!empty($custom_extra_options_fields)){
+			$custom_fields = array_merge($custom_food_fields, $custom_extra_options_fields);
+		} else {
+			$custom_fields = $custom_food_fields;
+		}
+		
 		$default_fields = $this->get_default_fields( );
 		
 		/*if(!get_option('food_manager_enable_food_ticket_prices', false)){

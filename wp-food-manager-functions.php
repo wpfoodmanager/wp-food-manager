@@ -1347,18 +1347,18 @@ function wpfm_get_allowed_mime_types( $field = '' ){
  *
  * @return bool
  */
-function food_manager_multiselect_food_type() {
+/*function food_manager_multiselect_food_type() {
 	return apply_filters( 'food_manager_multiselect_food_type', get_option( 'food_manager_multiselect_food_type' ) == 1 ? true : false );
-}
+}*/
 
 /**
  * True if only one category allowed per food
  *
  * @return bool
  */
-function food_manager_multiselect_food_category() {
+/*function food_manager_multiselect_food_category() {
 	return apply_filters( 'food_manager_multiselect_food_category', get_option( 'food_manager_multiselect_food_category' ) == 1 ? true : false );
-}
+}*/
 
 /**
  * Get the page ID of a page if set, with PolyLang compat.
@@ -1444,7 +1444,7 @@ function food_manager_duplicate_listing( $post_id ) {
 	if ( ! empty( $post_meta ) ) {
 		$post_meta = wp_list_pluck( $post_meta, 'meta_value', 'meta_key' );
 		foreach ( $post_meta as $meta_key => $meta_value ) {
-			if ( in_array( $meta_key, apply_filters( 'food_manager_duplicate_listing_ignore_keys', array( '_cancelled', '_featured', '_event_expires', '_event_duration' ) ) ) ) {
+			if ( in_array( $meta_key, apply_filters( 'food_manager_duplicate_listing_ignore_keys', array( '_cancelled', '_featured', '_food_expires', '_food_duration' ) ) ) ) {
 				continue;
 			}
 			update_post_meta( $new_post_id, $meta_key, maybe_unserialize( $meta_value ) );
@@ -1464,7 +1464,7 @@ function food_manager_duplicate_listing( $post_id ) {
  *
  * @return bool
  */
-function wpfm_multiselect_food_type() {
+function food_manager_multiselect_food_type() {
 
 	if(!class_exists('WPFM_Form_Submit_Food') ) 
     {
@@ -1477,20 +1477,20 @@ function wpfm_multiselect_food_type() {
 
     if( isset($food_fields['food']['food_type']['type']) && $food_fields['food']['food_type']['type'] === 'term-multiselect' )
     {
-    	return apply_filters( 'wpfm_multiselect_food_type', true );
+    	return apply_filters( 'food_manager_multiselect_food_type', true );
     }
     else
     {
-    	return apply_filters( 'wpfm_multiselect_food_type', false );
+    	return apply_filters( 'food_manager_multiselect_food_type', false );
     }
 }
 
 /**
- * True if only one category allowed per event
+ * True if only one category allowed per food
  *
  * @return bool
  */
-function wpfm_multiselect_food_category() {
+function food_manager_multiselect_food_category() {
 
 	if(!class_exists('WPFM_Form_Submit_Food') ) 
     {
@@ -1499,15 +1499,15 @@ function wpfm_multiselect_food_category() {
     }
 
     $form_submit_food_instance = call_user_func( array( 'WPFM_Form_Submit_Food', 'instance' ) );
-    $event_fields = $form_submit_food_instance->merge_with_custom_fields();
+    $food_fields = $form_submit_food_instance->merge_with_custom_fields();
 
-    if( isset($event_fields['food']['food_category']['type']) && $event_fields['food']['food_category']['type'] === 'term-multiselect' )
+    if( isset($food_fields['food']['food_category']['type']) && $food_fields['food']['food_category']['type'] === 'term-multiselect' )
     {
-    	return apply_filters( 'wpfm_multiselect_food_category', true );
+    	return apply_filters( 'food_manager_multiselect_food_category', true );
     }
     else
     {
-    	return apply_filters( 'wpfm_multiselect_food_category', false );
+    	return apply_filters( 'food_manager_multiselect_food_category', false );
     }
 }
 

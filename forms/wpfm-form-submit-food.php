@@ -115,7 +115,7 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
 					'type'        => get_option('food_manager_multiselect_food_category',1) ?  'term-multiselect' : 'term-select',
 					'required'    => true,
 					'placeholder' => '',
-					'priority'    => 3,
+					'priority'    => 2,
 					'default'     => '',
 					'taxonomy'    => 'food_manager_category'
 				),
@@ -160,7 +160,7 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
 					'type'        => 'file',
 					'required'    => true,
 					'placeholder' => '',
-					'priority'    => 9,
+					'priority'    => 4,
 					'ajax'        => true,
 					'multiple'    => false,
 					'allowed_mime_types' => array(
@@ -175,7 +175,7 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
 					'type'        => 'wp-editor',
 					'required'    => true,
 					'placeholder' => '',
-					'priority'    => 10
+					'priority'    => 5
 				),
 				
 				'food_veg_nonveg' => array(
@@ -188,21 +188,21 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
 										'veg' => __('Veg','wp-food-manager'),
 										'non-veg' => __('Non Veg','wp-food-manager'),
 									),
-					'priority'    => 11
+					'priority'    => 6
 				),
 				'food_price' => array(
 					'label'       => __( 'Regular Price', 'wp-food-manager' ),
 					'type'        => 'number',
 					'required'    => true,
 					'placeholder' => '',
-					'priority'    => 12
+					'priority'    => 7
 				),
 				'food_sale_price' => array(
 					'label'       => __( 'Sale Price', 'wp-food-manager' ),
 					'type'        => 'number',
 					'required'    => true,
 					'placeholder' => '',
-					'priority'    => 13
+					'priority'    => 8
 				),
 				'food_stock_status' => array(
 					'label'       => __( 'Stock Status', 'wp-food-manager' ),
@@ -212,7 +212,7 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
 										'fm_instock' => __('In stock','wp-food-manager'),
 										'fm_outofstock' => __('Out of stock','wp-food-manager'),
 									),
-					'priority'    => 14
+					'priority'    => 9
 				),
 			),
 
@@ -802,7 +802,10 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
 	 * @return fields Array
 	 */
 	public  function get_food_manager_fieldeditor_fields(){
-		return apply_filters('food_manager_add_food_fields', get_option( 'food_manager_add_food_fields', false ) );
+		return apply_filters('food_manager_submit_food_form_fields', get_option( 'food_manager_submit_food_form_fields', false ) );
+	}
+	public  function get_food_manager_fieldeditor_extra_options_fields(){
+		return apply_filters('food_manager_submit_extra_options_form_fields', get_option( 'food_manager_submit_extra_options_form_fields', false ) );
 	}
 	
 	/**
