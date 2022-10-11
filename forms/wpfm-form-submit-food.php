@@ -564,7 +564,7 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
 						$food_type_taxonomy = get_term( $values['food']['food_type'][0]);
 						$food_type = $food_type_taxonomy->name;
 					}
-					$food_slug = $food_type;
+					$food_slug[] = $food_type;
 				}
 				else{
 
@@ -574,7 +574,7 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
 						$food_type_taxonomy = get_term( $values['food']['food_type']);
 						$food_type = $food_type_taxonomy->name;
 					}
-					$food_slug = $food_type;
+					$food_slug[] = $food_type;
 				}
 			}
 			
