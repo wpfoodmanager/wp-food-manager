@@ -11,7 +11,9 @@ class WP_Food_Manager_Field_Editor
 	 */
 	public function __construct()
 	{
-		add_action('admin_menu', array($this, 'admin_menu'));
+		if ( get_option( 'food_manager_enable_field_editor' ,true) ) {
+			add_action('admin_menu', array($this, 'admin_menu'));
+		}
 		add_action('admin_enqueue_scripts', array($this, 'admin_enqueue_scripts'));
 
 		add_action('wp_ajax_get_group_field_html', array($this, 'get_group_field_html'));

@@ -115,6 +115,15 @@ class WPFM_Settings {
 									'attributes' => array(),
 								),
 							array(
+									'name'       => 'food_manager_enable_field_editor',
+									'std'        => '1',
+									'label'      => __( 'Enable Field editor', 'wp-food-manager' ),
+									'cb_label'   => __( 'Display Field editor.', 'wp-food-manager' ),
+									'desc'       => '',
+									'type'       => 'checkbox',
+									'attributes' => array(),
+								),
+							array(
 									'name'       => 'food_manager_delete_data_on_uninstall',
 									'std'        => '0',
 									'label'      => __( 'Delete Data On Uninstall', 'wp-food-manager' ),

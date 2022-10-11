@@ -56,6 +56,7 @@ $options = array(
 		'food_manager_enable_food_ingredients',
 		'food_manager_enable_food_nutritions',
 		'food_manager_enable_food_units',
+		'food_manager_enable_field_editor',
 		'food_manager_delete_data_on_uninstall',
 		'food-manager-setup',
 		'food_manager_form_fields',
