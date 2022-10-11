@@ -25,9 +25,9 @@ if ( get_option( 'food_manager_enable_categories' ,true) ) {
 
 	} else {
 
-		$rewrite   = false;
+		$rewrite   = true;
 
-		$public    = false;
+		$public    = true;
 	}
 
 	register_taxonomy( "food_manager_category",
@@ -115,9 +115,9 @@ if ( get_option( 'food_manager_enable_food_types' ,true) ) {
 
 	} else {
 
-		$rewrite   = false;
+		$rewrite   = true;
 
-		$public    = false;
+		$public    = true;
 
 	}
 
@@ -201,9 +201,9 @@ if ( get_option( 'food_manager_enable_food_tags' ,true) ) {
 
 	} else {
 
-		$rewrite   = false;
+		$rewrite   = true;
 
-		$public    = false;
+		$public    = true;
 
 	}
 

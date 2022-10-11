@@ -37,7 +37,7 @@ if (get_option('food_manager_food_item_show_hide') == 0 && get_stock_status() !=
 <div class="wpfm-food-box-col wpfm-col wpfm-col-12 wpfm-col-md-6 wpfm-col-lg-<?php echo apply_filters('food_manager_food_wpfm_column', '4'); ?>">
     <!----- wpfm-col-lg-4 value can be change by admin settings ------->
     <div class="wpfm-food-layout-wrapper">
-        <div <?php food_manager_class(); ?>>
+        <div <?php food_manager_class(''); ?>>
             <a href="<?php display_food_permalink(); ?>" class="wpfm-food-action-url food-style-color <?php echo $food_type; ?>">
                 <div class="wpfm-food-banner">
                     <div class="wpfm-food-banner-img" style="background-image: url('<?php echo $thumbnail ?>')">

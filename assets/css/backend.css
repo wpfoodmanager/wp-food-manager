@@ -812,7 +812,7 @@ mark.fm_instock {
   transition: .4s;
 }
 input:checked+.wpfm-field-switch-slider {
-  background-color: #5d3dfd;
+  background-color: #379308;
 }
 input:checked+.wpfm-field-switch-slider:before {
   -webkit-transform: translateX(26px);

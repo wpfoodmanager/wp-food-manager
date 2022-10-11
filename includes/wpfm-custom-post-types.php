@@ -40,6 +40,8 @@ class WPFM_Post_Types {
 
 		add_filter( 'the_content', array( $this, 'food_menu_content' ) );
 
+		add_filter( 'archive_template', array( $this, 'food_archive' ), 20 );
+
 		add_filter('use_block_editor_for_post_type', array($this,'wpfm_disable_gutenberg'), 10, 2);
 
 		//view count action
@@ -969,6 +971,30 @@ class WPFM_Post_Types {
 		add_filter( 'the_content', array( $this, 'food_content' ) );
 
 		return apply_filters( 'food_manager_single_food_content', $content, $post );
+	}
+
+	/**
+	 * food_archive function.
+	 *
+	 * @access public
+	 * @return void
+	 */
+	public function food_archive($template) 
+	{
+		if ( is_tax( 'food_manager_category' ) ) {
+
+			$template = WPFM_PLUGIN_DIR . '/templates/content-food_listing_category.php';
+	    }
+	    elseif ( is_tax( 'food_manager_type' ) ) {
+
+			$template = WPFM_PLUGIN_DIR . '/templates/content-food_listing_type.php';
+	    }
+	    elseif ( is_tax( 'food_manager_tag' ) ) {
+
+			$template = WPFM_PLUGIN_DIR . '/templates/content-food_listing_tag.php';
+	    }
+
+	    return $template;
 	}
 
 	/**

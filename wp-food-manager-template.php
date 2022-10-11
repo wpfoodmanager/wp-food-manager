@@ -516,7 +516,16 @@ function display_food_type( $post = null, $after = '') {
 		    $numType = count($food_type);
 		    $i = 0;
 		    foreach ( $food_type as $type ) {
-				echo '<span class="wpfm-food-type-text food-type '. esc_attr( sanitize_title( $type->slug ) ).' ">'. $type->name.'</span>';
+		    	//echo '<span class="wpfm-food-type-text food-type '. esc_attr( sanitize_title( $type->slug ) ).' ">'. $type->name.'</span>';
+				echo wp_kses(('<a href="' . get_term_link($type->term_id) . '"><span class="wpfm-food-type-text food-type ' . esc_attr(sanitize_title($type->slug)) . ' ">' . $type->name . '</span></a>'), array(
+					'a' => array(
+						'href' => array(),
+						'title' => array()
+					),
+					'span' => array(
+						'class'       => array()
+					),
+				));
 				if($numType > ++$i){
 				    echo $after;
 				}
@@ -566,7 +575,16 @@ function display_food_tag( $post = null, $after = '') {
 		    $numTag = count($food_tag);
 		    $i = 0;
 		    foreach ( $food_tag as $tag ) {
-				echo '<span class="wpfm-food-tag-text food-tag '. esc_attr( sanitize_title( $tag->slug ) ).' ">'. $tag->name.'</span>';
+				//echo '<span class="wpfm-food-tag-text food-tag '. esc_attr( sanitize_title( $tag->slug ) ).' ">'. $tag->name.'</span>';
+				echo wp_kses(('<a href="' . get_term_link($tag->term_id) . '"><span class="wpfm-food-tag-text food-tag ' . esc_attr(sanitize_title($tag->slug)) . ' ">' . $tag->name . '</span></a>'), array(
+					'a' => array(
+						'href' => array(),
+						'title' => array()
+					),
+					'span' => array(
+						'class'       => array()
+					),
+				));
 				if($numTag > ++$i){
 				    echo $after;
 				}
@@ -617,7 +635,17 @@ function display_food_category( $post = null, $after = '' ) {
 		    $numCategory = count($food_category);
 		    $i = 0;
 			foreach ( $food_category as $cat ) {
-				echo '<span class="food-category '. esc_attr( sanitize_title( $cat->slug ) ).' ">'. $cat->name.'</span>';
+				//echo '<span class="food-category '. esc_attr( sanitize_title( $cat->slug ) ).' ">'. $cat->name.'</span>';
+				echo wp_kses(('<a href="' . get_term_link($cat->term_id) . '"><span class="wpfm-food-cat-text food-category ' . esc_attr(sanitize_title($cat->slug)) . ' ">' . $cat->name . '</span></a>'), array(
+					'a' => array(
+						'href' => array(),
+						'title' => array()
+					),
+					'span' => array(
+						'class'       => array()
+					),
+
+				));
 				if($numCategory > ++$i){
 				    echo $after;
 				}
