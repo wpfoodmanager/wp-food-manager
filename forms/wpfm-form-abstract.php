@@ -636,9 +636,9 @@ abstract class WPFM_Form {
 	 */
 	public function merge_with_custom_fields( $field_view = 'frontend' ) {
 	
-		$custom_food_fields  = $this->get_food_manager_fieldeditor_fields();
+		$custom_food_fields  = !empty($this->get_food_manager_fieldeditor_fields()) ? $this->get_food_manager_fieldeditor_fields() : array();
 
-		$custom_extra_options_fields  = $this->get_food_manager_fieldeditor_extra_options_fields();
+		$custom_extra_options_fields  = !empty($this->get_food_manager_fieldeditor_extra_options_fields()) ? $this->get_food_manager_fieldeditor_extra_options_fields() : array();
 
 		$custom_fields = '';
 		if(!empty($custom_extra_options_fields)){
