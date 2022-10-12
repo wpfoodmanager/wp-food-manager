@@ -125,6 +125,7 @@ if (isset($field['type']) && $field['type'] == 'group') {
 			'radio'       => __('Radio', 'wp-food-manager'),
 			'select'      => __('Select', 'wp-food-manager'),
 			'textarea'    => __('Textarea', 'wp-food-manager'),
+			'options'    => __('Options', 'wp-food-manager'),
 		)
 	);
 	$child_index = -1;

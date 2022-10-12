@@ -47,6 +47,7 @@ class WP_Food_Manager_Field_Editor
 				'radio'       => __('Radio', 'wp-food-manager'),
 				'select'      => __('Select', 'wp-food-manager'),
 				'textarea'    => __('Textarea', 'wp-food-manager'),
+				'options'    => __('Options', 'wp-food-manager'),
 			)
 		);
 
@@ -117,7 +118,6 @@ class WP_Food_Manager_Field_Editor
 	 */
 	private function form_editor()
 	{
-
 		if (!empty($_GET['food-reset-fields']) && !empty($_GET['_wpnonce']) && wp_verify_nonce($_GET['_wpnonce'], 'reset')) {
 			delete_option('food_manager_submit_food_form_fields');
 			echo wp_kses_post('<div class="updated"><p>' . esc_attr('The fields were successfully reset.', 'wp-food-manager') . '</p></div>');
@@ -154,6 +154,7 @@ class WP_Food_Manager_Field_Editor
 				'textarea'         => __('Textarea', 'wp-food-manager'),
 				'wp-editor'        => __('WP Editor', 'wp-food-manager'),
 				'url'              => __('URL', 'wp-food-manager'),          /*'group'       			=> __( 'Group', 'wp-food-manager' ),	*/
+				'options'    => __('Options', 'wp-food-manager'),
 			)
 		);
 
