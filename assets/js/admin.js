@@ -17,6 +17,26 @@ var WPFMAdmin= function () {
         {
             //jQuery(".option-desc-common").hide();
 
+            //if field type is date then load datepicker
+            if (jQuery('input[data-picker="datepicker"]').length > 0)
+            {
+                if (wp_food_manager_admin_js.show_past_date)
+                {
+                    jQuery('input[data-picker="datepicker"]').datepicker({
+                        dateFormat: wp_food_manager_admin_js.i18n_datepicker_format,
+                        firstDay: wp_food_manager_admin_js.start_of_week
+                    });
+                }
+                else
+                {
+                    jQuery('input[data-picker="datepicker"]').datepicker({
+                        minDate: 0, 
+                        dateFormat: wp_food_manager_admin_js.i18n_datepicker_format,
+                        firstDay: wp_food_manager_admin_js.start_of_week
+                    });
+                }
+            }
+
             //Bind on click event of the settings section
 			jQuery(".wpfm-tabs li a").on('click',WPFMAdmin.actions.tabClick);
 		  	//show by default first Event Listings Settings Tab

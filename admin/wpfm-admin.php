@@ -106,6 +106,10 @@ class WPFM_Admin {
 		wp_register_script('chosen', WPFM_PLUGIN_URL . '/assets/js/jquery-chosen/chosen.jquery.min.js', array('jquery'), '1.1.0', true);
 		wp_enqueue_script('chosen');
 		wp_enqueue_style('chosen', WPFM_PLUGIN_URL . '/assets/css/chosen.css');
+
+		wp_enqueue_style('wpfm-jquery-timepicker-css', WPFM_PLUGIN_URL . '/assets/js/jquery-timepicker/jquery.timepicker.min.css');
+		wp_register_script('wpfm-jquery-timepicker', WPFM_PLUGIN_URL . '/assets/js/jquery-timepicker/jquery.timepicker.min.js', array('jquery', 'jquery-ui-core'), WPFM_VERSION, true);
+		wp_enqueue_script('wpfm-jquery-timepicker');
 	}
 
 	/**

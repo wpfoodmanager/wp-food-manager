@@ -113,10 +113,10 @@ if (isset($field['type']) && $field['type'] == 'group') {
 		'food_manager_form_group_field_types',
 		array(
 			'text'        => __('Text', 'wp-food-manager'),
-			'time'        => __('Time', 'wp-food-manager'),
+			//'time'        => __('Time', 'wp-food-manager'),
 			'checkbox'    => __('Checkbox', 'wp-food-manager'),
 			'date'        => __('Date', 'wp-food-manager'),
-			'timezone'    => __('Timezone', 'wp-food-manager'),
+			//'timezone'    => __('Timezone', 'wp-food-manager'),
 			'file'        => __('File', 'wp-food-manager'),
 			'hidden'      => __('Hidden', 'wp-food-manager'),
 			'multiselect' => __('Multiselect', 'wp-food-manager'),
