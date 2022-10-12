@@ -385,7 +385,7 @@ class WPFM_Settings {
 
 								'type'  => 'page',
 							),
-							array(
+							/*array(
 
 								'name'  => 'food_manager_food_categories_page_id',
 
@@ -409,7 +409,7 @@ class WPFM_Settings {
 								'desc'  => __('Select the page where you have placed the [food_types] shortcode. This lets the plugin know where the form is located.', 'wp-food-manager'),
 
 								'type'  => 'page',
-							),
+							),*/
 							
 						),
 					),

@@ -59,7 +59,7 @@ class WPFM_Cache_Helper {
 
 	public static function set_term( $object_id = '', $terms = '', $tt_ids = '', $taxonomy = '' ) {
 
-		self::get_transient_version( 'em_get_' . sanitize_text_field( $taxonomy ), true );
+		self::get_transient_version( 'fm_get_' . sanitize_text_field( $taxonomy ), true );
 	}
 
 	/**
@@ -67,7 +67,7 @@ class WPFM_Cache_Helper {
 	 */
 	public static function edited_term( $term_id = '', $tt_id = '', $taxonomy = '' ) {
 
-		self::get_transient_version( 'em_get_' . sanitize_text_field( $taxonomy ), true );
+		self::get_transient_version( 'fm_get_' . sanitize_text_field( $taxonomy ), true );
 	}
 
 	/**

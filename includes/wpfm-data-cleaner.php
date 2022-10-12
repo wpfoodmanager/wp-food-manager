@@ -38,7 +38,8 @@ class WP_Food_Manager_Data_Cleaner {
 		'food_manager_ingredient',
 		'food_manager_nutrition',
 		'food_manager_unit',
-		'food_manager_category'
+		'food_manager_category',
+		'food_manager_tag'
 	);
 
 	/** Cron jobs to be unscheduled.
