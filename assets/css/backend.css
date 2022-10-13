@@ -328,7 +328,7 @@ label.add-food-small {
 .wpfm_panel .checkbox {
   margin: 4px 0 !important;
   vertical-align: middle;
-  float: left;
+  /*float: left;*/
 }
 .wpfm-metaboxes {
   padding: 0.5em 0.75em 0.5em 1em !important;

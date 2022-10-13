@@ -489,7 +489,6 @@ class WPFM_Writepanels
 	public static function input_checkbox($key, $field)
 	{
 		global $thepostid;
-
 		$field_val = get_post_meta($thepostid, $key, true);
 
 		if (empty($field['value']) || empty($field_val)) {
@@ -505,7 +504,7 @@ class WPFM_Writepanels
 		$exp_arr = explode("_", $key);
 	?>
 		<p class="wpfm-admin-postbox-form-field <?=$name;?>">
-			<label for="<?php echo esc_attr($key); ?>"><?php echo esc_html($field['label']); ?></label>
+			<label for="<?php echo esc_attr($key); ?>"><?php echo esc_html($field['label']); ?> : </label>
 			<?php if($key == '_enable_food_ingre' || $key == '_enable_food_nutri') { //$key == '_option_enable_desc_'.end($exp_arr) ?>
 				<span class="wpfm-input-field">
 					<label class="wpfm-field-switch" for="<?php echo esc_attr($key); ?>">
@@ -515,7 +514,13 @@ class WPFM_Writepanels
 					</label>
 				</span>
 			<?php } else { ?>
-				<input type="checkbox" class="checkbox " name="<?php echo esc_attr($name); ?>" id="<?php echo esc_attr($key); ?>" value="1" <?php checked($field['value'], 1); ?> />
+				<span class="wpfm-input-field">
+				<?php foreach ($field['options'] as $option_key => $value) :?>
+					<input type="checkbox" id="<?php echo esc_attr($option_key); ?>" class="checkbox <?php echo esc_attr($option_key); ?>" name="<?php echo esc_attr(isset($field['name']) ? $field['name'] : $key); ?>[]" value="<?php echo esc_attr($option_key); ?>" <?php if (!empty($field['value']) && is_array($field['value'])) checked(in_array($option_key, $field['value'], true)); ?> />
+					<label for="<?php echo esc_attr($option_key); ?>"><?php echo esc_html($value); ?></label>
+				<?php endforeach; ?>
+				</span>
+				<!-- <input type="checkbox" class="checkbox " name="<?php echo esc_attr($name); ?>" id="<?php echo esc_attr($key); ?>" value="1" <?php checked($field['value'], 1); ?> /> -->
 				<?php if (!empty($field['description'])) : ?><span class="description"><?php echo $field['description']; ?></span>
 			<?php endif; } ?>
 		</p>
@@ -985,6 +990,7 @@ class WPFM_Writepanels
 							$option_maximum = $_POST['_option_maximum_'.$option_count];
 							$option_price = $_POST['_option_price_'.$option_count];
 							$option_price_type = $_POST['_option_price_type_'.$option_count];*/
+							
 							$option_values = array();
 
 							if(isset($_POST['option_value_count'])){
@@ -1023,8 +1029,9 @@ class WPFM_Writepanels
 								}
 								
 							}
-
-							$extra_options[$option_key] = array(
+							foreach ($field as $f_key => $f_value) {
+								if(isset($_POST["_".$f_key."_".$option_count])){
+										$extra_options[$option_key] = array(
 																'option_name' => $option_name,
 																'option_type' => $option_type,
 																'option_required' => $option_required,
@@ -1035,14 +1042,23 @@ class WPFM_Writepanels
 																'option_price' => $option_price,
 																'option_price_type' => $option_price_type,*/
 																'option_options' => $option_values,
+																$f_key => $_POST["_".$f_key."_".$option_count]
 															);
+								}
+							}
 						}
 
 					}
 					$counter++;
 				}
-
+				
 				update_post_meta($post_id,'_wpfm_extra_options',$extra_options);
+				
+				foreach ($field as $key2 => $fiel) {
+					if(isset($_POST["_".$key2])){
+						update_post_meta($post_id, "_".$key2, $_POST["_".$key2]);
+					}
+				}
 				
 				switch ($type) {
 					case 'textarea':
@@ -1079,7 +1095,7 @@ class WPFM_Writepanels
 
 
 		}
-
+		
 		remove_action('food_manager_save_food_manager', array($this, 'food_manager_save_food_manager_data'), 20, 2);
 		$food_data = array(
 			'ID'          => $post_id,

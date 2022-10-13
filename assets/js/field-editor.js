@@ -139,7 +139,7 @@ var FieldEditor = function() {
 
 				var field_type = jQuery(this).closest('tr').data( 'field-type' );
 				
-				if ( 'select' === jQuery(this).val() || 'multiselect' === jQuery(this).val() || 'button-options' === jQuery(this).val() || 'radio' === jQuery(this).val()  ) {
+				if ( 'select' === jQuery(this).val() || 'multiselect' === jQuery(this).val() || 'button-options' === jQuery(this).val() || 'radio' === jQuery(this).val() || 'checkbox' === jQuery(this).val() ) {
 					jQuery(this).closest('tr').find('.field-options .options').show();
 				} 
 				else if ( 'file' === jQuery(this).val() ) {

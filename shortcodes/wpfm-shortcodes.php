@@ -31,8 +31,8 @@ class WPFM_Shortcodes {
 		add_shortcode( 'add_food', array( $this, 'add_food' ) );
 		add_shortcode( 'food_dashboard', array( $this, 'food_dashboard' ) );
 		add_shortcode( 'foods', array( $this, 'output_foods' ) );
-		add_shortcode( 'food_categories', array( $this, 'output_foods_categories' ) );
-		add_shortcode( 'food_type', array( $this, 'output_foods_types' ) );
+		//add_shortcode( 'food_categories', array( $this, 'output_foods_categories' ) );
+		//add_shortcode( 'food_type', array( $this, 'output_foods_types' ) );
 		add_shortcode( 'food_menu', array( $this, 'output_food_menu' ) );
 	}
 

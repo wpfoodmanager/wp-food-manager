@@ -67,7 +67,6 @@ $options = array(
 		'food_manager_enable_field_editor',
 		'food_manager_delete_data_on_uninstall',
 		'food-manager-setup',
-		'food_manager_form_fields',
 		'wpfm_installed_terms',
 		'food_manager_login_page_url',
 		'food_manager_rating_showcase_admin_notices_dismiss',

@@ -58,7 +58,7 @@ class WP_Food_Manager_Install {
 		update_option( 'wp_food_manager_version', WPFM_VERSION );
 	}
 
-	/*public static function update() {
+	public static function update() {
 
 		global $wpdb;
 
@@ -75,14 +75,14 @@ class WP_Food_Manager_Install {
 				if(isset($all_fields['food']['food_venue_name']))
 					unset($all_fields['food']['food_venue_name']);
 
-				update_option( 'food_manager_add_food_fields', array('event' =>$all_fields['event']) );
+				update_option( 'food_manager_submit_food_form_fields', array('food' =>$all_fields['food']) );
 
-				update_option( 'food_manager_submit_organizer_form_fields', array('organizer' =>$all_fields['organizer']) );	
+				update_option( 'food_manager_submit_extra_options_form_fields', array('extra_options' =>$all_fields['extra_options']) );	
 			}			
 		}
 
 		// 3.1.14 add organizer pages
-		$pages_to_create = [
+		/*$pages_to_create = [
 			'submit_organizer_form' => [
 				'page_title' => 'Submit Organizer Form',
 				'page_content' => '[submit_organizer_form]',
@@ -112,12 +112,12 @@ class WP_Food_Manager_Install {
 		foreach ( $pages_to_create as $page_slug => $page ) 
 		{
 			self::create_page( sanitize_text_field( $page['page_title'] ), $page['page_content'], 'food_manager_' . $page_slug . '_page_id' );
-		}
+		}*/
 
 		delete_transient( 'wp_food_manager_addons_html' );
 
 		update_option( 'wp_food_manager_version', WPFM_VERSION );
-	}*/
+	}
 	
 	/**
 	 * Init user roles

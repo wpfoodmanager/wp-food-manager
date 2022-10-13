@@ -188,7 +188,7 @@ class WP_Food_Manager_Field_Editor
 
 			<div class="wp-food-manager-food-form-field-editor">
 
-				<h3><?php printf(esc_attr__('%s form fields', 'wp-food-manager'), ucfirst($group_key)); ?></h3>
+				<h3><?php printf(esc_attr__('%s form fields', 'wp-food-manager'), ucfirst(ucfirst(str_replace("_", " ", $group_key)))); ?></h3>
 				<table class="widefat">
 					<thead>
 						<tr>
@@ -270,7 +270,7 @@ class WP_Food_Manager_Field_Editor
 				unset($field['fields'][$field_key]['taxonomy']);
 			}
 
-			if (isset($field_value['type']) && $field_value['type'] == 'select' || $field_value['type'] == 'radio' || $field_value['type'] == 'multiselect' || $field_value['type'] == 'button-options') {
+			if (isset($field_value['type']) && $field_value['type'] == 'select' || $field_value['type'] == 'radio' || $field_value['type'] == 'multiselect' || $field_value['type'] == 'button-options' || $field_value['type'] == 'checkbox') {
 				if (isset($field_value['options']) && !empty($field_value['options'])) {
 					$field_value['options'] = explode('|', $field_value['options']);
 
@@ -346,7 +346,7 @@ class WP_Food_Manager_Field_Editor
 							unset($new_fields[$group_key][$field_key]['taxonomy']);
 						}
 
-						if (isset($new_fields[$group_key][$field_key]['type']) && ($new_fields[$group_key][$field_key]['type'] == 'select' || $new_fields[$group_key][$field_key]['type'] == 'radio' || $new_fields[$group_key][$field_key]['type'] == 'multiselect' || $new_fields[$group_key][$field_key]['type'] == 'button-options')) {
+						if (isset($new_fields[$group_key][$field_key]['type']) && ($new_fields[$group_key][$field_key]['type'] == 'select' || $new_fields[$group_key][$field_key]['type'] == 'radio' || $new_fields[$group_key][$field_key]['type'] == 'multiselect' || $new_fields[$group_key][$field_key]['type'] == 'button-options' || $new_fields[$group_key][$field_key]['type'] == 'checkbox')) {
 							if (isset($new_fields[$group_key][$field_key]['options'])) {
 								$new_fields[$group_key][$field_key]['options'] = explode('|', $new_fields[$group_key][$field_key]['options']);
 
@@ -388,11 +388,11 @@ class WP_Food_Manager_Field_Editor
 				// $food_fields =   $form_submit_food_instance->get_default_fields('backend');
 				$food_fields = $form_submit_food_instance->get_default_fields();
 
-				$default_fields = array_merge($food_fields);
+				//$default_fields = $food_fields;
 
 				// if field in not exist in new fields array then make visiblity false
-				if (!empty($default_fields)) {
-					foreach ($default_fields as $group_key => $group_fields) {
+				if (!empty($food_fields)) {
+					foreach ($food_fields as $group_key => $group_fields) {
 						foreach ($group_fields as $key => $field) {
 							if (!isset($new_fields[$group_key][$key])) {
 								$new_fields[$group_key][$key]               = $field;
@@ -401,7 +401,7 @@ class WP_Food_Manager_Field_Editor
 						}
 					}
 				}
-
+				
 				if (isset($new_fields['food'])) {
 					update_option('food_manager_submit_food_form_fields', array('food' => $new_fields['food']));
 				}
