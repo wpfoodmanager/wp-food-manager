@@ -3,6 +3,9 @@
   opacity: 0.6;
 }*/
 
+.food_manager_page_food-manager-settings #adminmenuwrap{
+  position: relative !important;
+}
 .wpfm-font-wesome-class {
   display: grid;
   grid-template-columns: auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto;
