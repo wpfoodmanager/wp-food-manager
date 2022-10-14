@@ -1275,7 +1275,7 @@ function get_food_order_by()
 						'title|desc' => __('Descending (DESC)', 'wp-food-manager'),
 					]
 				],
-				'food_category'   => [
+				/*'food_category'   => [
 					'label' => __('Food Category', 'wp-food-manager'),
 					'type' => [
 						'food_category|asc' => __('Ascending (ASC)', 'wp-food-manager'),
@@ -1288,7 +1288,7 @@ function get_food_order_by()
 						'food_type|asc' => __('Ascending (ASC)', 'wp-food-manager'),
 						'food_type|desc' => __('Descending (DESC)', 'wp-food-manager'),
 					]
-				],
+				],*/
 				/*'event_location'   => [
 					'label' => __('Event Location', 'wp-food-manager'),
 					'type' => [
