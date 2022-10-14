@@ -49,7 +49,9 @@ class WPFM_Admin {
 		global $wp_scripts;
 
 		$screen = get_current_screen();	
-
+		$jquery_version = isset($wp_scripts->registered['jquery-ui-core']->ver) ? $wp_scripts->registered['jquery-ui-core']->ver : '1.9.2';
+		
+		wp_enqueue_style('jquery-ui-style', WPFM_PLUGIN_URL . '/assets/js/jquery-ui/jquery-ui.min.css', array(), $jquery_version);
 		wp_enqueue_style('wpfm-backend-css',WPFM_PLUGIN_URL.'/assets/css/backend.css');
 
 		wp_enqueue_style('wpfm-font-awesome-css', WPFM_PLUGIN_URL.'/assets/font-awesome/css/font-awesome.css');
@@ -62,6 +64,7 @@ class WPFM_Admin {
 		wp_enqueue_script( 'wpfm-accounting' );
 		wp_enqueue_script( 'wp-food-manager-admin-settings' );
 		wp_enqueue_script( 'wpfm-admin' );
+		
 
 		$units    = get_terms(
 			[
@@ -79,12 +82,15 @@ class WPFM_Admin {
 			}
 		}
 
-		wp_register_script( 'wpfm-admin', WPFM_PLUGIN_URL. '/assets/js/admin.js', array( 'jquery' ), WPFM_VERSION, true );
-
+		wp_register_script( 'wpfm-admin', WPFM_PLUGIN_URL. '/assets/js/admin.js', array( 'jquery' , 'jquery-ui-core', 'jquery-ui-datepicker'), WPFM_VERSION, true );
 		wp_localize_script( 'wpfm-admin', 'wpfm_admin',
 					        array( 
 					            'ajax_url' => admin_url( 'admin-ajax.php' ),
 					            'security' =>wp_create_nonce( 'wpfm-admin-security' ),
+					            'start_of_week'                      => get_option('start_of_week'),
+					            'i18n_datepicker_format'             => WP_Food_Manager_Date_Time::get_datepicker_format(),
+								'i18n_timepicker_format'             => WP_Food_Manager_Date_Time::get_timepicker_format(),
+								'i18n_timepicker_step'               => WP_Food_Manager_Date_Time::get_timepicker_step(),
 					        )
 					    );
 		wp_localize_script( 'wpfm-admin', 'wpfm_var',
@@ -92,6 +98,7 @@ class WPFM_Admin {
 								'units'   => $unitList,
 							]
 						);
+
 		wp_register_script( 'wp-food-manager-admin-settings', WPFM_PLUGIN_URL. '/assets/js/admin-settings.min.js', array( 'jquery' ), WPFM_VERSION, true );
 
 		wp_register_script( 'wpfm-accounting', WPFM_PLUGIN_URL. '/assets/js/accounting/accounting.min.js', array( 'jquery' ), WPFM_VERSION, true );	
@@ -108,7 +115,7 @@ class WPFM_Admin {
 		wp_enqueue_style('chosen', WPFM_PLUGIN_URL . '/assets/css/chosen.css');
 
 		wp_enqueue_style('wpfm-jquery-timepicker-css', WPFM_PLUGIN_URL . '/assets/js/jquery-timepicker/jquery.timepicker.min.css');
-		wp_register_script('wpfm-jquery-timepicker', WPFM_PLUGIN_URL . '/assets/js/jquery-timepicker/jquery.timepicker.min.js', array('jquery', 'jquery-ui-core'), WPFM_VERSION, true);
+		wp_register_script('wpfm-jquery-timepicker', WPFM_PLUGIN_URL . '/assets/js/jquery-timepicker/jquery.timepicker.min.js', array('jquery', 'jquery-ui-core', 'jquery-ui-datepicker'), WPFM_VERSION, true);
 		wp_enqueue_script('wpfm-jquery-timepicker');
 	}
 

@@ -20,19 +20,19 @@ var WPFMAdmin= function () {
             //if field type is date then load datepicker
             if (jQuery('input[data-picker="datepicker"]').length > 0)
             {
-                if (wp_food_manager_admin_js.show_past_date)
+                if (wpfm_admin.show_past_date)
                 {
                     jQuery('input[data-picker="datepicker"]').datepicker({
-                        dateFormat: wp_food_manager_admin_js.i18n_datepicker_format,
-                        firstDay: wp_food_manager_admin_js.start_of_week
+                        dateFormat: wpfm_admin.i18n_datepicker_format,
+                        firstDay: wpfm_admin.start_of_week
                     });
                 }
                 else
                 {
                     jQuery('input[data-picker="datepicker"]').datepicker({
                         minDate: 0, 
-                        dateFormat: wp_food_manager_admin_js.i18n_datepicker_format,
-                        firstDay: wp_food_manager_admin_js.start_of_week
+                        dateFormat: wpfm_admin.i18n_datepicker_format,
+                        firstDay: wpfm_admin.start_of_week
                     });
                 }
             }

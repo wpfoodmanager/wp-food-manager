@@ -658,7 +658,11 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
 		add_post_meta( $this->food_id, '_featured', 0, true );
 		$maybe_attach = array();
 		
-		//get date and time setting defined in admin panel food listing -> Settings -> Date & Time formatting
+		//get date and time setting defined in admin panel Event listing -> Settings -> Date & Time formatting
+		$datepicker_date_format 	= WP_Food_Manager_Date_Time::get_datepicker_format();
+
+		//covert datepicker format  into php date() function date format
+		$php_date_format 		= WP_Food_Manager_Date_Time::get_view_date_format_from_datepicker_date_format( $datepicker_date_format );
 		
 		$ticket_type='';
 		$recurre_food='';

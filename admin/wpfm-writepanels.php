@@ -383,7 +383,43 @@ class WPFM_Writepanels
 	<?php
 	}
 
-
+	/**
+	 * input_date function.
+	 *
+	 * @param mixed $key
+	 * @param mixed $field
+	 */
+	public static function input_date($key, $field)
+	{
+		global $thepostid;
+		$datepicker_date_format = WP_Food_Manager_Date_Time::get_datepicker_format();
+		$php_date_format        = WP_Food_Manager_Date_Time::get_view_date_format_from_datepicker_date_format($datepicker_date_format);
+		if (!isset($field['value'])) {
+			$date = get_post_meta($thepostid, $key, true);
+			if (!empty($date)) {
+				$date = date($php_date_format, strtotime($date));
+				$field['value']         = $date;
+			}
+		}
+		if (!empty($field['name'])) {
+			$name = $field['name'];
+		} else {
+			$name = $key;
+		}
+	?>
+		<p class="wpfm-admin-postbox-form-field">
+			<label for="<?php echo esc_attr($key); ?>"> <?php echo esc_html($field['label']); ?>:
+				<?php
+				if (!empty($field['description'])) :
+				?>
+					<span class="tips" data-tip="<?php echo esc_attr($field['description']); ?>">[?]</span>
+				<?php endif; ?>
+			</label>
+			<input type="hidden" name="date_format" id="date_format" value="<?php echo esc_attr($php_date_format); ?>" />
+			<input type="text" name="<?php echo esc_attr($name); ?>" id="<?php echo esc_attr($key); ?>" placeholder="<?php echo esc_attr($field['placeholder']); ?>" value="<?php echo (isset($field['value']) ?  esc_attr($field['value']) : '') ?>" data-picker="datepicker" />
+		</p>
+	<?php
+	}
 
 	/**
 	 * input_text function.
