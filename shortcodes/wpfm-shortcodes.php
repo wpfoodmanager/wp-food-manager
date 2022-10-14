@@ -247,8 +247,8 @@ class WPFM_Shortcodes {
 			'ignore_sticky_posts' => 1,
 			'posts_per_page'      => $posts_per_page,
 			'offset'              => ( max( 1, get_query_var('paged') ) - 1 ) * $posts_per_page,
-			'orderby'             => 'date',
-			'order'               => 'desc',
+			'orderby'             => $orderby,
+			'order'               => $order,
 			'author'              => get_current_user_id()
 
 		) );
