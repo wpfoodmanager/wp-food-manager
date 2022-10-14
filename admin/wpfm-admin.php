@@ -117,6 +117,30 @@ class WPFM_Admin {
 		wp_enqueue_style('wpfm-jquery-timepicker-css', WPFM_PLUGIN_URL . '/assets/js/jquery-timepicker/jquery.timepicker.min.css');
 		wp_register_script('wpfm-jquery-timepicker', WPFM_PLUGIN_URL . '/assets/js/jquery-timepicker/jquery.timepicker.min.js', array('jquery', 'jquery-ui-core', 'jquery-ui-datepicker'), WPFM_VERSION, true);
 		wp_enqueue_script('wpfm-jquery-timepicker');
+
+		//file upload - vendor
+		if ( apply_filters( 'wpfm_ajax_file_upload_enabled', true ) ) {
+
+			wp_register_script( 'jquery-iframe-transport', WPFM_PLUGIN_URL . '/assets/js/jquery-fileupload/jquery.iframe-transport.js', array( 'jquery' ), '1.8.3', true );
+			wp_register_script( 'jquery-fileupload', WPFM_PLUGIN_URL . '/assets/js/jquery-fileupload/jquery.fileupload.js', array( 'jquery', 'jquery-iframe-transport', 'jquery-ui-widget' ), '5.42.3', true );
+			wp_register_script( 'wpfm-ajax-file-upload', WPFM_PLUGIN_URL . '/assets/js/ajax-file-upload.min.js', array( 'jquery', 'jquery-fileupload' ), WPFM_VERSION, true );
+
+			ob_start();
+			get_food_manager_template( 'form-fields/uploaded-file-html.php', array( 'name' => '', 'value' => '', 'extension' => 'jpg' ) );
+			$js_field_html_img = ob_get_clean();
+
+			ob_start();
+			get_food_manager_template( 'form-fields/uploaded-file-html.php', array( 'name' => '', 'value' => '', 'extension' => 'zip' ) );
+			$js_field_html = ob_get_clean();
+
+			wp_localize_script( 'wpfm-ajax-file-upload', 'wpfm_ajax_file_upload', array(
+				'ajax_url'               => admin_url( 'admin-ajax.php' ),
+				'js_field_html_img'      => esc_js( str_replace( "\n", "", $js_field_html_img ) ),
+				'js_field_html'          => esc_js( str_replace( "\n", "", $js_field_html ) ),
+				'i18n_invalid_file_type' => __( 'Invalid file type. Accepted types:', 'wp-food-manager' )
+			) );
+			
+		}
 	}
 
 	/**

@@ -965,6 +965,44 @@ div#wpfm-loading {
 .form-field .chosen-container {
   width: 100% !important;
 }
+.food-manager-uploaded-file-preview {
+  display: inline-block;
+  position: relative;
+}
+.food-manager-uploaded-file-preview img {
+  max-height: 100px;
+  max-width: 100px;
+  border: 2px solid #ccc;
+  border-radius: 6px;
+}
+.food-manager-uploaded-file-preview .food-manager-remove-uploaded-file {
+  font-size: 0;
+  height: 20px;
+  width: 20px;
+  background: #fff;
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  border-radius: 0 4px;
+  border: none;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+}
+.food-manager-uploaded-file-preview .food-manager-remove-uploaded-file::before {
+  content: "\ea0f";
+  font-family: wp-food-manager;
+  font-size: 10px;
+  color: red;
+  top: 50%;
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transition: all 0.2s;
+}
+.food-manager-uploaded-files .food-manager-uploaded-file {
+  margin-bottom: 20px;
+  display: inline-block;
+  padding-right: 20px;
+}
 
 
 

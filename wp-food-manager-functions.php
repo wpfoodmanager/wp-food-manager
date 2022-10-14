@@ -1289,11 +1289,11 @@ function get_food_order_by()
 						'food_type|desc' => __('Descending (DESC)', 'wp-food-manager'),
 					]
 				],*/
-				/*'event_location'   => [
+				/*'food_location'   => [
 					'label' => __('Event Location', 'wp-food-manager'),
 					'type' => [
-						'event_location|asc' => __('Ascending (ASC)', 'wp-food-manager'),
-						'event_location|desc' => __('Descending (DESC)', 'wp-food-manager'),
+						'food_location|asc' => __('Ascending (ASC)', 'wp-food-manager'),
+						'food_location|desc' => __('Descending (DESC)', 'wp-food-manager'),
 					]
 				],*/
 			];
@@ -2871,3 +2871,21 @@ function get_food_listings_keyword_search( $search) {
 	}
 
 endif;
+
+
+/**
+ * Checks if the user can upload a file via the Ajax endpoint.
+ *
+ * @since 1.7
+ * @return bool
+ */
+function food_manager_user_can_upload_file_via_ajax() {
+	$can_upload = is_user_logged_in() && wpfm_user_can_post_food();
+	/**
+	 * Override ability of a user to upload a file via Ajax.
+	 *
+	 * @since 1.7
+	 * @param bool $can_upload True if they can upload files from Ajax endpoint.
+	 */
+	return apply_filters( 'food_manager_user_can_upload_file_via_ajax', $can_upload );
+}

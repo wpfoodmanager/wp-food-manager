@@ -354,7 +354,156 @@ class WPFM_Writepanels
 	}
 
 
-	
+	/**
+	 * input_file function.
+	 *
+	 * @param mixed $key
+	 * @param mixed $field
+	 */
+	public static function input_file($key, $field)
+	{
+		global $thepostid;
+		if (!isset($field['value'])) {
+			$field['value'] = get_post_meta($thepostid, $key, true);
+		}
+
+		if (empty($field['placeholder'])) {
+			$field['placeholder'] = 'http://';
+		}
+		if (!empty($field['name'])) {
+			$name = $field['name'];
+		} else {
+			$name = $key;
+		}
+	?>
+
+		<p class="wpfm-admin-postbox-form-field">
+			<label for="<?php echo esc_attr($key); ?>"><?php echo esc_html($field['label']); ?>:
+				<?php if (!empty($field['description'])) : ?>
+					<span class="tips" data-tip="<?php echo esc_attr($field['description']); ?>">[?]</span>
+				<?php endif; ?>
+			</label>
+			<span class="wpfm-input-field">
+				<?php
+				if (!empty($field['multiple'])) {
+					foreach ((array) $field['value'] as $value) {
+				?>
+						<span class="file_url">
+							<span class="food-manager-uploaded-file">
+								<input type="hidden" name="<?php echo esc_attr($name); ?>[]" placeholder="<?php echo esc_attr($field['placeholder']); ?>" value="<?php echo esc_attr($value); ?>" />
+								<span class="food-manager-uploaded-file-preview">
+									<img src="<?php echo esc_attr($value); ?>">
+									<a class="food-manager-remove-uploaded-file" href="javascript:void(0);">[remove]</a>
+								</span>
+							</span>
+							<button class="button button-small wp_food_manager_upload_file_button" data-uploader_button_text="<?php esc_attr_e('Use file', 'wp-food-manager'); ?>"><?php esc_attr_e('Upload', 'wp-food-manager'); ?></button>
+						</span>
+					<?php
+					}
+				} else {
+					/*if (isset($field['value']) && is_array($field['value'])) {
+						$field['value'] = array_shift($field['value']);
+					}*/
+					?>
+					<span class="food-manager-uploaded-file">
+						<?php if(!empty($field['value'])) :?>
+							<span class="food-manager-uploaded-file">
+								<input type="hidden" name="<?php echo esc_attr($name); ?>" id="<?php echo esc_attr($key); ?>" placeholder="<?php echo esc_attr($field['placeholder']); ?>" value="<?php echo esc_attr($field['value']); ?>" />
+								<span class="food-manager-uploaded-file-preview">
+									<img src="<?php echo esc_attr($field['value']); ?>">
+									<a class="food-manager-remove-uploaded-file" href="javascript:void(0);">[remove]</a>
+								</span>
+							</span>
+						<?php endif; ?>
+						<button class="button button-small wp_food_manager_upload_file_button" style="display: block;" data-uploader_button_text="<?php esc_attr_e('Use file', 'wp-food-manager'); ?>"><?php esc_attr_e('Upload', 'wp-food-manager'); ?></button>
+					</span>
+				<?php
+				}
+				if (!empty($field['multiple'])) {
+				?>
+					<button class="button button-small wp_food_manager_add_another_file_button" data-field_name="<?php echo esc_attr($key); ?>" data-field_placeholder="<?php echo esc_attr($field['placeholder']); ?>" data-uploader_button_text="<?php esc_attr_e('Use file', 'wp-food-manager'); ?>" data-uploader_button="<?php esc_attr_e('Upload', 'wp-food-manager'); ?>"><?php esc_attr_e('Add file', 'wp-food-manager'); ?></button>
+				<?php
+				}
+				?>
+			</span>
+		</p>
+	<?php
+	}
+
+	/**
+	 * input_file function.
+	 *
+	 * @param mixed $key
+	 * @param mixed $field
+	 */
+	/*public static function input_file($key, $field)
+	{
+		global $thepostid;
+		if (!isset($field['value'])) {
+			$field['value'] = get_post_meta($thepostid, $key, true);
+		}
+		if (empty($field['placeholder'])) {
+			$field['placeholder'] = 'http://';
+		}
+		if (!empty($field['name'])) {
+			$name = $field['name'];
+		} else {
+			$name = $key;
+		}
+
+		$classes            = array( 'input-text' );
+		$allowed_mime_types = array_keys( ! empty( $field['allowed_mime_types'] ) ? $field['allowed_mime_types'] : get_allowed_mime_types() );
+	?>
+
+		<p class="wpfm-admin-postbox-form-field">
+			<label for="<?php echo esc_attr($key); ?>"><?php echo esc_html($field['label']); ?>:
+				<?php if (!empty($field['description'])) : ?>
+					<span class="tips" data-tip="<?php echo esc_attr($field['description']); ?>">[?]</span>
+				<?php endif; ?>
+			</label>
+			<span class="wpfm-input-field">
+				<?php
+				if (!empty($field['multiple'])) { ?>
+					<span class="food-manager-uploaded-files">
+						<?php 
+						if(!empty($field['value'])){
+							foreach ((array) $field['value'] as $value) { ?>
+								<span class="food-manager-uploaded-file">
+									<?php
+									if ( is_numeric( $value ) ) {
+										$image_src = wp_get_attachment_image_src( absint( $value ) );
+										$image_src = $image_src ? $image_src[0] : '';
+									} else {
+										$image_src = $value;
+									}
+									
+									$extension = ! empty( $extension ) ? $extension : substr( strrchr( $image_src, '.' ), 1 );
+									if ( 3 !== strlen( $extension ) || in_array( $extension, array( 'jpg', 'gif', 'png', 'jpeg', 'jpe' ) ) ) : ?>
+										<span class="food-manager-uploaded-file-preview"><img src="<?php echo esc_url( $image_src ); ?>" /> <a class="food-manager-remove-uploaded-file" href="javascript:void(0)">[<?php _e( 'remove', 'wp-food-manager' ); ?>]</a></span>
+									<?php else : ?>
+										<span class="food-manager-uploaded-file-name"><code><?php echo esc_html( basename( $image_src ) ); ?></code> <a class="food-manager-remove-uploaded-file" href="javascript:void(0)">[<?php _e( 'remove', 'wp-food-manager' ); ?>]</a></span>
+									<?php endif; ?>
+									<input type="hidden" class="input-text" name="<?php echo esc_attr( $name ); ?>" value="<?php echo esc_attr( $value ); ?>" />
+								</span>
+						<?php }
+						} ?>
+					</span>
+					<input type="file" class="<?php echo esc_attr( implode( ' ', $classes ) ); ?>" data-file_types="<?php echo esc_attr( implode( '|', $allowed_mime_types ) ); ?>" <?php if ( ! empty( $field['multiple'] ) ) echo 'multiple'; ?> name="<?php echo esc_attr($name); ?>[]" id="<?php echo esc_attr( $key ); ?>" placeholder="<?php echo empty( $field['placeholder'] ) ? '' : esc_attr( $field['placeholder'] ); ?>" />				
+				<?php
+				} else {
+					if (isset($field['value']) && is_array($field['value'])) {
+						$field['value'] = array_shift($field['value']);
+					}
+					?>
+					<input type="file" class="<?php echo esc_attr( implode( ' ', $classes ) ); ?>" data-file_types="<?php echo esc_attr( implode( '|', $allowed_mime_types ) ); ?>" <?php if ( ! empty( $field['multiple'] ) ) echo 'multiple'; ?> name="<?php echo esc_attr($name); ?>[]" id="<?php echo esc_attr( $key ); ?>" placeholder="<?php echo empty( $field['placeholder'] ) ? '' : esc_attr( $field['placeholder'] ); ?>" />	
+					<span class="file_url"><input type="text" name="<?php echo esc_attr($name); ?>" id="<?php echo esc_attr($key); ?>" placeholder="<?php echo esc_attr($field['placeholder']); ?>" value="<?php echo esc_attr($field['value']); ?>" /><img src="<?php echo esc_attr($value); ?>"><button class="button button-small wp_food_manager_upload_file_button" data-uploader_button_text="<?php esc_attr_e('Use file', 'wp-food-manager'); ?>"><?php esc_attr_e('Upload', 'wp-food-manager'); ?></button></span>
+				<?php
+				}
+			?>
+			</span>
+		</p>
+	<?php
+	}*/
 
 	/**
 	 * input_text function.
@@ -422,7 +571,7 @@ class WPFM_Writepanels
 	}
 
 	/**
-	 * input_text function.
+	 * input_textarea function.
 	 *
 	 * @param mixed $key
 	 * @param mixed $field
@@ -612,14 +761,14 @@ class WPFM_Writepanels
 
 					foreach ($post_ids as $post_id) {
 
-						$event_data = array(
+						$food_data = array(
 
 							'ID'          => $post_id,
 
 							'post_status' => 'publish',
 						);
 
-						if (in_array(get_post_status($post_id), array('pending', 'pending_payment')) && current_user_can('publish_post', $post_id) && wp_update_post($event_data)) {
+						if (in_array(get_post_status($post_id), array('pending', 'pending_payment')) && current_user_can('publish_post', $post_id) && wp_update_post($food_data)) {
 
 							$published_foods[] = $post_id;
 						}
@@ -1091,8 +1240,10 @@ class WPFM_Writepanels
 				update_post_meta($post_id,'_wpfm_extra_options',$extra_options);
 				
 				foreach ($field as $key2 => $fiel) {
-					if(isset($_POST["_".$key2])){
+					if(isset($_POST["_".$key2]) && !empty($_POST["_".$key2])){
 						update_post_meta($post_id, "_".$key2, $_POST["_".$key2]);
+					} else {
+						update_post_meta($post_id, "_".$key2, "");
 					}
 				}
 				

@@ -436,23 +436,23 @@ class WPFM_Ajax {
 	 */
 
 	public function upload_file() {
-		
+
 		if ( ! food_manager_user_can_upload_file_via_ajax() ) {
-					wp_send_json_error( new WP_Error( 'upload', __( 'You must be logged in to upload files using this method.', 'wp-food-manager' ) ) );
-					return;
+			wp_send_json_error( new WP_Error( 'upload', __( 'You must be logged in to upload files using this method.', 'wp-food-manager' ) ) );
+			return;
 		}
 
 		$data = array( 'files' => array() );
-
+		
 		if ( ! empty( $_FILES ) ) {
 
 			foreach ( $_FILES as $file_key => $file ) {
 
-				$files_to_upload = food_manager_prepare_uploaded_files( $file );
+				$files_to_upload = wpfm_prepare_uploaded_files( $file );
 
 				foreach ( $files_to_upload as $file_to_upload ) {
 
-					$uploaded_file = food_manager_upload_file( $file_to_upload, array( 'file_key' => $file_key ) );
+					$uploaded_file = wpfm_upload_file( $file_to_upload, array( 'file_key' => $file_key ) );
 
 					if ( is_wp_error( $uploaded_file ) ) {
 

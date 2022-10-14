@@ -17,6 +17,10 @@ var WPFMAdmin= function () {
         {
             //jQuery(".option-desc-common").hide();
 
+            jQuery("body").on("click",".food-manager-remove-uploaded-file", function(){
+                return jQuery(this).closest(".food-manager-uploaded-file").remove();
+            });
+            
             //if field type is date then load datepicker
             if (jQuery('input[data-picker="datepicker"]').length > 0)
             {
