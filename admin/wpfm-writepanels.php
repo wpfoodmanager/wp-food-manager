@@ -545,6 +545,9 @@ class WPFM_Writepanels
 		$php_date_format        = WP_Food_Manager_Date_Time::get_view_date_format_from_datepicker_date_format($datepicker_date_format);
 		if (!isset($field['value'])) {
 			$date = get_post_meta($thepostid, $key, true);
+			if(is_array($date)){
+				$date = $date['0'];
+			}
 			if (!empty($date)) {
 				$date = date($php_date_format, strtotime($date));
 				$field['value']         = $date;
@@ -818,7 +821,7 @@ class WPFM_Writepanels
 	 */
 	public static function input_number($key, $field)
 	{
-		global $thepostid;
+		global $thepostid, $cur_symbol;
 		if (!isset($field['value'])) {
 			$field['value'] = get_post_meta($thepostid, $key, true);
 		}
@@ -842,7 +845,7 @@ class WPFM_Writepanels
 		<p class="wpfm-admin-postbox-form-field <?=$name;?>">
 			<label for="<?php echo esc_attr($key); ?>"><?php echo esc_html($field['label']); ?> <?php echo esc_html($cur_symbol); ?> : <?php if (!empty($field['description'])) : ?><span class="tips" data-tip="<?php echo esc_attr($field['description']); ?>">[?]</span><?php endif; ?></label>
 			<span class="wpfm-input-field">
-				<input type="number" class="wpfm-small-field" name="<?php echo esc_attr($name); ?>" id="<?php echo esc_attr($key); ?>" placeholder="<?php echo esc_attr($field['placeholder']); ?>" value="<?php echo esc_attr($field['value']); ?>" step="any"/>
+				<input type="number" class="wpfm-small-field" name="<?php echo esc_attr($name); ?>" id="<?php echo esc_attr($key); ?>" placeholder="<?php echo esc_attr($field['placeholder']); ?>" value="<?php echo esc_attr($field['value']); ?>" maxlength="75" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" step="any"/>
 			</span>
 		</p>
 	<?php

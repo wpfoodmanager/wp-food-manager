@@ -334,7 +334,7 @@ do_action('set_single_listing_view_count');
 
                                                 <?php
                                                 $date_format = WP_Food_Manager_Date_Time::get_food_manager_view_date_format();
-                                                $time_format = WP_Food_Manager_Date_Time::get_timepicker_format();
+                                                $time_format = WP_Food_Manager_Date_Time::get_timepicker_format();                                                
 
                                                 foreach ($additional_fields as $name => $field) : ?>
 
@@ -488,7 +488,10 @@ do_action('set_single_listing_view_count');
                                                                 </div>
                                                             </div>
 
-                                                        <?php elseif (isset($field['type']) && $field['type'] == 'date') : ?>
+                                                        <?php elseif (isset($field['type']) && $field['type'] == 'date') :
+                                                            if(is_array($field_value)){
+                                                                $field_value = $field_value['0'];
+                                                            } ?>
                                                             <div class="wpfm-col-md-6 wpfm-col-sm-12 wpfm-additional-info-block-details-content-left">
                                                                 <div class="wpfm-additional-info-block-details-content-items">
                                                                     <p class="wpfm-additional-info-block-title"><strong><?php printf(__('%s', 'wp-food-manager'),  $field['label']); ?> - </strong> <?php echo date_i18n($date_format, strtotime($field_value)); ?></p>
@@ -522,7 +525,7 @@ do_action('set_single_listing_view_count');
                                                                             <div><img src="<?php echo esc_attr($field_value); ?>"></div>
                                                                         <?php else : ?>
                                                                             <p class="wpfm-additional-info-block-title"><strong><?php echo esc_attr(wp_basename($field_value)); ?></strong></p>
-                                                                            <div class="wpfm-icon"><a target="_blank" class="wpfm-icon-download3" href="<?php echo esc_attr($field_value); ?>"> <?php _e('Download', 'wp-food-manager'); ?></a></div>
+                                                                            <!-- <div class="wpfm-icon"><a target="_blank" class="wpfm-icon-download3" href="<?php echo esc_attr($field_value); ?>"> <?php _e('Download', 'wp-food-manager'); ?></a></div> -->
                                                                         <?php endif; ?>
                                                                     <?php endif; ?>
                                                                 </div>
