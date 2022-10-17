@@ -3,6 +3,55 @@ if (empty($field_key)) {
 	$field_key = $index;
 }
 $taxonomies = get_object_taxonomies((object) array('post_type' => 'food_manager'));
+
+if ($field_key !== 'option_options') {
+	$field_types    = apply_filters(
+		'food_manager_form_field_types',
+		array(
+			'text'             => __('Text', 'wp-food-manager'),
+			'checkbox'         => __('Checkbox', 'wp-food-manager'),
+			'date'             => __('Date', 'wp-food-manager'),
+			'file'             => __('File', 'wp-food-manager'),
+			'hidden'           => __('Hidden', 'wp-food-manager'),
+			'multiselect'      => __('Multiselect', 'wp-food-manager'),
+			'number'           => __('Number', 'wp-food-manager'),
+			'radio'            => __('Radio', 'wp-food-manager'),
+			'select'           => __('Select', 'wp-food-manager'),
+			'term-checklist'   => __('Term Checklist', 'wp-food-manager'),
+			'term-multiselect' => __('Term Multiselect', 'wp-food-manager'),
+			'term-select'      => __('Term Select', 'wp-food-manager'),
+			'textarea'         => __('Textarea', 'wp-food-manager'),
+			'wp-editor'        => __('WP Editor', 'wp-food-manager'),
+			'url'              => __('URL', 'wp-food-manager'),
+			//'options'    => __('Options', 'wp-food-manager'),
+		)
+	);
+} else {
+	$field_types    = apply_filters(
+		'food_manager_form_field_types',
+		array(
+			'text'             => __('Text', 'wp-food-manager'),
+			//'time'             => __('Time', 'wp-food-manager'),
+			'checkbox'         => __('Checkbox', 'wp-food-manager'),
+			'date'             => __('Date', 'wp-food-manager'),
+			//'timezone'         => __('Timezone', 'wp-food-manager'),
+			'file'             => __('File', 'wp-food-manager'),
+			'hidden'           => __('Hidden', 'wp-food-manager'),
+			'multiselect'      => __('Multiselect', 'wp-food-manager'),
+			'number'           => __('Number', 'wp-food-manager'),               /*'password'       		=> __( 'Password', 'wp-food-manager' ),*/
+			'radio'            => __('Radio', 'wp-food-manager'),
+			//'repeated'         => __('Repeated', 'wp-food-manager'),
+			'select'           => __('Select', 'wp-food-manager'),
+			'term-checklist'   => __('Term Checklist', 'wp-food-manager'),
+			'term-multiselect' => __('Term Multiselect', 'wp-food-manager'),
+			'term-select'      => __('Term Select', 'wp-food-manager'),
+			'textarea'         => __('Textarea', 'wp-food-manager'),
+			'wp-editor'        => __('WP Editor', 'wp-food-manager'),
+			'url'              => __('URL', 'wp-food-manager'),          /*'group'       			=> __( 'Group', 'wp-food-manager' ),	*/
+			'options'    => __('Options', 'wp-food-manager'),
+		)
+	);
+}
 ?>
 <tr data-field-type="<?php echo esc_attr($field['type']); ?>">
 	<td class="sort-column">&nbsp;</td>
@@ -15,10 +64,10 @@ $taxonomies = get_object_taxonomies((object) array('post_type' => 'food_manager'
 			foreach ($field_types as $key => $type) {
 				if (in_array($field_key, $disbled_fields)) {
 					if ($key == $field['type']) {
-						printf('<option value="' . esc_attr($key) . '" ' . selected($field['type'], $key, false) . '>' . esc_html($type) . '</option>');
+						printf('<option value="' . esc_attr($key) . '" ' . selected($field['type'], $key, false) . ' class="wpfm-opt-val '.esc_attr($key).'">' . esc_html($type) . '</option>');
 					}
 				} else {
-					printf('<option value="' . esc_attr($key) . '" ' . selected($field['type'], $key, false) . '>' . esc_html($type) . '</option>');
+					printf('<option value="' . esc_attr($key) . '" ' . selected($field['type'], $key, false) . ' class="wpfm-opt-val '.esc_attr($key).'">' . esc_html($type) . '</option>');
 				}
 			}
 			?>
@@ -125,7 +174,7 @@ if (isset($field['type']) && $field['type'] == 'group') {
 			'radio'       => __('Radio', 'wp-food-manager'),
 			'select'      => __('Select', 'wp-food-manager'),
 			'textarea'    => __('Textarea', 'wp-food-manager'),
-			'options'    => __('Options', 'wp-food-manager'),
+			//'options'    => __('Options', 'wp-food-manager'),
 		)
 	);
 	$child_index = -1;

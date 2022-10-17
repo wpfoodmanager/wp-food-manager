@@ -16,7 +16,15 @@ var WPFMAdmin= function () {
         init: function() 
         {
             //jQuery(".option-desc-common").hide();
-
+            /*jQuery("body").ready(function(){
+                jQuery("select .wpfm-opt-val").each(function(){
+                    var selected_val = jQuery(this).val();
+                    if(selected_val == 'options'){
+                        jQuery(".wp-food-manager-food-form-field-editor.extra_options td.field-type .field_type .options").attr("disabled","disabled");
+                        jQuery(this).prop("disabled", false);
+                    }
+                });
+            });*/
             jQuery("body").on("click",".food-manager-remove-uploaded-file", function(){
                 return jQuery(this).closest(".food-manager-uploaded-file").remove();
             });
@@ -49,7 +57,9 @@ var WPFMAdmin= function () {
             jQuery(document).on('click', '#wpfm-admin-add-food', WPFMAdmin.actions.updateFoodinMenu);	
 
             //use body to call after dom update
-            jQuery("body").on('click','a.wpfm-food-item-remove',WPFMAdmin.actions.removeFoodItem);						
+            jQuery("body").on('click','a.wpfm-food-item-remove',WPFMAdmin.actions.removeFoodItem);
+
+            //jQuery("body").on('change','.wp-food-manager-food-form-field-editor.extra_options .field-type select.field_type',WPFMAdmin.actions.removeFoodSelectionVal);
 
             //sortable 
             jQuery('.wpfm-admin-food-menu-items ul.wpfm-food-menu').sortable();
@@ -382,7 +392,15 @@ var WPFMAdmin= function () {
 	   		jQuery(this).parents('li').remove();
 	   },
 
-        /// <summary>
+       removeFoodSelectionVal: function(event){
+            var selected_val = jQuery(this).val();
+            if(selected_val == 'options'){
+                jQuery(".wp-food-manager-food-form-field-editor.extra_options td.field-type .field_type").find(".options").attr("disabled","disabled");
+                jQuery(this).find(".options").prop("disabled", false);
+            }
+       },
+
+       /// <summary>
        /// add options
        /// </summary>
        /// <param name="parent" type="Event"></param> 

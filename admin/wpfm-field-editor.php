@@ -133,6 +133,7 @@ class WP_Food_Manager_Field_Editor
 		}
 
 		$disbled_fields = apply_filters('wpfm_admin_field_editor_disabled_fields', array('food_title', 'food_description', 'organizer_name', 'organizer_description', 'venue_name', 'venue_description'));
+		
 		$field_types    = apply_filters(
 			'food_manager_form_field_types',
 			array(
@@ -186,7 +187,7 @@ class WP_Food_Manager_Field_Editor
 			}
 		?>
 
-			<div class="wp-food-manager-food-form-field-editor">
+			<div class="wp-food-manager-food-form-field-editor <?php echo $group_key; ?>">
 
 				<h3><?php printf(esc_attr__('%s form fields', 'wp-food-manager'), ucfirst(ucfirst(str_replace("_", " ", $group_key)))); ?></h3>
 				<table class="widefat">
@@ -233,6 +234,7 @@ class WP_Food_Manager_Field_Editor
 						<?php
 						if (isset($group_fields) && !empty($group_fields)) {
 							foreach ($group_fields as $field_key => $field) {
+
 								$index++;
 
 								include 'wpfm-form-field-editor-field.php';
