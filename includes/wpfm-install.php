@@ -258,15 +258,11 @@ class WP_Food_Manager_Install {
 			),
 			'food_manager_type' => array(
 			
-				'Fruit and vegetables',
+				'Vegan',
+				
+				'Vegeterian',
 			
-				'Starchy food',
-			
-				'Dairy',
-			
-				'Protein',
-			
-				'Fat',
+				'Non Vegeterian',
 			),
 			'food_manager_unit' => array(
 			
