@@ -5,44 +5,50 @@
 
 get_header();
 
-global $wp_query;
+global $wp_query, $post;
+$term = get_term_by('slug', $_GET['food_manager_type'], 'food_manager_type');
+$image_id = !empty($term) ? get_term_meta ( $term->term_id, 'image_id', true ) : '';
+$image_url = wp_get_attachment_image_src ( $image_id );
 ?>
 <div class="wpfm-container">
-<div class="wpfm-main wpfm-food-listing-type-page">
-<div class="wpfm-row">
+    <div class="wpfm-main wpfm-food-listing-type-page">
+        <div class="wpfm-row">
+            <div class="wpfm-col-12 wpfm-food-listing-type-page-wrapper">
+                <?php if(!empty($image_url) && is_array($image_url)){ ?>
+                    <div class="wpfm-my-5 wpfm-food-listing-type-page-title wpfm-with-bg-image" style="background-image: url('<?php echo esc_url($image_url[0]); ?>');">
+                        <h1 class="wpfm-heading-text"><?php echo wp_kses_post(get_the_archive_title()); ?></h1>
+                    </div>
+                <?php } else { ?>
+                    <div class="wpfm-my-5 wpfm-food-listing-type-page-title">
+                        <h1 class="wpfm-heading-text"><?php echo wp_kses_post(get_the_archive_title()); ?></h1>
+                    </div>
+                <?php } ?>
+                <div class="food_listings">
+                    <?php if ( have_posts() ) : ?>
 
-<div class="wpfm-col-12 wpfm-food-listing-type-page-wrapper">
+                        <?php get_food_manager_template( 'food-listings-start.php' ,array('layout_type'=>'all')); ?>           
 
-<div class="wpfm-my-5 wpfm-food-listing-type-page-title">
-                <h1 class="wpfm-heading-text"><?php echo wp_kses_post(get_the_archive_title()); ?></h1>
+                        <?php while ( have_posts() ) : the_post(); ?>
+
+                            <?php  get_food_manager_template_part( 'content', 'food_manager' ); ?>
+                            
+                        <?php endwhile; ?>
+
+                        <?php get_food_manager_template( 'food-listings-end.php' ); ?>
+
+                        <?php get_food_manager_template( 'pagination.php', array( 'max_num_pages' => $wp_query->max_num_pages ) ); ?>
+
+                    <?php else :
+
+                        do_action( 'food_manager_output_foods_no_results' );
+
+                    endif;
+
+                    wp_reset_postdata(); ?>
                 </div>
-
-            <div class="food_listings">
-                <?php if ( have_posts() ) : ?>
-
-                    <?php get_food_manager_template( 'food-listings-start.php' ,array('layout_type'=>'all')); ?>           
-
-                    <?php while ( have_posts() ) : the_post(); ?>
-
-                        <?php  get_food_manager_template_part( 'content', 'food_manager' ); ?>
-                        
-                    <?php endwhile; ?>
-
-                    <?php get_food_manager_template( 'food-listings-end.php' ); ?>
-
-                    <?php get_food_manager_template( 'pagination.php', array( 'max_num_pages' => $wp_query->max_num_pages ) ); ?>
-
-                <?php else :
-
-                    do_action( 'food_manager_output_foods_no_results' );
-
-                endif;
-
-                wp_reset_postdata(); ?>
             </div>
-</div>
-</div>
-</div>
+        </div>
+    </div>
 </div>
 
 <?php get_footer(); ?>
