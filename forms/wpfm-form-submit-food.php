@@ -178,7 +178,7 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
 					'priority'    => 5
 				),
 				
-				'food_veg_nonveg' => array(
+				/*'food_veg_nonveg' => array(
 					'label'       => __( 'Food Symbol / Tag', 'wp-food-manager' ),
 					'type'        => 'radio',
 					'required'    => true,
@@ -188,7 +188,7 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
 										'non-veg' => __('Non Veg','wp-food-manager'),
 									),
 					'priority'    => 6
-				),
+				),*/
 				'food_price' => array(
 					'label'       => __( 'Regular Price', 'wp-food-manager' ),
 					'type'        => 'number',

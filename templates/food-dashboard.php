@@ -96,7 +96,22 @@
 								<?php if ( $food->post_status == 'publish' ) : ?>
 									<a href="<?php echo get_permalink( $food->ID ); ?>"><?php echo esc_html( $food->post_title ); ?></a>
 									<?php 
-									$wpfm_veg_nonveg_tag = get_post_meta( $food->ID, '_food_veg_nonveg', true);
+									$wpfm_veg_nonveg_tags = get_food_veg_nonveg_icon_tag($food);
+									if(!empty($wpfm_veg_nonveg_tags)){
+								    	foreach($wpfm_veg_nonveg_tags as $wpfm_veg_nonveg_tag){
+											$imagePath = '';
+									        if($wpfm_veg_nonveg_tag->slug === 'vegeterian'){
+									            $imagePath = WPFM_PLUGIN_URL."/assets/images/wpfm-veg-organic.png";
+									        }
+									        if($wpfm_veg_nonveg_tag->slug === 'non-vegeterian'){
+									            $imagePath = WPFM_PLUGIN_URL."/assets/images/wpfm-non-veg-organic.png";
+									        }
+									        if(!empty($imagePath)){
+									        	echo '<div class="parent-organic-tag '.$wpfm_veg_nonveg_tag->slug.'"><img alt="'.$wpfm_veg_nonveg_tag->slug.'" src="'.$imagePath.'" class="wpfm-organic-tag-icon '.$wpfm_veg_nonveg_tag->slug.'"></div>';
+									        }
+									    }
+								    }
+									/*$wpfm_veg_nonveg_tag = get_post_meta( $food->ID, '_food_veg_nonveg', true);
 								    if(!empty($wpfm_veg_nonveg_tag)){
 								    	$imagePath = '';
 								        if($wpfm_veg_nonveg_tag === 'veg'){
@@ -108,7 +123,7 @@
 								        if(!empty($imagePath)){
 								        	echo '<div class="parent-organic-tag '.$wpfm_veg_nonveg_tag.'"><img alt="'.$wpfm_veg_nonveg_tag.'" src="'.$imagePath.'" class="wpfm-organic-tag-icon '.$wpfm_veg_nonveg_tag.'"></div>';
 								        }
-								    }
+								    }*/
 									?>
 								<?php else : ?>
 									<?php echo $food->post_title; ?> <small class="wpfm-food-status-pending-approval"><?php display_food_status( $food ); ?></small>

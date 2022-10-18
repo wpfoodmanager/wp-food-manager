@@ -551,23 +551,27 @@ input[name="_food_veg_nonveg"]{
   border-radius: 0;
 }
 
-._food_veg_nonveg .radio.veg{
+.type-food_manager td.image.column-image {
+  display: flex;
+  align-items: center;
+}
+._food_veg_nonveg .radio.vegeterian{
   border-color: #22aa00;
 }
-._food_veg_nonveg .radio.veg:focus{
+._food_veg_nonveg .radio.vegeterian:focus{
   box-shadow: 0 0 0 1px #22aa00;
 }
-._food_veg_nonveg .radio.veg:checked::before {
+._food_veg_nonveg .radio.vegeterian:checked::before {
   background-color: #22aa00;
 }
 
-._food_veg_nonveg .radio.non-veg{
+._food_veg_nonveg .radio.non-vegeterian{
   border-color: #ff0000;
 }
-._food_veg_nonveg .radio.non-veg:focus{
+._food_veg_nonveg .radio.non-vegeterian:focus{
   box-shadow: 0 0 0 1px #ff0000;
 }
-._food_veg_nonveg .radio.non-veg:checked::before {
+._food_veg_nonveg .radio.non-vegeterian:checked::before {
   background-color: #ff0000;
 }
 .wpfm_panel .wpfm-admin-postbox-form-field._food_veg_nonveg span.wpfm-input-field label {

@@ -469,19 +469,22 @@ function get_single_food_listing_view_count($post)
  */
 function display_food_veg_nonveg_icon_tag( $post = null, $after = '' ) {
 
-	$wpfm_veg_nonveg_tag = get_food_veg_nonveg_icon_tag($post);
+	$wpfm_veg_nonveg_tags = get_food_veg_nonveg_icon_tag($post);
 
-    if(!empty($wpfm_veg_nonveg_tag)){
-    	$imagePath = '';
-        if($wpfm_veg_nonveg_tag === 'veg'){
-            $imagePath = WPFM_PLUGIN_URL."/assets/images/wpfm-veg-organic.png";
-        }
-        if($wpfm_veg_nonveg_tag === 'non-veg'){
-            $imagePath = WPFM_PLUGIN_URL."/assets/images/wpfm-non-veg-organic.png";
-        }
-        if(!empty($imagePath)){
-        	echo '<div class="parent-organic-tag '.$wpfm_veg_nonveg_tag.'"><img alt="'.$wpfm_veg_nonveg_tag.'" src="'.$imagePath.'" class="wpfm-organic-tag-icon '.$wpfm_veg_nonveg_tag.'"></div>';
-        }
+
+    if(!empty($wpfm_veg_nonveg_tags)){
+    	foreach($wpfm_veg_nonveg_tags as $wpfm_veg_nonveg_tag){
+			$imagePath = '';
+	        if($wpfm_veg_nonveg_tag->slug === 'vegeterian'){
+	            $imagePath = WPFM_PLUGIN_URL."/assets/images/wpfm-veg-organic.png";
+	        }
+	        if($wpfm_veg_nonveg_tag->slug === 'non-vegeterian'){
+	            $imagePath = WPFM_PLUGIN_URL."/assets/images/wpfm-non-veg-organic.png";
+	        }
+	        if(!empty($imagePath)){
+	        	echo '<div class="parent-organic-tag '.$wpfm_veg_nonveg_tag->slug.'"><img alt="'.$wpfm_veg_nonveg_tag->slug.'" src="'.$imagePath.'" class="wpfm-organic-tag-icon '.$wpfm_veg_nonveg_tag->slug.'"></div>';
+	        }
+	    }
     }
 }
 /**
@@ -493,12 +496,22 @@ function display_food_veg_nonveg_icon_tag( $post = null, $after = '' ) {
  */
 function get_food_veg_nonveg_icon_tag( $post = null ) {
 
-	$post = get_post( $post );
+	/*$post = get_post( $post );
 
 	$wpfm_veg_nonveg_tag = get_post_meta( get_the_ID(), '_food_veg_nonveg', true);
 	
 	if(empty($wpfm_veg_nonveg_tag))
 		$wpfm_veg_nonveg_tag = '';
+
+	return apply_filters( 'display_food_veg_nonveg_icon_tag', $wpfm_veg_nonveg_tag, $post );*/
+
+	$post = get_post( $post );
+
+	if ( $post->post_type !== 'food_manager' || !get_option( 'food_manager_enable_food_types' ) ) {
+		return;
+	}
+
+	$wpfm_veg_nonveg_tag = wp_get_post_terms( $post->ID, 'food_manager_type' );
 
 	return apply_filters( 'display_food_veg_nonveg_icon_tag', $wpfm_veg_nonveg_tag, $post );
 }
@@ -833,7 +846,7 @@ function get_food_units( $post = null ) {
  */
 function display_food_permalink( $post = null ) {
 
-	echo get_food_permalink( $post );
+	echo esc_attr(get_food_permalink( $post ));
 }
 
 /**

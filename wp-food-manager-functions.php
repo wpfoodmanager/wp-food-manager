@@ -2889,3 +2889,42 @@ function food_manager_user_can_upload_file_via_ajax() {
 	 */
 	return apply_filters( 'food_manager_user_can_upload_file_via_ajax', $can_upload );
 }
+
+
+/**
+ * Use radio inputs instead of checkboxes for term checklists in specified taxonomies.
+ *
+ * @param   array   $args
+ * @return  array
+ */
+function wpfm_term_radio_checklist_for_food_type( $args ) {
+    if ( ! empty( $args['taxonomy'] ) && $args['taxonomy'] === 'food_manager_type' /* <== Change to your required taxonomy */ ) {
+        if ( empty( $args['walker'] ) || is_a( $args['walker'], 'Walker' ) ) { // Don't override 3rd party walkers.
+            if ( ! class_exists( 'WPFM_Walker_Category_Radio_Checklist_For_Food_Type' ) ) {
+                /**
+                 * Custom walker for switching checkbox inputs to radio.
+                 *
+                 * @see Walker_Category_Checklist
+                 */
+                class WPFM_Walker_Category_Radio_Checklist_For_Food_Type extends Walker_Category_Checklist {
+                    function walk( $elements, $max_depth, ...$args ) {
+                        $output = parent::walk( $elements, $max_depth, ...$args );
+                        $output = str_replace(
+                            array( 'type="checkbox"', "type='checkbox'" ),
+                            array( 'type="radio"', "type='radio'" ),
+                            $output
+                        );
+
+                        return $output;
+                    }
+                }
+            }
+
+            $args['walker'] = new WPFM_Walker_Category_Radio_Checklist_For_Food_Type;
+        }
+    }
+
+    return $args;
+}
+
+add_filter( 'wp_terms_checklist_args', 'wpfm_term_radio_checklist_for_food_type' );
