@@ -1007,6 +1007,9 @@ div#wpfm-loading {
   display: inline-block;
   padding-right: 20px;
 }
+#general_food_data_content p.wpfm-admin-postbox-form-field._food_banner {
+  display: none;
+}
 
 
 

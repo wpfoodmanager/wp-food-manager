@@ -377,7 +377,7 @@ class WPFM_Writepanels
 		}
 	?>
 
-		<p class="wpfm-admin-postbox-form-field">
+		<p class="wpfm-admin-postbox-form-field <?=$name;?>">
 			<label for="<?php echo esc_attr($key); ?>"><?php echo esc_html($field['label']); ?>:
 				<?php if (!empty($field['description'])) : ?>
 					<span class="tips" data-tip="<?php echo esc_attr($field['description']); ?>">[?]</span>
