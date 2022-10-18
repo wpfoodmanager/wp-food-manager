@@ -147,7 +147,7 @@ if ( get_option( 'food_manager_enable_food_types' ,true) ) {
 
                 'parent_item_colon' => sprintf( __( 'Parent %s:', 'wp-food-manager' ), $singular ),
 
-                'not_found'         => sprintf( __( 'No %s found', 'wp-food-manager' ), $plural ),
+                'not_found'         => sprintf( __( 'No %s found', 'wp-food-manager' ), strtolower( $plural ) ),
 
                 'edit_item' 		=> sprintf( __( 'Edit %s', 'wp-food-manager' ), $singular ),
 
