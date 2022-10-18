@@ -170,5 +170,15 @@ class WPFM_Admin {
 				break;
 		}
 	}
+
+	/**
+	 * Ran on WP admin_init hook
+	 */
+	public function admin_init()
+	{
+		if (!empty($_GET['food-manager-main-admin-dismiss'])) {
+			update_option('food_manager_rating_showcase_admin_notices_dismiss', 1);
+		}
+	}
 }
 new WPFM_Admin();

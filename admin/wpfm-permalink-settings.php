@@ -55,21 +55,21 @@ class WPFM_Permalink_Settings {
 	public function setup_fields() {
 		add_settings_field(
 			'wpfm_food_base_slug',
-			__( 'food base', 'wp-food-manager' ),
+			__( 'Food base', 'wp-food-manager' ),
 			array( $this, 'food_base_slug_input' ),
 			'permalink',
 			'optional'
 		);
 		add_settings_field(
 			'wpfm_food_category_slug',
-			__( 'food category base', 'wp-food-manager' ),
+			__( 'Food category base', 'wp-food-manager' ),
 			array( $this, 'food_category_slug_input' ),
 			'permalink',
 			'optional'
 		);
 		add_settings_field(
 			'wpfm_food_type_slug',
-			__( 'food type base', 'wp-food-manager' ),
+			__( 'Food type base', 'wp-food-manager' ),
 			array( $this, 'food_type_slug_input' ),
 			'permalink',
 			'optional'

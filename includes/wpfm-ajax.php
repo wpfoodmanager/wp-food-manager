@@ -42,13 +42,13 @@ class WPFM_Ajax {
 
 		add_action( 'init', array( __CLASS__, 'add_endpoint') );
 
-		add_action( 'template_redirect', array( __CLASS__, 'do_wpfm_ajax'), 0 );
+		add_action( 'template_redirect', array( __CLASS__, 'do_fm_ajax'), 0 );
 
-		// WPFM Ajax endpoints
+		// FM Ajax endpoints
 
-		add_action( 'wpfm_ajax_get_listings', array( $this, 'get_listings' ) );
+		add_action( 'food_manager_ajax_get_listings', array( $this, 'get_listings' ) );
 
-		add_action( 'wpfm_ajax_upload_file', array( $this, 'upload_file' ) );
+		add_action( 'food_manager_ajax_upload_file', array( $this, 'upload_file' ) );
 
 		// BW compatible handlers
 
@@ -114,11 +114,11 @@ class WPFM_Ajax {
 
 	public static function add_endpoint() {
 
-		add_rewrite_tag( '%wpfm-ajax%', '([^/]*)' );
+		add_rewrite_tag( '%fm-ajax%', '([^/]*)' );
 
-		add_rewrite_rule( 'wpfm-ajax/([^/]*)/?', 'index.php?wpfm-ajax=$matches[1]', 'top' );
+		add_rewrite_rule( 'fm-ajax/([^/]*)/?', 'index.php?fm-ajax=$matches[1]', 'top' );
 
-		add_rewrite_rule( 'index.php/wpfm-ajax/([^/]*)/?', 'index.php?wpfm-ajax=$matches[1]', 'top' );
+		add_rewrite_rule( 'index.php/fm-ajax/([^/]*)/?', 'index.php?fm-ajax=$matches[1]', 'top' );
 	}
 
 	/**
@@ -132,15 +132,15 @@ class WPFM_Ajax {
 
 		if ( strstr( get_option( 'permalink_structure' ), '/index.php/' ) ) {
 
-			$endpoint = trailingslashit( home_url( '/index.php/wpfm-ajax/' . $request . '/', 'relative' ) );
+			$endpoint = trailingslashit( home_url( '/index.php/fm-ajax/' . $request . '/', 'relative' ) );
 
 		} elseif ( get_option( 'permalink_structure' ) ) {
 
-			$endpoint = trailingslashit( home_url( '/wpfm-ajax/' . $request . '/', 'relative' ) );
+			$endpoint = trailingslashit( home_url( '/fm-ajax/' . $request . '/', 'relative' ) );
 
 		} else {
 
-			$endpoint = add_query_arg( 'wpfm-ajax', $request, trailingslashit( home_url( '', 'relative' ) ) );
+			$endpoint = add_query_arg( 'fm-ajax', $request, trailingslashit( home_url( '', 'relative' ) ) );
 		}
 		
 		return esc_url_raw( $endpoint );
@@ -150,16 +150,16 @@ class WPFM_Ajax {
 	 * Check for WC Ajax request and fire action
 	 */
 
-	public static function do_wpfm_ajax() {
+	public static function do_fm_ajax() {
 
 		global $wp_query;
 
-		if ( ! empty( $_GET['wpfm-ajax'] ) ) {
+		if ( ! empty( $_GET['fm-ajax'] ) ) {
 
-			 $wp_query->set( 'wpfm-ajax', sanitize_text_field( $_GET['wpfm-ajax'] ) );
+			 $wp_query->set( 'fm-ajax', sanitize_text_field( $_GET['fm-ajax'] ) );
 		}
 
-   		if ( $action = $wp_query->get( 'wpfm-ajax' ) ) {
+   		if ( $action = $wp_query->get( 'fm-ajax' ) ) {
 
    			if ( ! defined( 'DOING_AJAX' ) ) {
 
@@ -170,7 +170,7 @@ class WPFM_Ajax {
 
 			$wp_query->is_home = false;
 
-   			do_action( 'wpfm_ajax_' . sanitize_text_field( $action ) );
+   			do_action( 'food_manager_ajax_' . sanitize_text_field( $action ) );
 
    			die();
    		}

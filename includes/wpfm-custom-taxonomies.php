@@ -191,7 +191,7 @@ if ( get_option( 'food_manager_enable_food_tags' ,true) ) {
 
 		$rewrite   = array(
 
-			'slug'         => $permalink_structure['type_rewrite_slug'],
+			'slug'         => $permalink_structure['tag_rewrite_slug'],
 
 			'with_front'   => false,
 
@@ -279,7 +279,7 @@ if ( get_option( 'food_manager_enable_food_ingredients' ,true) ) {
 
 		$rewrite   = array(
 
-			'slug'         => $permalink_structure['type_rewrite_slug'],
+			'slug'         => $permalink_structure['ingredients_rewrite_slug'],
 
 			'with_front'   => false,
 
@@ -366,7 +366,7 @@ if ( get_option( 'food_manager_enable_food_nutritions' ,true) ) {
 
 		$rewrite   = array(
 
-			'slug'         => $permalink_structure['type_rewrite_slug'],
+			'slug'         => $permalink_structure['nutritions_rewrite_slug'],
 
 			'with_front'   => false,
 
@@ -453,7 +453,7 @@ if ( get_option( 'food_manager_enable_food_units' ,true) ) {
 
 		$rewrite   = array(
 
-			'slug'         => $permalink_structure['type_rewrite_slug'],
+			'slug'         => $permalink_structure['units_rewrite_slug'],
 
 			'with_front'   => false,
 
