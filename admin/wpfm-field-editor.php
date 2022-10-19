@@ -388,7 +388,7 @@ class WP_Food_Manager_Field_Editor
 				$GLOBALS['food_manager']->forms->get_form('submit-food', array());
 				$form_submit_food_instance = call_user_func(array('WPFM_Form_Submit_Food', 'instance'));
 				// $food_fields =   $form_submit_food_instance->get_default_fields('backend');
-				$food_fields = $form_submit_food_instance->get_default_fields();
+				$food_fields = $form_submit_food_instance->get_default_food_fields();
 
 				//$default_fields = $food_fields;
 

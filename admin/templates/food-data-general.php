@@ -16,7 +16,7 @@
 					$key  = '_'.$key;	
 				}
 			$type = !empty($field['type']) ? $field['type'] : 'text';
-			if ($type == 'wp-editor') $type = 'textarea';
+			if ($type == 'wp-editor') $type = 'wp_editor';
 
 			if (has_action('food_manager_input_' . $type)) {
 				do_action('food_manager_input_' . $type, $key, $field);

@@ -274,7 +274,7 @@ do_action('set_single_listing_view_count');
 
                             if ($show_additional_details) :
 
-                                if (!class_exists('WP_Food_Manager_Form_Submit_Food')) {
+                                if (!class_exists('WPFM_Form_Submit_Food')) {
                                     include_once(WPFM_PLUGIN_DIR . '/forms/wpfm-form-abstract.php');
                                     include_once(WPFM_PLUGIN_DIR . '/forms/wpfm-form-submit-food.php');
                                 }
@@ -293,10 +293,8 @@ do_action('set_single_listing_view_count');
                                     $custom_fields = $custom_food_fields;
                                 }
 
-                                $default_fields = $form_submit_food_instance->get_default_fields();
-                                /*echo "<pre>";
-                                print_r($custom_fields);
-                                echo "</pre>";*/
+                                $default_fields = $form_submit_food_instance->get_default_food_fields();
+                                
                                 $additional_fields = [];
                                 if (!empty($custom_fields) && isset($custom_fields) && !empty($custom_fields['food'])) {
                                     foreach ($custom_fields['food'] as $field_name => $field_data) {

@@ -93,8 +93,9 @@
 						<td data-title="<?php echo esc_html( $column ); ?>"
 						class="<?php echo esc_attr( $key ); ?>">
 							<?php if ('food_title' === $key ) : ?>
-								<?php if ( $food->post_status == 'publish' ) : ?>
-									<a href="<?php echo get_permalink( $food->ID ); ?>"><?php echo esc_html( $food->post_title ); ?></a>
+								<?php if ( $food->post_status == 'publish' ) :
+								$out = strlen($food->post_title) > 50 ? substr($food->post_title,0,50)."..." : $food->post_title; ?>
+									<a href="<?php echo get_permalink( $food->ID ); ?>"><?php echo esc_html( $out ); ?></a>
 									<?php 
 									$wpfm_veg_nonveg_tags = get_food_veg_nonveg_icon_tag($food);
 									if(!empty($wpfm_veg_nonveg_tags)){
