@@ -3,7 +3,9 @@
 * This file use for settings at admin site for wp food manager plugin.
 */
 
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+if (!defined('ABSPATH')) {
+	exit; // Exit if accessed directly
+}
 
 /**
  * WPFM_Settings class.
@@ -636,6 +638,13 @@ class WPFM_Settings {
 		?>
    
 		<div class="wrap food-manager-settings-wrap">	
+			
+			<h1 class="wp-heading-inline">
+				<?php
+			
+				esc_attr_e('Settings', 'wp-event-manager');
+				?>
+			</h1>
 
 			<form method="post" name="food-manager-settings-form" action="options.php">	
 
@@ -647,16 +656,17 @@ class WPFM_Settings {
 
 			    		foreach ( $this->settings as $key => $section ) {
 
-			    			echo '<a href="#settings-' . sanitize_title( $key ) . '" class="nav-tab">' . esc_html( $section[0] ) . '</a>';
+			    			//echo '<a href="#settings-' . sanitize_title( $key ) . '" class="nav-tab">' . esc_html( $section[0] ) . '</a>';
+			    			echo wp_kses_post('<a href="#settings-' . sanitize_title($key) . '" class="nav-tab">' . esc_html($section[0]) . '</a>');
 			    		}
 			    	?>
 			    </h2>
-			    
-			 <div class="admin-setting-left">
+
+				<div class="admin-setting-left">
 			     	
-			     <div class="white-background">
+			     	<div class="white-background">
 			     		
-				<?php
+					<?php
 
 					if ( ! empty( $_GET['settings-updated'] ) ) {
 
@@ -829,17 +839,15 @@ class WPFM_Settings {
 						}
 						echo '</table></div>';
 					}
-				?>
-				 </div>   <!-- .white-background- -->
-				<p class="submit">
-					<input type="submit" class="button-primary" id="save-changes" value="<?php _e( 'Save Changes', 'wp-food-manager' ); ?>" />
-				</p>
-			 </div>  <!-- .admin-setting-left -->						
-		    </form>
-            </div>
-	  	
-
-		<?php  wp_enqueue_script( 'wp-food-manager-admin-settings');
+					?>
+					</div>   <!-- .white-background- -->
+					<p class="submit">
+						<input type="submit" class="button-primary" id="save-changes" value="<?php _e( 'Save Changes', 'wp-food-manager' ); ?>" />
+					</p>
+				</div>  <!-- .admin-setting-left -->						
+			</form>
+    	</div>
+	<?php  wp_enqueue_script( 'wp-food-manager-admin-settings');
 	}
 	
 	/**

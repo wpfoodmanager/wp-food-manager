@@ -21,9 +21,12 @@ class WPFM_Admin {
 
 	public function __construct() {
 
-		include_once( 'wpfm-writepanels.php' );
 		include_once( 'wpfm-settings.php' );
+
+		include_once( 'wpfm-writepanels.php' );
+
 		include_once( 'wpfm-setup.php' );
+
 		include_once( 'wpfm-field-editor.php' );
 		
 		$this->settings_page = new WPFM_Settings();
@@ -51,21 +54,9 @@ class WPFM_Admin {
 		$screen = get_current_screen();	
 		$jquery_version = isset($wp_scripts->registered['jquery-ui-core']->ver) ? $wp_scripts->registered['jquery-ui-core']->ver : '1.9.2';
 		
-		wp_enqueue_style('jquery-ui-style', WPFM_PLUGIN_URL . '/assets/js/jquery-ui/jquery-ui.min.css', array(), $jquery_version);
 		wp_enqueue_style('wpfm-backend-css',WPFM_PLUGIN_URL.'/assets/css/backend.css');
-
-		wp_enqueue_style('wpfm-font-awesome-css', WPFM_PLUGIN_URL.'/assets/font-awesome/css/font-awesome.css');
-
-		wp_enqueue_style('wpfm-font-style', WPFM_PLUGIN_URL.'/assets/fonts/style.css');
-
-		wp_enqueue_script( 'jquery' );
-		wp_enqueue_script( 'jquery-ui-core' );
-		wp_enqueue_script( 'jquery-ui-sortable' );
-		wp_enqueue_script( 'wpfm-accounting' );
-		wp_enqueue_script( 'wp-food-manager-admin-settings' );
-		wp_enqueue_script( 'wpfm-admin' );
+		wp_enqueue_style('jquery-ui-style', WPFM_PLUGIN_URL . '/assets/js/jquery-ui/jquery-ui.min.css', array(), $jquery_version);
 		
-
 		$units    = get_terms(
 			[
 				'taxonomy'   => 'food_manager_unit',
@@ -81,7 +72,6 @@ class WPFM_Admin {
 				$unitList[ $unit->term_id ] = $unit->name;
 			}
 		}
-
 		wp_register_script( 'wpfm-admin', WPFM_PLUGIN_URL. '/assets/js/admin.js', array( 'jquery' , 'jquery-ui-core', 'jquery-ui-datepicker'), WPFM_VERSION, true );
 		wp_localize_script( 'wpfm-admin', 'wpfm_admin',
 					        array( 
@@ -98,8 +88,26 @@ class WPFM_Admin {
 								'units'   => $unitList,
 							]
 						);
+		wp_enqueue_script( 'wpfm-admin' );
 
 		wp_register_script( 'wp-food-manager-admin-settings', WPFM_PLUGIN_URL. '/assets/js/admin-settings.min.js', array( 'jquery' ), WPFM_VERSION, true );
+		wp_enqueue_script( 'wp-food-manager-admin-settings' );
+
+		wp_register_script('chosen', WPFM_PLUGIN_URL . '/assets/js/jquery-chosen/chosen.jquery.min.js', array('jquery'), '1.1.0', true);
+		wp_enqueue_script('chosen');
+		wp_enqueue_style('chosen', WPFM_PLUGIN_URL . '/assets/css/chosen.css');
+
+		wp_enqueue_style('wpfm-jquery-timepicker-css', WPFM_PLUGIN_URL . '/assets/js/jquery-timepicker/jquery.timepicker.min.css');
+		wp_register_script('wpfm-jquery-timepicker', WPFM_PLUGIN_URL . '/assets/js/jquery-timepicker/jquery.timepicker.min.js', array('jquery', 'jquery-ui-core', 'jquery-ui-datepicker'), WPFM_VERSION, true);
+		wp_enqueue_script('wpfm-jquery-timepicker');
+
+		wp_enqueue_style('wpfm-font-awesome-css', WPFM_PLUGIN_URL.'/assets/font-awesome/css/font-awesome.css');
+
+		wp_enqueue_style('wpfm-font-style', WPFM_PLUGIN_URL.'/assets/fonts/style.css');
+
+		wp_enqueue_script( 'jquery' );
+		wp_enqueue_script( 'jquery-ui-core' );
+		wp_enqueue_script( 'jquery-ui-sortable' );
 
 		wp_register_script( 'wpfm-accounting', WPFM_PLUGIN_URL. '/assets/js/accounting/accounting.min.js', array( 'jquery' ), WPFM_VERSION, true );	
 		wp_localize_script(
@@ -109,14 +117,7 @@ class WPFM_Admin {
 				'wpfm_sale_less_than_regular_error' => __( 'Please enter in a value less than the regular price.', 'woocommerce' ),
 			)
 		);
-
-		wp_register_script('chosen', WPFM_PLUGIN_URL . '/assets/js/jquery-chosen/chosen.jquery.min.js', array('jquery'), '1.1.0', true);
-		wp_enqueue_script('chosen');
-		wp_enqueue_style('chosen', WPFM_PLUGIN_URL . '/assets/css/chosen.css');
-
-		wp_enqueue_style('wpfm-jquery-timepicker-css', WPFM_PLUGIN_URL . '/assets/js/jquery-timepicker/jquery.timepicker.min.css');
-		wp_register_script('wpfm-jquery-timepicker', WPFM_PLUGIN_URL . '/assets/js/jquery-timepicker/jquery.timepicker.min.js', array('jquery', 'jquery-ui-core', 'jquery-ui-datepicker'), WPFM_VERSION, true);
-		wp_enqueue_script('wpfm-jquery-timepicker');
+		wp_enqueue_script( 'wpfm-accounting' );
 
 		//file upload - vendor
 		if ( apply_filters( 'wpfm_ajax_file_upload_enabled', true ) ) {
