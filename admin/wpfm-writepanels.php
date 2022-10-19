@@ -431,6 +431,37 @@ class WPFM_Writepanels
 	}
 
 	/**
+	 * input_url function.
+	 *
+	 * @param mixed $key
+	 * @param mixed $field
+	 */
+	public static function input_url($key, $field)
+	{
+		global $thepostid;
+		if (!isset($field['value'])) {
+			$field['value'] = get_post_meta($thepostid, $key, true);
+		}
+		if (!empty($field['name'])) {
+			$name = $field['name'];
+		} else {
+			$name = $key;
+		}
+	?>
+		<p class="wpfm-admin-postbox-form-field <?=$name;?>">
+			<label for="<?php echo esc_attr($key); ?>"><?php echo esc_html($field['label']); ?>:
+				<?php if (!empty($field['description'])) : ?>
+					<span class="tips" data-tip="<?php echo esc_attr($field['description']); ?>">[?]</span>
+				<?php endif; ?>
+			</label>
+			<span class="wpfm-input-field">
+				<input type="url" class="wpfm-small-field" name="<?php echo esc_attr($name); ?>" id="<?php echo esc_attr($key); ?>" placeholder="<?php echo esc_attr($field['placeholder']); ?>" value="<?php echo esc_attr($field['value']); ?>" />
+			</span>
+		</p>
+	<?php
+	}
+
+	/**
 	 * input_file function.
 	 *
 	 * @param mixed $key

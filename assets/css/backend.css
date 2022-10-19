@@ -296,7 +296,8 @@ label.add-food-small {
 .wpfm_panel input[type="email"].wpfm-small-field,
 .wpfm_panel input[type="number"].wpfm-small-field,
 .wpfm_panel input[type="password"].wpfm-small-field,
-.wpfm_panel input[type="text"].wpfm-small-field {
+.wpfm_panel input[type="text"].wpfm-small-field,
+.wpfm_panel input[type="url"].wpfm-small-field {
   width: 50%;
 }
 .wpfm_panel .wpfm-admin-postbox-form-group {
