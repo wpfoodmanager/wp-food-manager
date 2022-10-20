@@ -29,9 +29,12 @@ class WPFM_Category_Walker extends Walker {
 		/*foreach($categories as $category){
 			$cat_arr_ids[] = "$category->term_id";
 		}*/
-		$item_cat_ids = !empty(get_post_meta($_GET['post'], '_food_item_cat_ids', true)) ? get_post_meta($_GET['post'], '_food_item_cat_ids', true) : '';
+		$item_cat_ids = isset($_GET['post']) && !empty(get_post_meta($_GET['post'], '_food_item_cat_ids', true)) ? get_post_meta($_GET['post'], '_food_item_cat_ids', true) : '';
 
-		$field_val = ($item_cat_ids[0] == $object->term_id) ? "selected" : "";
+		$field_val = '';
+		if(!empty($item_cat_ids)){
+			$field_val = ($item_cat_ids[0] == $object->term_id) ? "selected" : "";
+		}
 
 		if ( ! empty( $args['hierarchical'] ) )
 
