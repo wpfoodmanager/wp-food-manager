@@ -54,7 +54,8 @@ var WPFMAdmin= function () {
 		  	//show by default first Event Listings Settings Tab
             jQuery('.wpfm-tabs li a:first').click();	
 
-            jQuery(document).on('click', '#wpfm-admin-add-food', WPFMAdmin.actions.updateFoodinMenu);	
+            //jQuery(document).on('click', '#wpfm-admin-add-food', WPFMAdmin.actions.updateFoodinMenu);
+            jQuery(document).on('change', '#wpfm-admin-food-selection', WPFMAdmin.actions.updateFoodinMenu);
 
             //use body to call after dom update
             jQuery("body").on('click','a.wpfm-food-item-remove',WPFMAdmin.actions.removeFoodItem);
@@ -360,6 +361,7 @@ var WPFMAdmin= function () {
                     	category_id: category_id,
                     },
                     success: function(response) {
+                        jQuery('ul.wpfm-food-menu li').remove();
                         jQuery('ul.wpfm-food-menu').append(response.html);
 
                     },
@@ -373,7 +375,7 @@ var WPFMAdmin= function () {
                         action: 'wpfm_get_food_listings_by_category_id',                        
                     },
                     success: function(response) {
-                        console.log(response.html);
+                        jQuery('ul.wpfm-food-menu li').remove();
                         jQuery('ul.wpfm-food-menu').append(response.html);
 
                     },
@@ -390,6 +392,10 @@ var WPFMAdmin= function () {
 	   /// <since>1.0.0</since>
 	   removeFoodItem: function(event){
 	   		jQuery(this).parents('li').remove();
+            
+            if(jQuery("ul.wpfm-food-menu li").length == 0){
+                jQuery("#wpfm-admin-food-selection option").removeAttr('selected');
+            }
 	   },
 
        removeFoodSelectionVal: function(event){

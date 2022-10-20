@@ -125,8 +125,25 @@ class WPFM_Writepanels
 
 		wp_nonce_field('save_meta_data', 'food_manager_nonce');
 		?>
-
 		<div class="wpfm-admin-food-menu-container wpfm-flex-col wpfm-admin-postbox-meta-data">
+			<div class="wpfm-admin-food-menu-container wpfm-flex-col wpfm-admin-postbox-meta-data">
+				<div class="wpfm-admin-menu-selection wpfm-admin-postbox-form-field">
+					<!-- <label for="_add_food"><?php _e('Select food category'); ?></label> -->
+					<?php food_manager_dropdown_selection(array(
+						'multiple' => false, 'show_option_all' => __('All category', 'wp-food-manager'),
+						'id' => 'wpfm-admin-food-selection',
+						'taxonomy' => 'food_manager_category',
+						'hide_empty' => false,
+						'pad_counts' => true,
+						'show_count' => true,
+						'hierarchical' => false,
+					)); ?>
+					<!-- Do not remove -->
+					<!--<div class="wpfm-admin-postbox-drop-btn">
+						<input type="button" id="wpfm-admin-add-food" class="button button-small" value="<?php _e('Add food', 'wp-food-manager'); ?>" />
+					</div> -->
+				</div>
+			</div>
 			<div class="wpfm-admin-food-menu-items">
 				<ul class="wpfm-food-menu menu menu-item-bar ">
 					<?php $item_ids = get_post_meta($thepostid, '_food_item_ids', true);
@@ -148,12 +165,13 @@ class WPFM_Writepanels
 					<?php } ?>
 				</ul>
 			</div>
-			<div class="wpfm-admin-menu-selection wpfm-admin-postbox-form-field">
+			<!-- Do not remove -->
+			<!-- <div class="wpfm-admin-menu-selection wpfm-admin-postbox-form-field">
 				<div class="wpfm-admin-postbox-drop-btn">
 					<input type="button" id="wpfm-admin-add-food" class="button button-small" value="<?php _e('Add', 'wp-food-manager'); ?>" />
 				</div>
 				<label for="_add_food" class="add-food-small"><i><?php _e('Add your food item'); ?></i></label>
-			</div>
+			</div> -->
 		</div>
 	<?php
 	}
@@ -177,23 +195,6 @@ class WPFM_Writepanels
 		
 		?>
 
-		<div class="wpfm-admin-food-menu-container wpfm-flex-col wpfm-admin-postbox-meta-data">
-			<div class="wpfm-admin-menu-selection wpfm-admin-postbox-form-field">
-				<!-- <label for="_add_food"><?php _e('Select food category'); ?></label> -->
-				<?php food_manager_dropdown_selection(array(
-					'multiple' => false, 'show_option_all' => __('All category', 'wp-food-manager'),
-					'id' => 'wpfm-admin-food-selection',
-					'taxonomy' => 'food_manager_category',
-					'hide_empty' => false,
-					'pad_counts' => true,
-					'show_count' => true,
-					'hierarchical' => false,
-				)); ?>
-				<!--<div class="wpfm-admin-postbox-drop-btn">
-					<input type="button" id="wpfm-admin-add-food" class="button button-small" value="<?php _e('Add food', 'wp-food-manager'); ?>" />
-				</div> -->
-			</div>
-		</div>
 		<?php
 
 		echo '<div class="wpfm-parent-icons"><input type="text" id="wpfm_icon_search" name="wpfm_icon_search" placeholder="Icon Search"><span class="wpfm-searh-clear"><i class="fa fa-times"></i></span></div>';
@@ -1080,8 +1081,6 @@ class WPFM_Writepanels
 	{
 		global $wpdb;
 
-		//error_log(print_r($_POST,true));
-
 		// Save fields
 
 		// Advanced tab fields
@@ -1486,6 +1485,13 @@ class WPFM_Writepanels
 			update_post_meta($post_id, '_food_item_ids', $item_ids);
 		} else {
 			update_post_meta($post_id, '_food_item_ids', '');
+		}
+
+		if (isset($_POST['cat'])) {
+			$cat_ids = array_map('esc_attr', $_POST['cat']);
+			update_post_meta($post_id, '_food_item_cat_ids', $cat_ids);
+		} else {
+			update_post_meta($post_id, '_food_item_cat_ids', '');
 		}
 	}
 
