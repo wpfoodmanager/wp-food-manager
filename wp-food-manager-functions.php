@@ -860,12 +860,15 @@ function food_manager_dropdown_selection( $args = '' ) {
 
 		$placeholder=__( 'Choose a food type&hellip;', 'wp-food-manager' );
 
-	endif;	
-	
+	endif;
+
 	$output = "<select name='" . esc_attr( $name ) . "[]' id='" . esc_attr( $id ) . "' class='" . esc_attr( $class ) . "' " . ( $multiple ? "multiple='multiple'" : '' ) . " data-placeholder='" . esc_attr( $placeholder ) . "' data-no_results_text='" . esc_attr( $no_results_text ) . "' data-multiple_text='" . esc_attr( $multiple_text ) . "'>\n";
 
 	if ( $show_option_all ) {
-		
+		/*$cat_arr = array();
+		foreach($categories as $category){
+			$cat_arr[] = "'$category->slug'";
+		}*/
 		$output .= '<option value="">' . esc_html( $show_option_all ) . '</option>'; //'.implode(",", $cat_arr).'
 	}
 
