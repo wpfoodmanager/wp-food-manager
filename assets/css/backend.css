@@ -598,6 +598,8 @@ mark.fm_instock {
 
 #the-list .column-image img.wpfm-organic-tag-icon {
   margin-left: 10px;
+  width: 20px;
+  max-width: 100%;
 }
 
 #wpfm-ingredient-container, #wpfm-nutrition-container {
@@ -1011,6 +1013,8 @@ div#wpfm-loading {
 #general_food_data_content p.wpfm-admin-postbox-form-field._food_banner {
   display: none;
 }
+.wpfm-food-menu .menu-item-handle .item-title{word-break: break-word;}
+
 
 
 

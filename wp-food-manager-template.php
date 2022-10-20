@@ -471,16 +471,25 @@ function display_food_veg_nonveg_icon_tag( $post = null, $after = '' ) {
 
 	$wpfm_veg_nonveg_tags = get_food_veg_nonveg_icon_tag($post);
 
+	$image_id = get_term_meta ( $wpfm_veg_nonveg_tags[0]->term_id, 'image_id', true );
+    $image_src = wp_get_attachment_image_src ( $image_id );
 
     if(!empty($wpfm_veg_nonveg_tags)){
     	foreach($wpfm_veg_nonveg_tags as $wpfm_veg_nonveg_tag){
 			$imagePath = '';
-	        if($wpfm_veg_nonveg_tag->slug === 'vegeterian'){
-	            $imagePath = WPFM_PLUGIN_URL."/assets/images/wpfm-veg-organic.png";
-	        }
-	        if($wpfm_veg_nonveg_tag->slug === 'non-vegeterian'){
-	            $imagePath = WPFM_PLUGIN_URL."/assets/images/wpfm-non-veg-organic.png";
-	        }
+    		if(empty($image_src)){
+		        if($wpfm_veg_nonveg_tag->slug === 'vegeterian'){
+		            $imagePath = WPFM_PLUGIN_URL."/assets/images/wpfm-veg-organic.png";
+		        }
+		        if($wpfm_veg_nonveg_tag->slug === 'non-vegeterian'){
+		            $imagePath = WPFM_PLUGIN_URL."/assets/images/wpfm-non-veg-organic.png";
+		        }
+		        if($wpfm_veg_nonveg_tag->slug === 'vegan'){
+		            $imagePath = WPFM_PLUGIN_URL."/assets/images/wpfm-vegan-organic.png";
+		        }
+		    } else {
+		    	$imagePath = $image_src[0];
+		    }
 	        if(!empty($imagePath)){
 	        	echo '<div class="parent-organic-tag '.$wpfm_veg_nonveg_tag->slug.'"><img alt="'.$wpfm_veg_nonveg_tag->slug.'" src="'.$imagePath.'" class="wpfm-organic-tag-icon '.$wpfm_veg_nonveg_tag->slug.'"></div>';
 	        }
