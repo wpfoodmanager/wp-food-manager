@@ -307,6 +307,22 @@ class WPFM_Settings {
 								'attributes' => array(),
 							),
 
+							array(
+								'name'       => 'food_manager_user_can_add_multiple_banner',
+
+								'std'        => '0',
+
+								'label'      => __('Allow Multiple Banners', 'wp-food-manager'),
+
+								'cb_label'   => __('User can submit multiple banner.', 'wp-food-manager'),
+
+								'desc'       => __('If enabled, Multiple banner can add at frontend by user and backend side by admin.', 'wp-food-manager'),
+
+								'type'       => 'checkbox',
+
+								'attributes' => array(),
+							),
+
 							/*array(
 
 								'name'       => 'food_manager_enable_categories',
@@ -642,7 +658,7 @@ class WPFM_Settings {
 			<h1 class="wp-heading-inline">
 				<?php
 			
-				esc_attr_e('Settings', 'wp-event-manager');
+				esc_attr_e('Settings', 'wp-food-manager');
 				?>
 			</h1>
 

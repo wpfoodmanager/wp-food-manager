@@ -66,6 +66,7 @@ var WPFMAdmin= function () {
             jQuery('.wpfm-admin-food-menu-items ul.wpfm-food-menu').sortable();
 
             //file upload
+            jQuery('body').on('click', '.wp_food_manager_upload_file_button_multiple', WPFMAdmin.fileUpload.multipleFile);
             jQuery('body').on('click', '.wp_food_manager_upload_file_button', WPFMAdmin.fileUpload.addFile);
             jQuery(".wp_food_manager_add_another_file_button").on('click', WPFMAdmin.fileUpload.addAnotherFile);
             
@@ -664,8 +665,10 @@ var WPFMAdmin= function () {
                     addFile: function (event)
                     {
                         event.preventDefault();
-                        file_target_wrapper = jQuery(this).closest('.file_url');
+                        file_target_wrapper = jQuery(this).closest('.food-manager-uploaded-file');
                         file_target_input = file_target_wrapper.find('input');
+
+                        file_target_wrapper_append = jQuery(this).closest('.food-manager-uploaded-file2');
                         // If the media frame already exists, reopen it.
 
                         if (file_frame)
@@ -689,6 +692,52 @@ var WPFMAdmin= function () {
                             // We set multiple to false so only get one image from the uploader
                             attachment = file_frame.state().get('selection').first().toJSON();
                             jQuery(file_target_input).val(attachment.url);
+                            jQuery(file_target_wrapper_append).find(".food-manager-uploaded-file").remove();
+                            jQuery(file_target_wrapper_append).prepend("<span class='food-manager-uploaded-file'><input type='hidden' name='_food_banner' id='_food_banner' placeholder='' value='"+attachment.url+"'><span class='food-manager-uploaded-file-preview'><img src='"+attachment.url+"'><a class='food-manager-remove-uploaded-file' href='javascript:void(0);'>[remove]</a></span>");
+                            
+                        });
+                        // Finally, open the modal
+                        file_frame.open();
+                    },
+                    multipleFile: function (event)
+                    {
+                        event.preventDefault();
+                        file_target_wrapper = jQuery(this).parent(".file_url").find('.food-manager-uploaded-file.multiple-file');
+                        file_target_input = file_target_wrapper.find('input');
+
+                        file_target_wrapper_apeend = jQuery(this).prev();
+                        
+                        // If the media frame already exists, reopen it.
+                        if (file_frame)
+                        {
+                            file_frame.open();
+                            return;
+                        }
+
+                        // Create the media frame.
+                        file_frame = wp.media.frames.file_frame = wp.media({
+                            title: jQuery(this).data('uploader_title'),
+                            button: {
+                                text: jQuery(this).data('uploader_button_text'),
+                            },
+                            multiple: true  // Set to true to allow multiple files to be selected
+                        });
+
+                        // When an image is selected, run a callback.
+                        file_frame.on('select', function ()
+                        {
+                            // We set multiple to false so only get one image from the uploader
+                            attachment = file_frame.state().get('selection').map( 
+                                function( attachment ) {
+                                   attachment.toJSON();
+                                   return attachment;
+                                });
+                            jQuery.each(attachment, function( index, attach ) {
+                                jQuery(file_target_input).val(attach.attributes.url);
+                                jQuery(file_target_wrapper_apeend).append("<span class='food-manager-uploaded-file multiple-file'><input type='hidden' name='_food_banner[]' placeholder='' value='"+attach.attributes.url+"'><span class='food-manager-uploaded-file-preview'><img src='"+attach.attributes.url+"'><a class='food-manager-remove-uploaded-file' href='javascript:void(0);'>[remove]</a></span>");
+                            });
+                            /*jQuery(file_target_input).val(attachment.url);
+                            jQuery(file_target_input).parent().find(".food-manager-uploaded-file-preview img").attr("src", attachment.url);*/
                         });
                         // Finally, open the modal
                         file_frame.open();

@@ -1,10 +1,16 @@
 <?php
+global $post;
 $food_type = get_food_type();
 $food_price = get_post_meta(get_the_ID(), '_food_price', true);
 if (is_array($food_type) && isset($food_type[0]))
     $food_type = $food_type[0]->slug;
 
-$thumbnail  = get_food_banner();
+//$thumbnail  = get_food_thumbnail();
+$food_thumbnail = get_the_post_thumbnail_url( $post->ID, 'full' );
+
+if( isset($food_thumbnail) && empty($food_thumbnail) ){
+    $food_thumbnail = apply_filters( 'wpfm_default_food_banner', WPFM_PLUGIN_URL . '/assets/images/wpfm-placeholder.jpg' );
+}
 
 if (get_option('food_manager_food_item_show_hide') == 0 && get_stock_status() !== 'fm_outofstock' ) { ?>
 <div class="wpfm-food-box-col wpfm-col wpfm-col-12 wpfm-col-md-6 wpfm-col-lg-<?php echo apply_filters('food_manager_food_wpfm_column', '4'); ?>">
@@ -13,7 +19,7 @@ if (get_option('food_manager_food_item_show_hide') == 0 && get_stock_status() !=
         <div <?php food_manager_class(); ?>>
             <a href="<?php display_food_permalink(); ?>" class="wpfm-food-action-url food-style-color <?php echo $food_type; ?>">
                 <div class="wpfm-food-banner">
-                    <div class="wpfm-food-banner-img" style="background-image: url('<?php echo $thumbnail ?>')">
+                    <div class="wpfm-food-banner-img" style="background-image: url('<?php echo esc_attr($food_thumbnail) ?>')">
                     </div>
                 </div>
 
@@ -40,7 +46,7 @@ if (get_option('food_manager_food_item_show_hide') == 0 && get_stock_status() !=
         <div <?php food_manager_class(''); ?>>
             <a href="<?php display_food_permalink(); ?>" class="wpfm-food-action-url food-style-color <?php echo $food_type; ?>">
                 <div class="wpfm-food-banner">
-                    <div class="wpfm-food-banner-img" style="background-image: url('<?php echo $thumbnail ?>')">
+                    <div class="wpfm-food-banner-img" style="background-image: url('<?php echo esc_attr($food_thumbnail) ?>')">
                     </div>
                 </div>
                 <div class="wpfm-food-infomation">

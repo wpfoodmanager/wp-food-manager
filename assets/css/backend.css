@@ -1010,12 +1010,15 @@ div#wpfm-loading {
   display: inline-block;
   padding-right: 20px;
 }
-#general_food_data_content p.wpfm-admin-postbox-form-field._food_banner {
+/*#general_food_data_content p.wpfm-admin-postbox-form-field._food_banner {
   display: none;
-}
+}*/
 .wpfm-food-menu .menu-item-handle .item-title{word-break: break-word;}
 select#wpfm-admin-food-selection {
   margin-top: 14px;
+}
+span.food-manager-uploaded-file {
+  margin-right: 10px;
 }
 
 

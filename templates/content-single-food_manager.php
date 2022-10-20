@@ -1,9 +1,12 @@
 <?php
 global $post;
 
+wp_enqueue_script('wpfm-slick-script');
+wp_enqueue_style('wpfm-slick-style');
+do_action('set_single_listing_view_count');
+
 $food = $post;
 
-do_action('set_single_listing_view_count');
 ?>
 <div class="single_food_listing">
 
@@ -733,17 +736,18 @@ do_action('set_single_listing_view_count');
             speed: 500,
             fade: true,
             cssEase: 'linear',
+            adaptiveHeight: true,
             responsive: [{
-                    breakpoint: 992,
-                    settings: {
-                        dots: true,
-                        infinite: true,
-                        speed: 500,
-                        fade: true,
-                        cssEase: 'linear',
-                        adaptiveHeight: true
-                    }
-                }]
+                breakpoint: 992,
+                settings: {
+                    dots: true,
+                    infinite: true,
+                    speed: 500,
+                    fade: true,
+                    cssEase: 'linear',
+                    adaptiveHeight: true
+                }
+            }]
         });
 
     });

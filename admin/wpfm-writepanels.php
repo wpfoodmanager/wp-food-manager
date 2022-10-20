@@ -385,43 +385,41 @@ class WPFM_Writepanels
 			</label>
 			<span class="wpfm-input-field">
 				<?php
-				if (!empty($field['multiple'])) {
-					foreach ((array) $field['value'] as $value) {
-				?>
-						<span class="file_url">
-							<span class="food-manager-uploaded-file">
+				if (!empty($field['multiple'])) { ?>
+					<span class="file_url">
+						<?php foreach ((array) $field['value'] as $value) { ?>
+							<span class="food-manager-uploaded-file multiple-file">
 								<input type="hidden" name="<?php echo esc_attr($name); ?>[]" placeholder="<?php echo esc_attr($field['placeholder']); ?>" value="<?php echo esc_attr($value); ?>" />
 								<span class="food-manager-uploaded-file-preview">
 									<img src="<?php echo esc_attr($value); ?>">
 									<a class="food-manager-remove-uploaded-file" href="javascript:void(0);">[remove]</a>
 								</span>
 							</span>
-							<button class="button button-small wp_food_manager_upload_file_button" data-uploader_button_text="<?php esc_attr_e('Use file', 'wp-food-manager'); ?>"><?php esc_attr_e('Upload', 'wp-food-manager'); ?></button>
-						</span>
-					<?php
-					}
-				} else {
-					/*if (isset($field['value']) && is_array($field['value'])) {
-						$field['value'] = array_shift($field['value']);
-					}*/
-					?>
-					<span class="food-manager-uploaded-file">
-						<?php if(!empty($field['value'])) :?>
-							<span class="food-manager-uploaded-file">
+						<?php } ?>
+					</span>
+					<button class="button button-small wp_food_manager_upload_file_button_multiple" style="display: block;" data-uploader_button_text="<?php esc_attr_e('Use file', 'wp-food-manager'); ?>"><?php esc_attr_e('Upload', 'wp-food-manager'); ?></button>
+				<?php } else { ?>
+					<span class="food-manager-uploaded-file2">
+						<span class="food-manager-uploaded-file">
+							<?php if(!empty($field['value'])) :
+								if(is_array($field['value'])){
+									$field['value'] = get_the_post_thumbnail_url($thepostid, 'full');
+								}
+								?>
 								<input type="hidden" name="<?php echo esc_attr($name); ?>" id="<?php echo esc_attr($key); ?>" placeholder="<?php echo esc_attr($field['placeholder']); ?>" value="<?php echo esc_attr($field['value']); ?>" />
 								<span class="food-manager-uploaded-file-preview">
 									<img src="<?php echo esc_attr($field['value']); ?>">
 									<a class="food-manager-remove-uploaded-file" href="javascript:void(0);">[remove]</a>
 								</span>
-							</span>
-						<?php endif; ?>
+							<?php endif; ?>
+						</span>
 						<button class="button button-small wp_food_manager_upload_file_button" style="display: block;" data-uploader_button_text="<?php esc_attr_e('Use file', 'wp-food-manager'); ?>"><?php esc_attr_e('Upload', 'wp-food-manager'); ?></button>
 					</span>
 				<?php
 				}
 				if (!empty($field['multiple'])) {
 				?>
-					<button class="button button-small wp_food_manager_add_another_file_button" data-field_name="<?php echo esc_attr($key); ?>" data-field_placeholder="<?php echo esc_attr($field['placeholder']); ?>" data-uploader_button_text="<?php esc_attr_e('Use file', 'wp-food-manager'); ?>" data-uploader_button="<?php esc_attr_e('Upload', 'wp-food-manager'); ?>"><?php esc_attr_e('Add file', 'wp-food-manager'); ?></button>
+					<!-- <button class="button button-small wp_food_manager_add_another_file_button" data-field_name="<?php echo esc_attr($key); ?>" data-field_placeholder="<?php echo esc_attr($field['placeholder']); ?>" data-uploader_button_text="<?php esc_attr_e('Use file', 'wp-food-manager'); ?>" data-uploader_button="<?php esc_attr_e('Upload', 'wp-food-manager'); ?>"><?php esc_attr_e('Add file', 'wp-food-manager'); ?></button> -->
 				<?php
 				}
 				?>

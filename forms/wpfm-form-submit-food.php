@@ -144,7 +144,7 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
 					'placeholder' => '',
 					'priority'    => 4,
 					'ajax'        => true,
-					'multiple'    => false,
+					'multiple'    => get_option( 'food_manager_user_can_add_multiple_banner' ) == 1 ? true : false,
 					'allowed_mime_types' => array(
 						'jpg'  => 'image/jpeg',
 						'jpeg' => 'image/jpeg',
