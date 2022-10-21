@@ -1020,6 +1020,10 @@ select#wpfm-admin-food-selection {
 span.food-manager-uploaded-file {
   margin-right: 10px;
 }
+.widefat td.image.column-image .food_banner img {
+  max-width: 60px;
+  height: auto;
+}
 
 
 

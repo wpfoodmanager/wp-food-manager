@@ -1536,14 +1536,19 @@ class WPFM_Writepanels
 		switch ($column) {
 
 			case 'image':
-				$food_thumbnail = get_the_post_thumbnail( $post_id, 'thumbnail', array( 'class' => 'alignleft' ) );
+				echo wp_kses_post('<div class="food_banner">');
+
+				display_food_banner();
+
+				echo wp_kses_post('</div>');
+				/*$food_thumbnail = get_the_post_thumbnail( $post_id, 'thumbnail', array( 'class' => 'alignleft' ) );
 				if(empty($food_thumbnail) || $food_thumbnail == ''){
 					$food_thumbnail_url = apply_filters( 'wpfm_default_food_banner', WPFM_PLUGIN_URL . '/assets/images/wpfm-placeholder.jpg' );
 					$food_thumbnail = '<img src='.esc_url($food_thumbnail_url).' height="60px" width="60px">';
 				} else {
 					$food_thumbnail = get_the_post_thumbnail( $post_id, array( 60, 60), array( 'class' => 'alignleft' ) );
 				}
-				echo $food_thumbnail;
+				echo $food_thumbnail;*/
 				display_food_veg_nonveg_icon_tag();
 
 				break;

@@ -1365,6 +1365,7 @@ function wpfm_get_allowed_mime_types( $field = '' ){
 function food_manager_get_page_id( $page ) 
 {	
 	$page_id = get_option( 'food_manager_' . $page . '_page_id', false );
+	
 	if ( $page_id ) {
 		return apply_filters( 'wpml_object_id', absint( function_exists( 'pll_get_post' ) ? pll_get_post( $page_id ) : $page_id ), 'page', TRUE );
 	} else {
