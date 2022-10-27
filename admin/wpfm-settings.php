@@ -688,14 +688,14 @@ class WPFM_Settings {
 
 						flush_rewrite_rules();
 
-						echo '<div class="updated fade food-manager-updated"><p>' . __( 'Settings successfully saved', 'wp-food-manager' ) . '</p></div>';
+						echo wp_kses_post('<div class="updated fade food-manager-updated"><p>' . __( 'Settings successfully saved', 'wp-food-manager' ) . '</p></div>');
 					}
 					
 					foreach ( $this->settings as $key => $section ) {
 
-						echo '<div id="settings-' . sanitize_title( $key ) . '" class="settings_panel">';
+						echo wp_kses_post('<div id="settings-' . sanitize_title( $key ) . '" class="settings_panel">');
 
-						echo '<table class="form-table">';
+						echo wp_kses_post('<table class="form-table">');
 
 						foreach ( $section[1] as $option ) {
 
@@ -715,7 +715,7 @@ class WPFM_Settings {
 
 									$attributes[] = esc_attr( $attribute_name ) . '="' . esc_attr( $attribute_value ) . '"';
 
-							echo '<tr valign="top" class="' . $class . '"><th scope="row"><label for="setting-' . $option['name'] . '">' . $option['label'] . '</a></th><td>';
+							echo wp_kses_post('<tr valign="top" class="' . $class . '"><th scope="row"><label for="setting-' . $option['name'] . '">' . $option['label'] . '</a></th><td>');
 
 							switch ( $option['type'] ) {
 
@@ -725,7 +725,7 @@ class WPFM_Settings {
 
 									if ( $option['desc'] )
 
-										echo ' <p class="description">' . $option['desc'] . '</p>';
+										echo wp_kses_post(' <p class="description">' . $option['desc'] . '</p>');
 
 								break;
 
@@ -735,7 +735,7 @@ class WPFM_Settings {
 
 									if ( $option['desc'] )
 
-										echo ' <p class="description">' . $option['desc'] . '</p>';
+										echo wp_kses_post(' <p class="description">' . $option['desc'] . '</p>');
 
 								break;
 
@@ -745,13 +745,13 @@ class WPFM_Settings {
 
 										foreach( $option['options'] as $key => $name )
 
-											echo '<option value="' . esc_attr( $key ) . '" ' . selected( $value, $key, false ) . '>' . esc_html( $name ) . '</option>';
+											echo printf('<option value="' . esc_attr( $key ) . '" ' . selected( $value, $key, false ) . '>' . esc_html( $name ) . '</option>');
 
 									?></select><?php
 
 									if ( $option['desc'] ) {
 
-										echo ' <p class="description">' . $option['desc'] . '</p>';
+										echo wp_kses_post(' <p class="description">' . $option['desc'] . '</p>');
 
 									}
 
@@ -763,7 +763,7 @@ class WPFM_Settings {
 										</legend><?php
 
 									if ( $option['desc'] ) {
-										echo '<p class="description">' . $option['desc'] . '</p>';
+										echo wp_kses_post('<p class="description">' . $option['desc'] . '</p>');
 									}
 
 									foreach( $option['options'] as $key => $name )
@@ -797,7 +797,7 @@ class WPFM_Settings {
 
 									if ( $option['desc'] ) {
 
-										echo ' <p class="description">' . $option['desc'] . '</p>';
+										echo wp_kses_post(' <p class="description">' . $option['desc'] . '</p>');
 
 									}
 									
@@ -809,7 +809,7 @@ class WPFM_Settings {
 
 									if ( $option['desc'] ) {
 
-										echo ' <p class="description">' . $option['desc'] . '</p>';
+										echo wp_kses_post(' <p class="description">' . $option['desc'] . '</p>');
 									}
 
 								break;
@@ -850,12 +850,11 @@ class WPFM_Settings {
 									do_action( 'wp_food_manager_admin_field_' . $option['type'], $option, $attributes, $value, $placeholder );
 
 								break;
-							}
-							echo '</td></tr>';
-						}
-						echo '</table></div>';
-					}
-					?>
+							}?>
+							</td></tr>
+						<?php } ?>
+						</table></div>
+					<?php } ?>
 					</div>   <!-- .white-background- -->
 					<p class="submit">
 						<input type="submit" class="button-primary" id="save-changes" value="<?php _e( 'Save Changes', 'wp-food-manager' ); ?>" />

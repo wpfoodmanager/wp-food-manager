@@ -115,7 +115,7 @@ class WPFM_Post_Types {
 			'feeds'      => true,
 
 			'pages'      => false
-		);	
+		);
 
 		register_post_type( "food_manager",
 
@@ -204,11 +204,20 @@ class WPFM_Post_Types {
 		 * Post types
 		 */
 
-		$singular  = __( 'Menu', 'wp-food-manager' );
+		$singular_menu  = __( 'Menu', 'wp-food-manager' );
 
-		$plural    = __( 'Menus', 'wp-food-manager' );
+		$plural_menu    = __( 'Menus', 'wp-food-manager' );
 
-		
+		$rewrite_menu     = array(
+		    
+			'slug'       => 'food-menu',
+
+			'with_front' => false,
+
+			'feeds'      => true,
+
+			'pages'      => false
+		);
 
 		register_post_type( "food_manager_menu",
 
@@ -216,35 +225,35 @@ class WPFM_Post_Types {
 
 				'labels' => array(
 
-					'name' 					=> $plural,
+					'name' 					=> $plural_menu,
 
-					'singular_name' 		=> $singular,
+					'singular_name' 		=> $singular_menu,
 
 					'menu_name'             => __( 'Food Menu', 'wp-food-manager' ),
 
-					'all_items'             => sprintf( __( '%s', 'wp-food-manager' ), $plural ),
+					'all_items'             => sprintf( __( '%s', 'wp-food-manager' ), $plural_menu ),
 
 					'add_new' 				=> __( 'Add New', 'wp-food-manager' ),
 
-					'add_new_item' 			=> sprintf( __( 'Add %s', 'wp-food-manager' ), $singular ),
+					'add_new_item' 			=> sprintf( __( 'Add %s', 'wp-food-manager' ), $singular_menu ),
 
 					'edit' 					=> __( 'Edit', 'wp-food-manager' ),
 
-					'edit_item' 			=> sprintf( __( 'Edit %s', 'wp-food-manager' ), $singular ),
+					'edit_item' 			=> sprintf( __( 'Edit %s', 'wp-food-manager' ), $singular_menu ),
 
-					'new_item' 				=> sprintf( __( 'New %s', 'wp-food-manager' ), $singular ),
+					'new_item' 				=> sprintf( __( 'New %s', 'wp-food-manager' ), $singular_menu ),
 
-					'view' 					=> sprintf( __( 'View %s', 'wp-food-manager' ), $singular ),
+					'view' 					=> sprintf( __( 'View %s', 'wp-food-manager' ), $singular_menu ),
 
-					'view_item' 			=> sprintf( __( 'View %s', 'wp-food-manager' ), $singular ),
+					'view_item' 			=> sprintf( __( 'View %s', 'wp-food-manager' ), $singular_menu ),
 
-					'search_items' 			=> sprintf( __( 'Search %s', 'wp-food-manager' ), $plural ),
+					'search_items' 			=> sprintf( __( 'Search %s', 'wp-food-manager' ), $plural_menu ),
 
-					'not_found' 			=> sprintf( __( 'No %s found', 'wp-food-manager' ), $plural ),
+					'not_found' 			=> sprintf( __( 'No %s found', 'wp-food-manager' ), $plural_menu ),
 
-					'not_found_in_trash' 	=> sprintf( __( 'No %s found in trash', 'wp-food-manager' ), $plural ),
+					'not_found_in_trash' 	=> sprintf( __( 'No %s found in trash', 'wp-food-manager' ), $plural_menu ),
 
-					'parent' 				=> sprintf( __( 'Parent %s', 'wp-food-manager' ), $singular ),
+					'parent' 				=> sprintf( __( 'Parent %s', 'wp-food-manager' ), $singular_menu ),
 					
 					'featured_image'        => __( 'Food Category Image', 'wp-food-manager' ),
 					
@@ -255,7 +264,7 @@ class WPFM_Post_Types {
 					'use_featured_image'    => __( 'Use as food thumbnail', 'wp-food-manager' ),
 				),
 
-				'description' => sprintf( __( 'This is where you can create and manage %s.', 'wp-food-manager' ), $plural ),
+				'description' => sprintf( __( 'This is where you can create and manage %s.', 'wp-food-manager' ), $plural_menu ),
 
 				'public' 				=> true,
 
@@ -271,7 +280,7 @@ class WPFM_Post_Types {
 
 				'hierarchical' 			=> false,
 
-				'rewrite' 				=> $rewrite,
+				'rewrite' 				=> $rewrite_menu,
 
 				'query_var' 			=> true,
 					
@@ -279,7 +288,7 @@ class WPFM_Post_Types {
 
 				'supports' 				=> array( 'title', 'thumbnail', 'publicize'), //'editor', 'custom-fields'
 
-				'has_archive' 			=> $has_archive,
+				'has_archive' 			=> true,
 
 				'show_in_menu' => 'edit.php?post_type=food_manager'
 
@@ -400,7 +409,7 @@ class WPFM_Post_Types {
 		$plural     = __( 'Food Manager', 'wp-food-manager' );
 
 		$count_foods = wp_count_posts( 'food_manager', 'readable' );
-
+		
 		if ( ! empty( $menu ) && is_array( $menu ) ) {
 
 			foreach ( $menu as $key => $menu_item ) {
