@@ -31,7 +31,6 @@ class WPFM_Post_Types {
 
 	public function __construct() {
 
-
 		add_action( 'init', array( $this, 'register_post_types' ), 0 );
 
 		add_filter( 'admin_head', array( $this, 'admin_head' ) );
@@ -42,8 +41,15 @@ class WPFM_Post_Types {
 
 		add_filter( 'archive_template', array( $this, 'food_archive' ), 20 );
 
+		add_action( 'wp_footer', array( $this, 'output_structured_data' ) );
+
+		add_action( 'wp_head', array( $this, 'noindex_expired_cancelled_food_listings' ) );
+
 		add_filter('use_block_editor_for_post_type', array($this,'wpfm_disable_gutenberg'), 10, 2);
 
+		add_filter( 'wp_insert_post_data', array( $this, 'fix_post_name' ), 10, 2 );
+		add_action( 'wp_insert_post', array( $this, 'maybe_add_default_meta_data' ), 10, 2 );
+		
 		//view count action
 		add_action( 'set_single_listing_view_count', array( $this, 'set_single_listing_view_count' ));
 
@@ -56,6 +62,9 @@ class WPFM_Post_Types {
 
 			add_action('restrict_manage_posts', array($this, 'foods_by_food_type'));
 		}
+
+		// Admin notices.
+        //add_filter( 'bulk_post_updated_messages', array( $this, 'bulk_post_updated_messages' ), 10, 2 );
 	}
 
 	/**
@@ -92,7 +101,7 @@ class WPFM_Post_Types {
 		 * @param bool $enable_food_archive_page
 		 */
 		if ( apply_filters( 'food_manager_enable_food_archive_page', current_theme_supports( 'food-manager-templates' ) ) ) {
-			$has_archive = _x( 'Foods', 'Post type archive slug - resave permalinks after changing this', 'wp-food-manager' );
+			$has_archive = _x( 'foods', 'Post type archive slug - resave permalinks after changing this', 'wp-food-manager' );
 		} else {
 			$has_archive = false;
 		}
@@ -120,29 +129,29 @@ class WPFM_Post_Types {
 
 					'menu_name'             => __( 'Food Manager', 'wp-food-manager' ),
 
-					'all_items'             => sprintf( __( 'All %s', 'wp-food-manager' ), $plural ),
+					'all_items'             => sprintf( wp_kses( 'All %s', 'wp-food-manager' ), $plural ),
 
 					'add_new' 				=> __( 'Add Food', 'wp-food-manager' ),
 
-					'add_new_item' 			=> sprintf( __( 'Add %s', 'wp-food-manager' ), $singular ),
+					'add_new_item' 			=> sprintf( wp_kses( 'Add %s', 'wp-food-manager' ), $singular ),
 
 					'edit' 					=> __( 'Edit', 'wp-food-manager' ),
 
-					'edit_item' 			=> sprintf( __( 'Edit %s', 'wp-food-manager' ), $singular ),
+					'edit_item' 			=> sprintf( wp_kses( 'Edit %s', 'wp-food-manager' ), $singular ),
 
-					'new_item' 				=> sprintf( __( 'New %s', 'wp-food-manager' ), $singular ),
+					'new_item' 				=> sprintf( wp_kses( 'New %s', 'wp-food-manager' ), $singular ),
 
-					'view' 					=> sprintf( __( 'View %s', 'wp-food-manager' ), $singular ),
+					'view' 					=> sprintf( wp_kses( 'View %s', 'wp-food-manager' ), $singular ),
 
-					'view_item' 			=> sprintf( __( 'View %s', 'wp-food-manager' ), $singular ),
+					'view_item' 			=> sprintf( wp_kses( 'View %s', 'wp-food-manager' ), $singular ),
 
-					'search_items' 			=> sprintf( __( 'Search %s', 'wp-food-manager' ), $plural ),
+					'search_items' 			=> sprintf( wp_kses( 'Search %s', 'wp-food-manager' ), $plural ),
 
-					'not_found' 			=> sprintf( __( 'No %s found', 'wp-food-manager' ), $plural ),
+					'not_found' 			=> sprintf( wp_kses( 'No %s found', 'wp-food-manager' ), $plural ),
 
-					'not_found_in_trash' 	=> sprintf( __( 'No %s found in trash', 'wp-food-manager' ), $plural ),
+					'not_found_in_trash' 	=> sprintf( wp_kses( 'No %s found in trash', 'wp-food-manager' ), $plural ),
 
-					'parent' 				=> sprintf( __( 'Parent %s', 'wp-food-manager' ), $singular ),
+					'parent' 				=> sprintf( wp_kses( 'Parent %s', 'wp-food-manager' ), $singular ),
 					
 					'featured_image'        => __( 'Food Thumbnail', 'wp-food-manager' ),
 					
@@ -153,13 +162,13 @@ class WPFM_Post_Types {
 					'use_featured_image'    => __( 'Use as food thumbnail', 'wp-food-manager' ),
 				),
 
-				'description' => sprintf( __( 'This is where you can create and manage %s.', 'wp-food-manager' ), $plural ),
+				'description' => sprintf( wp_kses( 'This is where you can create and manage %s.', 'wp-food-manager' ), $plural ),
 
 				'public' 				=> true,
 
 				'show_ui' 				=> true,
 
-				//'capability_type' 		=> 'food_manager',
+				'capability_type' 		=> 'post',
 
 				'map_meta_cap'          => true,
 
@@ -175,13 +184,11 @@ class WPFM_Post_Types {
 					
 				'show_in_rest' 			=> true,
 
-				'supports' 				=> array( 'title', 'editor', 'custom-fields', 'publicize' , 'thumbnail', 'page-attributes'),
+				'supports' 				=> array( 'title', 'editor', 'custom-fields', 'publicize' , 'thumbnail'),
 
 				'has_archive' 			=> $has_archive,
 
-				'show_in_nav_menus' 	=> false,
-
-				//'menu_icon' => 'dashicons-carrot' // It's use to display food manager icon at admin site.
+				'show_in_nav_menus' 	=> true,				
 
 				'menu_icon' => WPFM_PLUGIN_URL . '/assets/images/wpfm-icon.png' // It's use to display food manager icon at admin site. 
 			) )
@@ -1209,7 +1216,7 @@ class WPFM_Post_Types {
 	 * @param mixed  $meta_value
 	 */
 	public function update_post_meta( $meta_id, $object_id, $meta_key, $meta_value ) {
-		if ( 'food_listing' === get_post_type( $object_id ) ) {
+		if ( 'food_manager' === get_post_type( $object_id ) ) {
 			switch ( $meta_key ) {
 				case '_food_location':
 					$this->maybe_update_geolocation_data( $meta_id, $object_id, $meta_key, $meta_value );
@@ -1229,7 +1236,7 @@ class WPFM_Post_Types {
 
 	public function maybe_update_geolocation_data( $meta_id, $object_id, $meta_key, $_meta_value ) {
 
-		if ( '_food_location' !== $meta_key || 'food_listing' !== get_post_type( $object_id ) ) {
+		if ( '_food_location' !== $meta_key || 'food_manager' !== get_post_type( $object_id ) ) {
 		    
 			return;
 		}
@@ -1278,7 +1285,7 @@ class WPFM_Post_Types {
 
 	public function maybe_add_default_meta_data( $post_id, $post = '' ) {
 
-		if ( empty( $post ) || 'food_listing' === $post->post_type ) {
+		if ( empty( $post ) || 'food_manager' === $post->post_type ) {
 
 			add_post_meta( $post_id, '_cancelled', 0, true );
 
@@ -1310,7 +1317,7 @@ class WPFM_Post_Types {
 	 * @param  int $post_id
 	 */
 	public function before_delete_food( $post_id ) {
-    	if ( 'food_listing' === get_post_type( $post_id ) ) {
+    	if ( 'food_manager' === get_post_type( $post_id ) ) {
 			$attachments = get_children( array(
 		        'post_parent' => $post_id,
 		        'post_type'   => 'attachment'
@@ -1391,6 +1398,32 @@ class WPFM_Post_Types {
 			restore_current_locale();
 		}
 		return $permalinks;
+	}
+
+	/**
+	 * Specify custom bulk actions messages for different post types.
+	 *
+	 * @param  array $bulk_messages Array of messages.
+	 * @param  array $bulk_counts Array of how many objects were updated.
+	 * @since 3.18
+	 * @return array
+	 */
+	public function bulk_post_updated_messages($bulk_messages, $bulk_counts) {
+
+		$bulk_messages['food_manager'] = array(
+			/* translators: %s: product count */
+			'updated'   => _n( '%s event updated.', '%s foods updated.', $bulk_counts['updated'], 'wp-food-manager' ),
+			/* translators: %s: product count */
+			'locked'    => _n( '%s event not updated, somebody is editing it.', '%s foods not updated, somebody is editing them.', $bulk_counts['locked'], 'wp-food-manager' ),
+			/* translators: %s: product count */
+			'deleted'   => _n( '%s event permanently deleted.', '%s foods permanently deleted.', $bulk_counts['deleted'], 'wp-food-manager' ),
+			/* translators: %s: product count */
+			'trashed'   => _n( '%s event moved to the Trash.', '%s foods moved to the Trash.', $bulk_counts['trashed'], 'wp-food-manager' ),
+			/* translators: %s: product count */
+			'untrashed' => _n( '%s event restored from the Trash.', '%s foods restored from the Trash.', $bulk_counts['untrashed'], 'wp-food-manager' ),
+		);
+
+		return $bulk_messages;
 	}
 
 /**

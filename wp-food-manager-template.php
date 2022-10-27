@@ -178,12 +178,12 @@ function locate_food_manager_template( $template_name, $template_path = 'wp-food
 
 	$template = locate_template(
 		
-	array(
-		
-	trailingslashit( $template_path ) . $template_name,
-		
-	$template_name
-	)
+		array(
+			
+			trailingslashit( $template_path ) . $template_name,
+			
+			$template_name
+		)
 	);
 
 	// Get default template
@@ -232,14 +232,6 @@ function get_food_manager_template_part( $slug, $name = '', $template_path = 'wp
 		load_template( $template, false );
 	}
 }
-
-
-
-
-
-
-
-
 
 
 /**
@@ -351,7 +343,7 @@ function get_food_thumbnail( $post = null, $size = 'full' ) {
 
 	$post = get_post( $post );
 
-	if ( $post->post_type !== 'food_listing' )
+	if ( $post->post_type !== 'food_manager' )
 		return;
 
 	$food_thumbnail = get_the_post_thumbnail_url( $post->ID, $size );
@@ -1021,4 +1013,233 @@ function get_stock_status( $post = null ) {
 	$stock_status = get_post_meta(get_the_ID(), '_food_stock_status', true);
 
 	return apply_filters( 'display_stock_status', $stock_status, $post );
+}
+
+
+/**
+ * Displays the food description for the listing.
+ *
+ * @since 1.8
+ * @param int|WP_Post $post
+ * @return string
+ */
+function display_food_description($post = null)
+{
+	if ($food_description = get_food_description($post)) {
+		echo esc_attr($food_description);
+	}
+}
+
+/**
+ * Gets the food description for the listing.
+ *
+ * @since 1.8
+ * @param int|WP_Post $post (default: null)
+ * @return string|bool|null
+ */
+function get_food_description($post = null)
+{
+	$post = get_post($post);
+	if (!$post || 'food_manager' !== $post->post_type) {
+		return;
+	}
+
+	$description = apply_filters('display_food_description', get_the_content($post));
+
+	/**
+	 * Filter for the food description.
+	 *
+	 * @since 1.8
+	 * @param string      $title Title to be filtered.
+	 * @param int|WP_Post $post
+	 */
+	return apply_filters('food_manager_get_food_description', $description, $post);
+}
+
+/**
+ * Displays the food title for the listing.
+ *
+ * @since 1.8
+ * @param int|WP_Post $post
+ * @return string
+ */
+function display_food_title($post = null)
+{
+	if ($food_title = get_food_title($post)) {
+		echo esc_attr($food_title);
+	}
+}
+
+/**
+ * Gets the food title for the listing.
+ *
+ * @since 1.8
+ * @param int|WP_Post $post (default: null)
+ * @return string|bool|null
+ */
+function get_food_title($post = null)
+{
+	$post = get_post($post);
+	if (!$post || 'food_manager' !== $post->post_type) {
+		return;
+	}
+
+	$title = esc_html(get_the_title($post));
+
+	/**
+	 * Filter for the food title.
+	 *
+	 * @since 1.8
+	 * @param string      $title Title to be filtered.
+	 * @param int|WP_Post $post
+	 */
+	return apply_filters('display_food_title', $title, $post);
+}
+
+
+/**
+ * Gets the food listing location data.
+ *
+ * @see http://schema.org/PostalAddress
+ *
+ * @param WP_Post $post
+ * @return array|bool
+ */
+function food_manager_get_food_listing_location_structured_data($post)
+{
+	$post = get_post($post);
+	if ($post && $post->post_type !== 'food_manager') {
+		return false;
+	}
+
+
+	$mapping = array();
+	$mapping['streetAddress'] = array('street_number', 'street');
+	$mapping['addressLocality'] = 'city';
+	$mapping['addressRegion'] = 'state_short';
+	$mapping['postalCode'] = 'postcode';
+	$mapping['addressCountry'] = 'country_short';
+	$address = array();
+	$address['@type'] = 'PostalAddress';
+	foreach ($mapping as $schema_key => $geolocation_key) {
+		if (is_array($geolocation_key)) {
+			$values = array();
+			foreach ($geolocation_key as $sub_geo_key) {
+				$geo_value = get_post_meta($post->ID, 'geolocation_' . $sub_geo_key, true);
+				if (!empty($geo_value)) {
+					$values[] = $geo_value;
+				}
+			}
+			$value = implode(' ', $values);
+		} else {
+			$value = get_post_meta($post->ID, 'geolocation_' . $geolocation_key, true);
+		}
+		if (!empty($value)) {
+			$address[$schema_key] = $value;
+		}
+	}
+	// No address parts were found
+	if (1 === count($address)) {
+		$address = false;
+	}
+	/**
+	 * Gets the food listing location structured data.
+	 *
+	 * @since 1.8
+	 *
+	 * @param array|bool $address Array of address data.
+	 * @param WP_Post    $post
+	 */
+	return apply_filters('food_manager_get_food_listing_location_structured_data', $address, $post);
+}
+
+/**
+ * Returns if we allow indexing of a food listing.
+ *
+ * @since 1.8
+ *
+ * @param WP_Post|int|null $post
+ * @return bool
+ */
+function food_manager_allow_indexing_food_listing($post = null)
+{
+	$post = get_post($post);
+	if ($post && $post->post_type !== 'food_manager') {
+		return true;
+	}
+	// Only index food listings that are not expired and published.
+	$index_food_listing = !is_food_cancelled($post) && 'publish' === $post->post_status;
+	/**
+	 * Filter if we should allow indexing of food listing.
+	 *
+	 * @since 1.8
+	 * @param bool $index_food_listing True if we should allow indexing of food listing.
+	 */
+	return apply_filters('food_manager_allow_indexing_food_listing', $index_food_listing);
+}
+
+/**
+ * Returns if we output food listing structured data for a post.
+ *
+ * @since 1.8
+ *
+ * @param WP_Post|int|null $post
+ * @return bool
+ */
+function food_manager_output_food_listing_structured_data($post = null)
+{
+	$post = get_post($post);
+	if ($post && $post->post_type !== 'food_manager') {
+		return false;
+	}
+	// Only show structured data for un-filled and published food listings.
+	$output_structured_data = !is_food_cancelled($post) && 'publish' === $post->post_status;
+	/**
+	 * Filter if we should output structured data.
+	 *
+	 * @since 1.8
+	 * @param bool $output_structured_data True if we should show structured data for post.
+	 */
+	return apply_filters('food_manager_output_food_listing_structured_data', $output_structured_data);
+}
+
+
+/**
+ * Gets the structured data for the food listing.
+ *
+ * @since 1.8
+ * @see https://developers.google.com/search/docs/data-types/foods
+ *
+ * @param WP_Post|int|null $post
+ * @return bool|array False if functionality is disabled; otherwise array of structured data.
+ */
+function food_manager_get_food_listing_structured_data($post = null)
+{
+	$post = get_post($post);
+	if ($post && $post->post_type !== 'food_manager') {
+		return false;
+	}
+	$data = array();
+	$data['@context'] = 'http://schema.org/';
+	$data['@type'] = 'food';
+
+	$food_expires = get_post_meta($post->ID, '_food_expires', true);
+	if (!empty($food_expires)) {
+		$data['validThrough'] = date('c', strtotime($food_expires));
+	}
+
+	$data['description'] = get_food_description($post);
+
+	$data['name'] = strip_tags(get_food_title($post));
+	$data['image'] = get_food_banner($post);
+	$data['foodStatus'] = 'foodScheduled';
+	/**
+	 * Filter the structured data for a food listing.
+	 *
+	 * @since 1.8
+	 *
+	 * @param bool|array $structured_data False if functionality is disabled; otherwise array of structured data.
+	 * @param WP_Post    $post
+	 */
+	return apply_filters('food_manager_get_food_listing_structured_data', $data, $post);
 }

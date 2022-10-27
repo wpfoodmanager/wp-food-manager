@@ -95,7 +95,7 @@ class WP_Food_Manager_Data_Cleaner {
 	 * @var $caps
 	 */
 	private static $caps = array(
-		'manage_food_manager',
+		'manage_food_managers',
 		'edit_food_manager',
 		'read_food_manager',
 		'delete_food_manager',
