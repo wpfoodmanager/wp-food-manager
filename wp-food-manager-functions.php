@@ -3070,3 +3070,147 @@ function wpfm_display_custom_taxonomy_image_column_value_for_food_type( $columns
     }
     return $columns;
 }
+
+
+//Add image field in 'food_manager_category' taxonomy page
+add_action( 'food_manager_category_add_form_fields', 'wpfm_add_custom_taxonomy_image_for_food_category', 10, 2 );
+function wpfm_add_custom_taxonomy_image_for_food_category ( $taxonomy ) {
+?>
+    <div class="form-field term-group">
+
+        <label for="food_cat_image_id" class="wpfm-food-category-tax-image"><?php _e('Image/Icon', 'taxt-domain'); ?></label>
+        <input type="hidden" id="food_cat_image_id" name="food_cat_image_id" class="custom_media_url" value="">
+
+        <div id="image_wrapper"></div>
+
+        <p>
+            <input type="button" class="button button-secondary taxonomy_media_button" id="taxonomy_media_button" name="taxonomy_media_button" value="<?php _e( 'Add Image', 'taxt-domain' ); ?>">
+            <input type="button" class="button button-secondary taxonomy_media_remove" id="taxonomy_media_remove" name="taxonomy_media_remove" value="<?php _e( 'Remove Image', 'taxt-domain' ); ?>">
+        </p>
+
+    </div>
+<?php
+}
+
+//Save the 'food_manager_category' taxonomy image field
+add_action( 'created_food_manager_category', 'wpfm_save_custom_taxonomy_image_for_food_category', 10, 2 );
+function wpfm_save_custom_taxonomy_image_for_food_category ( $term_id, $tt_id ) {
+    if( isset( $_POST['food_cat_image_id'] ) && '' !== $_POST['food_cat_image_id'] ){
+     $image = $_POST['food_cat_image_id'];
+     add_term_meta( $term_id, 'food_cat_image_id', $image, true );
+    }
+}
+
+//Add the image field in edit form page
+add_action( 'food_manager_category_edit_form_fields', 'wpfm_update_custom_taxonomy_image_for_food_category', 10, 2 );
+function wpfm_update_custom_taxonomy_image_for_food_category ( $term, $taxonomy ) { ?>
+    <tr class="form-field term-group-wrap">
+        <th scope="row">
+            <label for="food_cat_image_id"><?php _e( 'Image', 'taxt-domain' ); ?></label>
+        </th>
+        <td>
+
+            <?php $food_cat_image_id = get_term_meta ( $term->term_id, 'food_cat_image_id', true ); ?>
+            <input type="hidden" id="food_cat_image_id" name="food_cat_image_id" value="<?php echo $food_cat_image_id; ?>">
+
+            <div id="image_wrapper">
+            <?php if ( $food_cat_image_id ) { ?>
+               <?php echo wp_get_attachment_image ( $food_cat_image_id, 'thumbnail' ); ?>
+            <?php } ?>
+
+            </div>
+
+            <p>
+                <input type="button" class="button button-secondary taxonomy_media_button" id="taxonomy_media_button" name="taxonomy_media_button" value="<?php _e( 'Add Image', 'taxt-domain' ); ?>">
+                <input type="button" class="button button-secondary taxonomy_media_remove" id="taxonomy_media_remove" name="taxonomy_media_remove" value="<?php _e( 'Remove Image', 'taxt-domain' ); ?>">
+            </p>
+
+        </div></td>
+    </tr>
+<?php
+}
+
+//Update the 'food_manager_category' taxonomy image field
+add_action( 'edited_food_manager_category', 'wpfm_updated_custom_taxonomy_image_for_food_category', 10, 2 );
+function wpfm_updated_custom_taxonomy_image_for_food_category ( $term_id, $tt_id ) {
+    if( isset( $_POST['food_cat_image_id'] ) && '' !== $_POST['food_cat_image_id'] ){
+        $image = $_POST['food_cat_image_id'];
+        update_term_meta ( $term_id, 'food_cat_image_id', $image );
+    } else {
+        update_term_meta ( $term_id, 'food_cat_image_id', '' );
+    }
+}
+
+//Enqueue the wp_media library
+add_action( 'admin_enqueue_scripts', 'wpfm_custom_taxonomy_load_media_for_food_category' );
+function wpfm_custom_taxonomy_load_media_for_food_category() {
+    if( ! isset( $_GET['taxonomy'] ) || $_GET['taxonomy'] != 'food_manager_category' ) {
+       return;
+    }
+    wp_enqueue_media();
+}
+
+//Custom script
+add_action( 'admin_footer', 'wpfm_add_custom_taxonomy_script_for_food_category' );
+function wpfm_add_custom_taxonomy_script_for_food_category() {
+    if( ! isset( $_GET['taxonomy'] ) || $_GET['taxonomy'] != 'food_manager_category' ) {
+       return;
+    }
+    ?> <script>jQuery(document).ready( function($) {
+            function taxonomy_media_upload(button_class) {
+                var custom_media = true,
+                original_attachment = wp.media.editor.send.attachment;
+                $('body').on('click', button_class, function(e) {
+                    var button_id = '#'+$(this).attr('id');
+                    var send_attachment = wp.media.editor.send.attachment;
+                    var button = $(button_id);
+                    custom_media = true;
+                    wp.media.editor.send.attachment = function(props, attachment){
+                        if ( custom_media ) {
+                            $('#food_cat_image_id').val(attachment.id);
+                            $('#image_wrapper').html('<img class="custom_media_image" src="" style="margin:0;padding:0;max-height:100px;float:none;" />');
+                            $('#image_wrapper .custom_media_image').attr('src',attachment.url).css('display','block');
+                        } else {
+                            return original_attachment.apply( button_id, [props, attachment] );
+                        }
+                    }
+                    wp.media.editor.open(button);
+                    return false;
+                });
+            }
+            taxonomy_media_upload('.taxonomy_media_button.button'); 
+            $('body').on('click','.taxonomy_media_remove',function(){
+                $('#food_cat_image_id').val('');
+                $('#image_wrapper').html('<img class="custom_media_image" src="" style="margin:0;padding:0;max-height:100px;float:none;display:none;" />');
+            });
+
+            $(document).ajaxComplete(function(event, xhr, settings) {
+                var queryStringArr = settings.data.split('&');
+                if( $.inArray('action=add-tag', queryStringArr) !== -1 ){
+                    var xml = xhr.responseXML;
+                    $response = $(xml).find('term_id').text();
+                    if($response!=""){
+                        $('#image_wrapper').html('');
+                    }
+                }
+            });
+        });</script> <?php
+}
+
+//Add new column heading
+add_filter( 'manage_edit-food_manager_category_columns', 'wpfm_display_custom_taxonomy_image_column_heading_for_food_category' ); 
+function wpfm_display_custom_taxonomy_image_column_heading_for_food_category( $columns ) {
+    $columns['category_image'] = __( 'Image', 'taxt-domain' );
+    return $columns;
+}
+
+//Display new columns values
+add_action( 'manage_food_manager_category_custom_column', 'wpfm_display_custom_taxonomy_image_column_value_for_food_category' , 10, 3); 
+function wpfm_display_custom_taxonomy_image_column_value_for_food_category( $columns, $column, $id ) {
+    if ( 'category_image' == $column ) {
+        $food_cat_image_id = esc_html( get_term_meta($id, 'food_cat_image_id', true) );
+        
+        $columns = wp_get_attachment_image ( $food_cat_image_id, array('50', '50') );
+    }
+    return $columns;
+}
