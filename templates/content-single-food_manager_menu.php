@@ -35,8 +35,11 @@ if(isset($featured_img_url) && empty($featured_img_url)){
                             <h3>
                                 <?php the_title();
                                 $wpfm_radio_icons = get_post_meta(get_the_ID(), 'wpfm_radio_icons', true);
+                                $without_fa_str = str_replace("fa-", "", $wpfm_radio_icons);
+                                $data_food_menu = ucwords(str_replace("-", " ", $without_fa_str));
+                                
                                 if($wpfm_radio_icons){
-                                    echo "<span class='wpfm-front-radio-icon'><i class='fa ".$wpfm_radio_icons."'></i></span>";
+                                    echo "<span class='wpfm-front-radio-icon' data-food-menu='".$data_food_menu."'><i class='fa ".$wpfm_radio_icons."'></i></span>";
                                 }
                                 ?>
                             </h3>
