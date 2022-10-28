@@ -535,7 +535,13 @@ $food = $post;
                                                         <?php elseif ($field['type'] == 'url') : ?>
                                                             <div class="wpfm-col-12 wpfm-additional-info-block-textarea">
                                                                 <div class="wpfm-additional-info-block-details-content-items">
-                                                                    <p class="wpfm-additional-info-block-textarea-text"><a target="_blank" href="<?php if (isset($field_value)) echo esc_url($field_value); ?>"><?php printf(__('%s', 'wp-food-manager'),  $field['label']); ?></a></p>
+                                                                    <p class="wpfm-additional-info-block-textarea-text">
+                                                                        <?php if(isset($field_value) && !empty($field_value)){ ?>
+                                                                            <a target="_blank" href="<?php echo esc_url($field_value); ?>"><?php printf(__('%s', 'wp-food-manager'),  $field['label']); ?></a>
+                                                                        <?php } else {
+                                                                            printf(__('%s', 'wp-food-manager'),  $field['label']);
+                                                                        } ?>
+                                                                    </p>
                                                                 </div>
                                                             </div>
                                                         <?php elseif ($field['type'] == 'radio' && array_key_exists('options',$field)) : ?>
