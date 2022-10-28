@@ -363,8 +363,12 @@ var WPFMAdmin= function () {
                     },
                     success: function(response) {
                         jQuery('ul.wpfm-food-menu li').remove();
-                        jQuery('ul.wpfm-food-menu').append(response.html);
-
+                        if(response.html.length !== 0){
+                            jQuery('ul.wpfm-food-menu').append(response.html);
+                            jQuery('.no-menu-item-handle').hide();
+                        } else {
+                            jQuery('.no-menu-item-handle').show();
+                        }
                     },
                     error: function(result) {}
                 });
@@ -377,8 +381,12 @@ var WPFMAdmin= function () {
                     },
                     success: function(response) {
                         jQuery('ul.wpfm-food-menu li').remove();
-                        jQuery('ul.wpfm-food-menu').append(response.html);
-
+                        if(response.html.length !== 0){
+                            jQuery('ul.wpfm-food-menu').append(response.html);
+                            jQuery('.no-menu-item-handle').hide();
+                        } else {
+                            jQuery('.no-menu-item-handle').show();
+                        }
                     },
                     error: function(result) {}
                 });

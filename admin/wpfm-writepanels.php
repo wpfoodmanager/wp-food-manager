@@ -145,25 +145,30 @@ class WPFM_Writepanels
 				</div>
 			</div>
 			<div class="wpfm-admin-food-menu-items">
+				<?php $item_ids = get_post_meta($thepostid, '_food_item_ids', true); ?>
 				<ul class="wpfm-food-menu menu menu-item-bar ">
-					<?php $item_ids = get_post_meta($thepostid, '_food_item_ids', true);
-					if ($item_ids && is_array($item_ids)) { ?>
-							<?php foreach ($item_ids as $key => $id) { ?>
-								<li class="menu-item-handle" data-food-id="<?= $id; ?>">
-									<div class="wpfm-admin-left-col">
-										<span class="dashicons dashicons-menu"></span>
-										<span class="item-title"><?php echo esc_html(get_the_title($id)); ?></span>
-									</div>
-									<div class="wpfm-admin-right-col">
-										<a href="javascript:void(0);" class="wpfm-food-item-remove">
-											<span class="dashicons dashicons-dismiss"></span>
-										</a>
-									</div>
-									<input type="hidden" name="wpfm_food_listing_ids[]" value="<?= $id; ?>" />
-								</li>
-						<?php } ?>
-					<?php } ?>
+					<?php if ($item_ids && is_array($item_ids)) { ?>
+						<?php foreach ($item_ids as $key => $id) { ?>
+							<li class="menu-item-handle" data-food-id="<?= $id; ?>">
+								<div class="wpfm-admin-left-col">
+									<span class="dashicons dashicons-menu"></span>
+									<span class="item-title"><?php echo esc_html(get_the_title($id)); ?></span>
+								</div>
+								<div class="wpfm-admin-right-col">
+									<a href="javascript:void(0);" class="wpfm-food-item-remove">
+										<span class="dashicons dashicons-dismiss"></span>
+									</a>
+								</div>
+								<input type="hidden" name="wpfm_food_listing_ids[]" value="<?= $id; ?>" />
+							</li>
+						<?php }
+					} ?>
 				</ul>
+				<?php if ($item_ids && is_array($item_ids)) { ?>
+					<span class="no-menu-item-handle" style="display: none;">Selected category has no food.</span>
+				<?php } else { ?>
+					<span class="no-menu-item-handle">Selected category has no food.</span>
+				<?php } ?>
 			</div>
 			<!-- Do not remove -->
 			<!-- <div class="wpfm-admin-menu-selection wpfm-admin-postbox-form-field">

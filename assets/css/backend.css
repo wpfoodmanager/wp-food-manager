@@ -1024,6 +1024,16 @@ span.food-manager-uploaded-file {
   max-width: 60px;
   height: auto;
 }
+span.no-menu-item-handle {
+  font-size: 14px;
+  font-weight: 500;
+  background: bisque;
+  padding: 5px 10px;
+  border-radius: 4px;
+  display: inline-block;
+}
+
+
 
 
 
