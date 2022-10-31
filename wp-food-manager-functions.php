@@ -860,10 +860,15 @@ function food_manager_dropdown_selection( $args = '' ) {
 
 		$placeholder=__( 'Choose a food type&hellip;', 'wp-food-manager' );
 
-	endif;	
+	endif;
+
+	$item_cat_ids = get_post_meta(get_the_ID(), '_food_item_cat_ids', true);
 	
 	$output = "<select name='" . esc_attr( $name ) . "[]' id='" . esc_attr( $id ) . "' class='" . esc_attr( $class ) . "' " . ( $multiple ? "multiple='multiple'" : '' ) . " data-placeholder='" . esc_attr( $placeholder ) . "' data-no_results_text='" . esc_attr( $no_results_text ) . "' data-multiple_text='" . esc_attr( $multiple_text ) . "'>\n";
 
+	if(empty($item_cat_ids) && isset($item_cat_ids)){
+		$output .= '<option value="" disabled selected>Choose a category</option>';
+	}
 	if ( $show_option_all ) {
 		
 		$output .= '<option value="">' . esc_html( $show_option_all ) . '</option>'; //'.implode(",", $cat_arr).'

@@ -300,6 +300,8 @@ var WPFMAdmin= function () {
                 jQuery(this).parents('.postbox').find('.wpfm-options-box-'+row_count+' .wpfm-metabox-content div.wpfm-admin-options-table tbody tr td .opt_select').attr('name', h7);
             });*/
 
+            //jQuery('.post-new-php #wpfm-admin-food-selection').prepend('<option value="" selected>Choose a Category</option>');
+
             jQuery('body').on('change', 'input[name^="option_name"]', WPFMAdmin.actions.updateOptionTitle);
             jQuery('body').on('change', 'select[name^="_option_type"]', WPFMAdmin.actions.changeFieldType);
 
