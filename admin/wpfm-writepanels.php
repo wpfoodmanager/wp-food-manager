@@ -1309,6 +1309,45 @@ class WPFM_Writepanels
 				update_post_meta($post_id,'_wpfm_extra_options',$extra_options);
 				
 				foreach ($field as $key2 => $fiel) {
+					// food banner
+					
+					if ('_food_banner' === "_".$key2) {
+						if (isset($_POST["_".$key2]) && !empty($_POST["_".$key2])) {
+							$thumbnail_image = $_POST["_".$key2];
+							update_post_meta($post_id, "_".$key2, $_POST["_".$key2]);
+						} else {
+						$thumbnail_image = $_POST["_".$key2];
+							update_post_meta($post_id, "_".$key2, $_POST["_".$key2]);
+						}
+
+						$image = get_the_post_thumbnail_url($post_id);
+
+						if (empty($image)) {
+							if (isset($thumbnail_image) && !empty($thumbnail_image)) {
+								$wp_upload_dir = wp_get_upload_dir();
+
+								$baseurl = $wp_upload_dir['baseurl'] . '/';
+
+								$wp_attached_file = str_replace($baseurl, '', $thumbnail_image);
+
+								$args = array(
+									'meta_key'       => '_wp_attached_file',
+									'meta_value'     => $wp_attached_file,
+									'post_type'      => 'attachment',
+									'posts_per_page' => 1,
+								);
+
+								$attachments = get_posts($args);
+
+								if (!empty($attachments)) {
+									foreach ($attachments as $attachment) {
+										set_post_thumbnail($post_id, $attachment->ID);
+									}
+								}
+							}
+						}
+					}
+
 					if(isset($_POST["_".$key2]) && !empty($_POST["_".$key2])){
 						update_post_meta($post_id, "_".$key2, $_POST["_".$key2]);
 					} else {
