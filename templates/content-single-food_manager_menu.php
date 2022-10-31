@@ -8,6 +8,13 @@ if(isset($featured_img_url) && empty($featured_img_url)){
 } else {
     $featured_img_url = get_the_post_thumbnail_url(get_the_ID(),'full'); 
 }
+
+$term = get_queried_object();
+$term_id = !empty($term) ? get_post_meta ( $term->ID, '_food_item_cat_ids', true ) : '';
+$term_name = get_term( $term_id[0] )->name;
+
+$image_id = !empty($term) ? get_term_meta ( $term_id[0], 'food_cat_image_id', true ) : '';
+$image_url = wp_get_attachment_image_src ( $image_id, 'full' );
 ?>
 <div class="single_food_listing">
     <div class="wpfm-main wpfm-single-food-page">
@@ -44,6 +51,14 @@ if(isset($featured_img_url) && empty($featured_img_url)){
                                 ?>
                             </h3>
                             <?php
+                            if(!empty($image_url) && is_array($image_url)){
+                                echo "<div class='fm-food-cat-image'>";
+                                echo "<h2>".$term_name."</h2>";
+                                echo "<img src='".$image_url[0]."' alt='".$term_name."'>";
+                                echo "</div>";
+                            } else {
+                                echo "<h2 style='margin-bottom:0;'>".$term_name."</h2>";
+                            }
                             //$term_list = get_the_terms($post->ID, 'food_manager_category');
                             /*$term_lists = wp_get_post_terms( $post->ID, 'food_manager_category' );
                             $term_arr = array();
@@ -73,14 +88,13 @@ if(isset($featured_img_url) && empty($featured_img_url)){
                                     'post_type' => 'food_manager',
                                     'orderby'   => 'post__in',
                                 ) );
-                                
+                                echo "<div class='fm-food-menu-container'>";
                                 foreach ($food_listings as $food_listing) {
                                     $price_decimals = wpfm_get_price_decimals();
                                     $price_format = get_food_manager_price_format();
                                     $price_thousand_separator = wpfm_get_price_thousand_separator();
                                     $price_decimal_separator = wpfm_get_price_decimal_separator();
-
-
+                                    $menu_food_desc = '';
                                     $sale_price = get_post_meta($food_listing->ID, '_food_sale_price', true);
                                     $regular_price = get_post_meta($food_listing->ID, '_food_price', true);
 
@@ -90,26 +104,27 @@ if(isset($featured_img_url) && empty($featured_img_url)){
                                     if(!empty($regular_price)){
                                         $formatted_regular_price = number_format($regular_price, $price_decimals, $price_decimal_separator, $price_thousand_separator);
                                     }
-                                    echo "<div class='fm-food-menu-container'>";
-                                        echo wp_kses_post("<a href='".get_permalink($food_listing->ID)."' class='food-list-box'><span class='fm-food-menu-title'><strong>".esc_html($food_listing->post_title))."</strong><i class='fm-food-menu-desc'>".$food_listing->post_content."</i></span>";
-                                            //echo "<span class='fm-divider'> - - - - - - </span>";
-                                            echo "<span class='fm-food-menu-pricing'>";
-                                            if(!empty($regular_price) && !empty($sale_price)){
-                                                $f_regular_price = sprintf($price_format, '<span class="food-manager-Price-currencySymbol">'.get_food_manager_currency_symbol().'</span>', $formatted_sale_price);
-                                                $f_sale_price = sprintf($price_format, '<span class="food-manager-Price-currencySymbol">'.get_food_manager_currency_symbol().'</span>', $formatted_regular_price);
-                                                echo "<del> ".$f_sale_price."</del> <ins><span class='food-manager-Price-currencySymbol'><strong>".$f_regular_price."</strong></ins>"; 
-                                            }
-                                            if(empty($regular_price) && empty($sale_price)){
-                                                return false;
-                                            }
-                                            if(empty($sale_price)){
-                                                echo "<span class='food-manager-Price-currencySymbol'>".get_food_manager_currency_symbol()."</span>".$formatted_regular_price;
-                                            }
-                                            echo "</span>";
-                                        echo "</a>";
-                                    echo "</div>";
-
+                                    if(!empty($food_listing->post_content)){
+                                        $menu_food_desc = "<i class='fm-food-menu-desc'>".$food_listing->post_content."</i>";
+                                    }
+                                    echo wp_kses_post("<a href='".get_permalink($food_listing->ID)."' class='food-list-box'><span class='fm-food-menu-title'><strong>".esc_html($food_listing->post_title))."</strong>".$menu_food_desc."</span>";
+                                        //echo "<span class='fm-divider'> - - - - - - </span>";
+                                        echo "<span class='fm-food-menu-pricing'>";
+                                        if(!empty($regular_price) && !empty($sale_price)){
+                                            $f_regular_price = sprintf($price_format, '<span class="food-manager-Price-currencySymbol">'.get_food_manager_currency_symbol().'</span>', $formatted_sale_price);
+                                            $f_sale_price = sprintf($price_format, '<span class="food-manager-Price-currencySymbol">'.get_food_manager_currency_symbol().'</span>', $formatted_regular_price);
+                                            echo "<del> ".$f_sale_price."</del> <ins><span class='food-manager-Price-currencySymbol'><strong>".$f_regular_price."</strong></ins>"; 
+                                        }
+                                        if(empty($regular_price) && empty($sale_price)){
+                                            return false;
+                                        }
+                                        if(empty($sale_price)){
+                                            echo "<span class='food-manager-Price-currencySymbol'>".get_food_manager_currency_symbol()."</span>".$formatted_regular_price;
+                                        }
+                                        echo "</span>";
+                                    echo "</a>";
                                 }
+                                echo "</div>";
                             }
                             ?>
                         </div>
