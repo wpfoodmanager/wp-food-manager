@@ -11,9 +11,9 @@ if(isset($featured_img_url) && empty($featured_img_url)){
 
 $term = get_queried_object();
 $term_id = !empty($term) ? get_post_meta ( $term->ID, '_food_item_cat_ids', true ) : '';
-$term_name = get_term( $term_id[0] )->name;
+$term_name = !empty($term_id) ? get_term( $term_id[0] )->name : '';
 
-$image_id = !empty($term) ? get_term_meta ( $term_id[0], 'food_cat_image_id', true ) : '';
+$image_id = !empty($term_id) ? get_term_meta ( $term_id[0], 'food_cat_image_id', true ) : '';
 $image_url = wp_get_attachment_image_src ( $image_id, 'full' );
 ?>
 <div class="single_food_listing">
