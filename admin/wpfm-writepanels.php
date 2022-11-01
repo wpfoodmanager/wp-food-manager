@@ -1170,55 +1170,54 @@ class WPFM_Writepanels
 			}
 		}
 
+		// Food type
+		/*$fd_type = sanitize_text_field($_POST['_food_veg_nonveg']);
+		if( !add_post_meta($post_id,'_food_veg_nonveg', $fd_type, true) ){
+			update_post_meta($post_id,'_food_veg_nonveg', $fd_type);
+		}*/
+		
+		// Food price
+		$fd_price = sanitize_text_field($_POST['_food_price']);
+		if( !add_post_meta($post_id,'_food_price', $fd_price, true) ){
+			update_post_meta($post_id,'_food_price', $fd_price);
+		}
 
-		foreach ($this->food_manager_data_fields() as $key => $field) {
+		// Food sale price
+		$fd_sale_price = sanitize_text_field($_POST['_food_sale_price']);
+		if( !add_post_meta($post_id,'_food_sale_price', $fd_sale_price, true) ){
+			update_post_meta($post_id,'_food_sale_price', $fd_sale_price);
+		}
 
-			// Food type
-			$fd_type = sanitize_text_field($_POST['_food_veg_nonveg']);
-			if( !add_post_meta($post_id,'_food_veg_nonveg', $fd_type, true) ){
-				update_post_meta($post_id,'_food_veg_nonveg', $fd_type);
+		// Food stock status
+		$fd_stock_status = sanitize_text_field($_POST['_food_stock_status']);
+		if( !add_post_meta($post_id,'_food_stock_status', $fd_stock_status, true) ){
+			update_post_meta($post_id,'_food_stock_status', $fd_stock_status);
+		}
+
+		// Repeated options
+		$repeated_options = isset($_POST['repeated_options']) ? $_POST['repeated_options'] : '';
+		if( !add_post_meta($post_id,'wpfm_repeated_options', $repeated_options, true) ){
+			update_post_meta($post_id,'wpfm_repeated_options', $repeated_options);
+		}
+
+		// Options value count
+		$array_cnt = isset($_POST['option_value_count']) ? $_POST['option_value_count'] : '';
+		if(isset($array_cnt) && !empty($array_cnt)){
+			$food_data_option_value_count = array();
+			$index = 0;
+			foreach ($array_cnt as $number) {
+			    if ($number == 1) {
+			        $index++;
+			    }
+			    $food_data_option_value_count[$index][] = $number;
 			}
-
-			// Food price
-			$fd_price = sanitize_text_field($_POST['_food_price']);
-			if( !add_post_meta($post_id,'_food_price', $fd_price, true) ){
-				update_post_meta($post_id,'_food_price', $fd_price);
+			if( !add_post_meta($post_id,'wpfm_option_value_count', $food_data_option_value_count, true) ){
+				update_post_meta($post_id,'wpfm_option_value_count', $food_data_option_value_count);
 			}
+		}
 
-			// Food sale price
-			$fd_sale_price = sanitize_text_field($_POST['_food_sale_price']);
-			if( !add_post_meta($post_id,'_food_sale_price', $fd_sale_price, true) ){
-				update_post_meta($post_id,'_food_sale_price', $fd_sale_price);
-			}
-
-			// Food stock status
-			$fd_stock_status = sanitize_text_field($_POST['_food_stock_status']);
-			if( !add_post_meta($post_id,'_food_stock_status', $fd_stock_status, true) ){
-				update_post_meta($post_id,'_food_stock_status', $fd_stock_status);
-			}
-
-			// Repeated options
-			$repeated_options = isset($_POST['repeated_options']) ? $_POST['repeated_options'] : '';
-			if( !add_post_meta($post_id,'wpfm_repeated_options', $repeated_options, true) ){
-				update_post_meta($post_id,'wpfm_repeated_options', $repeated_options);
-			}
-
-			// Options value count
-			$array_cnt = $_POST['option_value_count'];
-			if(isset($array_cnt) && !empty($array_cnt)){
-				$food_data_option_value_count = array();
-				$index = 0;
-				foreach ($array_cnt as $number) {
-				    if ($number == 1) {
-				        $index++;
-				    }
-				    $food_data_option_value_count[$index][] = $number;
-				}
-				if( !add_post_meta($post_id,'wpfm_option_value_count', $food_data_option_value_count, true) ){
-					update_post_meta($post_id,'wpfm_option_value_count', $food_data_option_value_count);
-				}
-			}
-
+		foreach ($this->food_manager_data_fields()['extra_options'] as $key => $field) {
+			
 			// author
 			if ('_food_author' === $key) {
 				$wpdb->update($wpdb->posts, array('post_author' => $_POST[$key] > 0 ? absint($_POST[$key]) : 0), array('ID' => $post_id));
@@ -1239,7 +1238,8 @@ class WPFM_Writepanels
 							$option_type = $_POST['_option_type_'.$option_count];
 							$option_required = $_POST['_option_required_'.$option_count];
 							$option_enable_desc = isset($_POST['_option_enable_desc_'.$option_count]) ? $_POST['_option_enable_desc_'.$option_count] : '';
-							$option_description = $_POST['_option_description_'.$option_count];
+							$option_description = isset($_POST['_option_description_'.$option_count]) ? $_POST['_option_description_'.$option_count] : '';
+							$key_post = isset($_POST["_".$key."_".$option_count]) ? $_POST["_".$key."_".$option_count] : '';
 							/*$option_minimum = $_POST['_option_minimum_'.$option_count];
 							$option_maximum = $_POST['_option_maximum_'.$option_count];
 							$option_price = $_POST['_option_price_'.$option_count];
@@ -1283,23 +1283,26 @@ class WPFM_Writepanels
 								}
 								
 							}
-							foreach ($field as $f_key => $f_value) {
-								if(isset($_POST["_".$f_key."_".$option_count])){
-										$extra_options[$option_key] = array(
-																'option_name' => $option_name,
-																'option_type' => $option_type,
-																'option_required' => $option_required,
-																'option_enable_desc' => $option_enable_desc,
-																'option_description' => $option_description,
-																/*'option_minimum' => $option_minimum,
-																'option_maximum' => $option_maximum,
-																'option_price' => $option_price,
-																'option_price_type' => $option_price_type,*/
-																'option_options' => $option_values,
-																$f_key => $_POST["_".$f_key."_".$option_count]
-															);
-								}
-							}
+							/*foreach ($field as $f_key => $f_value) {
+								echo "<pre>";
+								print_r($f_key);
+								echo "</pre>";
+							}*/
+							
+							$extra_options[$option_key] = array(
+													'option_name' => $option_name,
+													'option_type' => $option_type,
+													'option_required' => $option_required,
+													'option_enable_desc' => $option_enable_desc,
+													'option_description' => $option_description,
+													/*'option_minimum' => $option_minimum,
+													'option_maximum' => $option_maximum,
+													'option_price' => $option_price,
+													'option_price_type' => $option_price_type,*/
+													'option_options' => $option_values,
+													//$key => $key_post
+												);
+							$extra_options[$option_key][$key] = $key_post;
 						}
 
 					}
@@ -1357,7 +1360,9 @@ class WPFM_Writepanels
 				
 				switch ($type) {
 					case 'textarea':
-						update_post_meta($post_id, $key, wp_kses_post(stripslashes($_POST[$key])));
+						if (isset($_POST[$key])) {
+							update_post_meta($post_id, $key, wp_kses_post(stripslashes($_POST[$key])));
+						}
 						break;
 					case 'checkbox':
 						if (isset($_POST[$key])) {
@@ -1387,9 +1392,11 @@ class WPFM_Writepanels
 						break;
 				}
 			}
-
-
 		}
+		/*echo "<pre>";
+		print_r($extra_options);
+		echo "</pre>";*/
+		//exit;
 		
 		remove_action('food_manager_save_food_manager', array($this, 'food_manager_save_food_manager_data'), 20, 2);
 		$food_data = array(
