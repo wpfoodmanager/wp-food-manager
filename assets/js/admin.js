@@ -677,6 +677,7 @@ var WPFMAdmin= function () {
                         event.preventDefault();
                         file_target_wrapper = jQuery(this).closest('.food-manager-uploaded-file');
                         file_target_input = file_target_wrapper.find('input');
+                        var data_field_name = jQuery(this).parents(".wpfm-admin-postbox-form-field")[0].dataset.fieldName;
 
                         file_target_wrapper_append = jQuery(this).closest('.food-manager-uploaded-file2');
                         // If the media frame already exists, reopen it.
@@ -703,7 +704,7 @@ var WPFMAdmin= function () {
                             attachment = file_frame.state().get('selection').first().toJSON();
                             jQuery(file_target_input).val(attachment.url);
                             jQuery(file_target_wrapper_append).find(".food-manager-uploaded-file").remove();
-                            jQuery(file_target_wrapper_append).prepend("<span class='food-manager-uploaded-file'><input type='hidden' name='_food_banner' id='_food_banner' placeholder='' value='"+attachment.url+"'><span class='food-manager-uploaded-file-preview'><img src='"+attachment.url+"'><a class='food-manager-remove-uploaded-file' href='javascript:void(0);'>[remove]</a></span>");
+                            jQuery(file_target_wrapper_append).prepend("<span class='food-manager-uploaded-file'><input type='hidden' name='"+data_field_name+"' id='"+data_field_name+"' placeholder='' value='"+attachment.url+"'><span class='food-manager-uploaded-file-preview'><img src='"+attachment.url+"'><a class='food-manager-remove-uploaded-file' href='javascript:void(0);'>[remove]</a></span>");
                             
                         });
                         // Finally, open the modal
@@ -714,6 +715,7 @@ var WPFMAdmin= function () {
                         event.preventDefault();
                         file_target_wrapper = jQuery(this).parent(".file_url").find('.food-manager-uploaded-file.multiple-file');
                         file_target_input = file_target_wrapper.find('input');
+                        var data_field_name = jQuery(this).parents(".wpfm-admin-postbox-form-field")[0].dataset.fieldName;
 
                         file_target_wrapper_apeend = jQuery(this).prev();
                         
@@ -744,8 +746,9 @@ var WPFMAdmin= function () {
                                 });
                             jQuery.each(attachment, function( index, attach ) {
                                 jQuery(file_target_input).val(attach.attributes.url);
-                                jQuery(file_target_wrapper_apeend).append("<span class='food-manager-uploaded-file multiple-file'><input type='hidden' name='_food_banner[]' placeholder='' value='"+attach.attributes.url+"'><span class='food-manager-uploaded-file-preview'><img src='"+attach.attributes.url+"'><a class='food-manager-remove-uploaded-file' href='javascript:void(0);'>[remove]</a></span>");
+                                jQuery(file_target_wrapper_apeend).append("<span class='food-manager-uploaded-file multiple-file'><input type='hidden' name='"+data_field_name+"[]' placeholder='' value='"+attach.attributes.url+"'><span class='food-manager-uploaded-file-preview'><img src='"+attach.attributes.url+"'><a class='food-manager-remove-uploaded-file' href='javascript:void(0);'>[remove]</a></span>");
                             });
+                            
                             /*jQuery(file_target_input).val(attachment.url);
                             jQuery(file_target_input).parent().find(".food-manager-uploaded-file-preview img").attr("src", attachment.url);*/
                         });

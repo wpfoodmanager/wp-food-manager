@@ -382,7 +382,7 @@ class WPFM_Writepanels
 		}
 	?>
 
-		<p class="wpfm-admin-postbox-form-field <?=$name;?>">
+		<p class="wpfm-admin-postbox-form-field <?=$name;?>" data-field-name="<?=$name;?>">
 			<label for="<?php echo esc_attr($key); ?>"><?php echo esc_html($field['label']); ?>:
 				<?php if (!empty($field['description'])) : ?>
 					<span class="tips" data-tip="<?php echo esc_attr($field['description']); ?>">[?]</span>
@@ -463,81 +463,6 @@ class WPFM_Writepanels
 		</p>
 	<?php
 	}
-
-	/**
-	 * input_file function.
-	 *
-	 * @param mixed $key
-	 * @param mixed $field
-	 */
-	/*public static function input_file($key, $field)
-	{
-		global $thepostid;
-		if (!isset($field['value'])) {
-			$field['value'] = get_post_meta($thepostid, $key, true);
-		}
-		if (empty($field['placeholder'])) {
-			$field['placeholder'] = 'http://';
-		}
-		if (!empty($field['name'])) {
-			$name = $field['name'];
-		} else {
-			$name = $key;
-		}
-
-		$classes            = array( 'input-text' );
-		$allowed_mime_types = array_keys( ! empty( $field['allowed_mime_types'] ) ? $field['allowed_mime_types'] : get_allowed_mime_types() );
-	?>
-
-		<p class="wpfm-admin-postbox-form-field">
-			<label for="<?php echo esc_attr($key); ?>"><?php echo esc_html($field['label']); ?>:
-				<?php if (!empty($field['description'])) : ?>
-					<span class="tips" data-tip="<?php echo esc_attr($field['description']); ?>">[?]</span>
-				<?php endif; ?>
-			</label>
-			<span class="wpfm-input-field">
-				<?php
-				if (!empty($field['multiple'])) { ?>
-					<span class="food-manager-uploaded-files">
-						<?php 
-						if(!empty($field['value'])){
-							foreach ((array) $field['value'] as $value) { ?>
-								<span class="food-manager-uploaded-file">
-									<?php
-									if ( is_numeric( $value ) ) {
-										$image_src = wp_get_attachment_image_src( absint( $value ) );
-										$image_src = $image_src ? $image_src[0] : '';
-									} else {
-										$image_src = $value;
-									}
-									
-									$extension = ! empty( $extension ) ? $extension : substr( strrchr( $image_src, '.' ), 1 );
-									if ( 3 !== strlen( $extension ) || in_array( $extension, array( 'jpg', 'gif', 'png', 'jpeg', 'jpe' ) ) ) : ?>
-										<span class="food-manager-uploaded-file-preview"><img src="<?php echo esc_url( $image_src ); ?>" /> <a class="food-manager-remove-uploaded-file" href="javascript:void(0)">[<?php _e( 'remove', 'wp-food-manager' ); ?>]</a></span>
-									<?php else : ?>
-										<span class="food-manager-uploaded-file-name"><code><?php echo esc_html( basename( $image_src ) ); ?></code> <a class="food-manager-remove-uploaded-file" href="javascript:void(0)">[<?php _e( 'remove', 'wp-food-manager' ); ?>]</a></span>
-									<?php endif; ?>
-									<input type="hidden" class="input-text" name="<?php echo esc_attr( $name ); ?>" value="<?php echo esc_attr( $value ); ?>" />
-								</span>
-						<?php }
-						} ?>
-					</span>
-					<input type="file" class="<?php echo esc_attr( implode( ' ', $classes ) ); ?>" data-file_types="<?php echo esc_attr( implode( '|', $allowed_mime_types ) ); ?>" <?php if ( ! empty( $field['multiple'] ) ) echo 'multiple'; ?> name="<?php echo esc_attr($name); ?>[]" id="<?php echo esc_attr( $key ); ?>" placeholder="<?php echo empty( $field['placeholder'] ) ? '' : esc_attr( $field['placeholder'] ); ?>" />				
-				<?php
-				} else {
-					if (isset($field['value']) && is_array($field['value'])) {
-						$field['value'] = array_shift($field['value']);
-					}
-					?>
-					<input type="file" class="<?php echo esc_attr( implode( ' ', $classes ) ); ?>" data-file_types="<?php echo esc_attr( implode( '|', $allowed_mime_types ) ); ?>" <?php if ( ! empty( $field['multiple'] ) ) echo 'multiple'; ?> name="<?php echo esc_attr($name); ?>[]" id="<?php echo esc_attr( $key ); ?>" placeholder="<?php echo empty( $field['placeholder'] ) ? '' : esc_attr( $field['placeholder'] ); ?>" />	
-					<span class="file_url"><input type="text" name="<?php echo esc_attr($name); ?>" id="<?php echo esc_attr($key); ?>" placeholder="<?php echo esc_attr($field['placeholder']); ?>" value="<?php echo esc_attr($field['value']); ?>" /><img src="<?php echo esc_attr($value); ?>"><button class="button button-small wp_food_manager_upload_file_button" data-uploader_button_text="<?php esc_attr_e('Use file', 'wp-food-manager'); ?>"><?php esc_attr_e('Upload', 'wp-food-manager'); ?></button></span>
-				<?php
-				}
-			?>
-			</span>
-		</p>
-	<?php
-	}*/
 
 	/**
 	 * input_text function.
@@ -636,7 +561,7 @@ class WPFM_Writepanels
 				<?php endif; ?>
 			</label>
 			<input type="hidden" name="date_format" id="date_format" value="<?php echo esc_attr($php_date_format); ?>" />
-			<input type="text" name="<?php echo esc_attr($name); ?>" id="<?php echo esc_attr($key); ?>" placeholder="<?php echo esc_attr($field['placeholder']); ?>" value="<?php echo (isset($field['value']) ?  esc_attr($field['value']) : '') ?>" data-picker="datepicker" />
+			<input type="text" name="<?php echo esc_attr($name); ?>" id="<?php echo esc_attr($key); ?>" placeholder="<?php echo esc_attr($field['placeholder']); ?>" value="<?php echo (isset($field['value']) && !empty($field['value']) ?  esc_attr($field['value']) : '') ?>" data-picker="datepicker" />
 		</p>
 	<?php
 	}
@@ -1216,6 +1141,93 @@ class WPFM_Writepanels
 			}
 		}
 
+		// Save Food Form fields values
+		foreach ($this->food_manager_data_fields()['food'] as $key => $field) {
+			
+			//foreach ($field as $key2 => $fiel) {
+
+			$type = !empty($field['type']) ? $field['type'] : '';
+			// food banner
+			if ('_food_banner' === "_".$key) {
+				if (isset($_POST["_".$key]) && !empty($_POST["_".$key])) {
+					$thumbnail_image = $_POST["_".$key];
+					update_post_meta($post_id, "_".$key, $_POST["_".$key]);
+				} else {
+				$thumbnail_image = $_POST["_".$key];
+					update_post_meta($post_id, "_".$key, $_POST["_".$key]);
+				}
+
+				$image = get_the_post_thumbnail_url($post_id);
+
+				if (empty($image)) {
+					if (isset($thumbnail_image) && !empty($thumbnail_image)) {
+						$wp_upload_dir = wp_get_upload_dir();
+
+						$baseurl = $wp_upload_dir['baseurl'] . '/';
+
+						$wp_attached_file = str_replace($baseurl, '', $thumbnail_image);
+
+						$args = array(
+							'meta_key'       => '_wp_attached_file',
+							'meta_value'     => $wp_attached_file,
+							'post_type'      => 'attachment',
+							'posts_per_page' => 1,
+						);
+
+						$attachments = get_posts($args);
+
+						if (!empty($attachments)) {
+							foreach ($attachments as $attachment) {
+								set_post_thumbnail($post_id, $attachment->ID);
+							}
+						}
+					}
+				}
+			}
+
+			if(isset($_POST["_".$key]) && !empty($_POST["_".$key])){
+				update_post_meta($post_id, "_".$key, $_POST["_".$key]);
+			} else {
+				update_post_meta($post_id, "_".$key, "");
+			}
+		
+			switch ($type) {
+				case 'textarea':
+					if (isset($_POST[$key])) {
+						update_post_meta($post_id, $key, wp_kses_post(stripslashes($_POST[$key])));
+					}
+					break;
+				case 'checkbox':
+					if (isset($_POST[$key])) {
+						update_post_meta($post_id, $key, 1);
+					} else {
+						update_post_meta($post_id, $key, 0);
+					}
+					break;
+				case 'date':
+					if (isset($_POST[$key])) {
+						$date = $_POST[$key];
+
+						//Convert date and time value into DB formatted format and save eg. 1970-01-01
+						$date_dbformatted = WP_Food_Manager_Date_Time::date_parse_from_format($php_date_format, $date);
+						$date_dbformatted = !empty($date_dbformatted) ? $date_dbformatted : $date;
+						update_post_meta($post_id, $key, $date_dbformatted);
+					}
+					break;
+				default:
+					if (!isset($_POST[$key])) {
+						continue 2;
+					} elseif (is_array($_POST[$key])) {
+						update_post_meta($post_id, $key, array_filter(array_map('sanitize_text_field', $_POST[$key])));
+					} else {
+						update_post_meta($post_id, $key, sanitize_text_field($_POST[$key]));
+					}
+					break;
+			}
+			//}
+		}
+
+		// Save Extra Options/Topping form fields values
 		foreach ($this->food_manager_data_fields()['extra_options'] as $key => $field) {
 			
 			// author
@@ -1226,6 +1238,44 @@ class WPFM_Writepanels
 			else {
 				$type = !empty($field['type']) ? $field['type'] : '';
 				$extra_options = array();
+
+				$food = $post;
+				$form_submit_food_instance = call_user_func(array('WPFM_Form_Submit_Food', 'instance'));
+		        //$custom_fields = $form_submit_food_instance->get_food_manager_fieldeditor_fields();
+
+		        $custom_food_fields  = !empty($form_submit_food_instance->get_food_manager_fieldeditor_fields()) ? $form_submit_food_instance->get_food_manager_fieldeditor_fields() : array();
+
+		        $custom_extra_options_fields  = !empty($form_submit_food_instance->get_food_manager_fieldeditor_extra_options_fields()) ? $form_submit_food_instance->get_food_manager_fieldeditor_extra_options_fields() : array();
+
+		        $custom_fields = '';
+		        if(!empty($custom_extra_options_fields)){
+		            $custom_fields = array_merge($custom_food_fields, $custom_extra_options_fields);
+		        } else {
+		            $custom_fields = $custom_food_fields;
+		        }
+
+		        $default_fields = $form_submit_food_instance->get_default_food_fields();
+		        
+		        $additional_fields = [];
+		        if (!empty($custom_fields) && isset($custom_fields) && !empty($custom_fields['extra_options'])) {
+		            foreach ($custom_fields['extra_options'] as $field_name => $field_data) {
+		                if (!array_key_exists($field_name, $default_fields['extra_options'])) {
+		                    $meta_key = '_' . $field_name;
+		                    $field_value = $food->$meta_key;
+		                    if (isset($field_value)) {
+		                        $additional_fields[$field_name] = $field_data;
+		                    }
+		                }
+		            }
+
+		            if (isset($additional_fields['attendee_information_type']))
+		                unset($additional_fields['attendee_information_type']);
+
+		            if (isset($additional_fields['attendee_information_fields']))
+		                unset($additional_fields['attendee_information_fields']);
+
+		            $additional_fields = apply_filters('food_manager_show_additional_details_fields', $additional_fields);
+		        }				
 
 				//find how many total reapeated extra option there then store it.
 				if(isset($_POST['repeated_options']) && is_array($_POST['repeated_options'])){
@@ -1239,7 +1289,6 @@ class WPFM_Writepanels
 							$option_required = $_POST['_option_required_'.$option_count];
 							$option_enable_desc = isset($_POST['_option_enable_desc_'.$option_count]) ? $_POST['_option_enable_desc_'.$option_count] : '';
 							$option_description = isset($_POST['_option_description_'.$option_count]) ? $_POST['_option_description_'.$option_count] : '';
-							$key_post = isset($_POST["_".$key."_".$option_count]) ? $_POST["_".$key."_".$option_count] : '';
 							/*$option_minimum = $_POST['_option_minimum_'.$option_count];
 							$option_maximum = $_POST['_option_maximum_'.$option_count];
 							$option_price = $_POST['_option_price_'.$option_count];
@@ -1256,17 +1305,6 @@ class WPFM_Writepanels
 								
 								foreach ( $_POST['option_value_count'] as $option_value_count) {
 									if(!empty($_POST[$option_count.'_option_value_name_'.$option_value_count]) || !empty($_POST[$option_count.'_option_value_default_'.$option_value_count]) || !empty($_POST[$option_count.'_option_value_price_'.$option_value_count])){
-										
-										// Old Logic
-										/*$option_values[$option_count.'_option_value_name_'.$option_value_count] = array(
-															$option_count.'_option_value_name_'.$option_value_count => isset($_POST[$option_count.'_option_value_name_'.$option_value_count]) ? $_POST[$option_count.'_option_value_name_'.$option_value_count] : '',
-
-															$option_count.'_option_value_default_'.$option_value_count => isset($_POST[$option_count.'_option_value_default_'.$option_value_count]) ? $_POST[$option_count.'_option_value_default_'.$option_value_count] : '',
-
-															$option_count.'_option_value_price_'.$option_value_count => isset($_POST[$option_count.'_option_value_price_'.$option_value_count]) ? $_POST[$option_count.'_option_value_price_'.$option_value_count] : '',
-
-															$option_count.'_option_value_price_type_'.$option_value_count => isset($_POST[$option_count.'_option_value_price_type_'.$option_value_count]) ? $_POST[$option_count.'_option_value_price_type_'.$option_value_count] : ''
-														);*/
 
 										// New Logic
 										$option_values[$option_value_count] = array(
@@ -1283,119 +1321,49 @@ class WPFM_Writepanels
 								}
 								
 							}
-							/*foreach ($field as $f_key => $f_value) {
-								echo "<pre>";
-								print_r($f_key);
-								echo "</pre>";
-							}*/
 							
 							$extra_options[$option_key] = array(
 													'option_name' => $option_name,
-													'option_type' => $option_type,
-													'option_required' => $option_required,
-													'option_enable_desc' => $option_enable_desc,
-													'option_description' => $option_description,
-													/*'option_minimum' => $option_minimum,
-													'option_maximum' => $option_maximum,
-													'option_price' => $option_price,
-													'option_price_type' => $option_price_type,*/
-													'option_options' => $option_values,
-													//$key => $key_post
 												);
-							$extra_options[$option_key][$key] = $key_post;
+
+							if(!empty($custom_extra_options_fields)){
+								foreach($custom_extra_options_fields as $custom_ext_key => $custom_extra_options_field){
+									foreach($custom_extra_options_field as $custom_ext_single_key => $custom_extra_options_single_field){
+										if($custom_ext_single_key !== 'option_name' && $custom_ext_single_key !== 'option_options'){
+											$custom_ext_key_post = isset($_POST["_".$custom_ext_single_key."_".$option_count]) ? $_POST["_".$custom_ext_single_key."_".$option_count] : '';
+									        $extra_options[$option_key][$custom_ext_single_key] = $custom_ext_key_post;
+
+										    if(!empty($custom_ext_key_post)){
+										        update_post_meta($post_id, "_".$custom_ext_single_key."_".$option_count, $custom_ext_key_post);
+										    } else {
+										    	update_post_meta($post_id, "_".$custom_ext_single_key."_".$option_count, "");
+										    }
+									    }
+									    if($custom_ext_single_key == 'option_options'){
+									    	$extra_options[$option_key][$custom_ext_single_key] = $option_values;
+									    }
+								    }
+								}
+							}
+							
+							if(!empty($additional_fields)){
+								foreach($additional_fields as $add_key => $additional_field){
+									$key_post = isset($_POST["_".$add_key."_".$option_count]) ? $_POST["_".$add_key."_".$option_count] : '';
+							        $extra_options[$option_key][$add_key] = $key_post;
+								}
+							}
 						}
 
 					}
+					
 					$counter++;
 				}
 				
 				update_post_meta($post_id,'_wpfm_extra_options',$extra_options);
-				
-				foreach ($field as $key2 => $fiel) {
-					// food banner
-					
-					if ('_food_banner' === "_".$key2) {
-						if (isset($_POST["_".$key2]) && !empty($_POST["_".$key2])) {
-							$thumbnail_image = $_POST["_".$key2];
-							update_post_meta($post_id, "_".$key2, $_POST["_".$key2]);
-						} else {
-						$thumbnail_image = $_POST["_".$key2];
-							update_post_meta($post_id, "_".$key2, $_POST["_".$key2]);
-						}
 
-						$image = get_the_post_thumbnail_url($post_id);
-
-						if (empty($image)) {
-							if (isset($thumbnail_image) && !empty($thumbnail_image)) {
-								$wp_upload_dir = wp_get_upload_dir();
-
-								$baseurl = $wp_upload_dir['baseurl'] . '/';
-
-								$wp_attached_file = str_replace($baseurl, '', $thumbnail_image);
-
-								$args = array(
-									'meta_key'       => '_wp_attached_file',
-									'meta_value'     => $wp_attached_file,
-									'post_type'      => 'attachment',
-									'posts_per_page' => 1,
-								);
-
-								$attachments = get_posts($args);
-
-								if (!empty($attachments)) {
-									foreach ($attachments as $attachment) {
-										set_post_thumbnail($post_id, $attachment->ID);
-									}
-								}
-							}
-						}
-					}
-
-					if(isset($_POST["_".$key2]) && !empty($_POST["_".$key2])){
-						update_post_meta($post_id, "_".$key2, $_POST["_".$key2]);
-					} else {
-						update_post_meta($post_id, "_".$key2, "");
-					}
-				}
-				
-				switch ($type) {
-					case 'textarea':
-						if (isset($_POST[$key])) {
-							update_post_meta($post_id, $key, wp_kses_post(stripslashes($_POST[$key])));
-						}
-						break;
-					case 'checkbox':
-						if (isset($_POST[$key])) {
-							update_post_meta($post_id, $key, 1);
-						} else {
-							update_post_meta($post_id, $key, 0);
-						}
-						break;
-					case 'date':
-						if (isset($_POST[$key])) {
-							$date = $_POST[$key];
-
-							//Convert date and time value into DB formatted format and save eg. 1970-01-01
-							$date_dbformatted = WP_Food_Manager_Date_Time::date_parse_from_format($php_date_format, $date);
-							$date_dbformatted = !empty($date_dbformatted) ? $date_dbformatted : $date;
-							update_post_meta($post_id, $key, $date_dbformatted);
-						}
-						break;
-					default:
-						if (!isset($_POST[$key])) {
-							continue 2;
-						} elseif (is_array($_POST[$key])) {
-							update_post_meta($post_id, $key, array_filter(array_map('sanitize_text_field', $_POST[$key])));
-						} else {
-							update_post_meta($post_id, $key, sanitize_text_field($_POST[$key]));
-						}
-						break;
-				}
 			}
 		}
-		/*echo "<pre>";
-		print_r($extra_options);
-		echo "</pre>";*/
+		
 		//exit;
 		
 		remove_action('food_manager_save_food_manager', array($this, 'food_manager_save_food_manager_data'), 20, 2);

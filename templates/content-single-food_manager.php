@@ -678,9 +678,7 @@ $food = $post;
                                                             
                                                             $field_key = '_' . $name;
                                                             $field_value = $ext_option[$name];
-                                                            /*echo "<pre>";
-                                                            print_r($ext_option);
-                                                            echo "</pre>";*/
+                                                            
                                                             ?>
                                                             <?php if (isset($field_value)) : ?>
 
@@ -857,7 +855,7 @@ $food = $post;
                                                                                     <?php else : ?>
                                                                                         <div class="wpfm-icon">
                                                                                             <p class="wpfm-additional-info-block-title"><strong><?php echo esc_attr(wp_basename($file)); ?></strong></p>
-                                                                                            <a target="_blank" class="wpfm-icon-download3" href="<?php echo esc_attr($file); ?>"> <?php _e('Download', 'wp-food-manager'); ?></a>
+                                                                                            <!-- <a target="_blank" class="wpfm-icon-download3" href="<?php echo esc_attr($file); ?>"> <?php _e('Download', 'wp-food-manager'); ?></a> -->
                                                                                         </div>
                                                                                     <?php endif; ?>
                                                                                 <?php endforeach; ?>
