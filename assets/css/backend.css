@@ -1018,7 +1018,7 @@ div#wpfm-loading {
 }*/
 .wpfm-food-menu .menu-item-handle .item-title{word-break: break-word;}
 select#wpfm-admin-food-selection {
-  margin-top: 14px;
+  margin-top: 14px ;
 }
 span.food-manager-uploaded-file {
   margin-right: 10px;

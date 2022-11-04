@@ -54,8 +54,8 @@ var WPFMAdmin= function () {
 		  	//show by default first Event Listings Settings Tab
             jQuery('.wpfm-tabs li a:first').click();	
 
-            //jQuery(document).on('click', '#wpfm-admin-add-food', WPFMAdmin.actions.updateFoodinMenu);
-            jQuery(document).on('change', '#wpfm-admin-food-selection', WPFMAdmin.actions.updateFoodinMenu);
+            //jQuery(document).on('click', '#wpfm-admin-add-food', WPFMAdmin.actions.updateFoodinMenu); 
+            jQuery(document).on('change', '#wpfm-admin-food-selection', WPFMAdmin.actions.updateFoodinMenu); 
 
             //use body to call after dom update
             jQuery("body").on('click','a.wpfm-food-item-remove',WPFMAdmin.actions.removeFoodItem);
@@ -352,7 +352,7 @@ var WPFMAdmin= function () {
 	   /// <param name="parent" type="Food"></param>    
 	   /// <returns type="actions" />
 	   /// <since>1.0.0</since> 
-	   updateFoodinMenu: function(event){
+	   updateFoodinMenu: function(event){ 
 	   	
 	   	var category_id = jQuery('.wpfm-admin-menu-selection #wpfm-admin-food-selection').val();
 	   	if(category_id.length > 0){
@@ -393,7 +393,7 @@ var WPFMAdmin= function () {
                     error: function(result) {}
                 });
         }
-	   },
+	   }, 
 
 	   /// <summary>
 	   /// Remove food item from food menu

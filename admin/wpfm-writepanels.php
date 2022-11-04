@@ -124,6 +124,7 @@ class WPFM_Writepanels
 		wp_enqueue_script('wpfm-admin');
 
 		wp_nonce_field('save_meta_data', 'food_manager_nonce');
+
 		?>
 		<div class="wpfm-admin-food-menu-container wpfm-flex-col wpfm-admin-postbox-meta-data">
 			<div class="wpfm-admin-food-menu-container wpfm-flex-col wpfm-admin-postbox-meta-data">
@@ -138,9 +139,10 @@ class WPFM_Writepanels
 						'show_count' => true,
 						'hierarchical' => false,
 					)); ?>
+
 					<!-- Do not remove -->
 					<!--<div class="wpfm-admin-postbox-drop-btn">
-						<input type="button" id="wpfm-admin-add-food" class="button button-small" value="<?php _e('Add food', 'wp-food-manager'); ?>" />
+						<input type="button" id="wpfm-admin-add-food" class="button button-small" value="<?php //_e('Add food', 'wp-food-manager'); ?>" />
 					</div> -->
 				</div>
 			</div>
@@ -1385,6 +1387,7 @@ class WPFM_Writepanels
 	 */
 	public function wpfm_get_food_listings_by_category_id()
 	{
+		
 		if (isset($_POST['category_id']) && !empty($_POST['category_id'])) {
 
 			$args = [
@@ -1397,6 +1400,7 @@ class WPFM_Writepanels
 						'terms' => $_POST['category_id'],
 					],
 				],
+
 				// Rest of your arguments
 			];
 
@@ -1453,11 +1457,6 @@ class WPFM_Writepanels
 			endif;
 			wp_reset_postdata();
 
-			/*foreach($html as $htm){
-				echo "<pre>";
-				print_r($htm);
-				echo "</pre>";
-			}*/
 			wp_send_json(array('html' => $html, 'success' => true));
 		}
 		wp_die();
