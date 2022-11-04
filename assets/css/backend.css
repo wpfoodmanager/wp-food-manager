@@ -816,13 +816,13 @@ mark.fm_instock {
   width: 16px;
   left: 4px;
   bottom: 4px;
-  background-color: #fff;
+  background-color: #fff ;
   -webkit-transition: .4s;
   -o-transition: .4s;
   transition: .4s;
 }
 input:checked+.wpfm-field-switch-slider {
-  background-color: #379308;
+  background-color: #379308 ;
 }
 input:checked+.wpfm-field-switch-slider:before {
   -webkit-transform: translateX(26px);
