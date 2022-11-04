@@ -18,11 +18,14 @@
 }
 .no-radio-icons{
   display: none;
+  text-align: right;
 }
 .wpfm-parent-icons {
   display: inline-block;
   vertical-align: top;
   position: relative;
+  width: 100%;
+  text-align: right;
 }
 span.wpfm-searh-clear {
   position: absolute;
