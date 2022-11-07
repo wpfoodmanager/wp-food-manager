@@ -537,7 +537,7 @@ class WPFM_Writepanels
 	public static function input_date($key, $field)
 	{
 		global $thepostid;
-		$datepicker_date_format = WP_Food_Manager_Date_Time::get_datepicker_format();
+		$datepicker_date_format = !empty(get_option('date_format')) ? get_option('date_format') : 'F j, Y'; //WP_Food_Manager_Date_Time::get_datepicker_format();
 		$php_date_format        = WP_Food_Manager_Date_Time::get_view_date_format_from_datepicker_date_format($datepicker_date_format);
 		if (!isset($field['value'])) {
 			$date = get_post_meta($thepostid, $key, true);

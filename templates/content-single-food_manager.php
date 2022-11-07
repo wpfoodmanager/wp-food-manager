@@ -344,9 +344,9 @@ $food = $post;
                                             <div class="wpfm-row">
 
                                                 <?php
-                                                $date_format = WP_Food_Manager_Date_Time::get_food_manager_view_date_format();
-                                                $time_format = WP_Food_Manager_Date_Time::get_timepicker_format();                                                
-
+                                                $date_format = !empty(get_option('date_format')) ? get_option('date_format') : 'F j, Y'; //WP_Food_Manager_Date_Time::get_food_manager_view_date_format();
+                                                $time_format = !empty(get_option('time_format')) ? get_option('time_format') : 'g:i a'; //WP_Food_Manager_Date_Time::get_timepicker_format();
+                                                
                                                 foreach ($additional_fields as $name => $field) : ?>
 
                                                     <?php
@@ -669,8 +669,8 @@ $food = $post;
                                             <div class="wpfm-row">
 
                                                 <?php
-                                                $date_format = WP_Food_Manager_Date_Time::get_food_manager_view_date_format();
-                                                $time_format = WP_Food_Manager_Date_Time::get_timepicker_format();                                                
+                                                $date_format = !empty(get_option('date_format')) ? get_option('date_format') : 'F j, Y'; //WP_Food_Manager_Date_Time::get_food_manager_view_date_format();
+                                                $time_format = !empty(get_option('time_format')) ? get_option('time_format') : 'g:i a'; //WP_Food_Manager_Date_Time::get_timepicker_format();
 
                                                 foreach ($additional_fields_extra_topping as $name => $field) : 
                                                     if(!empty($repeated_count) || !empty($ext_options)){
