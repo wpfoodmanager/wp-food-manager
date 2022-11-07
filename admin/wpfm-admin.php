@@ -72,7 +72,8 @@ class WPFM_Admin {
 				$unitList[ $unit->term_id ] = $unit->name;
 			}
 		}
-		wp_register_script( 'wpfm-admin', WPFM_PLUGIN_URL. '/assets/js/admin.js', array( 'jquery' , 'jquery-ui-core', 'jquery-ui-datepicker'), WPFM_VERSION, true );
+		wp_register_script('wpfm-jquery-tiptip', WPFM_PLUGIN_URL . '/assets/js/jquery-tiptip/jquery.tipTip.min.js', array('jquery'), WPFM_VERSION, true);
+		wp_register_script( 'wpfm-admin', WPFM_PLUGIN_URL. '/assets/js/admin.js', array( 'jquery' , 'wpfm-jquery-tiptip', 'jquery-ui-core', 'jquery-ui-datepicker'), WPFM_VERSION, true );
 		wp_localize_script( 'wpfm-admin', 'wpfm_admin',
 					        array( 
 					            'ajax_url' => admin_url( 'admin-ajax.php' ),

@@ -15,6 +15,14 @@ var WPFMAdmin= function () {
         /// <since>1.0.0</since> 
         init: function() 
         {
+            //Tooltips
+            jQuery(".tips, .help_tip").tipTip({
+                'attribute': 'data-tip',
+                'fadeIn': 50,
+                'fadeOut': 50,
+                'delay': 200
+            });
+
             //jQuery(".option-desc-common").hide();
             /*jQuery("body").ready(function(){
                 jQuery("select .wpfm-opt-val").each(function(){

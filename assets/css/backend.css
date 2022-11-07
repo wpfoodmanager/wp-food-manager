@@ -555,7 +555,7 @@ input[name="_food_veg_nonveg"]{
   border-radius: 0;
 }
 
-.type-food_manager td.image.column-image {
+.type-food_manager td.food_banner.column-food_banner {
   display: flex;
   align-items: center;
 }
@@ -599,10 +599,66 @@ mark.fm_instock {
 }
 
 
-#the-list .column-image img.wpfm-organic-tag-icon {
+.widefat th.column-food_banner span{
+  display: inline-block;
+  text-indent: -9999px;
+  position: relative;
+  height: 1em;
+  width: 1em;
+  margin: 0 auto;
+  font-size: 14px;
+}
+.widefat th.column-food_banner span:before {
+  font-family: Dashicons;
+  speak: none;
+  font-weight: 400;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  margin: 0;
+  text-indent: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+}
+#the-list .column-food_banner img.wpfm-organic-tag-icon {
   margin-left: 10px;
   width: 20px;
   max-width: 100%;
+}
+.parent-organic-tag {
+  position: relative;
+  display: inline-block;
+  vertical-align: top;
+  cursor: help;
+}
+.parent-organic-tag:hover::before {
+  content: attr(data-icon-type);
+  position: absolute;
+  right: auto;
+  background: #464646;
+  color: #fff;
+  font-size: 11px;
+  border-radius: 4px;
+  left: 36px;
+  top: 0;
+  padding: 3px 10px;
+  z-index: 9;
+  width: auto;
+}
+.parent-organic-tag:hover::after{
+  content: '';
+  background: #464646;
+  height: 9px;
+  width: 9px;
+  position: absolute;
+  transform: rotate(45deg);
+  top: 7px;
+  right: -12px;
 }
 
 #wpfm-ingredient-container, #wpfm-nutrition-container {
@@ -1023,7 +1079,7 @@ select#wpfm-admin-food-selection {
 span.food-manager-uploaded-file {
   margin-right: 10px;
 }
-.widefat td.image.column-image .food_banner img {
+.widefat td.food_banner.column-food_banner .food_banner img {
   max-width: 60px;
   height: auto;
 }
@@ -1036,6 +1092,82 @@ span.no-menu-item-handle {
   display: inline-block;
 }
 
+#tiptip_holder {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 99999;
+}
+
+#tiptip_holder.tip_top {
+  padding-bottom: 5px;
+}
+
+#tiptip_holder.tip_bottom {
+  padding-top: 5px;
+}
+
+#tiptip_holder.tip_right {
+  padding-left: 5px;
+}
+
+#tiptip_holder.tip_left {
+  padding-right: 5px;
+}
+
+#tiptip_content {
+  font-size: 11px;
+  color: #fff;
+  padding: 4px 8px;
+  background: #464646;
+  border-radius: 3px;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+  -webkit-box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+  -moz-box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+#tiptip_content code {
+  background: #999;
+  padding: 1px;
+}
+
+#tiptip_arrow,
+#tiptip_arrow_inner {
+  position: absolute;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 6px;
+  height: 0;
+  width: 0;
+}
+
+#tiptip_holder.tip_top #tiptip_arrow_inner {
+  margin-top: -7px;
+  margin-left: -6px;
+  border-top-color: #464646;
+}
+
+#tiptip_holder.tip_bottom #tiptip_arrow_inner {
+  margin-top: -5px;
+  margin-left: -6px;
+  border-bottom-color: #464646;
+}
+
+#tiptip_holder.tip_right #tiptip_arrow_inner {
+  margin-top: -6px;
+  margin-left: -5px;
+  border-right-color: #464646;
+}
+
+#tiptip_holder.tip_left #tiptip_arrow_inner {
+  margin-top: -6px;
+  margin-left: -7px;
+  border-left-color: #464646;
+}
 
 
 

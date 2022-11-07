@@ -62,6 +62,7 @@ class WPFM_Writepanels
 		add_action('manage_food_manager_menu_posts_custom_column', array($this, 'shortcode_copy_content_column'), 10, 2);
 
 		//add food image column
+		add_filter('manage_edit-food_manager_columns', array($this, 'columns'));
 		add_filter('manage_food_manager_posts_columns', array($this, 'set_custom_food_columns'));
 		add_filter('manage_edit-food_manager_sortable_columns', array($this, 'set_custom_food_sortable_columns'));
 		add_action('manage_food_manager_posts_custom_column', array($this, 'custom_food_content_column'), 10, 2);
@@ -1502,6 +1503,42 @@ class WPFM_Writepanels
 		}
 	}
 
+	/**
+	 * columns function.
+	 *
+	 * @param array $columns
+	 * @return array
+	 */
+
+	public function columns($columns)
+	{
+
+		if (!is_array($columns)) {
+
+			$columns = array();
+		}
+
+		unset($columns['title'], $columns['date'], $columns['author']);
+
+		$columns['food_title'] = __('Title', 'wp-food-manager');
+
+		$columns['food_banner'] = '<span class="tips dashicons dashicons-format-image" data-tip="' . __('Banner', 'wp-food-manager') . '">' . __('Banner', 'wp-food-manager') . '</span>';
+
+		$columns['fm_stock_status'] = __('Stock Status', 'wp-food-manager');
+
+		$columns['fm_categories'] = __('Categories', 'wp-food-manager');
+
+		$columns['food_menu_order'] = __('Order', 'wp-food-manager');
+
+		$columns['food_actions'] = __('Actions', 'wp-food-manager');
+
+		if (!get_option('food_manager_enable_food_types')) {
+
+			unset($columns['food_manager_type']);
+		}
+		return $columns;
+	}
+
 	public function set_shortcode_copy_columns($columns)
 	{
 		$columns['shortcode'] = __('Shortcode', 'wp-food-manager');
@@ -1519,10 +1556,10 @@ class WPFM_Writepanels
 	{
 		$custom_col_order = array(
 	        'cb' => $columns['cb'],
-	        'title' => $columns['title'],
-	        'image' => __( 'Image', 'wp-food-manager' ),
+	        'food_title' => $columns['title'],
+	        'food_banner' => __( 'Image', 'wp-food-manager' ),
 	        'fm_stock_status' => __( 'Stock Status', 'wp-food-manager' ),
-	        'price' => __( 'Price', 'wp-food-manager' ),
+	        'fm-price' => __( 'Price', 'wp-food-manager' ),
 	        'fm_categories' => __( 'Categories', 'wp-food-manager' ),
 	        'food_menu_order' => __( 'Order', 'wp-food-manager' ),
 	        'date' => $columns['date'],
@@ -1544,7 +1581,18 @@ class WPFM_Writepanels
 
 		switch ($column) {
 
-			case 'image':
+			case 'food_title':
+				echo wp_kses_post('<div class="food_title">');
+
+				echo wp_kses_post('<a href="' . esc_url(admin_url('post.php?post=' . $post->ID . '&action=edit')) . '" class="tips food_title" data-tip="' . sprintf(wp_kses('ID: %d', 'wp-food-manager'), $post->ID) . '">' . esc_html($post->post_title) . '</a>');
+
+				echo wp_kses_post('</div>');
+
+				echo wp_kses_post('<button type="button" class="toggle-row"><span class="screen-reader-text">' . esc_html__('Show more details', 'wp-food-manager') . '</span></button>');
+
+				break;
+
+			case 'food_banner':
 				echo wp_kses_post('<div class="food_banner">');
 
 				display_food_banner();
@@ -1562,7 +1610,7 @@ class WPFM_Writepanels
 
 				break;
 
-			case 'price':
+			case 'fm-price':
 				display_food_price_tag();
 
 				break;
