@@ -79,8 +79,8 @@ class WPFM_Admin {
 					            'ajax_url' => admin_url( 'admin-ajax.php' ),
 					            'security' =>wp_create_nonce( 'wpfm-admin-security' ),
 					            'start_of_week'                      => get_option('start_of_week'),
-					            'i18n_datepicker_format'             => !empty(get_option('date_format')) ? get_option('date_format') : 'F j, Y', //WP_Food_Manager_Date_Time::get_datepicker_format(),
-								'i18n_timepicker_format'             => !empty(get_option('time_format')) ? get_option('time_format') : 'g:i a', //WP_Food_Manager_Date_Time::get_timepicker_format(),
+					            'i18n_datepicker_format'             => WP_Food_Manager_Date_Time::get_datepicker_format(), //!empty(get_option('date_format')) ? get_option('date_format') : 'F j, Y',
+								'i18n_timepicker_format'             => WP_Food_Manager_Date_Time::get_timepicker_format(), //!empty(get_option('time_format')) ? get_option('time_format') : 'g:i a',
 								'i18n_timepicker_step'               => WP_Food_Manager_Date_Time::get_timepicker_step(),
 					        )
 					    );
