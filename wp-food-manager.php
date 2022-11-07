@@ -313,9 +313,9 @@ class WP_Food_Manager {
 		) );
 
 	
-		wp_enqueue_style( 'wpfm-jquery-ui-css', WPFM_PLUGIN_URL . '/assets/js/jquery-ui/jquery-ui.css');	
-		wp_register_script( 'wpfm-slick-script', WPFM_PLUGIN_URL . '/assets/js/slick/slick.min.js', array( 'jquery' ) );
-		wp_register_style( 'wpfm-slick-style', WPFM_PLUGIN_URL . '/assets/js/slick/slick.css' , array( ) );
+		wp_enqueue_style( 'wpfm-jquery-ui-css', WPFM_PLUGIN_URL . '/assets/js/jquery-ui/jquery-ui.css'); 
+		wp_register_script( 'wpfm-slick-script', WPFM_PLUGIN_URL . '/assets/js/slick/slick.min.js', array( 'jquery' ) ); 
+		wp_register_style( 'wpfm-slick-style', WPFM_PLUGIN_URL . '/assets/js/slick/slick.css' , array( ) ); 
 		
 		wp_register_style( 'wpfm-grid-style', WPFM_PLUGIN_URL . '/assets/css/wpfm-grid.min.css');
 		wp_register_style( 'wp-food-manager-font-style', WPFM_PLUGIN_URL . '/assets/fonts/style.css');
