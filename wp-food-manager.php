@@ -254,9 +254,9 @@ class WP_Food_Manager {
 		wp_enqueue_script('wp-food-manager-food-submission');
 		wp_localize_script( 'wp-food-manager-food-submission', 'wp_food_manager_food_submission', array(
 			
-		'i18n_datepicker_format' => !empty(get_option('date_format')) ? get_option('date_format') : 'F j, Y', //WP_Food_Manager_Date_Time::get_datepicker_format(),
+		'i18n_datepicker_format' => WP_Food_Manager_Date_Time::get_datepicker_format(), //!empty(get_option('date_format')) ? get_option('date_format') : 'F j, Y',
 		
-		'i18n_timepicker_format' => !empty(get_option('time_format')) ? get_option('time_format') : 'g:i a', //WP_Food_Manager_Date_Time::get_timepicker_format(),
+		'i18n_timepicker_format' => WP_Food_Manager_Date_Time::get_timepicker_format(), //!empty(get_option('time_format')) ? get_option('time_format') : 'g:i a',
 		
 		'i18n_timepicker_step' => WP_Food_Manager_Date_Time::get_timepicker_step(),
 		'ajax_url' 	 => admin_url( 'admin-ajax.php' ),
