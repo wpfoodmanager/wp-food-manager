@@ -1168,6 +1168,9 @@ span.no-menu-item-handle {
   margin-left: -7px;
   border-left-color: #464646;
 }
+a.tips.food_title {
+  cursor: pointer;
+}
 
 
 
