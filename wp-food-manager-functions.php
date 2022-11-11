@@ -3389,7 +3389,7 @@ function wpfm_extra_topping_form_fields( $post, $field, $field_value) {
 	        } else {*/
 	        	echo '<div class="wpfm-col-md-6 wpfm-col-sm-12 wpfm-additional-info-block-details-content-left">';
 	                echo '<div class="wpfm-additional-info-block-details-content-items">';
-	                    echo '<p class="wpfm-additional-info-block-title"><strong> '.esc_attr($field['label']).' -</strong> '.esc_attr($field_value).'</p>';
+	                    echo '<p class="wpfm-additional-info-block-title"><strong> '.esc_attr($field['label']).' -</strong> '.esc_attr(ucfirst($field_value)).'</p>';
 	                echo '</div>';
 	            echo '</div>';
 	        //}
