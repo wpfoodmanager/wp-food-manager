@@ -121,121 +121,103 @@ if(!empty($extra_fields_options)){
 					            <div class="wpfm-togglediv" title="Click to toggle" aria-expanded="false" data-row-count="<?php echo $key; ?>"></div>
 					            <div class="tips wpfm-sort"></div>
 					            <strong class="attribute_name"><?php echo $extra_fields_option['option_name']; ?></strong>
-					            <span class="attribute_key"><input type="text" name="option_key_<?php echo $key; ?>" value="<?php echo $option_key; ?>" readonly=""></span>
+					            <span class="attribute_key"><input type="text" name="option_key_<?php echo esc_attr($key); ?>" value="<?php echo $option_key; ?>" readonly=""></span>
 					        </h3>
 							<div class="wpfm-metabox-content wpfm-options-box">
 								<div class="wpfm-content">
-									<fieldset class="wpfm-form-group fieldsetoption_name_<?php echo $key; ?> ">
-										<label for="option_name_<?php echo $key; ?>">Name <small>(optional)</small></label>
-										<div class="field ">
-											<input type="text" class="input-text option_name_<?php echo $key; ?>" name="option_name_<?php echo $key; ?>" id="option_name_<?php echo $key; ?>" placeholder="Enter option name" attribute="" value="<?php echo $extra_fields_option['option_name']; ?>" maxlength="">
-										</div>
-									</fieldset>
-									<fieldset class="wpfm-form-group fieldset_option_type_<?php echo $key; ?> ">
-										<label for="_option_type_<?php echo $key; ?>">Option type <small>(optional)</small></label>
-										<div class="field ">
-											<select name="_option_type_<?php echo $key; ?>" id="_option_type_<?php echo $key; ?>" attribute="">
-												<option value="checkbox" <?php echo esc_attr($selected_check);?> >Checkbox</option>
-												<option value="radio" <?php echo esc_attr($selected_radio);?> >Radio Buttons</option>
-												<option value="select" <?php echo esc_attr($selected_select);?> >Select Box</option>
-											</select>
-										</div>
-									</fieldset>
-									<fieldset class="wpfm-form-group fieldset_option_required_<?php echo $key; ?> ">
-										<label for="_option_required_<?php echo $key; ?>">Required <small>(optional)</small></label>
-										<div class="field ">
-											<label>
-												<input type="radio" name="_option_required_<?php echo $key; ?>" id="_option_required_<?php echo $key; ?>" attribute="" value="no" <?php echo $option_required; ?> > No</label>
-											<label>
-												<input type="radio" name="_option_required_<?php echo $key; ?>" id="_option_required_<?php echo $key; ?>" attribute="" value="yes" <?php echo $option_required; ?>> Yes</label>
-										</div>
-									</fieldset>
-									<!-- <fieldset class="wpfm-form-group fieldset_option_enable_desc_<?php echo $key; ?>">
-										<label for="_option_enable_desc_<?php echo $key; ?>">Description <small>(optional)</small></label>
-										<span class="wpfm-input-field">
-											<label class="wpfm-field-switch" for="_option_enable_desc_<?php echo $key; ?>">
-												<input type="checkbox" class="input-checkbox" name="_option_enable_desc_<?php echo $key; ?>" id="_option_enable_desc_<?php echo $key; ?>" value="<?php echo $extra_fields_option['option_enable_desc']; ?>" attribute="" <?php echo $option_enable_desc; ?> >
-
-												<span class="wpfm-field-switch-slider round"></span>
-											</label>
-										</span>
-									</fieldset> -->
+									<?php
 									
-									<fieldset class="wpfm-form-group fieldset_option_description_<?php echo $key; ?> option-desc-common" style="<?php //echo ($extra_fields_option['option_enable_desc'] !== '1') ? 'display: none;' : '';?>">
-										<label for="_option_enable_desc_<?php echo $key; ?>">Description <small>(optional)</small></label>
-										<div class="field ">
-											<textarea cols="20" rows="3" class="input-text" name="_option_description_<?php echo $key; ?>" id="_option_description_<?php echo $key; ?>" attribute="" placeholder="Enter the field description" maxlength=""><?php echo $extra_fields_option['option_description']; ?></textarea>
-										</div>
-									</fieldset>
+									foreach ( $food_extra_fields as $key2 => $field ) :
+										
+									if($key2 !== 'option_options'){ 
+										if($key2 !== 'option_name'){
+											$key2 = "_".$key2."_".$key;
+										} else {
+											$key2 = $key2."_".$key;
+										}
 
-									<fieldset class="wpfm-form-group fieldset_option_options_<?php echo $key; ?> ">
-										<label for="_option_options_<?php echo $key; ?>">Options <small>(optional)</small></label>
-										<div class="field ">
-											<table class="widefat">
-												<thead>
-													<tr>
-														<th> </th>
-														<th>#</th>
-														<th>Option name</th>
-														<th>Default</th>
-														<th>Price</th>
-														<th>Type of price</th>
-														<th></th>
-													</tr>
-												</thead>
-												<tbody class="ui-sortable">
-													<?php
-													foreach($extra_fields_option['option_options'] as $sub_value_count => $values){
-														$option_value_default = ($values['option_value_default'] === 'on') ? 'checked' : '';
-														$option_fixed_amount = ($values['option_value_price_type'] === 'fixed_amount') ? 'selected' : '';
-														$option_quantity_based = ($values['option_value_price_type'] === 'quantity_based') ? 'selected' : '';
-													 ?>
-														<tr class="option-tr-<?php echo $sub_value_count; ?>">
-															<td><span class="wpfm-option-sort">☰</span></td>
-															<td><?php echo $sub_value_count; ?></td>
-															<td>
-																<input type="text" name="<?php echo $key; ?>_option_value_name_<?php echo $sub_value_count; ?>" value="<?php echo $values['option_value_name']; ?>" class="opt_name" pattern=".*\S+.*" required>
-															</td>
-															<td>
-																<input type="checkbox" name="<?php echo $key; ?>_option_value_default_<?php echo $sub_value_count; ?>" class="opt_default" <?php echo $option_value_default; ?>>
-															</td>
-															<td>
-																<input type="number" name="<?php echo $key; ?>_option_value_price_<?php echo $sub_value_count; ?>" value="<?php echo $values['option_value_price']; ?>" class="opt_price" step="any" required>
-															</td>
-															<td>
-																<select name="<?php echo $key; ?>_option_value_price_type_<?php echo $sub_value_count; ?>" class="opt_select">
-																	<option value="quantity_based" <?php echo $option_quantity_based; ?>>Quantity Based</option>
-																	<option value="fixed_amount" <?php echo $option_fixed_amount; ?>>Fixed Amount</option>
-																</select>
-															</td>
-															<td><a href="javascript: void(0);" data-id="<?php echo $sub_value_count; ?>" class="option-delete-btn dashicons dashicons-dismiss">Remove</a></td>
-															<input type="hidden" class="option-value-class" name="option_value_count[<?php echo $key; ?>][]" value="<?php echo $sub_value_count; ?>">
+										if(empty($field['value'])){
+										    $field['value'] = get_post_meta($food_id, $key2, true);
+										}
+
+										?>
+										<fieldset class="wpfm-form-group fieldset<?php echo $key2; ?> ">
+											<label for="<?php echo $key2; ?>"><?php echo $field['label'] . apply_filters( 'add_food_required_label', $field['required'] ? '<span class="require-field">*</span>' : ' <small>' . __( '(optional)', 'wp-food-manager' ) . '</small>', $field ); ?></label>
+											<div class="field <?php echo $field['required'] ? 'required-field' : ''; ?>">
+												<?php get_food_manager_template( 'form-fields/' . $field['type'] . '-field.php', array( 'key' => $key2, 'field' => $field ) ); ?>
+											</div>
+										</fieldset>
+									<?php }
+									if($key2 == 'option_options'){ ?>
+										<fieldset class="wpfm-form-group fieldset_option_options_<?php echo $key; ?> ">
+											<label for="_option_options_<?php echo $key; ?>">Options <small>(optional)</small></label>
+											<div class="field ">
+												<table class="widefat">
+													<thead>
+														<tr>
+															<th> </th>
+															<th>#</th>
+															<th>Option name</th>
+															<th>Default</th>
+															<th>Price</th>
+															<th>Type of price</th>
+															<th></th>
 														</tr>
-													<?php } ?>
-												</tbody>
-												<tfoot>
-													<tr>
-														<td colspan="7"> <a class="button wpfm-add-row" data-row="<tr class='option-tr-%%repeated-option-index3%%'>
-						                    <td><span class='wpfm-option-sort'>☰</span></td>
-						                    <td>%%repeated-option-index3%%</td>
-						                    <td><input type='text' name='%%repeated-option-index2%%_option_value_name_%%repeated-option-index3%%' value='' class='opt_name' pattern='.*\S+.*' required></td>
-						                    <td><input type='checkbox' name='%%repeated-option-index2%%_option_value_default_%%repeated-option-index3%%' class='opt_default'></td>
-						                    <td><input type='number' name='%%repeated-option-index2%%_option_value_price_%%repeated-option-index3%%' value='' class='opt_price' required></td>
-						                    <td>
-						                        <select name='%%repeated-option-index2%%_option_value_price_type_%%repeated-option-index3%%' class='opt_select'>
-						                        <option value='quantity_based'>Quantity Based</option>
-						                        <option value='fixed_amount'>Fixed Amount</option>
-						                        </select>
-						                    </td>
-						                    <td><a href='javascript: void(0);' data-id='%%repeated-option-index3%%' class='option-delete-btn dashicons dashicons-dismiss'>Remove</a></td>
-						                    <input type='hidden' class='option-value-class' name='option_value_count[%%repeated-option-index2%%][]' value='%%repeated-option-index3%%'>
-						                </tr>">Add Row</a>
-														</td>
-													</tr>
-												</tfoot>
-											</table>
-										</div>
-									</fieldset>
+													</thead>
+													<tbody class="ui-sortable">
+														<?php
+														foreach($extra_fields_option['option_options'] as $sub_value_count => $values){
+															$option_value_default = ($values['option_value_default'] === 'on') ? 'checked' : '';
+															$option_fixed_amount = ($values['option_value_price_type'] === 'fixed_amount') ? 'selected' : '';
+															$option_quantity_based = ($values['option_value_price_type'] === 'quantity_based') ? 'selected' : '';
+														 ?>
+															<tr class="option-tr-<?php echo $sub_value_count; ?>">
+																<td><span class="wpfm-option-sort">☰</span></td>
+																<td><?php echo $sub_value_count; ?></td>
+																<td>
+																	<input type="text" name="<?php echo $key; ?>_option_value_name_<?php echo $sub_value_count; ?>" value="<?php echo $values['option_value_name']; ?>" class="opt_name" pattern=".*\S+.*" required>
+																</td>
+																<td>
+																	<input type="checkbox" name="<?php echo $key; ?>_option_value_default_<?php echo $sub_value_count; ?>" class="opt_default" <?php echo $option_value_default; ?>>
+																</td>
+																<td>
+																	<input type="number" name="<?php echo $key; ?>_option_value_price_<?php echo $sub_value_count; ?>" value="<?php echo $values['option_value_price']; ?>" class="opt_price" step="any" required>
+																</td>
+																<td>
+																	<select name="<?php echo $key; ?>_option_value_price_type_<?php echo $sub_value_count; ?>" class="opt_select">
+																		<option value="quantity_based" <?php echo $option_quantity_based; ?>>Quantity Based</option>
+																		<option value="fixed_amount" <?php echo $option_fixed_amount; ?>>Fixed Amount</option>
+																	</select>
+																</td>
+																<td><a href="javascript: void(0);" data-id="<?php echo $sub_value_count; ?>" class="option-delete-btn dashicons dashicons-dismiss">Remove</a></td>
+																<input type="hidden" class="option-value-class" name="option_value_count[<?php echo $key; ?>][]" value="<?php echo $sub_value_count; ?>">
+															</tr>
+														<?php } ?>
+													</tbody>
+													<tfoot>
+														<tr>
+															<td colspan="7"> <a class="button wpfm-add-row" data-row="<tr class='option-tr-%%repeated-option-index3%%'>
+							                    <td><span class='wpfm-option-sort'>☰</span></td>
+							                    <td>%%repeated-option-index3%%</td>
+							                    <td><input type='text' name='%%repeated-option-index2%%_option_value_name_%%repeated-option-index3%%' value='' class='opt_name' pattern='.*\S+.*' required></td>
+							                    <td><input type='checkbox' name='%%repeated-option-index2%%_option_value_default_%%repeated-option-index3%%' class='opt_default'></td>
+							                    <td><input type='number' name='%%repeated-option-index2%%_option_value_price_%%repeated-option-index3%%' value='' class='opt_price' required></td>
+							                    <td>
+							                        <select name='%%repeated-option-index2%%_option_value_price_type_%%repeated-option-index3%%' class='opt_select'>
+							                        <option value='quantity_based'>Quantity Based</option>
+							                        <option value='fixed_amount'>Fixed Amount</option>
+							                        </select>
+							                    </td>
+							                    <td><a href='javascript: void(0);' data-id='%%repeated-option-index3%%' class='option-delete-btn dashicons dashicons-dismiss'>Remove</a></td>
+							                    <input type='hidden' class='option-value-class' name='option_value_count[%%repeated-option-index2%%][]' value='%%repeated-option-index3%%'>
+							                </tr>">Add Row</a>
+															</td>
+														</tr>
+													</tfoot>
+												</table>
+											</div>
+										</fieldset>
+									<?php } endforeach; ?>
 								</div>
 							</div>
 						</div>
@@ -258,21 +240,6 @@ if(!empty($extra_fields_options)){
 				                <?php
 				                foreach ($food_extra_fields as $key => $field) :
 
-								/*if($key == 'option_enable_desc'){
-				                	if( strpos($key, '_') !== 0 ) {
-										$key  = "_".$key."_%%repeated-option-index%%";
-									}
-									?>
-									<fieldset class="wpfm-form-group fieldset<?php echo esc_attr($key); ?>">
-										<label for="<?php esc_attr_e($key); ?>"><?php echo esc_attr($field['label']) . apply_filters('add_food_required_label', $field['required'] ? '<span class="require-field">*</span>' : ' <small>' . __('(optional)', 'wp-food-manager') . '</small>', $field); ?></label>
-										<span class="wpfm-input-field">
-											<label class="wpfm-field-switch" for="<?php esc_attr_e($key); ?>">
-												<?php get_food_manager_template('form-fields/' . $field['type'] . '-field.php', array('key' => $key, 'field' => $field)); ?>
-												<span class="wpfm-field-switch-slider round"></span>
-											</label>
-										</span>
-									</fieldset>
-								<?php } else {*/
 									if($key == "option_name"){
 										if( strpos($key, '_') !== 0 ) {
 											$key  = $key.'_%%repeated-option-index%%';
@@ -282,13 +249,12 @@ if(!empty($extra_fields_options)){
 											$key  = "_".$key."_%%repeated-option-index%%";
 										}
 									}
-									$descClass = "";
-									if(!empty($field['value'])){
-										$descClass = "";
-									} else {
-										$descClass = "option-desc-common";
-									} ?>
-									<fieldset class="wpfm-form-group fieldset<?php echo esc_attr($key); ?> <?php if(str_contains($key, 'description')){ echo esc_attr($descClass); } ?>">
+
+									$type = !empty($field["type"]) ? $field["type"] : "text";
+									if ($type == "wp-editor") $type = "textarea";
+
+				                	?>
+									<fieldset class="wpfm-form-group fieldset<?php echo esc_attr($key); ?>">
 										<?php 
 										//if(!str_contains($key, 'description')){ ?>
 											<label for="<?php esc_attr_e($key); ?>"><?php echo esc_attr($field['label']) . apply_filters('add_food_required_label', $field['required'] ? '<span class="require-field">*</span>' : ' <small>' . __('(optional)', 'wp-food-manager') . '</small>', $field); ?></label>
@@ -297,40 +263,13 @@ if(!empty($extra_fields_options)){
 											<?php get_food_manager_template('form-fields/' . $field['type'] . '-field.php', array('key' => $key, 'field' => $field)); ?>
 										</div>
 									</fieldset>
-								<?php //} 
-								endforeach; ?>
+								<?php endforeach; ?>
 				            </div>
 				        </div>
 				    </div>'>+ Add Option 
 				    </button>
 				</div>
-				<?php /*foreach ($food_extra_fields as $key => $field) : ?>
-				<?php
-				if($key == 'option_enable_desc'){ ?>
-					<fieldset class="wpfm-form-group fieldset-<?php echo esc_attr($key); ?>">
-						<label for="<?php esc_attr_e($key); ?>"><?php echo esc_attr($field['label']) . apply_filters('add_food_required_label', $field['required'] ? '<span class="require-field">*</span>' : ' <small>' . __('(optional)', 'wp-food-manager') . '</small>', $field); ?></label>
-						<span class="wpfm-input-field">
-							<label class="wpfm-field-switch" for="<?php esc_attr_e($key); ?>">
-								<?php get_food_manager_template('form-fields/' . $field['type'] . '-field.php', array('key' => $key, 'field' => $field)); ?>
-								<span class="wpfm-field-switch-slider round"></span>
-							</label>
-						</span>
-					</fieldset>
-				<?php } else { ?>
-					<fieldset class="wpfm-form-group fieldset-<?php echo esc_attr($key); ?>">
-						<?php if($key !== 'option_description'){ ?>
-							<label for="<?php esc_attr_e($key); ?>"><?php echo esc_attr($field['label']) . apply_filters('add_food_required_label', $field['required'] ? '<span class="require-field">*</span>' : ' <small>' . __('(optional)', 'wp-food-manager') . '</small>', $field); ?></label>
-						<?php } ?>
-						<div class="field <?php echo esc_attr($field['required'] ? 'required-field' : ''); ?>">
-							<?php get_food_manager_template('form-fields/' . $field['type'] . '-field.php', array('key' => $key, 'field' => $field)); ?>
-						</div>
-					</fieldset>
-				<?php } endforeach; ?>
-				<?php do_action('add_food_extra_fields_end'); */?>
 			<?php endif; ?>
-		<?php //} else {
-
-		//} ?>
 		
 		<div class="wpfm-form-footer">
 			<input type="hidden" name="food_manager_form" value="<?php echo $form; ?>" />

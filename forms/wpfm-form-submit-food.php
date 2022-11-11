@@ -255,7 +255,7 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
     				}
 
 				    if ( ! empty( $field['taxonomy'] ) && in_array( $field['type'], array( 'term-checklist', 'term-select', 'term-multiselect' ) ) ) {
-    					if ( is_array( $values[ $group_key ][ $key ] ) ) {
+				    	if ( is_array( $values[ $group_key ][ $key ] ) && isset($values[ $group_key ][ $key ]) ) {
     						$check_value = $values[ $group_key ][ $key ];
     					} else {
     						$check_value = empty( $values[ $group_key ][ $key ] ) ? array() : array( $values[ $group_key ][ $key ] );
@@ -307,11 +307,18 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
 	 * Submit Step
 	 */
 	public function submit() {
-			// Init fields
-			//$this->init_fields(); We dont need to initialize with this function because of field edior
-			// Now field editor function will return all the fields 
-			//Get merged fields from db and default fields.
-			$this->merge_with_custom_fields('frontend' );
+
+		//get date and time setting defined in admin panel Event listing -> Settings -> Date & Time formatting
+		$datepicker_date_format 	= WP_Food_Manager_Date_Time::get_datepicker_format();
+
+		//covert datepicker format  into php date() function date format
+		$php_date_format 		= WP_Food_Manager_Date_Time::get_view_date_format_from_datepicker_date_format( $datepicker_date_format );
+		
+		// Init fields
+		//$this->init_fields(); We dont need to initialize with this function because of field edior
+		// Now field editor function will return all the fields 
+		//Get merged fields from db and default fields.
+		$this->merge_with_custom_fields('frontend' );
 			
 			
 		// Load data if neccessary
@@ -617,8 +624,9 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
 				}
 				else {
 					$values_ext = isset($values[ $group_key ][ $key ]) ? $values[ $group_key ][ $key ] : '';
-					
-					update_post_meta( $this->food_id, '_' . $key, $values_ext );
+					if($group_key !== 'extra_options'){
+						update_post_meta( $this->food_id, '_' . $key, $values_ext );
+					}
 					
 					// Handle attachments.
 					if ( 'file' === $field['type']  ) {

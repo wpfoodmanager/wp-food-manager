@@ -1318,11 +1318,10 @@ class WPFM_Writepanels
 								
 							}
 							
-							$extra_options[$option_key] = array(
-													'option_name' => $option_name,
-												);
-
 							if(!empty($custom_extra_options_fields)){
+								$extra_options[$option_key] = array(
+														'option_name' => $option_name,
+													);
 								foreach($custom_extra_options_fields as $custom_ext_key => $custom_extra_options_field){
 									foreach($custom_extra_options_field as $custom_ext_single_key => $custom_extra_options_single_field){
 										if($custom_ext_single_key !== 'option_name' && $custom_ext_single_key !== 'option_options'){
@@ -1335,11 +1334,34 @@ class WPFM_Writepanels
 										    	update_post_meta($post_id, "_".$custom_ext_single_key."_".$option_count, "");
 										    }
 									    }
+									    if($custom_ext_single_key == 'option_name'){
+									    	$custom_ext_key_post = isset($_POST[$custom_ext_single_key."_".$option_count]) ? $_POST[$custom_ext_single_key."_".$option_count] : '';
+
+									        $extra_options[$option_key][$custom_ext_single_key] = $custom_ext_key_post;
+
+										    if(!empty($custom_ext_key_post)){
+										        update_post_meta($post_id, $custom_ext_single_key."_".$option_count, $custom_ext_key_post);
+										    }
+									    }
 									    if($custom_ext_single_key == 'option_options'){
 									    	$extra_options[$option_key][$custom_ext_single_key] = $option_values;
 									    }
 								    }
 								}
+							} else {
+								update_post_meta($post_id, 'option_name_'.$option_count , $option_name);
+								update_post_meta($post_id, '_option_description_'.$option_count , $option_description);
+								update_post_meta($post_id, '_option_type_'.$option_count , $option_type);
+								update_post_meta($post_id, '_option_required_'.$option_count , $option_required);
+
+								$extra_options[$option_key] = array(
+													'option_name' => $option_name,
+													'option_type' => $option_type,
+													'option_required' => $option_required,
+													'option_enable_desc' => $option_enable_desc,
+													'option_description' => $option_description,
+													'option_options' => $option_values,
+												);
 							}
 							
 							if(!empty($additional_fields)){

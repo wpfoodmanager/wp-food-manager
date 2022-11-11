@@ -278,6 +278,10 @@ abstract class WPFM_Form {
 			$ext_multi_options = isset($_POST['option_value_count']) ? $_POST['option_value_count'] : '';
 		}
 
+		if( !add_post_meta($food_id,'wpfm_repeated_options', $repeated_options, true) ){
+			update_post_meta($food_id,'wpfm_repeated_options', $repeated_options);
+		}
+		
 		if(($option_value_count && is_array($option_value_count)) && ($repeated_options && is_array($repeated_options))){
 			foreach ( $ext_multi_options as $option_count => $option_value ) {
 
@@ -303,6 +307,9 @@ abstract class WPFM_Form {
 							}
 							$first_out = str_replace(" ", "_", strtolower($this->get_posted_field( $first_key, $field )));
 							$output = $this->get_posted_field( $key2, $field );
+
+							update_post_meta($food_id, $key2, $output);
+
 							$values[ $group_key ][$first_out][ $key ] = $output;
 
 							$output2 = array();
@@ -365,6 +372,13 @@ abstract class WPFM_Form {
 					// Set fields value
 
 					$this->fields[ $group_key ][ $key ]['value'] = $values[ $group_key ][ $key ];
+				}
+			}
+			for($i = 1; $i <= 100; $i++){
+				if($key == 'option_name'){
+					delete_post_meta($food_id, $key."_".$i, "");
+				} else {
+					delete_post_meta($food_id, "_".$key."_".$i, "");
 				}
 			}
 			update_post_meta($food_id,'_wpfm_extra_options','');

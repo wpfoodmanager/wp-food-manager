@@ -8,6 +8,10 @@ var WPFMFront= function () {
             //use body to call after dom update
             jQuery("body").on('click','a.wpfm-food-item-remove',WPFMFront.actions.removeFoodItem);
 
+            //Action button For Extra topping field's content to View more and View less
+            jQuery("body").on('click','span.wpfm-view-more',WPFMFront.actions.viewmoreFoodFields);
+            jQuery("body").on('click','span.wpfm-view-less',WPFMFront.actions.viewlessFoodFields);
+
             /* General tab - Regular and Sale price validation */
             jQuery('body').on( 'wpfm_add_error_tip', function( e, element, error_type ) {
                 var offset = element.position();
@@ -201,7 +205,18 @@ var WPFMFront= function () {
                 }
             },*/
 
-            
+            viewmoreFoodFields: function(event){
+                jQuery(this).prev().slideToggle();
+                jQuery(this).fadeOut();
+                jQuery(this).next().fadeIn();
+            },
+
+            viewlessFoodFields: function(event){
+                jQuery(this).prev().prev().slideToggle();
+                jQuery(this).fadeOut();
+                jQuery(this).prev().fadeIn();
+            },
+
             addElementRow:function(event){
                 var total_rows = 0;
                 total_rows = jQuery(this).parents('table').find('tbody tr').length;
