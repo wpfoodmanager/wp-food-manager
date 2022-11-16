@@ -254,7 +254,7 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
     					return new WP_Error( 'validation-error', sprintf( __( '%s is a required field.', 'wp-food-manager' ), $field['label'] ) );
     				}
 
-				    if ( ! empty( $field['taxonomy'] ) && in_array( $field['type'], array( 'term-checklist', 'term-select', 'term-multiselect' ) ) ) {
+				    if ( ! empty( $field['taxonomy'] ) && in_array( $field['type'], array( 'term-checklist', 'term-select', 'term-multiselect' ) ) && !empty($values[ $group_key ][ $key ]) ) {
 				    	if ( is_array( $values[ $group_key ][ $key ] ) && isset($values[ $group_key ][ $key ]) ) {
     						$check_value = $values[ $group_key ][ $key ];
     					} else {
@@ -602,11 +602,13 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
 		foreach ( $this->fields as $group_key => $group_fields ) {
 			foreach ( $group_fields as $key => $field ) {
 				// Save taxonomies
-				if ( ! empty( $field['taxonomy'] ) ) {
+				if ( ! empty( $field['taxonomy'] ) && !empty($values[ $group_key ][ $key ]) ) {
 					if ( is_array( $values[ $group_key ][ $key ] ) ) {
 						wp_set_object_terms( $this->food_id, $values[ $group_key ][ $key ], $field['taxonomy'], false );
 					} else {
-						wp_set_object_terms( $this->food_id, array( $values[ $group_key ][ $key ] ), $field['taxonomy'], false );
+						if(!empty($values[ $group_key ][ $key ])){
+							wp_set_object_terms( $this->food_id, array( $values[ $group_key ][ $key ] ), $field['taxonomy'], false );
+						}
 					}				
 				// oragnizer logo is a featured image
 				}

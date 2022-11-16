@@ -3330,19 +3330,18 @@ function wpfm_extra_topping_form_fields( $post, $field, $field_value) {
 		echo '<div class="wpfm-col-md-6 wpfm-col-sm-12 wpfm-additional-info-block-details-content-left">';
 	        echo '<div class="wpfm-additional-info-block-details-content-items">';
 	            echo '<p class="wpfm-additional-info-block-title"><strong>'.$field['label'].' - </strong>';
-	             
-	            $terms = wp_get_post_terms($post->ID, $field['taxonomy']);
-	            $term_checklist = '';
-	            if (!empty($terms)):
-	                $numTerm = count($terms);
-	                $i = 0;
-	                foreach ($terms as $term) :
-	                    $term_checklist .= $term->name;
-	                    if ($numTerm > ++$i)
-	                    $term_checklist .= ', ';
-	                endforeach;
-	            endif;
-	            echo esc_attr($term_checklist);
+		            if(!empty($field_value)){
+		                if(is_array($field_value)){
+		                    $my_checks_value_arr = [];
+		                    foreach ($field_value[$field['taxonomy']] as $key => $my_value) {
+				            	$term_name = get_term( $my_value )->name;
+		                        $my_checks_value_arr[] = $term_name;
+		                    }
+		                    printf(__('%s', 'wp-food-manager'),  implode(', ', $my_checks_value_arr));
+		                } else {
+		                	echo get_term( ucfirst($field_value) )->name;
+		                }
+		            }
 	            echo '</p>';
 	        echo '</div>';
 	    echo '</div>';
@@ -3371,6 +3370,35 @@ function wpfm_extra_topping_form_fields( $post, $field, $field_value) {
 	    echo '</div>';
 	}
 
+	elseif ($field['type'] == 'term-select') {
+		$term_name = get_term( $field_value )->name;
+		echo '<div class="wpfm-col-md-6 wpfm-col-sm-12 wpfm-additional-info-block-details-content-left">';
+            echo '<div class="wpfm-additional-info-block-details-content-items">';
+                echo '<p class="wpfm-additional-info-block-title"><strong> '.esc_attr($field['label']).' -</strong> '.esc_attr($term_name).'</p>';
+            echo '</div>';
+        echo '</div>';
+	}
+	elseif ($field['type'] == 'term-multiselect') {
+		echo '<div class="wpfm-col-md-6 wpfm-col-sm-12 wpfm-additional-info-block-details-content-left">';
+            echo '<div class="wpfm-additional-info-block-details-content-items">';
+                echo '<p class="wpfm-additional-info-block-title">';
+	                echo '<strong>'.esc_attr($field['label']).'</strong> - ';
+	                if(!empty($field_value)){
+		                if(is_array($field_value)){
+		                    $my_select_value_arr = [];
+		                    foreach ($field_value as $key => $my_value) {
+				                $term_name = get_term( $my_value )->name;
+		                        $my_select_value_arr[] = $term_name;
+		                    }
+		                    printf(__('%s', 'wp-food-manager'),  implode(', ', $my_select_value_arr));
+		                } else {
+		                	echo get_term( ucfirst($field_value) )->name;
+		                }
+		            }
+	            echo '</p>';
+            echo '</div>';
+        echo '</div>';
+	}
 	else {
 		if (is_array($field_value)) :
 	        echo '<div class="wpfm-col-md-6 wpfm-col-sm-12 wpfm-additional-info-block-details-content-left">';
@@ -3398,18 +3426,14 @@ function wpfm_extra_topping_form_fields( $post, $field, $field_value) {
 }
 
 
-function wpfm_category_checklist( $taxonomy, $key_name ) {
+function wpfm_category_checklist( $taxonomy, $key_name, $checked_term ) {
 	$post = get_post();
-
-	if ( $post && $post->ID ) {
-		$checked_terms = wp_get_object_terms( $post->ID, $taxonomy, array( 'fields' => 'ids' ) );
-	} else {
-		$checked_terms = array();
-	}
 
 	$terms = get_terms(
 		array(
 			'taxonomy'     => $taxonomy,
+			'orderby'          => 'name',
+			'hide_empty'       => false
 		)
 	);
 
@@ -3421,7 +3445,7 @@ function wpfm_category_checklist( $taxonomy, $key_name ) {
 		$popular_ids[] = $term->term_id;
 
 		$id      = "$taxonomy-$term->term_id";
-		$checked = in_array( $term->term_id, $checked_terms, true ) ? 'checked="checked"' : '';
+		$checked = in_array($term->term_id, $checked_term) ? 'checked="checked"' : '';
 		?>
 
 		<li id="<?php echo $tax->name; ?>-<?php echo $id; ?>" class="<?php echo $tax->name; ?>">
@@ -3441,12 +3465,6 @@ function wpfm_category_checklist( $taxonomy, $key_name ) {
 
 function wpfm_dropdown_categories( $taxonomy, $key_name, $selected_term ) {
 	$post = get_post();
-
-	if ( $post && $post->ID ) {
-		$checked_terms = wp_get_object_terms( $post->ID, $taxonomy, array( 'fields' => 'ids' ) );
-	} else {
-		$checked_terms = array();
-	}
 
 	$terms = get_terms(
 		array(
