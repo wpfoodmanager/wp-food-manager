@@ -308,7 +308,11 @@ abstract class WPFM_Form {
 							$first_out = str_replace(" ", "_", strtolower($this->get_posted_field( $first_key, $field )));
 							$output = $this->get_posted_field( $key2, $field );
 
-							update_post_meta($food_id, $key2, $output);
+							if($field['type'] == 'file'){
+								$output = $this->get_posted_field( "current_".$key2, $field );
+								update_post_meta($food_id, "current_".$key2, $output);
+							}
+							update_post_meta($food_id, $key2, $output);							
 
 							$values[ $group_key ][$first_out][ $key ] = $output;
 

@@ -635,7 +635,9 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
 								$maybe_attach[] = $file_url;
 							}
 						} else {
-							$maybe_attach[] = $values[ $group_key ][ $key ];
+							if(!empty($values[ $group_key ][ $key ])){
+								$maybe_attach[] = $values[ $group_key ][ $key ];
+							}
 						}
 					}
 				}
