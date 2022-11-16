@@ -580,6 +580,26 @@ $food = $post;
                                                                     </p>
                                                                 </div>
                                                             </div>
+                                                        <?php elseif ($field['type'] == 'term-select') : ?>
+                                                            <div class="wpfm-col-12 wpfm-additional-info-block-textarea">
+                                                                <div class="wpfm-additional-info-block-details-content-items">
+                                                                    <p class="wpfm-additional-info-block-textarea-text">
+                                                                        <strong><?php echo esc_attr($field['label']); ?></strong> - <?php
+                                                                        if($field['taxonomy'] == 'food_manager_tag'){
+                                                                            display_food_tag();
+                                                                        }
+                                                                        elseif($field['taxonomy'] == 'food_manager_category'){
+                                                                            display_food_category();   
+                                                                        }
+                                                                        elseif($field['taxonomy'] == 'food_manager_type'){
+                                                                            display_food_type();   
+                                                                        } else {
+                                                                            echo esc_attr($field_value);
+                                                                        }
+                                                                        ?> 
+                                                                    </p>
+                                                                </div>
+                                                            </div>
                                                         <?php else : ?>
                                                             <?php if (is_array($field_value)) : ?>
                                                                 <div class="wpfm-col-md-6 wpfm-col-sm-12 wpfm-additional-info-block-details-content-left">
