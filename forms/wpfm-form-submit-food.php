@@ -613,8 +613,8 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
 				// oragnizer logo is a featured image
 				}
 				elseif ( $field['type'] == 'date' ) {
-					$date = $values[ $group_key ][ $key ];	
-					if(!empty($date)) {
+					if(!empty($values[ $group_key ][ $key ])) {
+						$date = $values[ $group_key ][ $key ];
 						//Convert date and time value into DB formatted format and save eg. 1970-01-01
 						$date_dbformatted = WP_food_Manager_Date_Time::date_parse_from_format($php_date_format  , $date );
 						$date_dbformatted = !empty($date_dbformatted) ? $date_dbformatted : $date;

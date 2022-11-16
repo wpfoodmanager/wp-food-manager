@@ -294,6 +294,23 @@ var WPFMFront= function () {
                     }
                 }).disableSelection();
                 //jQuery(this).closest(".wpfm-actions").prev().find(".option-desc-common").hide();
+                if (jQuery('input[data-picker="datepicker"]').length > 0) {
+                    if (wp_food_manager_food_submission.show_past_date) {
+                        jQuery('input[data-picker="datepicker"]').datepicker({
+                            dateFormat: wp_food_manager_food_submission.i18n_datepicker_format,
+                            firstDay: wp_food_manager_food_submission.start_of_week,
+                            monthNames: wp_food_manager_food_submission.monthNames,
+                        });
+                    }
+                    else {
+                        jQuery('input[data-picker="datepicker"]').datepicker({
+                            minDate: 0,
+                            dateFormat: wp_food_manager_food_submission.i18n_datepicker_format,
+                            firstDay: wp_food_manager_food_submission.start_of_week,
+                            monthNames: wp_food_manager_food_submission.monthNames,
+                        });
+                    }
+                }
             },
     	},
     }
