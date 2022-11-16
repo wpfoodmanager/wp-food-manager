@@ -311,6 +311,7 @@ var WPFMFront= function () {
                         });
                     }
                 }
+                jQuery(".food-manager-multiselect").chosen({search_contains:!0})
             },
     	},
     }
