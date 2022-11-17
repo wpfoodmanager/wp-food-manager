@@ -398,9 +398,19 @@ class WPFM_Writepanels
 						<?php foreach ((array) $field['value'] as $value) { ?> 
 							<span class="food-manager-uploaded-file multiple-file"> 
 								<input type="hidden" name="<?php echo esc_attr($name); ?>[]" placeholder="<?php echo esc_attr($field['placeholder']); ?>" value="<?php echo esc_attr($value); ?>" /> 
-								<span class="food-manager-uploaded-file-preview"> 
-									<img src="<?php echo esc_attr($value); ?>"> 
-									<a class="food-manager-remove-uploaded-file" href="javascript:void(0);">[remove]</a> 
+								<span class="food-manager-uploaded-file-preview">
+									<?php if (in_array(pathinfo($value, PATHINFO_EXTENSION), ['png', 'jpg', 'jpeg', 'gif', 'svg'])) : ?>
+										<img src="<?php echo esc_attr($value); ?>">
+										<a class="food-manager-remove-uploaded-file" href="javascript:void(0);">[remove]</a> 
+									<?php else :
+										if(!empty($value)){ ?>
+				                            <span class="wpfm-icon">
+				                                <strong style="display: block; padding-top: 5px;"><?php echo esc_attr(wp_basename($value)); ?></strong>
+				                                <a target="_blank" href="<?php echo esc_attr($value);?>"><i class="wpfm-icon-download3" style="margin-right: 3px;"></i>Download</a>
+				                            </span>
+				                            <a class="food-manager-remove-uploaded-file" href="javascript:void(0);">[remove]</a> 
+				                        <?php }
+			                        endif; ?>
 								</span> 
 							</span> 
 						<?php } ?> 

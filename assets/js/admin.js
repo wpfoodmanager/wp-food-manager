@@ -724,6 +724,7 @@ var WPFMAdmin= function () {
                         file_target_wrapper = jQuery(this).parent(".file_url").find('.food-manager-uploaded-file.multiple-file');
                         file_target_input = file_target_wrapper.find('input');
                         var data_field_name = jQuery(this).parents(".wpfm-admin-postbox-form-field")[0].dataset.fieldName;
+                        var image_types     = [ 'jpg', 'gif', 'png', 'jpeg', 'jpe' ];
 
                         file_target_wrapper_apeend = jQuery(this).prev();
                         
@@ -754,7 +755,11 @@ var WPFMAdmin= function () {
                                 });
                             jQuery.each(attachment, function( index, attach ) {
                                 jQuery(file_target_input).val(attach.attributes.url);
-                                jQuery(file_target_wrapper_apeend).append("<span class='food-manager-uploaded-file multiple-file'><input type='hidden' name='"+data_field_name+"[]' placeholder='' value='"+attach.attributes.url+"'><span class='food-manager-uploaded-file-preview'><img src='"+attach.attributes.url+"'><a class='food-manager-remove-uploaded-file' href='javascript:void(0);'>[remove]</a></span>");
+                                if ( jQuery.inArray( attach.attributes.subtype, image_types ) >= 0 ) {
+                                    jQuery(file_target_wrapper_apeend).append("<span class='food-manager-uploaded-file multiple-file'><input type='hidden' name='"+data_field_name+"[]' placeholder='' value='"+attach.attributes.url+"'><span class='food-manager-uploaded-file-preview'><img src='"+attach.attributes.url+"'><a class='food-manager-remove-uploaded-file' href='javascript:void(0);'>[remove]</a></span>");
+                                } else {
+                                    jQuery(file_target_wrapper_apeend).append("<span class='food-manager-uploaded-file multiple-file'><input type='hidden' name='"+data_field_name+"[]' placeholder='' value='"+attach.attributes.url+"'><span class='food-manager-uploaded-file-preview'><span class='wpfm-icon'><strong style='display: block; padding-top: 5px;'>"+attach.attributes.filename+"</strong><a target='_blank' href='"+attach.attributes.url+"'><i class='wpfm-icon-download3' style='margin-right: 3px;'></i>Download</a></span><a class='food-manager-remove-uploaded-file' href='javascript:void(0);'>[remove]</a></span></span>");
+                                }
                             });
                             
                             /*jQuery(file_target_input).val(attachment.url);
