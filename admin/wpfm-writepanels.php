@@ -425,9 +425,19 @@ class WPFM_Writepanels
 								} 
 								?>
 								<input type="hidden" name="<?php echo esc_attr($name); ?>" id="<?php echo esc_attr($key); ?>" placeholder="<?php echo esc_attr($field['placeholder']); ?>" value="<?php echo esc_attr($field['value']); ?>" /> 
-								<span class="food-manager-uploaded-file-preview"> 
-									<img src="<?php echo esc_attr($field['value']); ?>">
-									<a class="food-manager-remove-uploaded-file" href="javascript:void(0);">[remove]</a> 
+								<span class="food-manager-uploaded-file-preview">
+									<?php if (in_array(pathinfo($field['value'], PATHINFO_EXTENSION), ['png', 'jpg', 'jpeg', 'gif', 'svg'])) : ?>
+										<img src="<?php echo esc_attr($field['value']); ?>">
+										<a class="food-manager-remove-uploaded-file" href="javascript:void(0);">[remove]</a> 
+									<?php else :
+										if(!empty($field['value'])){ ?>
+				                            <span class="wpfm-icon">
+				                                <strong style="display: block; padding-top: 5px;"><?php echo esc_attr(wp_basename($field['value'])); ?></strong>
+				                                <a target="_blank" href="<?php echo esc_attr($field['value']);?>"><i class="wpfm-icon-download3" style="margin-right: 3px;"></i>Download</a>
+				                            </span>
+				                            <a class="food-manager-remove-uploaded-file" href="javascript:void(0);">[remove]</a> 
+				                        <?php }
+			                        endif; ?>
 								</span> 
 							<?php endif; ?> 
 						</span>
