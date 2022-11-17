@@ -106,6 +106,10 @@ span.wpfm-searh-clear {
   align-items: center;
 }
 
+button.button.button-small.wp_food_manager_upload_file_button {
+  margin-top: 5px;
+}
+
 .food-manager-uploaded-file span.wpfm-icon {
   border: 2px solid #e4e4e4;
   display: inline-block;
