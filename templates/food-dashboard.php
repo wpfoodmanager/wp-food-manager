@@ -99,7 +99,7 @@
 									<?php 
 									$wpfm_veg_nonveg_tags = get_food_veg_nonveg_icon_tag($food);
 
-									$image_id = get_term_meta ( $wpfm_veg_nonveg_tags[0]->term_id, 'image_id', true );
+									$image_id = !empty($wpfm_veg_nonveg_tags) ? get_term_meta ( $wpfm_veg_nonveg_tags[0]->term_id, 'image_id', true ) : '';
 									$image_src = wp_get_attachment_image_src ( $image_id );
 
 									if(!empty($wpfm_veg_nonveg_tags)){
