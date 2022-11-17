@@ -189,7 +189,7 @@ class WP_Food_Manager_Field_Editor
 
 			<div class="wp-food-manager-food-form-field-editor <?php echo $group_key; ?>">
 
-				<h3><?php printf(esc_attr__('%s form fields', 'wp-food-manager'), ucfirst(ucfirst(str_replace("_", " ", $group_key)))); ?></h3>
+				<h3><?php printf(esc_attr__('%s form fields', 'wp-food-manager'), ucfirst(str_replace("options", "Toppings", str_replace("_", " ", $group_key)))); ?></h3>
 				<table class="widefat">
 					<thead>
 						<tr>
