@@ -514,7 +514,7 @@ $food = $post;
                                                                             <div><img src="<?php echo esc_attr($field_value); ?>"></div>
                                                                         <?php else : ?>
                                                                             <p class="wpfm-additional-info-block-title"><strong><?php echo esc_attr(wp_basename($field_value)); ?></strong></p>
-                                                                            <!-- <div class="wpfm-icon"><a target="_blank" class="wpfm-icon-download3" href="<?php echo esc_attr($field_value); ?>"> <?php _e('Download', 'wp-food-manager'); ?></a></div> -->
+                                                                            <div class="wpfm-icon"><a target="_blank" class="wpfm-icon-download3" href="<?php echo esc_attr($field_value); ?>"> <?php _e('Download', 'wp-food-manager'); ?></a></div>
                                                                         <?php endif; ?>
                                                                     <?php endif; ?>
                                                                 </div>

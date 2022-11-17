@@ -3301,16 +3301,22 @@ function wpfm_extra_topping_form_fields( $post, $field, $field_value) {
                         if (in_array(pathinfo($file, PATHINFO_EXTENSION), ['png', 'jpg', 'jpeg', 'gif', 'svg'])) :
                             echo '<div><img src="'.esc_attr($file).'"></div>';
                         else :
-                            echo '<div class="wpfm-icon">';
-                                echo '<p class="wpfm-additional-info-block-title"><strong>'.esc_attr(wp_basename($file)).'</strong></p>';
-                            echo '</div>';
+                        	if(!empty($file)){
+	                            echo '<div class="wpfm-icon">';
+	                                echo '<p class="wpfm-additional-info-block-title"><strong>'.esc_attr(wp_basename($file)).'</strong></p>';
+	                                echo '<a target="_blank" href="'.esc_attr($file).'"><i class="wpfm-icon-download3" style="margin-right: 3px;"></i>Download</a>';
+	                            echo '</div>';
+	                        }
                         endif;
                     endforeach;
                 else :
                     if (in_array(pathinfo($field_value, PATHINFO_EXTENSION), ['png', 'jpg', 'jpeg', 'gif', 'svg'])) :
                         echo '<div><img src="'.esc_attr($field_value).'"></div>';
                     else :
-                        echo '<p class="wpfm-additional-info-block-title"><strong>'.esc_attr(wp_basename($field_value)).'</strong></p>';
+                    	if(!empty($field_value[0])){
+	                        echo '<p class="wpfm-additional-info-block-title"><strong>'.esc_attr(wp_basename($field_value)).'</strong></p>';
+	                        echo '<a target="_blank" href="'.esc_attr($field_value).'"><i class="wpfm-icon-download3" style="margin-right: 3px;"></i>Download</a>';
+	                    }
                     endif;
                 endif;
             echo '</div>';
