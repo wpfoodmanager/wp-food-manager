@@ -533,7 +533,7 @@ class WPFM_Writepanels
 			$name = $key;
 		}
 	?>
-		<div class="wpfm_editor">
+		<div class="wpfm_editor" data-field-name="<?=$name;?>">
 			<p class="wpfm-admin-postbox-form-field <?=$name;?>">
 				<label for="<?php echo esc_attr($key); ?>"><?php echo esc_html($field['label']); ?>:
 					<?php if (!empty($field['description'])) : ?>
@@ -606,8 +606,12 @@ class WPFM_Writepanels
 		} else {
 			$name = $key;
 		}
+		$fieldLabel = '';
+		if($field['type'] == 'wp-editor'){
+			$fieldLabel =  'wp-editor-field';
+		}
 	?>
-		<p class="wpfm-admin-postbox-form-field <?=$name;?> ">
+		<p class="wpfm-admin-postbox-form-field <?=$name;?> <?php echo $fieldLabel; ?>" data-field-name="<?=$name;?>">
 			<label for="<?php echo esc_attr($key); ?>"><?php echo esc_html($field['label']); ?> : <?php if (!empty($field['description'])) : ?>: <span class="tips" data-tip="<?php echo esc_attr($field['description']); ?>">[?]</span><?php endif; ?></label>
 			<span class="wpfm-input-field">
 				<textarea name="<?php echo esc_attr($name); ?>" id="<?php echo esc_attr($key); ?>" rows="4" cols="63" placeholder="<?php echo esc_attr($field['placeholder']); ?>"><?php echo esc_html($field['value']); ?></textarea>

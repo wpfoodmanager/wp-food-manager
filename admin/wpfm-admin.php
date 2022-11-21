@@ -143,6 +143,7 @@ class WPFM_Admin {
 			) );
 			
 		}
+		wp_enqueue_editor();
 	}
 
 	/**

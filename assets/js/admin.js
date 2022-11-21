@@ -6,7 +6,6 @@ var WPFMAdmin= function () {
     var file_frame;
     var file_target_input;
     var file_target_wrapper;
-
     return {
 	    ///<summary>
         ///Initializes the AdminSettings.  
@@ -476,6 +475,25 @@ var WPFMAdmin= function () {
                     }
                 }).disableSelection();
                 //jQuery(this).closest(".postbox").find(".option-desc-common").hide();
+
+
+                //initialize WP editor on click for new WP editor's field.
+                var repeater_row_counts = jQuery(this).parents(".wpfm-options-wrapper").children(".wpfm-options-wrap").length;
+                fieldLabel = jQuery(this).parents(".wpfm-options-wrapper").find("p.wpfm-admin-postbox-form-field.wp-editor-field").attr("data-field-name");
+                var fieldChangedLabel = fieldLabel.replace(fieldLabel.match(/(\d+)/g)[0], '');
+                var editorId = fieldChangedLabel + repeater_row_counts;
+                
+                wp.editor.initialize(editorId, {
+                    tinymce: {
+                      wpautop: false,
+                      textarea_rows: 8,
+                      plugins : 'lists,paste,tabfocus,wplink,wordpress',
+                      toolbar1: 'bold,italic,|,bullist,numlist,|,link,unlink,|,undo,redo',
+                      toolbar2: '',
+                    },
+                    quicktags: {buttons: 'strong,em,link,block,del,ins,img,ul,ol,li,code,more,close'},
+                    mediaButtons: false,
+                });
        },
 
         /// <summary>
