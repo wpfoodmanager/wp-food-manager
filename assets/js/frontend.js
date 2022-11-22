@@ -257,13 +257,18 @@ var WPFMFront= function () {
                         });
                     }
                 max_index = max_index + 1;
+                
                 var html = jQuery(this).data('row').replace( /%%repeated-option-index%%/g, max_index );
+                var html_data = html.replace( /%repeated-option-index%/g, max_index );
+
+                /*var data_html = jQuery(this).data('row').replace( /%/g, '' );
+                var html = data_html.replace( /repeated-option-index/g, max_index );*/
 
                 //Old before() function - Developer Kushang
                 //jQuery('.wpfm-options-wrapper .wpfm-actions').before( html );
 
                 //New Before() function - Developer kushang
-                jQuery('.wpfm-form-wrapper .wpfm-actions').before(html);
+                jQuery('.wpfm-form-wrapper .wpfm-actions').before(html_data);
 
                 jQuery(".container .wpfm-form-wrapper table.widefat tbody").sortable({
                     connectWith: ".container .wpfm-form-wrapper table.widefat tbody",
@@ -312,6 +317,30 @@ var WPFMFront= function () {
                     }
                 }
                 jQuery(".food-manager-multiselect").chosen({search_contains:!0})
+
+                //initialize WP editor on click for new WP editor's field.
+                var repeater_row_counts = jQuery(this).parents(".wpfm-options-wrapper").children(".wpfm-options-wrap").length;
+                fieldLabel = jQuery(this).parents(".wpfm-options-wrapper").find("fieldset.wpfm-form-group.wp-editor-field").attr("data-field-name");
+                var fieldChangedLabel = fieldLabel.replace(fieldLabel.match(/(\d+)/g)[0], '');
+                var editorId = fieldChangedLabel + repeater_row_counts;
+                
+                wp.editor.initialize(editorId, {
+                    tinymce: {
+                        wpautop: false,
+                        textarea_rows: 8,
+                        plugins : 'lists,paste,tabfocus,wplink,wordpress',
+                        toolbar1: 'bold,italic,|,bullist,numlist,|,link,unlink,|,undo,redo',
+                        toolbar2: '',
+                        paste_as_text: true,
+                        paste_auto_cleanup_on_paste: true,
+                        paste_remove_spans: true,
+                        paste_remove_styles: true,
+                        paste_remove_styles_if_webkit: true,
+                        paste_strip_class_attributes: true,
+                    },
+                    quicktags: false, //{buttons: 'strong,em,link,block,del,ins,img,ul,ol,li,code,more,close'}
+                    mediaButtons: false,
+                });
             },
     	},
     }

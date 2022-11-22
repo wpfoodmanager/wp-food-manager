@@ -101,8 +101,9 @@ if(!empty($extra_fields_options)){
 			<?php if ($food_extra_fields) : ?>
 				<?php do_action('add_food_extra_fields_start'); ?>
 				<h3 class="wpfm-form-title wpfm-heading-text"><?php _e('Extra Toppings', 'wp-food-manager'); ?></h3>
-				<?php if(!empty($extra_fields_options)){
-				//foreach($option_value_counts as $key => $option_value_count){
+				<div class="wpfm-options-wrapper wpfm-metaboxes">
+					<?php if(!empty($extra_fields_options)){
+					//foreach($option_value_counts as $key => $option_value_count){
 					foreach($option_value_counts3 as $key => $extra_fields_option){
 						$selected_check = ($extra_fields_option['option_type'] === 'checkbox') ? 'selected' : '';
 						$selected_radio = ($extra_fields_option['option_type'] === 'radio') ? 'selected' : '';
@@ -140,8 +141,12 @@ if(!empty($extra_fields_options)){
 										    $field['value'] = get_post_meta($food_id, $key2, true);
 										}
 
+										$fieldClassLabel = '';
+										if(!empty($field['type']) && $field['type'] == 'wp-editor'){
+											$fieldClassLabel = 'wp-editor-field';
+										}
 										?>
-										<fieldset class="wpfm-form-group fieldset<?php echo $key2; ?> ">
+										<fieldset class="wpfm-form-group fieldset<?php echo $key2; ?> <?php echo $fieldClassLabel; ?>" data-field-name="<?php echo $key2; ?>">
 											<label for="<?php echo $key2; ?>"><?php echo $field['label'] . apply_filters( 'add_food_required_label', $field['required'] ? '<span class="require-field">*</span>' : ' <small>' . __( '(optional)', 'wp-food-manager' ) . '</small>', $field ); ?></label>
 											<div class="field <?php echo $field['required'] ? 'required-field' : ''; ?>">
 												<?php get_food_manager_template( 'form-fields/' . $field['type'] . '-field.php', array( 'key' => $key2, 'field' => $field ) ); ?>
@@ -224,50 +229,56 @@ if(!empty($extra_fields_options)){
 					<?php } 
 					}
 				//} ?>
-				<div class="wpfm-actions">
-				    <button type="button" class="wpfm-add-button button button-primary" id="wpfm-add-new-option" data-row='<div class="wpfm-options-wrap wpfm-metabox postbox wpfm-options-box-%%repeated-option-index%%">
-				        <input type="hidden" name="repeated_options[]" value="%%repeated-option-index%%" class="repeated-options">
-				        <h3 class="">
-				            <a href="javascript: void(0);" data-id="%%repeated-option-index%%" class="wpfm-delete-btn dashicons dashicons-dismiss">Remove</a>
-				            <div class="wpfm-togglediv" title="Click to toggle" aria-expanded="false" data-row-count="%%repeated-option-index%%"></div>
-				            <div class="tips wpfm-sort"></div>
-				            <strong class="attribute_name"><?php _e("Option %%repeated-option-index%%","wp-food-manager");?></strong>
-				            <span class="attribute_key"><input type="text" name="option_key_%%repeated-option-index%%" value="option_%%repeated-option-index%%" readonly>
-				                </span>
-				        </h3>
-				        <div class="wpfm-metabox-content wpfm-options-box">
-				            <div class="wpfm-content">
-				                <?php
-				                foreach ($food_extra_fields as $key => $field) :
+					<div class="wpfm-actions">
+					    <button type="button" class="wpfm-add-button button button-primary" id="wpfm-add-new-option" data-row='<div class="wpfm-options-wrap wpfm-metabox postbox wpfm-options-box-%%repeated-option-index%%">
+					        <input type="hidden" name="repeated_options[]" value="%%repeated-option-index%%" class="repeated-options">
+					        <h3 class="">
+					            <a href="javascript: void(0);" data-id="%%repeated-option-index%%" class="wpfm-delete-btn dashicons dashicons-dismiss">Remove</a>
+					            <div class="wpfm-togglediv" title="Click to toggle" aria-expanded="false" data-row-count="%%repeated-option-index%%"></div>
+					            <div class="tips wpfm-sort"></div>
+					            <strong class="attribute_name"><?php _e("Option %%repeated-option-index%%","wp-food-manager");?></strong>
+					            <span class="attribute_key"><input type="text" name="option_key_%%repeated-option-index%%" value="option_%%repeated-option-index%%" readonly>
+					                </span>
+					        </h3>
+					        <div class="wpfm-metabox-content wpfm-options-box">
+					            <div class="wpfm-content">
+					                <?php
+					                foreach ($food_extra_fields as $key => $field) :
 
-									if($key == "option_name"){
-										if( strpos($key, '_') !== 0 ) {
-											$key  = $key.'_%%repeated-option-index%%';
+										if($key == "option_name"){
+											if( strpos($key, '_') !== 0 ) {
+												$key  = $key.'_%%repeated-option-index%%';
+											}
+										} else {
+											if( strpos($key, '_') !== 0 ) {
+												$key  = "_".$key."_%%repeated-option-index%%";
+											}
 										}
-									} else {
-										if( strpos($key, '_') !== 0 ) {
-											$key  = "_".$key."_%%repeated-option-index%%";
+
+										$fieldClassLabel = '';
+										if(!empty($field['type']) && $field['type'] == 'wp-editor'){
+											$fieldClassLabel = 'wp-editor-field';
 										}
-									}
 
-									$type = !empty($field["type"]) ? $field["type"] : "text";
-									if ($type == "wp-editor") $type = "textarea";
+										$type = !empty($field["type"]) ? $field["type"] : "text";
+										if ($type == "wp-editor") $type = "textarea";
 
-				                	?>
-									<fieldset class="wpfm-form-group fieldset<?php echo esc_attr($key); ?>">
-										<?php 
-										//if(!str_contains($key, 'description')){ ?>
-											<label for="<?php esc_attr_e($key); ?>"><?php echo esc_attr($field['label']) . apply_filters('add_food_required_label', $field['required'] ? '<span class="require-field">*</span>' : ' <small>' . __('(optional)', 'wp-food-manager') . '</small>', $field); ?></label>
-										<?php //} ?>
-										<div class="field <?php echo esc_attr($field['required'] ? 'required-field' : ''); ?>">
-											<?php get_food_manager_template('form-fields/' . $field['type'] . '-field.php', array('key' => $key, 'field' => $field)); ?>
-										</div>
-									</fieldset>
-								<?php endforeach; ?>
-				            </div>
-				        </div>
-				    </div>'>+ Add Option 
-				    </button>
+					                	?>
+										<fieldset class="wpfm-form-group fieldset<?php echo esc_attr($key); ?> <?php echo esc_attr($fieldClassLabel); ?>" data-field-name="<?php echo $key; ?>">
+											<?php 
+											//if(!str_contains($key, 'description')){ ?>
+												<label for="<?php esc_attr_e($key); ?>"><?php echo esc_attr($field['label']) . apply_filters('add_food_required_label', $field['required'] ? '<span class="require-field">*</span>' : ' <small>' . __('(optional)', 'wp-food-manager') . '</small>', $field); ?></label>
+											<?php //} ?>
+											<div class="field <?php echo esc_attr($field['required'] ? 'required-field' : ''); ?>">
+												<?php get_food_manager_template('form-fields/' . $field['type'] . '-field.php', array('key' => $key, 'field' => $field)); ?>
+											</div>
+										</fieldset>
+									<?php endforeach; ?>
+					            </div>
+					        </div>
+					    </div>'>+ Add Option 
+					    </button>
+					</div>
 				</div>
 			<?php endif; ?>
 		

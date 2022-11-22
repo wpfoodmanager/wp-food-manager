@@ -495,7 +495,8 @@ abstract class WPFM_Form {
 
 	protected function get_posted_field( $key, $field ) {
 	    
-	    return isset( $_POST[ $key ] ) ? $this->sanitize_posted_field( $_POST[ $key ] ) : '';
+	    //return isset( $_POST[ $key ] ) ? $this->sanitize_posted_field( $_POST[ $key ] ) : '';
+	    return isset( $_POST[ $key ] ) ? $_POST[ $key ] : '';
 	}
 	
 	/**

@@ -322,6 +322,7 @@ class WP_Food_Manager {
 		
 		wp_enqueue_style( 'wpfm-grid-style');
 		wp_enqueue_style( 'wp-food-manager-font-style');
+		wp_enqueue_editor();
 	}
 	/**
 	 * Check cron status
