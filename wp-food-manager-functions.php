@@ -3340,7 +3340,7 @@ function wpfm_extra_topping_form_fields( $post, $field, $field_value) {
 	}
 
 	elseif ($field['type'] == 'file') {
-		echo '<div class="wpfm-col-md-12 wpfm-col-sm-12 wpfm-additional-info-block-details-content-left">';
+		echo '<div class="wpfm-col-md-12 wpfm-col-sm-12 wpfm-additional-info-block-details-content-left" style="margin-bottom: 20px;">';
             echo '<div class="wpfm-additional-info-block-details-content-items wpfm-additional-file-slider">';
             echo '<p class="wpfm-additional-info-block-title"><strong>'.$field['label'].' - </strong></p>';
                 if (is_array($field_value)) :

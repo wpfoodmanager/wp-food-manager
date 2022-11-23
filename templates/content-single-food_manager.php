@@ -311,7 +311,7 @@ $food = $post;
                                             $field_value = $food->$field_key;
 
                                             if (isset($field_value) && !empty($field_value)) { ?>
-                                            <?php }
+                                            <?php /*}
                                         }*/ ?>
 
                                         <div class="wpfm-additional-info-block-details">
@@ -501,27 +501,29 @@ $food = $post;
                                                             </div>
 
                                                         <?php elseif ($field['type'] == 'file') : ?>
-                                                            <div class="wpfm-col-md-6 wpfm-col-sm-12 wpfm-additional-info-block-details-content-left">
+                                                            <div class="wpfm-col-md-12 wpfm-col-sm-12 wpfm-additional-info-block-details-content-left" style="margin-bottom: 20px;">
                                                                 <p class="wpfm-additional-info-block-title"><strong><?php printf(__('%s', 'wp-food-manager'),  $field['label']); ?> - </strong></p>
                                                                 <div class="wpfm-additional-info-block-details-content-items wpfm-additional-file-slider">
                                                                     <?php if (is_array($field_value)) : ?>
-                                                                        <?php foreach ($field_value as $file) : ?>
-                                                                            <?php if (in_array(pathinfo($file, PATHINFO_EXTENSION), ['png', 'jpg', 'jpeg', 'gif', 'svg'])) : ?>
-                                                                                <div><img src="<?php echo esc_attr($file); ?>"></div>
-                                                                            <?php else : ?>
-                                                                                <div class="wpfm-icon">
-                                                                                    <p class="wpfm-additional-info-block-title"><strong><?php echo esc_attr(wp_basename($file)); ?></strong></p>
-                                                                                    <a target="_blank" class="wpfm-icon-download3" href="<?php echo esc_attr($file); ?>"> <?php _e('Download', 'wp-food-manager'); ?></a>
-                                                                                </div>
-                                                                            <?php endif; ?>
-                                                                        <?php endforeach; ?>
+                                                                        <div class="wpfm-img-multi-container">
+                                                                            <?php foreach ($field_value as $file) : ?>
+                                                                                <?php if (in_array(pathinfo($file, PATHINFO_EXTENSION), ['png', 'jpg', 'jpeg', 'gif', 'svg'])) : ?>
+                                                                                    <div class="wpfm-img-multiple"><img src="<?php echo esc_attr($file); ?>"></div>
+                                                                                <?php else : ?>
+                                                                                    <div class="wpfm-icon">
+                                                                                        <p class="wpfm-additional-info-block-title"><strong><?php echo esc_attr(wp_basename($file)); ?></strong></p>
+                                                                                        <a target="_blank" href="<?php echo esc_attr($file); ?>"><i class='wpfm-icon-download3' style='margin-right: 3px;'></i> <?php _e('Download', 'wp-food-manager'); ?></a>
+                                                                                    </div>
+                                                                                <?php endif; ?>
+                                                                            <?php endforeach; ?>
+                                                                        </div>
                                                                     <?php else : ?>
                                                                         <?php if (in_array(pathinfo($field_value, PATHINFO_EXTENSION), ['png', 'jpg', 'jpeg', 'gif', 'svg'])) : ?>
-                                                                            <div><img src="<?php echo esc_attr($field_value); ?>"></div>
-                                                                        <?php else : ?>
-                                                                            <p class="wpfm-additional-info-block-title"><strong><?php echo esc_attr(wp_basename($field_value)); ?></strong></p>
-                                                                            <div class="wpfm-icon"><a target="_blank" class="wpfm-icon-download3" href="<?php echo esc_attr($field_value); ?>"> <?php _e('Download', 'wp-food-manager'); ?></a></div>
-                                                                        <?php endif; ?>
+                                                                            <div class="wpfm-img-single"><img src="<?php echo esc_attr($field_value); ?>"></div>
+                                                                        <?php else : 
+                                                                            if(wpfm_begnWith($field_value, "http")) { ?>
+                                                                                <div class="wpfm-icon"><p class="wpfm-additional-info-block-title"><strong><?php echo esc_attr(wp_basename($field_value)); ?></strong></p><a target="_blank" href="<?php echo esc_attr($field_value); ?>"><i class='wpfm-icon-download3' style='margin-right: 3px;'></i> <?php _e('Download', 'wp-food-manager'); ?></a></div>
+                                                                        <?php } endif; ?>
                                                                     <?php endif; ?>
                                                                 </div>
                                                             </div>
