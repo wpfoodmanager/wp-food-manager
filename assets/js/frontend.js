@@ -206,13 +206,15 @@ var WPFMFront= function () {
             },*/
 
             viewmoreFoodFields: function(event){
-                jQuery(this).prev().slideToggle();
+                //jQuery(this).prev().slideToggle();
+                jQuery(this).prev().css({"visibility": "visible", "height": "100%" , "transform": "scaleY(1)"});
                 jQuery(this).fadeOut();
                 jQuery(this).next().fadeIn();
             },
 
             viewlessFoodFields: function(event){
-                jQuery(this).prev().prev().slideToggle();
+                //jQuery(this).prev().prev().slideToggle();
+                jQuery(this).prev().prev().css({"visibility": "hidden", "height": "0" , "transform": "scaleY(0)", "transition": "all 150ms"});
                 jQuery(this).fadeOut();
                 jQuery(this).prev().fadeIn();
             },

@@ -3293,25 +3293,27 @@ function wpfm_extra_topping_form_fields( $post, $field, $field_value) {
 	}
 
 	elseif ($field['type'] == 'file') {
-		echo '<div class="wpfm-col-md-6 wpfm-col-sm-12 wpfm-additional-info-block-details-content-left">';
+		echo '<div class="wpfm-col-md-12 wpfm-col-sm-12 wpfm-additional-info-block-details-content-left">';
             echo '<div class="wpfm-additional-info-block-details-content-items wpfm-additional-file-slider">';
             echo '<p class="wpfm-additional-info-block-title"><strong>'.$field['label'].' - </strong></p>';
                 if (is_array($field_value)) :
-                    foreach ($field_value as $file) :
-                        if (in_array(pathinfo($file, PATHINFO_EXTENSION), ['png', 'jpg', 'jpeg', 'gif', 'svg'])) :
-                            echo '<div><img src="'.esc_attr($file).'"></div>';
-                        else :
-                        	if(!empty($file)){
-	                            echo '<div class="wpfm-icon">';
-	                                echo '<p class="wpfm-additional-info-block-title"><strong>'.esc_attr(wp_basename($file)).'</strong></p>';
-	                                echo '<a target="_blank" href="'.esc_attr($file).'"><i class="wpfm-icon-download3" style="margin-right: 3px;"></i>Download</a>';
-	                            echo '</div>';
-	                        }
-                        endif;
-                    endforeach;
+                	echo '<div class="wpfm-img-multi-container">';
+	                    foreach ($field_value as $file) :
+	                        if (in_array(pathinfo($file, PATHINFO_EXTENSION), ['png', 'jpg', 'jpeg', 'gif', 'svg'])) :
+	                            echo '<div class="wpfm-img-multiple"><img src="'.esc_attr($file).'"></div>';
+	                        else :
+	                        	if(!empty($file)){
+		                            echo '<div class="wpfm-icon">';
+		                                echo '<p class="wpfm-additional-info-block-title"><strong>'.esc_attr(wp_basename($file)).'</strong></p>';
+		                                echo '<a target="_blank" href="'.esc_attr($file).'"><i class="wpfm-icon-download3" style="margin-right: 3px;"></i>Download</a>';
+		                            echo '</div>';
+		                        }
+	                        endif;
+	                    endforeach;
+                    echo '</div>';
                 else :
                     if (in_array(pathinfo($field_value, PATHINFO_EXTENSION), ['png', 'jpg', 'jpeg', 'gif', 'svg'])) :
-                        echo '<div><img src="'.esc_attr($field_value).'"></div>';
+                        echo '<div class="wpfm-img-single"><img src="'.esc_attr($field_value).'"></div>';
                     else :
                     	if(!empty($field_value[0])){
 	                        echo '<p class="wpfm-additional-info-block-title"><strong>'.esc_attr(wp_basename($field_value)).'</strong></p>';

@@ -1072,7 +1072,7 @@ $food = $post;
 <script type="text/javascript">
     jQuery(document).ready(function ()
     {
-        jQuery('.wpfm-single-food-slider').slick({
+        jQuery('.wpfm-single-food-slider, .wpfm-img-multi-container').slick({
             dots: true,
             infinite: true,
             speed: 500,
