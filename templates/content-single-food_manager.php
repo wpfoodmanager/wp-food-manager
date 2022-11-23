@@ -445,7 +445,11 @@ $food = $post;
                                                                     <?php endforeach; ?>
                                                                 </div>
                                                             <?php endif; ?>
-                                                        <?php elseif ($field['type'] == 'textarea' || $field['type'] == 'wp-editor') : ?>
+                                                        <?php elseif ($field['type'] == 'textarea' || $field['type'] == 'wp-editor') :
+                                                            if(is_array($field_value)){
+                                                                $field_value = '';
+                                                            }
+                                                            ?>
                                                             <div class="wpfm-col-12 wpfm-additional-info-block-textarea">
                                                                 <div class="wpfm-additional-info-block-details-content-items">
                                                                     <p class="wpfm-additional-info-block-title"><strong> <?php printf(__('%s', 'wp-food-manager'),  $field['label']); ?></strong></p>
@@ -457,8 +461,10 @@ $food = $post;
                                                                 <div class="wpfm-additional-info-block-details-content-items">
                                                                     <?php
                                                                     $my_value_arr = [];
-                                                                    foreach ($field_value as $key => $my_value) {
-                                                                        $my_value_arr[] = $field['options'][$my_value];
+                                                                    if(!empty($field_value)){
+                                                                        foreach ($field_value as $key => $my_value) {
+                                                                            $my_value_arr[] = $field['options'][$my_value];
+                                                                        }
                                                                     }
                                                                     ?>
                                                                     <p class="wpfm-additional-info-block-title"><strong><?php printf(__('%s', '-food-manager'),  $field['label']); ?> -</strong> <?php printf(__('%s', 'wp-food-manager'),  implode(', ', $my_value_arr)); ?></p>

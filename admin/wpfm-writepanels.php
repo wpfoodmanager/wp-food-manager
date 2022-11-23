@@ -527,6 +527,9 @@ class WPFM_Writepanels
 		if (!isset($field['value']) || empty($field['value'])) {
 			$field['value'] = get_post_meta($thepostid, $key, true);
 		}
+		if(is_array($field['value'])){
+			$field['value'] = '';
+		}
 		if (!empty($field['name'])) {
 			$name = $field['name'];
 		} else {
