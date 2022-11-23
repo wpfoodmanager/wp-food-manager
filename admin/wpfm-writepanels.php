@@ -200,20 +200,48 @@ class WPFM_Writepanels
 		wp_nonce_field('save_meta_data', 'food_manager_nonce');
 
 		$icon_arrs = wpfm_get_font_icons();
-		
+		$food_icon_arrs = wpfm_get_font_food_icons();
 		?>
-
 		<?php
-
 		echo '<div class="wpfm-parent-icons"><input type="text" id="wpfm_icon_search" name="wpfm_icon_search" placeholder="Icon Search"><span class="wpfm-searh-clear"><i class="fa fa-times"></i></span></div>';
 		echo '<div class="no-radio-icons"><strong>No icons found!</strong></div>';
-		echo "<div class='wpfm-font-wesome-class'>";
+		//echo "<h2 class='wp-food-menu-icon-title'>General Icons</h2>";
+		echo "<div class='wpfm-font-awesome-class'>";
 			foreach($icon_arrs as $key => $icon_arr){
 				$radio_checked = (get_post_meta($thepostid, 'wpfm_radio_icons', true) === $key) ? "checked" : "";
 				$key_name = str_replace("fa-", "", $key);
 				echo '<div class="sub-font-icon"><input type="radio" id="'.$key.'" name="radio_icons" value="'.$key.'" '.$radio_checked.'><label for="'.$key.'"><span class="wpfm-icon-key-name">'.$key_name.'</span><i class="fa '.$key.'"></i></label></div>';
 			}
+			foreach($food_icon_arrs as $key => $icon_arr){
+				$radio_checked = (get_post_meta($thepostid, 'wpfm_radio_icons', true) === $key) ? "checked" : "";
+				$key_name = str_replace("wpfm-menu-", "", $key);
+				echo '<div class="sub-font-icon"><input type="radio" id="'.$key.'" name="radio_icons" value="'.$key.'" '.$radio_checked.'><label for="'.$key.'"><span class="wpfm-icon-key-name">'.$key_name.'</span>';
+				if($key_name == 'fast-cart'){
+					echo '<span class="wpfm-menu wpfm-menu-fast-cart"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span></span>';
+				} elseif($key_name == 'rice-bowl') {
+					echo '<span class="wpfm-menu wpfm-menu-rice-bowl"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span></span>';
+				} else {
+					echo '<span class="wpfm-menu '.$key.'"></span>';
+				}
+				echo "</span></label></div>";
+			}
 		echo "</div>";
+		/*echo "<h2 class='wp-food-menu-icon-title'>WP Food Icons</h2>";
+		echo "<div class='wpfm-food-font-icon-class'>";
+			foreach($food_icon_arrs as $key => $icon_arr){
+				$radio_checked = (get_post_meta($thepostid, 'wpfm_radio_icons', true) === $key) ? "checked" : "";
+				$key_name = str_replace("wpfm-food-", "", $key);
+				echo '<div class="sub-font-icon"><input type="radio" id="'.$key.'" name="radio_icons" value="'.$key.'" '.$radio_checked.'><label for="'.$key.'"><span class="wpfm-icon-key-name">'.$key_name.'</span>';
+				if($key_name == 'fast-cart'){
+					echo '<span class="wpfm-food wpfm-food-fast-cart"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span></span>';
+				} elseif($key_name == 'rice-bowl') {
+					echo '<span class="wpfm-food wpfm-food-rice-bowl"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span></span>';
+				} else {
+					echo '<span class="wpfm-food '.$key.'"></span>';
+				}
+				echo "</span></label></div>";
+			}
+		echo "</div>";*/
 	}
 
 	/**

@@ -319,9 +319,11 @@ class WP_Food_Manager {
 		
 		wp_register_style( 'wpfm-grid-style', WPFM_PLUGIN_URL . '/assets/css/wpfm-grid.min.css');
 		wp_register_style( 'wp-food-manager-font-style', WPFM_PLUGIN_URL . '/assets/fonts/style.css');
+		wp_register_style( 'wp-food-manager-food-icons-style', WPFM_PLUGIN_URL . '/assets/fonts-food-icons/style.css');
 		
 		wp_enqueue_style( 'wpfm-grid-style');
 		wp_enqueue_style( 'wp-food-manager-font-style');
+		wp_enqueue_style( 'wp-food-manager-food-icons-style');
 		wp_enqueue_editor();
 	}
 	/**

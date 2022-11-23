@@ -11,7 +11,7 @@ if(isset($featured_img_url) && empty($featured_img_url)){
 
 $term = get_queried_object();
 $term_id = !empty($term) ? get_post_meta ( $term->ID, '_food_item_cat_ids', true ) : '';
-$term_name = !empty($term_id) ? get_term( $term_id[0] )->name : '';
+$term_name = !empty($term_id[0]) ? get_term( $term_id[0] )->name : '';
 
 $image_id = !empty($term_id) ? get_term_meta ( $term_id[0], 'food_cat_image_id', true ) : '';
 $image_url = wp_get_attachment_image_src ( $image_id, 'full' );
@@ -42,12 +42,27 @@ $image_url = wp_get_attachment_image_src ( $image_id, 'full' );
                             <h3>
                                 <?php the_title(); 
                                 $wpfm_radio_icons = get_post_meta(get_the_ID(), 'wpfm_radio_icons', true); 
+                                $without_food_str = str_replace("wpfm-menu-", "", $wpfm_radio_icons); 
                                 $without_fa_str = str_replace("fa-", "", $wpfm_radio_icons); 
-                                $data_food_menu = ucwords(str_replace("-", " ", $without_fa_str)); 
+                                $data_food_menu = ucwords(str_replace("-", " ", $without_fa_str));
+                                $data_food_menu2 = ucwords(str_replace("-", " ", $without_food_str));
                                 
-                                if($wpfm_radio_icons){ 
-                                    echo "<span class='wpfm-front-radio-icon' data-food-menu='".$data_food_menu."'><i class='fa ".$wpfm_radio_icons."'></i></span>"; 
-                                } 
+                                if(wpfm_begnWith($wpfm_radio_icons,"fa")){
+                                    if($wpfm_radio_icons){ 
+                                        echo "<span class='wpfm-front-radio-icon fa-icon' data-food-menu='".$data_food_menu."'><i class='fa ".$wpfm_radio_icons."'></i></span>"; 
+                                    }                                    
+                                } else {
+                                    if($wpfm_radio_icons){
+                                        if($wpfm_radio_icons == 'wpfm-menu-fast-cart'){
+                                            echo '<span class="wpfm-front-radio-icon food-icon" data-food-menu="'.$data_food_menu2.'"><span class="wpfm-menu '.$wpfm_radio_icons.'"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span></span></span>';
+                                        } elseif($wpfm_radio_icons == 'wpfm-menu-rice-bowl'){
+                                            echo '<span class="wpfm-front-radio-icon food-icon" data-food-menu="'.$data_food_menu2.'"><span class="wpfm-menu '.$wpfm_radio_icons.'"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span></span></span>';
+                                        } else {
+                                            echo "<span class='wpfm-front-radio-icon food-icon' data-food-menu='".$data_food_menu2."'><span class='wpfm-menu ".$wpfm_radio_icons."'></span></span>"; 
+                                        }
+                                    }
+                                }
+
                                 ?>
                             </h3>
                             <?php

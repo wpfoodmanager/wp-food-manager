@@ -160,7 +160,7 @@ var WPFMAdmin= function () {
             jQuery('body').on("keyup", "#wpfm_icon_search", (function() {
                 jQuery(this).next().show();
                 var t = jQuery(this),
-                    i = t.parents("div.inside").find(".wpfm-font-wesome-class .sub-font-icon"),
+                    i = t.parents("div.inside").find(".wpfm-font-awesome-class .sub-font-icon, .wpfm-food-font-icon-class .sub-font-icon"),
                     a = new RegExp(t.val(), "gi");
                 a ? i.each((function() {
                     var t = jQuery(this);
@@ -177,7 +177,8 @@ var WPFMAdmin= function () {
             jQuery('body').on("click", "span.wpfm-searh-clear", function() {
                 jQuery(this).prev().val("");
                 jQuery(this).hide();
-                jQuery("div.inside").find(".wpfm-font-wesome-class .sub-font-icon").show();
+                jQuery("div.inside").find(".wpfm-font-awesome-class .sub-font-icon").show();
+                jQuery("div.inside").find(".wpfm-food-font-icon-class .sub-font-icon").show();
                 jQuery(".no-radio-icons").hide();
             });
 

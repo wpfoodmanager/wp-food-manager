@@ -6,15 +6,28 @@
 .food_manager_page_food-manager-settings #adminmenuwrap{
   position: relative !important;
 }
-.wpfm-font-wesome-class {
+.wpfm-font-awesome-class, .wpfm-food-font-icon-class {
   display: grid;
   grid-template-columns: auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto;
-  height: 200px;
+  height: 192px;
   overflow-y: auto;
   grid-auto-rows: 48px;
+  margin-bottom: 30px;
 }
-.wpfm-font-wesome-class i.fa{
+.wpfm-food-font-icon-class{
+  height: auto;
+  margin-bottom: 0;
+}
+h2.wp-food-menu-icon-title {
+  background: #dddddd;
+  font-size: 16px !important;
+  font-weight: 500 !important;
+}
+.wpfm-font-awesome-class i.fa{
   font-size: 18px;
+}
+.wpfm-font-awesome-class span.wpfm-menu{
+  font-size: 26px; 
 }
 .no-radio-icons{
   display: none;
@@ -54,6 +67,7 @@ span.wpfm-searh-clear {
   right: 5px;
   width: auto;
   z-index: 99;
+  padding: 1px 0 3px;
 }
 .sub-font-icon input[type=radio]:hover + label span.wpfm-icon-key-name::before {
   background: #000;
@@ -85,7 +99,7 @@ span.wpfm-searh-clear {
   bottom: 0;
   z-index: -1;
 }
-.sub-font-icon input[type=radio]:checked + label i{
+.sub-font-icon input[type=radio]:checked + label i, .sub-font-icon input[type=radio]:checked + label span{
   color: #fff;
 }
 .sub-font-icon input[type=radio]:checked - .sub-font-icon{

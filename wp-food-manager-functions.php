@@ -2815,6 +2815,53 @@ function wpfm_get_font_icons() {
 		'fa-font-awesome'                        => 'f2b4'
 	);
 }
+function wpfm_get_font_food_icons() {
+
+	return array(
+		'wpfm-menu-broccoli'                            => 'e900',
+		'wpfm-menu-buffet-breakfast'                    => 'e901',
+		'wpfm-menu-chili-pepper'                        => 'e902',
+		'wpfm-menu-chocolate-bar'                       => 'e904',
+		'wpfm-menu-cinnamon-roll'                       => 'e905',
+		'wpfm-menu-cutlery'                             => 'e906',
+		'wpfm-menu-deliver-food'                        => 'e907',
+		'wpfm-menu-dog-bowl'                            => 'e908',
+		'wpfm-menu-energy-drink'                        => 'e909',
+		'wpfm-menu-fast-cart'                     	  => 'e90a',
+		'wpfm-menu-food'                          	  => 'e90f',
+		'wpfm-menu-food-bar'                            => 'e910',
+		'wpfm-menu-food-receiver'                       => 'e911',
+		'wpfm-menu-french-fries'                        => 'e912',
+		'wpfm-menu-hamburger'                			  => 'e913',
+		'wpfm-menu-hot-breakfast'                       => 'e914',
+		'wpfm-menu-hot-dog'                             => 'e915',
+		'wpfm-menu-ice-cream-bowl'                      => 'e916',
+		'wpfm-menu-ingredients'                         => 'e917',
+		'wpfm-menu-meal'                        		  => 'e918',
+		'wpfm-menu-melting-ice-cream'                   => 'e919',
+		'wpfm-menu-motorcycle-delivery-multiple-boxes'  => 'e91a',
+		'wpfm-menu-no-food'                        	  => 'e91b',
+		'wpfm-menu-noodles'                        	  => 'e91c',
+		'wpfm-menu-organic-food'                        => 'e91d',
+		'wpfm-menu-paprika'                        	  => 'e91e',
+		'wpfm-menu-pizza'                        	 	  => 'e91f',
+		'wpfm-menu-restaurant-pickup'                   => 'e920',
+		'wpfm-menu-rice-bowl'                        	  => 'e921',
+		'wpfm-menu-samosa'                        	  => 'e925',
+		'wpfm-menu-spaghetti'                        	  => 'e926',
+		'wpfm-menu-sushi'                        		  => 'e927',
+		'wpfm-menu-taco'								  => 'e928',
+		'wpfm-menu-vegan-food'                          => 'e929',
+		'wpfm-menu-weber'                        		  => 'e92a',
+		'wpfm-menu-wedding-cake'                        => 'e92b',
+		'wpfm-menu-wrap'                        		  => 'e92c'
+	);
+}
+
+function wpfm_begnWith($str, $begnString) {
+  $len = strlen($begnString);
+  return (substr($str, 0, $len) === $begnString);
+}
 
 if ( ! function_exists( 'get_food_listings_keyword_search' ) ) :
 

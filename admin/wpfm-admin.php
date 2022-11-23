@@ -106,6 +106,8 @@ class WPFM_Admin {
 
 		wp_enqueue_style('wpfm-font-style', WPFM_PLUGIN_URL.'/assets/fonts/style.css');
 
+		wp_enqueue_style('wpfm-font-food-icons-style', WPFM_PLUGIN_URL.'/assets/fonts-food-icons/style.css');
+
 		wp_enqueue_script( 'jquery' );
 		wp_enqueue_script( 'jquery-ui-core' );
 		wp_enqueue_script( 'jquery-ui-sortable' );
