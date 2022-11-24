@@ -3486,6 +3486,12 @@ function wpfm_extra_topping_form_fields( $post, $field, $field_value) {
 	}
 }
 
+function wpfm_isMultiArray($a){
+	if(is_array($a)){
+    	foreach($a as $v) if(is_array($v)) return TRUE;
+    }
+    return FALSE;
+}
 
 function wpfm_category_checklist( $taxonomy, $key_name, $checked_term ) {
 	$post = get_post();
