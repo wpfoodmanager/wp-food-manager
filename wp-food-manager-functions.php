@@ -2860,6 +2860,9 @@ function wpfm_get_font_food_icons() {
 
 function wpfm_begnWith($str, $begnString) {
   $len = strlen($begnString);
+  if(is_array($str)){
+  	$str = '';
+  }
   return (substr($str, 0, $len) === $begnString);
 }
 
