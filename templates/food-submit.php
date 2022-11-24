@@ -263,6 +263,8 @@ if(!empty($extra_fields_options)){
 										$type = !empty($field["type"]) ? $field["type"] : "text";
 										if ($type == "wp-editor") $type = "textarea";
 
+										$field['value'] = '';
+										
 					                	?>
 										<fieldset class="wpfm-form-group fieldset<?php echo esc_attr($key); ?> <?php echo esc_attr($fieldClassLabel); ?>" data-field-name="<?php echo $key; ?>">
 											<?php 
