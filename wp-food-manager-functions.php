@@ -3301,6 +3301,9 @@ function wpfm_extra_topping_form_fields( $post, $field, $field_value) {
 	}
 
 	elseif ($field['type'] == 'textarea' || $field['type'] == 'wp-editor') {
+		if(wpfm_begnWith($field_value, "http")){
+		    $field_value = '';
+		}
 	    echo '<div class="wpfm-col-12 wpfm-additional-info-block-textarea">';
 	        echo '<div class="wpfm-additional-info-block-details-content-items">';
 	        	echo '<p class="wpfm-additional-info-block-title"><strong>'.$field['label'].'</strong></p>';

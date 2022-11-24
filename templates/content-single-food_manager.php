@@ -446,7 +446,7 @@ $food = $post;
                                                                 </div>
                                                             <?php endif; ?>
                                                         <?php elseif ($field['type'] == 'textarea' || $field['type'] == 'wp-editor') :
-                                                            if(is_array($field_value)){
+                                                            if(is_array($field_value) || wpfm_begnWith($field_value, "http")){
                                                                 $field_value = '';
                                                             }
                                                             ?>
