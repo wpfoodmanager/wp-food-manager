@@ -4,7 +4,8 @@ global $post;
 $featured_img_url = get_the_post_thumbnail_url(get_the_ID(),'full'); 
 
 if(isset($featured_img_url) && empty($featured_img_url)){
-    $featured_img_url = apply_filters( 'wpfm_default_food_banner', WPFM_PLUGIN_URL . '/assets/images/wpfm-placeholder.jpg' );
+    //$featured_img_url = apply_filters( 'wpfm_default_food_banner', WPFM_PLUGIN_URL . '/assets/images/wpfm-placeholder.jpg' );
+    $featured_img_url = '';
 } else {
     $featured_img_url = get_the_post_thumbnail_url(get_the_ID(),'full'); 
 }
@@ -21,13 +22,15 @@ $image_url = wp_get_attachment_image_src ( $image_id, 'full' );
         <div class="wpfm-single-food-wrapper">
             <div class="wpfm-single-food-body">
                 <div class="wpfm-row">
-                    <div class="wpfm-col-xs-12 wpfm-col-sm-12 wpfm-col-md-12 wpfm-single-food-images">
-                        <div class="wpfm-food-single-image-wrapper">
-                            <div class="wpfm-food-single-image">
-                                <img itemprop="image" content="<?php echo esc_url($featured_img_url); ?>" src="<?php echo esc_url($featured_img_url); ?>" alt="">
+                    <?php if(!empty($featured_img_url)): ?>
+                        <div class="wpfm-col-xs-12 wpfm-col-sm-12 wpfm-col-md-12 wpfm-single-food-images">
+                            <div class="wpfm-food-single-image-wrapper">
+                                <div class="wpfm-food-single-image">
+                                    <img itemprop="image" content="<?php echo esc_url($featured_img_url); ?>" src="<?php echo esc_url($featured_img_url); ?>" alt="">
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    <?php endif; ?>
                     <div class="wpfm-col-xs-12 wpfm-col-sm-12 wpfm-col-md-12 wpfm-single-food-left-content">
                         <!-- <div class="wpfm-single-food-short-info">
                             <div class="wpfm-food-details">
@@ -66,7 +69,12 @@ $image_url = wp_get_attachment_image_src ( $image_id, 'full' );
                                 ?>
                             </h3>
                             <?php
-                            if(!empty($image_url) && is_array($image_url)){
+                            if(!empty($featured_img_url)){
+                                echo "<div class='fm-food-cat-image' style='display: none;'>";
+                                echo "<h2>".$term_name."</h2>";
+                                echo "<img src='".$featured_img_url."' alt='".$term_name."'>";
+                                echo "</div>";
+                            } elseif(!empty($image_url) && is_array($image_url)) {
                                 echo "<div class='fm-food-cat-image'>";
                                 echo "<h2>".$term_name."</h2>";
                                 echo "<img src='".$image_url[0]."' alt='".$term_name."'>";
