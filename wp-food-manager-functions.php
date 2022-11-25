@@ -3301,10 +3301,10 @@ function wpfm_extra_topping_form_fields( $post, $field, $field_value) {
 	}
 
 	elseif ($field['type'] == 'textarea' || $field['type'] == 'wp-editor') {
-		if(wpfm_begnWith($field_value, "http")){
+		if(wpfm_begnWith($field_value, "http") || is_array($field_value)){
 		    $field_value = '';
 		}
-	    echo '<div class="wpfm-col-12 wpfm-additional-info-block-textarea">';
+		echo '<div class="wpfm-col-12 wpfm-additional-info-block-textarea">';
 	        echo '<div class="wpfm-additional-info-block-details-content-items">';
 	        	echo '<p class="wpfm-additional-info-block-title"><strong>'.$field['label'].'</strong></p>';
             	echo '<p class="wpfm-additional-info-block-textarea-text">'.$field_value.'</p>';
@@ -3368,7 +3368,7 @@ function wpfm_extra_topping_form_fields( $post, $field, $field_value) {
                     if (in_array(pathinfo($field_value, PATHINFO_EXTENSION), ['png', 'jpg', 'jpeg', 'gif', 'svg'])) :
                         echo '<div class="wpfm-img-single"><img src="'.esc_attr($field_value).'"></div>';
                     else :
-                    	if(!empty($field_value[0])){
+                    	if(wpfm_begnWith($field_value, "http")){
 	                        echo '<p class="wpfm-additional-info-block-title"><strong>'.esc_attr(wp_basename($field_value)).'</strong></p>';
 	                        echo '<a target="_blank" href="'.esc_attr($field_value).'"><i class="wpfm-icon-download3" style="margin-right: 3px;"></i>Download</a>';
 	                    }

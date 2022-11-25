@@ -644,6 +644,10 @@ class WPFM_Writepanels
 		if($field['type'] == 'wp-editor'){
 			$fieldLabel =  'wp-editor-field';
 		}
+
+		if(wpfm_begnWith($field['value'], "http") || is_array($field['value'])){
+		    $field['value'] = '';
+		}
 	?>
 		<p class="wpfm-admin-postbox-form-field <?=$name;?> <?php echo $fieldLabel; ?>" data-field-name="<?=$name;?>">
 			<label for="<?php echo esc_attr($key); ?>"><?php echo esc_html($field['label']); ?> : <?php if (!empty($field['description'])) : ?>: <span class="tips" data-tip="<?php echo esc_attr($field['description']); ?>">[?]</span><?php endif; ?></label>
