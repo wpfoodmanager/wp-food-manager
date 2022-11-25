@@ -566,6 +566,9 @@ class WPFM_Writepanels
 		} else {
 			$name = $key;
 		}
+		if(wpfm_begnWith($field['value'], "http")) {
+			$field['value'] = '';	
+		}
 	?>
 		<div class="wpfm_editor" data-field-name="<?=$name;?>">
 			<p class="wpfm-admin-postbox-form-field <?=$name;?>">
