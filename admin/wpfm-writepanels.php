@@ -448,9 +448,12 @@ class WPFM_Writepanels
 					<span class="food-manager-uploaded-file2"> 
 						<span class="food-manager-uploaded-file"> 
 							<?php if(!empty($field['value'])) : 
+								if(!wpfm_begnWith($field['value'], "http")){
+									$field['value']	= '';
+								}
 								if(is_array($field['value'])){ 
 									$field['value'] = get_the_post_thumbnail_url($thepostid, 'full'); 
-								} 
+								}
 								?>
 								<input type="hidden" name="<?php echo esc_attr($name); ?>" id="<?php echo esc_attr($key); ?>" placeholder="<?php echo esc_attr($field['placeholder']); ?>" value="<?php echo esc_attr($field['value']); ?>" /> 
 								<span class="food-manager-uploaded-file-preview">
