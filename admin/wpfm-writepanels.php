@@ -431,6 +431,9 @@ class WPFM_Writepanels
 										<img src="<?php echo esc_attr($value); ?>">
 										<a class="food-manager-remove-uploaded-file" href="javascript:void(0);">[remove]</a> 
 									<?php else :
+										if(!wpfm_begnWith($value, "http")){
+											$value	= '';
+										}
 										if(!empty($value)){ ?>
 				                            <span class="wpfm-icon">
 				                                <strong style="display: block; padding-top: 5px;"><?php echo esc_attr(wp_basename($value)); ?></strong>

@@ -3282,7 +3282,7 @@ function wpfm_extra_topping_form_fields( $post, $field, $field_value) {
         echo '<div class="wpfm-col-12 wpfm-additional-info-block-textarea">';
             echo '<div class="wpfm-additional-info-block-details-content-items">';
                 echo'<p class="wpfm-additional-info-block-textarea-text">';
-                    if(isset($field_value) && !empty($field_value)){
+                    if(isset($field_value) && !empty($field_value) && wpfm_begnWith($field_value, "http")){
                         echo '<a target="_blank" href="'.esc_url($field_value).'">'.$field['label'].'</a>';
                     } else {
                         printf(__('%s', 'wp-food-manager'),  $field['label']);
@@ -3293,6 +3293,9 @@ function wpfm_extra_topping_form_fields( $post, $field, $field_value) {
     }
 
 	elseif ($field['type'] == 'text') {
+        if(is_array($field_value)){
+	        $field_value = '';
+        }
 	    echo '<div class="wpfm-col-12 wpfm-additional-info-block-textarea">';
 	        echo '<div class="wpfm-additional-info-block-details-content-items">';
 	            echo '<p class="wpfm-additional-info-block-title"><strong>'.esc_attr($field['label']).' -</strong> '.esc_attr($field_value).'</p>';
@@ -3316,9 +3319,13 @@ function wpfm_extra_topping_form_fields( $post, $field, $field_value) {
 		echo '<div class="wpfm-col-md-6 wpfm-col-sm-12 wpfm-additional-info-block-details-content-left">';
 		    echo '<div class="wpfm-additional-info-block-details-content-items">';
 		        $my_value_arr = [];
-		        if(is_array($field_value)){
+	        	if(is_array($field_value)){
 			        foreach ($field_value as $key => $my_value) {
-			            $my_value_arr[] = $field['options'][$my_value];
+			        	if(in_array(ucfirst($my_value), $field['options'])){
+					    	$my_value_arr[] = $field['options'][$my_value];
+			        	} else {
+			        		$my_value_arr[] = '';
+			        	}
 			        }
 			    }
 		        echo '<p class="wpfm-additional-info-block-title"><strong>'.$field['label'].' -</strong> '.implode(', ', $my_value_arr).'</p>';
@@ -3354,7 +3361,7 @@ function wpfm_extra_topping_form_fields( $post, $field, $field_value) {
 	                    foreach ($field_value as $file) :
 	                        if (in_array(pathinfo($file, PATHINFO_EXTENSION), ['png', 'jpg', 'jpeg', 'gif', 'svg'])) :
 	                            echo '<div class="wpfm-img-multiple"><img src="'.esc_attr($file).'"></div>';
-	                        else :
+		                    else :
 	                        	if(!empty($file)){
 		                            echo '<div class="wpfm-icon">';
 		                                echo '<p class="wpfm-additional-info-block-title"><strong>'.esc_attr(wp_basename($file)).'</strong></p>';
@@ -3394,13 +3401,15 @@ function wpfm_extra_topping_form_fields( $post, $field, $field_value) {
 		            if(!empty($field_value)){
 		                if(is_array($field_value)){
 		                    $my_checks_value_arr = [];
-		                    foreach ($field_value[$field['taxonomy']] as $key => $my_value) {
-				            	$term_name = get_term( $my_value )->name;
-		                        $my_checks_value_arr[] = $term_name;
-		                    }
+		                    if(isset($field_value[$field['taxonomy']])){
+			                    foreach ($field_value[$field['taxonomy']] as $key => $my_value) {
+					            	$term_name = get_term( $my_value )->name;
+			                        $my_checks_value_arr[] = $term_name;
+			                    }
+			                }
 		                    printf(__('%s', 'wp-food-manager'),  implode(', ', $my_checks_value_arr));
 		                } else {
-		                	echo get_term( ucfirst($field_value) )->name;
+				            echo !empty(get_term(ucfirst($field_value))) ? get_term( ucfirst($field_value) )->name : '';
 		                }
 		            }
 	            echo '</p>';
@@ -3436,6 +3445,23 @@ function wpfm_extra_topping_form_fields( $post, $field, $field_value) {
 		echo '<div class="wpfm-col-md-6 wpfm-col-sm-12 wpfm-additional-info-block-details-content-left">';
             echo '<div class="wpfm-additional-info-block-details-content-items">';
                 echo '<p class="wpfm-additional-info-block-title"><strong> '.esc_attr($field['label']).' -</strong> '.esc_attr($term_name).'</p>';
+            echo '</div>';
+        echo '</div>';
+	}
+
+	elseif ($field['type'] == 'number') {
+		if(!is_array($field_value)){
+			$field_value_count = preg_match('/^[1-9][0-9]*$/', $field_value);
+			if($field_value_count == 0){
+				$field_value = '';
+			}
+	    } else {
+	    	$field_value = '';
+	    }
+			
+		echo '<div class="wpfm-col-md-6 wpfm-col-sm-12 wpfm-additional-info-block-details-content-left">';
+            echo '<div class="wpfm-additional-info-block-details-content-items">';
+                echo '<p class="wpfm-additional-info-block-title"><strong> '.esc_attr($field['label']).' -</strong> '.esc_attr($field_value).'</p>';
             echo '</div>';
         echo '</div>';
 	}

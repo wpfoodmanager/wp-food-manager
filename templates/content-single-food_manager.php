@@ -461,9 +461,11 @@ $food = $post;
                                                                 <div class="wpfm-additional-info-block-details-content-items">
                                                                     <?php
                                                                     $my_value_arr = [];
-                                                                    if(!empty($field_value) && is_array($field_value)){
+                                                                    if(isset($field_value) && !empty($field_value) && is_array($field_value)){
                                                                         foreach ($field_value as $key => $my_value) {
-                                                                            $my_value_arr[] = $field['options'][$my_value];
+                                                                            if(isset($field['options'][$my_value])){
+                                                                                $my_value_arr[] = $field['options'][$my_value];
+                                                                            }
                                                                         }
                                                                     }
                                                                     ?>
