@@ -14,6 +14,13 @@ var WPFMAdmin= function () {
         /// <since>1.0.0</since> 
         init: function() 
         {
+
+            jQuery('div.food tr.wpfm-admin-common td.field-type select option').each(function() {
+                if ( jQuery(this).val() == 'term-checklist' || jQuery(this).val() == 'term-multiselect' || jQuery(this).val() == 'term-select') {
+                    jQuery(this).remove();
+                }
+            });
+
             //Tooltips
             jQuery(".tips, .help_tip").tipTip({
                 'attribute': 'data-tip',

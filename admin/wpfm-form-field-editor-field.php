@@ -53,8 +53,17 @@ if ($field_key !== 'option_options') {
 		)
 	);
 }
+
+$wpfm_admin_class = '';
+if($field_key == 'food_category'){
+	$wpfm_admin_class = '';
+} elseif($field_key == 'food_type'){
+	$wpfm_admin_class = '';
+} else {
+	$wpfm_admin_class = 'wpfm-admin-common';
+}
 ?>
-<tr data-field-type="<?php echo esc_attr($field['type']); ?>">
+<tr data-field-type="<?php echo esc_attr($field['type']); ?>" class="<?php echo esc_attr($wpfm_admin_class); ?> <?php echo esc_attr($field_key); ?>">
 	<td class="sort-column">&nbsp;</td>
 	<td>
 		<input type="text" class="input-text" name="<?php echo wp_kses_post($group_key); ?>[<?php echo esc_attr($field_key); ?>][label]" value="<?php echo esc_attr(stripslashes($field['label'])); ?>" />
