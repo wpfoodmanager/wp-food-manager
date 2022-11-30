@@ -102,6 +102,24 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
 
 		$this->fields = $this->get_default_food_fields();		
 		
+		$food_manager_tag_terms = get_terms(array(
+		    'taxonomy' => 'food_manager_tag',
+		    'hide_empty' => false,
+		) );
+		if(is_array($food_manager_tag_terms) && !empty($food_manager_tag_terms)){
+			$new_arr = array(
+				'food_tag' => array(
+					'label'       => __( 'Food Tag', 'wp-food-manager' ),
+					'type'        => 'term-multiselect', //get_option('food_manager_multiselect_food_type',1) ?  'term-multiselect' : 'term-select'
+					'required'    => true,
+					'placeholder' => '',
+					'priority'    => 4,
+					'default'     => '',
+					'taxonomy'    => 'food_manager_tag'
+				),
+			);
+			$this->fields['food'] = array_merge(array_slice($this->fields['food'], 0, 3), $new_arr, array_slice($this->fields['food'], 3));
+		}
 	
 		return $this->fields;
 	}
@@ -137,12 +155,21 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
 					'default'     => '',
 					'taxonomy'    => 'food_manager_type'
 				),
+				/*'food_tag' => array(
+					'label'       => __( 'Food Tag', 'wp-food-manager' ),
+					'type'        => 'term-multiselect', //get_option('food_manager_multiselect_food_type',1) ?  'term-multiselect' : 'term-select'
+					'required'    => true,
+					'placeholder' => '',
+					'priority'    => 4,
+					'default'     => '',
+					'taxonomy'    => 'food_manager_tag'
+				),*/
 				'food_banner' => array(
 					'label'       => __( 'Food Banner', 'wp-food-manager' ),
 					'type'        => 'file',
 					'required'    => true,
 					'placeholder' => '',
-					'priority'    => 4,
+					'priority'    => 5,
 					'ajax'        => true,
 					'multiple'    => get_option( 'food_manager_user_can_add_multiple_banner' ) == 1 ? true : false,
 					'allowed_mime_types' => array(
@@ -157,7 +184,7 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
 					'type'        => 'wp-editor',
 					'required'    => true,
 					'placeholder' => '',
-					'priority'    => 5
+					'priority'    => 6
 				),
 				'food_price' => array(
 					'label'       => __( 'Regular Price', 'wp-food-manager' ),

@@ -59,6 +59,8 @@ if($field_key == 'food_category'){
 	$wpfm_admin_class = '';
 } elseif($field_key == 'food_type'){
 	$wpfm_admin_class = '';
+} elseif($field_key == 'food_tag'){
+	$wpfm_admin_class = '';
 } else {
 	$wpfm_admin_class = 'wpfm-admin-common';
 }
