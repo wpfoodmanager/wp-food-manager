@@ -1,7 +1,9 @@
 <?php
 $field_val_num = '';
 if(!empty($field['value']) && is_array($field['value']) && isset($field['value'])){
-   $counter = end(explode("_", $key));
+   $tmp_cnt = explode("_", $key);
+   $counter = end($tmp_cnt);
+   //$counter = end(explode("_", $key));
    $field_val_num = !empty($field['value'][$counter]) ? $field['value'][$counter] : '';
 } else {
    $field_val_num = !empty($field['value']) ? $field['value'] : '';

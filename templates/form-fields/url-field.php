@@ -13,7 +13,9 @@
 
 $field_val_num = '';
 if(!empty($field['value']) && is_array($field['value'])){
-    $field_val_num = $field['value'][end(explode("_", $key))];
+    $tmp_cnt = explode("_", $key);
+    $counter = end($tmp_cnt);
+    $field_val_num = $field['value'][$counter];
 } else {
     $field_val_num = !empty($field['value']) ? $field['value'] : '';
 }
