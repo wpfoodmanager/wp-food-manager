@@ -221,7 +221,7 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
 				),
 				'option_description' => array(
 					'label'       => __( 'Description', 'wp-food-manager' ),
-					'type'        => 'textarea',
+					'type'        => 'wp-editor',
 					'required'    => false,
 					'placeholder' => 'Enter the field description',
 					'default' => 1,
