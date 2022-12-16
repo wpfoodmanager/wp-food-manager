@@ -485,7 +485,7 @@ class WP_Food_Manager_Date_Time {
      * @return string Converted Datetime selectors to use with Moment.js/Date.js
      * @since 3.1.26
      */
-	public static function wpem_convert_php_to_moment_format($format) {
+	public static function wpfm_convert_php_to_moment_format($format) {
 		$replacements = [
 			'd' => 'DD',
 			'D' => 'ddd',

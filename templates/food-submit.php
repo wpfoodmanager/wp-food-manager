@@ -88,7 +88,7 @@ if(!empty($extra_fields_options)){
 		<?php do_action( 'add_food_fields_start' ); ?>
 		<?php foreach ( $food_fields as $key => $field ) : ?>
 			<fieldset class="wpfm-form-group fieldset-<?php echo esc_attr( $key ); ?>">
-				<label for="<?php esc_attr_e( $key ); ?>"><?php echo $field['label'] . apply_filters( 'add_food_required_label', $field['required'] ? '<span class="require-field">*</span>' : ' <small>' . __( '(optional)', 'wp-food-manager' ) . '</small>', $field ); ?></label>
+				<label for="<?php esc_attr_e( $key ); ?>" class="wpfm-form-label-text"><?php echo $field['label'] . apply_filters( 'add_food_required_label', $field['required'] ? '<span class="require-field">*</span>' : ' <small>' . __( '(optional)', 'wp-food-manager' ) . '</small>', $field ); ?></label>
 				<div class="field <?php echo $field['required'] ? 'required-field' : ''; ?>">
 					<?php get_food_manager_template( 'form-fields/' . $field['type'] . '-field.php', array( 'key' => $key, 'field' => $field ) ); ?>
 				</div>
@@ -147,7 +147,7 @@ if(!empty($extra_fields_options)){
 										}
 										?>
 										<fieldset class="wpfm-form-group fieldset<?php echo $key2; ?> <?php echo $fieldClassLabel; ?>" data-field-name="<?php echo $key2; ?>">
-											<label for="<?php echo $key2; ?>"><?php echo $field['label'] . apply_filters( 'add_food_required_label', $field['required'] ? '<span class="require-field">*</span>' : ' <small>' . __( '(optional)', 'wp-food-manager' ) . '</small>', $field ); ?></label>
+											<label for="<?php echo $key2; ?>" class="wpfm-form-label-text"><?php echo $field['label'] . apply_filters( 'add_food_required_label', $field['required'] ? '<span class="require-field">*</span>' : ' <small>' . __( '(optional)', 'wp-food-manager' ) . '</small>', $field ); ?></label>
 											<div class="field <?php echo $field['required'] ? 'required-field' : ''; ?>">
 												<?php get_food_manager_template( 'form-fields/' . $field['type'] . '-field.php', array( 'key' => $key2, 'field' => $field ) ); ?>
 											</div>
@@ -269,7 +269,7 @@ if(!empty($extra_fields_options)){
 										<fieldset class="wpfm-form-group fieldset<?php echo esc_attr($key); ?> <?php echo esc_attr($fieldClassLabel); ?>" data-field-name="<?php echo $key; ?>">
 											<?php 
 											//if(!str_contains($key, 'description')){ ?>
-												<label for="<?php esc_attr_e($key); ?>"><?php echo esc_attr($field['label']) . apply_filters('add_food_required_label', $field['required'] ? '<span class="require-field">*</span>' : ' <small>' . __('(optional)', 'wp-food-manager') . '</small>', $field); ?></label>
+												<label for="<?php esc_attr_e($key); ?>" class="wpfm-form-label-text"><?php echo esc_attr($field['label']) . apply_filters('add_food_required_label', $field['required'] ? '<span class="require-field">*</span>' : ' <small>' . __('(optional)', 'wp-food-manager') . '</small>', $field); ?></label>
 											<?php //} ?>
 											<div class="field <?php echo esc_attr($field['required'] ? 'required-field' : ''); ?>">
 												<?php get_food_manager_template('form-fields/' . $field['type'] . '-field.php', array('key' => $key, 'field' => $field)); ?>
