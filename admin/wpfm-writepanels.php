@@ -1620,6 +1620,8 @@ class WPFM_Writepanels
 
 		$columns['food_menu_order'] = __('Order', 'wp-food-manager');
 
+		$columns['food_status'] = __('Status', 'wp-food-manager');
+
 		$columns['food_actions'] = __('Actions', 'wp-food-manager');
 
 		if (!get_option('food_manager_enable_food_types')) {
@@ -1652,6 +1654,7 @@ class WPFM_Writepanels
 	        'fm-price' => __( 'Price', 'wp-food-manager' ),
 	        'fm_categories' => __( 'Categories', 'wp-food-manager' ),
 	        'food_menu_order' => __( 'Order', 'wp-food-manager' ),
+			'food_status' => __( 'Status', 'wp-food-manager' ),
 	        'date' => $columns['date'],
 	        'food_actions' => __( 'Actions', 'wp-food-manager' )
 	    );
@@ -1668,7 +1671,7 @@ class WPFM_Writepanels
 	public function custom_food_content_column($column, $post_id)
 	{
 		global $post;
-
+		$thispost = get_post($post_id);
 		switch ($column) {
 
 			case 'food_title':
@@ -1716,9 +1719,13 @@ class WPFM_Writepanels
 				break;
 
 			case 'food_menu_order':
-				$thispost = get_post($post_id);
 				echo $thispost->menu_order;
 
+				break;
+
+			case 'food_status':
+				echo ucfirst($thispost->post_status);
+				
 				break;
 
 			case 'food_actions':
