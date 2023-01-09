@@ -8,7 +8,7 @@ EventSubmission = function () {
         ///<returns type="initialization settings" />
         /// <since>1.0.0</since>
         init: function () {
-            Common.logInfo("EventSubmission.init...");
+            WPFM_Common.logInfo("EventSubmission.init...");
 
             jQuery('body').on('click', '.event-manager-remove-uploaded-file', function () {
                 jQuery(this).closest('.event-manager-uploaded-file').remove();
@@ -280,7 +280,7 @@ EventSubmission = function () {
             /// <since>1.0.0</since>
             onlineEvent: function (event) {
                 event.preventDefault();
-                Common.logInfo("EventDashboard.actions.onlineEvent...");
+                WPFM_Common.logInfo("EventDashboard.actions.onlineEvent...");
                 if (jQuery('#event_online').length > 0) {
                     if (jQuery(this).val() == "yes") {
                         if (jQuery('.fieldset-event_venue_name').length > 0 && jQuery('input[name=event_venue_name]').length > 0) {
@@ -363,7 +363,7 @@ EventSubmission = function () {
             /// <since>1.0.0</since>
             eventTicketOptions: function (event) {
                 event.preventDefault();
-                Common.logInfo("EventDashboard.actions.eventTicketOptions...");
+                WPFM_Common.logInfo("EventDashboard.actions.eventTicketOptions...");
                 if (jQuery('#event_ticket_options').length > 0) {
                     if (jQuery(this).val() == "free") {
                         if (jQuery('.fieldset-event_ticket_price').length > 0 && jQuery('input[name=event_ticket_price]').length > 0) {

@@ -10,7 +10,7 @@ var FoodDashboard= function () {
         init: function() 
         {
           
-	  	    Common.logInfo("FoodDashboard.init...");  
+	  	    WPFM_Common.logInfo("FoodDashboard.init...");  
 				if (jQuery('.food-dashboard-action-delete').length > 0 && jQuery('td .wpfm-dboard-food-action').length == 0) 
 		    {
 
@@ -79,7 +79,7 @@ var FoodDashboard= function () {
 	        /// <since>1.0.0</since>       
 	        showDialog: function(event) 
 	        {
-	        	Common.logInfo("FoodDashboard.confirmation.showDialog...");	            
+	        	WPFM_Common.logInfo("FoodDashboard.confirmation.showDialog...");	            
 	           	return confirm(food_manager_food_dashboard.i18n_confirm_delete);
 	           	event.preventDefault(); 
 	        },

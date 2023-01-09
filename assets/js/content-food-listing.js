@@ -9,7 +9,7 @@ var ContentFoodListing= function () {
         /// <since>1.0.0</since> 
         init: function() 
         {   
-	           Common.logInfo("ContentFoodListing.init..."); 
+	           WPFM_Common.logInfo("ContentFoodListing.init..."); 
 	           
 			   jQuery(document).delegate('#wpfm-food-list-layout','click', ContentFoodListing.actions.lineLayoutIconClick);
 			   jQuery(document).delegate('#wpfm-food-box-layout','click', ContentFoodListing.actions.boxLayoutIconClick);
@@ -122,7 +122,7 @@ var ContentFoodListing= function () {
 	            /// <since>1.0.0</since>     
 	            lineLayoutIconClick: function (food)
 	            {   
-	                      Common.logInfo("ContentFoodListing.actions.lineLayoutIconClick...");   
+	                      WPFM_Common.logInfo("ContentFoodListing.actions.lineLayoutIconClick...");   
 
                 jQuery(this).addClass("wpfm-active-layout");
                 jQuery("#wpfm-food-box-layout").removeClass("wpfm-active-layout");
@@ -146,7 +146,7 @@ var ContentFoodListing= function () {
 	            /// <since>1.0.0</since>     
 	            boxLayoutIconClick: function (food)
 	            {                 	       
-	                Common.logInfo("ContentFoodListing.actions.boxLayoutIconClick...");    
+	                WPFM_Common.logInfo("ContentFoodListing.actions.boxLayoutIconClick...");    
                     jQuery(this).addClass("wpfm-active-layout");
 
                     if(jQuery("#wpfm-food-list-layout").hasClass("wpfm-active-layout"))
