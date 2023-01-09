@@ -1053,12 +1053,46 @@ class WPFM_Writepanels
 		if (is_int(wp_is_post_autosave($post))) return;
 		if (empty($_POST['food_manager_nonce']) || !wp_verify_nonce($_POST['food_manager_nonce'], 'save_meta_data')) return;
 		if (!current_user_can('edit_post', $post_id)) return;
-
-		if ($post->post_type == 'food_manager')
+		
+		if ($post->post_type == 'food_manager'){
 			do_action('food_manager_save_food_manager', $post_id, $post);
+			$unit_ids = [];
+			
+			if( isset( $_POST['_ingredient'] ) && !empty( $_POST['_ingredient'] ) ){
+				
+				$ingredients = $_POST['_ingredient'];
+				$ingredient_ids = [];
+				foreach ($ingredients as $ingredient_id => $ingredient ) {
+					$ingredient_ids[] = $ingredient_id;
+
+					if( trim($ingredient['unit_id']) ){
+						$unit_ids[] = (int)$ingredient['unit_id'];
+					}
+				}
+				wp_set_object_terms($post_id, $ingredient_ids, 'food_manager_ingredient');
+			}
+
+			if( isset( $_POST['_nutrition'] ) && !empty( $_POST['_nutrition'] ) ){
+				
+				$nutritions = $_POST['_nutrition'];
+				$nutrition_ids = [];
+				foreach ($nutritions as $nutrition_id => $nutrition ) {
+					$nutrition_ids[] = $nutrition_id;
+					if( trim($nutrition['unit_id']) ){
+						$unit_ids[] = (int)$nutrition['unit_id'];
+					}
+				}
+				wp_set_object_terms($post_id, $nutrition_ids, 'food_manager_nutrition');
+			}
+			if( $unit_ids ){
+				wp_set_object_terms($post_id, $unit_ids, 'food_manager_unit');
+			}
+			
+		}
 
 		if ($post->post_type == 'food_manager_menu')
 			do_action('food_manager_save_food_manager_menu', $post_id, $post);
+
 	}
 
 	/**
