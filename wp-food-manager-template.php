@@ -748,7 +748,7 @@ function get_food_ingredients( $post = null ) {
 
 	$post = get_post( $post );
 
-	if ( $post->post_type !== 'food_manager' || !get_option( 'food_manager_enable_food_ingredients' ) ) {
+	if ( $post->post_type !== 'food_manager' ) {
 		return;
 	}
 
@@ -799,7 +799,7 @@ function get_food_nutritions( $post = null ) {
 
 	$post = get_post( $post );
 
-	if ( $post->post_type !== 'food_manager' || !get_option( 'food_manager_enable_food_nutritions' ) ) {
+	if ( $post->post_type !== 'food_manager' ) {
 		return;
 	}
 
@@ -842,7 +842,7 @@ function get_food_units( $post = null ) {
 
 	$post = get_post( $post );
 
-	if ( $post->post_type !== 'food_manager' || !get_option( 'food_manager_enable_food_units' ) ) {
+	if ( $post->post_type !== 'food_manager' ) {
 		return;
 	}
 

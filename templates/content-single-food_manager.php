@@ -1004,19 +1004,19 @@ $food = $post;
                                         <div class="wpfm-food-category"><?php display_food_category(); ?></div>
                                     <?php endif; ?>
 
-                                    <?php if (get_option('food_manager_enable_food_ingredients') && get_food_ingredients() && get_post_meta($post->ID, '_enable_food_ingre', true)) : ?>
+                                    <?php if (get_food_ingredients() && get_post_meta($post->ID, '_enable_food_ingre', true)) : ?>
                                         <div class="clearfix">&nbsp;</div>
                                         <h3 class="wpfm-heading-text"><?php _e('Food Ingredients', 'wp-food-manager'); ?></h3>
                                         <div class="wpfm-food-ingredients"><?php display_food_ingredients(); ?></div>
                                     <?php endif; ?>
 
-                                    <?php if (get_option('food_manager_enable_food_nutritions') && get_food_nutritions() && get_post_meta($post->ID, '_enable_food_nutri', true)) : ?>
+                                    <?php if (get_food_nutritions() && get_post_meta($post->ID, '_enable_food_nutri', true)) : ?>
                                         <div class="clearfix">&nbsp;</div>
                                         <h3 class="wpfm-heading-text"><?php _e('Food Nutritions', 'wp-food-manager'); ?></h3>
                                         <div class="wpfm-food-nutritions"><?php display_food_nutritions(); ?></div>
                                     <?php endif; ?>
 
-                                    <?php if (get_option('food_manager_enable_food_units') && get_food_units()) : ?>
+                                    <?php if (get_food_units()) : ?>
                                         <div class="clearfix">&nbsp;</div>
                                         <h3 class="wpfm-heading-text"><?php _e('Food Units', 'wp-food-manager'); ?></h3>
                                         <div class="wpfm-food-units"><?php display_food_units(); ?></div>

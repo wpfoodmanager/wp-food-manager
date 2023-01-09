@@ -82,7 +82,7 @@ $units = get_terms(
 				</label>
 			</li>
 			<?php
-			if ( ! empty( $ingredient_terms ) && get_option( 'food_manager_enable_food_ingredients' )) {
+			if ( ! empty( $ingredient_terms ) ) {
 				foreach ( $ingredient_terms as $ing ) {
 					echo "<li class='wpfm-sortable-item available-item' data-id='{$ing->term_id}'>" .
 						"<label>{$ing->name}</label><div class='wpfm-sortable-item-values'></div>" .

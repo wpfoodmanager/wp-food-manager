@@ -67,7 +67,7 @@ class WPFM_Admin {
 		);
 		$unitList = [];
 
-		if ( ! empty( $units ) && get_option( 'food_manager_enable_food_units' )) {
+		if ( ! empty( $units ) ) {
 			foreach ( $units as $unit ) {
 				$unitList[ $unit->term_id ] = $unit->name;
 			}

@@ -268,9 +268,6 @@ if ( get_option( 'food_manager_enable_food_tags' ,true) ) {
     );
 }
 
-
-if ( get_option( 'food_manager_enable_food_ingredients' ,true) ) {
-
         $singular  = __( 'Food Ingredient', 'wp-food-manager' );
 
 		$plural    = __( 'Ingredients', 'wp-food-manager' );
@@ -354,9 +351,6 @@ if ( get_option( 'food_manager_enable_food_ingredients' ,true) ) {
            'rewrite' 				=> $rewrite,
         ) )
     );
-}
-
-if ( get_option( 'food_manager_enable_food_nutritions' ,true) ) {
 
         $singular  = __( 'Food Nutritions', 'wp-food-manager' );
 
@@ -441,9 +435,6 @@ if ( get_option( 'food_manager_enable_food_nutritions' ,true) ) {
            'rewrite' 				=> $rewrite,
         ) )
     );
-}
-
-if ( get_option( 'food_manager_enable_food_units' ,true) ) {
 
         $singular  = __( 'Unit', 'wp-food-manager' );
 
@@ -528,4 +519,3 @@ if ( get_option( 'food_manager_enable_food_units' ,true) ) {
            'rewrite' 				=> $rewrite,
         ) )
     );
-}

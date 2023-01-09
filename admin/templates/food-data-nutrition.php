@@ -82,7 +82,7 @@ $units = get_terms(
 				</label>
 			</li>
 			<?php
-			if ( ! empty( $nutrition_terms ) && get_option( 'food_manager_enable_food_nutritions' )) {
+			if ( ! empty( $nutrition_terms ) ) {
 				foreach ( $nutrition_terms as $nutri ) {
 					echo "<li class='wpfm-sortable-item available-item' data-id='{$nutri->term_id}'>" .
 						"<label>{$nutri->name}</label><div class='wpfm-sortable-item-values'></div>" .
