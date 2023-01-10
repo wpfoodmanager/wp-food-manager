@@ -22,7 +22,7 @@ $extra_options = get_post_meta($thepostid,'_wpfm_extra_options',true);
 								<div class="wpfm-togglediv" title="Click to toggle" aria-expanded="false" data-row-count="<?php echo esc_attr($count);?>"></div>
 								<div class="tips wpfm-sort"></div>
 								<strong class="attribute_name"><?php printf(__('%s','wp-food-manager'),$option['option_name']);?></strong>
-								<span class="attribute_key"> <input type="text" name="option_key_<?php echo esc_attr($count);?>" value="<?php echo $option_key;?>" readonly>
+								<span class="attribute_key"> <input type="hidden" name="option_key_<?php echo esc_attr($count);?>" value="<?php echo $option_key;?>" readonly>
 									</span>
 							</h3>
 							<div class="wpfm-metabox-content wpfm-options-box-<?php echo esc_attr($count);?>">
@@ -76,7 +76,7 @@ $extra_options = get_post_meta($thepostid,'_wpfm_extra_options',true);
 						<div class="wpfm-togglediv" title="Click to toggle" aria-expanded="false" data-row-count="1"></div>
 						<div class="tips wpfm-sort"></div>
 						<strong class="attribute_name"><?php //_e('Option 1','wp-food-manager');?></strong>
-						<span class="attribute_key"> <input type="text" name="_option_key_1" value="_option_1" readonly>
+						<span class="attribute_key"> <input type="hidden" name="_option_key_1" value="_option_1" readonly>
 							</span>
 					</h3>
 					<div class="wpfm-metabox-content wpfm-options-box-1">
@@ -113,7 +113,7 @@ $extra_options = get_post_meta($thepostid,'_wpfm_extra_options',true);
 						<div class="wpfm-togglediv" title="Click to toggle" aria-expanded="false" data-row-count="%%repeated-option-index%%"></div>
 						<div class="tips wpfm-sort"></div>
 						<strong class="attribute_name"><?php _e("Option %%repeated-option-index%%","wp-food-manager");?></strong>
-						<span class="attribute_key"><input type="text" name="option_key_%%repeated-option-index%%" value="option_%%repeated-option-index%%" readonly>
+						<span class="attribute_key"><input type="hidden" name="option_key_%%repeated-option-index%%" value="option_%%repeated-option-index%%" readonly>
 							</span>
 					</h3>
 					<div class="wpfm-metabox-content wpfm-options-box">
