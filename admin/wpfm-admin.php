@@ -92,7 +92,9 @@ class WPFM_Admin {
 		wp_enqueue_script( 'wpfm-admin' );
 
 		wp_register_script( 'wp-food-manager-admin-settings', WPFM_PLUGIN_URL. '/assets/js/admin-settings.min.js', array( 'jquery' ), WPFM_VERSION, true );
-		wp_enqueue_script( 'wp-food-manager-admin-settings' );
+		if(is_admin() && !isset($_GET['page']) == 'wc-settings'){
+			wp_enqueue_script( 'wp-food-manager-admin-settings' );
+		}
 
 		wp_register_script('chosen', WPFM_PLUGIN_URL . '/assets/js/jquery-chosen/chosen.jquery.min.js', array('jquery'), '1.1.0', true);
 		wp_enqueue_script('chosen');
