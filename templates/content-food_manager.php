@@ -25,8 +25,7 @@ if (get_option('food_manager_food_item_show_hide') == 0 && get_stock_status() !=
 
                 <div class="wpfm-food-infomation">
                     <div class="wpfm-food-details">
-                        <div class="wpfm-food-title"><h3 class="wpfm-heading-text"><?php echo esc_html(get_the_title()); ?></h3></div>
-                        <div class="wpfm-food-price"><?php display_food_price_tag(); ?></div>
+                        <div class="wpfm-food-title"><h3 class="wpfm-heading-text"><?php echo esc_html(get_the_title()); ?> - <?php display_food_price_tag(); ?></h3></div>
                         <?php
                         if (get_option('food_manager_enable_food_types') && get_food_type())
                         {
@@ -60,16 +59,16 @@ if (get_option('food_manager_food_item_show_hide') == 0 && get_stock_status() !=
                         <div class="wpfm-food-title">
                             <h3 class="wpfm-heading-text"><?php
                             $out = strlen(get_the_title()) > 50 ? substr(get_the_title(),0,50)."..." : get_the_title();
-                            echo esc_html($out); ?></h3>
+                            echo esc_html($out); ?> - <?php display_food_price_tag(); ?> </h3>
                             <?php display_food_veg_nonveg_icon_tag(); ?>
                         </div>
-                        <div class="wpfm-food-price"><?php display_food_price_tag(); ?></div>
                         <?php
                         if (get_option('food_manager_enable_food_types') && get_food_type())
                         {
                             ?>
                             <div class="wpfm-food-type"><?php display_food_type(); ?></div>
                         <?php } ?>
+                        <?php do_action('food_list_overview_after'); ?>
                     </div>
                 </div>   
             </a>
