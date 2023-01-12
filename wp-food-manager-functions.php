@@ -3363,10 +3363,10 @@ function wpfm_extra_topping_form_fields( $post, $field, $field_value) {
 	                            echo '<div class="wpfm-img-multiple"><img src="'.esc_attr($file).'"></div>';
 		                    else :
 	                        	if(!empty($file)){
-		                            echo '<div class="wpfm-icon">';
+		                            echo '<div><div class="wpfm-icon">';
 		                                echo '<p class="wpfm-additional-info-block-title"><strong>'.esc_attr(wp_basename($file)).'</strong></p>';
 		                                echo '<a target="_blank" href="'.esc_attr($file).'"><i class="wpfm-icon-download3" style="margin-right: 3px;"></i>Download</a>';
-		                            echo '</div>';
+		                            echo '</div></div>';
 		                        }
 	                        endif;
 	                    endforeach;

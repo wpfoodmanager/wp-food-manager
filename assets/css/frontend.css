@@ -2094,6 +2094,11 @@ span.fm-divider {
     overflow: hidden;
 }
 
+.wpfm-single-food-menu-page .wpfm-single-food-image img {
+    max-width: 100%;
+    width: 100%;
+}
+
 /* ===== FOOD MENU END ===== */
 
 
@@ -2105,7 +2110,7 @@ span.fm-divider {
     border: 2px solid var(--wpfm-gray-border-color);
     padding: 10px;
     border-radius: 4px;
-    margin: 5px 0px;
+    margin: 5px 1px;
 }
 .wpfm-front-radio-icon span.wpfm-menu, .wpfm-front-radio-icon i.fa{
     margin-left: 10px;

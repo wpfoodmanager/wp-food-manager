@@ -3,6 +3,7 @@ global $post;
 
 wp_enqueue_script('wpfm-slick-script');
 wp_enqueue_style('wpfm-slick-style');
+wp_enqueue_style('wpfm-slick-theme-style');
 do_action('set_single_listing_view_count');
 
 $food = $post;
@@ -515,9 +516,11 @@ $food = $post;
                                                                                 <?php if (in_array(pathinfo($file, PATHINFO_EXTENSION), ['png', 'jpg', 'jpeg', 'gif', 'svg'])) : ?>
                                                                                     <div class="wpfm-img-multiple"><img src="<?php echo esc_attr($file); ?>"></div>
                                                                                 <?php else : ?>
-                                                                                    <div class="wpfm-icon">
-                                                                                        <p class="wpfm-additional-info-block-title"><strong><?php echo esc_attr(wp_basename($file)); ?></strong></p>
-                                                                                        <a target="_blank" href="<?php echo esc_attr($file); ?>"><i class='wpfm-icon-download3' style='margin-right: 3px;'></i> <?php _e('Download', 'wp-food-manager'); ?></a>
+                                                                                    <div>
+                                                                                        <div class="wpfm-icon">
+                                                                                            <p class="wpfm-additional-info-block-title"><strong><?php echo esc_attr(wp_basename($file)); ?></strong></p>
+                                                                                            <a target="_blank" href="<?php echo esc_attr($file); ?>"><i class='wpfm-icon-download3' style='margin-right: 3px;'></i> <?php _e('Download', 'wp-food-manager'); ?></a>
+                                                                                        </div>
                                                                                     </div>
                                                                                 <?php endif; ?>
                                                                             <?php endforeach; ?>
@@ -1089,21 +1092,7 @@ $food = $post;
             dots: true,
             infinite: true,
             speed: 500,
-            fade: true,
-            cssEase: 'linear',
             adaptiveHeight: true,
-            responsive: [{
-                breakpoint: 992,
-                settings: {
-                    dots: true,
-                    infinite: true,
-                    speed: 500,
-                    fade: true,
-                    cssEase: 'linear',
-                    adaptiveHeight: true
-                }
-            }]
         });
-
     });
 </script>
