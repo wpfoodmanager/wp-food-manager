@@ -559,75 +559,77 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
 			}
 		}
 
-		
-		$prod_banner = isset($_POST['current_food_banner']) ? $_POST['current_food_banner'] : '';
-	    $prod_regular_price = isset($_POST['food_price']) ? $_POST['food_price'] : '';
-	    $prod_sale_price = isset($_POST['food_sale_price']) ? $_POST['food_sale_price'] : '';
-	    $prod_stock_status = isset($_POST['food_stock_status']) ? $_POST['food_stock_status'] : '';
-	    $prod_stock_array = explode("fm_", $prod_stock_status);
-	    $prod_ingre = isset($_POST['_enable_food_ingre']) ? $_POST['_enable_food_ingre'] : '';
-		$prod_nutri = isset($_POST['_enable_food_nutri']) ? $_POST['_enable_food_nutri'] : '';
-		$prod_types = get_term_by('id', $_POST['food_type'], 'food_manager_type');
-		$prod_categories = isset($_POST['food_category']) ? $_POST['food_category'] : '';
-		$prod_tags = isset($_POST['food_tag']) ? $_POST['food_tag'] : '';
+		// Check for wpfm-online-order add-on Active or not
+		if(in_array('wpfm-online-order/wpfm-online-order.php', apply_filters('active_plugins', get_option('active_plugins')))){
+			$prod_banner = isset($_POST['current_food_banner']) ? $_POST['current_food_banner'] : '';
+		    $prod_regular_price = isset($_POST['food_price']) ? $_POST['food_price'] : '';
+		    $prod_sale_price = isset($_POST['food_sale_price']) ? $_POST['food_sale_price'] : '';
+		    $prod_stock_status = isset($_POST['food_stock_status']) ? $_POST['food_stock_status'] : '';
+		    $prod_stock_array = explode("fm_", $prod_stock_status);
+		    $prod_ingre = isset($_POST['_enable_food_ingre']) ? $_POST['_enable_food_ingre'] : '';
+			$prod_nutri = isset($_POST['_enable_food_nutri']) ? $_POST['_enable_food_nutri'] : '';
+			$prod_types = get_term_by('id', $_POST['food_type'], 'food_manager_type');
+			$prod_categories = isset($_POST['food_category']) ? $_POST['food_category'] : '';
+			$prod_tags = isset($_POST['food_tag']) ? $_POST['food_tag'] : '';
 
 
-		if($prod_ingre == 1){
-			$prod_ingre = 'yes';
-		} else {
-			$prod_ingre = '';
-		}
+			if($prod_ingre == 1){
+				$prod_ingre = 'yes';
+			} else {
+				$prod_ingre = '';
+			}
 
-		if($prod_nutri == 1){
-			$prod_nutri = 'yes';
-		} else {
-			$prod_nutri = '';
-		}
+			if($prod_nutri == 1){
+				$prod_nutri = 'yes';
+			} else {
+				$prod_nutri = '';
+			}
 
-		$prod_categories_arr = array();
-		foreach ($prod_categories as $food_cat_key => $food_cat_value) {
-			$term_cat = get_term_by('id', $food_cat_value, 'food_manager_category');
-			/*echo "<pre>";
-			print_r($term_cat->slug);
-			echo "</pre>";*/
-			$prod_categories_arr[] = $term_cat->slug;
-		}
+			$prod_categories_arr = array();
+			foreach ($prod_categories as $food_cat_key => $food_cat_value) {
+				$term_cat = get_term_by('id', $food_cat_value, 'food_manager_category');
+				/*echo "<pre>";
+				print_r($term_cat->slug);
+				echo "</pre>";*/
+				$prod_categories_arr[] = $term_cat->slug;
+			}
 
-		$prod_tags_arr = array();
-		foreach ($prod_tags as $food_tag_key => $food_tag_value) {
-			$term_tag = get_term_by('id', $food_tag_value, 'food_manager_tag');
-			$prod_tags_arr[] = $term_tag->slug;
-		}
-		
-		include_once(ABSPATH.'wp-content/plugins/wpfm-online-order/includes/class-wc-product-food-product.php');
+			$prod_tags_arr = array();
+			foreach ($prod_tags as $food_tag_key => $food_tag_value) {
+				$term_tag = get_term_by('id', $food_tag_value, 'food_manager_tag');
+				$prod_tags_arr[] = $term_tag->slug;
+			}
+			
+			include_once(ABSPATH.'wp-content/plugins/wpfm-online-order/includes/class-wc-product-food-product.php');
 
-		$post_food = new WC_Product_Food_Product();
+			$post_food = new WC_Product_Food_Product();
 
-		$post_food->set_name( $post_title );
-		$post_food->set_slug( $food_data['post_name'] );
-		$post_food->set_regular_price( $prod_regular_price );
-		$post_food->set_sale_price( $prod_sale_price );
-		$post_food->set_description( $post_content );
-		//$post_food->set_image_id( get_post_thumbnail_id($this->food_id) );
-		$post_food->set_category_ids( $prod_categories_arr );
-		$post_food->set_tag_ids( $prod_tags_arr );
-		//$post_food->set_menu_order( $food_data->menu_order );
-		$post_food->set_stock_status( $prod_stock_array[1] );
-		$post_food->save();
+			$post_food->set_name( $post_title );
+			$post_food->set_slug( $food_data['post_name'] );
+			$post_food->set_regular_price( $prod_regular_price );
+			$post_food->set_sale_price( $prod_sale_price );
+			$post_food->set_description( $post_content );
+			//$post_food->set_image_id( get_post_thumbnail_id($this->food_id) );
+			$post_food->set_category_ids( $prod_categories_arr );
+			$post_food->set_tag_ids( $prod_tags_arr );
+			//$post_food->set_menu_order( $food_data->menu_order );
+			$post_food->set_stock_status( $prod_stock_array[1] );
+			$post_food->save();
 
-		$prod_id = $post_food->get_id();
+			$prod_id = $post_food->get_id();
 
-		$prod_banner_id = attachment_url_to_postid($prod_banner);
+			$prod_banner_id = attachment_url_to_postid($prod_banner);
 
-		/*update_post_meta( $prod_id, '_ingredient', $prod_multiArrayIng );
-		update_post_meta( $prod_id, '_nutrition', $prod_multiArrayNutri );*/
-		update_post_meta( $prod_id, '_enable_food_ingre', $prod_ingre );
-		update_post_meta( $prod_id, '_enable_food_nutri', $prod_nutri );
-		update_post_meta( $prod_id, 'food_manager_type', $prod_types->slug);
-		update_post_meta( $prod_id, '_thumbnail_id', $prod_banner_id);
+			/*update_post_meta( $prod_id, '_ingredient', $prod_multiArrayIng );
+			update_post_meta( $prod_id, '_nutrition', $prod_multiArrayNutri );*/
+			update_post_meta( $prod_id, '_enable_food_ingre', $prod_ingre );
+			update_post_meta( $prod_id, '_enable_food_nutri', $prod_nutri );
+			update_post_meta( $prod_id, 'food_manager_type', $prod_types->slug);
+			update_post_meta( $prod_id, '_thumbnail_id', $prod_banner_id);
 
-		wp_set_object_terms( $prod_id, $prod_tags_arr, 'product_tag' );
-    	wp_set_object_terms( $prod_id, $prod_categories_arr, 'product_cat' );
+			wp_set_object_terms( $prod_id, $prod_tags_arr, 'product_tag' );
+	    	wp_set_object_terms( $prod_id, $prod_categories_arr, 'product_cat' );
+	    }
 	}
 	/**
 	 * Create an attachment
