@@ -126,7 +126,7 @@ $image_url = wp_get_attachment_image_src ( $image_id, 'full' );
                     return false;
                 }
                 if(empty($sale_price)){
-                    echo "<span class='food-manager-Price-currencySymbol'>".get_food_manager_currency_symbol()."</span>".$formatted_regular_price;
+                    echo sprintf($price_format, '<span class="food-manager-Price-currencySymbol">'.get_food_manager_currency_symbol().'</span>', $formatted_regular_price);
                 }
                 echo "</span>";
             echo "</a>";
