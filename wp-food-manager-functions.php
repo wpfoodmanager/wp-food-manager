@@ -856,6 +856,11 @@ function food_manager_dropdown_selection( $args = '' ) {
 
 	$id = $r['id'] ? $r['id'] : $r['name'];
 
+	$data_taxonomy = '';
+	if( $taxonomy ){
+		$data_taxonomy = 'data-taxonomy="'.$taxonomy.'"';
+	}
+
 	if($taxonomy=='food_manager_type'):
 
 		$placeholder=__( 'Choose a food type&hellip;', 'wp-food-manager' );
@@ -864,11 +869,11 @@ function food_manager_dropdown_selection( $args = '' ) {
 
 	$item_cat_ids = get_post_meta(get_the_ID(), '_food_item_cat_ids', true);
 	
-	$output = '<select name="'. esc_attr( $name ) . '[]" id="' . esc_attr( $id ) . '" class="' . esc_attr( $class ) . '" ' . ( $multiple ? 'multiple="multiple"' : "" ) . ' data-placeholder="' . esc_attr( $placeholder ) . '" data-no_results_text="' . esc_attr( $no_results_text ) . '" data-multiple_text="' . esc_attr( $multiple_text ) . '">\n';
+	$output = '<select '.$data_taxonomy.' name="'. esc_attr( $name ) . '[]" id="' . esc_attr( $id ) . '" class="' . esc_attr( $class ) . '" ' . ( $multiple ? 'multiple="multiple"' : "" ) . ' data-placeholder="' . esc_attr( $placeholder ) . '" data-no_results_text="' . esc_attr( $no_results_text ) . '" data-multiple_text="' . esc_attr( $multiple_text ) . '">\n';
 
 	if(is_admin()){
 		if(empty($item_cat_ids) && isset($item_cat_ids)){
-			$output .= '<option value="" disabled selected>Choose a category</option>';
+			$output .= '<option value="" disabled selected>'.$placeholder.'</option>';
 		}
 	}
 	if ( $show_option_all ) {

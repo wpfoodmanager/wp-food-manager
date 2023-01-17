@@ -141,6 +141,17 @@ class WPFM_Writepanels
 						'hierarchical' => false,
 					)); ?>
 
+					<?php food_manager_dropdown_selection(array(
+						'multiple' => false, 'show_option_all' => __('All food types', 'wp-food-manager'),
+						'id' => 'wpfm-admin-food-types-selection',
+						'taxonomy' => 'food_manager_type',
+						'hide_empty' => false,
+						'pad_counts' => true,
+						'show_count' => true,
+						'hierarchical' => false,
+						'name' => 'food_type',
+					)); ?>
+
 					<!-- Do not remove -->
 					<!--<div class="wpfm-admin-postbox-drop-btn">
 						<input type="button" id="wpfm-admin-add-food" class="button button-small" value="<?php //_e('Add food', 'wp-food-manager'); ?>" />
@@ -1510,9 +1521,10 @@ class WPFM_Writepanels
 				'post_type' => 'food_manager',
 				'post_per_page' => -1,
 				'post_status' => 'publish',
+				'post__not_in' => isset( $_POST['exclude'] ) && !empty( $_POST['exclude'] ) ? $_POST['exclude']: array(),
 				'tax_query' => [
 					[
-						'taxonomy' => 'food_manager_category',
+						'taxonomy' => $_POST['taxonomy'],
 						'terms' => $_POST['category_id'],
 					],
 				],
@@ -1548,6 +1560,7 @@ class WPFM_Writepanels
 			$args = [
 				'post_type' => 'food_manager',
 				'post_per_page' => -1,
+				'post__not_in' => isset( $_POST['exclude'] ) && !empty( $_POST['exclude'] ) ? $_POST['exclude']: array(),
 				// Rest of your arguments
 			];
 

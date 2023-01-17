@@ -49,6 +49,8 @@ class WPFM_Category_Walker extends Walker {
 		$value = isset( $args['value'] ) && $args['value'] == 'id' ? $object->term_id : $object->slug;
 
 		$output .= "\t<option class=\"level-" . intval( $depth ) . '" value="' . esc_attr( $value ) . '" '.$field_val.' ';
+
+		$output .= ( !empty( $args['show_count'] ) ) ? 'data-count="'.$object->count.'"': '';
 		
 		if ( $value == $args['selected'] || ( is_array( $args['selected'] ) && in_array( $value, $args['selected'] ) ) )
 

@@ -69,7 +69,7 @@ var WPFMAdmin= function () {
             jQuery('.wpfm-tabs li a:first').click();	
 
             //jQuery(document).on('click', '#wpfm-admin-add-food', WPFMAdmin.actions.updateFoodinMenu); 
-            jQuery(document).on('change', '#wpfm-admin-food-selection', WPFMAdmin.actions.updateFoodinMenu); 
+            jQuery(document).on('change', '.wpfm-admin-menu-selection select.food-manager-category-dropdown', WPFMAdmin.actions.updateFoodinMenu); 
 
             //use body to call after dom update
             jQuery("body").on('click','a.wpfm-food-item-remove',WPFMAdmin.actions.removeFoodItem);
@@ -369,7 +369,22 @@ var WPFMAdmin= function () {
 	   /// <since>1.0.0</since> 
 	   updateFoodinMenu: function(event){ 
 	   	
-	   	var category_id = jQuery('.wpfm-admin-menu-selection #wpfm-admin-food-selection').val();
+	   	var category_id = jQuery(this).val();
+        var taxonomy = jQuery(this).attr('data-taxonomy');
+        var post_count = jQuery(this).find(":selected").attr('data-count');
+        var exclude = [];
+
+        if( post_count == 0 ){
+            jQuery('.no-menu-item-handle').show();
+            return false;
+        }
+
+        if( jQuery('ul.wpfm-food-menu li').length > 0 ){
+            jQuery('ul.wpfm-food-menu li').each(function() {
+                exclude.push(jQuery(this).attr('data-food-id'));
+            });
+        }
+        
 	   	if(category_id.length > 0){
             jQuery.ajax({
                     type: 'POST',
@@ -377,15 +392,41 @@ var WPFMAdmin= function () {
                     data: {
                     	action: 'wpfm_get_food_listings_by_category_id',
                     	category_id: category_id,
+                        taxonomy: taxonomy,
+                        exclude: exclude,
                     },
                     success: function(response) {
-                        jQuery('ul.wpfm-food-menu li').remove();
+                        
                         if(response.html.length !== 0){
                             jQuery('ul.wpfm-food-menu').append(response.html);
                             jQuery('.no-menu-item-handle').hide();
                         } else {
-                            jQuery('.no-menu-item-handle').show();
-                        }
+                            if( jQuery('ul.wpfm-food-menu li').length < 0 ){
+                                jQuery('.no-menu-item-handle').show();
+                            }
+                    }
+                                    
+                    // var food_arr = [];
+                    // jQuery('ul.wpfm-food-menu li').each(function( index ) {
+                    //     var Food_ID = jQuery(this).attr('data-food-id');
+                    //     food_arr.push(Food_ID);
+                    // });
+                    // var food_arr_sort = food_arr.sort();
+
+                    // var reportCheckDuplicate = [];
+                    // for (var i = 0; i < food_arr_sort.length - 1; i++) {
+                    //     if (food_arr_sort[i + 1] == food_arr_sort[i]) {
+                    //         reportCheckDuplicate.push(food_arr_sort[i]);
+                    //     }
+                    // }
+
+                    // console.log(reportCheckDuplicate);
+
+                    // for (var i = 0; i < reportCheckDuplicate.length; i++) {
+                    //     console.log('[data-food-id="'+reportCheckDuplicate[i]+'"]:first-child');
+                    //     jQuery('[data-food-id="'+reportCheckDuplicate[i]+'"]:first-child').remove();
+                    // }
+                    
                     },
                     error: function(result) {}
                 });
@@ -394,16 +435,42 @@ var WPFMAdmin= function () {
                     type: 'POST',
                     url: wpfm_admin.ajax_url,
                     data: {
-                        action: 'wpfm_get_food_listings_by_category_id',                        
+                        action: 'wpfm_get_food_listings_by_category_id',
+                        taxonomy: taxonomy,
+                        exclude: exclude,
                     },
                     success: function(response) {
-                        jQuery('ul.wpfm-food-menu li').remove();
+                        
                         if(response.html.length !== 0){
                             jQuery('ul.wpfm-food-menu').append(response.html);
                             jQuery('.no-menu-item-handle').hide();
                         } else {
-                            jQuery('.no-menu-item-handle').show();
+                            if( jQuery('ul.wpfm-food-menu li').length < 0 ){
+                                jQuery('.no-menu-item-handle').show();
+                            }
                         }
+                                        
+                    // var food_arr = [];
+                    // jQuery('ul.wpfm-food-menu li').each(function( index ) {
+                    //     var Food_ID = jQuery(this).attr('data-food-id');
+                    //     food_arr.push(Food_ID);
+                    // });
+                    // var food_arr_sort = food_arr.sort();
+
+                    // var reportCheckDuplicate = [];
+                    // for (var i = 0; i < food_arr_sort.length - 1; i++) {
+                    //     if (food_arr_sort[i + 1] == food_arr_sort[i]) {
+                    //         reportCheckDuplicate.push(food_arr_sort[i]);
+                    //     }
+                    // }
+
+                    // console.log(reportCheckDuplicate);
+
+                    // for (var i = 0; i < reportCheckDuplicate.length; i++) {
+                    //     console.log('[data-food-id="'+reportCheckDuplicate[i]+'"]:first-child');
+                    //     jQuery('[data-food-id="'+reportCheckDuplicate[i]+'"]:first-child').remove();
+                    // }
+
                     },
                     error: function(result) {}
                 });
