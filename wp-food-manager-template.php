@@ -720,10 +720,16 @@ function display_food_ingredients( $post = null, $after = '' ) {
 
 		    $i = 0;
 			foreach ( $food_ingredients as $ingredient ) {
-				$ingredient_slug = strtolower(str_replace(" ", "_", $ingredient['term_name']));
-				echo '<span class="food-ingredients '. esc_attr( sanitize_title( $ingredient_slug ) ).' ">'. $ingredient['term_name'].' - '.$ingredient['value'].' '.$ingredient['unit_name'].'</span>';
-				if($numIngredient > ++$i){
-				    echo $after;
+				$ingTerm = get_term(
+					! empty( $ingredient['id'] ) ? absint( $ingredient['id'] ) : 0,
+					'food_manager_ingredient'
+				);
+				if( !empty($ingTerm->term_id) ){
+					$ingredient_slug = strtolower(str_replace(" ", "_", $ingredient['term_name']));
+					echo '<span class="food-ingredients '. esc_attr( sanitize_title( $ingredient_slug ) ).' ">'. $ingredient['term_name'].' - '.$ingredient['value'].' '.$ingredient['unit_name'].'</span>';
+					if($numIngredient > ++$i){
+						echo $after;
+					}
 				}
 			}
 		}
@@ -771,10 +777,16 @@ function display_food_nutritions( $post = null, $after = '' ) {
 		    $numNutrition = count($food_nutritions);
 		    $i = 0;
 			foreach ( $food_nutritions as $nutrition ) {
-				$nutrition_slug = strtolower(str_replace(" ", "_", $nutrition['term_name']));
-				echo '<span class="food-nutritions '. esc_attr( sanitize_title( $nutrition_slug ) ).' ">'. $nutrition['term_name'].' - '.$nutrition['value'].' '.$nutrition['unit_name'].'</span>';
-				if($numNutrition > ++$i){
-				    echo $after;
+				$nutriTerm = get_term(
+					!empty($nutrition['id']) ? absint($nutrition['id']) : 0,
+					'food_manager_nutrition'
+				);
+				if( !empty( $nutriTerm->term_id ) ){
+					$nutrition_slug = strtolower(str_replace(" ", "_", $nutrition['term_name']));
+					echo '<span class="food-nutritions '. esc_attr( sanitize_title( $nutrition_slug ) ).' ">'. $nutrition['term_name'].' - '.$nutrition['value'].' '.$nutrition['unit_name'].'</span>';
+					if($numNutrition > ++$i){
+						echo $after;
+					}
 				}
 			}
 		}

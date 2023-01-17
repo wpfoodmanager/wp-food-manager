@@ -3597,3 +3597,19 @@ function wpfm_dropdown_categories( $taxonomy, $key_name, $selected_term ) {
 	echo "</select>";
 	return $popular_ids;
 }
+
+function is_wpfm_terms_exist($terms, $taxonomy){
+
+	$displayTerms = 0;
+
+	if( $terms ){
+		foreach ($terms as $term) {
+			$isTerm = get_term(
+				! empty( $term['id'] ) ? absint( $term['id'] ) : 0,
+				$taxonomy
+			);
+			$displayTerms = ( !empty( $isTerm->term_id ) ) ? 1 : 0;
+		}
+	}
+	return $displayTerms;
+}
