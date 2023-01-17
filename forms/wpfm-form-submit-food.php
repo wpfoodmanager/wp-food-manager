@@ -642,6 +642,9 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
 
 		// Check for wpfm-online-order add-on Active or not
 		if(in_array('wpfm-online-order/wpfm-online-order.php', apply_filters('active_plugins', get_option('active_plugins')))){
+			if(isset($_GET['action']) == 'edit'){
+				return;
+			}
 			$prod_banner = isset($_POST['current_food_banner']) ? $_POST['current_food_banner'] : '';
 		    $prod_regular_price = isset($_POST['food_price']) ? $_POST['food_price'] : '';
 		    $prod_sale_price = isset($_POST['food_sale_price']) ? $_POST['food_sale_price'] : '';
@@ -680,13 +683,17 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
 				$term_tag = get_term_by('id', $food_tag_value, 'food_manager_tag');
 				$prod_tags_arr[] = $term_tag->slug;
 			}
+
+			$post_slug_name = ltrim(strtolower($post_title));
+			$post_slug_name = rtrim($post_slug_name);
+			$post_name = str_replace(" ", "-", $post_slug_name);
 			
 			include_once(ABSPATH.'wp-content/plugins/wpfm-online-order/includes/class-wc-product-food-product.php');
 
 			$post_food = new WC_Product_Food_Product();
 
 			$post_food->set_name( $post_title );
-			$post_food->set_slug( $food_data['post_name'] );
+			$post_food->set_slug( $post_name );
 			$post_food->set_regular_price( $prod_regular_price );
 			$post_food->set_sale_price( $prod_sale_price );
 			$post_food->set_description( $post_content );
