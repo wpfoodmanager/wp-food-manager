@@ -214,7 +214,7 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
 				'food_sale_price' => array(
 					'label'       => __( 'Sale Price', 'wp-food-manager' ),
 					'type'        => 'number',
-					'required'    => true,
+					'required'    => false,
 					'placeholder' => '',
 					'priority'    => 8
 				),
