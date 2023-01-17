@@ -198,6 +198,7 @@ class WP_Food_Manager {
 
 			wp_register_script( 'chosen', WPFM_PLUGIN_URL . '/assets/js/jquery-chosen/chosen.jquery.min.js', array( 'jquery' ), '1.1.0', true );
 			wp_register_script( 'wp-food-manager-term-multiselect', WPFM_PLUGIN_URL . '/assets/js/term-multiselect.min.js', array( 'jquery', 'chosen' ), WPFM_VERSION, true );
+			wp_register_script( 'wp-food-manager-term-select-multi-appearance', WPFM_PLUGIN_URL . '/assets/js/term-select-multi-appearance.min.js', array( 'jquery', 'chosen' ), WPFM_VERSION, true );
 			wp_register_script( 'wp-food-manager-multiselect', WPFM_PLUGIN_URL . '/assets/js/multiselect.min.js', array( 'jquery', 'chosen' ), WPFM_VERSION, true );
 			wp_enqueue_style( 'chosen', WPFM_PLUGIN_URL . '/assets/css/chosen.css' );
 

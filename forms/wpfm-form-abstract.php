@@ -278,6 +278,14 @@ abstract class WPFM_Form {
 			$ext_multi_options = isset($_POST['option_value_count']) ? $_POST['option_value_count'] : '';
 		}
 
+		if( isset( $_POST['_nutrition'] ) && !empty( $_POST['_nutrition'] ) ){
+			$values['_nutrition'] = $_POST['_nutrition'];
+		}
+
+		if( isset( $_POST['_ingredient'] ) && !empty( $_POST['_ingredient'] ) ){
+			$values['_ingredient'] = $_POST['_ingredient'];
+		}
+
 		if( !add_post_meta($food_id,'wpfm_repeated_options', $repeated_options, true) ){
 			update_post_meta($food_id,'wpfm_repeated_options', $repeated_options);
 		}
@@ -695,7 +703,7 @@ abstract class WPFM_Form {
 		    unset($default_fields['food']['food_type']);
 		}
 		
-		if ( ! get_option( 'food_manager_enable_food_ingredient' ) || (wp_count_terms( 'food_manager_ingredient' ) == 0 && isset($custom_fields['food']['food_ingredient'])) ) {
+		if ( (wp_count_terms( 'food_manager_ingredient' ) == 0 && isset($custom_fields['food']['food_ingredient'])) ) {
 			
 			if(isset( $custom_fields['food']['food_ingredient']))
 			$custom_fields['food']['food_ingredient']['visibility']=false;

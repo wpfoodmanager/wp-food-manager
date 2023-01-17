@@ -155,6 +155,24 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
 					'default'     => '',
 					'taxonomy'    => 'food_manager_type'
 				),
+				'food_ingredient' => array(
+					'label'       => __( 'Food Ingredient', 'wp-food-manager' ),
+					'type'        => 'term-select-multi-appearance',
+					'required'    => false,
+					'placeholder' => '',
+					'priority'    => 3,
+					'default'     => '',
+					'taxonomy'    => 'food_manager_ingredient'
+				),
+				'food_nutrition' => array(
+					'label'       => __( 'Food Nutrition', 'wp-food-manager' ),
+					'type'        => 'term-select-multi-appearance',
+					'required'    => false,
+					'placeholder' => '',
+					'priority'    => 3,
+					'default'     => '',
+					'taxonomy'    => 'food_manager_nutrition'
+				),
 				/*'food_tag' => array(
 					'label'       => __( 'Food Tag', 'wp-food-manager' ),
 					'type'        => 'term-multiselect', //get_option('food_manager_multiselect_food_type',1) ?  'term-multiselect' : 'term-select'
@@ -559,6 +577,69 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
 			}
 		}
 
+		// Set ingredients
+		$multiArrayIng = array();
+
+		if( isset( $values['_ingredient'] ) && !empty( $values['_ingredient'] ) ){
+			foreach ( $_POST['_ingredient'] as $id => $ingredient ) {
+
+				$term_name = get_term( $id )->name;
+				$unit_name = "Unit";
+
+				if($ingredient['unit_id'] == '' && empty($ingredient['unit_id'])){
+					$unit_name = "Unit";
+				} else {
+					$unit_name = get_term( $ingredient['unit_id'] )->name;
+				}
+
+				$item = [
+					'id'      => $id,
+					'unit_id' => ! empty( $ingredient['unit_id'] ) ? $ingredient['unit_id'] : null,
+					'value'   => ! empty( $ingredient['value'] ) ? $ingredient['value'] : null,
+					'term_name' => $term_name,
+					'unit_name' => $unit_name
+				];
+
+				$multiArrayIng[$id] = $item;
+			}
+			
+			update_post_meta( $this->food_id, '_ingredient', $multiArrayIng );
+
+			// Enable ingredients to display
+			update_post_meta( $this->food_id, '_enable_food_ingre', true );
+		}
+
+		// Set nutritions
+		$multiArrayNutri = array();
+
+		if( isset( $values['_nutrition'] ) && !empty( $values['_nutrition'] ) ){
+			foreach ( $_POST['_nutrition'] as $id => $nutrition ) {
+
+				$term_name = get_term( $id )->name;
+				$unit_name = "Unit";
+
+				if($nutrition['unit_id'] == '' && empty($nutrition['unit_id'])){
+					$unit_name = "Unit";
+				} else {
+					$unit_name = get_term( $nutrition['unit_id'] )->name;
+				}
+
+				$item = [
+					'id'      => $id,
+					'unit_id' => ! empty( $nutrition['unit_id'] ) ? $nutrition['unit_id'] : null,
+					'value'   => ! empty( $nutrition['value'] ) ? $nutrition['value'] : null,
+					'term_name' => $term_name,
+					'unit_name' => $unit_name
+				];
+
+				$multiArrayNutri[$id] = $item;
+			}
+			update_post_meta( $this->food_id, '_nutrition', $multiArrayNutri );
+
+			// Enable nutritions to display
+			update_post_meta( $this->food_id, '_enable_food_nutri', true );
+		}
+
 		// Check for wpfm-online-order add-on Active or not
 		if(in_array('wpfm-online-order/wpfm-online-order.php', apply_filters('active_plugins', get_option('active_plugins')))){
 			$prod_banner = isset($_POST['current_food_banner']) ? $_POST['current_food_banner'] : '';
@@ -703,10 +784,10 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
 				// Save taxonomies
 				if ( ! empty( $field['taxonomy'] ) && !empty($values[ $group_key ][ $key ]) ) {
 					if ( is_array( $values[ $group_key ][ $key ] ) ) {
-						wp_set_object_terms( $this->food_id, $values[ $group_key ][ $key ], $field['taxonomy'], false );
+						wp_set_object_terms( $this->food_id, (int)$values[ $group_key ][ $key ], $field['taxonomy'], false );
 					} else {
 						if(!empty($values[ $group_key ][ $key ])){
-							wp_set_object_terms( $this->food_id, array( $values[ $group_key ][ $key ] ), $field['taxonomy'], false );
+							wp_set_object_terms( $this->food_id, array( (int)$values[ $group_key ][ $key ] ), $field['taxonomy'], false );
 						}
 					}				
 				// oragnizer logo is a featured image
