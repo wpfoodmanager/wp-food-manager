@@ -375,6 +375,8 @@ var WPFMAdmin= function () {
         var exclude = [];
 
         if( post_count == 0 ){
+            var NoMenuItemText = ( taxonomy == 'food_manager_type' ) ? 'Selected food-type has no food.': 'Selected category has no food.';
+            jQuery('.no-menu-item-handle').html(NoMenuItemText);
             jQuery('.no-menu-item-handle').show();
             return false;
         }
