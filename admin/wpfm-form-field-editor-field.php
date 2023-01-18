@@ -3,7 +3,7 @@ if (empty($field_key)) {
 	$field_key = $index;
 }
 $taxonomies = get_object_taxonomies((object) array('post_type' => 'food_manager'));
-unset($taxonomies['3'], $taxonomies['4'], $taxonomies['5']);
+unset($taxonomies['5']);
 
 if ($field_key !== 'option_options') {
 	$field_types    = apply_filters(
@@ -21,6 +21,7 @@ if ($field_key !== 'option_options') {
 			'term-checklist'   => __('Term Checklist', 'wp-food-manager'),
 			'term-multiselect' => __('Term Multiselect', 'wp-food-manager'),
 			'term-select'      => __('Term Select', 'wp-food-manager'),
+			'term-select-multi-appearance'      => __('Term Multi Select Appearance', 'wp-food-manager'),
 			'textarea'         => __('Textarea', 'wp-food-manager'),
 			'wp-editor'        => __('WP Editor', 'wp-food-manager'),
 			'url'              => __('URL', 'wp-food-manager'),
@@ -46,6 +47,7 @@ if ($field_key !== 'option_options') {
 			'term-checklist'   => __('Term Checklist', 'wp-food-manager'),
 			'term-multiselect' => __('Term Multiselect', 'wp-food-manager'),
 			'term-select'      => __('Term Select', 'wp-food-manager'),
+			'term-select-multi-appearance'      => __('Term Multi Select Appearance', 'wp-food-manager'),
 			'textarea'         => __('Textarea', 'wp-food-manager'),
 			'wp-editor'        => __('WP Editor', 'wp-food-manager'),
 			'url'              => __('URL', 'wp-food-manager'),          /*'group'       			=> __( 'Group', 'wp-food-manager' ),	*/
@@ -60,6 +62,10 @@ if($field_key == 'food_category'){
 } elseif($field_key == 'food_type'){
 	$wpfm_admin_class = '';
 } elseif($field_key == 'food_tag'){
+	$wpfm_admin_class = '';
+} elseif($field_key == 'food_ingredient'){
+	$wpfm_admin_class = '';
+} elseif($field_key == 'food_nutrition'){
 	$wpfm_admin_class = '';
 } else {
 	$wpfm_admin_class = 'wpfm-admin-common';

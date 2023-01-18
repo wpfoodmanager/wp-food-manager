@@ -152,6 +152,7 @@ class WP_Food_Manager_Field_Editor
 				'term-checklist'   => __('Term Checklist', 'wp-food-manager'),
 				'term-multiselect' => __('Term Multiselect', 'wp-food-manager'),
 				'term-select'      => __('Term Select', 'wp-food-manager'),
+				'term-select-multi-appearance'      => __('Term Multi Select Appearance', 'wp-food-manager'),
 				'textarea'         => __('Textarea', 'wp-food-manager'),
 				'wp-editor'        => __('WP Editor', 'wp-food-manager'),
 				'url'              => __('URL', 'wp-food-manager'),          /*'group'       			=> __( 'Group', 'wp-food-manager' ),	*/
@@ -268,7 +269,7 @@ class WP_Food_Manager_Field_Editor
 
 			$field['fields'][$field_key]['label'] = trim($field_value['label']);
 
-			if (isset($field_value['type']) && !in_array($field_value['type'], array('term-select', 'term-multiselect', 'term-checklist'))) {
+			if (isset($field_value['type']) && !in_array($field_value['type'], array('term-select', 'term-select-multi-appearance', 'term-multiselect', 'term-checklist'))) {
 				unset($field['fields'][$field_key]['taxonomy']);
 			}
 
@@ -344,7 +345,7 @@ class WP_Food_Manager_Field_Editor
 
 						$new_fields[$group_key][$field_key]['label'] = trim($new_fields[$group_key][$field_key]['label']);
 
-						if (isset($new_fields[$group_key][$field_key]['type']) && !in_array($new_fields[$group_key][$field_key]['type'], array('term-select', 'term-multiselect', 'term-checklist'))) {
+						if (isset($new_fields[$group_key][$field_key]['type']) && !in_array($new_fields[$group_key][$field_key]['type'], array('term-select', 'term-select-multi-appearance', 'term-multiselect', 'term-checklist'))) {
 							unset($new_fields[$group_key][$field_key]['taxonomy']);
 						}
 
