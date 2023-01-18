@@ -542,7 +542,7 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
 						$food_type_taxonomy = get_term( $values['food']['food_type'][0]);
 						$food_type = $food_type_taxonomy->name;
 					}
-					$food_slug[] = $food_type;
+					//$food_slug[] = $food_type;
 				}
 				else{
 
@@ -552,7 +552,7 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
 						$food_type_taxonomy = get_term( $values['food']['food_type']);
 						$food_type = $food_type_taxonomy->name;
 					}
-					$food_slug[] = $food_type;
+					//$food_slug[] = $food_type;
 				}
 			}
 			
@@ -641,7 +641,7 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
 			update_post_meta( $this->food_id, '_enable_food_nutri', true );
 		}
 
-		// Check for WPFM Online Order & Woocommerce add-on Active or not
+		// Check for WPFM Online Order & Woocommerce Active or not
 		if(in_array('wpfm-online-order/wpfm-online-order.php', apply_filters('active_plugins', get_option('active_plugins'))) && in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_option('active_plugins')))){
 			$prod_banner = isset($_POST['current_food_banner']) ? $_POST['current_food_banner'] : '';
 		    $prod_regular_price = isset($_POST['food_price']) ? $_POST['food_price'] : '';
