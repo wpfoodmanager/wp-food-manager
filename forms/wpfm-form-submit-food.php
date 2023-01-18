@@ -814,11 +814,18 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
 			foreach ( $group_fields as $key => $field ) {
 				// Save taxonomies
 				if ( ! empty( $field['taxonomy'] ) && !empty($values[ $group_key ][ $key ]) ) {
+					
+					if( $field['taxonomy'] == 'food_manager_ingredient' || $field['taxonomy'] == 'food_manager_nutrition' ){
+						$term_id = (int)$values[ $group_key ][ $key ];
+					}else{
+						$term_id = $values[ $group_key ][ $key ];
+					}
+
 					if ( is_array( $values[ $group_key ][ $key ] ) ) {
-						wp_set_object_terms( $this->food_id, $values[ $group_key ][ $key ], $field['taxonomy'], false );
+						wp_set_object_terms( $this->food_id, $term_id, $field['taxonomy'], false );
 					} else {
 						if(!empty($values[ $group_key ][ $key ])){
-							wp_set_object_terms( $this->food_id, array( $values[ $group_key ][ $key ] ), $field['taxonomy'], false );
+							wp_set_object_terms( $this->food_id, array( $term_id ), $field['taxonomy'], false );
 						}
 					}				
 				// oragnizer logo is a featured image
