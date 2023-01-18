@@ -1632,12 +1632,19 @@ class WPFM_Writepanels
 			update_post_meta($post_id, '_food_item_ids', '');
 		}
 
-		if (isset($_POST['cat'])) {
-			$cat_ids = array_map('esc_attr', $_POST['cat']);
-			update_post_meta($post_id, '_food_item_cat_ids', $cat_ids);
-		} else {
-			update_post_meta($post_id, '_food_item_cat_ids', '');
-		}
+		// if (isset($_POST['cat'])) {
+		// 	$cat_ids = array_map('esc_attr', $_POST['cat']);
+		// 	update_post_meta($post_id, '_food_item_cat_ids', $cat_ids);
+		// } else {
+		// 	update_post_meta($post_id, '_food_item_cat_ids', '');
+		// }
+
+		// if (isset($_POST['food_type'])) {
+		// 	$type_ids = array_map('esc_attr', $_POST['food_type']);
+		// 	update_post_meta($post_id, '_food_item_type_ids', $type_ids);
+		// } else {
+		// 	update_post_meta($post_id, '_food_item_type_ids', '');
+		// }
 	}
 
 	/**
