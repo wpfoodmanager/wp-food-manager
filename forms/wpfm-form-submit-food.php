@@ -523,6 +523,7 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
 	 * @param  bool $update_slug
 	 */
 	protected function save_food( $post_title, $post_content, $status = 'preview', $values = array(), $update_slug = true ) {
+		global $wpdb;
 		$food_data = array(
 			'post_title'     => $post_title,
 			'post_content'   => $post_content,
@@ -530,7 +531,7 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
 			'comment_status' => 'closed'
 		);
 
-	if ( $update_slug ) {
+		if ( $update_slug ) {
 			$food_slug   = array();
 			// Prepend with food type
 			if ( apply_filters( 'add_food_prefix_post_name_with_food_type', true ) && ! empty( $values['food']['food_type'] ) ) {
@@ -640,11 +641,8 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
 			update_post_meta( $this->food_id, '_enable_food_nutri', true );
 		}
 
-		// Check for wpfm-online-order add-on Active or not
-		if(in_array('wpfm-online-order/wpfm-online-order.php', apply_filters('active_plugins', get_option('active_plugins')))){
-			if(isset($_GET['action']) == 'edit'){
-				return;
-			}
+		// Check for WPFM Online Order & Woocommerce add-on Active or not
+		if(in_array('wpfm-online-order/wpfm-online-order.php', apply_filters('active_plugins', get_option('active_plugins'))) && in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_option('active_plugins')))){
 			$prod_banner = isset($_POST['current_food_banner']) ? $_POST['current_food_banner'] : '';
 		    $prod_regular_price = isset($_POST['food_price']) ? $_POST['food_price'] : '';
 		    $prod_sale_price = isset($_POST['food_sale_price']) ? $_POST['food_sale_price'] : '';
@@ -655,6 +653,8 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
 			$prod_types = get_term_by('id', $_POST['food_type'], 'food_manager_type');
 			$prod_categories = isset($_POST['food_category']) ? $_POST['food_category'] : '';
 			$prod_tags = isset($_POST['food_tag']) ? $_POST['food_tag'] : '';
+			$prod_description = isset($_POST['food_description']) ? $_POST['food_description'] : '';
+			$prod_title = isset($_POST['food_title']) ? $_POST['food_title'] : '';
 
 
 			if($prod_ingre == 1){
@@ -670,53 +670,77 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
 			}
 
 			$prod_categories_arr = array();
-			foreach ($prod_categories as $food_cat_key => $food_cat_value) {
-				$term_cat = get_term_by('id', $food_cat_value, 'food_manager_category');
-				/*echo "<pre>";
-				print_r($term_cat->slug);
-				echo "</pre>";*/
-				$prod_categories_arr[] = $term_cat->slug;
+			if(is_array($prod_categories)){
+				foreach ($prod_categories as $food_cat_key => $food_cat_value) {
+					$term_cat = get_term_by('id', $food_cat_value, 'food_manager_category');
+					$prod_categories_arr[] = $term_cat->slug;
+				}
 			}
 
 			$prod_tags_arr = array();
-			foreach ($prod_tags as $food_tag_key => $food_tag_value) {
-				$term_tag = get_term_by('id', $food_tag_value, 'food_manager_tag');
-				$prod_tags_arr[] = $term_tag->slug;
+			if(is_array($prod_tags)){
+				foreach ($prod_tags as $food_tag_key => $food_tag_value) {
+					$term_tag = get_term_by('id', $food_tag_value, 'food_manager_tag');
+					$prod_tags_arr[] = $term_tag->slug;
+				}
 			}
 
 			$post_slug_name = ltrim(strtolower($post_title));
 			$post_slug_name = rtrim($post_slug_name);
 			$post_name = str_replace(" ", "-", $post_slug_name);
-			
-			include_once(ABSPATH.'wp-content/plugins/wpfm-online-order/includes/class-wc-product-food-product.php');
-
-			$post_food = new WC_Product_Food_Product();
-
-			$post_food->set_name( $post_title );
-			$post_food->set_slug( $post_name );
-			$post_food->set_regular_price( $prod_regular_price );
-			$post_food->set_sale_price( $prod_sale_price );
-			$post_food->set_description( $post_content );
-			//$post_food->set_image_id( get_post_thumbnail_id($this->food_id) );
-			$post_food->set_category_ids( $prod_categories_arr );
-			$post_food->set_tag_ids( $prod_tags_arr );
-			//$post_food->set_menu_order( $food_data->menu_order );
-			$post_food->set_stock_status( $prod_stock_array[1] );
-			$post_food->save();
-
-			$prod_id = $post_food->get_id();
 
 			$prod_banner_id = attachment_url_to_postid($prod_banner);
 
-			/*update_post_meta( $prod_id, '_ingredient', $prod_multiArrayIng );
-			update_post_meta( $prod_id, '_nutrition', $prod_multiArrayNutri );*/
-			update_post_meta( $prod_id, '_enable_food_ingre', $prod_ingre );
-			update_post_meta( $prod_id, '_enable_food_nutri', $prod_nutri );
-			update_post_meta( $prod_id, 'food_manager_type', $prod_types->slug);
-			update_post_meta( $prod_id, '_thumbnail_id', $prod_banner_id);
+			if(isset($_GET['action']) == 'edit'){
 
-			wp_set_object_terms( $prod_id, $prod_tags_arr, 'product_tag' );
-	    	wp_set_object_terms( $prod_id, $prod_categories_arr, 'product_cat' );
+				$product_obj = get_page_by_path( $post_name, OBJECT, 'product' );
+		    	$product = wc_get_product($product_obj->ID);
+
+				update_post_meta( $product_obj->ID, '_stock_status', $prod_stock_array[1]);
+			    update_post_meta( $product_obj->ID, '_regular_price', $prod_regular_price );
+			    update_post_meta( $product_obj->ID, '_sale_price', $prod_sale_price );
+			    update_post_meta( $product_obj->ID, '_price', $prod_sale_price );
+			    /*update_post_meta( $product_obj->ID, '_ingredient', $food_ingredient );
+				update_post_meta( $product_obj->ID, '_nutrition', $food_nutrition );*/
+				update_post_meta( $product_obj->ID, '_enable_food_ingre', $prod_ingre );
+				update_post_meta( $product_obj->ID, '_enable_food_nutri', $prod_nutri );
+				update_post_meta( $product_obj->ID, '_thumbnail_id', $prod_banner_id);
+				update_post_meta( $product_obj->ID, 'food_manager_type', $prod_types->slug);
+				
+				$wpdb->update('wp_posts', array('post_content'=>$prod_description, 'post_title'=>$prod_title), array('ID' => $product_obj->ID, 'post_type' => 'product'));
+				
+				wp_set_object_terms( $product_obj->ID, $prod_tags_arr, 'product_tag' );
+		    	wp_set_object_terms( $product_obj->ID, $prod_categories_arr, 'product_cat' );
+			} else {
+			
+				include_once(ABSPATH.'wp-content/plugins/wpfm-online-order/includes/class-wc-product-food-product.php');
+
+				$post_food = new WC_Product_Food_Product();
+
+				$post_food->set_name( $post_title );
+				$post_food->set_slug( $post_name );
+				$post_food->set_regular_price( $prod_regular_price );
+				$post_food->set_sale_price( $prod_sale_price );
+				$post_food->set_description( $post_content );
+				//$post_food->set_image_id( get_post_thumbnail_id($this->food_id) );
+				$post_food->set_category_ids( $prod_categories_arr );
+				$post_food->set_tag_ids( $prod_tags_arr );
+				//$post_food->set_menu_order( $food_data->menu_order );
+				$post_food->set_stock_status( $prod_stock_array[1] );
+				$post_food->save();
+
+				$prod_id = $post_food->get_id();
+
+				/*update_post_meta( $prod_id, '_ingredient', $prod_multiArrayIng );
+				update_post_meta( $prod_id, '_nutrition', $prod_multiArrayNutri );*/
+				update_post_meta( $prod_id, '_enable_food_ingre', $prod_ingre );
+				update_post_meta( $prod_id, '_enable_food_nutri', $prod_nutri );
+				update_post_meta( $prod_id, 'food_manager_type', $prod_types->slug);
+				update_post_meta( $prod_id, '_thumbnail_id', $prod_banner_id);
+
+				wp_set_object_terms( $prod_id, $prod_tags_arr, 'product_tag' );
+		    	wp_set_object_terms( $prod_id, $prod_categories_arr, 'product_cat' );
+		    }
 	    }
 	}
 	/**

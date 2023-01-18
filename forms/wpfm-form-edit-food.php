@@ -183,8 +183,11 @@ class WPFM_Form_Edit_Food extends WPFM_Form_Submit_Food {
 
 			) );
 
+		if(!in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_option('active_plugins'))) && !in_array('wpfm-online-order/wpfm-online-order.php', apply_filters('active_plugins', get_option('active_plugins')))){
+			return;
+		}
 		// Check for wpfm-online-order add-on Active or not
-		if(in_array('wpfm-online-order/wpfm-online-order.php', apply_filters('active_plugins', get_option('active_plugins')))){
+		//if(in_array('wpfm-online-order/wpfm-online-order.php', apply_filters('active_plugins', get_option('active_plugins')))){
 			$food_price = get_post_meta($this->food_id,'_food_price', true);
 			$food_sale_price = get_post_meta($this->food_id,'_food_sale_price', true);
 			$food_stock_status = get_post_meta($this->food_id,'_food_stock_status', true);
@@ -255,7 +258,7 @@ class WPFM_Form_Edit_Food extends WPFM_Form_Submit_Food {
 			
 			wp_set_object_terms( $product_obj->ID, $food_tags_arr, 'product_tag' );
 	    	wp_set_object_terms( $product_obj->ID, $food_categories_arr, 'product_cat' );
-	    }
+	    //}
 
 	}
 
