@@ -815,10 +815,10 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
 				// Save taxonomies
 				if ( ! empty( $field['taxonomy'] ) && !empty($values[ $group_key ][ $key ]) ) {
 					if ( is_array( $values[ $group_key ][ $key ] ) ) {
-						wp_set_object_terms( $this->food_id, (int)$values[ $group_key ][ $key ], $field['taxonomy'], false );
+						wp_set_object_terms( $this->food_id, $values[ $group_key ][ $key ], $field['taxonomy'], false );
 					} else {
 						if(!empty($values[ $group_key ][ $key ])){
-							wp_set_object_terms( $this->food_id, array( (int)$values[ $group_key ][ $key ] ), $field['taxonomy'], false );
+							wp_set_object_terms( $this->food_id, array( $values[ $group_key ][ $key ] ), $field['taxonomy'], false );
 						}
 					}				
 				// oragnizer logo is a featured image
