@@ -160,7 +160,7 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
 					'type'        => 'term-select-multi-appearance',
 					'required'    => false,
 					'placeholder' => '',
-					'priority'    => 3,
+					'priority'    => 4,
 					'default'     => '',
 					'taxonomy'    => 'food_manager_ingredient'
 				),
@@ -169,7 +169,7 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
 					'type'        => 'term-select-multi-appearance',
 					'required'    => false,
 					'placeholder' => '',
-					'priority'    => 3,
+					'priority'    => 5,
 					'default'     => '',
 					'taxonomy'    => 'food_manager_nutrition'
 				),
@@ -187,7 +187,7 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
 					'type'        => 'file',
 					'required'    => true,
 					'placeholder' => '',
-					'priority'    => 5,
+					'priority'    => 6,
 					'ajax'        => true,
 					'multiple'    => get_option( 'food_manager_user_can_add_multiple_banner' ) == 1 ? true : false,
 					'allowed_mime_types' => array(
@@ -202,21 +202,21 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
 					'type'        => 'wp-editor',
 					'required'    => true,
 					'placeholder' => '',
-					'priority'    => 6
+					'priority'    => 7
 				),
 				'food_price' => array(
 					'label'       => __( 'Regular Price', 'wp-food-manager' ),
 					'type'        => 'number',
 					'required'    => true,
 					'placeholder' => '',
-					'priority'    => 7
+					'priority'    => 8
 				),
 				'food_sale_price' => array(
 					'label'       => __( 'Sale Price', 'wp-food-manager' ),
 					'type'        => 'number',
 					'required'    => false,
 					'placeholder' => '',
-					'priority'    => 8
+					'priority'    => 9
 				),
 				'food_stock_status' => array(
 					'label'       => __( 'Stock Status', 'wp-food-manager' ),
@@ -226,7 +226,7 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
 										'fm_instock' => __('In stock','wp-food-manager'),
 										'fm_outofstock' => __('Out of stock','wp-food-manager'),
 									),
-					'priority'    => 9
+					'priority'    => 10
 				),
 			),
 
