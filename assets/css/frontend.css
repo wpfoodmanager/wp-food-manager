@@ -956,6 +956,35 @@ a.button.wpfm-add-row:hover{
     height: auto;
     object-fit: cover;
 }
+
+
+.food_ingredient-preview ul, .food_nutrition-preview ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    background-color: var(--wpfm-gray-bg-color);
+    border-radius: 4px;
+}
+.food_ingredient-preview ul li, .food_nutrition-preview ul li {
+    padding: 15px 0;
+    border-bottom: 1px solid var(--wpfm-gray-border-color);
+}
+.food_ingredient-preview ul li:last-of-type, .food_nutrition-preview ul li:last-of-type{
+    border: 0px;
+}
+.food_ingredient-preview ul li label, .food_nutrition-preview ul li label {
+    margin: 0 15px 5px;
+    display: block;
+    line-height: normal;
+}
+.food_ingredient-preview ul li .term-item-flex, .food_nutrition-preview ul li .term-item-flex {
+    display: flex;
+    padding: 0 7.5px;
+}
+.food_ingredient-preview ul li .term-item-flex input, .food_ingredient-preview ul li .term-item-flex select,  .food_nutrition-preview ul li .term-item-flex input, .food_nutrition-preview ul li .term-item-flex select{
+    margin: 0 7.5px !important;
+}
+
 /* ===== ADD FOOD FORM OPTION END ===== */
 
 
