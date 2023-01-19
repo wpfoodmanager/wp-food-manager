@@ -960,7 +960,7 @@ a.button.wpfm-add-row:hover{
 
 .food_ingredient-preview ul, .food_nutrition-preview ul {
     list-style: none;
-    margin: 0;
+    margin: 10px 0 0 0;
     padding: 0;
     background-color: var(--wpfm-gray-bg-color);
     border-radius: 4px;
