@@ -1058,6 +1058,31 @@ class WPFM_Writepanels
 	 */
 	public function save_post($post_id, $post)
 	{
+		$ingredient_ids = [];
+		$nutrition_ids = [];
+
+		$meta_ingredient = get_post_meta($post_id, '_ingredient', true);
+		if( $meta_ingredient ){
+			foreach ($meta_ingredient as $value) {
+				$ingredient_ids[] = $value['id'];
+			}
+		}
+
+		$meta_nutrition = get_post_meta($post_id, '_nutrition', true);
+		if( $meta_nutrition ){
+			foreach ($meta_nutrition as $value) {
+				$nutrition_ids[] = $value['id'];
+			}
+		}
+
+		if( !empty($ingredient_ids) ){
+			wp_set_object_terms($post_id, $ingredient_ids, 'food_manager_ingredient');
+		}
+
+		if( !empty($nutrition_ids) ){
+			wp_set_object_terms($post_id, $nutrition_ids, 'food_manager_nutrition');
+		}
+
 		if (empty($post_id) || empty($post) || empty($_POST)) return;
 		if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) return;
 		if (is_int(wp_is_post_revision($post))) return;
@@ -1068,11 +1093,13 @@ class WPFM_Writepanels
 		if ($post->post_type == 'food_manager'){
 			do_action('food_manager_save_food_manager', $post_id, $post);
 			$unit_ids = [];
+			$ingredient_ids = [];
+			$nutrition_ids = [];
 			
 			if( isset( $_POST['_ingredient'] ) && !empty( $_POST['_ingredient'] ) ){
-				
+
 				$ingredients = $_POST['_ingredient'];
-				$ingredient_ids = [];
+
 				foreach ($ingredients as $ingredient_id => $ingredient ) {
 					$ingredient_ids[] = $ingredient_id;
 
@@ -1080,21 +1107,56 @@ class WPFM_Writepanels
 						$unit_ids[] = (int)$ingredient['unit_id'];
 					}
 				}
+			}
+
+			$exist_ingredients = get_the_terms( $post_id, 'food_manager_ingredient' );
+
+			if( $exist_ingredients ){
+
+				$removed_ingredient_ids = [];
+				foreach ($exist_ingredients as $ingredient) {
+					if( !in_array($ingredient->term_id, $ingredient_ids) ){
+						$removed_ingredient_ids[] = $ingredient->term_id;
+					}
+				}
+
+				wp_remove_object_terms($post_id, $removed_ingredient_ids, 'food_manager_ingredient');
+			}
+
+			if( !empty($ingredient_ids) ){
 				wp_set_object_terms($post_id, $ingredient_ids, 'food_manager_ingredient');
 			}
 
 			if( isset( $_POST['_nutrition'] ) && !empty( $_POST['_nutrition'] ) ){
 				
 				$nutritions = $_POST['_nutrition'];
-				$nutrition_ids = [];
+				
 				foreach ($nutritions as $nutrition_id => $nutrition ) {
 					$nutrition_ids[] = $nutrition_id;
 					if( trim($nutrition['unit_id']) ){
 						$unit_ids[] = (int)$nutrition['unit_id'];
 					}
 				}
+			}
+
+			$exist_nutritions = get_the_terms( $post_id, 'food_manager_nutrition' );
+
+			if( $exist_nutritions ){
+
+				$removed_nutrition_ids = [];
+				foreach ($exist_nutritions as $nutrition) {
+					if( !in_array($nutrition->term_id, $nutrition_ids) ){
+						$removed_nutrition_ids[] = $nutrition->term_id;
+					}
+				}
+
+				wp_remove_object_terms($post_id, $removed_nutrition_ids, 'food_manager_nutrition');
+			}
+
+			if( !empty($nutrition_ids) ){
 				wp_set_object_terms($post_id, $nutrition_ids, 'food_manager_nutrition');
 			}
+			
 			if( $unit_ids ){
 				wp_set_object_terms($post_id, $unit_ids, 'food_manager_unit');
 			}
