@@ -152,10 +152,14 @@ $food = $post;
                                                 foreach ($ext_option['option_options'] as $key2 => $value2) {
                                                     $checked = ($value2['option_value_default']) == 'on' ? 'checked' : '';
                                                     echo "<div class='wpfm-input-singular'>";
-                                                    echo '<input type="radio" id="' . esc_attr(str_replace(" ", "-", strtolower($value2['option_value_name']))) . '" name="' . esc_attr($key) . '" value="' . esc_attr($value2['option_value_name']) . '" ' . $checked . '>';
+                                                    echo '<input type="radio" id="' . esc_attr(str_replace(" ", "-", strtolower($value2['option_value_name']))) . '" name="' . esc_attr($key) . '" value="' . esc_attr($value2['option_value_price']) . '" ' . $checked . ' data-attr-name=' . esc_attr(str_replace(" ", "-", strtolower($value2['option_value_name']))) . '>';
                                                     echo '<label for="' . esc_attr(str_replace(" ", "-", strtolower($value2['option_value_name']))) . '"> ' . esc_html($value2['option_value_name']) . ' - ' . get_food_manager_currency_symbol() . $value2['option_value_price'] . '</label>';
                                                     echo "</div>";
                                                 }
+                                                echo "<div class='wpfm-input-singular'>";
+                                                echo '<input type="radio" id="radio-none" name="' . esc_attr($key) . '" value="">';
+                                                echo '<label for="radio-none"> None</label>';
+                                                echo "</div>";
                                                 if (!empty($additional_fields_extra_topping)) {
                                                     echo "<div class='wpfm-additional-main-row'>";
                                                     echo '<hr style="margin:25px 0 15px; display: block; background-color: #e4e4e4; height: 2px;"></hr>';
@@ -185,7 +189,7 @@ $food = $post;
                                                 foreach ($ext_option['option_options'] as $key2 => $value2) {
                                                     $checked = ($value2['option_value_default']) == 'on' ? 'checked' : '';
                                                     echo "<div class='wpfm-input-singular'>";
-                                                    echo '<input type="checkbox" id="' . esc_attr(str_replace(" ", "-", strtolower($value2['option_value_name']))) . '" name="' . esc_attr($key) . '" value="' . esc_attr($value2['option_value_name']) . '" ' . $checked . '>';
+                                                    echo '<input type="checkbox" id="' . esc_attr(str_replace(" ", "-", strtolower($value2['option_value_name']))) . '" name="' . esc_attr($key) . '" value="' . esc_attr($value2['option_value_price']) . '" ' . $checked . ' data-val="'.$value2['option_value_price'].'" data-attr-name=' . esc_attr(str_replace(" ", "-", strtolower($value2['option_value_name']))) . '>';
                                                     echo '<label for="' . esc_attr(str_replace(" ", "-", strtolower($value2['option_value_name']))) . '"> ' . esc_html($value2['option_value_name']) . ' - ' . get_food_manager_currency_symbol() . $value2['option_value_price'] . '</label>';
                                                     echo "</div>";
                                                 }
@@ -218,8 +222,9 @@ $food = $post;
                                                 foreach ($ext_option['option_options'] as $key2 => $value2) {
                                                     $selected = ($value2['option_value_default']) == 'on' ? 'selected' : '';
 
-                                                    echo '<option value="' . esc_attr($value2['option_value_name']) . '" ' . $selected . '>' . esc_attr($value2['option_value_name']) . ' - ' . get_food_manager_currency_symbol() . $value2['option_value_price'] . '</option>';
+                                                    echo '<option value="' . esc_attr($value2['option_value_price']) . '" ' . $selected . ' data-attr-name=' . esc_attr(str_replace(" ", "-", strtolower($value2['option_value_name']))) . '>' . esc_attr($value2['option_value_name']) . ' - ' . get_food_manager_currency_symbol() . $value2['option_value_price'] . '</option>';
                                                 }
+                                                echo '<option value="select-non">None</option>';
                                                 echo '</select>';
 
                                                 if (!empty($additional_fields_extra_topping)) {
