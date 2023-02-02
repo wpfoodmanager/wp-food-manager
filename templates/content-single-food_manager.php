@@ -157,7 +157,7 @@ $food = $post;
                                                     echo "</div>";
                                                 }
                                                 echo "<div class='wpfm-input-singular'>";
-                                                echo '<input type="radio" id="radio-none" name="' . esc_attr($key) . '" value="">';
+                                                echo '<input type="radio" id="radio-none" name="' . esc_attr($key) . '" value="0">';
                                                 echo '<label for="radio-none"> None</label>';
                                                 echo "</div>";
                                                 if (!empty($additional_fields_extra_topping)) {
