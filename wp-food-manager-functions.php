@@ -3355,7 +3355,7 @@ function wpfm_extra_topping_form_fields( $post, $field, $field_value) {
                 echo '<p class="wpfm-additional-info-block-title"><strong>'.printf(__('%s', 'wp-food-manager'),  $field['label']).' - </strong> '.date($time_format, strtotime($field_value)).'</p>';
             echo '</div>';
         echo '</div>';
-	}
+	} 
 
 	elseif ($field['type'] == 'file') {
 		echo '<div class="wpfm-col-md-12 wpfm-col-sm-12 wpfm-additional-info-block-details-content-left" style="margin-bottom: 20px;">';
