@@ -199,6 +199,7 @@ class WPFM_Form_Edit_Food extends WPFM_Form_Submit_Food {
 			$food_nutrition = get_post_meta($this->food_id,'_nutrition', true);
 			$food_post_title = isset($_POST['food_title']) ? $_POST['food_title'] : '';
 			$food_post_content = isset($_POST['food_description']) ? $_POST['food_description'] : '';
+			$food_new_price = '';
 
 			if($food_ingre == 1){
 				$food_ingre = 'yes';
@@ -240,10 +241,16 @@ class WPFM_Form_Edit_Food extends WPFM_Form_Submit_Food {
 	    	$product_obj = get_page_by_path( $food->post_name, OBJECT, 'product' );
 	    	$product = wc_get_product($product_obj->ID);
 
+	    	if(empty($food_sale_price)){
+				$food_new_price = $food_price;
+		    } else {
+		    	$food_new_price = $food_sale_price;
+		    }
+
 			update_post_meta( $product_obj->ID, '_stock_status', $food_stock_array[1]);
 		    update_post_meta( $product_obj->ID, '_regular_price', $food_price );
 		    update_post_meta( $product_obj->ID, '_sale_price', $food_sale_price );
-		    update_post_meta( $product_obj->ID, '_price', $food_sale_price );
+		    update_post_meta( $product_obj->ID, '_price', $food_new_price );
 		    update_post_meta( $product_obj->ID, '_ingredient', $food_ingredient );
 			update_post_meta( $product_obj->ID, '_nutrition', $food_nutrition );
 			update_post_meta( $product_obj->ID, '_enable_food_ingre', $food_ingre );
