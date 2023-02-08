@@ -72,7 +72,7 @@ $food = $post;
                                         <?php display_food_price_tag(); ?>
                                     </div>
                                     <div class="wpfm-food-organizer">
-                                        <div class="wpfm-food-organizer-name">by <?php echo get_the_author_link(); ?></div>
+                                        <div class="wpfm-food-organizer-name">by <?php echo the_author_posts_link(); ?></div>
                                     </div>
                                     <?php
                                     $view_count = get_food_views_count($post);
