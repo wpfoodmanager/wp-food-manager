@@ -65,7 +65,7 @@ class WPFM_Settings {
 							array(
 									'name'       => 'food_manager_enable_categories',
 									'std'        => '1',
-									'label'      => __( 'Enable Food categories', 'wp-food-manager' ),
+									'label'      => __( 'Enable Food Categories', 'wp-food-manager' ),
 									'cb_label'   => __( 'Display categories on food.', 'wp-food-manager' ),
 									'desc'     => __( 'If enabled, the Food Categories option will display and manage from the both side at frontend and backend. ', 'wp-food-manager' ),
 									'type'       => 'checkbox',
@@ -74,7 +74,7 @@ class WPFM_Settings {
 							array(
 									'name'       => 'food_manager_enable_food_types',
 									'std'        => '1',
-									'label'      => __( 'Enable Food types', 'wp-food-manager' ),
+									'label'      => __( 'Enable Food Types', 'wp-food-manager' ),
 									'cb_label'   => __( 'Display types on food.', 'wp-food-manager' ),
 									'desc'       => 'If enabled, the Food Types option will display and manage from the both side at frontend and backend. ',
 									'type'       => 'checkbox',
@@ -83,7 +83,7 @@ class WPFM_Settings {
 							array(
 									'name'       => 'food_manager_enable_food_tags',
 									'std'        => '1',
-									'label'      => __( 'Enable Food tags', 'wp-food-manager' ),
+									'label'      => __( 'Enable Food Tags', 'wp-food-manager' ),
 									'cb_label'   => __( 'Display tags on food.', 'wp-food-manager' ),
 									'desc'       => 'If enabled, the Food Tags option will display and manage from the both side at frontend and backend. ',
 									'type'       => 'checkbox',
@@ -92,7 +92,7 @@ class WPFM_Settings {
 							array(
 									'name'       => 'food_manager_enable_field_editor',
 									'std'        => '1',
-									'label'      => __( 'Enable Field editor', 'wp-food-manager' ),
+									'label'      => __( 'Enable Field Editor', 'wp-food-manager' ),
 									'cb_label'   => __( 'Display Field editor.', 'wp-food-manager' ),
 									'desc'       => 'If enabled, the Field editor option will display at frontend and manage from the backend. ',
 									'type'       => 'checkbox',
@@ -421,7 +421,7 @@ class WPFM_Settings {
 							),
 
 							array(
-								'label'    => __( 'Currency position', 'wp-food-manager' ),
+								'label'    => __( 'Currency Position', 'wp-food-manager' ),
 								'desc'     => __( 'This controls the position of the currency symbol.', 'wp-food-manager' ),
 								'name'       => 'wpfm_currency_pos',
 								'class'    => 'wc-enhanced-select',
@@ -436,7 +436,7 @@ class WPFM_Settings {
 							),
 
 							array(
-								'label'    => __( 'Thousand separator', 'wp-food-manager' ),
+								'label'    => __( 'Thousand Separator', 'wp-food-manager' ),
 								'desc'     => __( 'This sets the thousand separator of displayed prices.', 'wp-food-manager' ),
 								'name'       => 'wpfm_price_thousand_sep',
 								'css'      => 'width:50px;',
@@ -445,7 +445,7 @@ class WPFM_Settings {
 							),
 
 							array(
-								'label'    => __( 'Decimal separator', 'wp-food-manager' ),
+								'label'    => __( 'Decimal Separator', 'wp-food-manager' ),
 								'desc'     => __( 'This sets the decimal separator of displayed prices.', 'wp-food-manager' ),
 								'name'       => 'wpfm_price_decimal_sep',
 								'css'      => 'width:50px;',
@@ -454,7 +454,7 @@ class WPFM_Settings {
 							),
 
 							array(
-								'label'             => __( 'Number of decimals', 'wp-food-manager' ),
+								'label'             => __( 'Number of Decimals', 'wp-food-manager' ),
 								'desc'              => __( 'This sets the number of decimal points shown in displayed prices.', 'wp-food-manager' ),
 								'name'                => 'wpfm_price_num_decimals',
 								'css'               => 'width:50px;',
