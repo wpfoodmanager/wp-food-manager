@@ -132,7 +132,7 @@ class WP_Food_Manager_Field_Editor
 			echo wp_kses_post($this->form_editor_save());
 		}
 
-		$disbled_fields = apply_filters('wpfm_admin_field_editor_disabled_fields', array('food_title', 'food_description', 'food_category', 'food_type', 'food_ingredient', 'food_nutrition', 'option_description', 'food_tag'));
+		$disbled_fields = apply_filters('wpfm_admin_field_editor_disabled_fields', array('food_title', 'food_description', 'food_category', 'food_type', 'food_ingredient', 'food_nutrition' , 'food_tag'));
 		
 		$field_types    = apply_filters(
 			'food_manager_form_field_types',

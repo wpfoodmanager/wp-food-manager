@@ -270,14 +270,14 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
 					'required'    => false,
 					'placeholder' => 'Enter the field description',
 					'default' => 1,
-					'priority'    => 5
+					'priority'    => 4
 				),
 				'option_options' => array(
 					'label'       => __( 'Options', 'wp-food-manager' ),
 					'type'        => 'options',
 					'required'    => false,
 					'placeholder' => __('Enter option name','wp-food-manager'),
-					'priority'    => 6
+					'priority'    => 5
 				),
 
 			)
@@ -295,9 +295,23 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
     	  {     	      
     	      foreach ( $group_fields as $key => $field ) 
               	{
-    				if ( $field['required'] && empty( $values[ $group_key ][ $key ] ) ) {	    
-    					return new WP_Error( 'validation-error', sprintf( __( '%s is a required field.', 'wp-food-manager' ), $field['label'] ) );
-    				}
+					if( $group_key == 'extra_options' ){
+						if( isset( $_POST['repeated_options'] ) ){
+							foreach( $_POST['repeated_options'] as $repeated_options ){
+
+								$key = ( $key == 'option_description' ) ? '_'.$key: $key;
+
+								if ( $field['required'] && empty( $_POST[ $key.'_'.$repeated_options ] ) ) {
+									return new WP_Error( 'validation-error', sprintf( __( 'Extra Toppings Option %s is a required field.', 'wp-food-manager' ), $field['label'] ) );
+								}
+							}
+						}
+					}else{
+						if ( $field['required'] && empty( $values[ $group_key ][ $key ] ) ) {
+							return new WP_Error( 'validation-error', sprintf( __( '%s is a required field.', 'wp-food-manager' ), $field['label'] ) );
+						}
+					}
+    				
 
 				    if ( ! empty( $field['taxonomy'] ) && in_array( $field['type'], array( 'term-checklist', 'term-select', 'term-multiselect' ) ) && !empty($values[ $group_key ][ $key ]) ) {
 				    	if ( is_array( $values[ $group_key ][ $key ] ) && isset($values[ $group_key ][ $key ]) ) {
