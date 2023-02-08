@@ -861,6 +861,16 @@ function food_manager_dropdown_selection( $args = '' ) {
 		$data_taxonomy = 'data-taxonomy="'.$taxonomy.'"';
 	}
 
+	if( $taxonomy == 'food_manager_category' ){
+		$multiple_text=__( 'Choose a food Category&hellip;', 'wp-food-manager' );
+	}else if( $taxonomy == 'food_manager_type' ){
+		$multiple_text=__( 'Choose a food Type&hellip;', 'wp-food-manager' );
+	}else if( $taxonomy == 'food_manager_ingredient' ){
+		$multiple_text=__( 'Choose a food Ingredients&hellip;', 'wp-food-manager' );
+	}else if( $taxonomy == 'food_manager_nutrition' ){
+		$multiple_text=__( 'Choose a food Nutritions&hellip;', 'wp-food-manager' );
+	}
+
 	if($taxonomy=='food_manager_type'):
 
 		$placeholder=__( 'Choose a food type&hellip;', 'wp-food-manager' );

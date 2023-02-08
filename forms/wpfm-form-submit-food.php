@@ -133,7 +133,7 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
 					'label'       => __( 'Food Title', 'wp-food-manager' ),
 					'type'        => 'text',
 					'required'    => true,
-					'placeholder' => __('Food title','wp-food-manager'),
+					'placeholder' => __('Food Title','wp-food-manager'),
 					'priority'    => 1
 				),
 
@@ -141,7 +141,7 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
 					'label'       => __( 'Food Category', 'wp-food-manager' ),
 					'type'        => get_option('food_manager_multiselect_food_category',1) ?  'term-multiselect' : 'term-select',
 					'required'    => true,
-					'placeholder' => '',
+					'placeholder' => 'Select Food Category',
 					'priority'    => 2,
 					'default'     => '',
 					'taxonomy'    => 'food_manager_category'
