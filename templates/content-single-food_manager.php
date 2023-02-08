@@ -87,6 +87,25 @@ $food = $post;
                                 <?php do_action('single_food_overview_start'); ?>
                                 <?php echo apply_filters('display_food_description', get_the_content()); ?>
                                 <?php do_action('single_food_overview_end'); ?>
+
+                                <?php
+                                $ingredients = get_food_ingredients();
+                                $displaying = is_wpfm_terms_exist($ingredients, 'food_manager_ingredient');
+                                if ($displaying && get_food_ingredients() && get_post_meta($post->ID, '_enable_food_ingre', true)) : ?>
+                                    <div class="clearfix">&nbsp;</div>
+                                    <h3 class="wpfm-heading-text"><?php _e('Food Ingredients', 'wp-food-manager'); ?></h3>
+                                    <div class="wpfm-food-ingredients"><?php display_food_ingredients(); ?></div>
+                                <?php endif; ?>
+
+                                <?php
+                                $nutritions = get_food_nutritions();
+                                $displaynutri = is_wpfm_terms_exist($nutritions, 'food_manager_nutrition');
+                                if ($displaynutri && get_food_nutritions() && get_post_meta($post->ID, '_enable_food_nutri', true)) : ?>
+                                    <div class="clearfix">&nbsp;</div>
+                                    <h3 class="wpfm-heading-text"><?php _e('Food Nutritions', 'wp-food-manager'); ?></h3>
+                                    <div class="wpfm-food-nutritions"><?php display_food_nutritions(); ?></div>
+                                <?php endif; ?>
+                                
                             </div>
                             <div class="wpfm-single-food-body-content wpfm-extra-options">
                                 <?php
@@ -189,7 +208,7 @@ $food = $post;
                                                 foreach ($ext_option['option_options'] as $key2 => $value2) {
                                                     $checked = ($value2['option_value_default']) == 'on' ? 'checked' : '';
                                                     echo "<div class='wpfm-input-singular'>";
-                                                    echo '<input type="checkbox" id="' . esc_attr(str_replace(" ", "-", strtolower($value2['option_value_name']))) . '" name="' . esc_attr($key) . '" value="' . esc_attr($value2['option_value_price']) . '" ' . $checked . ' data-val="'.$value2['option_value_price'].'" data-attr-name=' . esc_attr(str_replace(" ", "-", strtolower($value2['option_value_name']))) . '>';
+                                                    echo '<input type="checkbox" id="' . esc_attr(str_replace(" ", "-", strtolower($value2['option_value_name']))) . '" name="' . esc_attr($key) . '" value="' . esc_attr($value2['option_value_price']) . '" ' . $checked . ' data-val="' . $value2['option_value_price'] . '" data-attr-name=' . esc_attr(str_replace(" ", "-", strtolower($value2['option_value_name']))) . '>';
                                                     echo '<label for="' . esc_attr(str_replace(" ", "-", strtolower($value2['option_value_name']))) . '"> ' . esc_html($value2['option_value_name']) . ' - ' . get_food_manager_currency_symbol() . $value2['option_value_price'] . '</label>';
                                                     echo "</div>";
                                                 }
@@ -1020,24 +1039,6 @@ $food = $post;
                                         <div class="clearfix">&nbsp;</div>
                                         <h3 class="wpfm-heading-text"><?php _e('Food Category', 'wp-food-manager'); ?></h3>
                                         <div class="wpfm-food-category"><?php display_food_category(); ?></div>
-                                    <?php endif; ?>
-
-                                    <?php
-                                    $ingredients = get_food_ingredients();
-                                    $displaying = is_wpfm_terms_exist($ingredients, 'food_manager_ingredient');
-                                    if ($displaying && get_food_ingredients() && get_post_meta($post->ID, '_enable_food_ingre', true)) : ?>
-                                        <div class="clearfix">&nbsp;</div>
-                                        <h3 class="wpfm-heading-text"><?php _e('Food Ingredients', 'wp-food-manager'); ?></h3>
-                                        <div class="wpfm-food-ingredients"><?php display_food_ingredients(); ?></div>
-                                    <?php endif; ?>
-
-                                    <?php
-                                    $nutritions = get_food_nutritions();
-                                    $displaynutri = is_wpfm_terms_exist($nutritions, 'food_manager_nutrition');
-                                    if ($displaynutri && get_food_nutritions() && get_post_meta($post->ID, '_enable_food_nutri', true)) : ?>
-                                        <div class="clearfix">&nbsp;</div>
-                                        <h3 class="wpfm-heading-text"><?php _e('Food Nutritions', 'wp-food-manager'); ?></h3>
-                                        <div class="wpfm-food-nutritions"><?php display_food_nutritions(); ?></div>
                                     <?php endif; ?>
 
                                     <?php if (get_food_units()) : ?>
