@@ -1780,6 +1780,7 @@ class WPFM_Writepanels
 	public function set_custom_food_sortable_columns($columns)
 	{
 		$columns['food_menu_order'] = 'menu_order';
+		$columns['food_title'] = 'food_title';
 		
 		return  $columns;
 	}
