@@ -153,7 +153,7 @@ class WPFM_Settings {
 
 								'std'        => '0',
 
-								'label'      => __('Multi-select Categories', 'wp-food-manager'),
+								'label'      => __('Multi-select Food Categories', 'wp-food-manager'),
 
 								'cb_label'   => __('Enable food category multiselect by default.', 'wp-food-manager'),
 
