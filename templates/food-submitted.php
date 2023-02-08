@@ -8,7 +8,7 @@ switch ( $food->post_status ) :
 	break;
 	
 	case 'pending' :
-		printf( '<p class="post-submitted-success-green-message wpfm-alert wpfm-alert-success">'.__( '%s submitted successfully. Your listing will be visible once approved.', 'wp-food-manager' ).'</p>', $wp_post_types['food_manager']->labels->singular_name, get_permalink( $food->ID ) );
+		printf( '<p class="post-submitted-success-green-message wpfm-alert wpfm-alert-success">'.__( 'Your %s added successfully in Food Manager. Your listing will be visible once approved by admin.', 'wp-food-manager' ).'</p>', $wp_post_types['food_manager']->labels->singular_name, get_permalink( $food->ID ) );
 	break;
 
 	default :
