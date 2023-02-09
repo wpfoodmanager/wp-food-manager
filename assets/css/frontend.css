@@ -984,7 +984,9 @@ a.button.wpfm-add-row:hover{
 .food_ingredient-preview ul li .term-item-flex input, .food_ingredient-preview ul li .term-item-flex select,  .food_nutrition-preview ul li .term-item-flex input, .food_nutrition-preview ul li .term-item-flex select{
     margin: 0 7.5px !important;
 }
-
+.wpfm-form-wrapper .wpfm-form-group .selection-preview {
+    margin-top: 5px;
+}
 /* ===== ADD FOOD FORM OPTION END ===== */
 
 
@@ -2023,16 +2025,17 @@ table.wpfm-responsive-table-wrapper tbody tr td .wpfm-dboard-food-action .wpfm-d
 .parent-organic-tag:hover::before, span.wpfm-front-radio-icon:hover:before {
     content: attr(data-icon-type);
     position: absolute;
-    right: auto;
+    right: calc(100% + 5px);
     background: var(--wpfm-dark-color);
     color: var(--wpfm-white-color);
     font-size: 11px;
     border-radius: 4px;
-    left: 25px;
     top: 0px;
     padding: 3px 6px;
     z-index: 9;
     width: auto;
+    min-width: 70px;
+    text-align: center;
 }
 .parent-organic-tag:hover::after, span.wpfm-front-radio-icon:hover:after {
     content: '';
@@ -2042,7 +2045,7 @@ table.wpfm-responsive-table-wrapper tbody tr td .wpfm-dboard-food-action .wpfm-d
     position: absolute;
     transform: rotate(45deg);
     top: 6px;
-    right: -12px;
+    right: 100%;
 }
 span.wpfm-front-radio-icon {
     display: inline-block;
@@ -2197,6 +2200,7 @@ mark.fm_instock {
     display: flex;
     align-items: center;
     justify-content: center;
+    flex: 0 0 20px;
 }
 ul.food-manager-term-checklist {
     list-style: none;
@@ -2242,6 +2246,18 @@ img.wpfm-organic-tag-icon {
         width: 100%;
     }
 }
+
+@media screen and (min-width: 993px){
+    #food-manager-food-dashboard table td .parent-organic-tag:hover::before, #food-manager-food-dashboard table td span.wpfm-front-radio-icon:hover:before {
+        right: inherit;
+        left: calc(100% + 5px);
+    }
+    #food-manager-food-dashboard table td .parent-organic-tag:hover::after, #food-manager-food-dashboard table td span.wpfm-front-radio-icon:hover:after {
+        left: 100%;
+        right: inherit;
+    }
+}
+
 @media screen and (max-width: 992px) {
     table.wpfm-responsive-table-wrapper {
         border: none;
@@ -2337,6 +2353,9 @@ img.wpfm-organic-tag-icon {
     .wpfm-single-food-page .wpfm-single-food-wrapper .wpfm-single-food-body .wpfm-single-food-left-content::after{
         display: none;
     }
+    #food-manager-food-dashboard table td.food_title{
+        width: inherit;
+    }
 }
 @media screen and (max-width: 768px) {
     .wpfm-single-food-page .wpfm-single-food-wrapper .wpfm-single-food-header-top .wpfm-single-food-slider-wrapper .wpfm-single-food-slider .wpfm-slider-items img {
@@ -2348,6 +2367,9 @@ img.wpfm-organic-tag-icon {
     }
     .wpfm-single-food-page .wpfm-single-food-sidebar-info {
         margin-bottom: 0;
+    }
+    .wpfm-single-food-page .wpfm-share-this-food{
+        margin-top: 20px;
     }
     .wpfm-single-food-page .wpfm-single-food-right-content .wpfm-single-food-body-sidebar .wpfm-theme-button, .wpfm-single-food-page .wpfm-single-food-right-content .wpfm-single-food-body-sidebar a.wpfm-theme-button, .wpfm-single-food-page .wpfm-single-food-right-content .wpfm-single-food-body-sidebar button.wpfm-theme-button, .wpfm-single-food-page .wpfm-single-food-right-content .wpfm-single-food-body-sidebar input.wpfm-theme-button {
         padding: 15px;
@@ -2372,6 +2394,13 @@ img.wpfm-organic-tag-icon {
     .fm-food-menu-container .food-list-box{
         width: calc(100% - 20px);
     }
+    .wpfm-dashboard-main-header .wpfm-foods-filter {
+        flex-direction: column;
+    }
+    .wpfm-dashboard-main-header .wpfm-foods-filter .wpfm-foods-filter-block.wpfm-foods-filter-submit{
+        width: 100%;
+    }
+    
 }
 @media screen and (max-width: 575px) {
     .wpfm-form-wrapper .wpfm-col {
@@ -2427,6 +2456,16 @@ img.wpfm-organic-tag-icon {
     }
     .food-manager-pagination ul.page-numbers li .page-numbers {
         margin: 0;
+    }
+    #food-manager-food-dashboard table td.food_title{
+        display: block;
+    }
+    #food-manager-food-dashboard table td .parent-organic-tag{
+        justify-content: start;
+        margin-top: 10px    ;
+    }
+    small.wpfm-food-status-pending-approval{
+        margin-top: 10px;
     }
 }
 

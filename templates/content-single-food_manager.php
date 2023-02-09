@@ -1053,8 +1053,8 @@ $food = $post;
                                 $is_friend_share = apply_filters('food_manager_food_friend_share', true);
 
                                 if ($is_friend_share) : ?>
-                                    <h3 class="wpfm-heading-text"><?php _e('Share With Friends', 'wp-food-manager'); ?></h3>
                                     <div class="wpfm-share-this-food">
+                                        <h3 class="wpfm-heading-text"><?php _e('Share With Friends', 'wp-food-manager'); ?></h3>
                                         <div class="wpfm-food-share-lists">
                                             <?php do_action('single_food_listing_social_share_start'); ?>
                                             <div class="wpfm-social-icon wpfm-facebook">

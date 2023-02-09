@@ -1268,3 +1268,13 @@ a.tips.food_title {
 .wpfm-metaboxes .wpfm-metabox-content.wpfm-variation-box {
     border-top: 1px solid #ccd0d4;
 }
+
+.white-background {
+  float: left;
+  width: 100%;
+  background-color: #fff;
+  border: 1px solid #e1e1e1;
+  padding: 10px;
+  box-sizing: border-box;
+  margin: 0 0 20px;
+}
