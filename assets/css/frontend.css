@@ -2036,7 +2036,7 @@ table.wpfm-responsive-table-wrapper tbody tr td .wpfm-dboard-food-action .wpfm-d
     padding: 3px 6px;
     z-index: 9;
     width: auto;
-    min-width: 60px;
+    min-width: 70px;
     text-align: center;
 }
 .parent-organic-tag:hover::after, span.wpfm-front-radio-icon:hover:after {
