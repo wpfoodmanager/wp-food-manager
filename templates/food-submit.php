@@ -238,7 +238,7 @@ if(!empty($extra_fields_options)){
 						            <a href="javascript: void(0);" data-id="%%repeated-option-index%%" class="wpfm-delete-btn dashicons dashicons-dismiss">Remove</a>
 						            <div class="wpfm-togglediv" title="Click to toggle" aria-expanded="false" data-row-count="%%repeated-option-index%%"></div>
 						            <div class="tips wpfm-sort"></div>
-						            <strong class="attribute_name"><?php _e("Option %%repeated-option-index%%","wp-food-manager");?></strong>
+						            <strong class="attribute_name"><?php _e("Topping Option %%repeated-option-index%%","wp-food-manager");?></strong>
 						            <span class="attribute_key"><input type="hidden" name="option_key_%%repeated-option-index%%" value="option_%%repeated-option-index%%" readonly>
 						                </span>
 						        </h3>

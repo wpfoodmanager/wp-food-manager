@@ -232,14 +232,14 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
 
 			'extra_options' => array(
 				'option_name' => array(
-					'label'       => __( 'Name', 'wp-food-manager' ),
+					'label'       => __( 'Topping Name', 'wp-food-manager' ),
 					'type'        => 'text',
 					'required'    => false,
-					'placeholder' => __('Enter option name','wp-food-manager'),
+					'placeholder' => __('Enter Topping option name','wp-food-manager'),
 					'priority'    => 1
 				),
 				'option_type' => array(
-					'label'       => __( 'Option Type', 'wp-food-manager' ),
+					'label'       => __( 'Topping selection type.', 'wp-food-manager' ),
 					'type'        => 'select',
 					'required'    => false,
 					'options' 	  => array(
@@ -253,10 +253,10 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
 					'priority'    => 2
 				),
 				'option_required' => array(
-					'label'       => __( 'Required', 'wp-food-manager' ),
+					'label'       => __( 'Topping Required', 'wp-food-manager' ),
 					'type'        => 'radio',
 					'required'    => false,
-					'placeholder' => __('Required','wp-food-manager'),
+					'placeholder' => __('Topping Required','wp-food-manager'),
 					'default'	  => 'no',
 					'options' 	  => array(
 										'no' => __('No','wp-food-manager'),
@@ -265,10 +265,10 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
 					'priority'    => 3
 				),
 				'option_description' => array(
-					'label'       => __( 'Description', 'wp-food-manager' ),
+					'label'       => __( 'Topping Description', 'wp-food-manager' ),
 					'type'        => 'wp-editor',
 					'required'    => false,
-					'placeholder' => 'Enter the field description',
+					'placeholder' => 'Enter the field Topping Description',
 					'default' => 1,
 					'priority'    => 4
 				),
