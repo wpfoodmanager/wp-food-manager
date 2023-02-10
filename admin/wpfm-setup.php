@@ -292,7 +292,7 @@ class WP_Food_Manager_Setup
 
 									<td><input type="checkbox" checked="checked" name="wp-food-manager-create-page[add_food]" /></td>
 
-									<td><input type="text" value="<?php echo esc_attr(_x('Add Food', 'Default page title (wizard)', 'wp-food-manager')); ?>" name="wp-food-manager-page-title[add_food]" /></td>
+									<td><input type="text" value="<?php echo esc_attr(_x('Post Foods', 'Default page title (wizard)', 'wp-food-manager')); ?>" name="wp-food-manager-page-title[add_food]" /></td>
 
 									<td>
 										<p><?php esc_attr_e('This page allows peoples to post foods to your website from the front-end.', 'wp-food-manager'); ?></p>
