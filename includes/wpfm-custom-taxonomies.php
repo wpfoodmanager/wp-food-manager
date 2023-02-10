@@ -151,6 +151,8 @@ if ( get_option( 'food_manager_enable_food_types' ,true) ) {
 
                 'edit_item' 		=> sprintf( __( 'Edit %s', 'wp-food-manager' ), $singular ),
 
+				'view_item' 		=> sprintf( __( 'View %s', 'wp-food-manager' ), $singular ),
+
                 'update_item' 		=> sprintf( __( 'Update %s', 'wp-food-manager' ), $singular ),
 
                 'add_new_item' 		=> sprintf( __( 'Add New %s', 'wp-food-manager' ), $singular ),
