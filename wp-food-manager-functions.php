@@ -808,7 +808,7 @@ function food_manager_dropdown_selection( $args = '' ) {
 
 		'show_option_all' => false,
 
-		'placeholder'     => __( 'Choose a category&hellip;', 'wp-food-manager' ),
+		'placeholder'     => __( 'Choose a Food category&hellip;', 'wp-food-manager' ),
 
 		'no_results_text' => __( 'No results match', 'wp-food-manager' ),
 
@@ -864,7 +864,7 @@ function food_manager_dropdown_selection( $args = '' ) {
 	if( $taxonomy == 'food_manager_category' ){
 		$multiple_text=__( 'Choose a food Category&hellip;', 'wp-food-manager' );
 	}else if( $taxonomy == 'food_manager_type' ){
-		$multiple_text=__( 'Choose a food Type&hellip;', 'wp-food-manager' );
+		$multiple_text=__( 'Choose a Food Type&hellip;', 'wp-food-manager' );
 	}else if( $taxonomy == 'food_manager_ingredient' ){
 		$multiple_text=__( 'Choose a food Ingredients&hellip;', 'wp-food-manager' );
 	}else if( $taxonomy == 'food_manager_nutrition' ){
@@ -873,7 +873,7 @@ function food_manager_dropdown_selection( $args = '' ) {
 
 	if($taxonomy=='food_manager_type'):
 
-		$placeholder=__( 'Choose a food type&hellip;', 'wp-food-manager' );
+		$placeholder=__( 'Choose a Food type&hellip;', 'wp-food-manager' );
 
 	endif;
 

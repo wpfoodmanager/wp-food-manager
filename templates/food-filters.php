@@ -49,7 +49,7 @@ wp_enqueue_script( 'wpfm-ajax-filters' );
 					<?php if ( $show_category_multiselect ) : ?>
 						<?php food_manager_dropdown_selection( array( 'value'=>'slug', 'taxonomy' => 'food_manager_category', 'hierarchical' => 1, 'name' => 'search_categories', 'orderby' => 'name', 'selected' => $selected_category, 'hide_empty' => false) ); ?>
 					<?php else : ?>
-						<?php food_manager_dropdown_selection( array( 'value'=>'slug', 'taxonomy' => 'food_manager_category', 'hierarchical' => 1, 'show_option_all' => __( 'Choose a Category', 'wp-food-manager' ), 'name' => 'search_categories', 'orderby' => 'name', 'selected' => $selected_category, 'multiple' => false, 'hide_empty' => false) ); ?>
+						<?php food_manager_dropdown_selection( array( 'value'=>'slug', 'taxonomy' => 'food_manager_category', 'hierarchical' => 1, 'show_option_all' => __( 'Choose a Food Category', 'wp-food-manager' ), 'name' => 'search_categories', 'orderby' => 'name', 'selected' => $selected_category, 'multiple' => false, 'hide_empty' => false) ); ?>
 					<?php endif; ?>
 					</div>
 				</div>
@@ -68,7 +68,7 @@ wp_enqueue_script( 'wpfm-ajax-filters' );
 					<?php if ( $show_food_type_multiselect) : ?>
  					    <?php food_manager_dropdown_selection( array( 'value'=>'slug', 'taxonomy' => 'food_manager_type', 'hierarchical' => 1, 'name' => 'search_food_types', 'orderby' => 'name', 'selected' => $selected_food_type, 'hide_empty' => false) ); ?>
 					<?php else : ?>
-						<?php food_manager_dropdown_selection( array( 'value'=>'slug', 'taxonomy' => 'food_manager_type', 'hierarchical' => 1, 'show_option_all' => __( 'Choose a food Type', 'wp-food-manager' ), 'name' => 'search_food_types', 'orderby' => 'name', 'selected' => $selected_food_type, 'multiple' => false,'hide_empty' => false) ); ?>
+						<?php food_manager_dropdown_selection( array( 'value'=>'slug', 'taxonomy' => 'food_manager_type', 'hierarchical' => 1, 'show_option_all' => __( 'Choose a Food Type', 'wp-food-manager' ), 'name' => 'search_food_types', 'orderby' => 'name', 'selected' => $selected_food_type, 'multiple' => false,'hide_empty' => false) ); ?>
 					<?php endif; ?>
 					</div>
 				</div>
