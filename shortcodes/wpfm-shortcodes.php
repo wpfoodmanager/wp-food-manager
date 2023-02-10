@@ -282,8 +282,8 @@ class WPFM_Shortcodes {
 		}
 
 		$foods = new WP_Query($args);
-		//echo $this->food_dashboard_message;
-		echo  wp_kses($this->food_dashboard_message, wp_kses_allowed_html($this->food_dashboard_message));
+		echo $this->food_dashboard_message;
+		// echo  wp_kses($this->food_dashboard_message, wp_kses_allowed_html($this->food_dashboard_message));
 
 		$food_dashboard_columns = apply_filters( 'food_manager_food_dashboard_columns', array(
 
