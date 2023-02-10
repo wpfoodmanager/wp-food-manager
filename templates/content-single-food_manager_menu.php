@@ -112,11 +112,11 @@ $image_url = wp_get_attachment_image_src ( $image_id, 'full' );
                 $formatted_regular_price = number_format($regular_price, $price_decimals, $price_decimal_separator, $price_thousand_separator);
             }
             if(!empty($food_listing->post_content)){
-                $menu_food_desc = "<i class='fm-food-menu-desc'>".$food_listing->post_content."</i>";
+                $menu_food_desc = "<div class='fm-food-menu-desc'>".$food_listing->post_content."</div>";
             }
-            echo wp_kses_post("<a href='".get_permalink($food_listing->ID)."' class='food-list-box'><span class='fm-food-menu-title'><strong>".esc_html($food_listing->post_title))."</strong>".$menu_food_desc."</span>";
+            echo wp_kses_post("<div class='food-list-box'><a href='".get_permalink($food_listing->ID)."'><div class='fm-food-menu-title'><strong>".esc_html($food_listing->post_title))."</strong></div>";
                 //echo "<span class='fm-divider'> - - - - - - </span>";
-                echo "<span class='fm-food-menu-pricing'>";
+                echo "<div class='fm-food-menu-pricing'>";
                 if(!empty($regular_price) && !empty($sale_price)){
                     $f_regular_price = sprintf($price_format, '<span class="food-manager-Price-currencySymbol">'.get_food_manager_currency_symbol().'</span>', $formatted_sale_price);
                     $f_sale_price = sprintf($price_format, '<span class="food-manager-Price-currencySymbol">'.get_food_manager_currency_symbol().'</span>', $formatted_regular_price);
@@ -128,8 +128,11 @@ $image_url = wp_get_attachment_image_src ( $image_id, 'full' );
                 if(empty($sale_price)){
                     echo sprintf($price_format, '<span class="food-manager-Price-currencySymbol">'.get_food_manager_currency_symbol().'</span>', $formatted_regular_price);
                 }
-                echo "</span>";
-            echo "</a>";
+                echo "</div>";
+                echo "</a>";
+                echo "$menu_food_desc";
+                
+            echo "</div>";
         }
         echo "</div>";
     }
