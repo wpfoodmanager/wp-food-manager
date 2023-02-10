@@ -1,6 +1,6 @@
 <?php if (is_user_logged_in()) : ?>
 	<div class="wpfm-form-group ">
-		<label class="wpfm-form-label-text"><?php _e('Your account', 'wp-food-manager'); ?></label>
+		<label class="wpfm-form-label-text"><?php _e('Your Account', 'wp-food-manager'); ?></label>
 		<div class="field account-sign-in wpfm-alert wpfm-alert-info"> <?php $user = wp_get_current_user();
 																																		printf(wp_kses(__('You are currently signed in as <strong>%s</strong>.', 'wp-food-manager'), array('strong' => array())), $user->user_login);    		?> <a href="<?php echo apply_filters('add_food_logout_url', wp_logout_url(get_permalink())); ?>"><?php _e('Sign out', 'wp-food-manager'); ?></a>
 		</div>
