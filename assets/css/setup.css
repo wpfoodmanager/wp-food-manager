@@ -86,7 +86,8 @@
     color:#fe4600
 }
 .wp-food-manager-shortcodes td,.wp-food-manager-shortcodes th{
-    vertical-align:middle
+    vertical-align:middle;
+    font-size: 14px;
 }
 .wp-food-manager-shortcodes td p,.wp-food-manager-shortcodes th p{
     margin:9px 0
