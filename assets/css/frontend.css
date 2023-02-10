@@ -1041,6 +1041,10 @@ a.button.wpfm-add-row:hover{
 .wpfm-food-listings .wpfm-food-layout-wrapper .wpfm-food-infomation {
     width: 100%;
 }
+.wpfm-food-listings .wpfm-food-layout-wrapper .wpfm-food-infomation .wpfm-food-details .wpfm-food-type-flex-container {
+    display: flex;
+    align-items: center;
+}
 .wpfm-food-listings .wpfm-food-layout-wrapper .wpfm-food-infomation .wpfm-food-details .wpfm-food-type {
     display: inline-block;
 }
@@ -1052,7 +1056,7 @@ a.button.wpfm-add-row:hover{
     line-height: 15px;
     font-weight: 400;
     font-size: 14px;
-    border-radius: 4px;
+    border-radius: 2px;
 }
 .wpfm-food-listings .wpfm-food-layout-wrapper .wpfm-food-infomation .wpfm-food-details .wpfm-food-title,
 .wpfm-food-listings .wpfm-food-layout-wrapper .wpfm-food-infomation .wpfm-food-details .wpfm-food-price,
@@ -1062,9 +1066,6 @@ a.button.wpfm-add-row:hover{
 }
 .wpfm-food-listings .wpfm-food-layout-wrapper .wpfm-food-infomation .wpfm-food-details .wpfm-food-title {
     margin-bottom: 10px;
-    display: flex;
-    align-items: center;
-    column-gap: 10px;
 }
 .wpfm-food-listings .wpfm-food-layout-wrapper .wpfm-food-infomation .wpfm-food-details .wpfm-food-title .wpfm-heading-text {
     font-size: 18px;
@@ -1078,6 +1079,8 @@ a.button.wpfm-add-row:hover{
     font-weight: bold;
     display: flex;
     align-items: center;
+    color: var(--wpfm-primary-color);
+    font-size: 18px;
 }
 .wpfm-food-listings .wpfm-food-layout-wrapper .wpfm-food-infomation .wpfm-food-details .wpfm-food-price del {
     margin-right: 5px;
@@ -1811,7 +1814,6 @@ form#food_preview {
     font-size: 15px;
     line-height: 20px;
     display: inline-block;
-    cursor: pointer;
     margin: 5px 5px 0 0;
 }
  .food_categories span.food-category{
@@ -2034,7 +2036,7 @@ table.wpfm-responsive-table-wrapper tbody tr td .wpfm-dboard-food-action .wpfm-d
     padding: 3px 6px;
     z-index: 9;
     width: auto;
-    min-width: 70px;
+    min-width: 60px;
     text-align: center;
 }
 .parent-organic-tag:hover::after, span.wpfm-front-radio-icon:hover:after {
@@ -2081,9 +2083,11 @@ span.fm-divider {
     font-size: 14px;
     border-radius: 4px;
     position: relative;
-    display: flex;
     transition: all 0.2s 0s;
     width: calc(50% - 20px);
+}
+.fm-food-menu-container .food-list-box > a{
+    color: var(--wpfm-dark-color); 
 }
 .fm-food-menu-container .food-list-box:hover {
     box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.12);
@@ -2093,23 +2097,23 @@ span.fm-divider {
 .fm-food-menu-container .food-list-box:focus{
     color: var(--wpfm-dark-color);
 }
-.fm-food-menu-container .food-list-box .fm-food-menu-title {
-    flex: 1;
-}
+
 .fm-food-menu-container .food-list-box .fm-food-menu-title strong{
     display: block;
     font-size: 18px;
-    margin-bottom: 5px;
 }
 .fm-food-menu-container .food-list-box .fm-food-menu-pricing {
-    margin-left: 15px;
     white-space: nowrap;
+    margin-bottom: 10px;
+    margin-top: 5px;
+    display: flex;
+    align-items: center;
 }
 .fm-food-menu-container .food-list-box .fm-food-menu-pricing ins {
     display: block;
     color: var(--wpfm-primary-color);
     font-size: 18px;
-    margin-top: 2px;
+    margin-left: 5px;
 }
 .fm-food-menu-container .food-list-box .fm-food-menu-pricing del{
     color: var(--wpfm-gray-color);
@@ -2172,14 +2176,14 @@ span.fm-divider {
     margin-bottom:0;
 }
 .food-stock-status mark.fm_outofstock {
-    padding: 3px 10px;
-    font-size: 14px;
+    padding: 3px 5px 2px;
+    font-size: 12px;
     display: inline-block;
     vertical-align: top;
     margin-bottom: 10px;
     background: #f74747;
     color: var(--wpfm-white-color);
-    border-radius: 4px;
+    border-radius: 2px;
 }
 small.wpfm-food-status-pending-approval{
     font-weight: 400;
@@ -2187,7 +2191,7 @@ small.wpfm-food-status-pending-approval{
     margin: 3px 0 3px 5px;
     padding: 3px 8px;
     font-size: 13px;
-    border-radius: 3px;
+    border-radius: 2px;
     background: #fff4d7;
     color: #6b4e00;
 }
@@ -2201,6 +2205,7 @@ mark.fm_instock {
     align-items: center;
     justify-content: center;
     flex: 0 0 20px;
+    margin: 5px;
 }
 ul.food-manager-term-checklist {
     list-style: none;
