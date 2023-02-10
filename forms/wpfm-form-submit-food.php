@@ -239,7 +239,7 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
 					'priority'    => 1
 				),
 				'option_type' => array(
-					'label'       => __( 'Topping selection type.', 'wp-food-manager' ),
+					'label'       => __( 'Topping Selection Type.', 'wp-food-manager' ),
 					'type'        => 'select',
 					'required'    => false,
 					'options' 	  => array(
