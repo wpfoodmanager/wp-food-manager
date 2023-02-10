@@ -703,7 +703,27 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
 			$post_slug_name = rtrim($post_slug_name);
 			$post_name = str_replace(" ", "-", $post_slug_name);
 
-			$prod_banner_id = attachment_url_to_postid($prod_banner);
+			$prod_banner_id = '';
+			$file = $prod_banner;
+			$filename = basename($file);
+
+			$upload_file = wp_upload_bits($filename, null, file_get_contents($file));
+			if (!$upload_file['error']) {
+				$wp_filetype = wp_check_filetype($filename, null );
+				$attachment = array(
+					'post_mime_type' => $wp_filetype['type'],
+					'post_title' => preg_replace('/\.[^.]+$/', '', $filename),
+					'post_content' => '',
+					'post_status' => 'inherit'
+				);
+				$attachment_id = wp_insert_attachment( $attachment, $upload_file['file'], '' );
+				if (!is_wp_error($attachment_id)) {
+					require_once(ABSPATH . "wp-admin" . '/includes/image.php');
+					$attachment_data = wp_generate_attachment_metadata( $attachment_id, $upload_file['file'] );
+					wp_update_attachment_metadata( $attachment_id,  $attachment_data );
+				}
+				$prod_banner_id = $attachment_id;
+			}
 
 			if(isset($_GET['action']) == 'edit'){
 
@@ -732,6 +752,11 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
 				$post_food = new WC_Product_Food_Product();
 
 				$post_food->set_name( $post_title );
+				if(get_option( 'food_manager_submission_requires_approval' )){
+					$post_food->set_status('draft');
+				} else {
+					$post_food->set_status('publish');
+				}
 				$post_food->set_slug( $post_name );
 				$post_food->set_regular_price( $prod_regular_price );
 				$post_food->set_sale_price( $prod_sale_price );
