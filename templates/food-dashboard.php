@@ -72,6 +72,9 @@
 		</form>
 	</div>
 	<div class="wpfm-responsive-table-block">
+	<?php if ( ! $foods ) : ?>
+		<div class="wpfm-alert wpfm-alert-danger wpfm-mb-0">You do not have any active listings.</div>
+		<?php else : ?>
 		<table class="wpfm-main wpfm-responsive-table-wrapper">
 			<thead>
 				<tr>
@@ -81,11 +84,6 @@
 				</tr>
 			</thead>
 			<tbody>
-				<?php if ( ! $foods ) : ?>
-				<tr>
-					<td colspan="6"><?php _e( 'You do not have any active listings.', 'wp-food-manager' ); ?></td>
-				</tr>
-				<?php else : ?>
 				<?php foreach ( $foods as $food ) : ?>
 				<tr>
 
@@ -217,12 +215,11 @@ elseif ('view_count' === $key) :
 							<?php endif; ?>
 						</td>
 					<?php endforeach; ?>
-
 				</tr>
 				<?php endforeach; ?>
-				<?php endif; ?>
 			</tbody>
 		</table>
+		<?php endif; ?>
 	</div>
 	<?php get_food_manager_template( 'pagination.php', array( 'max_num_pages' => $max_num_pages ) ); ?>
 
