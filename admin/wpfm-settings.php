@@ -834,6 +834,46 @@ class WPFM_Settings {
 					</p>
 				</div>  <!-- .admin-setting-left -->						
 			</form>
+			<div id="plugin_info" class="box-info">
+
+				<h3><span><?php esc_attr_e('Helpful Resources', 'wp-food-manager'); ?></span></h3>
+
+				<div class="wpfm-plugin_info-inside">
+					<div class="wpfm-setup-help-center-block-wrap">
+						<div class="wpfm-setup-help-center-block">
+							<div class="wpfm-setup-help-center-block-icon">
+								<span class="wpfm-setup-help-center-knowledge-base-icon"></span>
+							</div>
+							<div class="wpfm-setup-help-center-block-content">
+								<div class="wpfm-setup-help-center-block-heading"><?php esc_attr_e('Knowledge Base', 'wp-food-manager'); ?></div>
+								<div class="wpfm-setup-help-center-block-desc"><?php esc_attr_e('Solve your queries by browsing our documentation.', 'wp-food-manager'); ?></div>
+								<a href="http://wpfoodmanager.com/knowledge-base" target="_blank" class="wpfm-setup-help-center-block-link"><span class="wpfm-setup-help-center-box-target-text"><?php esc_attr_e('Browse More', 'wp-food-manager'); ?> »</span></a>
+							</div>
+						</div>
+						<div class="wpfm-setup-help-center-block">
+							<div class="wpfm-setup-help-center-block-icon">
+								<span class="wpfm-setup-help-center-faqs-icon"></span>
+							</div>
+							<div class="wpfm-setup-help-center-block-content">
+								<div class="wpfm-setup-help-center-block-heading"><?php esc_attr_e('FAQs', 'wp-food-manager'); ?></div>
+								<div class="wpfm-setup-help-center-block-desc"><?php esc_attr_e('Explore through the frequently asked questions.', 'wp-food-manager'); ?></div>
+								<a href="http://wpfoodmanager.com/faqs" target="_blank" class="wpfm-setup-help-center-block-link"><span class="wpfm-setup-help-center-box-target-text"><?php esc_attr_e('Get Answers', 'wp-food-manager'); ?> »</span></a>
+							</div>
+						</div>
+						<div class="wpfm-setup-help-center-block">
+							<div class="wpfm-setup-help-center-block-icon">
+								<span class="wpfm-setup-help-center-video-tutorial-icon"></span>
+							</div>
+							<div class="wpfm-setup-help-center-block-content">
+								<div class="wpfm-setup-help-center-block-heading"><?php esc_attr_e('Video Tutorials', 'wp-food-manager'); ?></div>
+								<div class="wpfm-setup-help-center-block-desc"><?php esc_attr_e('Learn different skills by examining attractive video tutorials.', 'wp-food-manager'); ?></div>
+								<a href="#" target="_blank" class="wpfm-setup-help-center-block-link"><span class="wpfm-setup-help-center-box-target-text"><?php esc_attr_e('Watch all', 'wp-food-manager'); ?> »</span></a>
+							</div>
+						</div>
+					</div>
+					<span class="light-grey"><?php esc_attr_e('Powered By', 'wp-food-manager'); ?></span> <a href="http://wpfoodmanager.com/" target="_blank"><img src="<?php echo get_template_directory_uri(); ?>/assets/images/wpfm-logo.svg" alt="WP Food Manager"></a>
+				</div>
+			</div>
     	</div>
 	<?php  wp_enqueue_script( 'wp-food-manager-admin-settings');
 	}
