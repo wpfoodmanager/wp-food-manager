@@ -285,9 +285,19 @@ class WPFM_Ajax {
 
 			<?php endwhile; ?>
 
-		<?php else : ?>
+		<?php else :
 
-			<?php get_food_manager_template_part( 'content', 'no-foods-found' ); ?>
+		// Check there is a publish food or not.
+		$default_foods = get_posts( array(
+			'numberposts' => -1,
+			'post_type'   => 'food_manager',
+			'post_status'   => 'publish'
+		));
+		if( count($default_foods) == 0 ){ ?>
+			<div class="no_food_listings_found wpfm-alert wpfm-alert-danger"><?php _e( 'There are no published foods.', 'wp-food-manager' ); ?></div>
+		<?php }else{
+			get_food_manager_template_part( 'content', 'no-foods-found' );
+		} ?>
 
 		<?php endif;
 
