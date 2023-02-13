@@ -216,7 +216,7 @@ class WPFM_Post_Types {
 
 			'feeds'      => true,
 
-			'pages'      => false
+			'pages'      => true
 		);
 
 		register_post_type( "food_manager_menu",
