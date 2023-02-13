@@ -64,7 +64,9 @@ if ( get_option( 'food_manager_enable_categories' ,true) ) {
 
 				'add_new_item'      => sprintf( __( 'Add New %s', 'wp-food-manager' ), $singular ),
 
-				'new_item_name'     => sprintf( __( 'New %s Name', 'wp-food-manager' ),  $singular )
+				'new_item_name'     => sprintf( __( 'New %s Name', 'wp-food-manager' ),  $singular ),
+
+				'back_to_items'     => sprintf( __( '← Go to Food %s', 'wp-food-manager' ),  $plural )
 
         	),
 
@@ -157,7 +159,9 @@ if ( get_option( 'food_manager_enable_food_types' ,true) ) {
 
                 'add_new_item' 		=> sprintf( __( 'Add New %s', 'wp-food-manager' ), $singular ),
 
-                'new_item_name' 	=> sprintf( __( 'New %s Name', 'wp-food-manager' ),  $singular )
+                'new_item_name' 	=> sprintf( __( 'New %s Name', 'wp-food-manager' ),  $singular ),
+
+				'back_to_items'     => sprintf( __( '← Go to Food %s', 'wp-food-manager' ),  $plural )
         	),
 
             'show_ui' 				=> true,
@@ -243,7 +247,9 @@ if ( get_option( 'food_manager_enable_food_tags' ,true) ) {
 
                 'add_new_item' 		=> sprintf( __( 'Add New %s', 'wp-food-manager' ), $singular ),
 
-                'new_item_name' 	=> sprintf( __( 'New %s Name', 'wp-food-manager' ),  $singular )
+                'new_item_name' 	=> sprintf( __( 'New %s Name', 'wp-food-manager' ),  $singular ),
+
+				'back_to_items'     => sprintf( __( '← Go to Food %s', 'wp-food-manager' ),  $plural )
         	),
 
             'show_ui' 				=> true,
@@ -328,7 +334,9 @@ if ( get_option( 'food_manager_enable_food_tags' ,true) ) {
 
                 'add_new_item' 		=> sprintf( __( 'Add New %s', 'wp-food-manager' ), $singular ),
 
-                'new_item_name' 	=> sprintf( __( 'New %s Name', 'wp-food-manager' ),  $singular )
+                'new_item_name' 	=> sprintf( __( 'New %s Name', 'wp-food-manager' ),  $singular ),
+
+				'back_to_items'     => sprintf( __( '← Go to %s', 'wp-food-manager' ),  $plural )
         	),
 
             'show_ui' 				=> true,
@@ -412,7 +420,9 @@ if ( get_option( 'food_manager_enable_food_tags' ,true) ) {
 
                 'add_new_item' 		=> sprintf( __( 'Add New %s', 'wp-food-manager' ), $singular ),
 
-                'new_item_name' 	=> sprintf( __( 'New %s Name', 'wp-food-manager' ),  $singular )
+                'new_item_name' 	=> sprintf( __( 'New %s Name', 'wp-food-manager' ),  $singular ),
+
+				'back_to_items'     => sprintf( __( '← Go to %s', 'wp-food-manager' ),  $plural )
         	),
 
             'show_ui' 				=> true,
@@ -496,7 +506,9 @@ if ( get_option( 'food_manager_enable_food_tags' ,true) ) {
 
                 'add_new_item' 		=> sprintf( __( 'Add New %s', 'wp-food-manager' ), $singular ),
 
-                'new_item_name' 	=> sprintf( __( 'New %s Name', 'wp-food-manager' ),  $singular )
+                'new_item_name' 	=> sprintf( __( 'New %s Name', 'wp-food-manager' ),  $singular ),
+
+				'back_to_items'     => sprintf( __( '← Go to Food %s', 'wp-food-manager' ),  $plural )
         	),
 
             'show_ui' 				=> true,
