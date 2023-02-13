@@ -68,6 +68,8 @@ class WPFM_Writepanels
 		add_action('manage_food_manager_posts_custom_column', array($this, 'custom_food_content_column'), 10, 2);
 		add_filter('post_row_actions', array($this, 'row_actions'));
 
+		add_action('admin_notices', array( $this, 'display_notice' ) );
+
 		//add food price column
 		/*add_filter('manage_food_manager_posts_columns', array($this, 'set_price_copy_columns'));
 		add_action('manage_food_manager_posts_custom_column', array($this, 'price_copy_content_column'), 10, 2);*/
@@ -874,9 +876,20 @@ class WPFM_Writepanels
 
 			wp_update_post($food_data);
 
+			set_transient('WPFM_Food_Notice', 'Food Item Approved!', 1 * MINUTE_IN_SECONDS);
+
 			wp_redirect(remove_query_arg('approve_food', add_query_arg('published_foods', $post_id, admin_url('edit.php?post_type=food_manager'))));
 
 			exit;
+		}
+	}
+
+	public function display_notice(){
+		$notice = get_transient('WPFM_Food_Notice');
+		if(!empty($notice)){
+			echo '<div class="notice notice-success is-dismissible">';
+			echo '<p>'.$notice.'</p>';
+			echo '</div>';
 		}
 	}
 
