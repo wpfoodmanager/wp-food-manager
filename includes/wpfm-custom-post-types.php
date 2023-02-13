@@ -255,7 +255,7 @@ class WPFM_Post_Types {
 
 					'parent' 				=> sprintf( __( 'Parent %s', 'wp-food-manager' ), $singular_menu ),
 					
-					'featured_image'        => __( 'Food Category Image', 'wp-food-manager' ),
+					'featured_image'        => __( 'Food Menu Image', 'wp-food-manager' ),
 					
 					'set_featured_image'    => __( 'Add Image', 'wp-food-manager' ),
 					
