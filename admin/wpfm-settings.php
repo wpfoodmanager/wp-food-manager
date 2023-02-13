@@ -252,7 +252,7 @@ class WPFM_Settings {
 
 								'name'    => 'food_manager_registration_role',
 
-								'std'     => 'organizer',
+								'std'     => 'food_owner',
 
 								'label'   => __('Account Role', 'wp-food-manager'),
 

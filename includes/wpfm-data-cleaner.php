@@ -87,7 +87,7 @@ class WP_Food_Manager_Data_Cleaner {
 	 *
 	 * @var $role
 	 */
-	private static $role = 'organizer';
+	private static $role = 'food_owner';
 
 	/**
 	 * Capabilities to be deleted.

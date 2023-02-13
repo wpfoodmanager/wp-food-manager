@@ -133,7 +133,7 @@ class WP_Food_Manager_Install {
 
 		if ( is_object( $wp_roles ) ) {
 
-			add_role( 'organizer', __( 'Organizer', 'wp-event-manager' ), array(
+			add_role( 'food_owner', __( 'Food Owner', 'wp-event-manager' ), array(
 
 				'read'         => true,
 
