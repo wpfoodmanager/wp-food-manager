@@ -238,12 +238,13 @@ $food = $post;
                                                     echo '<div class="wpfm-input-description">' . $ext_option['option_description'] . '</div>';
                                                 }
                                                 echo '<select name="' . esc_attr($key) . '">';
+                                                $d_selected_flg = 'selected';
                                                 foreach ($ext_option['option_options'] as $key2 => $value2) {
                                                     $selected = ($value2['option_value_default']) == 'on' ? 'selected' : '';
-
+                                                    $d_selected_flg = ( $selected ) ? '': $d_selected_flg;
                                                     echo '<option value="' . esc_attr($value2['option_value_price']) . '" ' . $selected . ' data-attr-name=' . esc_attr(str_replace(" ", "-", strtolower($value2['option_value_name']))) . '>' . esc_attr($value2['option_value_name']) . ' - ' . get_food_manager_currency_symbol() . $value2['option_value_price'] . '</option>';
                                                 }
-                                                echo '<option value="select-non">None</option>';
+                                                echo '<option value="select-non" '.$d_selected_flg.'>None</option>';
                                                 echo '</select>';
 
                                                 if (!empty($additional_fields_extra_topping)) {
