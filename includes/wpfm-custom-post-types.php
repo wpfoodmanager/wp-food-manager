@@ -1355,7 +1355,18 @@ class WPFM_Post_Types {
 		if ( food_manager_allow_indexing_food_listing() ) {
 			return;
 		}
-		wp_no_robots();
+	
+		$robots['noindex'] = true;
+		$robots['follow'] = true;
+		$robots_arr = wp_robots_no_robots($robots);
+	
+		$content_arr = array();
+		if( $robots_arr ){
+			foreach( $robots_arr as $r_key => $r_val ){
+				$content_arr[] = $r_key;
+			}
+		}
+		echo '<meta name="robots" content="'.implode(',', $content_arr).'" />';
 	}
 	
 	/**
