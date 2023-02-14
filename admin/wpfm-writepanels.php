@@ -1693,10 +1693,12 @@ class WPFM_Writepanels
 	 */
 	public function food_manager_save_food_manager_menu_data($post_id, $post)
 	{
+		if( isset($_POST['radio_icons']) && !empty($_POST['radio_icons']) ){
 		$wpfm_radio_icon = $_POST['radio_icons'];
-		if (isset($wpfm_radio_icon)) {
-			if( !add_post_meta($post_id,'wpfm_radio_icons', $wpfm_radio_icon, true) ){
-				update_post_meta($post_id,'wpfm_radio_icons', $wpfm_radio_icon);
+			if (isset($wpfm_radio_icon)) {
+				if( !add_post_meta($post_id,'wpfm_radio_icons', $wpfm_radio_icon, true) ){
+					update_post_meta($post_id,'wpfm_radio_icons', $wpfm_radio_icon);
+				}
 			}
 		}
 
