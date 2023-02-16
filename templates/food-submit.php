@@ -99,7 +99,7 @@ if(!empty($extra_fields_options)){
 		<!-- Extra options Fields -->
 		<?php //if (empty($extra_fields_options)) { ?>
 			<?php 
-			if(isset($_POST['food_id']) && !empty($_POST['food_id'])){
+			if((isset($_POST['food_id']) && !empty($_POST['food_id'])) || (isset($_GET['action']) == 'edit')){
 				if ($food_extra_fields) : ?>
 					<?php do_action('add_food_extra_fields_start'); ?>
 					<h3 class="wpfm-form-title wpfm-heading-text"><?php _e('Extra Toppings', 'wp-food-manager'); ?></h3>
