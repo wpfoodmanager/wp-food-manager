@@ -184,86 +184,157 @@ class WPFM_Form_Edit_Food extends WPFM_Form_Submit_Food {
 			) );
 
 		// Check for WPFM Online Order & Woocommerce Active or not
-		if(in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_option('active_plugins'))) && in_array('wpfm-online-order/wpfm-online-order.php', apply_filters('active_plugins', get_option('active_plugins')))){		
-			$food_price = get_post_meta($this->food_id,'_food_price', true);
-			$food_sale_price = get_post_meta($this->food_id,'_food_sale_price', true);
-			$food_stock_status = get_post_meta($this->food_id,'_food_stock_status', true);
-			$food_stock_array = explode("fm_", $food_stock_status);
-			$food_ingre = get_post_meta($this->food_id,'_enable_food_ingre', true);
-			$food_nutri = get_post_meta($this->food_id,'_enable_food_nutri', true);
-			$food_categories = wp_get_post_terms( $this->food_id, 'food_manager_category' );
-			$food_tags = wp_get_post_terms( $this->food_id, 'food_manager_tag' );
-			$food_types = wp_get_post_terms( $this->food_id, 'food_manager_type' );
-			//$food_types = get_post_meta( $this->food_id, 'food_manager_type', true);
-			$food_ingredient = get_post_meta($this->food_id,'_ingredient', true);
-			$food_nutrition = get_post_meta($this->food_id,'_nutrition', true);
-			$food_post_title = isset($_POST['food_title']) ? $_POST['food_title'] : '';
-			$food_post_content = isset($_POST['food_description']) ? $_POST['food_description'] : '';
-			$food_new_price = '';
+		if(isset($_GET['action']) == 'edit'){
+			if(in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_option('active_plugins'))) && in_array('wpfm-online-order/wpfm-online-order.php', apply_filters('active_plugins', get_option('active_plugins')))){
 
-			if($food_ingre == 1){
-				$food_ingre = 'yes';
-			} else {
-				$food_ingre = '';
-			}
+				$food_title_arr = $this->get_fields( 'food' );
+				$food_title = $food_title_arr['food_title']['value'];
 
-			if($food_nutri == 1){
-				$food_nutri = 'yes';
-			} else {
-				$food_nutri = '';
-			}
+				$food_description_arr = $this->get_fields( 'food' );
+				$food_description = $food_title_arr['food_description']['value'];
 
-			$food_categories_arr = array();
-			foreach ($food_categories as $food_cat_key => $food_cat_value) {
-				$term_cat = get_term_by('slug', $food_cat_value->slug, 'product_cat');
-				$food_categories_arr[] = $term_cat->term_id;
-			}
+				$food_price = get_post_meta($this->food_id,'_food_price', true);
+				$food_sale_price = get_post_meta($this->food_id,'_food_sale_price', true);
+				$food_stock_status = get_post_meta($this->food_id,'_food_stock_status', true);
+				$food_stock_array = explode("fm_", $food_stock_status);
+				$food_ingre = get_post_meta($this->food_id,'_enable_food_ingre', true);
+				$food_nutri = get_post_meta($this->food_id,'_enable_food_nutri', true);
+				$food_categories = wp_get_post_terms( $this->food_id, 'food_manager_category' );
+				$food_tags = wp_get_post_terms( $this->food_id, 'food_manager_tag' );
+				$food_types = wp_get_post_terms( $this->food_id, 'food_manager_type' );
+				//$food_types = get_post_meta( $this->food_id, 'food_manager_type', true);
+				$food_ingredient = get_post_meta($this->food_id,'_ingredient', true);
+				$food_nutrition = get_post_meta($this->food_id,'_nutrition', true);
+				$food_post_title = isset($_POST['food_title']) ? $_POST['food_title'] : $food_title;
+				$food_post_content = isset($_POST['food_description']) ? $_POST['food_description'] : $food_description;
+				$food_new_price = '';
 
-			$food_tag_arr_val = array();
-			foreach($food_tags as $food_tag){
-				$food_tag_arr_val[] = $food_tag->slug;
-			}
+				if($food_ingre == 1){
+					$food_ingre = 'yes';
+				} else {
+					$food_ingre = '';
+				}
 
-			$food_tags_arr = array();
-			foreach ($food_tags as $food_tag_key => $food_tag_value) {
-				$term_tag = get_term_by('slug', $food_tag_value->slug, 'product_tag');
-				$food_tags_arr[] = $term_tag->term_id;
-			}
+				if($food_nutri == 1){
+					$food_nutri = 'yes';
+				} else {
+					$food_nutri = '';
+				}
 
-			//wpfm_online_order_food_items_tag_sync();
+				$food_categories_arr = array();
+				foreach ($food_categories as $food_cat_key => $food_cat_value) {
+					$term_cat = get_term_by('slug', $food_cat_value->slug, 'product_cat');
+					$food_categories_arr[] = $term_cat->term_id;
+				}
 
-			/*$food_types_arr = array();
-			foreach ($food_types as $food_type_key => $food_type_value) {
-				$term_type = get_term_by('slug', $food_type_value->slug, 'product_types');
-				$food_types_arr[] = $term_type->term_id;
-			}*/
+				$food_tag_arr_val = array();
+				foreach($food_tags as $food_tag){
+					$food_tag_arr_val[] = $food_tag->slug;
+				}
 
-	    	$product_obj = get_page_by_path( $food->post_name, OBJECT, 'product' );
-	    	$product = wc_get_product($product_obj->ID);
+				$food_tags_arr = array();
+				foreach ($food_tags as $food_tag_key => $food_tag_value) {
+					$term_tag = get_term_by('slug', $food_tag_value->slug, 'product_tag');
+					$food_tags_arr[] = $term_tag->term_id;
+				}
 
-	    	if(empty($food_sale_price)){
-				$food_new_price = $food_price;
-		    } else {
-		    	$food_new_price = $food_sale_price;
+				//wpfm_online_order_food_items_tag_sync();
+
+				/*$food_types_arr = array();
+				foreach ($food_types as $food_type_key => $food_type_value) {
+					$term_type = get_term_by('slug', $food_type_value->slug, 'product_types');
+					$food_types_arr[] = $term_type->term_id;
+				}*/
+
+		    	$product_obj = get_page_by_path( $food->post_name, OBJECT, 'product' );
+		    	$product = wc_get_product($product_obj->ID);			
+
+		    	if(empty($food_sale_price)){
+					$food_new_price = $food_price;
+			    } else {
+			    	$food_new_price = $food_sale_price;
+			    }
+
+				update_post_meta( $product_obj->ID, '_stock_status', $food_stock_array[1]);
+			    update_post_meta( $product_obj->ID, '_regular_price', $food_price );
+			    update_post_meta( $product_obj->ID, '_sale_price', $food_sale_price );
+			    update_post_meta( $product_obj->ID, '_price', $food_new_price );
+			    update_post_meta( $product_obj->ID, '_ingredient', $food_ingredient );
+				update_post_meta( $product_obj->ID, '_nutrition', $food_nutrition );
+				update_post_meta( $product_obj->ID, '_enable_food_ingre', $food_ingre );
+				update_post_meta( $product_obj->ID, '_enable_food_nutri', $food_nutri );
+				update_post_meta( $product_obj->ID, '_thumbnail_id', get_post_thumbnail_id($this->food_id));
+				update_post_meta( $product_obj->ID, 'food_manager_type', $food_types[0]->slug);
+				
+				$wpdb->update('wp_posts', array('post_content'=>$food_post_content, 'post_title'=>$food_post_title), array('ID' => $product_obj->ID, 'post_type' => 'product'));
+				
+				wp_set_object_terms( $product_obj->ID, $food_tags_arr, 'product_tag' );
+		    	wp_set_object_terms( $product_obj->ID, $food_categories_arr, 'product_cat' );
+
+
+		    	// Create variation on update food to the products
+		    	$product2 = new WC_Product_Variable($product_obj->ID);
+				$prod_atts = $product2->get_attributes();
+				$prods_vars = $product2->get_children();
+
+				$option_value_count = isset($_POST['option_value_count']) ? $_POST['option_value_count'] : '';
+				$repeated_options = isset($_POST['repeated_options']) ? $_POST['repeated_options'] : '';
+				$ext_multi_options = '';
+				if(!empty($repeated_options) && empty($option_value_count)){
+					$ext_multi_options = isset($_POST['repeated_options']) ? $_POST['repeated_options'] : '';
+				}
+				if(!empty($repeated_options) && !empty($option_value_count)){
+					$ext_multi_options = isset($_POST['option_value_count']) ? $_POST['option_value_count'] : '';
+				}
+
+
+				// Do not delete
+				/*$prod_vars_datas = array();
+				if(($option_value_count && is_array($option_value_count)) && ($repeated_options && is_array($repeated_options))){
+					foreach ( $ext_multi_options as $option_count => $option_value ) {
+						foreach($option_value as $option_value_count){
+							$opt_attr_name = isset($_POST['option_name_'.$option_count]) ? $_POST['option_name_'.$option_count] : '';
+
+							$opt_name = isset($_POST[$option_count.'_option_value_name_'.$option_value_count]) ? $_POST[$option_count.'_option_value_name_'.$option_value_count] : '';
+							$opt_dafault = isset($_POST[$option_count.'_option_value_default_'.$option_value_count]) ? $_POST[$option_count.'_option_value_default_'.$option_value_count] : '';
+							$opt_price = isset($_POST[$option_count.'_option_value_price_'.$option_value_count]) ? $_POST[$option_count.'_option_value_price_'.$option_value_count] : '';
+							$opt_price_type = isset($_POST[$option_count.'_option_value_price_type_'.$option_value_count]) ? $_POST[$option_count.'_option_value_price_type_'.$option_value_count] : '';
+							$prod_vars_datas[$opt_attr_name][] = array(
+								'option_value_name' => $opt_name,
+								'option_value_default' => $opt_dafault,
+								'option_value_price' => $opt_price,
+								'option_value_price_type' => $opt_price_type,
+							);
+							
+							
+						}
+					}
+				}*/
+				$option_prices = [];
+				if(($option_value_count && is_array($option_value_count)) && ($repeated_options && is_array($repeated_options))){
+					
+					foreach ( $ext_multi_options as $option_count => $option_value ) {
+						foreach($option_value as $option_value_count){
+							$opt_name = isset($_POST[$option_count.'_option_value_name_'.$option_value_count]) ? $_POST[$option_count.'_option_value_name_'.$option_value_count] : '';
+							$opt_price = isset($_POST[$option_count.'_option_value_price_'.$option_value_count]) ? $_POST[$option_count.'_option_value_price_'.$option_value_count] : '';
+
+							$option_prices[] = $opt_price;							
+						}
+					}
+				}
+				
+				$combine_arr = '';
+				if(!empty($prods_vars) && !empty($option_prices)){
+					$combine_arr = array_combine($prods_vars, $option_prices);
+				}
+				if(!empty($combine_arr) && is_array($combine_arr)){
+					foreach($combine_arr as $v_id => $new_price){
+						update_post_meta($v_id, '_price', $new_price);
+						update_post_meta($v_id, '_regular_price',$new_price);
+					}
+				}
 		    }
-
-			update_post_meta( $product_obj->ID, '_stock_status', $food_stock_array[1]);
-		    update_post_meta( $product_obj->ID, '_regular_price', $food_price );
-		    update_post_meta( $product_obj->ID, '_sale_price', $food_sale_price );
-		    update_post_meta( $product_obj->ID, '_price', $food_new_price );
-		    update_post_meta( $product_obj->ID, '_ingredient', $food_ingredient );
-			update_post_meta( $product_obj->ID, '_nutrition', $food_nutrition );
-			update_post_meta( $product_obj->ID, '_enable_food_ingre', $food_ingre );
-			update_post_meta( $product_obj->ID, '_enable_food_nutri', $food_nutri );
-			update_post_meta( $product_obj->ID, '_thumbnail_id', get_post_thumbnail_id($this->food_id));
-			update_post_meta( $product_obj->ID, 'food_manager_type', $food_types[0]->slug);
-			
-			$wpdb->update('wp_posts', array('post_content'=>$food_post_content, 'post_title'=>$food_post_title), array('ID' => $product_obj->ID, 'post_type' => 'product'));
-			
-			wp_set_object_terms( $product_obj->ID, $food_tags_arr, 'product_tag' );
-	    	wp_set_object_terms( $product_obj->ID, $food_categories_arr, 'product_cat' );
-	    }
-
+		}
 	}
 
 	/**
