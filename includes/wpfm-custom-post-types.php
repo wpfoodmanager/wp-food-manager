@@ -262,6 +262,8 @@ class WPFM_Post_Types {
 					'remove_featured_image' => __( 'Remove Image', 'wp-food-manager' ),
 					
 					'use_featured_image'    => __( 'Use as food thumbnail', 'wp-food-manager' ),
+
+					'view_items'    => sprintf( __( 'View %s', 'wp-food-manager' ), $plural_menu ),
 				),
 
 				'description' => sprintf( __( 'This is where you can create and manage %s.', 'wp-food-manager' ), $plural_menu ),
