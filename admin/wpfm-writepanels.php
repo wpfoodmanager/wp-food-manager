@@ -1071,6 +1071,7 @@ class WPFM_Writepanels
 	 */
 	public function save_post($post_id, $post)
 	{
+		global $wpdb;
 		$ingredient_ids = [];
 		$nutrition_ids = [];
 
@@ -1172,6 +1173,29 @@ class WPFM_Writepanels
 			
 			if( $unit_ids ){
 				wp_set_object_terms($post_id, $unit_ids, 'food_manager_unit');
+			}
+
+			// Set Order Menu
+			$order_menu = $wpdb->get_results("SELECT menu_order FROM $wpdb->posts WHERE ID = " . intval($post_id));
+
+			if ($order_menu && $order_menu[0]->menu_order == 0) {
+				
+				$last_inserted_post = get_posts(array(
+					'post_type' => $post->post_type,
+					'posts_per_page' => 2,
+					'offset' => 0,
+					'orderby' => 'ID',
+					'order' => 'DESC',
+					'post_status' => 'any',
+				));
+
+				if ($last_inserted_post) {
+					$last_menu_order = $wpdb->get_results("SELECT menu_order FROM $wpdb->posts WHERE ID = " . intval($last_inserted_post[1]->ID));
+					$next_menu_order = $last_menu_order[0]->menu_order + 1;
+					$wpdb->update($wpdb->posts, ['menu_order' => $next_menu_order], ['ID' => intval($post_id)]);
+				} else {
+					$wpdb->update($wpdb->posts, ['menu_order' => 1], ['ID' => intval($post_id)]);
+				}
 			}
 			
 		}

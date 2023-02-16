@@ -662,6 +662,29 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
 			update_post_meta( $this->food_id, '_enable_food_nutri', true );
 		}
 
+		$order_menu = $wpdb->get_results("SELECT menu_order FROM $wpdb->posts WHERE ID = " . intval($this->food_id));
+
+		if ($order_menu && $order_menu[0]->menu_order == 0) {
+			
+			$last_inserted_post = get_posts(array(
+				'post_type' => 'food_manager',
+				'posts_per_page' => 2,
+				'offset' => 0,
+				'orderby' => 'ID',
+				'order' => 'DESC',
+				'post_status' => 'any',
+			));
+
+			if ($last_inserted_post) {
+				$last_menu_order = $wpdb->get_results("SELECT menu_order FROM $wpdb->posts WHERE ID = " . intval($last_inserted_post[0]->ID));
+				$next_menu_order = intval($last_menu_order[0]->menu_order) + 1;
+				$wpdb->update($wpdb->posts, ['menu_order' => $next_menu_order], ['ID' => intval($this->food_id)]);
+			} else {
+				$wpdb->update($wpdb->posts, ['menu_order' => 1], ['ID' => intval($this->food_id)]);
+			}
+			
+		}
+
 		// Check for WPFM Online Order & Woocommerce Active or not
 		if(in_array('wpfm-online-order/wpfm-online-order.php', apply_filters('active_plugins', get_option('active_plugins'))) && in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_option('active_plugins')))){
 			$prod_banner = isset($_POST['current_food_banner']) ? $_POST['current_food_banner'] : '';
