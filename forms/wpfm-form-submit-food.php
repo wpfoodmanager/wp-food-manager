@@ -173,21 +173,21 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
 					'default'     => '',
 					'taxonomy'    => 'food_manager_nutrition'
 				),
-				/*'food_tag' => array(
+				'food_tag' => array(
 					'label'       => __( 'Food Tag', 'wp-food-manager' ),
-					'type'        => 'term-multiselect', //get_option('food_manager_multiselect_food_type',1) ?  'term-multiselect' : 'term-select'
+					'type'        => 'text',
 					'required'    => true,
-					'placeholder' => '',
-					'priority'    => 4,
+					'placeholder' => 'Delicious, Spicy',
+					'priority'    => 6,
 					'default'     => '',
-					'taxonomy'    => 'food_manager_tag'
-				),*/
+					'description'     => 'Comma separate tags, such as required like food type or content for this food.',
+				),
 				'food_banner' => array(
 					'label'       => __( 'Food Banner', 'wp-food-manager' ),
 					'type'        => 'file',
 					'required'    => true,
 					'placeholder' => '',
-					'priority'    => 6,
+					'priority'    => 7,
 					'ajax'        => true,
 					'multiple'    => get_option( 'food_manager_user_can_add_multiple_banner' ) == 1 ? true : false,
 					'allowed_mime_types' => array(
@@ -202,21 +202,21 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
 					'type'        => 'wp-editor',
 					'required'    => true,
 					'placeholder' => '',
-					'priority'    => 7
+					'priority'    => 8
 				),
 				'food_price' => array(
 					'label'       => __( 'Regular Price', 'wp-food-manager' ),
 					'type'        => 'number',
 					'required'    => true,
 					'placeholder' => '',
-					'priority'    => 8
+					'priority'    => 9
 				),
 				'food_sale_price' => array(
 					'label'       => __( 'Sale Price', 'wp-food-manager' ),
 					'type'        => 'number',
 					'required'    => false,
 					'placeholder' => '',
-					'priority'    => 9
+					'priority'    => 10
 				),
 				'food_stock_status' => array(
 					'label'       => __( 'Stock Status', 'wp-food-manager' ),
@@ -226,7 +226,7 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
 										'fm_instock' => __('In stock','wp-food-manager'),
 										'fm_outofstock' => __('Out of stock','wp-food-manager'),
 									),
-					'priority'    => 10
+					'priority'    => 11
 				),
 			),
 
@@ -590,6 +590,13 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
 				setcookie( 'wp-food-manager-submitting-food-key', $submitting_key, 0, COOKIEPATH, COOKIE_DOMAIN, false );
 				update_post_meta( $this->food_id, '_submitting_key', $submitting_key );
 			}
+		}
+
+		// Set Food Tags
+		if( isset( $values['food']['food_tag'] ) && !empty( $values['food']['food_tag'] ) ){
+			$food_tag = explode(',',$values['food']['food_tag']);
+			$food_tag = array_map('trim', $food_tag);
+			wp_set_object_terms( $this->food_id, $food_tag, 'food_manager_tag' );
 		}
 
 		// Set ingredients
