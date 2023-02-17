@@ -60,7 +60,7 @@ class WPFM_Form_Edit_Food extends WPFM_Form_Submit_Food {
 	public function submit() {
 		global $wpdb;
 		$food = get_post( $this->food_id );
-		if ( empty( $this->food_id  ) || ( $food->post_status !== 'publish' && ! food_manager_user_can_edit_pending_submissions() ) ) {
+		if ( empty( $this->food_id  ) || ( $food->post_status !== 'publish' && $food->post_status !== 'pending' && ! food_manager_user_can_edit_pending_submissions() ) ) {
 
 			echo wpautop( __( 'Invalid listing', 'wp-food-manager' ) );
 

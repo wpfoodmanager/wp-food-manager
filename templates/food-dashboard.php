@@ -175,12 +175,10 @@
 										break;
 									case 'pending_payment' :
 									case 'pending' :
-										if (food_manager_user_can_edit_pending_submissions ()) {
-											$actions ['edit'] = array (
-													'label' => __ ( 'Edit', 'wp-food-manager' ),
-													'nonce' => false
-											);
-										}
+										$actions ['edit'] = array (
+											'label' => __ ( 'Edit', 'wp-food-manager' ),
+											'nonce' => false
+										);
 										break;
 								}
 								$actions ['delete'] = array (
