@@ -181,7 +181,7 @@ class WP_Food_Manager_Field_Editor
 		}
 */
 		$fields = array_merge($food_fields); // , $organizer_fields, $venue_fields
-
+		$submit_food_form_fields = get_option('food_manager_submit_food_form_fields');
 		foreach ($fields  as $group_key => $group_fields) {
 			if (empty($group_fields)) {
 				continue;
@@ -235,9 +235,16 @@ class WP_Food_Manager_Field_Editor
 						<?php
 						if (isset($group_fields) && !empty($group_fields)) {
 							foreach ($group_fields as $field_key => $field) {
-								if( trim($field['label']) != '' ){
-									$index++;
-									include 'wpfm-form-field-editor-field.php';
+								if( $group_key == 'food' ){
+									if( trim($field['label']) != '' && isset( $submit_food_form_fields['food'][$field_key] ) ){
+										$index++;
+										include 'wpfm-form-field-editor-field.php';
+									}
+								}else{
+									if( trim($field['label']) != '' ){
+										$index++;
+										include 'wpfm-form-field-editor-field.php';
+									}
 								}
 							}
 						}
