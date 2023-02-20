@@ -236,10 +236,18 @@ class WP_Food_Manager_Field_Editor
 						if (isset($group_fields) && !empty($group_fields)) {
 							foreach ($group_fields as $field_key => $field) {
 								if( $group_key == 'food' ){
-									if( trim($field['label']) != '' && isset( $submit_food_form_fields['food'][$field_key] ) ){
-										$index++;
-										include 'wpfm-form-field-editor-field.php';
+									if( $submit_food_form_fields ){
+										if( trim($field['label']) != '' && isset( $submit_food_form_fields['food'][$field_key] ) ){
+											$index++;
+											include 'wpfm-form-field-editor-field.php';
+										}
+									}else{
+										if( trim($field['label']) != '' ){
+											$index++;
+											include 'wpfm-form-field-editor-field.php';
+										}	
 									}
+									
 								}else{
 									if( trim($field['label']) != '' ){
 										$index++;
