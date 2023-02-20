@@ -235,10 +235,10 @@ class WP_Food_Manager_Field_Editor
 						<?php
 						if (isset($group_fields) && !empty($group_fields)) {
 							foreach ($group_fields as $field_key => $field) {
-
-								$index++;
-
-								include 'wpfm-form-field-editor-field.php';
+								if( trim($field['label']) != '' ){
+									$index++;
+									include 'wpfm-form-field-editor-field.php';
+								}
 							}
 						}
 						?>
