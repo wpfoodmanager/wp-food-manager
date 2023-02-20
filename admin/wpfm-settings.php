@@ -871,7 +871,7 @@ class WPFM_Settings {
 							</div>
 						</div>
 					</div>
-					<span class="light-grey"><?php esc_attr_e('Powered By', 'wp-food-manager'); ?></span> <a href="http://wpfoodmanager.com/" target="_blank"><img src="<?php echo get_template_directory_uri(); ?>/assets/images/wpfm-logo.svg" alt="WP Food Manager"></a>
+					<span class="light-grey"><?php esc_attr_e('Powered By', 'wp-food-manager'); ?></span> <a href="http://wpfoodmanager.com/" target="_blank"><img src="<?php echo WPFM_PLUGIN_URL . '/assets/images/wpfm-logo.svg'; ?>" alt="WP Food Manager"></a>
 				</div>
 			</div>
     	</div>
