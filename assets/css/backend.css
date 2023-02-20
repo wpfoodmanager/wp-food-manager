@@ -1,8 +1,6 @@
-/*.wpfm-disabled-link{
-  pointer-events: none;
-  opacity: 0.6;
-}*/
-
+:root {
+  --wpfm-primary-color: #ff4600;
+}
 .food_manager_page_food-manager-settings #adminmenuwrap{
   position: relative !important;
 }
@@ -141,7 +139,6 @@ button.button.button-small.wp_food_manager_upload_file_button_multiple {
   align-items: center;
 }
 .wpfm-admin-postbox-meta-data .wpfm-admin-postbox-form-field label {
-  vertical-align: middle;
   display: block;
   font-weight: 700;
   margin: 0;
@@ -209,6 +206,7 @@ label.add-food-small {
 }
 .wpfm-food-menu.menu li.menu-item-handle {
   margin-bottom: 5px;
+  max-width: 600px;
 }
 .wpfm-food-item-remove {
   text-decoration: none;
@@ -910,7 +908,7 @@ mark.fm_instock {
   transition: .4s;
 }
 input:checked+.wpfm-field-switch-slider {
-  background-color: #379308 ;
+  background-color: var(--wpfm-primary-color) ;
 }
 input:checked+.wpfm-field-switch-slider:before {
   -webkit-transform: translateX(26px);
@@ -1102,9 +1100,11 @@ div#wpfm-loading {
 /*#general_food_data_content p.wpfm-admin-postbox-form-field._food_banner {
   display: none;
 }*/
-.wpfm-food-menu .menu-item-handle .item-title{word-break: break-word;}
-select#wpfm-admin-food-selection {
-  margin-top: 14px ;
+.wpfm-food-menu .menu-item-handle .item-title{
+  word-break: break-word;
+}
+.wpfm-admin-menu-selection select {
+  margin-top: 10px ;
 }
 span.food-manager-uploaded-file {
   margin-right: 10px;
@@ -1203,6 +1203,129 @@ a.tips.food_title {
 }
 
 
+.wpfm-metaboxes .wpfm-metabox-content.wpfm-variation-box {
+  border-top: 1px solid #ccd0d4;
+}
+
+.white-background {
+  float: left;
+  width: 100%;
+  background-color: #fff;
+  border: 1px solid #e1e1e1;
+  padding: 10px;
+  box-sizing: border-box;
+  margin: 0 0 20px;
+  }
+
+
+ /*helpful start*/ 
+.admin-setting-left {
+  float: left;
+  width: 70%;
+}
+.box-info {
+  position: relative;
+  min-width: 255px;
+  border: 1px solid #e5e5e5;
+  -webkit-box-shadow: 0 1px 1px rgb(0 0 0 / 4%);
+  box-shadow: 0 1px 1px rgb(0 0 0 / 4%);
+  background: #fff;
+  float: right !important;
+  box-sizing: border-box;
+  width: 28%;
+  padding: 15px;
+}
+.box-info h3 {
+  padding: 0 0 10px 10px;
+  font-size: 14px;
+  margin-top: 5px;
+  border-bottom: 1px solid #efefef;
+}
+.wpfm-plugin_info-inside {
+  max-width: 100%;
+  overflow: hidden;
+}
+.wpfm-plugin_info-inside .wpfm-setup-help-center-block {
+  background: #fff;
+  border: 1px solid #e1e1e4;
+  box-sizing: border-box;
+  border-radius: 7px;
+  display: flex;
+  margin-bottom: 10px;
+  padding: 10px 15px;
+  text-align: left;
+  align-items: center;
+}
+.wpfm-plugin_info-inside .wpfm-setup-help-center-block .wpfm-setup-help-center-block-icon {
+  margin-right: 25px;
+}
+.wpfm-plugin_info-inside .wpfm-setup-help-center-faqs-icon, .wpfm-plugin_info-inside .wpfm-setup-help-center-knowledge-base-icon, .wpfm-plugin_info-inside .wpfm-setup-help-center-support-icon, .wpfm-plugin_info-inside .wpfm-setup-help-center-video-tutorial-icon {
+  display: inline-block;
+  background: url(../images/support-page-sprites-img.png) no-repeat;
+  background-size: 140px;
+  overflow: hidden;
+  text-indent: -9999px;
+  text-align: left;
+}
+.wpfm-plugin_info-inside .wpfm-setup-help-center-knowledge-base-icon {
+  background-position: -68px 1px;
+  width: 60px;
+  height: 60px;
+}
+.wpfm-plugin_info-inside .wpfm-setup-help-center-faqs-icon {
+  background-position: -5px 1px;
+  width: 60px;
+  height: 60px;
+}
+.wpfm-plugin_info-inside .wpfm-setup-help-center-video-tutorial-icon {
+  background-position: -72px -62px;
+  width: 60px;
+  height: 60px;
+}
+.wpfm-plugin_info-inside .wpfm-setup-help-center-block-content .wpfm-setup-help-center-block-heading {
+  font-weight: 600;
+  line-height: 1.42;
+  color: #111;
+  font-size: 16px;
+  margin-bottom: 5px;
+}
+.wpfm-plugin_info-inside .wpfm-setup-help-center-block-content .wpfm-setup-help-center-block-desc {
+  font-size: 14px;
+  line-height: 1.42;
+  color: #555;
+}
+.wpfm-plugin_info-inside .wpfm-setup-help-center-block-content a.wpfm-setup-help-center-block-link {
+  display: inline-block;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 18px;
+  margin-top: 10px;
+  position: relative;
+  text-decoration: none;
+  color: var(--wpfm-primary-color);
+  transition: 0.2s color ease;
+}
+.wpfm-plugin_info-inside .wpfm-setup-help-center-block-content a.wpfm-setup-help-center-block-link:hover{
+  color: #000;
+}
+.wpfm-plugin_info-inside span.light-grey {
+  text-align: center;
+  display: block;
+  padding-top: 10px;
+  font-size: 14px;
+  margin-top: 5px;
+  border-top: 1px solid #efefef;
+}
+.wpfm-plugin_info-inside a img {
+  width: 100%;
+  display: block;
+  max-width: 200px;
+  margin: 0 auto;
+  margin-top: 5px;
+}
+ /*helpful end*/ 
+
 
 
 @media only screen and (max-width: 1280px) {
@@ -1213,11 +1336,13 @@ a.tips.food_title {
   .wpfm_panel input[type="text"].wpfm-small-field {
     width: 80%;
   }
-
   .wpfm_panel .description {
     display: block;
     clear: both;
     margin-left: 0;
+  }
+  .admin-setting-left, .box-info {
+      width: 100%;
   }
 }
 @media only screen and (max-width: 900px) {
@@ -1265,16 +1390,3 @@ a.tips.food_title {
 /* WPFM tabs */
 
 
-.wpfm-metaboxes .wpfm-metabox-content.wpfm-variation-box {
-    border-top: 1px solid #ccd0d4;
-}
-
-.white-background {
-  float: left;
-  width: 100%;
-  background-color: #fff;
-  border: 1px solid #e1e1e1;
-  padding: 10px;
-  box-sizing: border-box;
-  margin: 0 0 20px;
-}

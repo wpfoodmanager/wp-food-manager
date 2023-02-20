@@ -90,7 +90,7 @@ class WPFM_Writepanels
 
 		add_meta_box('food_manager_menu_data', __('Menu Icon', 'wp-food-manager'), array($this, 'food_manager_menu_data'), 'food_manager_menu', 'normal', 'high');
 
-		add_meta_box('food_manager_menu_data_icons', __('Select the food items from Food category and Food types', 'wp-food-manager'), array($this, 'food_manager_menu_data_icons'), 'food_manager_menu', 'normal', 'high');
+		add_meta_box('food_manager_menu_data_icons', __('Select Food ', 'wp-food-manager'), array($this, 'food_manager_menu_data_icons'), 'food_manager_menu', 'normal', 'high');
 	}
 
 	/**
@@ -130,7 +130,7 @@ class WPFM_Writepanels
 
 		?>
 		<div class="wpfm-admin-food-menu-container wpfm-flex-col wpfm-admin-postbox-meta-data">
-			<div class="wpfm-admin-food-menu-container wpfm-flex-col wpfm-admin-postbox-meta-data">
+			<div class="wpfm-admin-postbox-meta-data">
 				<div class="wpfm-admin-menu-selection wpfm-admin-postbox-form-field">
 					<!-- <label for="_add_food"><?php _e('Select food category'); ?></label> -->
 					<?php food_manager_dropdown_selection(array(
@@ -142,7 +142,8 @@ class WPFM_Writepanels
 						'show_count' => true,
 						'hierarchical' => false,
 					)); ?>
-
+				</div>
+				<div class="wpfm-admin-menu-selection wpfm-admin-postbox-form-field">
 					<?php food_manager_dropdown_selection(array(
 						'multiple' => false, 'show_option_all' => __('All food types', 'wp-food-manager'),
 						'id' => 'wpfm-admin-food-types-selection',
