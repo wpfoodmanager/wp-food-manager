@@ -90,7 +90,7 @@ class WPFM_Writepanels
 
 		add_meta_box('food_manager_menu_data', __('Menu Icon', 'wp-food-manager'), array($this, 'food_manager_menu_data'), 'food_manager_menu', 'normal', 'high');
 
-		add_meta_box('food_manager_menu_data_icons', __('All Food', 'wp-food-manager'), array($this, 'food_manager_menu_data_icons'), 'food_manager_menu', 'normal', 'high');
+		add_meta_box('food_manager_menu_data_icons', __('Select the food items from Food category and Food types', 'wp-food-manager'), array($this, 'food_manager_menu_data_icons'), 'food_manager_menu', 'normal', 'high');
 	}
 
 	/**
