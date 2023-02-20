@@ -664,28 +664,6 @@ class WPFM_Shortcodes {
 
 		get_food_manager_template( 'content-no-foods-found.php' );
 	}
-
-	/**
-	 * Output anchor tag close: single organizer details url
-	 */
-	public function organizer_more_info_link( $organizer_id ) {
-
-		global $post;
-		
-		if ( ! $post || 'food_manager' !== $post->post_type ) {
-			return;
-		}
-
-		if(isset($organizer_id) && !empty($organizer_id))
-		{	
-			$organizer_url = get_permalink( $organizer_id );
-
-			if(isset($organizer_url) && !empty($organizer_url))
-			{
-				printf( '<div class="wpfm-organizer-page-url-button"><a href="%s" class="wpfm-theme-button"><span>%s</span></a></div>',  get_permalink( $organizer_id ), __( 'More info', 'wp-food-manager' ) );	
-			}
-		}
-	}
 	
 	/**
 	 * Get string as a bool
