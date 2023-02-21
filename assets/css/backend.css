@@ -1,10 +1,13 @@
 :root {
   --wpfm-primary-color: #ff4600;
 }
-.food_manager_page_food-manager-settings #adminmenuwrap{
+
+.food_manager_page_food-manager-settings #adminmenuwrap {
   position: relative !important;
 }
-.wpfm-font-awesome-class, .wpfm-food-font-icon-class {
+
+.wpfm-font-awesome-class,
+.wpfm-food-font-icon-class {
   display: grid;
   grid-template-columns: auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto;
   height: 192px;
@@ -12,25 +15,31 @@
   grid-auto-rows: 48px;
   margin-bottom: 30px;
 }
-.wpfm-food-font-icon-class{
+
+.wpfm-food-font-icon-class {
   height: auto;
   margin-bottom: 0;
 }
+
 h2.wp-food-menu-icon-title {
   background: #dddddd;
   font-size: 16px !important;
   font-weight: 500 !important;
 }
-.wpfm-font-awesome-class i.fa{
+
+.wpfm-font-awesome-class i.fa {
   font-size: 18px;
 }
-.wpfm-font-awesome-class span.wpfm-menu{
-  font-size: 26px; 
+
+.wpfm-font-awesome-class span.wpfm-menu {
+  font-size: 26px;
 }
-.no-radio-icons{
+
+.no-radio-icons {
   display: none;
   text-align: right;
 }
+
 .wpfm-parent-icons {
   display: inline-block;
   vertical-align: top;
@@ -38,6 +47,7 @@ h2.wp-food-menu-icon-title {
   width: 100%;
   text-align: right;
 }
+
 span.wpfm-searh-clear {
   position: absolute;
   right: 10px;
@@ -46,6 +56,7 @@ span.wpfm-searh-clear {
   cursor: pointer;
   display: none;
 }
+
 .sub-font-icon {
   border: 1px solid #ddd;
   padding: 12px 5px;
@@ -54,7 +65,8 @@ span.wpfm-searh-clear {
   z-index: 9;
   height: 22px;
 }
-.sub-font-icon input[type=radio]:hover + label span.wpfm-icon-key-name {
+
+.sub-font-icon input[type=radio]:hover+label span.wpfm-icon-key-name {
   font-size: 10px;
   position: absolute;
   top: 1px;
@@ -67,7 +79,8 @@ span.wpfm-searh-clear {
   z-index: 99;
   padding: 1px 0 3px;
 }
-.sub-font-icon input[type=radio]:hover + label span.wpfm-icon-key-name::before {
+
+.sub-font-icon input[type=radio]:hover+label span.wpfm-icon-key-name::before {
   background: #000;
   content: '';
   height: 10px;
@@ -80,14 +93,17 @@ span.wpfm-searh-clear {
   margin: 0 auto;
   z-index: -1;
 }
+
 .sub-font-icon input[type=radio] {
   opacity: 0;
 }
-.sub-font-icon input[type=radio] + label {
+
+.sub-font-icon input[type=radio]+label {
   margin-left: -20px;
   font-size: 0;
 }
-.sub-font-icon input[type=radio]:checked + label::after {
+
+.sub-font-icon input[type=radio]:checked+label::after {
   background: #333;
   content: '';
   position: absolute;
@@ -97,21 +113,27 @@ span.wpfm-searh-clear {
   bottom: 0;
   z-index: -1;
 }
-.sub-font-icon input[type=radio]:checked + label i, .sub-font-icon input[type=radio]:checked + label span{
+
+.sub-font-icon input[type=radio]:checked+label i,
+.sub-font-icon input[type=radio]:checked+label span {
   color: #fff;
 }
-.sub-font-icon input[type=radio]:checked - .sub-font-icon{
+
+.sub-font-icon input[type=radio]:checked - .sub-font-icon {
   border-color: #333;
 }
-#wpfm_icon_search{
+
+#wpfm_icon_search {
   margin: 10px 0 15px;
 }
-.menu-icon-food_manager .wp-menu-image img{
+
+.menu-icon-food_manager .wp-menu-image img {
   width: 28px;
   margin-top: 0;
   padding-top: 3px !important;
   max-width: 100%;
 }
+
 .wpfm-admin-left-col,
 .wpfm-admin-right-col {
   display: inline-flex;
@@ -121,8 +143,9 @@ span.wpfm-searh-clear {
 button.button.button-small.wp_food_manager_upload_file_button {
   margin-top: 5px;
 }
+
 button.button.button-small.wp_food_manager_upload_file_button_multiple {
-    margin-top: 5px;
+  margin-top: 5px;
 }
 
 .food-manager-uploaded-file span.wpfm-icon {
@@ -138,23 +161,28 @@ button.button.button-small.wp_food_manager_upload_file_button_multiple {
   justify-content: space-between;
   align-items: center;
 }
+
 .wpfm-admin-postbox-meta-data .wpfm-admin-postbox-form-field label {
   display: block;
   font-weight: 700;
   margin: 0;
 }
+
 .wpfm-admin-postbox-meta-data .wpfm-admin-postbox-form-field {
   line-height: 2em;
   box-sizing: border-box;
   padding: 0 12px 0 0;
-  margin: 0 -1px 0; /*0 0 12px*/
+  margin: 0 -1px 0;
 }
+
 .wpfm-admin-postbox-drop-btn {
   width: 80px;
 }
+
 .wpfm-admin-postbox-drop-btn input#wpfm-admin-add-food {
   font-size: 13px;
 }
+
 label.add-food-small {
   font-weight: 500 !important;
   color: #787c82;
@@ -184,6 +212,7 @@ label.add-food-small {
 .wpfm-admin-postbox-meta-data .wpfm-admin-postbox-form-field .checkbox {
   width: 1em;
 }
+
 .wpfm-admin-postbox-drop-btn,
 .wpfm-food-item-remove span.dashicons.dashicons-dismiss {
   display: flex;
@@ -192,22 +221,28 @@ label.add-food-small {
 .wpfm-admin-postbox-drop-btn input[type="button"] {
   flex: 1;
 }
+
 .wpfm-admin-food-menu-container.wpfm-flex-col.wpfm-admin-postbox-meta-data {
   flex-direction: column;
 }
+
 .wpfm-admin-menu-selection.wpfm-admin-postbox-form-field {
   max-width: 270px;
 }
+
 .wpfm-admin-food-menu-items .wpfm-admin-left-col span.dashicons {
   margin-right: 10px;
 }
+
 .wpfm-food-menu.menu li.menu-item-handle:last-child {
   margin-bottom: 10px;
 }
+
 .wpfm-food-menu.menu li.menu-item-handle {
   margin-bottom: 5px;
   max-width: 600px;
 }
+
 .wpfm-food-item-remove {
   text-decoration: none;
 }
@@ -215,15 +250,18 @@ label.add-food-small {
 .wpfm-food-item-remove:hover {
   color: red;
 }
+
 /* WPFM tabs */
 #food_manager_data .inside {
   margin: 0;
   padding: 0;
 }
+
 #food_manager_data .panel-wrap {
   overflow: hidden;
   background: #fff;
 }
+
 #food_manager_data ul.wpfm-tabs {
   margin: 0;
   width: 20%;
@@ -235,12 +273,14 @@ label.add-food-small {
   border-right: 1px solid #eee;
   box-sizing: border-box;
 }
+
 #food_manager_data ul.wpfm-tabs li {
   margin: 0;
   padding: 0;
   display: block;
   position: relative;
 }
+
 #food_manager_data ul.wpfm-tabs li a {
   margin: 0;
   padding: 10px;
@@ -251,22 +291,28 @@ label.add-food-small {
   border-bottom: 1px solid #eee;
   border-left: 3px solid transparent;
 }
+
 #food_manager_data ul.wpfm-tabs li a span {
   margin-left: 0.618em;
   margin-right: 0.618em;
 }
+
 #food_manager_data ul.wpfm-tabs li.general_options a::before {
   content: "\f107";
 }
+
 #food_manager_data ul.wpfm-tabs li.advanced_tab a::before {
   content: "\f111";
 }
+
 #food_manager_data ul.wpfm-tabs li.nutritions_tab a::before {
   content: "\f511";
 }
+
 #food_manager_data ul.wpfm-tabs li.ingredient_tab a::before {
   content: "\f175";
 }
+
 #food_manager_data ul.wpfm-tabs li a::before {
   font-family: Dashicons;
   speak: none;
@@ -279,26 +325,29 @@ label.add-food-small {
   text-decoration: none;
 }
 
-#food_manager_data ul.wpfm-tabs li.extra-options_tab a::before
-{
-      content: "\f509";
+#food_manager_data ul.wpfm-tabs li.extra-options_tab a::before {
+  content: "\f509";
 }
 
 #food_manager_data .wpfm_panel {
   float: left;
   width: 80%;
 }
+
 .wpfm_panel {
   min-height: 175px;
   box-sizing: border-box;
 }
+
 .panel,
 .wpfm_panel {
   color: #555;
 }
+
 #food_manager_data .wpfm-tabs a.nav-tab-active {
   border-left: 3px solid #0b8ac7;
 }
+
 .wpfm_panel p.wpfm-admin-postbox-form-field {
   padding: 5px 20px 5px 162px !important;
   display: flex;
@@ -308,8 +357,6 @@ label.add-food-small {
 
 #advanced_product_data p.wpfm-admin-postbox-form-field {
   display: flex;
-  /* overflow: hidden; */
-  /* position: relative; */
   align-items: center;
 }
 
@@ -330,13 +377,16 @@ label.add-food-small {
 .wpfm_panel input[type="url"].wpfm-small-field {
   width: 50%;
 }
+
 .wpfm_panel .wpfm-admin-postbox-form-group {
   border-top: 1px solid #fff;
   border-bottom: 1px solid #eee;
 }
+
 .wpfm_panel .wpfm-admin-postbox-form-group:first-child {
   border-top: 0;
 }
+
 #food_manager_data ul.wpfm-tabs::after {
   content: "";
   display: block;
@@ -348,22 +398,25 @@ label.add-food-small {
   background-color: #fafafa;
   border-right: 1px solid #eee;
 }
+
 .wpfm_panel p {
   margin: 9px 0;
   font-size: 12px;
   line-height: 24px;
 }
+
 .wpfm_panel .description {
   padding: 0;
   margin: 0 0 0 7px;
   clear: none;
   display: inline;
 }
+
 .wpfm_panel .checkbox {
   margin: 4px 0 !important;
   vertical-align: middle;
-  /*float: left;*/
 }
+
 .wpfm-metaboxes {
   padding: 0.5em 0.75em 0.5em 1em !important;
 }
@@ -399,15 +452,18 @@ label.add-food-small {
 .wpfm-metaboxes .wpfm-metabox h3 button {
   float: right;
 }
+
 .wpfm-metaboxes .wpfm-metabox h3 .wpfm-togglediv {
   background-position: 6px 5px !important;
- 
+
   height: 26px;
 }
+
 .wpfm-metaboxes .wpfm-metabox .wpfm-togglediv {
   width: 27px;
   float: right;
 }
+
 .wpfm-attributes-wrap h3 .wpfm-sort {
   width: 17px;
   height: 26px;
@@ -420,31 +476,38 @@ label.add-food-small {
   text-align: center;
   vertical-align: middle;
 }
+
 .tips {
   cursor: help;
   text-decoration: none;
 }
+
 .wpfm-metaboxes .wpfm-metabox h3 strong {
   font-weight: 400;
   line-height: 26px;
   font-weight: 700;
   margin-right: 10px;
 }
+
 #extra_options_food_data_content .wpfm-admin-options-table .widefat thead,
 #extra_options_food_data_content .wpfm-admin-options-table .widefat tfoot {
   background: #f7fafc;
 }
+
 a.button.wpfm-add-row {
   float: right;
 }
-.wpfm-input-field.parent-option-description{
+
+.wpfm-input-field.parent-option-description {
   display: flex;
   flex-flow: column;
   row-gap: 12px;
 }
+
 .wpfm-metaboxes-wrapper .wpfm-metabox:nth-child(2n) h3 {
   background: #ebebeb;
 }
+
 .wpfm-metaboxes .wpfm-metabox .wpfm-togglediv::before {
   content: "\f142" !important;
   cursor: pointer;
@@ -456,9 +519,11 @@ a.button.wpfm-add-row {
   right: 12px;
   top: 0;
 }
+
 .wpfm-metaboxes .wpfm-metabox.closed .wpfm-togglediv::before {
   content: "\f140" !important;
 }
+
 .wpfm-metaboxes .wpfm-metabox h3 strong {
   font-weight: 400;
   line-height: 26px;
@@ -476,6 +541,7 @@ a.button.wpfm-add-row {
   text-align: center;
   vertical-align: middle;
 }
+
 .wpfm-attributes-wrap h3 .wpfm-sort::before {
   content: "\f333";
   font-family: Dashicons;
@@ -487,21 +553,26 @@ a.button.wpfm-add-row {
   float: left;
   height: 100%;
 }
+
 .wpfm-attributes-wrap h3 .wpfm-sort:hover::before {
   color: #777;
 }
+
 .wpfm-attributes-box {
   background-color: #fdfdfd;
   border-top: 1px solid #eee;
 }
+
 .wpfm-content {
   padding: 1em;
 }
+
 .wpfm-attributes-wrap .wpfm-content::after,
 .wpfm-attributes-wrap .wpfm-content::before {
   content: " ";
   display: table;
 }
+
 .wpfm-form-row.wpfm-form-row-first,
 .wpfm-form-row.wpfm-form-row-last {
   width: 48%;
@@ -517,12 +588,14 @@ a.button.wpfm-add-row {
 .wpfm-content::after {
   clear: both;
 }
+
 .wpfm-form-row label {
   display: inline-block;
   float: none;
   width: auto;
   margin: auto;
 }
+
 .wpfm-form-row input[type="color"],
 .wpfm-form-row input[type="date"],
 .wpfm-form-row input[type="datetime-local"],
@@ -548,26 +621,31 @@ a.button.wpfm-add-row {
 .wpfm-form-row select {
   height: 40px;
 }
+
 .wpfm-metaboxes-wrapper .wpfm-actions {
   margin: 0 !important;
   border-top: 1px solid #fff;
   border-bottom: 1px solid #eee;
   padding: 9px 12px !important;
 }
+
 .wpfm-metaboxes-wrapper .wpfm-metabox {
   background: #fff;
   margin: 15px 0 0 !important;
   border-bottom: 1px solid #c3c4c7;
   border-radius: 4px;
 }
+
 .wpfm-actions .wpfm-add-button {
   display: block;
   margin-left: auto;
 }
+
 .wpfm-metaboxes .wpfm-metabox .wpfm-metabox-content .wpfm-metabox-footer.wpfm-actions {
   padding-top: 0 !important;
   margin-right: auto !important;
 }
+
 td.fm_categories.column-fm_categories span.food-category {
   background: #f0f0f0;
   padding: 5px 7px;
@@ -578,7 +656,7 @@ td.fm_categories.column-fm_categories span.food-category {
   border-radius: 4px;
 }
 
-input[name="_food_veg_nonveg"]{
+input[name="_food_veg_nonveg"] {
   border-radius: 0;
 }
 
@@ -586,29 +664,36 @@ input[name="_food_veg_nonveg"]{
   display: flex;
   align-items: center;
 }
-._food_veg_nonveg .radio.vegeterian{
+
+._food_veg_nonveg .radio.vegeterian {
   border-color: #22aa00;
 }
-._food_veg_nonveg .radio.vegeterian:focus{
+
+._food_veg_nonveg .radio.vegeterian:focus {
   box-shadow: 0 0 0 1px #22aa00;
 }
+
 ._food_veg_nonveg .radio.vegeterian:checked::before {
   background-color: #22aa00;
 }
 
-._food_veg_nonveg .radio.non-vegeterian{
+._food_veg_nonveg .radio.non-vegeterian {
   border-color: #ff0000;
 }
-._food_veg_nonveg .radio.non-vegeterian:focus{
+
+._food_veg_nonveg .radio.non-vegeterian:focus {
   box-shadow: 0 0 0 1px #ff0000;
 }
+
 ._food_veg_nonveg .radio.non-vegeterian:checked::before {
   background-color: #ff0000;
 }
+
 .wpfm_panel .wpfm-admin-postbox-form-field._food_veg_nonveg span.wpfm-input-field label {
   float: none;
   margin: 0 5px 0 0;
 }
+
 .wpfm_panel .wpfm-admin-postbox-form-field span.wpfm-input-field label {
   float: none;
   margin: 0;
@@ -619,6 +704,7 @@ mark.fm_outofstock {
   background: transparent;
   font-weight: bold;
 }
+
 mark.fm_instock {
   color: #7ad03a;
   background: transparent;
@@ -626,7 +712,7 @@ mark.fm_instock {
 }
 
 
-.widefat th.column-food_banner span{
+.widefat th.column-food_banner span {
   display: inline-block;
   text-indent: -9999px;
   position: relative;
@@ -635,6 +721,7 @@ mark.fm_instock {
   margin: 0 auto;
   font-size: 14px;
 }
+
 .widefat th.column-food_banner span:before {
   font-family: Dashicons;
   speak: none;
@@ -652,17 +739,20 @@ mark.fm_instock {
   height: 100%;
   text-align: center;
 }
+
 #the-list .column-food_banner img.wpfm-organic-tag-icon {
   margin-left: 10px;
   width: 20px;
   max-width: 100%;
 }
+
 .parent-organic-tag {
   position: relative;
   display: inline-block;
   vertical-align: top;
   cursor: help;
 }
+
 .parent-organic-tag:hover::before {
   content: attr(data-icon-type);
   position: absolute;
@@ -677,7 +767,8 @@ mark.fm_instock {
   z-index: 9;
   width: auto;
 }
-.parent-organic-tag:hover::after{
+
+.parent-organic-tag:hover::after {
   content: '';
   background: #464646;
   height: 9px;
@@ -688,18 +779,21 @@ mark.fm_instock {
   right: -12px;
 }
 
-#wpfm-ingredient-container, #wpfm-nutrition-container {
+#wpfm-ingredient-container,
+#wpfm-nutrition-container {
   padding: 5px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
 }
+
 .wpfm-lists-container .wpfm-active-list.wpfm-sortable-list {
   -webkit-box-flex: 1;
   -ms-flex: 1;
   flex: 1;
   margin-right: 5px;
 }
+
 .wpfm-lists-container .wpfm-sortable-list {
   position: relative;
   padding: 50px 10px 10px 10px;
@@ -710,9 +804,10 @@ mark.fm_instock {
   -ms-flex: 2;
   flex: 2;
 }
+
 .wpfm-sortable-list:before {
   content: attr(data-title);
-  background: #f6f7f7; /*#f7fafc*/
+  background: #f6f7f7;
   padding: 10px 0;
   text-align: center;
   font-weight: bold;
@@ -723,6 +818,7 @@ mark.fm_instock {
   margin-left: -10px;
   border-bottom: 1px solid #d9e3ed;
 }
+
 .wpfm-active-list .wpfm-sortable-item {
   background: #f6f7f7;
   padding: 10px 5px 10px 10px;
@@ -731,20 +827,24 @@ mark.fm_instock {
   margin: 0;
   border: 1px solid #d9e3ed;
 }
+
 .wpfm-sortable-list .wpfm-sortable-item {
   cursor: move;
 }
+
 .wpfm-sortable-list .wpfm-sortable-item label {
   cursor: move;
   width: auto;
   float: none;
   margin: 0;
 }
+
 .wpfm-clear::after {
   clear: both;
   content: "";
   display: block;
 }
+
 .wpfm-sortable-list .wpfm-item-search.with-title {
   margin-bottom: 30px;
   padding: 15px;
@@ -753,6 +853,7 @@ mark.fm_instock {
   margin-left: 5px;
   border: 1px solid #d9e3ed;
 }
+
 .wpfm-sortable-list .wpfm-item-search.with-title .wpfm-search-label {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -764,14 +865,17 @@ mark.fm_instock {
   margin: 0;
   width: auto;
 }
+
 .wpfm-sortable-list .wpfm-item-search.with-title .wpfm-search-label span {
   margin-right: 30px;
   font-size: 15px;
 }
+
 .wpfm-sortable-list .wpfm-item-search.with-title .wpfm-search-label input {
   min-height: 36px;
   min-width: 250px;
 }
+
 .wpfm-available-list .wpfm-sortable-item {
   width: 150px;
   float: left;
@@ -792,10 +896,12 @@ mark.fm_instock {
   line-height: 1.4;
   border: 1px solid #d9e3ed;
 }
+
 .wpfm-sortable-item-values>* {
-    width: 48%;
-    box-sizing: border-box;
+  width: 48%;
+  box-sizing: border-box;
 }
+
 .wpfm-active-list .wpfm-sortable-item {
   background: #f6f7f7;
   padding: 10px 5px 10px 10px;
@@ -804,10 +910,12 @@ mark.fm_instock {
   margin: 0;
   border: 1px solid #d9e3ed;
 }
+
 .wpfm-active-list .wpfm-sortable-item+li {
   margin-top: 6px;
 }
-.wrap.food-manager-settings-wrap h2.nav-tab-wrapper{
+
+.wrap.food-manager-settings-wrap h2.nav-tab-wrapper {
   margin-bottom: 20px;
 }
 
@@ -831,7 +939,8 @@ mark.fm_instock {
   margin: 1.5em 1px 0 -1em;
   z-index: 9999999;
 }
-.wpfm_error_tip::after{
+
+.wpfm_error_tip::after {
   content: "";
   display: block;
   border: 8px solid #d82223;
@@ -843,7 +952,8 @@ mark.fm_instock {
   left: 50%;
   margin: -1em 0 0 -3px;
 }
-.wpfm_panel  label.wpfm-field-switch {
+
+.wpfm_panel label.wpfm-field-switch {
   position: relative;
   display: inline-block;
   width: 50px;
@@ -851,10 +961,8 @@ mark.fm_instock {
   float: none;
   margin: 0;
 }
+
 .wpfm-input-field {
-  /*-webkit-box-flex: 0;
-  -ms-flex: 0 0 calc(100% - 235px);
-  flex: 0 0 calc(100% - 235px);*/
   background: #f7fafc;
   padding: 15px;
   position: relative;
@@ -866,6 +974,7 @@ mark.fm_instock {
   vertical-align: top;
   box-sizing: border-box;
 }
+
 .wpfm-field-switch-slider {
   position: absolute;
   cursor: pointer;
@@ -878,23 +987,28 @@ mark.fm_instock {
   -o-transition: .4s;
   transition: .4s;
 }
+
 .wpfm-field-switch-slider.round {
   border-radius: 34px;
 }
+
 .wpfm-field-switch-slider.round:before {
   border-radius: 50%;
 }
+
 .wpfm-field-switch input {
   opacity: 0;
   width: 0;
   height: 0;
 }
+
 .wpfm-field-switch input[type=checkbox]:checked::before {
   content: url("data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%270%200%2020%2020%27%3E%3Cpath%20d%3D%27M14.83%204.89l1.34.94-5.81%208.38H9.02L5.78%209.67l1.34-1.25%202.57%202.4z%27%20fill%3D%27%233582c4%27%2F%3E%3C%2Fsvg%3E");
   margin: -.1875rem 0 0 -.25rem;
   height: 1.3125rem;
   width: 1.3125rem;
 }
+
 .wpfm-field-switch-slider:before {
   position: absolute;
   content: "";
@@ -902,22 +1016,26 @@ mark.fm_instock {
   width: 16px;
   left: 4px;
   bottom: 4px;
-  background-color: #fff ;
+  background-color: #fff;
   -webkit-transition: .4s;
   -o-transition: .4s;
   transition: .4s;
 }
+
 input:checked+.wpfm-field-switch-slider {
-  background-color: var(--wpfm-primary-color) ;
+  background-color: var(--wpfm-primary-color);
 }
+
 input:checked+.wpfm-field-switch-slider:before {
   -webkit-transform: translateX(26px);
   -ms-transform: translateX(26px);
   transform: translateX(26px);
 }
+
 .post-type-food_manager .ui-sortable tr:hover {
   cursor: move;
 }
+
 div#wpfm-loading {
   position: fixed;
   width: 100%;
@@ -926,6 +1044,7 @@ div#wpfm-loading {
   background: rgba(0, 0, 0, 0.7);
   top: 0;
 }
+
 #wpfm-loading span.wpfm-loading {
   display: block;
   top: 50%;
@@ -936,28 +1055,33 @@ div#wpfm-loading {
   width: 100%;
   text-align: center;
 }
+
 .widefat .column-food_actions {
   text-align: right;
   width: 120px;
 }
+
 .widefat .column-food_actions .actions {
   padding-top: 2px;
 }
+
 .widefat .column-food_actions a.button {
   display: inline-block;
   margin: 0 0 2px 4px;
   cursor: pointer;
-  padding: 0 6px!important;
-  font-size: 1em!important;
-  line-height: 2em!important;
+  padding: 0 6px !important;
+  font-size: 1em !important;
+  line-height: 2em !important;
   overflow: hidden;
 }
+
 .widefat .column-food_actions a.button-icon {
-  width: 2em!important;
-  padding: 0!important;
+  width: 2em !important;
+  padding: 0 !important;
 }
+
 .widefat .column-food_actions a.button-icon:before {
-  font-family: wp-food-manager!important;
+  font-family: wp-food-manager !important;
   font-style: normal;
   font-weight: 400;
   speak: none;
@@ -967,18 +1091,22 @@ div#wpfm-loading {
   font-variant: normal;
   text-transform: none;
   float: left;
-  width: 2em!important;
+  width: 2em !important;
   line-height: 2em;
 }
+
 .widefat .column-food_actions .icon-view:before {
   content: "\e9ce";
 }
+
 .widefat .column-food_actions .icon-publish:before {
   content: "\ea10";
 }
+
 .widefat .column-food_actions .icon-edit:before {
   content: "\e905";
 }
+
 .widefat .column-food_actions .icon-delete:before {
   content: "\e9ac";
 }
@@ -986,31 +1114,40 @@ div#wpfm-loading {
 .wp-food-manager-food-form-field-editor table tr:nth-child(odd) td {
   background-color: #f9f9f9;
 }
+
 .wp-food-manager-food-form-field-editor table .sort-column {
   cursor: move;
   color: #ccc;
 }
+
 .wp-food-manager-food-form-field-editor table td {
   overflow: visible;
   padding: 1em 0 1em 1em;
   vertical-align: middle;
 }
+
 .wp-food-manager-food-form-field-editor table .sort-column:before {
   content: "\f333";
   font-family: dashicons;
 }
-.wp-food-manager-food-form-field-editor table td input.input-text, .wp-food-manager-food-form-field-editor table td select {
+
+.wp-food-manager-food-form-field-editor table td input.input-text,
+.wp-food-manager-food-form-field-editor table td select {
   width: 100%;
   min-width: 100px;
 }
+
 .wp-food-manager-food-form-field-editor table td .file-options .multiple-files input {
   width: auto;
   display: inline-block;
   min-width: 16px;
 }
-.wp-food-manager-food-form-field-editor table td:last-child, .wp-food-manager-food-form-field-editor table th:last-child {
+
+.wp-food-manager-food-form-field-editor table td:last-child,
+.wp-food-manager-food-form-field-editor table th:last-child {
   padding-right: 1em;
 }
+
 .wp-food-manager-food-form-field-editor table .field-actions a.delete-field {
   color: #ccc;
   padding: 1em 0 0;
@@ -1020,6 +1157,7 @@ div#wpfm-loading {
   display: inline-block;
   position: relative;
 }
+
 .wp-food-manager-food-form-field-editor table .field-actions a.delete-field:before {
   content: "\f153";
   font-family: dashicons;
@@ -1030,45 +1168,56 @@ div#wpfm-loading {
   top: 0;
   left: 0;
 }
+
 .wp-food-manager-food-form-field-editor table .field-actions a.delete-field:hover {
   color: red;
 }
+
 .wp-food-manager-food-form-field-editor table tfoot th {
   vertical-align: middle;
   line-height: 28px;
 }
+
 .wp-food-manager-food-form-field-editor table th {
   padding: 1em 0 1em 1em;
 }
+
 .wp-food-manager-food-form-field-editor .save-actions {
   text-align: right;
 }
+
 .wp-food-manager-food-form-field-editor .save-actions input {
   margin-left: 1em;
 }
+
 .wp-food-manager-food-form-field-editor .save-actions .reset {
   color: #bbb;
   text-decoration: none;
   position: relative;
   top: 4px;
 }
+
 .wp-food-manager-food-form-field-editor .save-actions .reset:hover {
   color: red;
 }
+
 .form-field .chosen-container {
   width: 100% !important;
 }
+
 .food-manager-uploaded-file-preview {
   display: inline-block;
   position: relative;
   vertical-align: top;
 }
+
 .food-manager-uploaded-file-preview img {
   max-height: 100px;
   max-width: 100px;
   border: 2px solid #ccc;
   border-radius: 6px;
 }
+
 .food-manager-uploaded-file-preview .food-manager-remove-uploaded-file {
   font-size: 0;
   height: 20px;
@@ -1081,6 +1230,7 @@ div#wpfm-loading {
   border: none;
   box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
 }
+
 .food-manager-uploaded-file-preview .food-manager-remove-uploaded-file::before {
   content: "\ea0f";
   font-family: wp-food-manager;
@@ -1092,27 +1242,30 @@ div#wpfm-loading {
   transform: translate(-50%, -50%);
   transition: all 0.2s;
 }
+
 .food-manager-uploaded-files .food-manager-uploaded-file {
   margin-bottom: 20px;
   display: inline-block;
   padding-right: 20px;
 }
-/*#general_food_data_content p.wpfm-admin-postbox-form-field._food_banner {
-  display: none;
-}*/
-.wpfm-food-menu .menu-item-handle .item-title{
+
+.wpfm-food-menu .menu-item-handle .item-title {
   word-break: break-word;
 }
+
 .wpfm-admin-menu-selection select {
-  margin-top: 10px ;
+  margin-top: 10px;
 }
+
 span.food-manager-uploaded-file {
   margin-right: 10px;
 }
+
 .widefat td.food_banner.column-food_banner .food_banner img {
   max-width: 60px;
   height: auto;
 }
+
 span.no-menu-item-handle {
   font-size: 14px;
   font-weight: 500;
@@ -1198,6 +1351,7 @@ span.no-menu-item-handle {
   margin-left: -7px;
   border-left-color: #464646;
 }
+
 a.tips.food_title {
   cursor: pointer;
 }
@@ -1215,14 +1369,15 @@ a.tips.food_title {
   padding: 10px;
   box-sizing: border-box;
   margin: 0 0 20px;
-  }
+}
 
 
- /*helpful start*/ 
+/*helpful start*/
 .admin-setting-left {
   float: left;
   width: 70%;
 }
+
 .box-info {
   position: relative;
   min-width: 255px;
@@ -1235,16 +1390,19 @@ a.tips.food_title {
   width: 28%;
   padding: 15px;
 }
+
 .box-info h3 {
   padding: 0 0 10px 10px;
   font-size: 14px;
   margin-top: 5px;
   border-bottom: 1px solid #efefef;
 }
+
 .wpfm-plugin_info-inside {
   max-width: 100%;
   overflow: hidden;
 }
+
 .wpfm-plugin_info-inside .wpfm-setup-help-center-block {
   background: #fff;
   border: 1px solid #e1e1e4;
@@ -1256,10 +1414,15 @@ a.tips.food_title {
   text-align: left;
   align-items: center;
 }
+
 .wpfm-plugin_info-inside .wpfm-setup-help-center-block .wpfm-setup-help-center-block-icon {
   margin-right: 25px;
 }
-.wpfm-plugin_info-inside .wpfm-setup-help-center-faqs-icon, .wpfm-plugin_info-inside .wpfm-setup-help-center-knowledge-base-icon, .wpfm-plugin_info-inside .wpfm-setup-help-center-support-icon, .wpfm-plugin_info-inside .wpfm-setup-help-center-video-tutorial-icon {
+
+.wpfm-plugin_info-inside .wpfm-setup-help-center-faqs-icon,
+.wpfm-plugin_info-inside .wpfm-setup-help-center-knowledge-base-icon,
+.wpfm-plugin_info-inside .wpfm-setup-help-center-support-icon,
+.wpfm-plugin_info-inside .wpfm-setup-help-center-video-tutorial-icon {
   display: inline-block;
   background: url(../images/support-page-sprites-img.png) no-repeat;
   background-size: 140px;
@@ -1267,21 +1430,25 @@ a.tips.food_title {
   text-indent: -9999px;
   text-align: left;
 }
+
 .wpfm-plugin_info-inside .wpfm-setup-help-center-knowledge-base-icon {
   background-position: -68px 1px;
   width: 60px;
   height: 60px;
 }
+
 .wpfm-plugin_info-inside .wpfm-setup-help-center-faqs-icon {
   background-position: -5px 1px;
   width: 60px;
   height: 60px;
 }
+
 .wpfm-plugin_info-inside .wpfm-setup-help-center-video-tutorial-icon {
   background-position: -72px -62px;
   width: 60px;
   height: 60px;
 }
+
 .wpfm-plugin_info-inside .wpfm-setup-help-center-block-content .wpfm-setup-help-center-block-heading {
   font-weight: 600;
   line-height: 1.42;
@@ -1289,11 +1456,13 @@ a.tips.food_title {
   font-size: 16px;
   margin-bottom: 5px;
 }
+
 .wpfm-plugin_info-inside .wpfm-setup-help-center-block-content .wpfm-setup-help-center-block-desc {
   font-size: 14px;
   line-height: 1.42;
   color: #555;
 }
+
 .wpfm-plugin_info-inside .wpfm-setup-help-center-block-content a.wpfm-setup-help-center-block-link {
   display: inline-block;
   font-size: 14px;
@@ -1306,9 +1475,11 @@ a.tips.food_title {
   color: var(--wpfm-primary-color);
   transition: 0.2s color ease;
 }
-.wpfm-plugin_info-inside .wpfm-setup-help-center-block-content a.wpfm-setup-help-center-block-link:hover{
+
+.wpfm-plugin_info-inside .wpfm-setup-help-center-block-content a.wpfm-setup-help-center-block-link:hover {
   color: #000;
 }
+
 .wpfm-plugin_info-inside span.light-grey {
   text-align: center;
   display: block;
@@ -1317,6 +1488,7 @@ a.tips.food_title {
   margin-top: 5px;
   border-top: 1px solid #efefef;
 }
+
 .wpfm-plugin_info-inside a img {
   width: 100%;
   display: block;
@@ -1324,11 +1496,11 @@ a.tips.food_title {
   margin: 0 auto;
   margin-top: 5px;
 }
- /*helpful end*/ 
 
-
+/*helpful end*/
 
 @media only screen and (max-width: 1280px) {
+
   .wpfm_panel .wpfm-small-field,
   .wpfm_panel input[type="email"].wpfm-small-field,
   .wpfm_panel input[type="number"].wpfm-small-field,
@@ -1336,24 +1508,30 @@ a.tips.food_title {
   .wpfm_panel input[type="text"].wpfm-small-field {
     width: 80%;
   }
+
   .wpfm_panel .description {
     display: block;
     clear: both;
     margin-left: 0;
   }
-  .admin-setting-left, .box-info {
-      width: 100%;
+
+  .admin-setting-left,
+  .box-info {
+    width: 100%;
   }
 }
+
 @media only screen and (max-width: 900px) {
   #food_manager_data ul.wpfm-tabs {
     width: 10%;
   }
+
   #food_manager_data ul.wpfm-tabs li a {
     position: relative;
     text-indent: -999px;
     padding: 10px;
   }
+
   #food_manager_data ul.wpfm-tabs li a::before {
     position: absolute;
     top: 0;
@@ -1366,20 +1544,24 @@ a.tips.food_title {
     width: 100%;
     height: 40px;
   }
+
   .wpfm_panel.wpfm-metaboxes-wrapper .wpfm-metaboxes,
   .wpfm_panel.wpfm-metaboxes-wrapper .wpfm-actions {
     margin-right: -12.5% !important;
   }
 }
+
 @media only screen and (max-width: 782px) {
   #food_manager_data .checkbox {
     width: 25px;
   }
 }
+
 @media only screen and (max-width: 500px) {
   .wpfm_panel p.wpfm-admin-postbox-form-field {
     padding: 5px 20px !important;
   }
+
   #food_manager_data label {
     float: none;
     width: auto;
@@ -1387,6 +1569,5 @@ a.tips.food_title {
     margin: 0;
   }
 }
+
 /* WPFM tabs */
-
-

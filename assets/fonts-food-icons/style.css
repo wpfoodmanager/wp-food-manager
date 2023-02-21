@@ -1,7 +1,7 @@
 @font-face {
   font-family: 'wpfm-food-menu-icons';
-  src:  url('wpfm-food-menu-icons.eot?xzrvfp');
-  src:  url('wpfm-food-menu-icons.eot?xzrvfp#iefix') format('embedded-opentype'),
+  src: url('wpfm-food-menu-icons.eot?xzrvfp');
+  src: url('wpfm-food-menu-icons.eot?xzrvfp#iefix') format('embedded-opentype'),
     url('wpfm-food-menu-icons.ttf?xzrvfp') format('truetype'),
     url('wpfm-food-menu-icons.woff?xzrvfp') format('woff'),
     url('wpfm-food-menu-icons.svg?xzrvfp#wpfm-food-menu-icons') format('svg');
@@ -10,7 +10,8 @@
   font-display: block;
 }
 
-[class^="wpfm-menu-"], [class*=" wpfm-menu-"] {
+[class^="wpfm-menu-"],
+[class*=" wpfm-menu-"] {
   /* use !important to prevent issues with browser extensions that change fonts */
   font-family: 'wpfm-food-menu-icons' !important;
   speak: never;
@@ -28,12 +29,15 @@
 .wpfm-menu-broccoli:before {
   content: "\e900";
 }
+
 .wpfm-menu-buffet-breakfast:before {
   content: "\e901";
 }
+
 .wpfm-menu-chili-pepper:before {
   content: "\e902";
 }
+
 /*.wpfm-menu-chili-pepper .path2:before {
   content: "\e903";
   margin-left: -1em;
@@ -42,131 +46,171 @@
 .wpfm-menu-chocolate-bar:before {
   content: "\e904";
 }
+
 .wpfm-menu-cinnamon-roll:before {
   content: "\e905";
 }
+
 .wpfm-menu-cutlery:before {
   content: "\e906";
 }
+
 .wpfm-menu-deliver-food:before {
   content: "\e907";
 }
+
 .wpfm-menu-dog-bowl:before {
   content: "\e908";
 }
+
 .wpfm-menu-energy-drink:before {
   content: "\e909";
 }
+
 .wpfm-menu-fast-cart .path1:before {
   content: "\e90a";
 }
+
 .wpfm-menu-fast-cart .path2:before {
   content: "\e90b";
   margin-left: -1em;
 }
+
 .wpfm-menu-fast-cart .path3:before {
   content: "\e90c";
   margin-left: -1em;
   color: rgb(84, 84, 84);
 }
+
 .wpfm-menu-fast-cart .path4:before {
   content: "\e90d";
   margin-left: -1em;
 }
+
 .wpfm-menu-fast-cart .path5:before {
   content: "\e90e";
   margin-left: -1em;
 }
+
 .wpfm-menu-food:before {
   content: "\e90f";
 }
+
 .wpfm-menu-food-bar:before {
   content: "\e910";
 }
+
 .wpfm-menu-food-receiver:before {
   content: "\e911";
 }
+
 .wpfm-menu-french-fries:before {
   content: "\e912";
 }
+
 .wpfm-menu-hamburger:before {
   content: "\e913";
 }
+
 .wpfm-menu-hot-breakfast:before {
   content: "\e914";
 }
+
 .wpfm-menu-hot-dog:before {
   content: "\e915";
 }
+
 .wpfm-menu-ice-cream-bowl:before {
   content: "\e916";
 }
+
 .wpfm-menu-ingredients:before {
   content: "\e917";
 }
+
 .wpfm-menu-meal:before {
   content: "\e918";
 }
+
 .wpfm-menu-melting-ice-cream:before {
   content: "\e919";
 }
+
 .wpfm-menu-motorcycle-delivery-multiple-boxes:before {
   content: "\e91a";
 }
+
 .wpfm-menu-no-food:before {
   content: "\e91b";
 }
+
 .wpfm-menu-noodles:before {
   content: "\e91c";
 }
+
 .wpfm-menu-organic-food:before {
   content: "\e91d";
 }
+
 .wpfm-menu-paprika:before {
   content: "\e91e";
 }
+
 .wpfm-menu-pizza:before {
   content: "\e91f";
 }
+
 .wpfm-menu-restaurant-pickup:before {
   content: "\e920";
 }
+
 .wpfm-menu-rice-bowl .path1:before {
-  content: "\e921";  
+  content: "\e921";
 }
+
 .wpfm-menu-rice-bowl .path2:before {
   content: "\e922";
   margin-left: -1em;
 }
+
 .wpfm-menu-rice-bowl .path3:before {
   content: "\e923";
   margin-left: -1em;
 }
+
 .wpfm-menu-rice-bowl .path4:before {
   content: "\e924";
   margin-left: -1em;
 }
+
 .wpfm-menu-samosa:before {
   content: "\e925";
 }
+
 .wpfm-menu-spaghetti:before {
   content: "\e926";
 }
+
 .wpfm-menu-sushi:before {
   content: "\e927";
 }
+
 .wpfm-menu-taco:before {
   content: "\e928";
 }
+
 .wpfm-menu-vegan-food:before {
   content: "\e929";
 }
+
 .wpfm-menu-weber:before {
   content: "\e92a";
 }
+
 .wpfm-menu-wedding-cake:before {
   content: "\e92b";
 }
+
 .wpfm-menu-wrap:before {
   content: "\e92c";
 }

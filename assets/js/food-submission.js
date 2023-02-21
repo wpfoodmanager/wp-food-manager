@@ -36,9 +36,6 @@ EventSubmission = function () {
                 });
             }
 
-
-            //EventSubmission.timeFormatSettings();
-
             if (jQuery('input[data-picker="datepicker"]#event_start_date').length > 0) {
                 wp_food_manager_event_submission.start_of_week = parseInt(wp_food_manager_event_submission.start_of_week);
 
@@ -49,10 +46,8 @@ EventSubmission = function () {
                         monthNames: wp_food_manager_event_submission.monthNames,
                     }).on('change', function () {
                         // set the "event_start_date" end to not be later than "event_end_date" starts:
-                        //jQuery('#event_start_date').datepicker('minDate', new Date(jQuery(this).val()));
 
                         jQuery("#event_end_date").datepicker("destroy");
-
                         jQuery('input[data-picker="datepicker"]#event_end_date').datepicker({
                             minDate: jQuery('#event_start_date').val(),
                             dateFormat: wp_food_manager_event_submission.i18n_datepicker_format,
@@ -70,8 +65,6 @@ EventSubmission = function () {
                         monthNames: wp_food_manager_event_submission.monthNames,
                     }).on('change', function () {
                         // set the "event_start_date" end to not be later than "event_end_date" starts:
-                        //jQuery('#event_start_date').datepicker('minDate', new Date(jQuery(this).val()));
-
                         jQuery("#event_end_date").datepicker("destroy");
 
                         jQuery('input[data-picker="datepicker"]#event_end_date').datepicker({
@@ -96,7 +89,6 @@ EventSubmission = function () {
                     }
                 }).on('change', function () {
                     // set the "event_start_date" end to not be later than "event_end_date" starts:
-                    //jQuery('#event_start_date').datepicker('minDate', new Date(jQuery(this).val()));
 
                     jQuery("#event_registration_deadline").datepicker("destroy");
 

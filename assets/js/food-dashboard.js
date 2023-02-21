@@ -1,97 +1,87 @@
-var FoodDashboard= function () {
-    /// <summary>Constructor function of the food FoodDashboard class.</summary>
-    /// <returns type="Home" />      
-    return {
-	    ///<summary>
-        ///Initializes the food dashboard.  
-        ///</summary>     
-        ///<returns type="initialization settings" />   
-        /// <since>1.0.0</since> 
-        init: function() 
-        {
-          
-	  	    WPFM_Common.logInfo("FoodDashboard.init...");  
-				if (jQuery('.food-dashboard-action-delete').length > 0 && jQuery('td .wpfm-dboard-food-action').length == 0) 
-		    {
+var FoodDashboard = function () {
+	/// <summary>Constructor function of the food FoodDashboard class.</summary>
+	/// <returns type="Home" />      
+	return {
+		///<summary>
+		///Initializes the food dashboard.  
+		///</summary>     
+		///<returns type="initialization settings" />   
+		/// <since>1.0.0</since> 
+		init: function () {
 
-				jQuery('.food-dashboard-action-delete').css({'cursor':'pointer'});  					
+			WPFM_Common.logInfo("FoodDashboard.init...");
+			if (jQuery('.food-dashboard-action-delete').length > 0 && jQuery('td .wpfm-dboard-food-action').length == 0) {
+
+				jQuery('.food-dashboard-action-delete').css({ 'cursor': 'pointer' });
+
 				//for delete food confirmation dialog / tooltip 
-				jQuery('.food-dashboard-action-delete').on('click', FoodDashboard.confirmation.showDialog);	
-	        }
+				jQuery('.food-dashboard-action-delete').on('click', FoodDashboard.confirmation.showDialog);
+			}
 
-	        // For Dashboard Menu Toggle
-	        if(jQuery('.wpfm-main-vmenu-dashboard-sub-menu .wpfm-main-vmenu-dashboard-link').length >0)
-		    {
-		    	jQuery('.wpfm-main-vmenu-dashboard-sub-menu .wpfm-main-vmenu-dashboard-submenu-ul').hide();
+			// For Dashboard Menu Toggle
+			if (jQuery('.wpfm-main-vmenu-dashboard-sub-menu .wpfm-main-vmenu-dashboard-link').length > 0) {
+				jQuery('.wpfm-main-vmenu-dashboard-sub-menu .wpfm-main-vmenu-dashboard-submenu-ul').hide();
+				jQuery('.wpfm-main-vmenu-dashboard-sub-menu .wpfm-main-vmenu-dashboard-link').on('click', FoodDashboard.actions.openSubmenu);
+			}
 
-		    	jQuery('.wpfm-main-vmenu-dashboard-sub-menu .wpfm-main-vmenu-dashboard-link').on('click', FoodDashboard.actions.openSubmenu);	
-		    }
+			// For Active Dashboard Menu Open
+			if (jQuery('.wpfm-main-vmenu-dashboard-sub-menu .wpfm-main-vmenu-dashboard-link-active').length > 0) {
+				jQuery('.wpfm-main-vmenu-dashboard-sub-menu .wpfm-main-vmenu-dashboard-link-active').trigger('click');
+			}
 
-		    // For Active Dashboard Menu Open
-	        if(jQuery('.wpfm-main-vmenu-dashboard-sub-menu .wpfm-main-vmenu-dashboard-link-active').length >0)
-		    {
-		    	jQuery('.wpfm-main-vmenu-dashboard-sub-menu .wpfm-main-vmenu-dashboard-link-active').trigger('click');	
-		    }
-
-		    // For food List Toggle
-		    if(jQuery('#wpfm-dashboard-food-list-wrapper .wpfm-food-dashboard-information-toggle').length >0)
-		    {
-		    	jQuery('#wpfm-dashboard-food-list-wrapper .wpfm-food-dashboard-information-toggle').hide();
+			// For food List Toggle
+			if (jQuery('#wpfm-dashboard-food-list-wrapper .wpfm-food-dashboard-information-toggle').length > 0) {
+				jQuery('#wpfm-dashboard-food-list-wrapper .wpfm-food-dashboard-information-toggle').hide();
 				jQuery('#wpfm-dashboard-food-list-wrapper')
-					.on('click', '.food-dashboard-action-details', function() {
-
+					.on('click', '.food-dashboard-action-details', function () {
 						jQuery(this).closest('div.wpfm-dashboard-food-list').find('section:not(.wpfm-food-dashboard-information-toggle)').slideUp();
 						jQuery(this).closest('div.wpfm-dashboard-food-list').find('section.wpfm-food-dashboard-information-toggle').slideToggle();
 						return false;
 					})
-					.on('click', 'a.hide_section', function() {
+					.on('click', 'a.hide_section', function () {
 						jQuery(this).closest('section').slideUp();
 						return false;
 					});
 			}
 
 			// For Food Filter Toggle
-			if(jQuery('.wpfm-dashboard-main-header .wpfm-food-dashboard-filter-toggle').length >0)
-		    {
+			if (jQuery('.wpfm-dashboard-main-header .wpfm-food-dashboard-filter-toggle').length > 0) {
 				jQuery('.wpfm-dashboard-main-header .wpfm-food-dashboard-filter-toggle').hide();
 				jQuery('.wpfm-dashboard-main-header .wpfm-dashboard-main-filter')
-					.on('click', '.wpfm-dashboard-food-filter', function() {
+					.on('click', '.wpfm-dashboard-food-filter', function () {
 
 						jQuery(this).closest('div.wpfm-dashboard-main-header').find('form:not(.wpfm-food-dashboard-filter-toggle)').slideUp();
 						jQuery(this).closest('div.wpfm-dashboard-main-header').find('form.wpfm-food-dashboard-filter-toggle').slideToggle();
 
-						if(jQuery('.wpfm-dashboard-main-header .wpfm-food-dashboard-filter-toggle').hasClass('wpfm-d-block'))
-						{
+						if (jQuery('.wpfm-dashboard-main-header .wpfm-food-dashboard-filter-toggle').hasClass('wpfm-d-block')) {
 							jQuery('.wpfm-dashboard-main-header .wpfm-food-dashboard-filter-toggle').removeClass('wpfm-d-block');
 						}
 						return false;
 					})
-		    }
- 	 	}, 
+			}
+		},
 
-		confirmation:{
+		confirmation: {
 
-            /// <summary>
-	        /// Show bootstrap third party confirmation dialog when click on 'Delete' options on food dashboard page where show delete food option.	     
-	        /// </summary>
-	        /// <param name="parent" type="assign"></param>           
-	        /// <returns type="actions" />     
-	        /// <since>1.0.0</since>       
-	        showDialog: function(event) 
-	        {
-	        	WPFM_Common.logInfo("FoodDashboard.confirmation.showDialog...");	            
-	           	return confirm(food_manager_food_dashboard.i18n_confirm_delete);
-	           	event.preventDefault(); 
-	        },
+			/// <summary>
+			/// Show bootstrap third party confirmation dialog when click on 'Delete' options on food dashboard page where show delete food option.	     
+			/// </summary>
+			/// <param name="parent" type="assign"></param>           
+			/// <returns type="actions" />     
+			/// <since>1.0.0</since>       
+			showDialog: function (event) {
+				WPFM_Common.logInfo("FoodDashboard.confirmation.showDialog...");
+				return confirm(food_manager_food_dashboard.i18n_confirm_delete);
+				event.preventDefault();
+			},
 
-	    },//end of comfirmation
-	    
+		},//end of comfirmation
 
-	    actions:{
 
-	    	openSubmenu: function(event) 
-	        {
-	        	event.stopPropagation();
+		actions: {
+
+			openSubmenu: function (event) {
+				event.stopPropagation();
 
 				var parentLI = jQuery(this).closest("li");
 				var other = parentLI.siblings();
@@ -103,15 +93,14 @@ var FoodDashboard= function () {
 
 				myUL.slideToggle("100");
 				myToggle.toggleClass("wpfm-main-vmenu-caret-up wpfm-main-vmenu-caret-down");
-	        },
+			},
 
-	    }, //end of actions
+		}, //end of actions
 
-    } //enf of return	
+	} //enf of return	
 }; //end of class
 
-FoodDashboard= FoodDashboard();
-jQuery(document).ready(function($) 
-{
+FoodDashboard = FoodDashboard();
+jQuery(document).ready(function ($) {
 	FoodDashboard.init();
 });
