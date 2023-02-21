@@ -4,13 +4,13 @@
  * Taxonomies
  */
 
-if ( get_option( 'food_manager_enable_categories' ,true) ) {
+if (get_option('food_manager_enable_categories', true)) {
 
-	$singular  = __( 'Food Category', 'wp-food-manager' );
+	$singular  = __('Food Category', 'wp-food-manager');
 
-	$plural    = __( 'Categories', 'wp-food-manager' );
+	$plural    = __('Categories', 'wp-food-manager');
 
-	if ( current_theme_supports( 'food-manager-templates' ) ) {
+	if (current_theme_supports('food-manager-templates')) {
 
 		$rewrite   = array(
 
@@ -22,7 +22,6 @@ if ( get_option( 'food_manager_enable_categories' ,true) ) {
 		);
 
 		$public    = true;
-
 	} else {
 
 		$rewrite   = true;
@@ -30,78 +29,79 @@ if ( get_option( 'food_manager_enable_categories' ,true) ) {
 		$public    = true;
 	}
 
-	register_taxonomy( "food_manager_category",
-		
-	apply_filters( 'register_taxonomy_food_manager_category_object_type', array( 'food_manager' ) ), //'food_manager_menu'
+	register_taxonomy(
+		"food_manager_category",
 
-   	 	apply_filters( 'register_taxonomy_food_manager_category_args', array(
+		apply_filters('register_taxonomy_food_manager_category_object_type', array('food_manager')), //'food_manager_menu'
 
-            'hierarchical' 			=> true,
+		apply_filters('register_taxonomy_food_manager_category_args', array(
 
-            'update_count_callback' => '_update_post_term_count',
+			'hierarchical' 			=> true,
 
-            'label' 				=> $plural,
+			'update_count_callback' => '_update_post_term_count',
 
-            'labels' => array(
+			'label' 				=> $plural,
+
+			'labels' => array(
 
 				'name'              => $plural,
 
 				'singular_name'     => $singular,
 
-				'menu_name'         => ucwords( $plural ),
+				'menu_name'         => ucwords($plural),
 
-				'search_items'      => sprintf( __( 'Search %s', 'wp-food-manager' ), $plural ),
+				'search_items'      => sprintf(__('Search %s', 'wp-food-manager'), $plural),
 
-				'all_items'         => sprintf( __( 'All %s', 'wp-food-manager' ), $plural ),
+				'all_items'         => sprintf(__('All %s', 'wp-food-manager'), $plural),
 
-				'parent_item'       => sprintf( __( 'Parent %s', 'wp-food-manager' ), $singular ),
+				'parent_item'       => sprintf(__('Parent %s', 'wp-food-manager'), $singular),
 
-				'parent_item_colon' => sprintf( __( 'Parent %s:', 'wp-food-manager' ), $singular ),
+				'parent_item_colon' => sprintf(__('Parent %s:', 'wp-food-manager'), $singular),
 
-				'edit_item'         => sprintf( __( 'Edit %s', 'wp-food-manager' ), $singular ),
+				'edit_item'         => sprintf(__('Edit %s', 'wp-food-manager'), $singular),
 
-				'update_item'       => sprintf( __( 'Update %s', 'wp-food-manager' ), $singular ),
+				'update_item'       => sprintf(__('Update %s', 'wp-food-manager'), $singular),
 
-				'add_new_item'      => sprintf( __( 'Add New %s', 'wp-food-manager' ), $singular ),
+				'add_new_item'      => sprintf(__('Add New %s', 'wp-food-manager'), $singular),
 
-				'new_item_name'     => sprintf( __( 'New %s Name', 'wp-food-manager' ),  $singular ),
+				'new_item_name'     => sprintf(__('New %s Name', 'wp-food-manager'),  $singular),
 
-				'back_to_items'     => sprintf( __( '← Go to Food %s', 'wp-food-manager' ),  $plural )
+				'back_to_items'     => sprintf(__('← Go to Food %s', 'wp-food-manager'),  $plural)
 
-        	),
+			),
 
-            'show_ui' 				=> true,
-   	 		'show_in_rest'          => true,
-   	 		//'hierarchical'        => false, // Hierarchical causes memory issues
-            'public' 	     		=> $public,
+			'show_ui' 				=> true,
 
-            'capabilities'			=> array(
+			'show_in_rest'          => true,
 
-            	'manage_terms' 		=> $admin_capability,
+			'public' 	     		=> $public,
 
-            	'edit_terms' 		=> $admin_capability,
+			'capabilities'			=> array(
 
-            	'delete_terms' 		=> $admin_capability,
+				'manage_terms' 		=> $admin_capability,
 
-            	'assign_terms' 		=> $admin_capability,
+				'edit_terms' 		=> $admin_capability,
 
-            ),
+				'delete_terms' 		=> $admin_capability,
 
-            'rewrite' 				=> $rewrite,
+				'assign_terms' 		=> $admin_capability,
 
-        ) )
+			),
 
-    );
+			'rewrite' 				=> $rewrite,
 
+		))
+
+	);
 }
 
-if ( get_option( 'food_manager_enable_food_types' ,true) ) {
+if (get_option('food_manager_enable_food_types', true)) {
 
-        $singular  = __( 'Food Type', 'wp-food-manager' );
+	$singular  = __('Food Type', 'wp-food-manager');
 
-		$plural    = __( 'Types', 'wp-food-manager' );
+	$plural    = __('Types', 'wp-food-manager');
 
-	if ( current_theme_supports( 'food-manager-templates' ) ) {
+	if (current_theme_supports('food-manager-templates')) {
 
 		$rewrite   = array(
 
@@ -114,86 +114,85 @@ if ( get_option( 'food_manager_enable_food_types' ,true) ) {
 		);
 
 		$public    = true;
-
 	} else {
 
 		$rewrite   = true;
 
 		$public    = true;
-
 	}
 
-	register_taxonomy( "food_manager_type",
+	register_taxonomy(
+		"food_manager_type",
 
-	apply_filters( 'register_taxonomy_food_manager_types_object_type', array( 'food_manager' ) ),
+		apply_filters('register_taxonomy_food_manager_types_object_type', array('food_manager')),
 
-        apply_filters( 'register_taxonomy_food_manager_types_args', array(
+		apply_filters('register_taxonomy_food_manager_types_args', array(
 
-            'hierarchical' 			=> true,
+			'hierarchical' 			=> true,
 
-            'label' 				=> $plural,
+			'label' 				=> $plural,
 
-            'labels' => array(
+			'labels' => array(
 
-                'name' 				=> $plural,
+				'name' 				=> $plural,
 
-                'singular_name' 	=> $singular,
+				'singular_name' 	=> $singular,
 
-                'menu_name'         => ucwords( $plural ),
+				'menu_name'         => ucwords($plural),
 
-                'search_items' 		=> sprintf( __( 'Search %s', 'wp-food-manager' ), $plural ),
+				'search_items' 		=> sprintf(__('Search %s', 'wp-food-manager'), $plural),
 
-                'all_items' 		=> sprintf( __( 'All %s', 'wp-food-manager' ), $plural ),
+				'all_items' 		=> sprintf(__('All %s', 'wp-food-manager'), $plural),
 
-                'parent_item' 		=> sprintf( __( 'Parent %s', 'wp-food-manager' ), $singular ),
+				'parent_item' 		=> sprintf(__('Parent %s', 'wp-food-manager'), $singular),
 
-                'parent_item_colon' => sprintf( __( 'Parent %s:', 'wp-food-manager' ), $singular ),
+				'parent_item_colon' => sprintf(__('Parent %s:', 'wp-food-manager'), $singular),
 
-                'not_found'         => sprintf( __( 'No %s found', 'wp-food-manager' ), strtolower( $plural ) ),
+				'not_found'         => sprintf(__('No %s found', 'wp-food-manager'), strtolower($plural)),
 
-                'edit_item' 		=> sprintf( __( 'Edit %s', 'wp-food-manager' ), $singular ),
+				'edit_item' 		=> sprintf(__('Edit %s', 'wp-food-manager'), $singular),
 
-				'view_item' 		=> sprintf( __( 'View %s', 'wp-food-manager' ), $singular ),
+				'view_item' 		=> sprintf(__('View %s', 'wp-food-manager'), $singular),
 
-                'update_item' 		=> sprintf( __( 'Update %s', 'wp-food-manager' ), $singular ),
+				'update_item' 		=> sprintf(__('Update %s', 'wp-food-manager'), $singular),
 
-                'add_new_item' 		=> sprintf( __( 'Add New %s', 'wp-food-manager' ), $singular ),
+				'add_new_item' 		=> sprintf(__('Add New %s', 'wp-food-manager'), $singular),
 
-                'new_item_name' 	=> sprintf( __( 'New %s Name', 'wp-food-manager' ),  $singular ),
+				'new_item_name' 	=> sprintf(__('New %s Name', 'wp-food-manager'),  $singular),
 
-				'back_to_items'     => sprintf( __( '← Go to Food %s', 'wp-food-manager' ),  $plural )
-        	),
+				'back_to_items'     => sprintf(__('← Go to Food %s', 'wp-food-manager'),  $plural)
+			),
 
-            'show_ui' 				=> true,
-        		
-        	'show_in_rest'          => true,
+			'show_ui' 				=> true,
 
-            'public' 			    => $public,
+			'show_in_rest'          => true,
 
-            'capabilities'			=> array(
+			'public' 			    => $public,
 
-            	'manage_terms' 		=> $admin_capability,
+			'capabilities'			=> array(
 
-            	'edit_terms' 		=> $admin_capability,
+				'manage_terms' 		=> $admin_capability,
 
-            	'delete_terms' 		=> $admin_capability,
+				'edit_terms' 		=> $admin_capability,
 
-            	'assign_terms' 		=> $admin_capability,
-            ),
+				'delete_terms' 		=> $admin_capability,
 
-           'rewrite' 				=> $rewrite,
-        ) )
-    );
+				'assign_terms' 		=> $admin_capability,
+			),
+
+			'rewrite' 				=> $rewrite,
+		))
+	);
 }
 
 
-if ( get_option( 'food_manager_enable_food_tags' ,true) ) {
+if (get_option('food_manager_enable_food_tags', true)) {
 
-        $singular  = __( 'Food Tags', 'wp-food-manager' );
+	$singular  = __('Food Tags', 'wp-food-manager');
 
-		$plural    = __( 'Tags', 'wp-food-manager' );
+	$plural    = __('Tags', 'wp-food-manager');
 
-	if ( current_theme_supports( 'food-manager-templates' ) ) {
+	if (current_theme_supports('food-manager-templates')) {
 
 		$rewrite   = array(
 
@@ -206,330 +205,326 @@ if ( get_option( 'food_manager_enable_food_tags' ,true) ) {
 		);
 
 		$public    = true;
-
 	} else {
 
 		$rewrite   = true;
 
 		$public    = true;
-
 	}
 
-	register_taxonomy( "food_manager_tag",
+	register_taxonomy(
+		"food_manager_tag",
 
-	apply_filters( 'register_taxonomy_food_manager_tags_object_tag', array( 'food_manager' ) ),
+		apply_filters('register_taxonomy_food_manager_tags_object_tag', array('food_manager')),
 
-        apply_filters( 'register_taxonomy_food_manager_tags_args', array(
+		apply_filters('register_taxonomy_food_manager_tags_args', array(
 
-            'hierarchical' 			=> true,
+			'hierarchical' 			=> true,
 
-            'label' 				=> $plural,
+			'label' 				=> $plural,
 
-            'labels' => array(
+			'labels' => array(
 
-                'name' 				=> $plural,
+				'name' 				=> $plural,
 
-                'singular_name' 	=> $singular,
+				'singular_name' 	=> $singular,
 
-                'menu_name'         => ucwords( $plural ),
+				'menu_name'         => ucwords($plural),
 
-                'search_items' 		=> sprintf( __( 'Search %s', 'wp-food-manager' ), $plural ),
+				'search_items' 		=> sprintf(__('Search %s', 'wp-food-manager'), $plural),
 
-                'all_items' 		=> sprintf( __( 'All %s', 'wp-food-manager' ), $plural ),
+				'all_items' 		=> sprintf(__('All %s', 'wp-food-manager'), $plural),
 
-                'parent_item' 		=> sprintf( __( 'Parent %s', 'wp-food-manager' ), $singular ),
+				'parent_item' 		=> sprintf(__('Parent %s', 'wp-food-manager'), $singular),
 
-                'parent_item_colon' => sprintf( __( 'Parent %s:', 'wp-food-manager' ), $singular ),
+				'parent_item_colon' => sprintf(__('Parent %s:', 'wp-food-manager'), $singular),
 
-                'edit_item' 		=> sprintf( __( 'Edit %s', 'wp-food-manager' ), $singular ),
+				'edit_item' 		=> sprintf(__('Edit %s', 'wp-food-manager'), $singular),
 
-                'update_item' 		=> sprintf( __( 'Update %s', 'wp-food-manager' ), $singular ),
+				'update_item' 		=> sprintf(__('Update %s', 'wp-food-manager'), $singular),
 
-                'add_new_item' 		=> sprintf( __( 'Add New %s', 'wp-food-manager' ), $singular ),
+				'add_new_item' 		=> sprintf(__('Add New %s', 'wp-food-manager'), $singular),
 
-                'new_item_name' 	=> sprintf( __( 'New %s Name', 'wp-food-manager' ),  $singular ),
+				'new_item_name' 	=> sprintf(__('New %s Name', 'wp-food-manager'),  $singular),
 
-				'back_to_items'     => sprintf( __( '← Go to Food %s', 'wp-food-manager' ),  $plural )
-        	),
+				'back_to_items'     => sprintf(__('← Go to Food %s', 'wp-food-manager'),  $plural)
+			),
 
-            'show_ui' 				=> true,
-        		
-        	'show_in_rest'          => true,
+			'show_ui' 				=> true,
 
-   	 		'hierarchical'        => false,
+			'show_in_rest'          => true,
 
-            'public' 			    => $public,
+			'hierarchical'        => false,
 
-            'capabilities'			=> array(
+			'public' 			    => $public,
 
-            	'manage_terms' 		=> $admin_capability,
+			'capabilities'			=> array(
 
-            	'edit_terms' 		=> $admin_capability,
+				'manage_terms' 		=> $admin_capability,
 
-            	'delete_terms' 		=> $admin_capability,
+				'edit_terms' 		=> $admin_capability,
 
-            	'assign_terms' 		=> $admin_capability,
-            ),
+				'delete_terms' 		=> $admin_capability,
 
-           'rewrite' 				=> $rewrite,
-        ) )
-    );
+				'assign_terms' 		=> $admin_capability,
+			),
+
+			'rewrite' 				=> $rewrite,
+		))
+	);
 }
 
-        $singular  = __( 'Food Ingredient', 'wp-food-manager' );
+$singular  = __('Food Ingredient', 'wp-food-manager');
 
-		$plural    = __( 'Ingredients', 'wp-food-manager' );
+$plural    = __('Ingredients', 'wp-food-manager');
 
-	if ( current_theme_supports( 'food-manager-templates' ) ) {
+if (current_theme_supports('food-manager-templates')) {
 
-		$rewrite   = array(
+	$rewrite   = array(
 
-			'slug'         => $permalink_structure['ingredients_rewrite_slug'],
+		'slug'         => $permalink_structure['ingredients_rewrite_slug'],
 
-			'with_front'   => false,
+		'with_front'   => false,
 
-			'hierarchical' => false
+		'hierarchical' => false
 
-		);
+	);
 
-		$public    = true;
+	$public    = true;
+} else {
 
-	} else {
+	$rewrite   = false;
 
-		$rewrite   = false;
+	$public    = false;
+}
 
-		$public    = false;
+register_taxonomy(
+	"food_manager_ingredient",
 
-	}
+	apply_filters('register_taxonomy_food_manager_ingredients_object_type', array('food_manager')),
 
-	register_taxonomy( "food_manager_ingredient",
+	apply_filters('register_taxonomy_food_manager_ingredients_args', array(
 
-	apply_filters( 'register_taxonomy_food_manager_ingredients_object_type', array( 'food_manager' ) ),
+		'hierarchical' 			=> true,
 
-        apply_filters( 'register_taxonomy_food_manager_ingredients_args', array(
+		'label' 				=> $plural,
 
-            'hierarchical' 			=> true,
+		'labels' => array(
 
-            'label' 				=> $plural,
+			'name' 				=> $plural,
 
-            'labels' => array(
+			'singular_name' 	=> $singular,
 
-                'name' 				=> $plural,
+			'menu_name'         => ucwords($plural),
 
-                'singular_name' 	=> $singular,
+			'search_items' 		=> sprintf(__('Search %s', 'wp-food-manager'), $plural),
 
-                'menu_name'         => ucwords( $plural ),
+			'all_items' 		=> sprintf(__('All %s', 'wp-food-manager'), $plural),
 
-                'search_items' 		=> sprintf( __( 'Search %s', 'wp-food-manager' ), $plural ),
+			'parent_item' 		=> sprintf(__('Parent %s', 'wp-food-manager'), $singular),
 
-                'all_items' 		=> sprintf( __( 'All %s', 'wp-food-manager' ), $plural ),
+			'parent_item_colon' => sprintf(__('Parent %s:', 'wp-food-manager'), $singular),
 
-                'parent_item' 		=> sprintf( __( 'Parent %s', 'wp-food-manager' ), $singular ),
+			'edit_item' 		=> sprintf(__('Edit %s', 'wp-food-manager'), $singular),
 
-                'parent_item_colon' => sprintf( __( 'Parent %s:', 'wp-food-manager' ), $singular ),
+			'update_item' 		=> sprintf(__('Update %s', 'wp-food-manager'), $singular),
 
-                'edit_item' 		=> sprintf( __( 'Edit %s', 'wp-food-manager' ), $singular ),
+			'add_new_item' 		=> sprintf(__('Add New %s', 'wp-food-manager'), $singular),
 
-                'update_item' 		=> sprintf( __( 'Update %s', 'wp-food-manager' ), $singular ),
+			'new_item_name' 	=> sprintf(__('New %s Name', 'wp-food-manager'),  $singular),
 
-                'add_new_item' 		=> sprintf( __( 'Add New %s', 'wp-food-manager' ), $singular ),
+			'back_to_items'     => sprintf(__('← Go to %s', 'wp-food-manager'),  $plural)
+		),
 
-                'new_item_name' 	=> sprintf( __( 'New %s Name', 'wp-food-manager' ),  $singular ),
+		'show_ui' 				=> true,
 
-				'back_to_items'     => sprintf( __( '← Go to %s', 'wp-food-manager' ),  $plural )
-        	),
+		'show_in_rest'          => true,
 
-            'show_ui' 				=> true,
-        		
-        	'show_in_rest'          => true,
+		'meta_box_cb'		    => false,
 
-        	'meta_box_cb'		    => false,
+		'public' 			    => $public,
 
-            'public' 			    => $public,
+		'capabilities'			=> array(
 
-            'capabilities'			=> array(
+			'manage_terms' 		=> $admin_capability,
 
-            	'manage_terms' 		=> $admin_capability,
+			'edit_terms' 		=> $admin_capability,
 
-            	'edit_terms' 		=> $admin_capability,
+			'delete_terms' 		=> $admin_capability,
 
-            	'delete_terms' 		=> $admin_capability,
+			'assign_terms' 		=> $admin_capability,
+		),
 
-            	'assign_terms' 		=> $admin_capability,
-            ),
+		'rewrite' 				=> $rewrite,
+	))
+);
 
-           'rewrite' 				=> $rewrite,
-        ) )
-    );
+$singular  = __('Food Nutritions', 'wp-food-manager');
 
-        $singular  = __( 'Food Nutritions', 'wp-food-manager' );
+$plural    = __('Nutritions', 'wp-food-manager');
 
-		$plural    = __( 'Nutritions', 'wp-food-manager' );
+if (current_theme_supports('food-manager-templates')) {
 
-	if ( current_theme_supports( 'food-manager-templates' ) ) {
+	$rewrite   = array(
 
-		$rewrite   = array(
+		'slug'         => $permalink_structure['nutritions_rewrite_slug'],
 
-			'slug'         => $permalink_structure['nutritions_rewrite_slug'],
+		'with_front'   => false,
 
-			'with_front'   => false,
+		'hierarchical' => false
 
-			'hierarchical' => false
+	);
 
-		);
+	$public    = true;
+} else {
 
-		$public    = true;
+	$rewrite   = false;
 
-	} else {
+	$public    = false;
+}
 
-		$rewrite   = false;
+register_taxonomy(
+	"food_manager_nutrition",
 
-		$public    = false;
+	apply_filters('register_taxonomy_food_manager_nutritions_object_type', array('food_manager')),
 
-	}
+	apply_filters('register_taxonomy_food_manager_nutritions_args', array(
 
-	register_taxonomy( "food_manager_nutrition",
+		'hierarchical' 			=> true,
 
-	apply_filters( 'register_taxonomy_food_manager_nutritions_object_type', array( 'food_manager' ) ),
+		'label' 				=> $plural,
 
-        apply_filters( 'register_taxonomy_food_manager_nutritions_args', array(
+		'labels' => array(
 
-            'hierarchical' 			=> true,
+			'name' 				=> $plural,
 
-            'label' 				=> $plural,
+			'singular_name' 	=> $singular,
 
-            'labels' => array(
+			'menu_name'         => ucwords($plural),
 
-                'name' 				=> $plural,
+			'search_items' 		=> sprintf(__('Search %s', 'wp-food-manager'), $plural),
 
-                'singular_name' 	=> $singular,
+			'all_items' 		=> sprintf(__('All %s', 'wp-food-manager'), $plural),
 
-                'menu_name'         => ucwords( $plural ),
+			'parent_item' 		=> sprintf(__('Parent %s', 'wp-food-manager'), $singular),
 
-                'search_items' 		=> sprintf( __( 'Search %s', 'wp-food-manager' ), $plural ),
+			'parent_item_colon' => sprintf(__('Parent %s:', 'wp-food-manager'), $singular),
 
-                'all_items' 		=> sprintf( __( 'All %s', 'wp-food-manager' ), $plural ),
+			'edit_item' 		=> sprintf(__('Edit %s', 'wp-food-manager'), $singular),
 
-                'parent_item' 		=> sprintf( __( 'Parent %s', 'wp-food-manager' ), $singular ),
+			'update_item' 		=> sprintf(__('Update %s', 'wp-food-manager'), $singular),
 
-                'parent_item_colon' => sprintf( __( 'Parent %s:', 'wp-food-manager' ), $singular ),
+			'add_new_item' 		=> sprintf(__('Add New %s', 'wp-food-manager'), $singular),
 
-                'edit_item' 		=> sprintf( __( 'Edit %s', 'wp-food-manager' ), $singular ),
+			'new_item_name' 	=> sprintf(__('New %s Name', 'wp-food-manager'),  $singular),
 
-                'update_item' 		=> sprintf( __( 'Update %s', 'wp-food-manager' ), $singular ),
+			'back_to_items'     => sprintf(__('← Go to %s', 'wp-food-manager'),  $plural)
+		),
 
-                'add_new_item' 		=> sprintf( __( 'Add New %s', 'wp-food-manager' ), $singular ),
+		'show_ui' 				=> true,
 
-                'new_item_name' 	=> sprintf( __( 'New %s Name', 'wp-food-manager' ),  $singular ),
+		'show_in_rest'          => true,
 
-				'back_to_items'     => sprintf( __( '← Go to %s', 'wp-food-manager' ),  $plural )
-        	),
+		'meta_box_cb'		    => false,
 
-            'show_ui' 				=> true,
-        		
-        	'show_in_rest'          => true,
+		'public' 			    => $public,
 
-        	'meta_box_cb'		    => false,
+		'capabilities'			=> array(
 
-            'public' 			    => $public,
+			'manage_terms' 		=> $admin_capability,
 
-            'capabilities'			=> array(
+			'edit_terms' 		=> $admin_capability,
 
-            	'manage_terms' 		=> $admin_capability,
+			'delete_terms' 		=> $admin_capability,
 
-            	'edit_terms' 		=> $admin_capability,
+			'assign_terms' 		=> $admin_capability,
+		),
 
-            	'delete_terms' 		=> $admin_capability,
+		'rewrite' 				=> $rewrite,
+	))
+);
 
-            	'assign_terms' 		=> $admin_capability,
-            ),
+$singular  = __('Unit', 'wp-food-manager');
 
-           'rewrite' 				=> $rewrite,
-        ) )
-    );
+$plural    = __('Units', 'wp-food-manager');
 
-        $singular  = __( 'Unit', 'wp-food-manager' );
+if (current_theme_supports('food-manager-templates')) {
 
-		$plural    = __( 'Units', 'wp-food-manager' );
+	$rewrite   = array(
 
-	if ( current_theme_supports( 'food-manager-templates' ) ) {
+		'slug'         => $permalink_structure['units_rewrite_slug'],
 
-		$rewrite   = array(
+		'with_front'   => false,
 
-			'slug'         => $permalink_structure['units_rewrite_slug'],
+		'hierarchical' => false
 
-			'with_front'   => false,
+	);
 
-			'hierarchical' => false
+	$public    = true;
+} else {
 
-		);
+	$rewrite   = false;
 
-		$public    = true;
+	$public    = false;
+}
 
-	} else {
+register_taxonomy(
+	"food_manager_unit",
 
-		$rewrite   = false;
+	apply_filters('register_taxonomy_food_manager_units_object_type', array('food_manager')),
 
-		$public    = false;
+	apply_filters('register_taxonomy_food_manager_units_args', array(
 
-	}
+		'hierarchical' 			=> true,
 
-	register_taxonomy( "food_manager_unit",
+		'label' 				=> $plural,
 
-	apply_filters( 'register_taxonomy_food_manager_units_object_type', array( 'food_manager' ) ),
+		'labels' => array(
 
-        apply_filters( 'register_taxonomy_food_manager_units_args', array(
+			'name' 				=> $plural,
 
-            'hierarchical' 			=> true,
+			'singular_name' 	=> $singular,
 
-            'label' 				=> $plural,
+			'menu_name'         => ucwords($plural),
 
-            'labels' => array(
+			'search_items' 		=> sprintf(__('Search %s', 'wp-food-manager'), $plural),
 
-                'name' 				=> $plural,
+			'all_items' 		=> sprintf(__('All %s', 'wp-food-manager'), $plural),
 
-                'singular_name' 	=> $singular,
+			'parent_item' 		=> sprintf(__('Parent %s', 'wp-food-manager'), $singular),
 
-                'menu_name'         => ucwords( $plural ),
+			'parent_item_colon' => sprintf(__('Parent %s:', 'wp-food-manager'), $singular),
 
-                'search_items' 		=> sprintf( __( 'Search %s', 'wp-food-manager' ), $plural ),
+			'edit_item' 		=> sprintf(__('Edit %s', 'wp-food-manager'), $singular),
 
-                'all_items' 		=> sprintf( __( 'All %s', 'wp-food-manager' ), $plural ),
+			'update_item' 		=> sprintf(__('Update %s', 'wp-food-manager'), $singular),
 
-                'parent_item' 		=> sprintf( __( 'Parent %s', 'wp-food-manager' ), $singular ),
+			'add_new_item' 		=> sprintf(__('Add New %s', 'wp-food-manager'), $singular),
 
-                'parent_item_colon' => sprintf( __( 'Parent %s:', 'wp-food-manager' ), $singular ),
+			'new_item_name' 	=> sprintf(__('New %s Name', 'wp-food-manager'),  $singular),
 
-                'edit_item' 		=> sprintf( __( 'Edit %s', 'wp-food-manager' ), $singular ),
+			'back_to_items'     => sprintf(__('← Go to Food %s', 'wp-food-manager'),  $plural)
+		),
 
-                'update_item' 		=> sprintf( __( 'Update %s', 'wp-food-manager' ), $singular ),
+		'show_ui' 				=> true,
 
-                'add_new_item' 		=> sprintf( __( 'Add New %s', 'wp-food-manager' ), $singular ),
+		'show_in_rest'          => true,
 
-                'new_item_name' 	=> sprintf( __( 'New %s Name', 'wp-food-manager' ),  $singular ),
+		'meta_box_cb'		    => false,
 
-				'back_to_items'     => sprintf( __( '← Go to Food %s', 'wp-food-manager' ),  $plural )
-        	),
+		'public' 			    => $public,
 
-            'show_ui' 				=> true,
-        		
-        	'show_in_rest'          => true,
+		'capabilities'			=> array(
 
-        	'meta_box_cb'		    => false,
+			'manage_terms' 		=> $admin_capability,
 
-            'public' 			    => $public,
+			'edit_terms' 		=> $admin_capability,
 
-            'capabilities'			=> array(
+			'delete_terms' 		=> $admin_capability,
 
-            	'manage_terms' 		=> $admin_capability,
+			'assign_terms' 		=> $admin_capability,
+		),
 
-            	'edit_terms' 		=> $admin_capability,
-
-            	'delete_terms' 		=> $admin_capability,
-
-            	'assign_terms' 		=> $admin_capability,
-            ),
-
-           'rewrite' 				=> $rewrite,
-        ) )
-    );
+		'rewrite' 				=> $rewrite,
+	))
+);

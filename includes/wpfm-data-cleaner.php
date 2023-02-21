@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Defines a class with methods for cleaning up plugin data. To be used when
  * the plugin is deleted.
@@ -6,7 +7,7 @@
  * @package Core
  */
 
-if ( ! defined( 'ABSPATH' ) ) {
+if (!defined('ABSPATH')) {
 	// Exit if accessed directly.
 	exit;
 }
@@ -16,7 +17,8 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  * @since 2.5
  */
-class WP_Food_Manager_Data_Cleaner {
+class WP_Food_Manager_Data_Cleaner
+{
 
 	/**
 	 * Custom post types to be deleted.
@@ -59,7 +61,7 @@ class WP_Food_Manager_Data_Cleaner {
 	 *
 	 * @var $options
 	 */
-	private static $options = array(  );
+	private static $options = array();
 
 	/**
 	 * Site options to be deleted.
@@ -118,7 +120,8 @@ class WP_Food_Manager_Data_Cleaner {
 	 *
 	 * @access public
 	 */
-	public static function cleanup_all() {
+	public static function cleanup_all()
+	{
 		self::cleanup_custom_post_types();
 		self::cleanup_taxonomies();
 		self::cleanup_pages();
@@ -134,8 +137,9 @@ class WP_Food_Manager_Data_Cleaner {
 	 *
 	 * @access private
 	 */
-	private static function cleanup_custom_post_types() {
-		foreach ( self::$custom_post_types as $post_type ) {
+	private static function cleanup_custom_post_types()
+	{
+		foreach (self::$custom_post_types as $post_type) {
 			$items = get_posts(
 				array(
 					'post_type'   => $post_type,
@@ -145,9 +149,9 @@ class WP_Food_Manager_Data_Cleaner {
 				)
 			);
 
-			foreach ( $items as $item ) {
+			foreach ($items as $item) {
 				self::delete_food_with_attachment($item);
-				wp_delete_post( $item );
+				wp_delete_post($item);
 			}
 		}
 	}
@@ -158,59 +162,51 @@ class WP_Food_Manager_Data_Cleaner {
 	 * @param $post_id
 	 * @return void
 	 */
-	private static function delete_food_with_attachment($post_id) {
-		if( !in_array(get_post_type($post_id), ['food_manager']) )
+	private static function delete_food_with_attachment($post_id)
+	{
+		if (!in_array(get_post_type($post_id), ['food_manager']))
 			return;
 
 		$food_banner = get_post_meta($post_id, '_food_banner', true);
 
-		if(!empty($food_banner))
-		{
+		if (!empty($food_banner)) {
 			$wp_upload_dir = wp_get_upload_dir();
 
 			$baseurl = $wp_upload_dir['baseurl'] . '/';
 
-			if(is_array($food_banner))
-			{
-				foreach ($food_banner as $banner) 
-				{
+			if (is_array($food_banner)) {
+				foreach ($food_banner as $banner) {
 					$wp_attached_file = str_replace($baseurl, '', $banner);
 
 					$args = array(
-				        'meta_key'         	=> '_wp_attached_file',
-				        'meta_value'       	=> $wp_attached_file,
-				        'post_type'        	=> 'attachment',
-				        'posts_per_page'	=> 1,
-				    );
+						'meta_key'         	=> '_wp_attached_file',
+						'meta_value'       	=> $wp_attached_file,
+						'post_type'        	=> 'attachment',
+						'posts_per_page'	=> 1,
+					);
 
 					$attachments = get_posts($args);
 
-					if(!empty($attachments))
-					{
-						foreach ($attachments as $attachment) 
-						{
+					if (!empty($attachments)) {
+						foreach ($attachments as $attachment) {
 							wp_delete_attachment($attachment->ID, true);
 						}
 					}
 				}
-			}
-			else
-			{
+			} else {
 				$wp_attached_file = str_replace($baseurl, '', $food_banner);
 
 				$args = array(
-			        'meta_key'         	=> '_wp_attached_file',
-			        'meta_value'       	=> $wp_attached_file,
-			        'post_type'        	=> 'attachment',
-			        'posts_per_page'	=> 1,
-			    );
+					'meta_key'         	=> '_wp_attached_file',
+					'meta_value'       	=> $wp_attached_file,
+					'post_type'        	=> 'attachment',
+					'posts_per_page'	=> 1,
+				);
 
 				$attachments = get_posts($args);
 
-				if(!empty($attachments))
-				{
-					foreach ($attachments as $attachment) 
-					{
+				if (!empty($attachments)) {
+					foreach ($attachments as $attachment) {
 						wp_delete_attachment($attachment->ID, true);
 					}
 				}
@@ -218,11 +214,9 @@ class WP_Food_Manager_Data_Cleaner {
 		}
 
 		$thumbnail_id = get_post_thumbnail_id($post_id);
-		if(!empty($thumbnail_id))
-		{
+		if (!empty($thumbnail_id)) {
 			wp_delete_attachment($thumbnail_id, true);
 		}
-
 	}
 
 	/**
@@ -230,10 +224,11 @@ class WP_Food_Manager_Data_Cleaner {
 	 *
 	 * @access private
 	 */
-	private static function cleanup_taxonomies() {
+	private static function cleanup_taxonomies()
+	{
 		global $wpdb;
 
-		foreach ( self::$taxonomies as $taxonomy ) {
+		foreach (self::$taxonomies as $taxonomy) {
 			$terms = $wpdb->get_results(
 				$wpdb->prepare(
 					"SELECT term_id, term_taxonomy_id FROM $wpdb->term_taxonomy WHERE taxonomy = %s",
@@ -242,15 +237,15 @@ class WP_Food_Manager_Data_Cleaner {
 			);
 
 			// Delete all data for each term.
-			foreach ( $terms as $term ) {
-				$wpdb->delete( $wpdb->term_relationships, array( 'term_taxonomy_id' => $term->term_taxonomy_id ) );
-				$wpdb->delete( $wpdb->term_taxonomy, array( 'term_taxonomy_id' => $term->term_taxonomy_id ) );
-				$wpdb->delete( $wpdb->terms, array( 'term_id' => $term->term_id ) );
-				$wpdb->delete( $wpdb->termmeta, array( 'term_id' => $term->term_id ) );
+			foreach ($terms as $term) {
+				$wpdb->delete($wpdb->term_relationships, array('term_taxonomy_id' => $term->term_taxonomy_id));
+				$wpdb->delete($wpdb->term_taxonomy, array('term_taxonomy_id' => $term->term_taxonomy_id));
+				$wpdb->delete($wpdb->terms, array('term_id' => $term->term_id));
+				$wpdb->delete($wpdb->termmeta, array('term_id' => $term->term_id));
 			}
 
-			if ( function_exists( 'clean_taxonomy_cache' ) ) {
-				clean_taxonomy_cache( $taxonomy );
+			if (function_exists('clean_taxonomy_cache')) {
+				clean_taxonomy_cache($taxonomy);
 			}
 		}
 	}
@@ -260,37 +255,37 @@ class WP_Food_Manager_Data_Cleaner {
 	 *
 	 * @access private
 	 */
-	private static function cleanup_pages() {
+	private static function cleanup_pages()
+	{
 		// Trash the Submit Food page.
-		$add_food_page_id = get_option( 'food_manager_add_food_page_id' );
-		if ( $add_food_page_id ) {
-			wp_delete_post( $add_food_page_id, true );
+		$add_food_page_id = get_option('food_manager_add_food_page_id');
+		if ($add_food_page_id) {
+			wp_delete_post($add_food_page_id, true);
 		}
 
 		// Trash the Food Dashboard page.
-		$food_dashboard_page_id = get_option( 'food_manager_food_dashboard_page_id' );
-		if ( $food_dashboard_page_id ) {
-			wp_delete_post( $food_dashboard_page_id, true );
+		$food_dashboard_page_id = get_option('food_manager_food_dashboard_page_id');
+		if ($food_dashboard_page_id) {
+			wp_delete_post($food_dashboard_page_id, true);
 		}
 
 		// Trash the foods page.
-		$foods_page_id = get_option( 'food_manager_foods_page_id' );
-		if ( $foods_page_id ) {
-			wp_delete_post( $foods_page_id, true );
+		$foods_page_id = get_option('food_manager_foods_page_id');
+		if ($foods_page_id) {
+			wp_delete_post($foods_page_id, true);
 		}
 
 		// Trash the Food Categories page.
-		$submit_organizer_form_page_id = get_option( 'food_manager_food_categories_page_id' );
-		if ( $submit_organizer_form_page_id ) {
-			wp_delete_post( $submit_organizer_form_page_id, true );
+		$submit_organizer_form_page_id = get_option('food_manager_food_categories_page_id');
+		if ($submit_organizer_form_page_id) {
+			wp_delete_post($submit_organizer_form_page_id, true);
 		}
 
 		// Trash the Food Type page.
-		$organizer_dashboard_page_id = get_option( 'food_manager_food_type_page_id' );
-		if ( $organizer_dashboard_page_id ) {
-			wp_delete_post( $organizer_dashboard_page_id, true );
+		$organizer_dashboard_page_id = get_option('food_manager_food_type_page_id');
+		if ($organizer_dashboard_page_id) {
+			wp_delete_post($organizer_dashboard_page_id, true);
 		}
-		
 	}
 
 	/**
@@ -298,9 +293,10 @@ class WP_Food_Manager_Data_Cleaner {
 	 *
 	 * @access private
 	 */
-	private static function cleanup_options() {
-		foreach ( self::$options as $option ) {
-			delete_option( $option );
+	private static function cleanup_options()
+	{
+		foreach (self::$options as $option) {
+			delete_option($option);
 		}
 	}
 
@@ -309,9 +305,10 @@ class WP_Food_Manager_Data_Cleaner {
 	 *
 	 * @access private
 	 */
-	private static function cleanup_site_options() {
-		foreach ( self::$site_options as $option ) {
-			delete_site_option( $option );
+	private static function cleanup_site_options()
+	{
+		foreach (self::$site_options as $option) {
+			delete_site_option($option);
 		}
 	}
 
@@ -320,11 +317,12 @@ class WP_Food_Manager_Data_Cleaner {
 	 *
 	 * @access private
 	 */
-	private static function cleanup_transients() {
+	private static function cleanup_transients()
+	{
 		global $wpdb;
 
-		foreach ( array( '_transient_', '_transient_timeout_' ) as $prefix ) {
-			foreach ( self::$transients as $transient ) {
+		foreach (array('_transient_', '_transient_timeout_') as $prefix) {
+			foreach (self::$transients as $transient) {
 				$wpdb->query(
 					$wpdb->prepare(
 						"DELETE FROM $wpdb->options WHERE option_name RLIKE %s",
@@ -340,25 +338,26 @@ class WP_Food_Manager_Data_Cleaner {
 	 *
 	 * @access private
 	 */
-	private static function cleanup_roles_and_caps() {
+	private static function cleanup_roles_and_caps()
+	{
 		global $wp_roles;
 
 		// Remove caps from roles.
-		$role_names = array_keys( $wp_roles->roles );
-		foreach ( $role_names as $role_name ) {
-			$role = get_role( $role_name );
-			self::remove_all_food_manager_caps( $role );
+		$role_names = array_keys($wp_roles->roles);
+		foreach ($role_names as $role_name) {
+			$role = get_role($role_name);
+			self::remove_all_food_manager_caps($role);
 		}
 
 		// Remove caps and role from users.
-		$users = get_users( array() );
-		foreach ( $users as $user ) {
-			self::remove_all_food_manager_caps( $user );
-			$user->remove_role( self::$role );
+		$users = get_users(array());
+		foreach ($users as $user) {
+			self::remove_all_food_manager_caps($user);
+			$user->remove_role(self::$role);
 		}
 
 		// Remove role.
-		remove_role( self::$role );
+		remove_role(self::$role);
 	}
 
 	/**
@@ -366,9 +365,10 @@ class WP_Food_Manager_Data_Cleaner {
 	 *
 	 * @param (WP_User|WP_Role) $object the user or role object.
 	 */
-	private static function remove_all_food_manager_caps( $object ) {
-		foreach ( self::$caps as $cap ) {
-			$object->remove_cap( $cap );
+	private static function remove_all_food_manager_caps($object)
+	{
+		foreach (self::$caps as $cap) {
+			$object->remove_cap($cap);
 		}
 	}
 
@@ -378,9 +378,10 @@ class WP_Food_Manager_Data_Cleaner {
 	 *
 	 * @access private
 	 */
-	private static function cleanup_cron_jobs() {
-		foreach ( self::$cron_jobs as $job ) {
-			wp_clear_scheduled_hook( $job );
+	private static function cleanup_cron_jobs()
+	{
+		foreach (self::$cron_jobs as $job) {
+			wp_clear_scheduled_hook($job);
 		}
 	}
 }
