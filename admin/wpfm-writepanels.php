@@ -44,9 +44,7 @@ class WPFM_Writepanels
 		add_action('admin_init', array($this, 'approve_food'));
 
 		add_action('load-edit.php', array($this, 'do_bulk_actions'));
-
 		add_action('admin_footer-edit.php', array($this, 'add_bulk_actions'));
-
 		add_action('food_manager_save_food_manager', array($this, 'food_manager_save_food_manager_data'), 20, 2);
 
 		// save food attributes
@@ -54,7 +52,6 @@ class WPFM_Writepanels
 
 		//food menu 
 		add_action('wp_ajax_wpfm_get_food_listings_by_category_id', array($this, 'wpfm_get_food_listings_by_category_id'));
-
 		add_action('food_manager_save_food_manager_menu', array($this, 'food_manager_save_food_manager_menu_data'), 20, 2);
 
 		//add food menu column
@@ -68,11 +65,7 @@ class WPFM_Writepanels
 		add_action('manage_food_manager_posts_custom_column', array($this, 'custom_food_content_column'), 10, 2);
 		add_filter('post_row_actions', array($this, 'row_actions'));
 
-		add_action('admin_notices', array( $this, 'display_notice' ) );
-
-		//add food price column
-		/*add_filter('manage_food_manager_posts_columns', array($this, 'set_price_copy_columns'));
-		add_action('manage_food_manager_posts_custom_column', array($this, 'price_copy_content_column'), 10, 2);*/
+		add_action('admin_notices', array($this, 'display_notice'));
 	}
 
 
@@ -87,9 +80,7 @@ class WPFM_Writepanels
 		global $wp_post_types;
 
 		add_meta_box('food_manager_data', sprintf(__('%s Data', 'wp-food-manager'), $wp_post_types['food_manager']->labels->singular_name), array($this, 'food_manager_data'), 'food_manager', 'normal', 'high');
-
 		add_meta_box('food_manager_menu_data', __('Menu Icon', 'wp-food-manager'), array($this, 'food_manager_menu_data'), 'food_manager_menu', 'normal', 'high');
-
 		add_meta_box('food_manager_menu_data_icons', __('Select Food ', 'wp-food-manager'), array($this, 'food_manager_menu_data_icons'), 'food_manager_menu', 'normal', 'high');
 	}
 
@@ -109,7 +100,6 @@ class WPFM_Writepanels
 		wp_nonce_field('save_meta_data', 'food_manager_nonce');
 
 		include('templates/food-data-tabs.php');
-
 	}
 
 
@@ -125,14 +115,11 @@ class WPFM_Writepanels
 		global $post, $thepostid;
 		$thepostid = $post->ID;
 		wp_enqueue_script('wpfm-admin');
-
 		wp_nonce_field('save_meta_data', 'food_manager_nonce');
-
-		?>
+?>
 		<div class="wpfm-admin-food-menu-container wpfm-flex-col wpfm-admin-postbox-meta-data">
 			<div class="wpfm-admin-postbox-meta-data">
 				<div class="wpfm-admin-menu-selection wpfm-admin-postbox-form-field">
-					<!-- <label for="_add_food"><?php _e('Select food category'); ?></label> -->
 					<?php food_manager_dropdown_selection(array(
 						'multiple' => false, 'show_option_all' => __('All category', 'wp-food-manager'),
 						'id' => 'wpfm-admin-food-selection',
@@ -154,11 +141,6 @@ class WPFM_Writepanels
 						'hierarchical' => false,
 						'name' => 'food_type',
 					)); ?>
-
-					<!-- Do not remove -->
-					<!--<div class="wpfm-admin-postbox-drop-btn">
-						<input type="button" id="wpfm-admin-add-food" class="button button-small" value="<?php //_e('Add food', 'wp-food-manager'); ?>" />
-					</div> -->
 				</div>
 			</div>
 			<div class="wpfm-admin-food-menu-items">
@@ -178,7 +160,7 @@ class WPFM_Writepanels
 								</div>
 								<input type="hidden" name="wpfm_food_listing_ids[]" value="<?= $id; ?>" />
 							</li>
-						<?php }
+					<?php }
 					} ?>
 				</ul>
 				<?php if ($item_ids && is_array($item_ids)) { ?>
@@ -187,13 +169,6 @@ class WPFM_Writepanels
 					<span class="no-menu-item-handle">Selected category has no food.</span>
 				<?php } ?>
 			</div>
-			<!-- Do not remove -->
-			<!-- <div class="wpfm-admin-menu-selection wpfm-admin-postbox-form-field">
-				<div class="wpfm-admin-postbox-drop-btn">
-					<input type="button" id="wpfm-admin-add-food" class="button button-small" value="<?php _e('Add', 'wp-food-manager'); ?>" />
-				</div>
-				<label for="_add_food" class="add-food-small"><i><?php _e('Add your food item'); ?></i></label>
-			</div> -->
 		</div>
 	<?php
 	}
@@ -215,47 +190,30 @@ class WPFM_Writepanels
 
 		$icon_arrs = wpfm_get_font_icons();
 		$food_icon_arrs = wpfm_get_font_food_icons();
-		?>
+	?>
 		<?php
 		echo '<div class="wpfm-parent-icons"><input type="text" id="wpfm_icon_search" name="wpfm_icon_search" placeholder="Icon Search"><span class="wpfm-searh-clear"><i class="fa fa-times"></i></span></div>';
 		echo '<div class="no-radio-icons"><strong>No icons found!</strong></div>';
-		//echo "<h2 class='wp-food-menu-icon-title'>General Icons</h2>";
 		echo "<div class='wpfm-font-awesome-class'>";
-			foreach($icon_arrs as $key => $icon_arr){
-				$radio_checked = (get_post_meta($thepostid, 'wpfm_radio_icons', true) === $key) ? "checked" : "";
-				$key_name = str_replace("fa-", "", $key);
-				echo '<div class="sub-font-icon"><input type="radio" id="'.$key.'" name="radio_icons" value="'.$key.'" '.$radio_checked.'><label for="'.$key.'"><span class="wpfm-icon-key-name">'.$key_name.'</span><i class="fa '.$key.'"></i></label></div>';
+		foreach ($icon_arrs as $key => $icon_arr) {
+			$radio_checked = (get_post_meta($thepostid, 'wpfm_radio_icons', true) === $key) ? "checked" : "";
+			$key_name = str_replace("fa-", "", $key);
+			echo '<div class="sub-font-icon"><input type="radio" id="' . $key . '" name="radio_icons" value="' . $key . '" ' . $radio_checked . '><label for="' . $key . '"><span class="wpfm-icon-key-name">' . $key_name . '</span><i class="fa ' . $key . '"></i></label></div>';
+		}
+		foreach ($food_icon_arrs as $key => $icon_arr) {
+			$radio_checked = (get_post_meta($thepostid, 'wpfm_radio_icons', true) === $key) ? "checked" : "";
+			$key_name = str_replace("wpfm-menu-", "", $key);
+			echo '<div class="sub-font-icon"><input type="radio" id="' . $key . '" name="radio_icons" value="' . $key . '" ' . $radio_checked . '><label for="' . $key . '"><span class="wpfm-icon-key-name">' . $key_name . '</span>';
+			if ($key_name == 'fast-cart') {
+				echo '<span class="wpfm-menu wpfm-menu-fast-cart"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span></span>';
+			} elseif ($key_name == 'rice-bowl') {
+				echo '<span class="wpfm-menu wpfm-menu-rice-bowl"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span></span>';
+			} else {
+				echo '<span class="wpfm-menu ' . $key . '"></span>';
 			}
-			foreach($food_icon_arrs as $key => $icon_arr){
-				$radio_checked = (get_post_meta($thepostid, 'wpfm_radio_icons', true) === $key) ? "checked" : "";
-				$key_name = str_replace("wpfm-menu-", "", $key);
-				echo '<div class="sub-font-icon"><input type="radio" id="'.$key.'" name="radio_icons" value="'.$key.'" '.$radio_checked.'><label for="'.$key.'"><span class="wpfm-icon-key-name">'.$key_name.'</span>';
-				if($key_name == 'fast-cart'){
-					echo '<span class="wpfm-menu wpfm-menu-fast-cart"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span></span>';
-				} elseif($key_name == 'rice-bowl') {
-					echo '<span class="wpfm-menu wpfm-menu-rice-bowl"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span></span>';
-				} else {
-					echo '<span class="wpfm-menu '.$key.'"></span>';
-				}
-				echo "</span></label></div>";
-			}
+			echo "</span></label></div>";
+		}
 		echo "</div>";
-		/*echo "<h2 class='wp-food-menu-icon-title'>WP Food Icons</h2>";
-		echo "<div class='wpfm-food-font-icon-class'>";
-			foreach($food_icon_arrs as $key => $icon_arr){
-				$radio_checked = (get_post_meta($thepostid, 'wpfm_radio_icons', true) === $key) ? "checked" : "";
-				$key_name = str_replace("wpfm-food-", "", $key);
-				echo '<div class="sub-font-icon"><input type="radio" id="'.$key.'" name="radio_icons" value="'.$key.'" '.$radio_checked.'><label for="'.$key.'"><span class="wpfm-icon-key-name">'.$key_name.'</span>';
-				if($key_name == 'fast-cart'){
-					echo '<span class="wpfm-food wpfm-food-fast-cart"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span></span>';
-				} elseif($key_name == 'rice-bowl') {
-					echo '<span class="wpfm-food wpfm-food-rice-bowl"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span></span>';
-				} else {
-					echo '<span class="wpfm-food '.$key.'"></span>';
-				}
-				echo "</span></label></div>";
-			}
-		echo "</div>";*/
 	}
 
 	/**
@@ -343,51 +301,6 @@ class WPFM_Writepanels
 
 		uasort($fields, array($this, 'sort_by_priority'));
 		return $fields;
-
-
-		/*global $post;
-		$current_user = wp_get_current_user();
-		
-		$GLOBALS['food_manager']->forms->get_form_fields('submit-food', array());
-		$form_submit_food_instance = call_user_func(array('WPFM_Form_Submit_Food', 'instance'));
-		$fields                     = $form_submit_food_instance->merge_with_custom_fields('backend');
-
-		foreach ($fields as $group_key => $group_fields) {
-			foreach ($group_fields as $field_key => $field_value) {
-
-				if ($field_key === 'registration') {
-					$field_value['value'] = $registration;
-				}
-
-				if (strpos($field_key, '_') !== 0) {
-					$fields['_' . $field_key] = $field_value;
-				} else {
-					$fields[$field_key] = $field_value;
-				}
-			}
-			unset($fields[$group_key]);
-		}
-
-		$fields = apply_filters('food_manager_food_listing_data_fields', $fields);
-
-		if (isset($fields['food_title'])) {
-			unset($fields['food_title']);
-		}
-
-		if (isset($fields['food_description'])) {
-			unset($fields['food_description']);
-		}
-
-		if ($current_user->has_cap('edit_others_food_manager')) {
-			$fields['food_author'] = array(
-				'label'    => __('Posted by', 'wp-food-manager'),
-				'type'     => 'author',
-				'priority' => 41,
-			);
-		}
-
-		uasort($fields, array($this, 'sort_by_priority'));
-		return $fields;*/
 	}
 
 
@@ -425,9 +338,9 @@ class WPFM_Writepanels
 		} else {
 			$name = $key;
 		}
-	?>
+		?>
 
-		<p class="wpfm-admin-postbox-form-field <?=$name;?>" data-field-name="<?=$name;?>">
+		<p class="wpfm-admin-postbox-form-field <?= $name; ?>" data-field-name="<?= $name; ?>">
 			<label for="<?php echo esc_attr($key); ?>"><?php echo esc_html($field['label']); ?>:
 				<?php if (!empty($field['description'])) : ?>
 					<span class="tips" data-tip="<?php echo esc_attr($field['description']); ?>">[?]</span>
@@ -436,69 +349,62 @@ class WPFM_Writepanels
 			<span class="wpfm-input-field">
 				<?php
 				if (!empty($field['multiple'])) {  ?>
-					<span class="file_url"> 
-						<?php foreach ((array) $field['value'] as $value) { ?> 
-							<span class="food-manager-uploaded-file multiple-file"> 
-								<input type="hidden" name="<?php echo esc_attr($name); ?>[]" placeholder="<?php echo esc_attr($field['placeholder']); ?>" value="<?php echo esc_attr($value); ?>" /> 
+					<span class="file_url">
+						<?php foreach ((array) $field['value'] as $value) { ?>
+							<span class="food-manager-uploaded-file multiple-file">
+								<input type="hidden" name="<?php echo esc_attr($name); ?>[]" placeholder="<?php echo esc_attr($field['placeholder']); ?>" value="<?php echo esc_attr($value); ?>" />
 								<span class="food-manager-uploaded-file-preview">
 									<?php if (in_array(pathinfo($value, PATHINFO_EXTENSION), ['png', 'jpg', 'jpeg', 'gif', 'svg'])) : ?>
 										<img src="<?php echo esc_attr($value); ?>">
-										<a class="food-manager-remove-uploaded-file" href="javascript:void(0);">[remove]</a> 
-									<?php else :
-										if(!wpfm_begnWith($value, "http")){
+										<a class="food-manager-remove-uploaded-file" href="javascript:void(0);">[remove]</a>
+										<?php else :
+										if (!wpfm_begnWith($value, "http")) {
 											$value	= '';
 										}
-										if(!empty($value)){ ?>
-				                            <span class="wpfm-icon">
-				                                <strong style="display: block; padding-top: 5px;"><?php echo esc_attr(wp_basename($value)); ?></strong>
-				                                <a target="_blank" href="<?php echo esc_attr($value);?>"><i class="wpfm-icon-download3" style="margin-right: 3px;"></i>Download</a>
-				                            </span>
-				                            <a class="food-manager-remove-uploaded-file" href="javascript:void(0);">[remove]</a> 
-				                        <?php }
-			                        endif; ?>
-								</span> 
-							</span> 
-						<?php } ?> 
-					</span> 
-					<button class="button button-small wp_food_manager_upload_file_button_multiple" style="display: block;" data-uploader_button_text="<?php esc_attr_e('Use file', 'wp-food-manager'); ?>"><?php esc_attr_e('Upload', 'wp-food-manager'); ?></button> 
-				<?php } else { ?> 
-					<span class="food-manager-uploaded-file2"> 
-						<span class="food-manager-uploaded-file"> 
-							<?php if(!empty($field['value'])) : 
-								if(!wpfm_begnWith($field['value'], "http")){
+										if (!empty($value)) { ?>
+											<span class="wpfm-icon">
+												<strong style="display: block; padding-top: 5px;"><?php echo esc_attr(wp_basename($value)); ?></strong>
+												<a target="_blank" href="<?php echo esc_attr($value); ?>"><i class="wpfm-icon-download3" style="margin-right: 3px;"></i>Download</a>
+											</span>
+											<a class="food-manager-remove-uploaded-file" href="javascript:void(0);">[remove]</a>
+									<?php }
+									endif; ?>
+								</span>
+							</span>
+						<?php } ?>
+					</span>
+					<button class="button button-small wp_food_manager_upload_file_button_multiple" style="display: block;" data-uploader_button_text="<?php esc_attr_e('Use file', 'wp-food-manager'); ?>"><?php esc_attr_e('Upload', 'wp-food-manager'); ?></button>
+				<?php } else { ?>
+					<span class="food-manager-uploaded-file2">
+						<span class="food-manager-uploaded-file">
+							<?php if (!empty($field['value'])) :
+								if (!wpfm_begnWith($field['value'], "http")) {
 									$field['value']	= '';
 								}
-								if(is_array($field['value'])){ 
-									$field['value'] = get_the_post_thumbnail_url($thepostid, 'full'); 
+								if (is_array($field['value'])) {
+									$field['value'] = get_the_post_thumbnail_url($thepostid, 'full');
 								}
-								?>
-								<input type="hidden" name="<?php echo esc_attr($name); ?>" id="<?php echo esc_attr($key); ?>" placeholder="<?php echo esc_attr($field['placeholder']); ?>" value="<?php echo esc_attr($field['value']); ?>" /> 
+							?>
+								<input type="hidden" name="<?php echo esc_attr($name); ?>" id="<?php echo esc_attr($key); ?>" placeholder="<?php echo esc_attr($field['placeholder']); ?>" value="<?php echo esc_attr($field['value']); ?>" />
 								<span class="food-manager-uploaded-file-preview">
 									<?php if (in_array(pathinfo($field['value'], PATHINFO_EXTENSION), ['png', 'jpg', 'jpeg', 'gif', 'svg'])) : ?>
 										<img src="<?php echo esc_attr($field['value']); ?>">
-										<a class="food-manager-remove-uploaded-file" href="javascript:void(0);">[remove]</a> 
-									<?php else :
-										if(!empty($field['value'])){ ?>
-				                            <span class="wpfm-icon">
-				                                <strong style="display: block; padding-top: 5px;"><?php echo esc_attr(wp_basename($field['value'])); ?></strong>
-				                                <a target="_blank" href="<?php echo esc_attr($field['value']);?>"><i class="wpfm-icon-download3" style="margin-right: 3px;"></i>Download</a>
-				                            </span>
-				                            <a class="food-manager-remove-uploaded-file" href="javascript:void(0);">[remove]</a> 
-				                        <?php }
-			                        endif; ?>
-								</span> 
-							<?php endif; ?> 
+										<a class="food-manager-remove-uploaded-file" href="javascript:void(0);">[remove]</a>
+										<?php else :
+										if (!empty($field['value'])) { ?>
+											<span class="wpfm-icon">
+												<strong style="display: block; padding-top: 5px;"><?php echo esc_attr(wp_basename($field['value'])); ?></strong>
+												<a target="_blank" href="<?php echo esc_attr($field['value']); ?>"><i class="wpfm-icon-download3" style="margin-right: 3px;"></i>Download</a>
+											</span>
+											<a class="food-manager-remove-uploaded-file" href="javascript:void(0);">[remove]</a>
+									<?php }
+									endif; ?>
+								</span>
+							<?php endif; ?>
 						</span>
-						<button class="button button-small wp_food_manager_upload_file_button" style="display: block;" data-uploader_button_text="<?php esc_attr_e('Use file', 'wp-food-manager'); ?>"><?php esc_attr_e('Upload', 'wp-food-manager'); ?></button> 
+						<button class="button button-small wp_food_manager_upload_file_button" style="display: block;" data-uploader_button_text="<?php esc_attr_e('Use file', 'wp-food-manager'); ?>"><?php esc_attr_e('Upload', 'wp-food-manager'); ?></button>
 					</span>
-				<?php
-				}
-				if (!empty($field['multiple'])) { 
-				?> 
-					<!-- <button class="button button-small wp_food_manager_add_another_file_button" data-field_name="<?php echo esc_attr($key); ?>" data-field_placeholder="<?php echo esc_attr($field['placeholder']); ?>" data-uploader_button_text="<?php esc_attr_e('Use file', 'wp-food-manager'); ?>" data-uploader_button="<?php esc_attr_e('Upload', 'wp-food-manager'); ?>"><?php esc_attr_e('Add file', 'wp-food-manager'); ?></button> --> 
-				<?php 
-				} 
-				?>
+				<?php } ?>
 			</span>
 		</p>
 	<?php
@@ -522,7 +428,7 @@ class WPFM_Writepanels
 			$name = $key;
 		}
 	?>
-		<p class="wpfm-admin-postbox-form-field <?=$name;?>">
+		<p class="wpfm-admin-postbox-form-field <?= $name; ?>">
 			<label for="<?php echo esc_attr($key); ?>"><?php echo esc_html($field['label']); ?>:
 				<?php if (!empty($field['description'])) : ?>
 					<span class="tips" data-tip="<?php echo esc_attr($field['description']); ?>">[?]</span>
@@ -553,7 +459,7 @@ class WPFM_Writepanels
 			$name = $key;
 		}
 	?>
-		<p class="wpfm-admin-postbox-form-field <?=$name;?>">
+		<p class="wpfm-admin-postbox-form-field <?= $name; ?>">
 			<label for="<?php echo esc_attr($key); ?>"><?php echo esc_html($field['label']); ?> : <?php if (!empty($field['description'])) : ?><span class="tips" data-tip="<?php echo esc_attr($field['description']); ?>">[?]</span><?php endif; ?></label>
 			<span class="wpfm-input-field">
 				<input type="text" class="wpfm-small-field" name="<?php echo esc_attr($name); ?>" id="<?php echo esc_attr($key); ?>" placeholder="<?php echo esc_attr($field['placeholder']); ?>" value="<?php echo esc_attr($field['value']); ?>" />
@@ -575,7 +481,7 @@ class WPFM_Writepanels
 		if (!isset($field['value']) || empty($field['value'])) {
 			$field['value'] = get_post_meta($thepostid, $key, true);
 		}
-		if(is_array($field['value'])){
+		if (is_array($field['value'])) {
 			$field['value'] = '';
 		}
 		if (!empty($field['name'])) {
@@ -583,12 +489,12 @@ class WPFM_Writepanels
 		} else {
 			$name = $key;
 		}
-		if(wpfm_begnWith($field['value'], "http")) {
-			$field['value'] = '';	
+		if (wpfm_begnWith($field['value'], "http")) {
+			$field['value'] = '';
 		}
 	?>
-		<div class="wpfm_editor" data-field-name="<?=$name;?>">
-			<p class="wpfm-admin-postbox-form-field <?=$name;?>">
+		<div class="wpfm_editor" data-field-name="<?= $name; ?>">
+			<p class="wpfm-admin-postbox-form-field <?= $name; ?>">
 				<label for="<?php echo esc_attr($key); ?>"><?php echo esc_html($field['label']); ?>:
 					<?php if (!empty($field['description'])) : ?>
 						<span class="tips" data-tip="<?php echo esc_attr($field['description']); ?>">[?]</span>
@@ -615,7 +521,7 @@ class WPFM_Writepanels
 		$php_date_format        = WP_Food_Manager_Date_Time::get_view_date_format_from_datepicker_date_format($datepicker_date_format);
 		if (!isset($field['value'])) {
 			$date = get_post_meta($thepostid, $key, true);
-			if(is_array($date)){
+			if (is_array($date)) {
 				$date = $date['0'];
 			}
 			if (!empty($date)) {
@@ -661,15 +567,15 @@ class WPFM_Writepanels
 			$name = $key;
 		}
 		$fieldLabel = '';
-		if($field['type'] == 'wp-editor'){
+		if ($field['type'] == 'wp-editor') {
 			$fieldLabel =  'wp-editor-field';
 		}
 
-		if(wpfm_begnWith($field['value'], "http") || is_array($field['value'])){
-		    $field['value'] = '';
+		if (wpfm_begnWith($field['value'], "http") || is_array($field['value'])) {
+			$field['value'] = '';
 		}
 	?>
-		<p class="wpfm-admin-postbox-form-field <?=$name;?> <?php echo $fieldLabel; ?>" data-field-name="<?=$name;?>">
+		<p class="wpfm-admin-postbox-form-field <?= $name; ?> <?php echo $fieldLabel; ?>" data-field-name="<?= $name; ?>">
 			<label for="<?php echo esc_attr($key); ?>"><?php echo esc_html($field['label']); ?> : <?php if (!empty($field['description'])) : ?>: <span class="tips" data-tip="<?php echo esc_attr($field['description']); ?>">[?]</span><?php endif; ?></label>
 			<span class="wpfm-input-field">
 				<textarea name="<?php echo esc_attr($name); ?>" id="<?php echo esc_attr($key); ?>" rows="4" cols="63" placeholder="<?php echo esc_attr($field['placeholder']); ?>"><?php echo esc_html($field['value']); ?></textarea>
@@ -697,15 +603,15 @@ class WPFM_Writepanels
 		}
 	?>
 
-		<p class="wpfm-admin-postbox-form-field <?=$name;?>">
+		<p class="wpfm-admin-postbox-form-field <?= $name; ?>">
 			<label for="<?php echo esc_attr($key); ?>"><?php echo esc_html($field['label']); ?> : <?php if (!empty($field['description'])) : ?><span class="tips" data-tip="<?php echo esc_attr($field['description']); ?>">[?]</span><?php endif; ?></label>
 			<span class="wpfm-input-field">
-                <select name="<?php echo esc_attr($name); ?>" id="<?php echo esc_attr($key); ?>" class="input-select wpfm-small-field <?php echo esc_attr(isset($field['class']) ? $field['class'] : $key); ?>">
-    				<?php foreach ($field['options'] as $key => $value) : ?>
-    					<option value="<?php echo esc_attr($key); ?>" <?php if (isset($field['value'])) selected($field['value'], $key); ?>><?php echo esc_html($value); ?></option>
-    				<?php endforeach; ?>
-    			</select>
-            </span>
+				<select name="<?php echo esc_attr($name); ?>" id="<?php echo esc_attr($key); ?>" class="input-select wpfm-small-field <?php echo esc_attr(isset($field['class']) ? $field['class'] : $key); ?>">
+					<?php foreach ($field['options'] as $key => $value) : ?>
+						<option value="<?php echo esc_attr($key); ?>" <?php if (isset($field['value'])) selected($field['value'], $key); ?>><?php echo esc_html($value); ?></option>
+					<?php endforeach; ?>
+				</select>
+			</span>
 		</p>
 	<?php
 	}
@@ -728,7 +634,7 @@ class WPFM_Writepanels
 			$name = $key;
 		}
 	?>
-		<p class="wpfm-admin-postbox-form-field <?=$name;?>">
+		<p class="wpfm-admin-postbox-form-field <?= $name; ?>">
 			<label for="<?php echo esc_attr($key); ?>"><?php echo esc_html($field['label']); ?> : <?php if (!empty($field['description'])) : ?><span class="tips" data-tip="<?php echo esc_attr($field['description']); ?>">[?]</span><?php endif; ?></label>
 			<select multiple="multiple" name="<?php echo esc_attr($name); ?>[]" id="<?php echo esc_attr($key); ?>" class="input-select <?php echo esc_attr(isset($field['class']) ? $field['class'] : $key); ?>">
 				<?php foreach ($field['options'] as $key => $value) : ?>
@@ -762,28 +668,28 @@ class WPFM_Writepanels
 
 		$exp_arr = explode("_", $key);
 	?>
-		<p class="wpfm-admin-postbox-form-field <?=$name;?>">
+		<p class="wpfm-admin-postbox-form-field <?= $name; ?>">
 			<label for="<?php echo esc_attr($key); ?>"><?php echo esc_html($field['label']); ?> : </label>
-			<?php if($key == '_enable_food_ingre' || $key == '_enable_food_nutri') { //$key == '_option_enable_desc_'.end($exp_arr) ?>
+			<?php if ($key == '_enable_food_ingre' || $key == '_enable_food_nutri') {
+			?>
 				<span class="wpfm-input-field">
 					<label class="wpfm-field-switch" for="<?php echo esc_attr($key); ?>">
-						<input type="checkbox" id="<?php echo esc_attr($key); ?>" name="<?php echo esc_attr($name); ?>" value="1"
-						<?php checked($field['value'], 1); ?>>
+						<input type="checkbox" id="<?php echo esc_attr($key); ?>" name="<?php echo esc_attr($name); ?>" value="1" <?php checked($field['value'], 1); ?>>
 						<span class="wpfm-field-switch-slider round"></span>
 					</label>
 				</span>
 			<?php } else { ?>
 				<span class="wpfm-input-field">
-				<?php foreach ($field['options'] as $option_key => $value) :?>
-					<input type="checkbox" id="<?php echo esc_attr($option_key); ?>" class="checkbox <?php echo esc_attr($option_key); ?>" name="<?php echo esc_attr(isset($field['name']) ? $field['name'] : $key); ?>[]" value="<?php echo esc_attr($option_key); ?>" <?php if (!empty($field['value']) && is_array($field['value'])) checked(in_array($option_key, $field['value'], true)); ?> />
-					<label for="<?php echo esc_attr($option_key); ?>"><?php echo esc_html($value); ?></label>
-				<?php endforeach; ?>
+					<?php foreach ($field['options'] as $option_key => $value) : ?>
+						<input type="checkbox" id="<?php echo esc_attr($option_key); ?>" class="checkbox <?php echo esc_attr($option_key); ?>" name="<?php echo esc_attr(isset($field['name']) ? $field['name'] : $key); ?>[]" value="<?php echo esc_attr($option_key); ?>" <?php if (!empty($field['value']) && is_array($field['value'])) checked(in_array($option_key, $field['value'], true)); ?> />
+						<label for="<?php echo esc_attr($option_key); ?>"><?php echo esc_html($value); ?></label>
+					<?php endforeach; ?>
 				</span>
-				<!-- <input type="checkbox" class="checkbox " name="<?php echo esc_attr($name); ?>" id="<?php echo esc_attr($key); ?>" value="1" <?php checked($field['value'], 1); ?> /> -->
 				<?php if (!empty($field['description'])) : ?><span class="description"><?php echo $field['description']; ?></span>
-			<?php endif; } ?>
+			<?php endif;
+			} ?>
 		</p>
-	<?php
+		<?php
 	}
 
 
@@ -885,11 +791,12 @@ class WPFM_Writepanels
 		}
 	}
 
-	public function display_notice(){
+	public function display_notice()
+	{
 		$notice = get_transient('WPFM_Food_Notice');
-		if(!empty($notice)){
+		if (!empty($notice)) {
 			echo '<div class="notice notice-success is-dismissible">';
-			echo '<p>'.$notice.'</p>';
+			echo '<p>' . $notice . '</p>';
 			echo '</div>';
 		}
 	}
@@ -914,25 +821,25 @@ class WPFM_Writepanels
 		}
 
 
-		if($name == '_food_price' || $name == '_food_sale_price'){
-			$cur_symbol = "(".get_food_manager_currency_symbol().")";
+		if ($name == '_food_price' || $name == '_food_sale_price') {
+			$cur_symbol = "(" . get_food_manager_currency_symbol() . ")";
 		}
 
-		if($name == '_food_menu_order'){
+		if ($name == '_food_menu_order') {
 			$field['value'] = (empty($field['value']) ? '0' : $field['value']);
 		} else {
 			$field['value'] = $field['value'];
 		}
-	?>
-		<p class="wpfm-admin-postbox-form-field <?=$name;?>">
+		?>
+		<p class="wpfm-admin-postbox-form-field <?= $name; ?>">
 			<label for="<?php echo esc_attr($key); ?>"><?php echo esc_html($field['label']); ?> <?php echo esc_html($cur_symbol); ?> : <?php if (!empty($field['description'])) : ?><span class="tips" data-tip="<?php echo esc_attr($field['description']); ?>">[?]</span><?php endif; ?></label>
 			<span class="wpfm-input-field">
-				<input type="number" class="wpfm-small-field" name="<?php echo esc_attr($name); ?>" id="<?php echo esc_attr($key); ?>" placeholder="<?php echo esc_attr($field['placeholder']); ?>" value="<?php echo esc_attr($field['value']); ?>" maxlength="75" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" step="any"/>
+				<input type="number" class="wpfm-small-field" name="<?php echo esc_attr($name); ?>" id="<?php echo esc_attr($key); ?>" placeholder="<?php echo esc_attr($field['placeholder']); ?>" value="<?php echo esc_attr($field['value']); ?>" maxlength="75" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" step="any" />
 			</span>
 		</p>
 	<?php
 	}
-	
+
 
 	/**
 	 * input_radio function.
@@ -943,21 +850,21 @@ class WPFM_Writepanels
 	public static function input_radio($key, $field)
 	{
 		global $thepostid;
-		
+
 		$field_val = get_post_meta($thepostid, $key, true);
 
 		if (empty($field['value']) || !empty($field_val)) {
 			$field['value'] = get_post_meta($thepostid, $key, true);
 		}
-		
+
 		if (!empty($field['name'])) {
 			$name = $field['name'];
 		} else {
 			$name = $key;
 		}
-		
+
 	?>
-		<p class="wpfm-admin-postbox-form-field <?=$name;?>">
+		<p class="wpfm-admin-postbox-form-field <?= $name; ?>">
 			<label><?php echo esc_html($field['label']); ?> :</label>
 			<span class="wpfm-input-field">
 				<?php foreach ($field['options'] as $option_key => $value) : ?>
@@ -967,7 +874,7 @@ class WPFM_Writepanels
 				<?php if (!empty($field['description'])) : ?><span class="description"><?php echo $field['description']; ?></span><?php endif; ?>
 			</span>
 		</p>
-<?php
+	<?php
 	}
 
 
@@ -992,55 +899,47 @@ class WPFM_Writepanels
 		$wpfm_key_num = explode("_", $key)['3'];
 
 	?>
-	<div class="wpfm-admin-options-table <?=$name;?>" >
-		<p class="wpfm-admin-postbox-form-field"><label><?php echo esc_html($field['label']); ?></label></p>
-		<table class="widefat">
-			<thead>
-				<th> </th>
-				<th>#</th>
-				<th>Option name</th>
-				<th>Default</th>
-				<th>Price</th>
-				<th>Type of price</th>
-				<th></th>
-			</thead>
-			<tbody>
-				<?php 
-				if(isset($field['value']) && !empty($field['value']) && is_array($field['value'])){
-
-					//$repeated_rows = array_unique(get_post_meta($thepostid ,'wpfm_repeated_options', true));
+		<div class="wpfm-admin-options-table <?= $name; ?>">
+			<p class="wpfm-admin-postbox-form-field"><label><?php echo esc_html($field['label']); ?></label></p>
+			<table class="widefat">
+				<thead>
+					<th> </th>
+					<th>#</th>
+					<th>Option name</th>
+					<th>Default</th>
+					<th>Price</th>
+					<th>Type of price</th>
+					<th></th>
+				</thead>
+				<tbody>
+					<?php
+					if (isset($field['value']) && !empty($field['value']) && is_array($field['value'])) {
 						$count = 1;
 						foreach ($field['value'] as $op_key => $op_value) {
-							//for($i=1; $i <= count($repeated_rows); $i++){
-								?>
-								<tr class="option-tr-<?php echo esc_attr($count);?>">
-									<td><span class="wpfm-option-sort">☰</span></td>
-									<td><?php echo esc_html($count);?></td>
-									<td><input type="text" name="<?php echo esc_attr($wpfm_key_num);?>_option_value_name_<?php echo esc_attr($count); ?>" value="<?php if(isset($op_value['option_value_name']) ) echo $op_value['option_value_name']; ?>" class="opt_name" pattern=".*\S+.*" required></td>
-									<!-- <td><input type="checkbox" name="%%repeated-option-index2%%_option_value_default_<?php //echo esc_attr($count);?>" value="1"<?php //if(isset($op_value['option_value_default']) && $op_value['option_value_price_type'] == 'option_value_default') echo 'checked="checked"' ?> class="opt_default"></td> -->
-									<td><input type="checkbox" name="<?php echo esc_attr($wpfm_key_num);?>_option_value_default_<?php echo esc_attr($count);?>" <?php if(isset($op_value['option_value_default']) && $op_value['option_value_default'] == 'on') echo 'checked="checked"'; ?> class="opt_default" ></td>
-
-									<td><input type="number" name="<?php echo esc_attr($wpfm_key_num);?>_option_value_price_<?php echo esc_attr($count);?>" value="<?php if(isset($op_value['option_value_price']) ) echo $op_value['option_value_price']; ?>" class="opt_price" step="any" required></td>
-
-									<td>
-										<select name="<?php echo esc_attr($wpfm_key_num);?>_option_value_price_type_<?php echo esc_attr($count);?>" class="opt_select">
-										<option value="quantity_based" <?php if(isset($op_value['option_value_price_type']) && $op_value['option_value_price_type'] == 'quantity_based') echo 'selected="selected"' ?>>Quantity Based</option>
-										<option value="fixed_amount" <?php if(isset($op_value['option_value_price_type']) && $op_value['option_value_price_type'] == 'fixed_amount') echo 'selected="selected"' ?>>Fixed Amount</option>
-										</select>
-									</td>
-									<td><a href="javascript: void(0);" data-id="<?php echo esc_attr($count);?>" class="option-delete-btn">Remove</a></td>
-									<input type="hidden" class="option-value-class" name="option_value_count[]" value="<?php echo esc_attr($count);?>">
-								</tr>
-							<?php 
+					?>
+							<tr class="option-tr-<?php echo esc_attr($count); ?>">
+								<td><span class="wpfm-option-sort">☰</span></td>
+								<td><?php echo esc_html($count); ?></td>
+								<td><input type="text" name="<?php echo esc_attr($wpfm_key_num); ?>_option_value_name_<?php echo esc_attr($count); ?>" value="<?php if (isset($op_value['option_value_name'])) echo $op_value['option_value_name']; ?>" class="opt_name" pattern=".*\S+.*" required></td>
+								<td><input type="checkbox" name="<?php echo esc_attr($wpfm_key_num); ?>_option_value_default_<?php echo esc_attr($count); ?>" <?php if (isset($op_value['option_value_default']) && $op_value['option_value_default'] == 'on') echo 'checked="checked"'; ?> class="opt_default"></td>
+								<td><input type="number" name="<?php echo esc_attr($wpfm_key_num); ?>_option_value_price_<?php echo esc_attr($count); ?>" value="<?php if (isset($op_value['option_value_price'])) echo $op_value['option_value_price']; ?>" class="opt_price" step="any" required></td>
+								<td>
+									<select name="<?php echo esc_attr($wpfm_key_num); ?>_option_value_price_type_<?php echo esc_attr($count); ?>" class="opt_select">
+										<option value="quantity_based" <?php if (isset($op_value['option_value_price_type']) && $op_value['option_value_price_type'] == 'quantity_based') echo 'selected="selected"' ?>>Quantity Based</option>
+										<option value="fixed_amount" <?php if (isset($op_value['option_value_price_type']) && $op_value['option_value_price_type'] == 'fixed_amount') echo 'selected="selected"' ?>>Fixed Amount</option>
+									</select>
+								</td>
+								<td><a href="javascript: void(0);" data-id="<?php echo esc_attr($count); ?>" class="option-delete-btn">Remove</a></td>
+								<input type="hidden" class="option-value-class" name="option_value_count[]" value="<?php echo esc_attr($count); ?>">
+							</tr>
+					<?php
 							$count++;
-							//}
 						}
-				}else{
-					
-				} ?>
-			</tbody>
-			<tfoot>
-				<td colspan="7"><a class="button wpfm-add-row" data-row="<tr class=&apos;option-tr-%%repeated-option-index3%%&apos;>
+					} else {
+					} ?>
+				</tbody>
+				<tfoot>
+					<td colspan="7"><a class="button wpfm-add-row" data-row="<tr class=&apos;option-tr-%%repeated-option-index3%%&apos;>
 					<td><span class=&apos;wpfm-option-sort&apos;>☰</span></td>
 					<td>%%repeated-option-index3%%</td>
 					<td><input type=&apos;text&apos; name=&apos;%%repeated-option-index2%%_option_value_name_%%repeated-option-index3%%&apos; value=&apos;&apos; class=&apos;opt_name&apos; pattern=&apos;.*\S+.*&apos; required></td>
@@ -1055,11 +954,11 @@ class WPFM_Writepanels
 					<td><a href=&apos;javascript: void(0);&apos; data-id=&apos;%%repeated-option-index3%%&apos; class=&apos;option-delete-btn&apos;>Remove</a></td>
 					<input type=&apos;hidden&apos; class=&apos;option-value-class&apos; name=&apos;option_value_count[]&apos; value=&apos;%%repeated-option-index3%%&apos;>
 				</tr>">Add Row</a>
-				</td>
-			</tfoot>
-		</table>
-	</div>
-	<?php
+					</td>
+				</tfoot>
+			</table>
+		</div>
+<?php
 	}
 
 	/**
@@ -1077,24 +976,24 @@ class WPFM_Writepanels
 		$nutrition_ids = [];
 
 		$meta_ingredient = get_post_meta($post_id, '_ingredient', true);
-		if( $meta_ingredient ){
+		if ($meta_ingredient) {
 			foreach ($meta_ingredient as $value) {
 				$ingredient_ids[] = $value['id'];
 			}
 		}
 
 		$meta_nutrition = get_post_meta($post_id, '_nutrition', true);
-		if( $meta_nutrition ){
+		if ($meta_nutrition) {
 			foreach ($meta_nutrition as $value) {
 				$nutrition_ids[] = $value['id'];
 			}
 		}
 
-		if( !empty($ingredient_ids) ){
+		if (!empty($ingredient_ids)) {
 			wp_set_object_terms($post_id, $ingredient_ids, 'food_manager_ingredient');
 		}
 
-		if( !empty($nutrition_ids) ){
+		if (!empty($nutrition_ids)) {
 			wp_set_object_terms($post_id, $nutrition_ids, 'food_manager_nutrition');
 		}
 
@@ -1104,33 +1003,33 @@ class WPFM_Writepanels
 		if (is_int(wp_is_post_autosave($post))) return;
 		if (empty($_POST['food_manager_nonce']) || !wp_verify_nonce($_POST['food_manager_nonce'], 'save_meta_data')) return;
 		if (!current_user_can('edit_post', $post_id)) return;
-		
-		if ($post->post_type == 'food_manager'){
+
+		if ($post->post_type == 'food_manager') {
 			do_action('food_manager_save_food_manager', $post_id, $post);
 			$unit_ids = [];
 			$ingredient_ids = [];
 			$nutrition_ids = [];
-			
-			if( isset( $_POST['_ingredient'] ) && !empty( $_POST['_ingredient'] ) ){
+
+			if (isset($_POST['_ingredient']) && !empty($_POST['_ingredient'])) {
 
 				$ingredients = $_POST['_ingredient'];
 
-				foreach ($ingredients as $ingredient_id => $ingredient ) {
+				foreach ($ingredients as $ingredient_id => $ingredient) {
 					$ingredient_ids[] = $ingredient_id;
 
-					if( trim($ingredient['unit_id']) ){
+					if (trim($ingredient['unit_id'])) {
 						$unit_ids[] = (int)$ingredient['unit_id'];
 					}
 				}
 			}
 
-			$exist_ingredients = get_the_terms( $post_id, 'food_manager_ingredient' );
+			$exist_ingredients = get_the_terms($post_id, 'food_manager_ingredient');
 
-			if( $exist_ingredients ){
+			if ($exist_ingredients) {
 
 				$removed_ingredient_ids = [];
 				foreach ($exist_ingredients as $ingredient) {
-					if( !in_array($ingredient->term_id, $ingredient_ids) ){
+					if (!in_array($ingredient->term_id, $ingredient_ids)) {
 						$removed_ingredient_ids[] = $ingredient->term_id;
 					}
 				}
@@ -1138,29 +1037,29 @@ class WPFM_Writepanels
 				wp_remove_object_terms($post_id, $removed_ingredient_ids, 'food_manager_ingredient');
 			}
 
-			if( !empty($ingredient_ids) ){
+			if (!empty($ingredient_ids)) {
 				wp_set_object_terms($post_id, $ingredient_ids, 'food_manager_ingredient');
 			}
 
-			if( isset( $_POST['_nutrition'] ) && !empty( $_POST['_nutrition'] ) ){
-				
+			if (isset($_POST['_nutrition']) && !empty($_POST['_nutrition'])) {
+
 				$nutritions = $_POST['_nutrition'];
-				
-				foreach ($nutritions as $nutrition_id => $nutrition ) {
+
+				foreach ($nutritions as $nutrition_id => $nutrition) {
 					$nutrition_ids[] = $nutrition_id;
-					if( trim($nutrition['unit_id']) ){
+					if (trim($nutrition['unit_id'])) {
 						$unit_ids[] = (int)$nutrition['unit_id'];
 					}
 				}
 			}
 
-			$exist_nutritions = get_the_terms( $post_id, 'food_manager_nutrition' );
+			$exist_nutritions = get_the_terms($post_id, 'food_manager_nutrition');
 
-			if( $exist_nutritions ){
+			if ($exist_nutritions) {
 
 				$removed_nutrition_ids = [];
 				foreach ($exist_nutritions as $nutrition) {
-					if( !in_array($nutrition->term_id, $nutrition_ids) ){
+					if (!in_array($nutrition->term_id, $nutrition_ids)) {
 						$removed_nutrition_ids[] = $nutrition->term_id;
 					}
 				}
@@ -1168,11 +1067,11 @@ class WPFM_Writepanels
 				wp_remove_object_terms($post_id, $removed_nutrition_ids, 'food_manager_nutrition');
 			}
 
-			if( !empty($nutrition_ids) ){
+			if (!empty($nutrition_ids)) {
 				wp_set_object_terms($post_id, $nutrition_ids, 'food_manager_nutrition');
 			}
-			
-			if( $unit_ids ){
+
+			if ($unit_ids) {
 				wp_set_object_terms($post_id, $unit_ids, 'food_manager_unit');
 			}
 
@@ -1180,7 +1079,7 @@ class WPFM_Writepanels
 			$order_menu = $wpdb->get_results("SELECT menu_order FROM $wpdb->posts WHERE ID = " . intval($post_id));
 
 			if ($order_menu && $order_menu[0]->menu_order == 0) {
-				
+
 				$last_inserted_post = get_posts(array(
 					'post_type' => $post->post_type,
 					'posts_per_page' => 2,
@@ -1198,12 +1097,10 @@ class WPFM_Writepanels
 					$wpdb->update($wpdb->posts, ['menu_order' => 1], ['ID' => intval($post_id)]);
 				}
 			}
-			
 		}
 
 		if ($post->post_type == 'food_manager_menu')
 			do_action('food_manager_save_food_manager_menu', $post_id, $post);
-
 	}
 
 	/**
@@ -1221,149 +1118,139 @@ class WPFM_Writepanels
 		// Save fields
 
 		// Advanced tab fields
-		if ( ! empty( $_POST['_food_menu_order'] ) ) {
+		if (!empty($_POST['_food_menu_order'])) {
 			$fd_menu_order = sanitize_text_field($_POST['_food_menu_order']);
-			if( !add_post_meta($post_id,'_food_menu_order', $fd_menu_order, true) ){
-				update_post_meta($post_id,'_food_menu_order', $fd_menu_order);
+			if (!add_post_meta($post_id, '_food_menu_order', $fd_menu_order, true)) {
+				update_post_meta($post_id, '_food_menu_order', $fd_menu_order);
 			}
 		}
-		
-		if(isset($_POST['_enable_food_ingre'])){
+
+		if (isset($_POST['_enable_food_ingre'])) {
 			$fd_food_ingre = sanitize_text_field($_POST['_enable_food_ingre']);
-			if( !add_post_meta($post_id,'_enable_food_ingre', $fd_food_ingre, true) ){
-				update_post_meta($post_id,'_enable_food_ingre', $fd_food_ingre);
+			if (!add_post_meta($post_id, '_enable_food_ingre', $fd_food_ingre, true)) {
+				update_post_meta($post_id, '_enable_food_ingre', $fd_food_ingre);
 			}
 		} else {
-			update_post_meta($post_id,'_enable_food_ingre', '');
+			update_post_meta($post_id, '_enable_food_ingre', '');
 		}
-		
-		if(isset($_POST['_enable_food_nutri'])){
+
+		if (isset($_POST['_enable_food_nutri'])) {
 			$fd_food_nutri = sanitize_text_field($_POST['_enable_food_nutri']);
-			if( !add_post_meta($post_id,'_enable_food_nutri', $fd_food_nutri, true) ){
-				update_post_meta($post_id,'_enable_food_nutri', $fd_food_nutri);
+			if (!add_post_meta($post_id, '_enable_food_nutri', $fd_food_nutri, true)) {
+				update_post_meta($post_id, '_enable_food_nutri', $fd_food_nutri);
 			}
 		} else {
-			update_post_meta($post_id,'_enable_food_nutri', '');
+			update_post_meta($post_id, '_enable_food_nutri', '');
 		}
 
 		// Ingredients.
-		delete_post_meta( $post_id, '_ingredient' );
+		delete_post_meta($post_id, '_ingredient');
 
 		$multiArrayIng = array();
-		if ( ! empty( $_POST['_ingredient'] ) ) {
-			foreach ( $_POST['_ingredient'] as $id => $ingredient ) {
-				$term_name = get_term( $id )->name;
+		if (!empty($_POST['_ingredient'])) {
+			foreach ($_POST['_ingredient'] as $id => $ingredient) {
+				$term_name = get_term($id)->name;
 				$unit_name = "Unit";
-				if($ingredient['unit_id'] == '' && empty($ingredient['unit_id'])){
+				if ($ingredient['unit_id'] == '' && empty($ingredient['unit_id'])) {
 					$unit_name = "Unit";
 				} else {
-					$unit_name = get_term( $ingredient['unit_id'] )->name;
+					$unit_name = get_term($ingredient['unit_id'])->name;
 				}
 
 				$item = [
 					'id'      => $id,
-					'unit_id' => ! empty( $ingredient['unit_id'] ) ? $ingredient['unit_id'] : null,
-					'value'   => ! empty( $ingredient['value'] ) ? $ingredient['value'] : null,
+					'unit_id' => !empty($ingredient['unit_id']) ? $ingredient['unit_id'] : null,
+					'value'   => !empty($ingredient['value']) ? $ingredient['value'] : null,
 					'term_name' => $term_name,
 					'unit_name' => $unit_name
 				];
 				$multiArrayIng[$id] = $item;
-				//add_post_meta( $post_id, '_ingredient', $item );
 			}
-			if( !add_post_meta($post_id,'_ingredient', $multiArrayIng, true) ){
-				update_post_meta($post_id,'_ingredient', $multiArrayIng);
+			if (!add_post_meta($post_id, '_ingredient', $multiArrayIng, true)) {
+				update_post_meta($post_id, '_ingredient', $multiArrayIng);
 			}
 		}
 
 		// Nutritions.
-		delete_post_meta( $post_id, '_nutrition' );
+		delete_post_meta($post_id, '_nutrition');
 
 		$multiArrayNutri = array();
-		if ( ! empty( $_POST['_nutrition'] ) ) {
-			foreach ( $_POST['_nutrition'] as $id => $nutrition ) {
-				$term_name = get_term( $id )->name;
+		if (!empty($_POST['_nutrition'])) {
+			foreach ($_POST['_nutrition'] as $id => $nutrition) {
+				$term_name = get_term($id)->name;
 				$unit_name = "Unit";
-				if($nutrition['unit_id'] == '' && empty($nutrition['unit_id'])){
+				if ($nutrition['unit_id'] == '' && empty($nutrition['unit_id'])) {
 					$unit_name = "Unit";
 				} else {
-					$unit_name = get_term( $nutrition['unit_id'] )->name;
+					$unit_name = get_term($nutrition['unit_id'])->name;
 				}
 
 				$item = [
 					'id'      => $id,
-					'unit_id' => ! empty( $nutrition['unit_id'] ) ? $nutrition['unit_id'] : null,
-					'value'   => ! empty( $nutrition['value'] ) ? $nutrition['value'] : null,
+					'unit_id' => !empty($nutrition['unit_id']) ? $nutrition['unit_id'] : null,
+					'value'   => !empty($nutrition['value']) ? $nutrition['value'] : null,
 					'term_name' => $term_name,
 					'unit_name' => $unit_name
 				];
 				$multiArrayNutri[$id] = $item;
-				//add_post_meta( $post_id, '_ingredient', $item );
 			}
-			if( !add_post_meta($post_id,'_nutrition', $multiArrayNutri, true) ){
-				update_post_meta($post_id,'_nutrition', $multiArrayNutri);
+			if (!add_post_meta($post_id, '_nutrition', $multiArrayNutri, true)) {
+				update_post_meta($post_id, '_nutrition', $multiArrayNutri);
 			}
 		}
 
-		// Food type
-		/*$fd_type = sanitize_text_field($_POST['_food_veg_nonveg']);
-		if( !add_post_meta($post_id,'_food_veg_nonveg', $fd_type, true) ){
-			update_post_meta($post_id,'_food_veg_nonveg', $fd_type);
-		}*/
-		
 		// Food price
 		$fd_price = sanitize_text_field($_POST['_food_price']);
-		if( !add_post_meta($post_id,'_food_price', $fd_price, true) ){
-			update_post_meta($post_id,'_food_price', $fd_price);
+		if (!add_post_meta($post_id, '_food_price', $fd_price, true)) {
+			update_post_meta($post_id, '_food_price', $fd_price);
 		}
 
 		// Food sale price
 		$fd_sale_price = sanitize_text_field($_POST['_food_sale_price']);
-		if( !add_post_meta($post_id,'_food_sale_price', $fd_sale_price, true) ){
-			update_post_meta($post_id,'_food_sale_price', $fd_sale_price);
+		if (!add_post_meta($post_id, '_food_sale_price', $fd_sale_price, true)) {
+			update_post_meta($post_id, '_food_sale_price', $fd_sale_price);
 		}
 
 		// Food stock status
 		$fd_stock_status = sanitize_text_field($_POST['_food_stock_status']);
-		if( !add_post_meta($post_id,'_food_stock_status', $fd_stock_status, true) ){
-			update_post_meta($post_id,'_food_stock_status', $fd_stock_status);
+		if (!add_post_meta($post_id, '_food_stock_status', $fd_stock_status, true)) {
+			update_post_meta($post_id, '_food_stock_status', $fd_stock_status);
 		}
 
 		// Repeated options
 		$repeated_options = isset($_POST['repeated_options']) ? $_POST['repeated_options'] : '';
-		if( !add_post_meta($post_id,'wpfm_repeated_options', $repeated_options, true) ){
-			update_post_meta($post_id,'wpfm_repeated_options', $repeated_options);
+		if (!add_post_meta($post_id, 'wpfm_repeated_options', $repeated_options, true)) {
+			update_post_meta($post_id, 'wpfm_repeated_options', $repeated_options);
 		}
 
 		// Options value count
 		$array_cnt = isset($_POST['option_value_count']) ? $_POST['option_value_count'] : '';
-		if(isset($array_cnt) && !empty($array_cnt)){
+		if (isset($array_cnt) && !empty($array_cnt)) {
 			$food_data_option_value_count = array();
 			$index = 0;
 			foreach ($array_cnt as $number) {
-			    if ($number == 1) {
-			        $index++;
-			    }
-			    $food_data_option_value_count[$index][] = $number;
+				if ($number == 1) {
+					$index++;
+				}
+				$food_data_option_value_count[$index][] = $number;
 			}
-			if( !add_post_meta($post_id,'wpfm_option_value_count', $food_data_option_value_count, true) ){
-				update_post_meta($post_id,'wpfm_option_value_count', $food_data_option_value_count);
+			if (!add_post_meta($post_id, 'wpfm_option_value_count', $food_data_option_value_count, true)) {
+				update_post_meta($post_id, 'wpfm_option_value_count', $food_data_option_value_count);
 			}
 		}
 
 		// Save Food Form fields values
 		foreach ($this->food_manager_data_fields()['food'] as $key => $field) {
-			
-			//foreach ($field as $key2 => $fiel) {
 
 			$type = !empty($field['type']) ? $field['type'] : '';
 			// food banner
-			if ('_food_banner' === "_".$key) {
-				if (isset($_POST["_".$key]) && !empty($_POST["_".$key])) {
-					$thumbnail_image = $_POST["_".$key];
-					update_post_meta($post_id, "_".$key, $_POST["_".$key]);
+			if ('_food_banner' === "_" . $key) {
+				if (isset($_POST["_" . $key]) && !empty($_POST["_" . $key])) {
+					$thumbnail_image = $_POST["_" . $key];
+					update_post_meta($post_id, "_" . $key, $_POST["_" . $key]);
 				} else {
-				$thumbnail_image = $_POST["_".$key];
-					update_post_meta($post_id, "_".$key, $_POST["_".$key]);
+					$thumbnail_image = $_POST["_" . $key];
+					update_post_meta($post_id, "_" . $key, $_POST["_" . $key]);
 				}
 
 				$image = get_the_post_thumbnail_url($post_id);
@@ -1394,12 +1281,12 @@ class WPFM_Writepanels
 				}
 			}
 
-			if(isset($_POST["_".$key]) && !empty($_POST["_".$key])){
-				update_post_meta($post_id, "_".$key, $_POST["_".$key]);
+			if (isset($_POST["_" . $key]) && !empty($_POST["_" . $key])) {
+				update_post_meta($post_id, "_" . $key, $_POST["_" . $key]);
 			} else {
-				update_post_meta($post_id, "_".$key, "");
+				update_post_meta($post_id, "_" . $key, "");
 			}
-		
+
 			switch ($type) {
 				case 'textarea':
 					if (isset($_POST[$key])) {
@@ -1433,12 +1320,11 @@ class WPFM_Writepanels
 					}
 					break;
 			}
-			//}
 		}
 
 		// Save Extra Options/Topping form fields values
 		foreach ($this->food_manager_data_fields()['extra_options'] as $key => $field) {
-			
+
 			// author
 			if ('_food_author' === $key) {
 				$wpdb->update($wpdb->posts, array('post_author' => $_POST[$key] > 0 ? absint($_POST[$key]) : 0), array('ID' => $post_id));
@@ -1450,161 +1336,149 @@ class WPFM_Writepanels
 
 				$food = $post;
 				$form_submit_food_instance = call_user_func(array('WPFM_Form_Submit_Food', 'instance'));
-		        //$custom_fields = $form_submit_food_instance->get_food_manager_fieldeditor_fields();
+				$custom_food_fields  = !empty($form_submit_food_instance->get_food_manager_fieldeditor_fields()) ? $form_submit_food_instance->get_food_manager_fieldeditor_fields() : array();
+				$custom_extra_options_fields  = !empty($form_submit_food_instance->get_food_manager_fieldeditor_extra_options_fields()) ? $form_submit_food_instance->get_food_manager_fieldeditor_extra_options_fields() : array();
 
-		        $custom_food_fields  = !empty($form_submit_food_instance->get_food_manager_fieldeditor_fields()) ? $form_submit_food_instance->get_food_manager_fieldeditor_fields() : array();
+				$custom_fields = '';
+				if (!empty($custom_extra_options_fields)) {
+					$custom_fields = array_merge($custom_food_fields, $custom_extra_options_fields);
+				} else {
+					$custom_fields = $custom_food_fields;
+				}
 
-		        $custom_extra_options_fields  = !empty($form_submit_food_instance->get_food_manager_fieldeditor_extra_options_fields()) ? $form_submit_food_instance->get_food_manager_fieldeditor_extra_options_fields() : array();
+				$default_fields = $form_submit_food_instance->get_default_food_fields();
 
-		        $custom_fields = '';
-		        if(!empty($custom_extra_options_fields)){
-		            $custom_fields = array_merge($custom_food_fields, $custom_extra_options_fields);
-		        } else {
-		            $custom_fields = $custom_food_fields;
-		        }
+				$additional_fields = [];
+				if (!empty($custom_fields) && isset($custom_fields) && !empty($custom_fields['extra_options'])) {
+					foreach ($custom_fields['extra_options'] as $field_name => $field_data) {
+						if (!array_key_exists($field_name, $default_fields['extra_options'])) {
+							$meta_key = '_' . $field_name;
+							$field_value = $food->$meta_key;
+							if (isset($field_value)) {
+								$additional_fields[$field_name] = $field_data;
+							}
+						}
+					}
 
-		        $default_fields = $form_submit_food_instance->get_default_food_fields();
-		        
-		        $additional_fields = [];
-		        if (!empty($custom_fields) && isset($custom_fields) && !empty($custom_fields['extra_options'])) {
-		            foreach ($custom_fields['extra_options'] as $field_name => $field_data) {
-		                if (!array_key_exists($field_name, $default_fields['extra_options'])) {
-		                    $meta_key = '_' . $field_name;
-		                    $field_value = $food->$meta_key;
-		                    if (isset($field_value)) {
-		                        $additional_fields[$field_name] = $field_data;
-		                    }
-		                }
-		            }
+					if (isset($additional_fields['attendee_information_type']))
+						unset($additional_fields['attendee_information_type']);
 
-		            if (isset($additional_fields['attendee_information_type']))
-		                unset($additional_fields['attendee_information_type']);
+					if (isset($additional_fields['attendee_information_fields']))
+						unset($additional_fields['attendee_information_fields']);
 
-		            if (isset($additional_fields['attendee_information_fields']))
-		                unset($additional_fields['attendee_information_fields']);
-
-		            $additional_fields = apply_filters('food_manager_show_additional_details_fields', $additional_fields);
-		        }				
+					$additional_fields = apply_filters('food_manager_show_additional_details_fields', $additional_fields);
+				}
 
 				//find how many total reapeated extra option there then store it.
-				if(isset($_POST['repeated_options']) && is_array($_POST['repeated_options'])){
-					foreach ( $_POST['repeated_options'] as $option_count) {
+				if (isset($_POST['repeated_options']) && is_array($_POST['repeated_options'])) {
+					foreach ($_POST['repeated_options'] as $option_count) {
 						$counter = 0;
-						if(isset($_POST['option_key_'.$option_count])){
+						if (isset($_POST['option_key_' . $option_count])) {
 
-							$option_key = $_POST['option_key_'.$option_count];
-							$option_name = $_POST['option_name_'.$option_count];
-							$option_type = $_POST['_option_type_'.$option_count];
-							$option_required = $_POST['_option_required_'.$option_count];
-							$option_enable_desc = isset($_POST['_option_enable_desc_'.$option_count]) ? $_POST['_option_enable_desc_'.$option_count] : '';
-							$option_description = isset($_POST['_option_description_'.$option_count]) ? $_POST['_option_description_'.$option_count] : '';
-							/*$option_minimum = $_POST['_option_minimum_'.$option_count];
-							$option_maximum = $_POST['_option_maximum_'.$option_count];
-							$option_price = $_POST['_option_price_'.$option_count];
-							$option_price_type = $_POST['_option_price_type_'.$option_count];*/
-							
+							$option_key = $_POST['option_key_' . $option_count];
+							$option_name = $_POST['option_name_' . $option_count];
+							$option_type = $_POST['_option_type_' . $option_count];
+							$option_required = $_POST['_option_required_' . $option_count];
+							$option_enable_desc = isset($_POST['_option_enable_desc_' . $option_count]) ? $_POST['_option_enable_desc_' . $option_count] : '';
+							$option_description = isset($_POST['_option_description_' . $option_count]) ? $_POST['_option_description_' . $option_count] : '';
+
 							$option_values = array();
 
-							if(isset($_POST['option_value_count'])){
+							if (isset($_POST['option_value_count'])) {
 								$find_option = array_search('%%repeated-option-index%%', $_POST['option_value_count']);
 								if ($find_option !== false) {
 									// Remove from array
-    								unset($_POST['option_value_count'][$find_option]);
+									unset($_POST['option_value_count'][$find_option]);
 								}
-								
-								foreach ( $_POST['option_value_count'] as $option_value_count) {
-									if(!empty($_POST[$option_count.'_option_value_name_'.$option_value_count]) || !empty($_POST[$option_count.'_option_value_default_'.$option_value_count]) || !empty($_POST[$option_count.'_option_value_price_'.$option_value_count])){
+
+								foreach ($_POST['option_value_count'] as $option_value_count) {
+									if (!empty($_POST[$option_count . '_option_value_name_' . $option_value_count]) || !empty($_POST[$option_count . '_option_value_default_' . $option_value_count]) || !empty($_POST[$option_count . '_option_value_price_' . $option_value_count])) {
 
 										// New Logic
 										$option_values[$option_value_count] = array(
-															'option_value_name' => isset($_POST[$option_count.'_option_value_name_'.$option_value_count]) ? $_POST[$option_count.'_option_value_name_'.$option_value_count] : '',
+											'option_value_name' => isset($_POST[$option_count . '_option_value_name_' . $option_value_count]) ? $_POST[$option_count . '_option_value_name_' . $option_value_count] : '',
 
-															'option_value_default' => isset($_POST[$option_count.'_option_value_default_'.$option_value_count]) ? $_POST[$option_count.'_option_value_default_'.$option_value_count] : '',
+											'option_value_default' => isset($_POST[$option_count . '_option_value_default_' . $option_value_count]) ? $_POST[$option_count . '_option_value_default_' . $option_value_count] : '',
 
-															'option_value_price' => isset($_POST[$option_count.'_option_value_price_'.$option_value_count]) ? $_POST[$option_count.'_option_value_price_'.$option_value_count] : '',
+											'option_value_price' => isset($_POST[$option_count . '_option_value_price_' . $option_value_count]) ? $_POST[$option_count . '_option_value_price_' . $option_value_count] : '',
 
-															'option_value_price_type' => isset($_POST[$option_count.'_option_value_price_type_'.$option_value_count]) ? $_POST[$option_count.'_option_value_price_type_'.$option_value_count] : ''
-														);
-
+											'option_value_price_type' => isset($_POST[$option_count . '_option_value_price_type_' . $option_value_count]) ? $_POST[$option_count . '_option_value_price_type_' . $option_value_count] : ''
+										);
 									}
 								}
-								
 							}
-							
-							if(!empty($custom_extra_options_fields)){
+
+							if (!empty($custom_extra_options_fields)) {
 								$extra_options[$option_key] = array(
-														'option_name' => $option_name,
-													);
-								foreach($custom_extra_options_fields as $custom_ext_key => $custom_extra_options_field){
-									foreach($custom_extra_options_field as $custom_ext_single_key => $custom_extra_options_single_field){
-										if($custom_ext_single_key !== 'option_name' && $custom_ext_single_key !== 'option_options'){
-											$custom_ext_key_post = isset($_POST["_".$custom_ext_single_key."_".$option_count]) ? $_POST["_".$custom_ext_single_key."_".$option_count] : '';
-									        $extra_options[$option_key][$custom_ext_single_key] = $custom_ext_key_post;
+									'option_name' => $option_name,
+								);
+								foreach ($custom_extra_options_fields as $custom_ext_key => $custom_extra_options_field) {
+									foreach ($custom_extra_options_field as $custom_ext_single_key => $custom_extra_options_single_field) {
+										if ($custom_ext_single_key !== 'option_name' && $custom_ext_single_key !== 'option_options') {
+											$custom_ext_key_post = isset($_POST["_" . $custom_ext_single_key . "_" . $option_count]) ? $_POST["_" . $custom_ext_single_key . "_" . $option_count] : '';
+											$extra_options[$option_key][$custom_ext_single_key] = $custom_ext_key_post;
 
-										    if(!empty($custom_ext_key_post)){
-										        update_post_meta($post_id, "_".$custom_ext_single_key."_".$option_count, $custom_ext_key_post);
-										    } else {
-										    	update_post_meta($post_id, "_".$custom_ext_single_key."_".$option_count, "");
-										    }
-									    }
-									    if($custom_ext_single_key == 'option_name'){
-									    	$custom_ext_key_post = isset($_POST[$custom_ext_single_key."_".$option_count]) ? $_POST[$custom_ext_single_key."_".$option_count] : '';
+											if (!empty($custom_ext_key_post)) {
+												update_post_meta($post_id, "_" . $custom_ext_single_key . "_" . $option_count, $custom_ext_key_post);
+											} else {
+												update_post_meta($post_id, "_" . $custom_ext_single_key . "_" . $option_count, "");
+											}
+										}
+										if ($custom_ext_single_key == 'option_name') {
+											$custom_ext_key_post = isset($_POST[$custom_ext_single_key . "_" . $option_count]) ? $_POST[$custom_ext_single_key . "_" . $option_count] : '';
 
-									        $extra_options[$option_key][$custom_ext_single_key] = $custom_ext_key_post;
+											$extra_options[$option_key][$custom_ext_single_key] = $custom_ext_key_post;
 
-										    if(!empty($custom_ext_key_post)){
-										        update_post_meta($post_id, $custom_ext_single_key."_".$option_count, $custom_ext_key_post);
-										    }
-									    }
-									    if($custom_ext_single_key == 'option_options'){
-									    	$extra_options[$option_key][$custom_ext_single_key] = $option_values;
-									    }
-								    }
+											if (!empty($custom_ext_key_post)) {
+												update_post_meta($post_id, $custom_ext_single_key . "_" . $option_count, $custom_ext_key_post);
+											}
+										}
+										if ($custom_ext_single_key == 'option_options') {
+											$extra_options[$option_key][$custom_ext_single_key] = $option_values;
+										}
+									}
 								}
 							} else {
-								update_post_meta($post_id, 'option_name_'.$option_count , $option_name);
-								update_post_meta($post_id, '_option_description_'.$option_count , $option_description);
-								update_post_meta($post_id, '_option_type_'.$option_count , $option_type);
-								update_post_meta($post_id, '_option_required_'.$option_count , $option_required);
+								update_post_meta($post_id, 'option_name_' . $option_count, $option_name);
+								update_post_meta($post_id, '_option_description_' . $option_count, $option_description);
+								update_post_meta($post_id, '_option_type_' . $option_count, $option_type);
+								update_post_meta($post_id, '_option_required_' . $option_count, $option_required);
 
 								$extra_options[$option_key] = array(
-													'option_name' => $option_name,
-													'option_type' => $option_type,
-													'option_required' => $option_required,
-													'option_enable_desc' => $option_enable_desc,
-													'option_description' => $option_description,
-													'option_options' => $option_values,
-												);
+									'option_name' => $option_name,
+									'option_type' => $option_type,
+									'option_required' => $option_required,
+									'option_enable_desc' => $option_enable_desc,
+									'option_description' => $option_description,
+									'option_options' => $option_values,
+								);
 							}
-							
-							if(!empty($additional_fields)){
-								foreach($additional_fields as $add_key => $additional_field){
-									$key_post = isset($_POST["_".$add_key."_".$option_count]) ? $_POST["_".$add_key."_".$option_count] : '';
-							        $extra_options[$option_key][$add_key] = $key_post;
+
+							if (!empty($additional_fields)) {
+								foreach ($additional_fields as $add_key => $additional_field) {
+									$key_post = isset($_POST["_" . $add_key . "_" . $option_count]) ? $_POST["_" . $add_key . "_" . $option_count] : '';
+									$extra_options[$option_key][$add_key] = $key_post;
 								}
 							}
 						}
-
 					}
-					
+
 					$counter++;
 				}
-				
-				update_post_meta($post_id,'_wpfm_extra_options',$extra_options);
 
+				update_post_meta($post_id, '_wpfm_extra_options', $extra_options);
 			}
 		}
-		
+
 		remove_action('food_manager_save_food_manager', array($this, 'food_manager_save_food_manager_data'), 20, 2);
 		$food_data = array(
 			'ID'          => $post_id,
-			//'post_status' => $post_status,
 		);
 		wp_update_post($food_data);
 		add_action('food_manager_save_food_manager', array($this, 'food_manager_save_food_manager_data'), 20, 2);
 	}
 
-	
+
 	/**
 	 * wpfm_get_food_listings_by_category_id function.
 	 *
@@ -1614,14 +1488,14 @@ class WPFM_Writepanels
 	 */
 	public function wpfm_get_food_listings_by_category_id()
 	{
-		
+
 		if (isset($_POST['category_id']) && !empty($_POST['category_id'])) {
 
 			$args = [
 				'post_type' => 'food_manager',
 				'post_per_page' => -1,
 				'post_status' => 'publish',
-				'post__not_in' => isset( $_POST['exclude'] ) && !empty( $_POST['exclude'] ) ? $_POST['exclude']: array(),
+				'post__not_in' => isset($_POST['exclude']) && !empty($_POST['exclude']) ? $_POST['exclude'] : array(),
 				'tax_query' => [
 					[
 						'taxonomy' => $_POST['taxonomy'],
@@ -1660,7 +1534,7 @@ class WPFM_Writepanels
 			$args = [
 				'post_type' => 'food_manager',
 				'post_per_page' => -1,
-				'post__not_in' => isset( $_POST['exclude'] ) && !empty( $_POST['exclude'] ) ? $_POST['exclude']: array(),
+				'post__not_in' => isset($_POST['exclude']) && !empty($_POST['exclude']) ? $_POST['exclude'] : array(),
 				// Rest of your arguments
 			];
 
@@ -1718,11 +1592,11 @@ class WPFM_Writepanels
 	 */
 	public function food_manager_save_food_manager_menu_data($post_id, $post)
 	{
-		if( isset($_POST['radio_icons']) && !empty($_POST['radio_icons']) ){
-		$wpfm_radio_icon = $_POST['radio_icons'];
+		if (isset($_POST['radio_icons']) && !empty($_POST['radio_icons'])) {
+			$wpfm_radio_icon = $_POST['radio_icons'];
 			if (isset($wpfm_radio_icon)) {
-				if( !add_post_meta($post_id,'wpfm_radio_icons', $wpfm_radio_icon, true) ){
-					update_post_meta($post_id,'wpfm_radio_icons', $wpfm_radio_icon);
+				if (!add_post_meta($post_id, 'wpfm_radio_icons', $wpfm_radio_icon, true)) {
+					update_post_meta($post_id, 'wpfm_radio_icons', $wpfm_radio_icon);
 				}
 			}
 		}
@@ -1733,20 +1607,6 @@ class WPFM_Writepanels
 		} else {
 			update_post_meta($post_id, '_food_item_ids', '');
 		}
-
-		// if (isset($_POST['cat'])) {
-		// 	$cat_ids = array_map('esc_attr', $_POST['cat']);
-		// 	update_post_meta($post_id, '_food_item_cat_ids', $cat_ids);
-		// } else {
-		// 	update_post_meta($post_id, '_food_item_cat_ids', '');
-		// }
-
-		// if (isset($_POST['food_type'])) {
-		// 	$type_ids = array_map('esc_attr', $_POST['food_type']);
-		// 	update_post_meta($post_id, '_food_item_type_ids', $type_ids);
-		// } else {
-		// 	update_post_meta($post_id, '_food_item_type_ids', '');
-		// }
 	}
 
 	/**
@@ -1803,25 +1663,25 @@ class WPFM_Writepanels
 	public function set_custom_food_columns($columns)
 	{
 		$custom_col_order = array(
-	        'cb' => $columns['cb'],
-	        'food_title' => $columns['title'],
-	        'food_banner' => __( 'Image', 'wp-food-manager' ),
-	        'fm_stock_status' => __( 'Stock Status', 'wp-food-manager' ),
-	        'fm-price' => __( 'Price', 'wp-food-manager' ),
-	        'fm_categories' => __( 'Categories', 'wp-food-manager' ),
-	        'food_menu_order' => __( 'Order', 'wp-food-manager' ),
-			'food_status' => __( 'Status', 'wp-food-manager' ),
-	        'date' => $columns['date'],
-	        'food_actions' => __( 'Actions', 'wp-food-manager' )
-	    );
-	    return $custom_col_order;
+			'cb' => $columns['cb'],
+			'food_title' => $columns['title'],
+			'food_banner' => __('Image', 'wp-food-manager'),
+			'fm_stock_status' => __('Stock Status', 'wp-food-manager'),
+			'fm-price' => __('Price', 'wp-food-manager'),
+			'fm_categories' => __('Categories', 'wp-food-manager'),
+			'food_menu_order' => __('Order', 'wp-food-manager'),
+			'food_status' => __('Status', 'wp-food-manager'),
+			'date' => $columns['date'],
+			'food_actions' => __('Actions', 'wp-food-manager')
+		);
+		return $custom_col_order;
 	}
 
 	public function set_custom_food_sortable_columns($columns)
 	{
 		$columns['food_menu_order'] = 'menu_order';
 		$columns['food_title'] = 'food_title';
-		
+
 		return  $columns;
 	}
 
@@ -1848,14 +1708,7 @@ class WPFM_Writepanels
 				display_food_banner();
 
 				echo wp_kses_post('</div>');
-				/*$food_thumbnail = get_the_post_thumbnail( $post_id, 'thumbnail', array( 'class' => 'alignleft' ) );
-				if(empty($food_thumbnail) || $food_thumbnail == ''){
-					$food_thumbnail_url = apply_filters( 'wpfm_default_food_banner', WPFM_PLUGIN_URL . '/assets/images/wpfm-placeholder.jpg' );
-					$food_thumbnail = '<img src='.esc_url($food_thumbnail_url).' height="60px" width="60px">';
-				} else {
-					$food_thumbnail = get_the_post_thumbnail( $post_id, array( 60, 60), array( 'class' => 'alignleft' ) );
-				}
-				echo $food_thumbnail;*/
+
 				display_food_veg_nonveg_icon_tag();
 
 				break;
@@ -1882,7 +1735,7 @@ class WPFM_Writepanels
 
 			case 'food_status':
 				echo ucfirst($thispost->post_status);
-				
+
 				break;
 
 			case 'food_actions':
@@ -1955,9 +1808,8 @@ class WPFM_Writepanels
 				}
 
 				echo wp_kses_post('</div>');
-				
-				break;
 
+				break;
 		}
 	}
 }

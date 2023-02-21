@@ -1,6 +1,5 @@
 <?php
-
-if ( ! defined( 'ABSPATH' ) ) {
+if (!defined('ABSPATH')) {
 	exit; // Exit if accessed directly.
 }
 
@@ -9,7 +8,8 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  * @since 2.5
  */
-class WPFM_Permalink_Settings {
+class WPFM_Permalink_Settings
+{
 	/**
 	 * The single instance of the class.
 	 *
@@ -33,8 +33,9 @@ class WPFM_Permalink_Settings {
 	 * @static
 	 * @return self Main instance.
 	 */
-	public static function instance() {
-		if ( is_null( self::$_instance ) ) {
+	public static function instance()
+	{
+		if (is_null(self::$_instance)) {
 			self::$_instance = new self();
 		}
 		return self::$_instance;
@@ -43,7 +44,8 @@ class WPFM_Permalink_Settings {
 	/**
 	 * Constructor.
 	 */
-	public function __construct() {
+	public function __construct()
+	{
 		$this->setup_fields();
 		$this->settings_save();
 		$this->permalinks = WPFM_Post_Types::get_permalink_structure();
@@ -52,25 +54,26 @@ class WPFM_Permalink_Settings {
 	/**
 	 * Add setting fields related to permalinks.
 	 */
-	public function setup_fields() {
+	public function setup_fields()
+	{
 		add_settings_field(
 			'wpfm_food_base_slug',
-			__( 'Food base', 'wp-food-manager' ),
-			array( $this, 'food_base_slug_input' ),
+			__('Food base', 'wp-food-manager'),
+			array($this, 'food_base_slug_input'),
 			'permalink',
 			'optional'
 		);
 		add_settings_field(
 			'wpfm_food_category_slug',
-			__( 'Food category base', 'wp-food-manager' ),
-			array( $this, 'food_category_slug_input' ),
+			__('Food category base', 'wp-food-manager'),
+			array($this, 'food_category_slug_input'),
 			'permalink',
 			'optional'
 		);
 		add_settings_field(
 			'wpfm_food_type_slug',
-			__( 'Food type base', 'wp-food-manager' ),
-			array( $this, 'food_type_slug_input' ),
+			__('Food type base', 'wp-food-manager'),
+			array($this, 'food_type_slug_input'),
 			'permalink',
 			'optional'
 		);
@@ -79,51 +82,55 @@ class WPFM_Permalink_Settings {
 	/**
 	 * Show a slug input box for food post type slug.
 	 */
-	public function food_base_slug_input() {
-		?>
-		<input name="wpfm_food_base_slug" type="text" class="regular-text code" value="<?php echo esc_attr( $this->permalinks['food_base'] ); ?>" placeholder="<?php echo esc_attr_x( 'food', 'food permalink - resave permalinks after changing this', 'wp-food-manager' ); ?>" />
-		<?php
+	public function food_base_slug_input()
+	{
+?>
+		<input name="wpfm_food_base_slug" type="text" class="regular-text code" value="<?php echo esc_attr($this->permalinks['food_base']); ?>" placeholder="<?php echo esc_attr_x('food', 'food permalink - resave permalinks after changing this', 'wp-food-manager'); ?>" />
+	<?php
 	}
 
 	/**
 	 * Show a slug input box for food category slug.
 	 */
-	public function food_category_slug_input() {
-		?>
-		<input name="wpfm_food_category_slug" type="text" class="regular-text code" value="<?php echo esc_attr( $this->permalinks['category_base'] ); ?>" placeholder="<?php echo esc_attr_x( 'food-category', 'food category slug - resave permalinks after changing this', 'wp-food-manager' ); ?>" />
-		<?php
+	public function food_category_slug_input()
+	{
+	?>
+		<input name="wpfm_food_category_slug" type="text" class="regular-text code" value="<?php echo esc_attr($this->permalinks['category_base']); ?>" placeholder="<?php echo esc_attr_x('food-category', 'food category slug - resave permalinks after changing this', 'wp-food-manager'); ?>" />
+	<?php
 	}
 
 	/**
 	 * Show a slug input box for food type slug.
 	 */
-	public function food_type_slug_input() {
-		?>
-		<input name="wpfm_food_type_slug" type="text" class="regular-text code" value="<?php echo esc_attr( $this->permalinks['type_base'] ); ?>" placeholder="<?php echo esc_attr_x( 'food-type', 'food type slug - resave permalinks after changing this', 'wp-food-manager' ); ?>" />
-		<?php
+	public function food_type_slug_input()
+	{
+	?>
+		<input name="wpfm_food_type_slug" type="text" class="regular-text code" value="<?php echo esc_attr($this->permalinks['type_base']); ?>" placeholder="<?php echo esc_attr_x('food-type', 'food type slug - resave permalinks after changing this', 'wp-food-manager'); ?>" />
+<?php
 	}
 
 	/**
 	 * Save the settings.
 	 */
-	public function settings_save() {
-		if ( ! is_admin() ) {
+	public function settings_save()
+	{
+		if (!is_admin()) {
 			return;
 		}
 
-		if ( isset( $_POST['permalink_structure'] ) ) {
-			if ( function_exists( 'switch_to_locale' ) ) {
-				switch_to_locale( get_locale() );
+		if (isset($_POST['permalink_structure'])) {
+			if (function_exists('switch_to_locale')) {
+				switch_to_locale(get_locale());
 			}
 
-			$permalinks                  = (array) get_option( 'wpfm_permalinks', array() );
-			$permalinks['food_base']      = sanitize_title_with_dashes( $_POST['wpfm_food_base_slug'] );
-			$permalinks['category_base'] = sanitize_title_with_dashes( $_POST['wpfm_food_category_slug'] );
-			$permalinks['type_base']     = sanitize_title_with_dashes( $_POST['wpfm_food_type_slug'] );
+			$permalinks                  = (array) get_option('wpfm_permalinks', array());
+			$permalinks['food_base']      = sanitize_title_with_dashes($_POST['wpfm_food_base_slug']);
+			$permalinks['category_base'] = sanitize_title_with_dashes($_POST['wpfm_food_category_slug']);
+			$permalinks['type_base']     = sanitize_title_with_dashes($_POST['wpfm_food_type_slug']);
 
-			update_option( 'wpfm_permalinks', $permalinks );
+			update_option('wpfm_permalinks', $permalinks);
 
-			if ( function_exists( 'restore_current_locale' ) ) {
+			if (function_exists('restore_current_locale')) {
 				restore_current_locale();
 			}
 		}

@@ -25,7 +25,6 @@ if ($field_key !== 'option_options') {
 			'textarea'         => __('Textarea', 'wp-food-manager'),
 			'wp-editor'        => __('WP Editor', 'wp-food-manager'),
 			'url'              => __('URL', 'wp-food-manager'),
-			//'options'    => __('Options', 'wp-food-manager'),
 		)
 	);
 } else {
@@ -33,16 +32,13 @@ if ($field_key !== 'option_options') {
 		'food_manager_form_field_types',
 		array(
 			'text'             => __('Text', 'wp-food-manager'),
-			//'time'             => __('Time', 'wp-food-manager'),
 			'checkbox'         => __('Checkbox', 'wp-food-manager'),
 			'date'             => __('Date', 'wp-food-manager'),
-			//'timezone'         => __('Timezone', 'wp-food-manager'),
 			'file'             => __('File', 'wp-food-manager'),
 			'hidden'           => __('Hidden', 'wp-food-manager'),
 			'multiselect'      => __('Multiselect', 'wp-food-manager'),
-			'number'           => __('Number', 'wp-food-manager'),               /*'password'       		=> __( 'Password', 'wp-food-manager' ),*/
+			'number'           => __('Number', 'wp-food-manager'),
 			'radio'            => __('Radio', 'wp-food-manager'),
-			//'repeated'         => __('Repeated', 'wp-food-manager'),
 			'select'           => __('Select', 'wp-food-manager'),
 			'term-checklist'   => __('Term Checklist', 'wp-food-manager'),
 			'term-multiselect' => __('Term Multiselect', 'wp-food-manager'),
@@ -50,22 +46,22 @@ if ($field_key !== 'option_options') {
 			'term-select-multi-appearance'      => __('Term Multi Select Appearance', 'wp-food-manager'),
 			'textarea'         => __('Textarea', 'wp-food-manager'),
 			'wp-editor'        => __('WP Editor', 'wp-food-manager'),
-			'url'              => __('URL', 'wp-food-manager'),          /*'group'       			=> __( 'Group', 'wp-food-manager' ),	*/
+			'url'              => __('URL', 'wp-food-manager'),
 			'options'    => __('Options', 'wp-food-manager'),
 		)
 	);
 }
 
 $wpfm_admin_class = '';
-if($field_key == 'food_category'){
+if ($field_key == 'food_category') {
 	$wpfm_admin_class = '';
-} elseif($field_key == 'food_type'){
+} elseif ($field_key == 'food_type') {
 	$wpfm_admin_class = '';
-} elseif($field_key == 'food_tag'){
+} elseif ($field_key == 'food_tag') {
 	$wpfm_admin_class = '';
-} elseif($field_key == 'food_ingredient'){
+} elseif ($field_key == 'food_ingredient') {
 	$wpfm_admin_class = '';
-} elseif($field_key == 'food_nutrition'){
+} elseif ($field_key == 'food_nutrition') {
 	$wpfm_admin_class = '';
 } else {
 	$wpfm_admin_class = 'wpfm-admin-common';
@@ -82,10 +78,10 @@ if($field_key == 'food_category'){
 			foreach ($field_types as $key => $type) {
 				if (in_array($field_key, $disbled_fields)) {
 					if ($key == $field['type']) {
-						printf('<option value="' . esc_attr($key) . '" ' . selected($field['type'], $key, false) . ' class="wpfm-opt-val '.esc_attr($key).'">' . esc_html($type) . '</option>');
+						printf('<option value="' . esc_attr($key) . '" ' . selected($field['type'], $key, false) . ' class="wpfm-opt-val ' . esc_attr($key) . '">' . esc_html($type) . '</option>');
 					}
 				} else {
-					printf('<option value="' . esc_attr($key) . '" ' . selected($field['type'], $key, false) . ' class="wpfm-opt-val '.esc_attr($key).'">' . esc_html($type) . '</option>');
+					printf('<option value="' . esc_attr($key) . '" ' . selected($field['type'], $key, false) . ' class="wpfm-opt-val ' . esc_attr($key) . '">' . esc_html($type) . '</option>');
 				}
 			}
 			?>
@@ -112,8 +108,8 @@ if($field_key == 'food_category'){
 		}
 		?>
 		<input type="text" class="input-text placeholder" name="<?php echo esc_attr($group_key); ?>[<?php echo esc_attr($field_key); ?>][placeholder]" value="<?php if (isset($field['placeholder'])) {
-																																																																														printf(esc_html__('%s', 'wp-food-manager'), esc_attr(stripslashes($field['placeholder'])));
-																																																																													}	?>" placeholder="<?php esc_attr_e('N/A', 'wp-food-manager'); ?>" />
+																																									printf(esc_html__('%s', 'wp-food-manager'), esc_attr(stripslashes($field['placeholder'])));
+																																								}	?>" placeholder="<?php esc_attr_e('N/A', 'wp-food-manager'); ?>" />
 		<input type="text" class="input-text options" name="<?php echo esc_attr($group_key); ?>[<?php echo esc_attr($field_key); ?>][options]" placeholder="<?php esc_attr_e('Pipe (|) separate options.', 'wp-food-manager'); ?>" value="<?php echo esc_attr($options); ?>" />
 		<div class="file-options">
 			<label class="multiple-files"><input type='hidden' value='0' name="<?php echo esc_attr($group_key); ?>[<?php echo esc_attr($field_key); ?>][multiple]"><input type="checkbox" class="input-text" name="<?php echo esc_attr($group_key); ?>[<?php echo esc_attr($field_key); ?>][multiple]" value="1" <?php checked(!empty($field['multiple']), true); ?> /> <?php esc_attr_e('Multiple Files?', 'wp-food-manager'); ?></label>
@@ -124,10 +120,11 @@ if($field_key == 'food_category'){
 					<select class="input-text taxonomy-select" name="<?php echo esc_attr($group_key); ?>[<?php echo esc_attr($field_key); ?>][taxonomy]">
 						<?php foreach ($taxonomies  as $taxonomy) : ?>
 							<option value="<?php echo esc_attr($taxonomy); ?>" <?php
-								if (isset($field['taxonomy'])) {
-									echo esc_attr(selected($field['taxonomy'], $taxonomy, false)); 
-								}
-								?>><?php echo esc_html($taxonomy); ?></option>
+																				if (isset($field['taxonomy'])) {
+																					echo esc_attr(selected($field['taxonomy'], $taxonomy, false));
+																				}
+																				?>>
+								<?php echo esc_html($taxonomy); ?></option>
 						<?php endforeach; ?>
 					</select>
 				<?php endif; ?>
@@ -143,10 +140,10 @@ if($field_key == 'food_category'){
 	</td>
 	<td>
 		<input type="text" class="input-text placeholder" name="<?php echo esc_attr($group_key); ?>[<?php echo esc_attr($field_key); ?>][priority]" value="<?php
-																																																																												if (isset($field['priority'])) {
-																																																																													echo esc_attr($field['priority']);
-																																																																												}
-																																																																												?>" placeholder="<?php esc_attr_e('N/A', 'wp-food-manager'); ?>" disabled />
+																																							if (isset($field['priority'])) {
+																																								echo esc_attr($field['priority']);
+																																							}
+																																							?>" placeholder="<?php esc_attr_e('N/A', 'wp-food-manager'); ?>" disabled />
 	</td>
 	<td class="field-rules">
 		<?php if (!in_array($field_key, $disbled_fields)) : ?>
@@ -154,15 +151,17 @@ if($field_key == 'food_category'){
 				<select name="<?php echo esc_attr($group_key); ?>[<?php echo esc_attr($field_key); ?>][required]">
 					<?php $field['required'] = (isset($field['required']) ? $field['required'] : false); ?>
 					<option value="0" <?php
-														if ($field['required'] == false) {
-															echo wp_kses_post('selected="selected"');
-														}
-														?>><?php esc_attr_e('Not Required', 'wp-food-manager'); ?></option>
+										if ($field['required'] == false) {
+											echo wp_kses_post('selected="selected"');
+										}
+										?>>
+						<?php esc_attr_e('Not Required', 'wp-food-manager'); ?></option>
 					<option value="1" <?php
-														if ($field['required'] == true) {
-															echo wp_kses_post('selected="selected"');
-														}
-														?>><?php esc_attr_e('Required', 'wp-food-manager'); ?></option>
+										if ($field['required'] == true) {
+											echo wp_kses_post('selected="selected"');
+										}
+										?>>
+						<?php esc_attr_e('Required', 'wp-food-manager'); ?></option>
 				</select>
 			</div>
 		<?php endif; ?>
@@ -180,10 +179,8 @@ if (isset($field['type']) && $field['type'] == 'group') {
 		'food_manager_form_group_field_types',
 		array(
 			'text'        => __('Text', 'wp-food-manager'),
-			//'time'        => __('Time', 'wp-food-manager'),
 			'checkbox'    => __('Checkbox', 'wp-food-manager'),
 			'date'        => __('Date', 'wp-food-manager'),
-			//'timezone'    => __('Timezone', 'wp-food-manager'),
 			'file'        => __('File', 'wp-food-manager'),
 			'hidden'      => __('Hidden', 'wp-food-manager'),
 			'multiselect' => __('Multiselect', 'wp-food-manager'),
@@ -192,7 +189,6 @@ if (isset($field['type']) && $field['type'] == 'group') {
 			'radio'       => __('Radio', 'wp-food-manager'),
 			'select'      => __('Select', 'wp-food-manager'),
 			'textarea'    => __('Textarea', 'wp-food-manager'),
-			//'options'    => __('Options', 'wp-food-manager'),
 		)
 	);
 	$child_index = -1;
@@ -223,16 +219,16 @@ if (isset($field['type']) && $field['type'] == 'group') {
 				</tfoot>
 				<tbody class="child-form-fields" data-name="<?php echo esc_attr($group_key); ?>[<?php echo esc_attr($field_key); ?>][fields]" data-field="
 																	   <?php
-																			ob_start();
-																			$child_field_key = '';
-																			$child_field     = array(
-																				'type'        => 'text',
-																				'label'       => '',
-																				'placeholder' => '',
-																			);
-																			include 'wpfm-form-field-editor-group-field.php';
-																			echo wp_kses_post(ob_get_clean());
-																			?>
+																		ob_start();
+																		$child_field_key = '';
+																		$child_field     = array(
+																			'type'        => 'text',
+																			'label'       => '',
+																			'placeholder' => '',
+																		);
+																		include 'wpfm-form-field-editor-group-field.php';
+																		echo wp_kses_post(ob_get_clean());
+																		?>
 							">
 					<?php
 					if (isset($field['fields']) && !empty($field['fields'])) {

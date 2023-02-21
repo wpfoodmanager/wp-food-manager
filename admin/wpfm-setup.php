@@ -94,7 +94,7 @@ class WP_Food_Manager_Setup
 		// Delete the redirect transient
 		delete_transient('_food_manager_activation_redirect');
 
-		
+
 		// Bail if activating from network, or bulk, or within an iFrame
 		if (is_network_admin() || isset($_GET['activate-multi']) || defined('IFRAME_REQUEST')) {
 
@@ -186,21 +186,9 @@ class WP_Food_Manager_Setup
 			$page_titles = $this->sanitize_array($_POST['wp-food-manager-page-title']);
 
 			$pages_to_create = array(
-
 				'add_food'     => '[add_food]',
-
 				'food_dashboard'       => '[food_dashboard]',
-
 				'foods'                => '[foods]',
-
-				/*'food_categories'      => '[food_categories]',
-
-				'food_type'            => '[food_type]',*/
-
-				/*'nutritions_dashboard' => '[nutritions_dashboard]',
-
-				'ingredients_dashboard'   => '[ingredients_dashboard]',*/
-
 			);
 
 			foreach ($pages_to_create as $page => $content) {
@@ -327,62 +315,6 @@ class WP_Food_Manager_Setup
 									<td><code>[foods]</code></td>
 								</tr>
 
-								<!-- <tr>
-									<td><input type="checkbox" checked="checked" name="wp-food-manager-create-page[food_categories]" /></td>
-
-									<td><input type="text" value="<?php echo esc_attr(_x('Food Categories', 'Default page title (wizard)', 'wp-food-manager')); ?>" name="wp-food-manager-page-title[food_categories]" /></td>
-
-									<td>
-										<p><?php esc_attr_e('This page allows peoples to manage and edit their own food categories from the front-end.', 'wp-food-manager'); ?></p>
-
-										<p><?php esc_attr_e('In case if you do not want to allow your users to show menus from the frontend, you can uncheck this and skip creating this page.', 'wp-food-manager'); ?></p>
-									</td>
-
-									<td><code>[food_categories]</code></td>
-								</tr>
-
-								<tr>
-									<td><input type="checkbox" checked="checked" name="wp-food-manager-create-page[food_type]" /></td>
-
-									<td><input type="text" value="<?php echo esc_attr(_x('Food Type', 'Default page title (wizard)', 'wp-food-manager')); ?>" name="wp-food-manager-page-title[food_type]" /></td>
-
-									<td>
-										<p><?php esc_attr_e('This page allows peoples to manage and edit their own food type from the front-end.', 'wp-food-manager'); ?></p>
-
-										<p><?php esc_attr_e('In case if you do not want to allow your users to show menus from the frontend, you can uncheck this and skip creating this page.', 'wp-food-manager'); ?></p>
-									</td>
-
-									<td><code>[food_type]</code></td>
-								</tr> -->
-
-								<!-- <tr>
-									<td><input type="checkbox" checked="checked" name="wp-food-manager-create-page[nutritions_dashboard]" /></td>
-
-									<td><input type="text" value="<?php echo esc_attr(_x('Nutritions Dashboard', 'Default page title (wizard)', 'wp-food-manager')); ?>" name="wp-food-manager-page-title[nutritions_dashboard]" /></td>
-
-									<td>
-										<p><?php esc_attr_e('This page allows peoples to manage and edit their own nutritions from the front-end.', 'wp-food-manager'); ?></p>
-
-										<p><?php esc_attr_e('In case if you do not want to allow your users to show menus from the frontend, you can uncheck this and skip creating this page.', 'wp-food-manager'); ?></p>
-									</td>
-
-									<td><code>[nutritions_dashboard]</code></td>
-								</tr>
-
-								<tr>
-									<td><input type="checkbox" checked="checked" name="wp-food-manager-create-page[ingredients_dashboard]" /></td>
-
-									<td><input type="text" value="<?php echo esc_attr(_x('Ingredients Dashboard', 'Default page title (wizard)', 'wp-food-manager')); ?>" name="wp-food-manager-page-title[ingredients_dashboard]" /></td>
-
-									<td>
-										<p><?php esc_attr_e('This page allows peoples to manage and edit their own ingredients from the front-end.', 'wp-food-manager'); ?></p>
-
-										<p><?php esc_attr_e('In case if you do not want to allow your users to show menus from the frontend, you can uncheck this and skip creating this page.', 'wp-food-manager'); ?></p>
-									</td>
-
-									<td><code>[ingredients_dashboard]</code></td>
-								</tr> -->
-
 							</tbody>
 
 							<tfoot>
@@ -410,9 +342,6 @@ class WP_Food_Manager_Setup
 
 								<img src="<?php echo WPFM_PLUGIN_URL; ?>/assets/images/wpfm-logo.svg" alt="WP Food Manager">
 								<p><?php esc_attr_e('Thanks for installing WP Food Manager! Here are some valuable resources that will assist you in getting started with our plugins.', 'wp-food-manager'); ?></p>
-								<!-- <div class="wpfm-backend-video-wrap">
-									<iframe width="560" height="315" src="https://www.youtube.com/embed/hlDVYtEDOgQ" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-								</div> -->
 								<div class="wpfm-setup-intro-block-btn">
 									<a href="<?php echo esc_url(admin_url('post-new.php?post_type=food_manager')); ?>" class="button button-primary button-hero"><?php esc_attr_e('Create Your First Food', 'wp-food-manager'); ?></a>
 									<a href="<?php echo esc_url(admin_url('edit.php?post_type=food_manager&page=food-manager-settings')); ?>" class="button button-secondary button-hero"><?php esc_attr_e('Settings', 'wp-food-manager'); ?></a>
@@ -448,7 +377,6 @@ class WP_Food_Manager_Setup
 										<div class="wpfm-setup-help-center-block-content">
 											<div class="wpfm-setup-help-center-block-heading"><?php esc_attr_e('Video Tutorials', 'wp-food-manager'); ?></div>
 											<div class="wpfm-setup-help-center-block-desc"><?php esc_attr_e('Coming Soon...', 'wp-food-manager'); ?></div>
-											<!-- <a href="https://www.youtube.com/channel/UCnfYxg-fegS_n9MaPNU61bg" target="_blank" class="wpfm-setup-help-center-block-link"><span class="wpfm-setup-help-center-box-target-text"><?php esc_attr_e('Watch all', 'wp-food-manager'); ?> »</span></a> -->
 										</div>
 									</div>
 								</div>
