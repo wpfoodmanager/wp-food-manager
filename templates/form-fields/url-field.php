@@ -12,14 +12,14 @@
  */
 
 $field_val_num = '';
-if(!empty($field['value']) && is_array($field['value'])){
+if (!empty($field['value']) && is_array($field['value'])) {
     $tmp_cnt = explode("_", $key);
     $counter = end($tmp_cnt);
     $field_val_num = $field['value'][$counter];
 } else {
     $field_val_num = !empty($field['value']) ? $field['value'] : '';
 }
-if(!wpfm_begnWith($field_val_num, "http")){
+if (!wpfm_begnWith($field_val_num, "http")) {
     $field_val_num = '';
 }
 ?>

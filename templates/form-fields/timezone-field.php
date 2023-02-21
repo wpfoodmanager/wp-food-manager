@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Shows the timezone field on food listing forms.
  *
@@ -11,10 +12,10 @@
  * @since 		3.0
  * @version     3.0
  */
- ?>
- <select name="<?php echo esc_attr( isset( $field['name'] ) ? $field['name'] : $key ); ?>" id="<?php echo isset( $field['id'] ) ? esc_attr( $field['id'] ) :  esc_attr( $key ); ?>" class="input-select <?php echo esc_attr( isset( $field['class'] ) ? $field['class'] : $key ); ?>">
- 			<?php 
- 			$value = isset($field['value']) ? $field['value'] : $field['default'];	
- 			echo WP_Food_Manager_Date_Time::wp_food_manager_timezone_choice($value);
- 			?>
- </select>
+?>
+<select name="<?php echo esc_attr(isset($field['name']) ? $field['name'] : $key); ?>" id="<?php echo isset($field['id']) ? esc_attr($field['id']) :  esc_attr($key); ?>" class="input-select <?php echo esc_attr(isset($field['class']) ? $field['class'] : $key); ?>">
+	<?php
+	$value = isset($field['value']) ? $field['value'] : $field['default'];
+	echo WP_Food_Manager_Date_Time::wp_food_manager_timezone_choice($value);
+	?>
+</select>

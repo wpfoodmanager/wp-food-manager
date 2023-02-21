@@ -10,10 +10,10 @@ if (isset($field['value'])) {
     $selected = '';
 }
 
-$unit = get_terms( 'food_manager_unit', array(
+$unit = get_terms('food_manager_unit', array(
     'orderby'    => 'count',
     'hide_empty' => 0
-) );
+));
 
 wp_enqueue_script('wp-food-manager-term-multiselect');
 wp_enqueue_script('wp-food-manager-term-select-multi-appearance');
@@ -36,34 +36,34 @@ $args = array(
 
 // For Edit screen screen of food
 $preview_htm = '';
-if( isset($_GET['food_id']) && !empty($_GET['food_id']) ){
+if (isset($_GET['food_id']) && !empty($_GET['food_id'])) {
     $food_id = $_GET['food_id'];
-    $meta_key = ( $field['taxonomy'] == 'food_manager_nutrition' ) ? '_nutrition' : ( $field['taxonomy'] == 'food_manager_ingredient' ? '_ingredient' : '' );
+    $meta_key = ($field['taxonomy'] == 'food_manager_nutrition') ? '_nutrition' : ($field['taxonomy'] == 'food_manager_ingredient' ? '_ingredient' : '');
 
-    if( $meta_key ){
+    if ($meta_key) {
 
         $tax_values = get_post_meta($food_id, $meta_key, true);
-        $unit_terms = get_terms( array(
+        $unit_terms = get_terms(array(
             'taxonomy' => 'food_manager_unit',
             'hide_empty' => false,
-        ) );
+        ));
 
-        if( $tax_values ){
-            foreach( $tax_values as $tax_value ){
+        if ($tax_values) {
+            foreach ($tax_values as $tax_value) {
 
                 $unit_option = '<option value="">Unit</option>';
-                
-                if( $unit_terms ){
+
+                if ($unit_terms) {
                     foreach ($unit_terms as $unit) {
-                        $unit_option .= '<option value="'.$unit->term_id.'" '.( $unit->term_id == $tax_value['unit_id'] ? 'selected' : '' ).'>'.$unit->name.'</option>';
+                        $unit_option .= '<option value="' . $unit->term_id . '" ' . ($unit->term_id == $tax_value['unit_id'] ? 'selected' : '') . '>' . $unit->name . '</option>';
                     }
                 }
 
                 $preview_htm .= '<li class="term-item" data-id="' . $tax_value['id'] . '">';
                 $preview_htm .= '<label>' . $tax_value['term_name'] . '</label>';
                 $preview_htm .= '<div class="term-item-flex">';
-                $preview_htm .= '<input type="number" value="'.$tax_value['value'].'" name="' . $meta_key . '[' . $tax_value['id'] . '][value]">';
-                $preview_htm .= '<select name="' . $meta_key . '[' . $tax_value['id'] . '][unit_id]">'.$unit_option.'</select>';
+                $preview_htm .= '<input type="number" value="' . $tax_value['value'] . '" name="' . $meta_key . '[' . $tax_value['id'] . '][value]">';
+                $preview_htm .= '<select name="' . $meta_key . '[' . $tax_value['id'] . '][unit_id]">' . $unit_option . '</select>';
                 $preview_htm .= '</div>';
                 $preview_htm .= '</li>';
             }
