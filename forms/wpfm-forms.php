@@ -1,9 +1,11 @@
 <?php
+
 /**
  * WP_Food_Manager_Forms class.
  */
 
-class WPFM_Forms {
+class WPFM_Forms
+{
 
 	/**
 	 * The single instance of the class.
@@ -20,8 +22,9 @@ class WPFM_Forms {
 	 * @static
 	 * @return self Main instance.
 	 */
-	public static function instance() {
-		if ( is_null( self::$_instance ) ) {
+	public static function instance()
+	{
+		if (is_null(self::$_instance)) {
 			self::$_instance = new self();
 		}
 		return self::$_instance;
@@ -30,20 +33,20 @@ class WPFM_Forms {
 	/**
 	 * Constructor
 	 */
-	public function __construct() {
-
-		add_action( 'init', array( $this, 'load_posted_form' ) );
+	public function __construct()
+	{
+		add_action('init', array($this, 'load_posted_form'));
 	}
 
 	/**
 	 * If a form was posted, load its class so that it can be processed before display.
 	 */
-	 
-	public function load_posted_form() {
 
-		if ( ! empty( $_POST['food_manager_form'] ) ) {
+	public function load_posted_form()
+	{
+		if (!empty($_POST['food_manager_form'])) {
 
-			$this->load_form_class( sanitize_title( $_POST['food_manager_form'] ) );
+			$this->load_form_class(sanitize_title($_POST['food_manager_form']));
 		}
 	}
 
@@ -53,38 +56,37 @@ class WPFM_Forms {
 	 * @param  string $form_name
 	 * @return string class name on success, false on failure
 	 */
-	 
-	private function load_form_class( $form_name ) {
 
-		if ( ! class_exists( 'WPFM_Form' ) ) {
+	private function load_form_class($form_name)
+	{
+
+		if (!class_exists('WPFM_Form')) {
 
 			include 'wpfm-form-abstract.php';
 		}
 
 		// Now try to load the form_name
+		$form_class  = 'WPFM_Form_' . str_replace('-', '_', $form_name);
 
-		$form_class  = 'WPFM_Form_' . str_replace( '-', '_', $form_name );
-		
+		$form_file   = WPFM_PLUGIN_DIR . '/forms/wpfm-form-' . $form_name . '.php';
 
-		$form_file   = WPFM_PLUGIN_DIR . '/forms/wpfm-form-' . $form_name . '.php';		
+		if (class_exists($form_class)) {
 
-		if ( class_exists( $form_class ) ) {
-
-			return call_user_func( array( $form_class, 'instance' ) );
+			return call_user_func(array($form_class, 'instance'));
 		}
 
-		if ( ! file_exists( $form_file ) ) {
+		if (!file_exists($form_file)) {
 
 			return false;
 		}
 
-		if ( ! class_exists( $form_class ) ) {
+		if (!class_exists($form_class)) {
 
 			include $form_file;
 		}
 
 		// Init the form
-		return call_user_func( array( $form_class, 'instance' ) );
+		return call_user_func(array($form_class, 'instance'));
 	}
 
 	/**
@@ -94,15 +96,13 @@ class WPFM_Forms {
 	 * @param  array $atts Optional passed attributes
 	 * @return string
 	 */
-	 
-	public function get_form( $form_name, $atts = array() ) {
-		
 
-		if ( $form = $this->load_form_class( $form_name ) ) {
-
+	public function get_form($form_name, $atts = array())
+	{
+		if ($form = $this->load_form_class($form_name)) {
 			ob_start();
 
-			$form->output( $atts );
+			$form->output($atts);
 
 			return ob_get_clean();
 		}
@@ -116,12 +116,11 @@ class WPFM_Forms {
 	 * @param  array $atts Optional passed attributes
 	 * @return string
 	 */
-	 
-	public function get_form_fields( $form_name, $field_types = 'frontend' ) {
-		
 
-		if ( $form = $this->load_form_class( $form_name ) ) {
-			 $form->init_fields();
+	public function get_form_fields($form_name, $field_types = 'frontend')
+	{
+		if ($form = $this->load_form_class($form_name)) {
+			$form->init_fields();
 			$fields = $form->merge_with_custom_fields($field_types);
 			return $fields;
 		}
