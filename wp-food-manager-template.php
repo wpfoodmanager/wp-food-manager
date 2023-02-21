@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Template Functions
  *
@@ -16,12 +17,13 @@
  * @return string The name of the current role
  * @since 1.0.0
  */
-function get_food_manager_current_user_role() {
+function get_food_manager_current_user_role()
+{
 	global $wp_roles;
 	$current_user = wp_get_current_user();
 	$roles = $current_user->roles;
 	$role = array_shift($roles);
-	return isset($wp_roles->role_names[$role]) ? translate_user_role($wp_roles->role_names[$role] ) : false;
+	return isset($wp_roles->role_names[$role]) ? translate_user_role($wp_roles->role_names[$role]) : false;
 }
 
 /**
@@ -149,13 +151,14 @@ function food_manager_get_registration_fields()
  * @param string $default_path (default: '')
  * @return void
  */
-function get_food_manager_template( $template_name, $args = array(), $template_path = 'wp-food-manager', $default_path = '' ) {
+function get_food_manager_template($template_name, $args = array(), $template_path = 'wp-food-manager', $default_path = '')
+{
 
-	if ( $args && is_array( $args ) ) {
+	if ($args && is_array($args)) {
 
-		extract( $args );
+		extract($args);
 	}
-	include( locate_food_manager_template( $template_name, $template_path, $default_path ) );
+	include(locate_food_manager_template($template_name, $template_path, $default_path));
 }
 
 /**
@@ -163,8 +166,8 @@ function get_food_manager_template( $template_name, $args = array(), $template_p
  *
  * This is the load order:
  *
- *		yourtheme		/	$template_path	/	$template_name
- *		yourtheme		/	$template_name
+ *		wp-food-manager		/	$template_path	/	$template_name
+ *		wp-food-manager		/	$template_name
  *		$default_path	/	$template_name
  *
  * @param string $template_name
@@ -172,35 +175,30 @@ function get_food_manager_template( $template_name, $args = array(), $template_p
  * @param string|bool $default_path (default: '') False to not load a default
  * @return string
  */
-function locate_food_manager_template( $template_name, $template_path = 'wp-food-manager', $default_path = '' ) {
+function locate_food_manager_template($template_name, $template_path = 'wp-food-manager', $default_path = '')
+{
 
 	// Look within passed path within the theme - this is priority
 
 	$template = locate_template(
-		
 		array(
-			
-			trailingslashit( $template_path ) . $template_name,
-			
+			trailingslashit($template_path) . $template_name,
 			$template_name
 		)
 	);
 
 	// Get default template
-
-	if ( ! $template && $default_path !== false ) {
+	if (!$template && $default_path !== false) {
 
 		$default_path = $default_path ? $default_path : WPFM_PLUGIN_DIR . '/templates/';
 
-		if ( file_exists( trailingslashit( $default_path ) . $template_name ) ) {
-				
-			$template = trailingslashit( $default_path ) . $template_name;
+		if (file_exists(trailingslashit($default_path) . $template_name)) {
+			$template = trailingslashit($default_path) . $template_name;
 		}
 	}
 
 	// Return what we found
-
-	return apply_filters( 'food_manager_locate_template', $template, $template_name, $template_path );
+	return apply_filters('food_manager_locate_template', $template, $template_name, $template_path);
 }
 
 /**
@@ -211,25 +209,22 @@ function locate_food_manager_template( $template_name, $template_path = 'wp-food
  * @param string $template_path (default: 'wp-food-manager')
  * @param string|bool $default_path (default: '') False to not load a default
  */
-function get_food_manager_template_part( $slug, $name = '', $template_path = 'wp-food-manager', $default_path = '' ) {
+function get_food_manager_template_part($slug, $name = '', $template_path = 'wp-food-manager', $default_path = '')
+{
 
 	$template = '';
 
-	if ( $name ) {
-
-		$template = locate_food_manager_template( "{$slug}-{$name}.php", $template_path, $default_path );
+	if ($name) {
+		$template = locate_food_manager_template("{$slug}-{$name}.php", $template_path, $default_path);
 	}
 
-	// If template file doesn't exist, look in yourtheme/slug.php and yourtheme/wp-food-manager/slug.php
-
-	if ( ! $template ) {
-
-		$template = locate_food_manager_template( "{$slug}.php", $template_path, $default_path );
+	// If template file doesn't exist, look in wp-food-manager/slug.php and wp-food-manager/wp-food-manager/slug.php
+	if (!$template) {
+		$template = locate_food_manager_template("{$slug}.php", $template_path, $default_path);
 	}
 
-	if ( $template ) {
-
-		load_template( $template, false );
+	if ($template) {
+		load_template($template, false);
 	}
 }
 
@@ -240,10 +235,9 @@ function get_food_manager_template_part( $slug, $name = '', $template_path = 'wp
  * @param  object $post
  * @return boolean
  */
-function is_food_cancelled( $post = null ) {
-
-	$post = get_post( $post );
-
+function is_food_cancelled($post = null)
+{
+	$post = get_post($post);
 	return $post->_cancelled ? true : false;
 }
 
@@ -253,10 +247,9 @@ function is_food_cancelled( $post = null ) {
  * @param  object $post
  * @return boolean
  */
-function is_food_featured( $post = null ) {
-
-	$post = get_post( $post );
-
+function is_food_featured($post = null)
+{
+	$post = get_post($post);
 	return $post->_featured ? true : false;
 }
 
@@ -268,35 +261,36 @@ function is_food_featured( $post = null ) {
  * @param mixed $post (default: null)
  * @return void
  */
-function get_food_location( $post = null ) {
+function get_food_location($post = null)
+{
 
-	$post = get_post( $post );
+	$post = get_post($post);
 
-	if ( $post->post_type !== 'food_manager' )
+	if ($post->post_type !== 'food_manager')
 		return;
 
-	return apply_filters( 'display_food_location', $post->_food_location, $post );
+	return apply_filters('display_food_location', $post->_food_location, $post);
 }
 
 /**
-* display_food_location function.
-* @param  boolean $map_link whether or not to link to the map on google maps
-* @return [type]
-*/
-function display_food_location( $map_link = true, $post = null ) {
+ * display_food_location function.
+ * @param  boolean $map_link whether or not to link to the map on google maps
+ * @return [type]
+ */
+function display_food_location($map_link = true, $post = null)
+{
 
-	$location = get_food_location( $post );
+	$location = get_food_location($post);
 
-	if ( $location ) {
+	if ($location) {
 
-		if ( $map_link )
-			echo apply_filters( 'display_food_location_map_link', '<a  href="http://maps.google.com/maps?q=' . urlencode( $location ) . '&zoom=14&size=512x512&maptype=roadmap&sensor=false" target="_blank">' . $location . '</a>', $location, $post );
+		if ($map_link)
+			echo apply_filters('display_food_location_map_link', '<a  href="http://maps.google.com/maps?q=' . urlencode($location) . '&zoom=14&size=512x512&maptype=roadmap&sensor=false" target="_blank">' . $location . '</a>', $location, $post);
 		else
 			echo  $location;
-
 	} else {
 
-		echo  apply_filters( 'display_food_location_anywhere_text', __( 'Online food', 'wp-food-manager' ) );
+		echo  apply_filters('display_food_location_anywhere_text', __('Online food', 'wp-food-manager'));
 	}
 }
 
@@ -307,22 +301,13 @@ function display_food_location( $map_link = true, $post = null ) {
  * @param mixed $post (default: null)
  * @return string
  */
-function get_food_banner( $post = null ) {
+function get_food_banner($post = null)
+{
 
-	$post = get_post( $post );
+	$post = get_post($post);
 
-	if ( $post->post_type !== 'food_manager' )
+	if ($post->post_type !== 'food_manager')
 		return;
-
-	/*$food_banner = get_the_post_thumbnail_url( $post );
-
-	if(isset($food_banner) && empty($food_banner)){
-		$food_banner = apply_filters( 'wpfm_default_food_banner', WPFM_PLUGIN_URL . '/assets/images/wpfm-placeholder.jpg' );
-	} else {
-		//$food_banner = $post->_food_banner;
-		//the_post_thumbnail('large');
-		$food_banner = get_the_post_thumbnail_url($post->ID, 'full');
-	}*/
 
 	if (isset($post->_food_banner) && empty($post->_food_banner))
 		$food_banner = apply_filters('wpfm_default_food_banner', WPFM_PLUGIN_URL . '/assets/images/wpfm-placeholder.jpg');
@@ -339,19 +324,20 @@ function get_food_banner( $post = null ) {
  * @param mixed $post (default: null)
  * @return string
  */
-function get_food_thumbnail( $post = null, $size = 'full' ) {
+function get_food_thumbnail($post = null, $size = 'full')
+{
 
-	$post = get_post( $post );
+	$post = get_post($post);
 
-	if ( $post->post_type !== 'food_manager' )
+	if ($post->post_type !== 'food_manager')
 		return;
 
-	$food_thumbnail = get_the_post_thumbnail_url( $post->ID, $size );
+	$food_thumbnail = get_the_post_thumbnail_url($post->ID, $size);
 
-	if( isset($food_thumbnail) && empty($food_thumbnail) )
-		$food_thumbnail = apply_filters( 'wpfm_default_food_banner', WPFM_PLUGIN_URL . '/assets/images/wpfm-placeholder.jpg' );
-	
-	return apply_filters( 'display_food_thumbnail', $food_thumbnail, $post );
+	if (isset($food_thumbnail) && empty($food_thumbnail))
+		$food_thumbnail = apply_filters('wpfm_default_food_banner', WPFM_PLUGIN_URL . '/assets/images/wpfm-placeholder.jpg');
+
+	return apply_filters('display_food_thumbnail', $food_thumbnail, $post);
 }
 
 /**
@@ -361,11 +347,12 @@ function get_food_thumbnail( $post = null, $size = 'full' ) {
  * @param mixed $post (default: null)
  * @return string
  */
-function display_food_price_tag( $post = null ) {
+function display_food_price_tag($post = null)
+{
 
-	$post = get_post( $post );
+	$post = get_post($post);
 
-	if ( $post->post_type !== 'food_manager' )
+	if ($post->post_type !== 'food_manager')
 		return;
 
 	$price_decimals = wpfm_get_price_decimals();
@@ -373,29 +360,29 @@ function display_food_price_tag( $post = null ) {
 	$price_thousand_separator = wpfm_get_price_thousand_separator();
 	$price_decimal_separator = wpfm_get_price_decimal_separator();
 
-
 	$sale_price = get_post_meta($post->ID, '_food_sale_price', true);
 	$regular_price = get_post_meta($post->ID, '_food_price', true);
 
-	if(!empty($sale_price)){
+	if (!empty($sale_price)) {
 		$formatted_sale_price = number_format($sale_price, $price_decimals, $price_decimal_separator, $price_thousand_separator);
 	}
-	if(!empty($regular_price)){
+	if (!empty($regular_price)) {
 		$formatted_regular_price = number_format($regular_price, $price_decimals, $price_decimal_separator, $price_thousand_separator);
 	}
 
-	if(!empty($regular_price) && !empty($sale_price)){
-		$f_regular_price = sprintf($price_format, '<span class="food-manager-Price-currencySymbol">'.get_food_manager_currency_symbol().'</span>', $formatted_sale_price);
-		$f_sale_price = sprintf($price_format, '<span class="food-manager-Price-currencySymbol">'.get_food_manager_currency_symbol().'</span>', $formatted_regular_price);
-		echo "<del> ".$f_sale_price."</del><ins> <span class='food-manager-Price-currencySymbol'>".$f_regular_price."</ins>"; 
-	}
-	if(empty($regular_price) && empty($sale_price)){
-		return false;
-	}
-	if(empty($sale_price)){
-		echo sprintf($price_format, '<span class="food-manager-Price-currencySymbol">'.get_food_manager_currency_symbol().'</span>', $formatted_regular_price);
+	if (!empty($regular_price) && !empty($sale_price)) {
+		$f_regular_price = sprintf($price_format, '<span class="food-manager-Price-currencySymbol">' . get_food_manager_currency_symbol() . '</span>', $formatted_sale_price);
+		$f_sale_price = sprintf($price_format, '<span class="food-manager-Price-currencySymbol">' . get_food_manager_currency_symbol() . '</span>', $formatted_regular_price);
+		echo "<del> " . $f_sale_price . "</del><ins> <span class='food-manager-Price-currencySymbol'>" . $f_regular_price . "</ins>";
 	}
 
+	if (empty($regular_price) && empty($sale_price)) {
+		return false;
+	}
+
+	if (empty($sale_price)) {
+		echo sprintf($price_format, '<span class="food-manager-Price-currencySymbol">' . get_food_manager_currency_symbol() . '</span>', $formatted_regular_price);
+	}
 }
 
 /**
@@ -406,27 +393,22 @@ function display_food_price_tag( $post = null ) {
  * @param mixed $default (default: null)
  * @return void
  */
-function display_food_banner( $size = 'full', $default = null, $post = null ) {
+function display_food_banner($size = 'full', $default = null, $post = null)
+{
 
-	$banner = get_food_banner( $post );
+	$banner = get_food_banner($post);
 
-	if ( ! empty( $banner ) && ! is_array( $banner )  && ( strstr( $banner, 'http' ) || file_exists( $banner ) ) )
-	{
-		if ( $size !== 'full' ) {
-				
-			$banner = wpfm_get_resized_image( $banner, $size );
+	if (!empty($banner) && !is_array($banner)  && (strstr($banner, 'http') || file_exists($banner))) {
+		if ($size !== 'full') {
+			$banner = wpfm_get_resized_image($banner, $size);
 		}
-		echo '<img itemprop="image" content="' . esc_attr( $banner ) . '" src="' . esc_attr( $banner ) . '" alt="" />';
-
-	} else if ( $default ) {
-
-		echo '<img itemprop="image" content="' . esc_attr( $default ) . '" src="' . esc_attr( $default ) . '" alt="" />';
-
-	} else if(is_array($banner) && isset($banner[0]) ){
-		echo '<img itemprop="image" content="' . esc_attr( $banner[0] ) . '" src="' . esc_attr( $banner[0] ) . '" alt="' .  '" />';
-	}
-	else  {
-		echo '<img itemprop="image" content="' . esc_attr( apply_filters( 'food_manager_default_food_banner', WPFM_PLUGIN_URL . '/assets/images/wpfm-placeholder.jpg' ) ) . '" src="' . esc_attr( apply_filters( 'food_manager_default_food_banner', WPFM_PLUGIN_URL . '/assets/images/wpfm-placeholder.jpg' ) ) . '" alt="' . esc_attr( get_the_title() ) . '" />';
+		echo '<img itemprop="image" content="' . esc_attr($banner) . '" src="' . esc_attr($banner) . '" alt="" />';
+	} else if ($default) {
+		echo '<img itemprop="image" content="' . esc_attr($default) . '" src="' . esc_attr($default) . '" alt="" />';
+	} else if (is_array($banner) && isset($banner[0])) {
+		echo '<img itemprop="image" content="' . esc_attr($banner[0]) . '" src="' . esc_attr($banner[0]) . '" alt="' .  '" />';
+	} else {
+		echo '<img itemprop="image" content="' . esc_attr(apply_filters('food_manager_default_food_banner', WPFM_PLUGIN_URL . '/assets/images/wpfm-placeholder.jpg')) . '" src="' . esc_attr(apply_filters('food_manager_default_food_banner', WPFM_PLUGIN_URL . '/assets/images/wpfm-placeholder.jpg')) . '" alt="' . esc_attr(get_the_title()) . '" />';
 	}
 }
 
@@ -440,8 +422,7 @@ function get_food_views_count($post)
 	$count_key = '_view_count';
 	$count = get_post_meta($post->ID, $count_key, true);
 
-	if($count=='' || $count==null)
-	{
+	if ($count == '' || $count == null) {
 		delete_post_meta($post->ID, $count_key);
 		add_post_meta($post->ID, $count_key, '0');
 		return "-";
@@ -454,7 +435,6 @@ function get_food_views_count($post)
  */
 function get_single_food_listing_view_count($post)
 {
-
 	get_food_views_count($post);
 }
 
@@ -464,40 +444,41 @@ function get_single_food_listing_view_count($post)
  * @access public
  * @return void
  */
-function display_food_veg_nonveg_icon_tag( $post = null, $after = '' ) {
+function display_food_veg_nonveg_icon_tag($post = null, $after = '')
+{
 
 	$wpfm_veg_nonveg_tags = get_food_veg_nonveg_icon_tag($post);
 
 	$image_id = '';
-	
-	if(!empty($wpfm_veg_nonveg_tags)){
-		$image_id = get_term_meta ( $wpfm_veg_nonveg_tags[0]->term_id, 'image_id', true );
+
+	if (!empty($wpfm_veg_nonveg_tags)) {
+		$image_id = get_term_meta($wpfm_veg_nonveg_tags[0]->term_id, 'image_id', true);
 	}
 
-	$image_src = wp_get_attachment_image_src ( $image_id );
+	$image_src = wp_get_attachment_image_src($image_id);
 
-    if(!empty($wpfm_veg_nonveg_tags)){
-    	foreach($wpfm_veg_nonveg_tags as $wpfm_veg_nonveg_tag){
+	if (!empty($wpfm_veg_nonveg_tags)) {
+		foreach ($wpfm_veg_nonveg_tags as $wpfm_veg_nonveg_tag) {
 			$imagePath = '';
-    		if(empty($image_src)){
-		        if($wpfm_veg_nonveg_tag->slug === 'vegeterian'){
-		            $imagePath = WPFM_PLUGIN_URL."/assets/images/wpfm-veg-organic.png";
-		        }
-		        if($wpfm_veg_nonveg_tag->slug === 'non-vegeterian'){
-		            $imagePath = WPFM_PLUGIN_URL."/assets/images/wpfm-non-veg-organic.png";
-		        }
-		        if($wpfm_veg_nonveg_tag->slug === 'vegan'){
-		            $imagePath = WPFM_PLUGIN_URL."/assets/images/wpfm-vegan-organic.png";
-		        }
-		    } else {
-		    	$imagePath = $image_src[0];
-		    }
-	        if(!empty($imagePath)){
-	        	$data_icon_label = ucwords(str_replace("-", " ", $wpfm_veg_nonveg_tag->slug));
-	        	echo '<div class="parent-organic-tag '.$wpfm_veg_nonveg_tag->slug.'" data-icon-type="'.$data_icon_label.'"><img alt="'.$wpfm_veg_nonveg_tag->slug.'" src="'.$imagePath.'" class="wpfm-organic-tag-icon '.$wpfm_veg_nonveg_tag->slug.'"></div>';
-	        }
-	    }
-    }
+			if (empty($image_src)) {
+				if ($wpfm_veg_nonveg_tag->slug === 'vegeterian') {
+					$imagePath = WPFM_PLUGIN_URL . "/assets/images/wpfm-veg-organic.png";
+				}
+				if ($wpfm_veg_nonveg_tag->slug === 'non-vegeterian') {
+					$imagePath = WPFM_PLUGIN_URL . "/assets/images/wpfm-non-veg-organic.png";
+				}
+				if ($wpfm_veg_nonveg_tag->slug === 'vegan') {
+					$imagePath = WPFM_PLUGIN_URL . "/assets/images/wpfm-vegan-organic.png";
+				}
+			} else {
+				$imagePath = $image_src[0];
+			}
+			if (!empty($imagePath)) {
+				$data_icon_label = ucwords(str_replace("-", " ", $wpfm_veg_nonveg_tag->slug));
+				echo '<div class="parent-organic-tag ' . $wpfm_veg_nonveg_tag->slug . '" data-icon-type="' . $data_icon_label . '"><img alt="' . $wpfm_veg_nonveg_tag->slug . '" src="' . $imagePath . '" class="wpfm-organic-tag-icon ' . $wpfm_veg_nonveg_tag->slug . '"></div>';
+			}
+		}
+	}
 }
 /**
  * get_food_veg_nonveg_icon_tag function.
@@ -506,26 +487,18 @@ function display_food_veg_nonveg_icon_tag( $post = null, $after = '' ) {
  * @param mixed $post (default: null)
  * @return void
  */
-function get_food_veg_nonveg_icon_tag( $post = null ) {
+function get_food_veg_nonveg_icon_tag($post = null)
+{
 
-	/*$post = get_post( $post );
+	$post = get_post($post);
 
-	$wpfm_veg_nonveg_tag = get_post_meta( get_the_ID(), '_food_veg_nonveg', true);
-	
-	if(empty($wpfm_veg_nonveg_tag))
-		$wpfm_veg_nonveg_tag = '';
-
-	return apply_filters( 'display_food_veg_nonveg_icon_tag', $wpfm_veg_nonveg_tag, $post );*/
-
-	$post = get_post( $post );
-
-	if ( $post->post_type !== 'food_manager' || !get_option( 'food_manager_enable_food_types' ) ) {
+	if ($post->post_type !== 'food_manager' || !get_option('food_manager_enable_food_types')) {
 		return;
 	}
 
-	$wpfm_veg_nonveg_tag = wp_get_post_terms( $post->ID, 'food_manager_type' );
+	$wpfm_veg_nonveg_tag = wp_get_post_terms($post->ID, 'food_manager_type');
 
-	return apply_filters( 'display_food_veg_nonveg_icon_tag', $wpfm_veg_nonveg_tag, $post );
+	return apply_filters('display_food_veg_nonveg_icon_tag', $wpfm_veg_nonveg_tag, $post);
 }
 
 /**
@@ -534,14 +507,14 @@ function get_food_veg_nonveg_icon_tag( $post = null ) {
  * @access public
  * @return void
  */
-function display_food_type( $post = null, $after = '') {
+function display_food_type($post = null, $after = '')
+{
 
-	if ( $food_type = get_food_type( $post ) ) {
-		if (! empty( $food_type ) ) {
-		    $numType = count($food_type);
-		    $i = 0;
-		    foreach ( $food_type as $type ) {
-		    	//echo '<span class="wpfm-food-type-text food-type '. esc_attr( sanitize_title( $type->slug ) ).' ">'. $type->name.'</span>';
+	if ($food_type = get_food_type($post)) {
+		if (!empty($food_type)) {
+			$numType = count($food_type);
+			$i = 0;
+			foreach ($food_type as $type) {
 				echo wp_kses(('<a href="' . get_term_link($type->term_id) . '"><span class="wpfm-food-type-text food-type ' . esc_attr(sanitize_title($type->slug)) . ' ">' . $type->name . '</span></a>'), array(
 					'a' => array(
 						'href' => array(),
@@ -551,8 +524,8 @@ function display_food_type( $post = null, $after = '') {
 						'class'       => array()
 					),
 				));
-				if($numType > ++$i){
-				    echo $after;
+				if ($numType > ++$i) {
+					echo $after;
 				}
 			}
 		}
@@ -566,25 +539,21 @@ function display_food_type( $post = null, $after = '') {
  * @param mixed $post (default: null)
  * @return void
  */
-function get_food_type( $post = null ) {
+function get_food_type($post = null)
+{
 
-	$post = get_post( $post );
+	$post = get_post($post);
 
-	if ( $post->post_type !== 'food_manager' || !get_option( 'food_manager_enable_food_types' ) ) {
+	if ($post->post_type !== 'food_manager' || !get_option('food_manager_enable_food_types')) {
 		return;
 	}
 
-	$types = wp_get_post_terms( $post->ID, 'food_manager_type' );
+	$types = wp_get_post_terms($post->ID, 'food_manager_type');
 
-	// Return single if not enabled.
-	/*if ( ! empty( $types ) ) {
-		$types = array( current( $types ) );
-	}*/
-
-	if(empty($types))
+	if (empty($types))
 		$types = '';
 
-	return apply_filters( 'display_food_type', $types, $post );
+	return apply_filters('display_food_type', $types, $post);
 }
 
 /**
@@ -593,14 +562,14 @@ function get_food_type( $post = null ) {
  * @access public
  * @return void
  */
-function display_food_tag( $post = null, $after = '') {
+function display_food_tag($post = null, $after = '')
+{
 
-	if ( $food_tag = get_food_tag( $post ) ) {
-		if (! empty( $food_tag ) ) {
-		    $numTag = count($food_tag);
-		    $i = 0;
-		    foreach ( $food_tag as $tag ) {
-				//echo '<span class="wpfm-food-tag-text food-tag '. esc_attr( sanitize_title( $tag->slug ) ).' ">'. $tag->name.'</span>';
+	if ($food_tag = get_food_tag($post)) {
+		if (!empty($food_tag)) {
+			$numTag = count($food_tag);
+			$i = 0;
+			foreach ($food_tag as $tag) {
 				echo wp_kses(('<a href="' . get_term_link($tag->term_id) . '"><span class="wpfm-food-tag-text food-tag ' . esc_attr(sanitize_title($tag->slug)) . ' ">' . $tag->name . '</span></a>'), array(
 					'a' => array(
 						'href' => array(),
@@ -610,8 +579,8 @@ function display_food_tag( $post = null, $after = '') {
 						'class'       => array()
 					),
 				));
-				if($numTag > ++$i){
-				    echo $after;
+				if ($numTag > ++$i) {
+					echo $after;
 				}
 			}
 		}
@@ -625,25 +594,21 @@ function display_food_tag( $post = null, $after = '') {
  * @param mixed $post (default: null)
  * @return void
  */
-function get_food_tag( $post = null ) {
+function get_food_tag($post = null)
+{
 
-	$post = get_post( $post );
+	$post = get_post($post);
 
-	if ( $post->post_type !== 'food_manager' || !get_option( 'food_manager_enable_food_tags' ) ) {
+	if ($post->post_type !== 'food_manager' || !get_option('food_manager_enable_food_tags')) {
 		return;
 	}
 
-	$tags = wp_get_post_terms( $post->ID, 'food_manager_tag' );
+	$tags = wp_get_post_terms($post->ID, 'food_manager_tag');
 
-	// Return single if not enabled.
-	/*if ( ! empty( $tags ) ) {
-		$tags = array( current( $tags ) );
-	}*/
-
-	if(empty($tags))
+	if (empty($tags))
 		$tags = '';
 
-	return apply_filters( 'display_food_tag', $tags, $post );
+	return apply_filters('display_food_tag', $tags, $post);
 }
 
 /**
@@ -652,15 +617,15 @@ function get_food_tag( $post = null ) {
  * @access public
  * @return void
  */
-function display_food_category( $post = null, $after = '' ) {
+function display_food_category($post = null, $after = '')
+{
 
-	if ( $food_category = get_food_category( $post ) ) {
+	if ($food_category = get_food_category($post)) {
 
-		if (! empty( $food_category ) ) {
-		    $numCategory = count($food_category);
-		    $i = 0;
-			foreach ( $food_category as $cat ) {
-				//echo '<span class="food-category '. esc_attr( sanitize_title( $cat->slug ) ).' ">'. $cat->name.'</span>';
+		if (!empty($food_category)) {
+			$numCategory = count($food_category);
+			$i = 0;
+			foreach ($food_category as $cat) {
 				echo wp_kses(('<a href="' . get_term_link($cat->term_id) . '"><span class="wpfm-food-cat-text food-category ' . esc_attr(sanitize_title($cat->slug)) . ' ">' . $cat->name . '</span></a>'), array(
 					'a' => array(
 						'href' => array(),
@@ -671,8 +636,8 @@ function display_food_category( $post = null, $after = '' ) {
 					),
 
 				));
-				if($numCategory > ++$i){
-				    echo $after;
+				if ($numCategory > ++$i) {
+					echo $after;
 				}
 			}
 		}
@@ -688,22 +653,18 @@ function display_food_category( $post = null, $after = '' ) {
  * @param mixed $post (default: null)
  * @return void
  */
-function get_food_category( $post = null ) {
+function get_food_category($post = null)
+{
 
-	$post = get_post( $post );
+	$post = get_post($post);
 
-	if ( $post->post_type !== 'food_manager' || !get_option( 'food_manager_enable_categories' ) ) {
+	if ($post->post_type !== 'food_manager' || !get_option('food_manager_enable_categories')) {
 		return;
 	}
 
-	$categories = wp_get_post_terms( $post->ID, 'food_manager_category' );
+	$categories = wp_get_post_terms($post->ID, 'food_manager_category');
 
-	// Return single if not enabled.
-	/*if ( !empty( $categories ) && ! food_manager_multiselect_food_category() ) {
-		$categories = array( current( $categories ) );
-	}*/
-
-	return apply_filters( 'display_food_category', $categories, $post );
+	return apply_filters('display_food_category', $categories, $post);
 }
 /**
  * display_food_ingredients function.
@@ -711,36 +672,30 @@ function get_food_category( $post = null ) {
  * @access public
  * @return void
  */
-function display_food_ingredients( $post = null, $after = '' ) {
+function display_food_ingredients($post = null, $after = '')
+{
 
-	if ( $food_ingredients = get_food_ingredients( $post ) ) {
+	if ($food_ingredients = get_food_ingredients($post)) {
 
-		if (! empty( $food_ingredients ) ) {
-		    $numIngredient = count($food_ingredients);
+		if (!empty($food_ingredients)) {
+			$numIngredient = count($food_ingredients);
 
-		    $i = 0;
-			foreach ( $food_ingredients as $ingredient ) {
+			$i = 0;
+			foreach ($food_ingredients as $ingredient) {
 				$ingTerm = get_term(
-					! empty( $ingredient['id'] ) ? absint( $ingredient['id'] ) : 0,
+					!empty($ingredient['id']) ? absint($ingredient['id']) : 0,
 					'food_manager_ingredient'
 				);
-				if( !empty($ingTerm->term_id) ){
+				if (!empty($ingTerm->term_id)) {
 					$ingredient_slug = strtolower(str_replace(" ", "_", $ingredient['term_name']));
-					echo '<span class="food-ingredients '. esc_attr( sanitize_title( $ingredient_slug ) ).' ">'. $ingredient['term_name'].' - '.$ingredient['value'].' '.$ingredient['unit_name'].'</span>';
-					if($numIngredient > ++$i){
+					echo '<span class="food-ingredients ' . esc_attr(sanitize_title($ingredient_slug)) . ' ">' . $ingredient['term_name'] . ' - ' . $ingredient['value'] . ' ' . $ingredient['unit_name'] . '</span>';
+					if ($numIngredient > ++$i) {
 						echo $after;
 					}
 				}
 			}
 		}
 	}
-	/*$food_ingredients = get_post_meta(get_the_ID(), '_ingredient', true);
-	if (! empty( $food_ingredients ) ) {
-	    foreach ( $food_ingredients as $ingredient ) {
-	    	$ingredient_slug = strtolower(str_replace(" ", "_", $ingredient['term_name']));
-		    echo '<span class="food-ingredients '. esc_attr( sanitize_title( $ingredient_slug ) ).'">'. $ingredient['term_name'].' - '.$ingredient['value'].' '.$ingredient['unit_name'].'</span>';
-	    }
-	}*/
 }
 
 /**
@@ -750,18 +705,18 @@ function display_food_ingredients( $post = null, $after = '' ) {
  * @param mixed $post (default: null)
  * @return void
  */
-function get_food_ingredients( $post = null ) {
+function get_food_ingredients($post = null)
+{
 
-	$post = get_post( $post );
+	$post = get_post($post);
 
-	if ( $post->post_type !== 'food_manager' ) {
+	if ($post->post_type !== 'food_manager') {
 		return;
 	}
 
-	//$ingredients = wp_get_post_terms( $post->ID, 'food_manager_ingredient' );
 	$ingredients = get_post_meta(get_the_ID(), '_ingredient', true);
 
-	return apply_filters( 'display_food_ingredients', $ingredients, $post );
+	return apply_filters('display_food_ingredients', $ingredients, $post);
 }
 /**
  * display_food_nutritions function.
@@ -769,35 +724,29 @@ function get_food_ingredients( $post = null ) {
  * @access public
  * @return void
  */
-function display_food_nutritions( $post = null, $after = '' ) {
+function display_food_nutritions($post = null, $after = '')
+{
 
-	if ( $food_nutritions = get_food_nutritions( $post ) ) {
+	if ($food_nutritions = get_food_nutritions($post)) {
 
-		if (! empty( $food_nutritions ) ) {
-		    $numNutrition = count($food_nutritions);
-		    $i = 0;
-			foreach ( $food_nutritions as $nutrition ) {
+		if (!empty($food_nutritions)) {
+			$numNutrition = count($food_nutritions);
+			$i = 0;
+			foreach ($food_nutritions as $nutrition) {
 				$nutriTerm = get_term(
 					!empty($nutrition['id']) ? absint($nutrition['id']) : 0,
 					'food_manager_nutrition'
 				);
-				if( !empty( $nutriTerm->term_id ) ){
+				if (!empty($nutriTerm->term_id)) {
 					$nutrition_slug = strtolower(str_replace(" ", "_", $nutrition['term_name']));
-					echo '<span class="food-nutritions '. esc_attr( sanitize_title( $nutrition_slug ) ).' ">'. $nutrition['term_name'].' - '.$nutrition['value'].' '.$nutrition['unit_name'].'</span>';
-					if($numNutrition > ++$i){
+					echo '<span class="food-nutritions ' . esc_attr(sanitize_title($nutrition_slug)) . ' ">' . $nutrition['term_name'] . ' - ' . $nutrition['value'] . ' ' . $nutrition['unit_name'] . '</span>';
+					if ($numNutrition > ++$i) {
 						echo $after;
 					}
 				}
 			}
 		}
 	}
-	/*$food_nutritions = get_post_meta(get_the_ID(), '_nutrition', true);
-	if (! empty( $food_nutritions ) ) {
-		foreach ( $food_nutritions as $nutrition ) {
-	    	$nutrition_slug = strtolower(str_replace(" ", "_", $nutrition['term_name']));
-		    echo '<span class="food-nutritions '. esc_attr( sanitize_title( $nutrition_slug ) ).'">'. $nutrition['term_name'].' - '.$nutrition['value'].' '.$nutrition['unit_name'].'</span>';
-	    }
-	}*/
 }
 
 /**
@@ -807,18 +756,18 @@ function display_food_nutritions( $post = null, $after = '' ) {
  * @param mixed $post (default: null)
  * @return void
  */
-function get_food_nutritions( $post = null ) {
+function get_food_nutritions($post = null)
+{
 
-	$post = get_post( $post );
+	$post = get_post($post);
 
-	if ( $post->post_type !== 'food_manager' ) {
+	if ($post->post_type !== 'food_manager') {
 		return;
 	}
 
-	//$nutritions = wp_get_post_terms( $post->ID, 'food_manager_nutrition' );
 	$nutritions = get_post_meta(get_the_ID(), '_nutrition', true);
 
-	return apply_filters( 'display_food_nutritions', $nutritions, $post );
+	return apply_filters('display_food_nutritions', $nutritions, $post);
 }
 /**
  * display_food_units function.
@@ -826,17 +775,18 @@ function get_food_nutritions( $post = null ) {
  * @access public
  * @return void
  */
-function display_food_units( $post = null, $after = '' ) {
+function display_food_units($post = null, $after = '')
+{
 
-	if ( $food_units = get_food_units( $post ) ) {
+	if ($food_units = get_food_units($post)) {
 
-		if (! empty( $food_units ) ) {
-		    $numUnit = count($food_units);
-		    $i = 0;
-			foreach ( $food_units as $unit ) {
-				echo '<span class="food-units '. esc_attr( sanitize_title( $unit->slug ) ).' ">'. $unit->name.'</span>';
-				if($numUnit > ++$i){
-				    echo $after;
+		if (!empty($food_units)) {
+			$numUnit = count($food_units);
+			$i = 0;
+			foreach ($food_units as $unit) {
+				echo '<span class="food-units ' . esc_attr(sanitize_title($unit->slug)) . ' ">' . $unit->name . '</span>';
+				if ($numUnit > ++$i) {
+					echo $after;
 				}
 			}
 		}
@@ -850,17 +800,18 @@ function display_food_units( $post = null, $after = '' ) {
  * @param mixed $post (default: null)
  * @return void
  */
-function get_food_units( $post = null ) {
+function get_food_units($post = null)
+{
 
-	$post = get_post( $post );
+	$post = get_post($post);
 
-	if ( $post->post_type !== 'food_manager' ) {
+	if ($post->post_type !== 'food_manager') {
 		return;
 	}
 
-	$units = wp_get_post_terms( $post->ID, 'food_manager_unit' );
+	$units = wp_get_post_terms($post->ID, 'food_manager_unit');
 
-	return apply_filters( 'display_food_units', $units, $post );
+	return apply_filters('display_food_units', $units, $post);
 }
 /**
  * display_food_permalink function.
@@ -868,9 +819,10 @@ function get_food_units( $post = null ) {
  * @access public
  * @return void
  */
-function display_food_permalink( $post = null ) {
+function display_food_permalink($post = null)
+{
 
-	echo esc_attr(get_food_permalink( $post ));
+	echo esc_attr(get_food_permalink($post));
 }
 
 /**
@@ -880,13 +832,14 @@ function display_food_permalink( $post = null ) {
  * @param mixed $post (default: null)
  * @return string
  */
-function get_food_permalink( $post = null ) {
+function get_food_permalink($post = null)
+{
 
-	$post = get_post( $post );
+	$post = get_post($post);
 
-	$link = get_permalink( $post );
+	$link = get_permalink($post);
 
-	return apply_filters( 'display_food_permalink', $link, $post );
+	return apply_filters('display_food_permalink', $link, $post);
 }
 
 
@@ -898,11 +851,11 @@ function get_food_permalink( $post = null ) {
  * @param mixed $post_id (default: null)
  * @return void
  */
-function food_manager_class( $class = '', $post_id = null ) {
+function food_manager_class($class = '', $post_id = null)
+{
 
 	// Separates classes with a single space, collates classes for post DIV
-	echo 'class="' . join( ' ', get_food_manager_class( $class, $post_id ) ) . '"';
-
+	echo 'class="' . join(' ', get_food_manager_class($class, $post_id)) . '"';
 }
 
 /**
@@ -911,47 +864,48 @@ function food_manager_class( $class = '', $post_id = null ) {
  * @access public
  * @return array
  */
-function get_food_manager_class( $class = '', $post_id = null ) {
+function get_food_manager_class($class = '', $post_id = null)
+{
 
-	$post = get_post( $post_id );
+	$post = get_post($post_id);
 
-	if ( $post->post_type !== 'food_manager' ) {
+	if ($post->post_type !== 'food_manager') {
 		return array();
 	}
 
 	$classes = array();
 
-	if ( empty( $post ) ) {
+	if (empty($post)) {
 		return $classes;
 	}
 
 	$classes[] = 'food_manager';
 
-	if ( $food_type = get_food_type() ) {
+	if ($food_type = get_food_type()) {
 
-		if ( $food_type && ! empty( $food_type ) ) {
-			foreach ( $food_type as $type ) {
-				$classes[] = 'food-type-' . sanitize_title( $type->name );
+		if ($food_type && !empty($food_type)) {
+			foreach ($food_type as $type) {
+				$classes[] = 'food-type-' . sanitize_title($type->name);
 			}
 		}
 	}
 
-	
-	if ( is_food_featured( $post ) ) {
+
+	if (is_food_featured($post)) {
 
 		$classes[] = 'food_featured';
 	}
 
-	if ( ! empty( $class ) ) {
+	if (!empty($class)) {
 
-		if ( ! is_array( $class ) ) {
-			$class = preg_split( '#\s+#', $class );
+		if (!is_array($class)) {
+			$class = preg_split('#\s+#', $class);
 		}
 
-		$classes = array_merge( $classes, $class );
+		$classes = array_merge($classes, $class);
 	}
 
-	return get_post_class( $classes, $post->ID );
+	return get_post_class($classes, $post->ID);
 }
 
 /**
@@ -995,19 +949,20 @@ function get_food_status($post = null)
  * @access public
  * @return void
  */
-function display_stock_status( $post = null, $after = '' ) {
+function display_stock_status($post = null, $after = '')
+{
 
-	if ( $food_stock_status = get_stock_status( $post ) ) {
+	if ($food_stock_status = get_stock_status($post)) {
 
-		if (! empty( $food_stock_status ) ) {
+		if (!empty($food_stock_status)) {
 			$food_stock_status_label = "";
-			if($food_stock_status == 'fm_instock'){
+			if ($food_stock_status == 'fm_instock') {
 				$food_stock_status_label = 'In stock';
 			}
-			if($food_stock_status == 'fm_outofstock'){
+			if ($food_stock_status == 'fm_outofstock') {
 				$food_stock_status_label = 'Out of stock';
 			}
-			echo '<mark class="'.$food_stock_status.'">'.esc_html($food_stock_status_label).'</mark>';
+			echo '<mark class="' . $food_stock_status . '">' . esc_html($food_stock_status_label) . '</mark>';
 		}
 	}
 }
@@ -1018,13 +973,14 @@ function display_stock_status( $post = null, $after = '' ) {
  * @param mixed $post (default: null)
  * @return void
  */
-function get_stock_status( $post = null ) {
+function get_stock_status($post = null)
+{
 
-	$post = get_post( $post );
+	$post = get_post($post);
 
 	$stock_status = get_post_meta(get_the_ID(), '_food_stock_status', true);
 
-	return apply_filters( 'display_stock_status', $stock_status, $post );
+	return apply_filters('display_stock_status', $stock_status, $post);
 }
 
 
@@ -1150,10 +1106,12 @@ function food_manager_get_food_listing_location_structured_data($post)
 			$address[$schema_key] = $value;
 		}
 	}
+
 	// No address parts were found
 	if (1 === count($address)) {
 		$address = false;
 	}
+
 	/**
 	 * Gets the food listing location structured data.
 	 *
