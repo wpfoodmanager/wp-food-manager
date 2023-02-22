@@ -187,7 +187,7 @@ class WPFM_Form_Submit_Food extends WPFM_Form
 					'description'     => 'Comma separate tags, such as required like food type or content for this food.',
 				),
 				'food_banner' => array(
-					'label'       => __('Food Banner', 'wp-food-manager'),
+					'label'       => __('Food Banner ', 'wp-food-manager'),
 					'type'        => 'file',
 					'required'    => true,
 					'placeholder' => '',
@@ -243,7 +243,7 @@ class WPFM_Form_Submit_Food extends WPFM_Form
 					'priority'    => 1
 				),
 				'option_type' => array(
-					'label'       => __('Topping Selection Type.', 'wp-food-manager'),
+					'label'       => __('Topping Selection Type', 'wp-food-manager'),
 					'type'        => 'select',
 					'required'    => false,
 					'options' 	  => array(
@@ -876,9 +876,35 @@ class WPFM_Form_Submit_Food extends WPFM_Form
 
 		$ticket_type = '';
 		$recurre_food = '';
+
 		// Loop fields and save meta and term data
 		foreach ($this->fields as $group_key => $group_fields) {
 			foreach ($group_fields as $key => $field) {
+
+				// Set units taxonomy to food
+				$unit_ids = array();
+				if (isset($values['_nutrition']) && !empty($values['_nutrition'])) {
+					$nutritions = $values['_nutrition'];
+					foreach ($nutritions as $nutrition_id => $nutrition) {
+						if (trim($nutrition['unit_id'])) {
+							$unit_ids[] = (int)$nutrition['unit_id'];
+						}
+					}
+				}
+
+				if (isset($values['_ingredient']) && !empty($values['_ingredient'])) {
+					$ingredients = $values['_ingredient'];
+					foreach ($ingredients as $ingredient_id => $ingredient) {
+						if (trim($ingredient['unit_id'])) {
+							$unit_ids[] = (int)$ingredient['unit_id'];
+						}
+					}
+				}
+
+				if ($unit_ids) {
+					wp_set_object_terms($this->food_id, $unit_ids, 'food_manager_unit');
+				}
+
 				// Save taxonomies
 				if (!empty($field['taxonomy']) && !empty($values[$group_key][$key])) {
 
