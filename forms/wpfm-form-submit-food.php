@@ -238,7 +238,7 @@ class WPFM_Form_Submit_Food extends WPFM_Form
 				'option_name' => array(
 					'label'       => __('Topping Name', 'wp-food-manager'),
 					'type'        => 'text',
-					'required'    => false,
+					'required'    => true,
 					'placeholder' => __('Enter Topping option name', 'wp-food-manager'),
 					'priority'    => 1
 				),
@@ -268,7 +268,7 @@ class WPFM_Form_Submit_Food extends WPFM_Form
 				'option_description' => array(
 					'label'       => __('Topping Description', 'wp-food-manager'),
 					'type'        => 'wp-editor',
-					'required'    => false,
+					'required'    => true,
 					'placeholder' => 'Enter the field Topping Description',
 					'default' => 1,
 					'priority'    => 4
@@ -301,7 +301,7 @@ class WPFM_Form_Submit_Food extends WPFM_Form
 							$key = ($key == 'option_description') ? '_' . $key : $key;
 
 							if ($field['required'] && empty($_POST[$key . '_' . $repeated_options])) {
-								return new WP_Error('validation-error', sprintf(__('Extra Toppings Option %s is a required field.', 'wp-food-manager'), $field['label']));
+								return new WP_Error('validation-error', sprintf(__('Extra Toppings Option - %s is a required field.', 'wp-food-manager'), $field['label']));
 							}
 						}
 					}
