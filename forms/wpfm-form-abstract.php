@@ -688,6 +688,14 @@ abstract class WPFM_Form
 			unset($default_fields['food']['food_category']);
 		}
 
+		if (!get_option('food_manager_enable_food_tags') || (wp_count_terms('food_manager_tag') == 0 && isset($custom_fields['food']['food_tag']))) {
+
+			if (isset($custom_fields['food']['food_tag']))
+				$custom_fields['food']['food_tag']['visibility'] = false;
+
+			unset($default_fields['food']['food_tag']);
+		}
+
 		if (!get_option('food_manager_enable_food_types') || (wp_count_terms('food_manager_type') == 0 && isset($custom_fields['food']['food_type']))) {
 
 			if (isset($custom_fields['food']['food_type']))
