@@ -92,8 +92,8 @@ class WPFM_Settings
 						array(
 							'name'       => 'food_manager_enable_categories',
 							'std'        => '1',
-							'label'      => __('Enable Food Categories', 'wp-food-manager'),
-							'cb_label'   => __('Display categories on food.', 'wp-food-manager'),
+							'label'      => __('Food Categories', 'wp-food-manager'),
+							'cb_label'   => __('Display Food categories.', 'wp-food-manager'),
 							'desc'     => __('If enabled, the Food Categories option will display and manage from the both side at frontend and backend. ', 'wp-food-manager'),
 							'type'       => 'checkbox',
 							'attributes' => array(),
@@ -101,8 +101,8 @@ class WPFM_Settings
 						array(
 							'name'       => 'food_manager_enable_food_types',
 							'std'        => '1',
-							'label'      => __('Enable Food Types', 'wp-food-manager'),
-							'cb_label'   => __('Display types on food.', 'wp-food-manager'),
+							'label'      => __('Food Types', 'wp-food-manager'),
+							'cb_label'   => __('Display Food types.', 'wp-food-manager'),
 							'desc'       => 'If enabled, the Food Types option will display and manage from the both side at frontend and backend. ',
 							'type'       => 'checkbox',
 							'attributes' => array(),
@@ -110,8 +110,8 @@ class WPFM_Settings
 						array(
 							'name'       => 'food_manager_enable_food_tags',
 							'std'        => '1',
-							'label'      => __('Enable Food Tags', 'wp-food-manager'),
-							'cb_label'   => __('Display tags on food.', 'wp-food-manager'),
+							'label'      => __('Food Tags', 'wp-food-manager'),
+							'cb_label'   => __('Display Food tags.', 'wp-food-manager'),
 							'desc'       => 'If enabled, the Food Tags option will display and manage from the both side at frontend and backend. ',
 							'type'       => 'checkbox',
 							'attributes' => array(),
@@ -119,7 +119,7 @@ class WPFM_Settings
 						array(
 							'name'       => 'food_manager_enable_field_editor',
 							'std'        => '1',
-							'label'      => __('Enable Field Editor', 'wp-food-manager'),
+							'label'      => __('Field Editor', 'wp-food-manager'),
 							'cb_label'   => __('Display Field editor.', 'wp-food-manager'),
 							'desc'       => 'If enabled, the Field editor option will display at frontend and manage from the backend. ',
 							'type'       => 'checkbox',
@@ -136,7 +136,7 @@ class WPFM_Settings
 						),
 						array(
 							'name'       => 'food_manager_food_item_show_hide',
-							'label'      => __('Hide Food Items', 'wp-food-manager'),
+							'label'      => __('Food Items', 'wp-food-manager'),
 							'type'       => 'radio',
 							'desc'       => '',
 							'std'        => '1',
