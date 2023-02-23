@@ -10,7 +10,30 @@ if (!defined('ABSPATH')) {
 class WPFM_Cache_Helper
 {
 
-	public static function init()
+	/**
+	 * The single instance of the class.
+	 *
+	 * @var self
+	 * @since  2.5
+	 */
+	private static $_instance = null;
+
+	/**
+	 * Allows for accessing single instance of class. Class should only be constructed once per call.
+	 *
+	 * @since  2.5
+	 * @static
+	 * @return self Main instance.
+	 */
+	public static function instance()
+	{
+		if (is_null(self::$_instance)) {
+			self::$_instance = new self();
+		}
+		return self::$_instance;
+	}
+
+	public function __construct()
 	{
 		add_action('save_post', array(__CLASS__, 'flush_get_food_managers_cache'));
 		add_action('delete_post', array(__CLASS__, 'flush_get_food_managers_cache'));
@@ -241,4 +264,4 @@ class WPFM_Cache_Helper
 	}
 }
 
-WPFM_Cache_Helper::init();
+WPFM_Cache_Helper::instance();

@@ -11,7 +11,7 @@ if (!is_multisite()) {
 	// Only do deletion if the setting is true.
 	$do_deletion = get_option('food_manager_delete_data_on_uninstall');
 	if ($do_deletion) {
-		WP_Food_Manager_Data_Cleaner::cleanup_all();
+		WPFM_Data_Cleaner::cleanup_all();
 	}
 } else {
 	global $wpdb;
@@ -25,7 +25,7 @@ if (!is_multisite()) {
 		// Only do deletion if the setting is true.
 		$do_deletion = get_option('food_manager_delete_data_on_uninstall');
 		if ($do_deletion) {
-			WP_Food_Manager_Data_Cleaner::cleanup_all();
+			WPFM_Data_Cleaner::cleanup_all();
 		}
 	}
 

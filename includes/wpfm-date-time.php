@@ -4,10 +4,33 @@ if (!defined('ABSPATH')) {
 }
 
 /**
- * WP_Food_Manager_Date_Time
+ * WPFM_Date_Time
  */
-class WP_Food_Manager_Date_Time
+class WPFM_Date_Time
 {
+
+	/**
+	 * The single instance of the class.
+	 *
+	 * @var self
+	 * @since  1.0.0
+	 */
+	private static $_instance = null;
+
+	/**
+	 * Allows for accessing single instance of class. Class should only be constructed once per call.
+	 *
+	 * @since  1.0.0
+	 * @static
+	 * @return self Main instance.
+	 */
+	public static function instance()
+	{
+		if (is_null(self::$_instance)) {
+			self::$_instance = new self();
+		}
+		return self::$_instance;
+	}
 
 	const DATABASE_DATE_TIME_FORMAT      = 'Y-m-d H:i:s';
 	const DBTIMEFORMAT          = 'H:i:s';
@@ -547,4 +570,4 @@ class WP_Food_Manager_Date_Time
 	}
 }
 
-new WP_Food_Manager_Date_Time();
+WPFM_Date_Time::instance();

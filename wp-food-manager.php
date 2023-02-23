@@ -152,7 +152,7 @@ class WP_Food_Manager
 		$this->post_types->register_post_types();
 		remove_filter('pre_option_wpfm_categories', '__return_true');
 		remove_filter('pre_option_wpfm_enable_food_types', '__return_true');
-		WP_Food_Manager_Install::install();
+		WPFM_Install::install();
 		flush_rewrite_rules();
 	}
 
@@ -165,7 +165,7 @@ class WP_Food_Manager
 	{
 		if (version_compare(WPFM_VERSION, get_option('wp_food_manager_version'), '>')) {
 
-			WP_Food_Manager_Install::update();
+			WPFM_Install::update();
 			flush_rewrite_rules();
 		}
 	}
@@ -253,11 +253,11 @@ class WP_Food_Manager
 		wp_enqueue_script('wp-food-manager-food-submission');
 		wp_localize_script('wp-food-manager-food-submission', 'wp_food_manager_food_submission', array(
 
-			'i18n_datepicker_format' => WP_Food_Manager_Date_Time::get_datepicker_format(), //!empty(get_option('date_format')) ? get_option('date_format') : 'F j, Y',
+			'i18n_datepicker_format' => WPFM_Date_Time::get_datepicker_format(), //!empty(get_option('date_format')) ? get_option('date_format') : 'F j, Y',
 
-			'i18n_timepicker_format' => WP_Food_Manager_Date_Time::get_timepicker_format(), //!empty(get_option('time_format')) ? get_option('time_format') : 'g:i a',
+			'i18n_timepicker_format' => WPFM_Date_Time::get_timepicker_format(), //!empty(get_option('time_format')) ? get_option('time_format') : 'g:i a',
 
-			'i18n_timepicker_step' => WP_Food_Manager_Date_Time::get_timepicker_step(),
+			'i18n_timepicker_step' => WPFM_Date_Time::get_timepicker_step(),
 			'ajax_url' 	 => admin_url('admin-ajax.php'),
 
 		));

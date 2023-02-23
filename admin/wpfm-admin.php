@@ -13,6 +13,29 @@ class WPFM_Admin
 {
 
 	/**
+	 * The single instance of the class.
+	 *
+	 * @var self
+	 * @since  2.5
+	 */
+	private static $_instance = null;
+
+	/**
+	 * Allows for accessing single instance of class. Class should only be constructed once per call.
+	 *
+	 * @since  2.5
+	 * @static
+	 * @return self Main instance.
+	 */
+	public static function instance()
+	{
+		if (is_null(self::$_instance)) {
+			self::$_instance = new self();
+		}
+		return self::$_instance;
+	}
+
+	/**
 	 * __construct function.
 	 *
 	 * @access public
@@ -26,7 +49,7 @@ class WPFM_Admin
 		include_once('wpfm-setup.php');
 		include_once('wpfm-field-editor.php');
 
-		$this->settings_page = new WPFM_Settings();
+		$this->settings_page = WPFM_Settings::instance();
 
 		add_action('admin_menu', array($this, 'admin_menu'), 12);
 		add_action('admin_enqueue_scripts', array($this, 'admin_enqueue_scripts'));
@@ -76,9 +99,9 @@ class WPFM_Admin
 				'ajax_url' => admin_url('admin-ajax.php'),
 				'security' => wp_create_nonce('wpfm-admin-security'),
 				'start_of_week'                      => get_option('start_of_week'),
-				'i18n_datepicker_format'             => WP_Food_Manager_Date_Time::get_datepicker_format(),
-				'i18n_timepicker_format'             => WP_Food_Manager_Date_Time::get_timepicker_format(),
-				'i18n_timepicker_step'               => WP_Food_Manager_Date_Time::get_timepicker_step(),
+				'i18n_datepicker_format'             => WPFM_Date_Time::get_datepicker_format(),
+				'i18n_timepicker_format'             => WPFM_Date_Time::get_timepicker_format(),
+				'i18n_timepicker_step'               => WPFM_Date_Time::get_timepicker_step(),
 			)
 		);
 		wp_localize_script(
@@ -186,4 +209,4 @@ class WPFM_Admin
 		}
 	}
 }
-new WPFM_Admin();
+WPFM_Admin::instance();

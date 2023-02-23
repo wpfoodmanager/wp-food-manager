@@ -369,10 +369,10 @@ class WPFM_Form_Submit_Food extends WPFM_Form
 	{
 
 		//get date and time setting defined in admin panel Event listing -> Settings -> Date & Time formatting
-		$datepicker_date_format 	= WP_Food_Manager_Date_Time::get_datepicker_format();
+		$datepicker_date_format 	= WPFM_Date_Time::get_datepicker_format();
 
 		//covert datepicker format  into php date() function date format
-		$php_date_format 		= WP_Food_Manager_Date_Time::get_view_date_format_from_datepicker_date_format($datepicker_date_format);
+		$php_date_format 		= WPFM_Date_Time::get_view_date_format_from_datepicker_date_format($datepicker_date_format);
 
 		// Init fields
 		//$this->init_fields(); We dont need to initialize with this function because of field edior
@@ -869,10 +869,10 @@ class WPFM_Form_Submit_Food extends WPFM_Form
 		$maybe_attach = array();
 
 		//get date and time setting defined in admin panel Event listing -> Settings -> Date & Time formatting
-		$datepicker_date_format 	= WP_Food_Manager_Date_Time::get_datepicker_format();
+		$datepicker_date_format 	= WPFM_Date_Time::get_datepicker_format();
 
 		//covert datepicker format  into php date() function date format
-		$php_date_format 		= WP_Food_Manager_Date_Time::get_view_date_format_from_datepicker_date_format($datepicker_date_format);
+		$php_date_format 		= WPFM_Date_Time::get_view_date_format_from_datepicker_date_format($datepicker_date_format);
 
 		$ticket_type = '';
 		$recurre_food = '';
@@ -926,7 +926,7 @@ class WPFM_Form_Submit_Food extends WPFM_Form
 					if (!empty($values[$group_key][$key])) {
 						$date = $values[$group_key][$key];
 						// Convert date and time value into DB formatted format and save eg. 1970-01-01
-						$date_dbformatted = WP_food_Manager_Date_Time::date_parse_from_format($php_date_format, $date);
+						$date_dbformatted = WPFM_Date_Time::date_parse_from_format($php_date_format, $date);
 						$date_dbformatted = !empty($date_dbformatted) ? $date_dbformatted : $date;
 						update_post_meta($this->food_id, '_' . $key, $date_dbformatted);
 					} else

@@ -17,7 +17,7 @@ if (!defined('ABSPATH')) {
  *
  * @since 2.5
  */
-class WP_Food_Manager_Data_Cleaner
+class WPFM_Data_Cleaner
 {
 
 	/**

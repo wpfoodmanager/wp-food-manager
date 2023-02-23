@@ -7,6 +7,29 @@ class WP_Food_Manager_Field_Editor
 {
 
 	/**
+	 * The single instance of the class.
+	 *
+	 * @var self
+	 * @since  2.5
+	 */
+	private static $_instance = null;
+
+	/**
+	 * Allows for accessing single instance of class. Class should only be constructed once per call.
+	 *
+	 * @since  2.5
+	 * @static
+	 * @return self Main instance.
+	 */
+	public static function instance()
+	{
+		if (is_null(self::$_instance)) {
+			self::$_instance = new self();
+		}
+		return self::$_instance;
+	}
+
+	/**
 	 * Constructor
 	 */
 	public function __construct()
@@ -424,4 +447,4 @@ class WP_Food_Manager_Field_Editor
 	}
 }
 
-new WP_Food_Manager_Field_Editor();
+WP_Food_Manager_Field_Editor::instance();

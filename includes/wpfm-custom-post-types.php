@@ -28,6 +28,7 @@ class WPFM_Post_Types
 		}
 		return self::$_instance;
 	}
+	
 	/**
 	 * Constructor
 	 */
@@ -346,7 +347,7 @@ class WPFM_Post_Types
 
 		$terms = get_terms('food_manager_category', $r);
 
-		$walker = new WPFM_Category_Walker();
+		$walker = WPFM_Category_Walker::instance();
 
 		if (!$terms) {
 
@@ -383,7 +384,7 @@ class WPFM_Post_Types
 		$r['selected']     = (isset($wp_query->query['food_manager_type'])) ? $wp_query->query['food_manager_type'] : '';
 		$r['menu_order']   = false;
 		$terms             = get_terms('food_manager_type', $r);
-		$walker            = new WPFM_Category_Walker();
+		$walker            = WPFM_Category_Walker::instance();
 
 		if (!$terms) {
 			return;

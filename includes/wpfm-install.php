@@ -4,10 +4,10 @@ if (!defined('ABSPATH')) {
 }
 
 /**
- * WP_Food_Manager_Install
+ * WPFM_Install
  */
 
-class WP_Food_Manager_Install
+class WPFM_Install
 {
 
 	/**

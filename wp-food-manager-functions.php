@@ -860,7 +860,7 @@ function food_manager_dropdown_selection($args = '')
 
 		include_once(WPFM_PLUGIN_DIR . '/includes/wpfm-category-walker.php');
 
-		$walker = new WPFM_Category_Walker;
+		$walker = WPFM_Category_Walker::instance();
 
 		if ($hierarchical) {
 

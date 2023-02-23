@@ -517,8 +517,8 @@ class WPFM_Writepanels
 	public static function input_date($key, $field)
 	{
 		global $thepostid;
-		$datepicker_date_format = !empty(get_option('date_format')) ? get_option('date_format') : 'F j, Y'; //WP_Food_Manager_Date_Time::get_datepicker_format();
-		$php_date_format        = WP_Food_Manager_Date_Time::get_view_date_format_from_datepicker_date_format($datepicker_date_format);
+		$datepicker_date_format = !empty(get_option('date_format')) ? get_option('date_format') : 'F j, Y';
+		$php_date_format        = WPFM_Date_Time::get_view_date_format_from_datepicker_date_format($datepicker_date_format);
 		if (!isset($field['value'])) {
 			$date = get_post_meta($thepostid, $key, true);
 			if (is_array($date)) {
@@ -1305,7 +1305,7 @@ class WPFM_Writepanels
 						$date = $_POST[$key];
 
 						//Convert date and time value into DB formatted format and save eg. 1970-01-01
-						$date_dbformatted = WP_Food_Manager_Date_Time::date_parse_from_format($php_date_format, $date);
+						$date_dbformatted = WPFM_Date_Time::date_parse_from_format($php_date_format, $date);
 						$date_dbformatted = !empty($date_dbformatted) ? $date_dbformatted : $date;
 						update_post_meta($post_id, $key, $date_dbformatted);
 					}
