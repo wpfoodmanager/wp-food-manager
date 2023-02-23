@@ -1,4 +1,6 @@
 <?php
+global $wp_scripts;
+
 // Get selected value
 if (isset($field['value'])) {
     $selected = $field['value'];
@@ -17,6 +19,7 @@ $unit = get_terms('food_manager_unit', array(
 
 wp_enqueue_script('wp-food-manager-term-multiselect');
 wp_enqueue_script('wp-food-manager-term-select-multi-appearance');
+
 wp_localize_script(
     'wp-food-manager-term-select-multi-appearance',
     'appearance_params',
@@ -24,6 +27,18 @@ wp_localize_script(
         'unit_terms' => json_encode($unit),
     )
 );
+
+/* Check if localize script is running or not to run globally localize script */
+$data = $wp_scripts->get_data('wp-food-manager-term-select-multi-appearance', 'data');
+if (empty($data)) {
+    wp_localize_script(
+        'jquery',
+        'appearance_params',
+        array(
+            'unit_terms' => json_encode($unit),
+        )
+    );
+}
 
 $args = array(
     'taxonomy'     => $field['taxonomy'],
@@ -34,7 +49,7 @@ $args = array(
     'hide_empty'   => false
 );
 
-// For Edit screen screen of food
+// For Edit screen of food
 $preview_htm = '';
 if (isset($_GET['food_id']) && !empty($_GET['food_id'])) {
     $food_id = $_GET['food_id'];
