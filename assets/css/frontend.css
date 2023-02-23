@@ -2596,9 +2596,22 @@ span.fm-divider {
 
 
 /* ===== ALL MIX START ===== */
-.wpfm-food-ingredients span.food-ingredients,
-.wpfm-food-nutritions span.food-nutritions {
-    cursor: auto !important;
+.wpfm-single-food-page .wpfm-single-food-body-content .wpfm-food-ingredients .wpfm-heading-text,
+.wpfm-single-food-page .wpfm-single-food-body-content .wpfm-food-nutritions .wpfm-heading-text{
+    font-size: 18px;
+    margin-bottom: 10px !important;
+}
+
+
+.wpfm-single-food-page .wpfm-single-food-body-content .wpfm-food-ingredients span.food-ingredients,
+.wpfm-single-food-page .wpfm-single-food-body-content .wpfm-food-nutritions span.food-nutritions {
+    background: var(--wpfm-gray-bg-color);
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 15px;
+    line-height: 20px;
+    display: inline-block;
+    margin: 0px 5px 5px 0;
 }
 
 .wpfm-additional-file-slider .wpfm-icon {

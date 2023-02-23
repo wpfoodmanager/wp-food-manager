@@ -349,7 +349,7 @@ label.add-food-small {
 }
 
 .wpfm_panel p.wpfm-admin-postbox-form-field {
-  padding: 5px 20px 5px 162px !important;
+  padding: 5px 20px 5px 200px !important;
   display: flex;
   align-items: center;
   column-gap: 5px;
@@ -362,9 +362,9 @@ label.add-food-small {
 
 .wpfm_panel label {
   float: left;
-  width: 150px;
+  width: 200px;
   padding: 0;
-  margin: 0 0 0 -150px;
+  margin: 0 0 0 -200px;
   font-size: 14px;
   color: #555;
 }
@@ -491,7 +491,7 @@ label.add-food-small {
 
 #extra_options_food_data_content .wpfm-admin-options-table .widefat thead,
 #extra_options_food_data_content .wpfm-admin-options-table .widefat tfoot {
-  background: #f7fafc;
+  background: #f6f7f7;
 }
 
 a.button.wpfm-add-row {
@@ -797,7 +797,7 @@ mark.fm_instock {
 .wpfm-lists-container .wpfm-sortable-list {
   position: relative;
   padding: 50px 10px 10px 10px;
-  border: 1px solid #d9e3ed;
+  border: 1px solid #dcdcde;
   margin: 0;
   min-height: 50px;
   -webkit-box-flex: 2;
@@ -816,7 +816,7 @@ mark.fm_instock {
   width: 100%;
   top: 0;
   margin-left: -10px;
-  border-bottom: 1px solid #d9e3ed;
+  border-bottom: 1px solid #dcdcde;
 }
 
 .wpfm-active-list .wpfm-sortable-item {
@@ -825,7 +825,7 @@ mark.fm_instock {
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
   margin: 0;
-  border: 1px solid #d9e3ed;
+  border: 1px solid #dcdcde;
 }
 
 .wpfm-sortable-list .wpfm-sortable-item {
@@ -851,7 +851,7 @@ mark.fm_instock {
   background: #f6f7f7;
   padding-left: 20px;
   margin-left: 5px;
-  border: 1px solid #d9e3ed;
+  border: 1px solid #dcdcde;
 }
 
 .wpfm-sortable-list .wpfm-item-search.with-title .wpfm-search-label {
@@ -894,12 +894,13 @@ mark.fm_instock {
   -ms-flex-align: center;
   align-items: center;
   line-height: 1.4;
-  border: 1px solid #d9e3ed;
+  border: 1px solid #dcdcde;
 }
 
 .wpfm-sortable-item-values>* {
   width: 48%;
   box-sizing: border-box;
+  margin-right: 1.6%;
 }
 
 .wpfm-active-list .wpfm-sortable-item {
@@ -908,7 +909,7 @@ mark.fm_instock {
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
   margin: 0;
-  border: 1px solid #d9e3ed;
+  border: 1px solid #dcdcde;
 }
 
 .wpfm-active-list .wpfm-sortable-item+li {
@@ -963,18 +964,23 @@ mark.fm_instock {
 }
 
 .wpfm-input-field {
-  background: #f7fafc;
+  background: #f6f7f7;
   padding: 15px;
   position: relative;
   border-radius: 4px;
-  border: 1px solid #d9e3ed;
+  border: 1px solid #dcdcde;
   margin: 0;
   width: 100%;
   display: inline-block;
   vertical-align: top;
   box-sizing: border-box;
 }
-
+.wpfm-input-field .wp-editor-container textarea {
+  height: 126px;
+  width: 100%;
+  border: 0px;
+  box-shadow: none;
+}
 .wpfm-field-switch-slider {
   position: absolute;
   cursor: pointer;
@@ -1370,6 +1376,10 @@ a.tips.food_title {
   box-sizing: border-box;
   margin: 0 0 20px;
 }
+.wpfm-input-field .mce-btn.mce-active button, .wpfm-input-field .mce-btn.mce-active:hover button, .wpfm-input-field .mce-btn.mce-active i, .wpfm-input-field .mce-btn.mce-active:hover i {
+  color: #595959;
+}
+
 
 
 /*helpful start*/
