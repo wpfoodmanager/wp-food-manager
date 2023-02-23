@@ -1,6 +1,6 @@
-var ContentFoodListing = function () {
-	/// <summary>Constructor function of the food ContentFoodListing class.</summary>
-	/// <returns type="ContentFoodListing" />      
+var WPFMContentFoodListing = function () {
+	/// <summary>Constructor function of the food WPFMContentFoodListing class.</summary>
+	/// <returns type="WPFMContentFoodListing" />      
 	return {
 		///<summary>
 		///Initializes the content food listing.  
@@ -8,10 +8,10 @@ var ContentFoodListing = function () {
 		///<returns type="initialization settings" />   
 		/// <since>1.0.0</since> 
 		init: function () {
-			WPFM_Common.logInfo("ContentFoodListing.init...");
+			WPFMCommon.logInfo("WPFMContentFoodListing.init...");
 
-			jQuery(document).delegate('#wpfm-food-list-layout', 'click', ContentFoodListing.actions.lineLayoutIconClick);
-			jQuery(document).delegate('#wpfm-food-box-layout', 'click', ContentFoodListing.actions.boxLayoutIconClick);
+			jQuery(document).delegate('#wpfm-food-list-layout', 'click', WPFMContentFoodListing.actions.lineLayoutIconClick);
+			jQuery(document).delegate('#wpfm-food-box-layout', 'click', WPFMContentFoodListing.actions.boxLayoutIconClick);
 
 			//check if default layout is set or icon are on the page to load according to localstorage
 			if (jQuery('.wpfm-food-list-layout').length > 0 || jQuery('.wpfm-food-box-layout').length > 0) {
@@ -119,7 +119,7 @@ var ContentFoodListing = function () {
 			/// <returns type="foods listing view" />    
 			/// <since>1.0.0</since>     
 			lineLayoutIconClick: function (food) {
-				WPFM_Common.logInfo("ContentFoodListing.actions.lineLayoutIconClick...");
+				WPFMCommon.logInfo("WPFMContentFoodListing.actions.lineLayoutIconClick...");
 				jQuery(this).addClass("wpfm-active-layout");
 				jQuery("#wpfm-food-box-layout").removeClass("wpfm-active-layout");
 				jQuery(".wpfm-food-box-col").show();
@@ -135,7 +135,7 @@ var ContentFoodListing = function () {
 			/// <returns type="foods listing view" />    
 			/// <since>1.0.0</since>     
 			boxLayoutIconClick: function (food) {
-				WPFM_Common.logInfo("ContentFoodListing.actions.boxLayoutIconClick...");
+				WPFMCommon.logInfo("WPFMContentFoodListing.actions.boxLayoutIconClick...");
 				jQuery(this).addClass("wpfm-active-layout");
 
 				if (jQuery("#wpfm-food-list-layout").hasClass("wpfm-active-layout"))
@@ -154,7 +154,7 @@ var ContentFoodListing = function () {
 
 }; //end of class
 
-ContentFoodListing = ContentFoodListing();
+WPFMContentFoodListing = WPFMContentFoodListing();
 jQuery(document).ready(function ($) {
-	ContentFoodListing.init();
+	WPFMContentFoodListing.init();
 });

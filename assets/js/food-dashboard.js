@@ -1,5 +1,5 @@
-var FoodDashboard = function () {
-	/// <summary>Constructor function of the food FoodDashboard class.</summary>
+var WPFMFoodDashboard = function () {
+	/// <summary>Constructor function of the food WPFMFoodDashboard class.</summary>
 	/// <returns type="Home" />      
 	return {
 		///<summary>
@@ -9,19 +9,19 @@ var FoodDashboard = function () {
 		/// <since>1.0.0</since> 
 		init: function () {
 
-			WPFM_Common.logInfo("FoodDashboard.init...");
+			WPFMCommon.logInfo("WPFMFoodDashboard.init...");
 			if (jQuery('.food-dashboard-action-delete').length > 0 && jQuery('td .wpfm-dboard-food-action').length == 0) {
 
 				jQuery('.food-dashboard-action-delete').css({ 'cursor': 'pointer' });
 
 				//for delete food confirmation dialog / tooltip 
-				jQuery('.food-dashboard-action-delete').on('click', FoodDashboard.confirmation.showDialog);
+				jQuery('.food-dashboard-action-delete').on('click', WPFMFoodDashboard.confirmation.showDialog);
 			}
 
 			// For Dashboard Menu Toggle
 			if (jQuery('.wpfm-main-vmenu-dashboard-sub-menu .wpfm-main-vmenu-dashboard-link').length > 0) {
 				jQuery('.wpfm-main-vmenu-dashboard-sub-menu .wpfm-main-vmenu-dashboard-submenu-ul').hide();
-				jQuery('.wpfm-main-vmenu-dashboard-sub-menu .wpfm-main-vmenu-dashboard-link').on('click', FoodDashboard.actions.openSubmenu);
+				jQuery('.wpfm-main-vmenu-dashboard-sub-menu .wpfm-main-vmenu-dashboard-link').on('click', WPFMFoodDashboard.actions.openSubmenu);
 			}
 
 			// For Active Dashboard Menu Open
@@ -70,7 +70,7 @@ var FoodDashboard = function () {
 			/// <returns type="actions" />     
 			/// <since>1.0.0</since>       
 			showDialog: function (event) {
-				WPFM_Common.logInfo("FoodDashboard.confirmation.showDialog...");
+				WPFMCommon.logInfo("WPFMFoodDashboard.confirmation.showDialog...");
 				return confirm(food_manager_food_dashboard.i18n_confirm_delete);
 				event.preventDefault();
 			},
@@ -100,7 +100,7 @@ var FoodDashboard = function () {
 	} //enf of return	
 }; //end of class
 
-FoodDashboard = FoodDashboard();
+WPFMFoodDashboard = WPFMFoodDashboard();
 jQuery(document).ready(function ($) {
-	FoodDashboard.init();
+	WPFMFoodDashboard.init();
 });

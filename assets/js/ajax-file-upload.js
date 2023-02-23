@@ -1,5 +1,5 @@
-var AjaxFileUpload = function () {
-	/// <summary>Constructor function of the food AjaxFileUpload class.</summary>
+var WPFMAjaxFileUpload = function () {
+	/// <summary>Constructor function of the food WPFMAjaxFileUpload class.</summary>
 	/// <returns type="Home" />      
 	return {
 		///<summary>
@@ -9,7 +9,7 @@ var AjaxFileUpload = function () {
 		/// <since>1.0.0</since>
 
 		init: function () {
-			WPFM_Common.logInfo("AjaxFileUpload.init...");
+			WPFMCommon.logInfo("WPFMAjaxFileUpload.init...");
 			jQuery('.wp-food-manager-file-upload').each(function () {
 				jQuery(this).fileupload({
 					dataType: 'json',
@@ -91,7 +91,7 @@ var AjaxFileUpload = function () {
 	} //enf of return
 }; //end of class
 
-AjaxFileUpload = AjaxFileUpload();
+WPFMAjaxFileUpload = WPFMAjaxFileUpload();
 jQuery(document).ready(function ($) {
-	AjaxFileUpload.init();
+	WPFMAjaxFileUpload.init();
 });

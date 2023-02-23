@@ -1,9 +1,9 @@
-var FoodAjaxFilters = function () {
+var WPFMFoodAjaxFilters = function () {
     var supportHtml5History;
     var xmlHttpRequest = [];
     return {
         init: function () {
-            WPFM_Common.logInfo("FoodAjaxFilters.init...");
+            WPFMCommon.logInfo("WPFMFoodAjaxFilters.init...");
 
             if (jQuery.isFunction(jQuery.fn.chosen)) {
                 if (wpfm_ajax_filters.is_rtl == 1) {
@@ -30,16 +30,16 @@ var FoodAjaxFilters = function () {
             } else {
                 supportHtml5History = false
             }
-            jQuery(document).ready(FoodAjaxFilters.actions.windowLoad);
-            jQuery(document.body).on('click', '.load_more_foods', FoodAjaxFilters.actions.loadMorefoods);
-            jQuery('.food_filters').on('click', '.reset', FoodAjaxFilters.actions.FoodAjaxFiltersReset);
-            jQuery('div.food_listings').on('click', '.food-manager-pagination a', FoodAjaxFilters.actions.foodPagination);
-            jQuery('.food_listings').on('update_food_listings', FoodAjaxFilters.actions.getfoodListings);
+            jQuery(document).ready(WPFMFoodAjaxFilters.actions.windowLoad);
+            jQuery(document.body).on('click', '.load_more_foods', WPFMFoodAjaxFilters.actions.loadMorefoods);
+            jQuery('.food_filters').on('click', '.reset', WPFMFoodAjaxFilters.actions.WPFMFoodAjaxFiltersReset);
+            jQuery('div.food_listings').on('click', '.food-manager-pagination a', WPFMFoodAjaxFilters.actions.foodPagination);
+            jQuery('.food_listings').on('update_food_listings', WPFMFoodAjaxFilters.actions.getfoodListings);
             jQuery('#search_keywords, #search_location, #search_datetimes, #search_categories, #search_food_types, #search_ticket_prices, .food-manager-filter').change(function () {
                 var target = jQuery(this).closest('div.food_listings');
                 target.triggerHandler('update_food_listings', [1, false]);
 
-                FoodAjaxFilters.food_manager_store_state(target, 1)
+                WPFMFoodAjaxFilters.food_manager_store_state(target, 1)
             }).on("keyup", function (e) {
                 if (e.which === 13) {
                     jQuery(this).trigger('change')
@@ -47,7 +47,7 @@ var FoodAjaxFilters = function () {
             })
         },
         food_manager_store_state: function (target, page) {
-            WPFM_Common.logInfo("FoodAjaxFilters.food_manager_store_state...");
+            WPFMCommon.logInfo("WPFMFoodAjaxFilters.food_manager_store_state...");
             var location = document.location.href.split('#')[0];
             if (supportHtml5History) {
                 var form = target.find('.food_filters');
@@ -63,7 +63,7 @@ var FoodAjaxFilters = function () {
         },
         actions: {
             windowLoad: function (event) {
-                WPFM_Common.logInfo("FoodAjaxFilters.actions.windowLoad...");
+                WPFMCommon.logInfo("WPFMFoodAjaxFilters.actions.windowLoad...");
                 jQuery('.food_filters').each(function () {
                     var target = jQuery(this).closest('div.food_listings');
                     console.log(jQuery(this).closest('div.food_listings').length);
@@ -87,8 +87,8 @@ var FoodAjaxFilters = function () {
                     target.triggerHandler('update_food_listings', [inital_page, false])
                 });
             },
-            FoodAjaxFiltersReset: function (event) {
-                WPFM_Common.logInfo("FoodAjaxFilters.actions.FoodAjaxFiltersReset...");
+            WPFMFoodAjaxFiltersReset: function (event) {
+                WPFMCommon.logInfo("WPFMFoodAjaxFilters.actions.WPFMFoodAjaxFiltersReset...");
                 var target = jQuery(this).closest('div.food_listings');
                 var form = jQuery(this).closest('form');
                 form.find(':input[name="search_keywords"], :input[name="search_location"], .food-manager-filter').not(':input[type="hidden"]').val('').trigger('chosen:updated');
@@ -98,12 +98,12 @@ var FoodAjaxFilters = function () {
                 form.find(':input[name^="search_ticket_prices"]').not(':input[type="hidden"]').val(0).trigger('chosen:updated');
                 target.triggerHandler('reset');
                 target.triggerHandler('update_food_listings', [1, false]);
-                FoodAjaxFilters.food_manager_store_state(target, 1);
+                WPFMFoodAjaxFilters.food_manager_store_state(target, 1);
                 return false;
                 event.preventDefault()
             },
             loadMorefoods: function (event) {
-                WPFM_Common.logInfo("FoodAjaxFilters.actions.loadMorefoods...");
+                WPFMCommon.logInfo("WPFMFoodAjaxFilters.actions.loadMorefoods...");
                 var target = jQuery(this).closest('div.food_listings');
                 var page = parseInt(jQuery(this).data('page') || 1);
                 var loading_previous = false;
@@ -115,10 +115,10 @@ var FoodAjaxFilters = function () {
                 event.preventDefault()
             },
             foodPagination: function (event) {
-                WPFM_Common.logInfo("FoodAjaxFilters.actions.foodPagination...");
+                WPFMCommon.logInfo("WPFMFoodAjaxFilters.actions.foodPagination...");
                 var target = jQuery(this).closest('div.food_listings');
                 var page = jQuery(this).data('page');
-                FoodAjaxFilters.food_manager_store_state(target, page);
+                WPFMFoodAjaxFilters.food_manager_store_state(target, page);
                 target.triggerHandler('update_food_listings', [page, false]);
                 jQuery("body, html").animate({
                     scrollTop: target.offset().top
@@ -128,7 +128,7 @@ var FoodAjaxFilters = function () {
             },
             getfoodListings: function (event, page, append, loading_previous) {
 
-                WPFM_Common.logInfo("FoodAjaxFilters.actions.getfoodListings...");
+                WPFMCommon.logInfo("WPFMFoodAjaxFilters.actions.getfoodListings...");
 
                 var data = '';
                 var target = jQuery(this);
@@ -272,20 +272,20 @@ var FoodAjaxFilters = function () {
                                 target.triggerHandler('updated_results', result)
                             } catch (err) {
                                 if (window.console) {
-                                    WPFM_Common.logError(err)
+                                    WPFMCommon.logError(err)
                                 }
                             }
                         }
                     },
                     error: function (jqXHR, textStatus, error) {
                         if (window.console && 'abort' !== textStatus) {
-                            WPFM_Common.logError(textStatus + ': ' + error)
+                            WPFMCommon.logError(textStatus + ': ' + error)
                         }
                     },
                     statusCode: {
                         404: function () {
                             if (window.console) {
-                                WPFM_Common.logError("Error 404: Ajax Endpoint cannot be reached. Go to Settings > Permalinks and save to resolve.")
+                                WPFMCommon.logError("Error 404: Ajax Endpoint cannot be reached. Go to Settings > Permalinks and save to resolve.")
                             }
                         }
                     }
@@ -296,7 +296,7 @@ var FoodAjaxFilters = function () {
     }
 };
 
-FoodAjaxFilters = FoodAjaxFilters();
+WPFMFoodAjaxFilters = WPFMFoodAjaxFilters();
 jQuery(document).ready(function ($) {
-    FoodAjaxFilters.init()
+    WPFMFoodAjaxFilters.init()
 });

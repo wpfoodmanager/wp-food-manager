@@ -1,6 +1,6 @@
-EventSubmission = function () {
-    /// <summary>Constructor function of the event EventSubmission class.</summary>
-    /// <returns type="EventSubmission" />
+WPFMFoodSubmission = function () {
+    /// <summary>Constructor function of the event WPFMFoodSubmission class.</summary>
+    /// <returns type="WPFMFoodSubmission" />
     return {
         ///<summary>
         ///Initializes the event submission.
@@ -8,7 +8,7 @@ EventSubmission = function () {
         ///<returns type="initialization settings" />
         /// <since>1.0.0</since>
         init: function () {
-            WPFM_Common.logInfo("EventSubmission.init...");
+            WPFMCommon.logInfo("WPFMFoodSubmission.init...");
 
             jQuery('body').on('click', '.event-manager-remove-uploaded-file', function () {
                 jQuery(this).closest('.event-manager-uploaded-file').remove();
@@ -197,14 +197,14 @@ EventSubmission = function () {
                 jQuery('.fieldset-event_ticket_price').hide();
             }
 
-            jQuery('input[name=event_online]').on('change', EventSubmission.actions.onlineEvent);
-            jQuery('input[name=event_ticket_options]').on('change', EventSubmission.actions.eventTicketOptions);
+            jQuery('input[name=event_online]').on('change', WPFMFoodSubmission.actions.onlineEvent);
+            jQuery('input[name=event_ticket_options]').on('change', WPFMFoodSubmission.actions.eventTicketOptions);
 
             //add links for paid and free tickets   
-            jQuery('.add-group-row').on('click', EventSubmission.actions.addGroupField);
+            jQuery('.add-group-row').on('click', WPFMFoodSubmission.actions.addGroupField);
 
             //delete tickets 
-            jQuery(document).delegate('.remove-group-row', 'click', EventSubmission.actions.removeGroupField);
+            jQuery(document).delegate('.remove-group-row', 'click', WPFMFoodSubmission.actions.removeGroupField);
         },
 
         actions:
@@ -272,7 +272,7 @@ EventSubmission = function () {
             /// <since>1.0.0</since>
             onlineEvent: function (event) {
                 event.preventDefault();
-                WPFM_Common.logInfo("EventDashboard.actions.onlineEvent...");
+                WPFMCommon.logInfo("EventDashboard.actions.onlineEvent...");
                 if (jQuery('#event_online').length > 0) {
                     if (jQuery(this).val() == "yes") {
                         if (jQuery('.fieldset-event_venue_name').length > 0 && jQuery('input[name=event_venue_name]').length > 0) {
@@ -355,7 +355,7 @@ EventSubmission = function () {
             /// <since>1.0.0</since>
             eventTicketOptions: function (event) {
                 event.preventDefault();
-                WPFM_Common.logInfo("EventDashboard.actions.eventTicketOptions...");
+                WPFMCommon.logInfo("EventDashboard.actions.eventTicketOptions...");
                 if (jQuery('#event_ticket_options').length > 0) {
                     if (jQuery(this).val() == "free") {
                         if (jQuery('.fieldset-event_ticket_price').length > 0 && jQuery('input[name=event_ticket_price]').length > 0) {
@@ -380,7 +380,7 @@ EventSubmission = function () {
 
     } //enf of return
 }; //end of class
-EventSubmission = EventSubmission();
+WPFMFoodSubmission = WPFMFoodSubmission();
 jQuery(document).ready(function ($) {
-    EventSubmission.init();
+    WPFMFoodSubmission.init();
 });

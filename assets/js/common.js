@@ -1,16 +1,16 @@
-var WPFM_Common = function () {
-    /// <summary>Constructor function of the WPFM_Common class.</summary>
+var WPFMCommon = function () {
+    /// <summary>Constructor function of the WPFMCommon class.</summary>
     /// <since>1.0.0</since>
-    /// <returns type="WPFM_Common" />
+    /// <returns type="WPFMCommon" />
     var abortObjects = [];
     var javaScriptInfoLoggingEnabled = false;
     var javaScriptTraceLoggingEnabled = false;
     return {
         init: function () {
-            /// <summary>Initializes the WPFM_common.</summary>
+            /// <summary>Initializes the WPFMCommon.</summary>
             /// <since>1.0.0</since>              
-            WPFM_Common.logInfo("WPFM_Common.init...");
-            jQuery(document).delegate("ul.wpfm-tabs-wrap li.wpfm-tab-link", "click", WPFM_Common.tabChanged);
+            WPFMCommon.logInfo("WPFMCommon.init...");
+            jQuery(document).delegate("ul.wpfm-tabs-wrap li.wpfm-tab-link", "click", WPFMCommon.tabChanged);
 
             window.addEventListener('keydown', function (e) {
                 if (e.keyCode === 27 && jQuery('.wpfm-modal-close').length > 0) {
@@ -61,7 +61,7 @@ var WPFM_Common = function () {
             /// <param name="jsonString" type="string">The json string.</param>
             /// <since>1.0.0</since>
             /// <returns type="json" />
-            WPFM_Common.logInfo("stringToJson...");
+            WPFMCommon.logInfo("stringToJson...");
             if (jsonString === undefined || jsonString.length === 0) {
                 return undefined;
             }
@@ -166,7 +166,7 @@ var WPFM_Common = function () {
         /// <returns type="bool" />     
         /// <since>1.0.0</since>       
         validateEmail: function (email) {
-            WPFM_Common.logInfo("WPFM_Common.validateEmail...");
+            WPFMCommon.logInfo("WPFMCommon.validateEmail...");
             var expr = /^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
             return expr.test(email);
         },
@@ -179,7 +179,7 @@ var WPFM_Common = function () {
         /// <returns type="bool" />     
         /// <since>1.0.0</since>       
         validatePincode: function (email) {
-            WPFM_Common.logInfo("WPFM_Common.validatePincode...");
+            WPFMCommon.logInfo("WPFMCommon.validatePincode...");
             var expr = /^[0-9]+$/;
             return expr.test(email);
         },
@@ -192,7 +192,7 @@ var WPFM_Common = function () {
         /// <returns type="bool" />     
         /// <since>1.0.0</since>       
         validateName: function (name) {
-            WPFM_Common.logInfo("WPFM_Common.validateName...");
+            WPFMCommon.logInfo("WPFMCommon.validateName...");
             var expr = /[A-Za-z \-_.\u00C0-\u00D6\u00D8-\u00F6\u00F8-\u00FF]/;
             return expr.test(name);
         },
@@ -205,7 +205,7 @@ var WPFM_Common = function () {
         /// <returns type="bool" />     
         /// <since>1.0.0</since>       
         isURL: function (str) {
-            WPFM_Common.logInfo("WPFM_Common.isURL...");
+            WPFMCommon.logInfo("WPFMCommon.isURL...");
             var urlRegex = '^(?!mailto:)(?:(?:http|https|ftp)://)(?:\\S+(?::\\S*)?@)?(?:(?:(?:[1-9]\\d?|1\\d\\d|2[01]\\d|22[0-3])(?:\\.(?:1?\\d{1,2}|2[0-4]\\d|25[0-5])){2}(?:\\.(?:[0-9]\\d?|1\\d\\d|2[0-4]\\d|25[0-4]))|(?:(?:[a-z\\u00a1-\\uffff0-9]+-?)*[a-z\\u00a1-\\uffff0-9]+)(?:\\.(?:[a-z\\u00a1-\\uffff0-9]+-?)*[a-z\\u00a1-\\uffff0-9]+)*(?:\\.(?:[a-z\\u00a1-\\uffff]{2,})))|localhost)(?::\\d{2,5})?(?:(/|\\?|#)[^\\s]*)?$';
             var url = new RegExp(urlRegex, 'i');
             return str.length < 2083 && url.test(str);
@@ -218,7 +218,7 @@ var WPFM_Common = function () {
         /// <returns type="actions" />    
         /// <since>3.1.5</since>       
         showToggleContent: function (food) {
-            WPFM_Common.logInfo("WPFM_Common.actions.showToggleContent...");
+            WPFMCommon.logInfo("WPFMCommon.actions.showToggleContent...");
             jQuery(this).toggleClass("wpfm-active-button");
 
             event.preventDefault();
@@ -231,7 +231,7 @@ var WPFM_Common = function () {
         /// <returns type="actions" />     
         /// <since>3.1.6</since>       
         hideToggleContent: function (food) {
-            WPFM_Common.logInfo("WPFM_Common.actions.hideToggleContent...");
+            WPFMCommon.logInfo("WPFMCommon.actions.hideToggleContent...");
             //jQuery('#wpfm_contact_organizer').removeClass("wpfm-active-button");
             //jQuery('#wpfm_contact_organizer_form').slideUp("slow");
             event.preventDefault();
@@ -241,7 +241,7 @@ var WPFM_Common = function () {
     }
 };
 
-WPFM_Common = WPFM_Common();
+WPFMCommon = WPFMCommon();
 jQuery(document).ready(function ($) {
-    WPFM_Common.init();
+    WPFMCommon.init();
 });

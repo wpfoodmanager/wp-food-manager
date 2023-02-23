@@ -1,4 +1,4 @@
-var FieldEditor = function () {
+var WPFMFieldEditor = function () {
 	return {
 
 		///<summary>
@@ -8,15 +8,15 @@ var FieldEditor = function () {
 		/// <since>1.0.0</since> 
 		init: function () {
 
-			jQuery('.wp-food-manager-food-form-field-editor').on('init', FieldEditor.actions.initSortable);
+			jQuery('.wp-food-manager-food-form-field-editor').on('init', WPFMFieldEditor.actions.initSortable);
 			jQuery('.wp-food-manager-food-form-field-editor').trigger('init');
-			jQuery('.add-field').on('click', FieldEditor.actions.addNewFields); //add new field
-			jQuery('body').on('click', '.child-add-field', FieldEditor.actions.addNewChildFields);
-			jQuery('.wp-food-manager-food-form-field-editor').on('change', '.field-type select', FieldEditor.actions.changeFieldTypeOptions);
-			jQuery('.delete-field').on('click', FieldEditor.actions.deleteField); //delete field
-			jQuery('.reset').on('click', FieldEditor.actions.resetFields); //reset field
+			jQuery('.add-field').on('click', WPFMFieldEditor.actions.addNewFields); //add new field
+			jQuery('body').on('click', '.child-add-field', WPFMFieldEditor.actions.addNewChildFields);
+			jQuery('.wp-food-manager-food-form-field-editor').on('change', '.field-type select', WPFMFieldEditor.actions.changeFieldTypeOptions);
+			jQuery('.delete-field').on('click', WPFMFieldEditor.actions.deleteField); //delete field
+			jQuery('.reset').on('click', WPFMFieldEditor.actions.resetFields); //reset field
 
-			jQuery('.wp-food-manager-organizer-form-field-editor').on('init', FieldEditor.actions.initSortable);
+			jQuery('.wp-food-manager-organizer-form-field-editor').on('init', WPFMFieldEditor.actions.initSortable);
 			jQuery('.wp-food-manager-organizer-form-field-editor').trigger('init');
 		},
 		actions: {
@@ -46,7 +46,7 @@ var FieldEditor = function () {
 						ui.item.removeAttr('style');
 					}
 				});
-				jQuery(this).find('.field-type select').each(FieldEditor.actions.changeFieldTypeOptions);
+				jQuery(this).find('.field-type select').each(WPFMFieldEditor.actions.changeFieldTypeOptions);
 				jQuery(this).find('.field-rules select:visible').chosen();
 			},
 
@@ -95,7 +95,7 @@ var FieldEditor = function () {
 				$tbody.append(row);
 
 				jQuery('.wp-food-manager-food-form-field-editor').trigger('init');
-				jQuery('.delete-field').on('click', FieldEditor.actions.deleteField); //delete field
+				jQuery('.delete-field').on('click', WPFMFieldEditor.actions.deleteField); //delete field
 				return false;
 			},
 
@@ -116,7 +116,7 @@ var FieldEditor = function () {
 				$tbody.append(row);
 
 				jQuery('.wp-food-manager-food-form-field-editor').trigger('init');
-				jQuery('.delete-field').on('click', FieldEditor.actions.deleteField); //delete field
+				jQuery('.delete-field').on('click', WPFMFieldEditor.actions.deleteField); //delete field
 				return false;
 			},
 
@@ -184,6 +184,6 @@ var FieldEditor = function () {
 		}
 	}
 };
-FieldEditor = FieldEditor(), jQuery(document).ready(function (t) {
-	FieldEditor.init()
+WPFMFieldEditor = WPFMFieldEditor(), jQuery(document).ready(function (t) {
+	WPFMFieldEditor.init()
 });
