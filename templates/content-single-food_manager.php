@@ -104,7 +104,7 @@ $food = $post;
                                 <?php endif; ?>
 
                             </div>
-                            <div class="wpfm-single-food-body-content wpfm-extra-options">
+                            <form class="wpfm-single-food-body-content wpfm-extra-options" method="post" action="">
                                 <?php
                                 $ext_options = get_post_meta(get_the_ID(), '_wpfm_extra_options', true);
                                 $food_data_option_value_count = get_post_meta(get_the_ID(), 'wpfm_option_value_count', true);
@@ -179,6 +179,9 @@ $food = $post;
                                                 echo '<input type="radio" id="radio-none" name="' . esc_attr($key) . '" value="0">';
                                                 echo '<label for="radio-none"> None</label>';
                                                 echo "</div>";
+                                                echo "<div class='wpfm-input-singular quantity-based'>";
+                                                echo '<input type="number" id="wpfm-qty-based-select" class="wpfm-qty-based" placeholder="Enter Qty" value="">';
+                                                echo "</div>";
                                                 if (!empty($additional_fields_extra_topping)) {
                                                     echo "<div class='wpfm-additional-main-row'>";
                                                     echo '<hr style="margin:25px 0 15px; display: block; background-color: #e4e4e4; height: 2px;"></hr>';
@@ -210,6 +213,9 @@ $food = $post;
                                                     echo "<div class='wpfm-input-singular'>";
                                                     echo '<input type="checkbox" id="' . esc_attr(str_replace(" ", "-", strtolower($value2['option_value_name']))) . '" name="' . esc_attr($key) . '" value="' . esc_attr($value2['option_value_price']) . '" ' . $checked . ' data-val="' . $value2['option_value_price'] . '" data-price-type='.esc_attr($value2['option_value_price_type']).' data-attr-name=' . esc_attr(str_replace(" ", "-", strtolower($value2['option_value_name']))) . ' '.$field_required.'>';
                                                     echo '<label for="' . esc_attr(str_replace(" ", "-", strtolower($value2['option_value_name']))) . '"> ' . esc_html($value2['option_value_name']) . ' - ' . get_food_manager_currency_symbol() . $value2['option_value_price'] . '</label>';
+                                                    echo "</div>";
+                                                    echo "<div class='wpfm-input-singular quantity-based'>";
+                                                    echo '<input type="number" id="wpfm-qty-based-check" class="wpfm-qty-based" placeholder="Enter Qty" value="">';
                                                     echo "</div>";
                                                 }
                                                 if (!empty($additional_fields_extra_topping)) {
@@ -246,6 +252,9 @@ $food = $post;
                                                 }
                                                 echo '<option value="" '.$d_selected_flg.'>None</option>';
                                                 echo '</select>';
+                                                echo "<div class='wpfm-input-singular quantity-based'>";
+                                                echo '<input type="number" id="wpfm-qty-based-select" class="wpfm-qty-based" placeholder="Enter Qty" value="">';
+                                                echo "</div>";
 
                                                 if (!empty($additional_fields_extra_topping)) {
                                                     echo "<div class='wpfm-additional-main-row'>";
@@ -270,7 +279,7 @@ $food = $post;
 
                                 do_action('single_food_extra_toppings_after');
                                 ?>
-                            </div>
+                            </form>
                             <!-- Additional Info Block Start -->
                             <?php
                             $show_additional_details = apply_filters('food_manager_show_additional_details', true);

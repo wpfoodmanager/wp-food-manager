@@ -781,9 +781,9 @@ class WPFM_Form_Submit_Food extends WPFM_Form
 					wp_set_object_terms($product_obj->ID, $prod_categories_arr, 'product_cat');
 				} else {
 
-					include_once(ABSPATH . 'wp-content/plugins/wpfm-online-order/includes/wpfm-online-order-product-food-product.php');
+					include_once(ABSPATH . 'wp-content/plugins/wpfm-online-order/includes/wpfm-online-order-food-product.php');
 
-					$post_food = new WC_Product_Food_Product();
+					$post_food = new WPFM_Online_Order_Food_Product();
 
 					$post_food->set_name($post_title);
 					if (get_option('food_manager_submission_requires_approval')) {
