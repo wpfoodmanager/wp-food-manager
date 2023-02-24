@@ -693,7 +693,7 @@ class WPFM_Form_Submit_Food extends WPFM_Form
 			$prod_stock_array = explode("fm_", $prod_stock_status);
 			$prod_ingre = isset($_POST['_enable_food_ingre']) ? $_POST['_enable_food_ingre'] : '';
 			$prod_nutri = isset($_POST['_enable_food_nutri']) ? $_POST['_enable_food_nutri'] : '';
-			$prod_types = get_term_by('id', $_POST['food_type'], 'food_manager_type');
+			$prod_types = isset($_POST['food_type']) ? get_term_by('id', $_POST['food_type'], 'food_manager_type') : '';
 			$prod_categories = isset($_POST['food_category']) ? $_POST['food_category'] : '';
 			$prod_tags = isset($_POST['food_tag']) ? $_POST['food_tag'] : '';
 			$prod_description = isset($_POST['food_description']) ? $_POST['food_description'] : '';
@@ -733,7 +733,7 @@ class WPFM_Form_Submit_Food extends WPFM_Form
 			$post_name = str_replace(" ", "-", $post_slug_name);
 
 			$prod_banner_id = '';
-			if(empty($prod_banner)){
+			if (empty($prod_banner)) {
 				return;
 			}
 			$file = $prod_banner;
@@ -771,7 +771,9 @@ class WPFM_Form_Submit_Food extends WPFM_Form
 					update_post_meta($product_obj->ID, '_enable_food_ingre', $prod_ingre);
 					update_post_meta($product_obj->ID, '_enable_food_nutri', $prod_nutri);
 					update_post_meta($product_obj->ID, '_thumbnail_id', $prod_banner_id);
-					update_post_meta($product_obj->ID, 'food_manager_type', $prod_types->slug);
+					if ($prod_types) {
+						update_post_meta($product_obj->ID, 'food_manager_type', $prod_types->slug);
+					}
 
 					$wpdb->update('wp_posts', array('post_content' => $prod_description, 'post_title' => $prod_title), array('ID' => $product_obj->ID, 'post_type' => 'product'));
 
@@ -802,7 +804,9 @@ class WPFM_Form_Submit_Food extends WPFM_Form
 
 					update_post_meta($prod_id, '_enable_food_ingre', $prod_ingre);
 					update_post_meta($prod_id, '_enable_food_nutri', $prod_nutri);
-					update_post_meta($prod_id, 'food_manager_type', $prod_types->slug);
+					if ($prod_types) {
+						update_post_meta($prod_id, 'food_manager_type', $prod_types->slug);
+					}
 					update_post_meta($prod_id, '_thumbnail_id', $prod_banner_id);
 
 					wp_set_object_terms($prod_id, $prod_tags_arr, 'product_tag');
