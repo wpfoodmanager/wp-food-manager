@@ -733,6 +733,9 @@ class WPFM_Form_Submit_Food extends WPFM_Form
 			$post_name = str_replace(" ", "-", $post_slug_name);
 
 			$prod_banner_id = '';
+			if(empty($prod_banner)){
+				return;
+			}
 			$file = $prod_banner;
 			$filename = basename($file);
 
@@ -776,7 +779,7 @@ class WPFM_Form_Submit_Food extends WPFM_Form
 					wp_set_object_terms($product_obj->ID, $prod_categories_arr, 'product_cat');
 				} else {
 
-					include_once(ABSPATH . 'wp-content/plugins/wpfm-online-order/includes/class-wc-product-food-product.php');
+					include_once(ABSPATH . 'wp-content/plugins/wpfm-online-order/includes/wpfm-online-order-product-food-product.php');
 
 					$post_food = new WC_Product_Food_Product();
 
