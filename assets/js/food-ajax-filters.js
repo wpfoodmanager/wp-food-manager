@@ -4,7 +4,6 @@ var WPFMFoodAjaxFilters = function () {
     return {
         init: function () {
             WPFMCommon.logInfo("WPFMFoodAjaxFilters.init...");
-
             if (jQuery.isFunction(jQuery.fn.chosen)) {
                 if (wpfm_ajax_filters.is_rtl == 1) {
                     jQuery('select[name^="search_datetimes"]').addClass('chosen-rtl');
@@ -38,7 +37,6 @@ var WPFMFoodAjaxFilters = function () {
             jQuery('#search_keywords, #search_location, #search_datetimes, #search_categories, #search_food_types, #search_ticket_prices, .food-manager-filter').change(function () {
                 var target = jQuery(this).closest('div.food_listings');
                 target.triggerHandler('update_food_listings', [1, false]);
-
                 WPFMFoodAjaxFilters.food_manager_store_state(target, 1)
             }).on("keyup", function (e) {
                 if (e.which === 13) {
@@ -73,9 +71,8 @@ var WPFMFoodAjaxFilters = function () {
                     if (window.history.state && window.location.hash) {
                         var state = window.history.state;
                         console.log(form.deserialize(state.data));
-
                         if (state.id && 'food_manager_state' === state.id && index == state.index) {
-                            //set initial_page with 1 on page refresh
+                            // set initial_page with 1 on page refresh
                             inital_page = 1;
                             form.deserialize(state.data);
                             form.find(':input[name^="search_datetimes"]').not(':input[type="hidden"]').trigger('chosen:updated');
@@ -127,9 +124,7 @@ var WPFMFoodAjaxFilters = function () {
                 event.preventDefault()
             },
             getfoodListings: function (event, page, append, loading_previous) {
-
                 WPFMCommon.logInfo("WPFMFoodAjaxFilters.actions.getfoodListings...");
-
                 var data = '';
                 var target = jQuery(this);
                 var form = target.find('.food_filters');

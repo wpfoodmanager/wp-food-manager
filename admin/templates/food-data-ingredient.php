@@ -6,9 +6,7 @@
 
 echo '<div id="ingredient_food_data_content" class="panel wpfm_panel wpfm-metaboxes-wrapper">
 <div class="wp_food_manager_meta_data">';
-
 do_action('food_manager_food_data_ingredient_start', $thepostid);
-
 $metaIngredients = get_post_meta($post->ID, '_ingredient');
 $excludeIngredients = [];
 if (!empty($metaIngredients)) {
@@ -18,7 +16,6 @@ if (!empty($metaIngredients)) {
 		}
 	}
 }
-
 $ingredient_terms = get_terms(
 	[
 		'taxonomy'   => 'food_manager_ingredient',

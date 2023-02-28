@@ -1,34 +1,31 @@
 <?php
-/*
-* Main Admin functions class which responsible for the entire amdin functionality and scripts loaded and files.
-*
-*/
 
+/**
+ * Main Admin functions class which responsible for the entire amdin functionality and scripts loaded and files.
+ */
 if (!defined('ABSPATH')) exit; // Exit if accessed directly
 
 /**
  * WPFM_Admin class.
  */
-class WPFM_Admin
-{
+class WPFM_Admin {
 
 	/**
 	 * The single instance of the class.
 	 *
 	 * @var self
-	 * @since  2.5
+	 * @since 1.0.0
 	 */
 	private static $_instance = null;
 
 	/**
 	 * Allows for accessing single instance of class. Class should only be constructed once per call.
 	 *
-	 * @since  2.5
+	 * @since 1.0.0
 	 * @static
 	 * @return self Main instance.
 	 */
-	public static function instance()
-	{
+	public static function instance() {
 		if (is_null(self::$_instance)) {
 			self::$_instance = new self();
 		}
@@ -36,21 +33,17 @@ class WPFM_Admin
 	}
 
 	/**
-	 * __construct function.
+	 * __construct function
 	 *
 	 * @access public
 	 * @return void
 	 */
-
-	public function __construct()
-	{
+	public function __construct() {
 		include_once('wpfm-settings.php');
 		include_once('wpfm-writepanels.php');
 		include_once('wpfm-setup.php');
 		include_once('wpfm-field-editor.php');
-
 		$this->settings_page = WPFM_Settings::instance();
-
 		add_action('admin_menu', array($this, 'admin_menu'), 12);
 		add_action('admin_enqueue_scripts', array($this, 'admin_enqueue_scripts'));
 		add_action('current_screen', array($this, 'conditional_includes'));
@@ -63,18 +56,12 @@ class WPFM_Admin
 	 * @access public
 	 * @return void
 	 */
-
-	public function admin_enqueue_scripts()
-	{
-
+	public function admin_enqueue_scripts() {
 		global $wp_scripts;
-
 		$screen = get_current_screen();
 		$jquery_version = isset($wp_scripts->registered['jquery-ui-core']->ver) ? $wp_scripts->registered['jquery-ui-core']->ver : '1.9.2';
-
 		wp_enqueue_style('wpfm-backend-css', WPFM_PLUGIN_URL . '/assets/css/backend.css');
 		wp_enqueue_style('jquery-ui-style', WPFM_PLUGIN_URL . '/assets/js/jquery-ui/jquery-ui.min.css', array(), $jquery_version);
-
 		$units    = get_terms(
 			[
 				'taxonomy'   => 'food_manager_unit',
@@ -84,7 +71,6 @@ class WPFM_Admin
 			]
 		);
 		$unitList = [];
-
 		if (!empty($units)) {
 			foreach ($units as $unit) {
 				$unitList[$unit->term_id] = $unit->name;
@@ -112,28 +98,22 @@ class WPFM_Admin
 			]
 		);
 		wp_enqueue_script('wpfm-admin');
-
 		wp_register_script('wp-food-manager-admin-settings', WPFM_PLUGIN_URL . '/assets/js/admin-settings.min.js', array('jquery'), WPFM_VERSION, true);
 		if (is_admin() && !isset($_GET['page']) == 'wc-settings') {
 			wp_enqueue_script('wp-food-manager-admin-settings');
 		}
-
 		wp_register_script('chosen', WPFM_PLUGIN_URL . '/assets/js/jquery-chosen/chosen.jquery.min.js', array('jquery'), '1.1.0', true);
 		wp_enqueue_script('chosen');
 		wp_enqueue_style('chosen', WPFM_PLUGIN_URL . '/assets/css/chosen.css');
-
 		wp_enqueue_style('wpfm-jquery-timepicker-css', WPFM_PLUGIN_URL . '/assets/js/jquery-timepicker/jquery.timepicker.min.css');
 		wp_register_script('wpfm-jquery-timepicker', WPFM_PLUGIN_URL . '/assets/js/jquery-timepicker/jquery.timepicker.min.js', array('jquery', 'jquery-ui-core', 'jquery-ui-datepicker'), WPFM_VERSION, true);
 		wp_enqueue_script('wpfm-jquery-timepicker');
-
 		wp_enqueue_style('wpfm-font-awesome-css', WPFM_PLUGIN_URL . '/assets/font-awesome/css/font-awesome.css');
 		wp_enqueue_style('wpfm-font-style', WPFM_PLUGIN_URL . '/assets/fonts/style.css');
 		wp_enqueue_style('wpfm-font-food-icons-style', WPFM_PLUGIN_URL . '/assets/fonts-food-icons/style.css');
-
 		wp_enqueue_script('jquery');
 		wp_enqueue_script('jquery-ui-core');
 		wp_enqueue_script('jquery-ui-sortable');
-
 		wp_register_script('wpfm-accounting', WPFM_PLUGIN_URL . '/assets/js/accounting/accounting.min.js', array('jquery'), WPFM_VERSION, true);
 		wp_localize_script(
 			'wpfm-accounting',
@@ -143,22 +123,17 @@ class WPFM_Admin
 			)
 		);
 		wp_enqueue_script('wpfm-accounting');
-
-		//file upload - vendor
+		// File upload - vendor
 		if (apply_filters('wpfm_ajax_file_upload_enabled', true)) {
-
 			wp_register_script('jquery-iframe-transport', WPFM_PLUGIN_URL . '/assets/js/jquery-fileupload/jquery.iframe-transport.js', array('jquery'), '1.8.3', true);
 			wp_register_script('jquery-fileupload', WPFM_PLUGIN_URL . '/assets/js/jquery-fileupload/jquery.fileupload.js', array('jquery', 'jquery-iframe-transport', 'jquery-ui-widget'), '5.42.3', true);
 			wp_register_script('wpfm-ajax-file-upload', WPFM_PLUGIN_URL . '/assets/js/ajax-file-upload.min.js', array('jquery', 'jquery-fileupload'), WPFM_VERSION, true);
-
 			ob_start();
 			get_food_manager_template('form-fields/uploaded-file-html.php', array('name' => '', 'value' => '', 'extension' => 'jpg'));
 			$js_field_html_img = ob_get_clean();
-
 			ob_start();
 			get_food_manager_template('form-fields/uploaded-file-html.php', array('name' => '', 'value' => '', 'extension' => 'zip'));
 			$js_field_html = ob_get_clean();
-
 			wp_localize_script('wpfm-ajax-file-upload', 'wpfm_ajax_file_upload', array(
 				'ajax_url'               => admin_url('admin-ajax.php'),
 				'js_field_html_img'      => esc_js(str_replace("\n", "", $js_field_html_img)),
@@ -175,19 +150,14 @@ class WPFM_Admin
 	 * @access public
 	 * @return void
 	 */
-
-	public function admin_menu()
-	{
-
+	public function admin_menu() {
 		add_submenu_page('edit.php?post_type=food_manager', __('Settings', 'wp-food-manager'), __('Settings', 'wp-food-manager'), 'manage_options', 'food-manager-settings', array($this->settings_page, 'output'));
 	}
-
 
 	/**
 	 * Include admin files conditionally.
 	 */
-	public function conditional_includes()
-	{
+	public function conditional_includes() {
 		$screen = get_current_screen();
 		if (!$screen) {
 			return;
@@ -202,8 +172,7 @@ class WPFM_Admin
 	/**
 	 * Ran on WP admin_init hook
 	 */
-	public function admin_init()
-	{
+	public function admin_init() {
 		if (!empty($_GET['food-manager-main-admin-dismiss'])) {
 			update_option('food_manager_rating_showcase_admin_notices_dismiss', 1);
 		}

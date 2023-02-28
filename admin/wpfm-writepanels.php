@@ -1,34 +1,33 @@
 <?php
-/*
-* This file use to cretae fields of wp food manager at admin side.
-*/
+
+/**
+ * This file use to cretae fields of wp food manager at admin side.
+ */
 if (!defined('ABSPATH')) exit; // Exit if accessed directly
-class WPFM_Writepanels
-{
+
+class WPFM_Writepanels {
 
 	/**
 	 * The single instance of the class.
 	 *
 	 * @var self
-	 * @since  2.5
+	 * @since 1.0.0
 	 */
 	private static $_instance = null;
 
 	/**
 	 * Allows for accessing single instance of class. Class should only be constructed once per call.
 	 *
-	 * @since  2.5
+	 * @since 1.0.0
 	 * @static
 	 * @return self Main instance.
 	 */
-	public static function instance()
-	{
+	public static function instance() {
 		if (is_null(self::$_instance)) {
 			self::$_instance = new self();
 		}
 		return self::$_instance;
 	}
-
 
 	/**
 	 * __construct function.
@@ -36,38 +35,29 @@ class WPFM_Writepanels
 	 * @access public
 	 * @return void
 	 */
-	public function __construct()
-	{
-
+	public function __construct() {
 		add_action('add_meta_boxes', array($this, 'add_meta_boxes'));
 		add_action('save_post', array($this, 'save_post'), 1, 2);
 		add_action('admin_init', array($this, 'approve_food'));
-
 		add_action('load-edit.php', array($this, 'do_bulk_actions'));
 		add_action('admin_footer-edit.php', array($this, 'add_bulk_actions'));
 		add_action('food_manager_save_food_manager', array($this, 'food_manager_save_food_manager_data'), 20, 2);
-
-		// save food attributes
+		// Save food attributes
 		add_action('wp_ajax_wpfm_update_food_attributes', array($this, 'wpfm_update_food_attributes'));
-
-		//food menu 
+		// Food menu 
 		add_action('wp_ajax_wpfm_get_food_listings_by_category_id', array($this, 'wpfm_get_food_listings_by_category_id'));
 		add_action('food_manager_save_food_manager_menu', array($this, 'food_manager_save_food_manager_menu_data'), 20, 2);
-
-		//add food menu column
+		// Add food menu column
 		add_filter('manage_food_manager_menu_posts_columns', array($this, 'set_shortcode_copy_columns'));
 		add_action('manage_food_manager_menu_posts_custom_column', array($this, 'shortcode_copy_content_column'), 10, 2);
-
-		//add food image column
+		// Add food image column
 		add_filter('manage_edit-food_manager_columns', array($this, 'columns'));
 		add_filter('manage_food_manager_posts_columns', array($this, 'set_custom_food_columns'));
 		add_filter('manage_edit-food_manager_sortable_columns', array($this, 'set_custom_food_sortable_columns'));
 		add_action('manage_food_manager_posts_custom_column', array($this, 'custom_food_content_column'), 10, 2);
 		add_filter('post_row_actions', array($this, 'row_actions'));
-
 		add_action('admin_notices', array($this, 'display_notice'));
 	}
-
 
 	/**
 	 * add_meta_boxes function.
@@ -75,10 +65,8 @@ class WPFM_Writepanels
 	 * @access public
 	 * @return void
 	 */
-	public function add_meta_boxes()
-	{
+	public function add_meta_boxes() {
 		global $wp_post_types;
-
 		add_meta_box('food_manager_data', sprintf(__('%s Data', 'wp-food-manager'), $wp_post_types['food_manager']->labels->singular_name), array($this, 'food_manager_data'), 'food_manager', 'normal', 'high');
 		add_meta_box('food_manager_menu_data', __('Menu Icon', 'wp-food-manager'), array($this, 'food_manager_menu_data'), 'food_manager_menu', 'normal', 'high');
 		add_meta_box('food_manager_menu_data_icons', __('Select Food ', 'wp-food-manager'), array($this, 'food_manager_menu_data_icons'), 'food_manager_menu', 'normal', 'high');
@@ -91,17 +79,13 @@ class WPFM_Writepanels
 	 * @param mixed $post
 	 * @return void
 	 */
-	public function food_manager_data($post)
-	{
+	public function food_manager_data($post) {
 		global $post, $thepostid;
 		$thepostid = $post->ID;
 		wp_enqueue_script('wpfm-admin');
-
 		wp_nonce_field('save_meta_data', 'food_manager_nonce');
-
 		include('templates/food-data-tabs.php');
 	}
-
 
 	/**
 	 * food_manager_data_icons function.
@@ -110,13 +94,11 @@ class WPFM_Writepanels
 	 * @param mixed $post
 	 * @return void
 	 */
-	public function food_manager_menu_data_icons($post)
-	{
+	public function food_manager_menu_data_icons($post) {
 		global $post, $thepostid;
 		$thepostid = $post->ID;
 		wp_enqueue_script('wpfm-admin');
-		wp_nonce_field('save_meta_data', 'food_manager_nonce');
-?>
+		wp_nonce_field('save_meta_data', 'food_manager_nonce'); ?>
 		<div class="wpfm-admin-food-menu-container wpfm-flex-col wpfm-admin-postbox-meta-data">
 			<div class="wpfm-admin-postbox-meta-data">
 				<div class="wpfm-admin-menu-selection wpfm-admin-postbox-form-field">
@@ -180,18 +162,13 @@ class WPFM_Writepanels
 	 * @param mixed $post
 	 * @return void
 	 */
-	public function food_manager_menu_data($post)
-	{
+	public function food_manager_menu_data($post) {
 		global $post, $thepostid;
 		$thepostid = $post->ID;
 		wp_enqueue_script('wpfm-admin');
-
 		wp_nonce_field('save_meta_data', 'food_manager_nonce');
-
 		$icon_arrs = wpfm_get_font_icons();
 		$food_icon_arrs = wpfm_get_font_food_icons();
-	?>
-		<?php
 		echo '<div class="wpfm-parent-icons"><input type="text" id="wpfm_icon_search" name="wpfm_icon_search" placeholder="Icon Search"><span class="wpfm-searh-clear"><i class="fa fa-times"></i></span></div>';
 		echo '<div class="no-radio-icons"><strong>No icons found!</strong></div>';
 		echo "<div class='wpfm-font-awesome-class'>";
@@ -221,8 +198,7 @@ class WPFM_Writepanels
 	 *
 	 * @return array
 	 */
-	private function get_food_data_tabs()
-	{
+	private function get_food_data_tabs() {
 		$tabs = apply_filters(
 			'wpfm_food_data_tabs',
 			array(
@@ -258,19 +234,14 @@ class WPFM_Writepanels
 				),
 			)
 		);
-
 		// Sort tabs based on priority.
 		uasort($tabs, array($this, 'sort_by_priority'));
-
 		return $tabs;
 	}
 
-
-	public function output_tabs()
-	{
+	public function output_tabs() {
 		global $post, $thepostid;
 		$thepostid = $post->ID;
-
 		include 'templates/food-data-general.php';
 		include 'templates/food-data-extra-options.php';
 		include 'templates/food-data-ingredient.php';
@@ -284,38 +255,28 @@ class WPFM_Writepanels
 	 * @access public
 	 * @return void
 	 */
-	public function food_manager_data_fields()
-	{
+	public function food_manager_data_fields() {
 		global $post;
 		$current_user = wp_get_current_user();
-
 		$fields =  $GLOBALS['food_manager']->forms->get_form_fields('submit-food', 'backend');
-
 		$fields = apply_filters('food_manager_food_data_fields', $fields);
-
 		if (isset($fields['food']['food_title']))
 			unset($fields['food']['food_title']);
-
 		if (isset($fields['food']['food_description']))
 			unset($fields['food']['food_description']);
-
 		uasort($fields, array($this, 'sort_by_priority'));
 		return $fields;
 	}
 
-
-
 	/**
 	 * Sort array by priority value
 	 */
-	protected function sort_by_priority($a, $b)
-	{
+	protected function sort_by_priority($a, $b) {
 		if (!isset($a['priority']) || !isset($b['priority']) || $a['priority'] === $b['priority']) {
 			return 0;
 		}
 		return ($a['priority'] < $b['priority']) ? -1 : 1;
 	}
-
 
 	/**
 	 * input_file function.
@@ -323,13 +284,11 @@ class WPFM_Writepanels
 	 * @param mixed $key
 	 * @param mixed $field
 	 */
-	public static function input_file($key, $field)
-	{
+	public static function input_file($key, $field) {
 		global $thepostid;
 		if (!isset($field['value'])) {
 			$field['value'] = get_post_meta($thepostid, $key, true);
 		}
-
 		if (empty($field['placeholder'])) {
 			$field['placeholder'] = 'http://';
 		}
@@ -337,9 +296,7 @@ class WPFM_Writepanels
 			$name = $field['name'];
 		} else {
 			$name = $key;
-		}
-		?>
-
+		} ?>
 		<p class="wpfm-admin-postbox-form-field <?= $name; ?>" data-field-name="<?= $name; ?>">
 			<label for="<?php echo esc_attr($key); ?>"><?php echo esc_html($field['label']); ?>:
 				<?php if (!empty($field['description'])) : ?>
@@ -383,8 +340,7 @@ class WPFM_Writepanels
 								}
 								if (is_array($field['value'])) {
 									$field['value'] = get_the_post_thumbnail_url($thepostid, 'full');
-								}
-							?>
+								} ?>
 								<input type="hidden" name="<?php echo esc_attr($name); ?>" id="<?php echo esc_attr($key); ?>" placeholder="<?php echo esc_attr($field['placeholder']); ?>" value="<?php echo esc_attr($field['value']); ?>" />
 								<span class="food-manager-uploaded-file-preview">
 									<?php if (in_array(pathinfo($field['value'], PATHINFO_EXTENSION), ['png', 'jpg', 'jpeg', 'gif', 'svg'])) : ?>
@@ -416,8 +372,7 @@ class WPFM_Writepanels
 	 * @param mixed $key
 	 * @param mixed $field
 	 */
-	public static function input_url($key, $field)
-	{
+	public static function input_url($key, $field) {
 		global $thepostid;
 		if (!isset($field['value'])) {
 			$field['value'] = get_post_meta($thepostid, $key, true);
@@ -426,8 +381,7 @@ class WPFM_Writepanels
 			$name = $field['name'];
 		} else {
 			$name = $key;
-		}
-	?>
+		} ?>
 		<p class="wpfm-admin-postbox-form-field <?= $name; ?>">
 			<label for="<?php echo esc_attr($key); ?>"><?php echo esc_html($field['label']); ?>:
 				<?php if (!empty($field['description'])) : ?>
@@ -447,8 +401,7 @@ class WPFM_Writepanels
 	 * @param mixed $key
 	 * @param mixed $field
 	 */
-	public static function input_text($key, $field)
-	{
+	public static function input_text($key, $field) {
 		global $thepostid;
 		if (!isset($field['value'])) {
 			$field['value'] = get_post_meta($thepostid, $key, true);
@@ -457,8 +410,7 @@ class WPFM_Writepanels
 			$name = $field['name'];
 		} else {
 			$name = $key;
-		}
-	?>
+		} ?>
 		<p class="wpfm-admin-postbox-form-field <?= $name; ?>">
 			<label for="<?php echo esc_attr($key); ?>"><?php echo esc_html($field['label']); ?> : <?php if (!empty($field['description'])) : ?><span class="tips" data-tip="<?php echo esc_attr($field['description']); ?>">[?]</span><?php endif; ?></label>
 			<span class="wpfm-input-field">
@@ -473,10 +425,9 @@ class WPFM_Writepanels
 	 *
 	 * @param mixed $key
 	 * @param mixed $field
-	 * @since 2.8
+	 * @since 1.0.0
 	 */
-	public static function input_wp_editor($key, $field)
-	{
+	public static function input_wp_editor($key, $field) {
 		global $thepostid;
 		if (!isset($field['value']) || empty($field['value'])) {
 			$field['value'] = get_post_meta($thepostid, $key, true);
@@ -491,8 +442,7 @@ class WPFM_Writepanels
 		}
 		if (wpfm_begnWith($field['value'], "http")) {
 			$field['value'] = '';
-		}
-	?>
+		} ?>
 		<div class="wpfm_editor" data-field-name="<?= $name; ?>">
 			<p class="wpfm-admin-postbox-form-field <?= $name; ?>">
 				<label for="<?php echo esc_attr($key); ?>"><?php echo esc_html($field['label']); ?>:
@@ -514,8 +464,7 @@ class WPFM_Writepanels
 	 * @param mixed $key
 	 * @param mixed $field
 	 */
-	public static function input_date($key, $field)
-	{
+	public static function input_date($key, $field) {
 		global $thepostid;
 		$datepicker_date_format = !empty(get_option('date_format')) ? get_option('date_format') : 'F j, Y';
 		$php_date_format        = WPFM_Date_Time::get_view_date_format_from_datepicker_date_format($datepicker_date_format);
@@ -533,13 +482,10 @@ class WPFM_Writepanels
 			$name = $field['name'];
 		} else {
 			$name = $key;
-		}
-	?>
+		} ?>
 		<p class="wpfm-admin-postbox-form-field">
 			<label for="<?php echo esc_attr($key); ?>"> <?php echo esc_html($field['label']); ?>:
-				<?php
-				if (!empty($field['description'])) :
-				?>
+				<?php if (!empty($field['description'])) : ?>
 					<span class="tips" data-tip="<?php echo esc_attr($field['description']); ?>">[?]</span>
 				<?php endif; ?>
 			</label>
@@ -555,8 +501,7 @@ class WPFM_Writepanels
 	 * @param mixed $key
 	 * @param mixed $field
 	 */
-	public static function input_textarea($key, $field)
-	{
+	public static function input_textarea($key, $field) {
 		global $thepostid;
 		if (!isset($field['value'])) {
 			$field['value'] = get_post_meta($thepostid, $key, true);
@@ -573,8 +518,7 @@ class WPFM_Writepanels
 
 		if (wpfm_begnWith($field['value'], "http") || is_array($field['value'])) {
 			$field['value'] = '';
-		}
-	?>
+		} ?>
 		<p class="wpfm-admin-postbox-form-field <?= $name; ?> <?php echo $fieldLabel; ?>" data-field-name="<?= $name; ?>">
 			<label for="<?php echo esc_attr($key); ?>"><?php echo esc_html($field['label']); ?> : <?php if (!empty($field['description'])) : ?>: <span class="tips" data-tip="<?php echo esc_attr($field['description']); ?>">[?]</span><?php endif; ?></label>
 			<span class="wpfm-input-field">
@@ -590,8 +534,7 @@ class WPFM_Writepanels
 	 * @param mixed $key
 	 * @param mixed $field
 	 */
-	public static function input_select($key, $field)
-	{
+	public static function input_select($key, $field) {
 		global $thepostid;
 		if (!isset($field['value'])) {
 			$field['value'] = get_post_meta($thepostid, $key, true);
@@ -600,9 +543,7 @@ class WPFM_Writepanels
 			$name = $field['name'];
 		} else {
 			$name = $key;
-		}
-	?>
-
+		} ?>
 		<p class="wpfm-admin-postbox-form-field <?= $name; ?>">
 			<label for="<?php echo esc_attr($key); ?>"><?php echo esc_html($field['label']); ?> : <?php if (!empty($field['description'])) : ?><span class="tips" data-tip="<?php echo esc_attr($field['description']); ?>">[?]</span><?php endif; ?></label>
 			<span class="wpfm-input-field">
@@ -622,8 +563,7 @@ class WPFM_Writepanels
 	 * @param mixed $key
 	 * @param mixed $field
 	 */
-	public static function input_multiselect($key, $field)
-	{
+	public static function input_multiselect($key, $field) {
 		global $thepostid;
 		if (!isset($field['value'])) {
 			$field['value'] = get_post_meta($thepostid, $key, true);
@@ -632,8 +572,7 @@ class WPFM_Writepanels
 			$name = $field['name'];
 		} else {
 			$name = $key;
-		}
-	?>
+		} ?>
 		<p class="wpfm-admin-postbox-form-field <?= $name; ?>">
 			<label for="<?php echo esc_attr($key); ?>"><?php echo esc_html($field['label']); ?> : <?php if (!empty($field['description'])) : ?><span class="tips" data-tip="<?php echo esc_attr($field['description']); ?>">[?]</span><?php endif; ?></label>
 			<select multiple="multiple" name="<?php echo esc_attr($name); ?>[]" id="<?php echo esc_attr($key); ?>" class="input-select <?php echo esc_attr(isset($field['class']) ? $field['class'] : $key); ?>">
@@ -651,27 +590,21 @@ class WPFM_Writepanels
 	 * @param mixed $key
 	 * @param mixed $field
 	 */
-	public static function input_checkbox($key, $field)
-	{
+	public static function input_checkbox($key, $field) {
 		global $thepostid;
 		$field_val = get_post_meta($thepostid, $key, true);
-
 		if (empty($field['value']) || empty($field_val)) {
 			$field['value'] = get_post_meta($thepostid, $key, true);
 		}
-
 		if (!empty($field['name'])) {
 			$name = $field['name'];
 		} else {
 			$name = $key;
 		}
-
-		$exp_arr = explode("_", $key);
-	?>
+		$exp_arr = explode("_", $key); ?>
 		<p class="wpfm-admin-postbox-form-field <?= $name; ?>">
 			<label for="<?php echo esc_attr($key); ?>"><?php echo esc_html($field['label']); ?> : </label>
-			<?php if ($key == '_enable_food_ingre' || $key == '_enable_food_nutri') {
-			?>
+			<?php if ($key == '_enable_food_ingre' || $key == '_enable_food_nutri') { ?>
 				<span class="wpfm-input-field">
 					<label class="wpfm-field-switch" for="<?php echo esc_attr($key); ?>">
 						<input type="checkbox" id="<?php echo esc_attr($key); ?>" name="<?php echo esc_attr($name); ?>" value="1" <?php checked($field['value'], 1); ?>>
@@ -692,27 +625,18 @@ class WPFM_Writepanels
 		<?php
 	}
 
-
 	/**
 	 * Edit bulk actions
 	 */
-
-	public function add_bulk_actions()
-	{
-
+	public function add_bulk_actions() {
 		global $post_type, $wp_post_types;
-
 		if ($post_type == 'food_manager') { ?>
 			<script type="text/javascript">
 				jQuery(document).ready(function() {
-
 					jQuery('<option>').val('approve_food').text('<?php printf(__('Approve %s', 'wp-food-manager'), esc_attr($wp_post_types['food_manager']->labels->name)); ?>').appendTo("select[name='action']");
-
 					jQuery('<option>').val('approve_food').text('<?php printf(__('Approve %s', 'wp-food-manager'), esc_attr($wp_post_types['food_manager']->labels->name)); ?>').appendTo("select[name='action2']");
-
 				});
 			</script>
-
 		<?php
 		}
 	}
@@ -720,79 +644,53 @@ class WPFM_Writepanels
 	/**
 	 * Do custom bulk actions
 	 */
-
-	public function do_bulk_actions()
-	{
-
+	public function do_bulk_actions() {
 		$wp_list_table = _get_list_table('WP_Posts_List_Table');
-
 		$action = $wp_list_table->current_action();
-
 		switch ($action) {
-
 			case 'approve_food':
 				check_admin_referer('bulk-posts');
-
 				$post_ids = array_map('absint', array_filter((array) $_GET['post']));
-
 				$published_foods = array();
-
 				if (!empty($post_ids)) {
-
 					foreach ($post_ids as $post_id) {
-
 						$food_data = array(
-
 							'ID'          => $post_id,
-
 							'post_status' => 'publish',
 						);
-
 						if (in_array(get_post_status($post_id), array('pending', 'pending_payment')) && current_user_can('publish_post', $post_id) && wp_update_post($food_data)) {
-
 							$published_foods[] = $post_id;
 						}
 					}
 				}
-
 				wp_redirect(add_query_arg('published_foods', $published_foods, remove_query_arg(array('published_foods', 'expired_events'), admin_url('edit.php?post_type=food_manager'))));
-
 				exit;
-
 				break;
 		}
-
 		return;
 	}
 
 	/**
 	 * Approve a single food
 	 */
-
-	public function approve_food()
-	{
-
+	public function approve_food() {
 		if (!empty($_GET['approve_food']) && wp_verify_nonce($_REQUEST['_wpnonce'], 'approve_food') && current_user_can('publish_post', $_GET['approve_food'])) {
-
 			$post_id = absint($_GET['approve_food']);
-
 			$food_data = array(
 				'ID'          => $post_id,
 				'post_status' => 'publish',
 			);
-
 			wp_update_post($food_data);
-
 			set_transient('WPFM_Food_Notice', 'Food Item Approved!', 1 * MINUTE_IN_SECONDS);
-
 			wp_redirect(remove_query_arg('approve_food', add_query_arg('published_foods', $post_id, admin_url('edit.php?post_type=food_manager'))));
-
 			exit;
 		}
 	}
 
-	public function display_notice()
-	{
+	/**
+	 * Display notice
+	 */
+	public function display_notice() {
 		$notice = get_transient('WPFM_Food_Notice');
 		if (!empty($notice)) {
 			echo '<div class="notice notice-success is-dismissible">';
@@ -801,15 +699,13 @@ class WPFM_Writepanels
 		}
 	}
 
-
 	/**
 	 * input_number function.
 	 *
 	 * @param mixed $key
 	 * @param mixed $field
 	 */
-	public static function input_number($key, $field)
-	{
+	public static function input_number($key, $field) {
 		global $thepostid, $cur_symbol;
 		if (!isset($field['value'])) {
 			$field['value'] = get_post_meta($thepostid, $key, true);
@@ -819,18 +715,14 @@ class WPFM_Writepanels
 		} else {
 			$name = $key;
 		}
-
-
 		if ($name == '_food_price' || $name == '_food_sale_price') {
 			$cur_symbol = "(" . get_food_manager_currency_symbol() . ")";
 		}
-
 		if ($name == '_food_menu_order') {
 			$field['value'] = (empty($field['value']) ? '0' : $field['value']);
 		} else {
 			$field['value'] = $field['value'];
-		}
-		?>
+		} ?>
 		<p class="wpfm-admin-postbox-form-field <?= $name; ?>">
 			<label for="<?php echo esc_attr($key); ?>"><?php echo esc_html($field['label']); ?> <?php echo esc_html($cur_symbol); ?> : <?php if (!empty($field['description'])) : ?><span class="tips" data-tip="<?php echo esc_attr($field['description']); ?>">[?]</span><?php endif; ?></label>
 			<span class="wpfm-input-field">
@@ -840,30 +732,23 @@ class WPFM_Writepanels
 	<?php
 	}
 
-
 	/**
 	 * input_radio function.
 	 *
 	 * @param mixed $key
 	 * @param mixed $field
 	 */
-	public static function input_radio($key, $field)
-	{
+	public static function input_radio($key, $field) {
 		global $thepostid;
-
 		$field_val = get_post_meta($thepostid, $key, true);
-
 		if (empty($field['value']) || !empty($field_val)) {
 			$field['value'] = get_post_meta($thepostid, $key, true);
 		}
-
 		if (!empty($field['name'])) {
 			$name = $field['name'];
 		} else {
 			$name = $key;
-		}
-
-	?>
+		} ?>
 		<p class="wpfm-admin-postbox-form-field <?= $name; ?>">
 			<label><?php echo esc_html($field['label']); ?> :</label>
 			<span class="wpfm-input-field">
@@ -877,15 +762,13 @@ class WPFM_Writepanels
 	<?php
 	}
 
-
 	/**
 	 * input_options function.
 	 *
 	 * @param mixed $key
 	 * @param mixed $field
 	 */
-	public static function input_options($key, $field)
-	{
+	public static function input_options($key, $field) {
 		global $thepostid;
 		if (empty($field['value'])) {
 			$field['value'] = get_post_meta($thepostid, $key, true);
@@ -895,10 +778,7 @@ class WPFM_Writepanels
 		} else {
 			$name = $key;
 		}
-
-		$wpfm_key_num = explode("_", $key)['3'];
-
-	?>
+		$wpfm_key_num = explode("_", $key)['3']; ?>
 		<div class="wpfm-admin-options-table <?= $name; ?>">
 			<p class="wpfm-admin-postbox-form-field"><label><?php echo esc_html($field['label']); ?></label></p>
 			<table class="widefat">
@@ -915,8 +795,7 @@ class WPFM_Writepanels
 					<?php
 					if (isset($field['value']) && !empty($field['value']) && is_array($field['value'])) {
 						$count = 1;
-						foreach ($field['value'] as $op_key => $op_value) {
-					?>
+						foreach ($field['value'] as $op_key => $op_value) { ?>
 							<tr class="option-tr-<?php echo esc_attr($count); ?>">
 								<td><span class="wpfm-option-sort">☰</span></td>
 								<td><?php echo esc_html($count); ?></td>
@@ -932,8 +811,7 @@ class WPFM_Writepanels
 								<td><a href="javascript: void(0);" data-id="<?php echo esc_attr($count); ?>" class="option-delete-btn">Remove</a></td>
 								<input type="hidden" class="option-value-class" name="option_value_count[]" value="<?php echo esc_attr($count); ?>">
 							</tr>
-					<?php
-							$count++;
+					<?php $count++;
 						}
 					} else {
 					} ?>
@@ -969,82 +847,63 @@ class WPFM_Writepanels
 	 * @param mixed $post
 	 * @return void
 	 */
-	public function save_post($post_id, $post)
-	{
+	public function save_post($post_id, $post) {
 		global $wpdb;
 		$ingredient_ids = [];
 		$nutrition_ids = [];
-
 		$meta_ingredient = get_post_meta($post_id, '_ingredient', true);
 		if ($meta_ingredient) {
 			foreach ($meta_ingredient as $value) {
 				$ingredient_ids[] = $value['id'];
 			}
 		}
-
 		$meta_nutrition = get_post_meta($post_id, '_nutrition', true);
 		if ($meta_nutrition) {
 			foreach ($meta_nutrition as $value) {
 				$nutrition_ids[] = $value['id'];
 			}
 		}
-
 		if (!empty($ingredient_ids)) {
 			wp_set_object_terms($post_id, $ingredient_ids, 'food_manager_ingredient');
 		}
-
 		if (!empty($nutrition_ids)) {
 			wp_set_object_terms($post_id, $nutrition_ids, 'food_manager_nutrition');
 		}
-
 		if (empty($post_id) || empty($post) || empty($_POST)) return;
 		if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) return;
 		if (is_int(wp_is_post_revision($post))) return;
 		if (is_int(wp_is_post_autosave($post))) return;
 		if (empty($_POST['food_manager_nonce']) || !wp_verify_nonce($_POST['food_manager_nonce'], 'save_meta_data')) return;
 		if (!current_user_can('edit_post', $post_id)) return;
-
 		if ($post->post_type == 'food_manager') {
 			do_action('food_manager_save_food_manager', $post_id, $post);
 			$unit_ids = [];
 			$ingredient_ids = [];
 			$nutrition_ids = [];
-
 			if (isset($_POST['_ingredient']) && !empty($_POST['_ingredient'])) {
-
 				$ingredients = $_POST['_ingredient'];
-
 				foreach ($ingredients as $ingredient_id => $ingredient) {
 					$ingredient_ids[] = $ingredient_id;
-
 					if (trim($ingredient['unit_id'])) {
 						$unit_ids[] = (int)$ingredient['unit_id'];
 					}
 				}
 			}
-
 			$exist_ingredients = get_the_terms($post_id, 'food_manager_ingredient');
-
 			if ($exist_ingredients) {
-
 				$removed_ingredient_ids = [];
 				foreach ($exist_ingredients as $ingredient) {
 					if (!in_array($ingredient->term_id, $ingredient_ids)) {
 						$removed_ingredient_ids[] = $ingredient->term_id;
 					}
 				}
-
 				wp_remove_object_terms($post_id, $removed_ingredient_ids, 'food_manager_ingredient');
 			}
-
 			if (!empty($ingredient_ids)) {
 				wp_set_object_terms($post_id, $ingredient_ids, 'food_manager_ingredient');
 			}
-
 			if (isset($_POST['_nutrition']) && !empty($_POST['_nutrition'])) {
-
 				$nutritions = $_POST['_nutrition'];
-
 				foreach ($nutritions as $nutrition_id => $nutrition) {
 					$nutrition_ids[] = $nutrition_id;
 					if (trim($nutrition['unit_id'])) {
@@ -1052,34 +911,25 @@ class WPFM_Writepanels
 					}
 				}
 			}
-
 			$exist_nutritions = get_the_terms($post_id, 'food_manager_nutrition');
-
 			if ($exist_nutritions) {
-
 				$removed_nutrition_ids = [];
 				foreach ($exist_nutritions as $nutrition) {
 					if (!in_array($nutrition->term_id, $nutrition_ids)) {
 						$removed_nutrition_ids[] = $nutrition->term_id;
 					}
 				}
-
 				wp_remove_object_terms($post_id, $removed_nutrition_ids, 'food_manager_nutrition');
 			}
-
 			if (!empty($nutrition_ids)) {
 				wp_set_object_terms($post_id, $nutrition_ids, 'food_manager_nutrition');
 			}
-
 			if ($unit_ids) {
 				wp_set_object_terms($post_id, $unit_ids, 'food_manager_unit');
 			}
-
 			// Set Order Menu
 			$order_menu = $wpdb->get_results("SELECT menu_order FROM $wpdb->posts WHERE ID = " . intval($post_id));
-
 			if ($order_menu && $order_menu[0]->menu_order == 0) {
-
 				$last_inserted_post = get_posts(array(
 					'post_type' => $post->post_type,
 					'posts_per_page' => 2,
@@ -1088,7 +938,6 @@ class WPFM_Writepanels
 					'order' => 'DESC',
 					'post_status' => 'any',
 				));
-
 				if ($last_inserted_post) {
 					$last_menu_order = $wpdb->get_results("SELECT menu_order FROM $wpdb->posts WHERE ID = " . intval($last_inserted_post[1]->ID));
 					$next_menu_order = $last_menu_order[0]->menu_order + 1;
@@ -1098,7 +947,6 @@ class WPFM_Writepanels
 				}
 			}
 		}
-
 		if ($post->post_type == 'food_manager_menu')
 			do_action('food_manager_save_food_manager_menu', $post_id, $post);
 	}
@@ -1111,12 +959,8 @@ class WPFM_Writepanels
 	 * @param mixed $post
 	 * @return void
 	 */
-	public function food_manager_save_food_manager_data($post_id, $post)
-	{
+	public function food_manager_save_food_manager_data($post_id, $post) {
 		global $wpdb;
-
-		// Save fields
-
 		// Advanced tab fields
 		if (!empty($_POST['_food_menu_order'])) {
 			$fd_menu_order = sanitize_text_field($_POST['_food_menu_order']);
@@ -1124,7 +968,6 @@ class WPFM_Writepanels
 				update_post_meta($post_id, '_food_menu_order', $fd_menu_order);
 			}
 		}
-
 		if (isset($_POST['_enable_food_ingre'])) {
 			$fd_food_ingre = sanitize_text_field($_POST['_enable_food_ingre']);
 			if (!add_post_meta($post_id, '_enable_food_ingre', $fd_food_ingre, true)) {
@@ -1133,7 +976,6 @@ class WPFM_Writepanels
 		} else {
 			update_post_meta($post_id, '_enable_food_ingre', '');
 		}
-
 		if (isset($_POST['_enable_food_nutri'])) {
 			$fd_food_nutri = sanitize_text_field($_POST['_enable_food_nutri']);
 			if (!add_post_meta($post_id, '_enable_food_nutri', $fd_food_nutri, true)) {
@@ -1142,10 +984,8 @@ class WPFM_Writepanels
 		} else {
 			update_post_meta($post_id, '_enable_food_nutri', '');
 		}
-
 		// Ingredients.
 		delete_post_meta($post_id, '_ingredient');
-
 		$multiArrayIng = array();
 		if (!empty($_POST['_ingredient'])) {
 			foreach ($_POST['_ingredient'] as $id => $ingredient) {
@@ -1156,7 +996,6 @@ class WPFM_Writepanels
 				} else {
 					$unit_name = get_term($ingredient['unit_id'])->name;
 				}
-
 				$item = [
 					'id'      => $id,
 					'unit_id' => !empty($ingredient['unit_id']) ? $ingredient['unit_id'] : null,
@@ -1170,10 +1009,8 @@ class WPFM_Writepanels
 				update_post_meta($post_id, '_ingredient', $multiArrayIng);
 			}
 		}
-
 		// Nutritions.
 		delete_post_meta($post_id, '_nutrition');
-
 		$multiArrayNutri = array();
 		if (!empty($_POST['_nutrition'])) {
 			foreach ($_POST['_nutrition'] as $id => $nutrition) {
@@ -1184,7 +1021,6 @@ class WPFM_Writepanels
 				} else {
 					$unit_name = get_term($nutrition['unit_id'])->name;
 				}
-
 				$item = [
 					'id'      => $id,
 					'unit_id' => !empty($nutrition['unit_id']) ? $nutrition['unit_id'] : null,
@@ -1198,31 +1034,26 @@ class WPFM_Writepanels
 				update_post_meta($post_id, '_nutrition', $multiArrayNutri);
 			}
 		}
-
 		// Food price
 		$fd_price = sanitize_text_field($_POST['_food_price']);
 		if (!add_post_meta($post_id, '_food_price', $fd_price, true)) {
 			update_post_meta($post_id, '_food_price', $fd_price);
 		}
-
 		// Food sale price
 		$fd_sale_price = sanitize_text_field($_POST['_food_sale_price']);
 		if (!add_post_meta($post_id, '_food_sale_price', $fd_sale_price, true)) {
 			update_post_meta($post_id, '_food_sale_price', $fd_sale_price);
 		}
-
 		// Food stock status
 		$fd_stock_status = sanitize_text_field($_POST['_food_stock_status']);
 		if (!add_post_meta($post_id, '_food_stock_status', $fd_stock_status, true)) {
 			update_post_meta($post_id, '_food_stock_status', $fd_stock_status);
 		}
-
 		// Repeated options
 		$repeated_options = isset($_POST['repeated_options']) ? $_POST['repeated_options'] : '';
 		if (!add_post_meta($post_id, 'wpfm_repeated_options', $repeated_options, true)) {
 			update_post_meta($post_id, 'wpfm_repeated_options', $repeated_options);
 		}
-
 		// Options value count
 		$array_cnt = isset($_POST['option_value_count']) ? $_POST['option_value_count'] : '';
 		if (isset($array_cnt) && !empty($array_cnt)) {
@@ -1238,10 +1069,8 @@ class WPFM_Writepanels
 				update_post_meta($post_id, 'wpfm_option_value_count', $food_data_option_value_count);
 			}
 		}
-
 		// Save Food Form fields values
 		foreach ($this->food_manager_data_fields()['food'] as $key => $field) {
-
 			$type = !empty($field['type']) ? $field['type'] : '';
 			// food banner
 			if ('_food_banner' === "_" . $key) {
@@ -1252,26 +1081,19 @@ class WPFM_Writepanels
 					$thumbnail_image = $_POST["_" . $key];
 					update_post_meta($post_id, "_" . $key, $_POST["_" . $key]);
 				}
-
 				$image = get_the_post_thumbnail_url($post_id);
-
 				if (empty($image)) {
 					if (isset($thumbnail_image) && !empty($thumbnail_image)) {
 						$wp_upload_dir = wp_get_upload_dir();
-
 						$baseurl = $wp_upload_dir['baseurl'] . '/';
-
 						$wp_attached_file = str_replace($baseurl, '', $thumbnail_image);
-
 						$args = array(
 							'meta_key'       => '_wp_attached_file',
 							'meta_value'     => $wp_attached_file,
 							'post_type'      => 'attachment',
 							'posts_per_page' => 1,
 						);
-
 						$attachments = get_posts($args);
-
 						if (!empty($attachments)) {
 							foreach ($attachments as $attachment) {
 								set_post_thumbnail($post_id, $attachment->ID);
@@ -1280,13 +1102,11 @@ class WPFM_Writepanels
 					}
 				}
 			}
-
 			if (isset($_POST["_" . $key]) && !empty($_POST["_" . $key])) {
 				update_post_meta($post_id, "_" . $key, $_POST["_" . $key]);
 			} else {
 				update_post_meta($post_id, "_" . $key, "");
 			}
-
 			switch ($type) {
 				case 'textarea':
 					if (isset($_POST[$key])) {
@@ -1303,8 +1123,7 @@ class WPFM_Writepanels
 				case 'date':
 					if (isset($_POST[$key])) {
 						$date = $_POST[$key];
-
-						//Convert date and time value into DB formatted format and save eg. 1970-01-01
+						// Convert date and time value into DB formatted format and save eg. 1970-01-01
 						$date_dbformatted = WPFM_Date_Time::date_parse_from_format($php_date_format, $date);
 						$date_dbformatted = !empty($date_dbformatted) ? $date_dbformatted : $date;
 						update_post_meta($post_id, $key, $date_dbformatted);
@@ -1321,11 +1140,9 @@ class WPFM_Writepanels
 					break;
 			}
 		}
-
 		// Save Extra Options/Topping form fields values
 		foreach ($this->food_manager_data_fields()['extra_options'] as $key => $field) {
-
-			// author
+			// Author
 			if ('_food_author' === $key) {
 				$wpdb->update($wpdb->posts, array('post_author' => $_POST[$key] > 0 ? absint($_POST[$key]) : 0), array('ID' => $post_id));
 			}
@@ -1333,21 +1150,17 @@ class WPFM_Writepanels
 			else {
 				$type = !empty($field['type']) ? $field['type'] : '';
 				$extra_options = array();
-
 				$food = $post;
 				$form_submit_food_instance = call_user_func(array('WPFM_Form_Submit_Food', 'instance'));
 				$custom_food_fields  = !empty($form_submit_food_instance->get_food_manager_fieldeditor_fields()) ? $form_submit_food_instance->get_food_manager_fieldeditor_fields() : array();
 				$custom_extra_options_fields  = !empty($form_submit_food_instance->get_food_manager_fieldeditor_extra_options_fields()) ? $form_submit_food_instance->get_food_manager_fieldeditor_extra_options_fields() : array();
-
 				$custom_fields = '';
 				if (!empty($custom_extra_options_fields)) {
 					$custom_fields = array_merge($custom_food_fields, $custom_extra_options_fields);
 				} else {
 					$custom_fields = $custom_food_fields;
 				}
-
 				$default_fields = $form_submit_food_instance->get_default_food_fields();
-
 				$additional_fields = [];
 				if (!empty($custom_fields) && isset($custom_fields) && !empty($custom_fields['extra_options'])) {
 					foreach ($custom_fields['extra_options'] as $field_name => $field_data) {
@@ -1359,55 +1172,41 @@ class WPFM_Writepanels
 							}
 						}
 					}
-
 					if (isset($additional_fields['attendee_information_type']))
 						unset($additional_fields['attendee_information_type']);
-
 					if (isset($additional_fields['attendee_information_fields']))
 						unset($additional_fields['attendee_information_fields']);
-
 					$additional_fields = apply_filters('food_manager_show_additional_details_fields', $additional_fields);
 				}
-
-				//find how many total reapeated extra option there then store it.
+				// Find how many total reapeated extra option there then store it.
 				if (isset($_POST['repeated_options']) && is_array($_POST['repeated_options'])) {
 					foreach ($_POST['repeated_options'] as $option_count) {
 						$counter = 0;
 						if (isset($_POST['option_key_' . $option_count])) {
-
 							$option_key = $_POST['option_key_' . $option_count];
 							$option_name = $_POST['option_name_' . $option_count];
 							$option_type = $_POST['_option_type_' . $option_count];
 							$option_required = $_POST['_option_required_' . $option_count];
 							$option_enable_desc = isset($_POST['_option_enable_desc_' . $option_count]) ? $_POST['_option_enable_desc_' . $option_count] : '';
 							$option_description = isset($_POST['_option_description_' . $option_count]) ? $_POST['_option_description_' . $option_count] : '';
-
 							$option_values = array();
-
 							if (isset($_POST['option_value_count'])) {
 								$find_option = array_search('%%repeated-option-index%%', $_POST['option_value_count']);
 								if ($find_option !== false) {
 									// Remove from array
 									unset($_POST['option_value_count'][$find_option]);
 								}
-
 								foreach ($_POST['option_value_count'] as $option_value_count) {
 									if (!empty($_POST[$option_count . '_option_value_name_' . $option_value_count]) || !empty($_POST[$option_count . '_option_value_default_' . $option_value_count]) || !empty($_POST[$option_count . '_option_value_price_' . $option_value_count])) {
-
-										// New Logic
 										$option_values[$option_value_count] = array(
 											'option_value_name' => isset($_POST[$option_count . '_option_value_name_' . $option_value_count]) ? $_POST[$option_count . '_option_value_name_' . $option_value_count] : '',
-
 											'option_value_default' => isset($_POST[$option_count . '_option_value_default_' . $option_value_count]) ? $_POST[$option_count . '_option_value_default_' . $option_value_count] : '',
-
 											'option_value_price' => isset($_POST[$option_count . '_option_value_price_' . $option_value_count]) ? $_POST[$option_count . '_option_value_price_' . $option_value_count] : '',
-
 											'option_value_price_type' => isset($_POST[$option_count . '_option_value_price_type_' . $option_value_count]) ? $_POST[$option_count . '_option_value_price_type_' . $option_value_count] : ''
 										);
 									}
 								}
 							}
-
 							if (!empty($custom_extra_options_fields)) {
 								$extra_options[$option_key] = array(
 									'option_name' => $option_name,
@@ -1417,7 +1216,6 @@ class WPFM_Writepanels
 										if ($custom_ext_single_key !== 'option_name' && $custom_ext_single_key !== 'option_options') {
 											$custom_ext_key_post = isset($_POST["_" . $custom_ext_single_key . "_" . $option_count]) ? $_POST["_" . $custom_ext_single_key . "_" . $option_count] : '';
 											$extra_options[$option_key][$custom_ext_single_key] = $custom_ext_key_post;
-
 											if (!empty($custom_ext_key_post)) {
 												update_post_meta($post_id, "_" . $custom_ext_single_key . "_" . $option_count, $custom_ext_key_post);
 											} else {
@@ -1426,9 +1224,7 @@ class WPFM_Writepanels
 										}
 										if ($custom_ext_single_key == 'option_name') {
 											$custom_ext_key_post = isset($_POST[$custom_ext_single_key . "_" . $option_count]) ? $_POST[$custom_ext_single_key . "_" . $option_count] : '';
-
 											$extra_options[$option_key][$custom_ext_single_key] = $custom_ext_key_post;
-
 											if (!empty($custom_ext_key_post)) {
 												update_post_meta($post_id, $custom_ext_single_key . "_" . $option_count, $custom_ext_key_post);
 											}
@@ -1443,7 +1239,6 @@ class WPFM_Writepanels
 								update_post_meta($post_id, '_option_description_' . $option_count, $option_description);
 								update_post_meta($post_id, '_option_type_' . $option_count, $option_type);
 								update_post_meta($post_id, '_option_required_' . $option_count, $option_required);
-
 								$extra_options[$option_key] = array(
 									'option_name' => $option_name,
 									'option_type' => $option_type,
@@ -1453,7 +1248,6 @@ class WPFM_Writepanels
 									'option_options' => $option_values,
 								);
 							}
-
 							if (!empty($additional_fields)) {
 								foreach ($additional_fields as $add_key => $additional_field) {
 									$key_post = isset($_POST["_" . $add_key . "_" . $option_count]) ? $_POST["_" . $add_key . "_" . $option_count] : '';
@@ -1462,14 +1256,11 @@ class WPFM_Writepanels
 							}
 						}
 					}
-
 					$counter++;
 				}
-
 				update_post_meta($post_id, '_wpfm_extra_options', $extra_options);
 			}
 		}
-
 		remove_action('food_manager_save_food_manager', array($this, 'food_manager_save_food_manager_data'), 20, 2);
 		$food_data = array(
 			'ID'          => $post_id,
@@ -1478,7 +1269,6 @@ class WPFM_Writepanels
 		add_action('food_manager_save_food_manager', array($this, 'food_manager_save_food_manager_data'), 20, 2);
 	}
 
-
 	/**
 	 * wpfm_get_food_listings_by_category_id function.
 	 *
@@ -1486,11 +1276,8 @@ class WPFM_Writepanels
 	 * @param NULL
 	 * @return void
 	 */
-	public function wpfm_get_food_listings_by_category_id()
-	{
-
+	public function wpfm_get_food_listings_by_category_id() {
 		if (isset($_POST['category_id']) && !empty($_POST['category_id'])) {
-
 			$args = [
 				'post_type' => 'food_manager',
 				'post_per_page' => -1,
@@ -1502,64 +1289,58 @@ class WPFM_Writepanels
 						'terms' => $_POST['category_id'],
 					],
 				],
-
 				// Rest of your arguments
 			];
-
 
 			$food_listing = new WP_Query($args);
 			$html = [];
 			if ($food_listing->have_posts()) :
 				while ($food_listing->have_posts()) : $food_listing->the_post();
 					$id = get_the_ID();
-					$html[] = '<li class="menu-item-handle" data-food-id="' . $id . '">
-			    										<div class="wpfm-admin-left-col">
-			    											<span class="dashicons dashicons-menu"></span>
-			    											<span class="item-title">' . get_the_title($id) . '</span>
-			    										</div>
-			    										<div class="wpfm-admin-right-col">
-			    											<a href="javascript:void(0);" class="wpfm-food-item-remove">
-			    												<span class="dashicons dashicons-dismiss"></span>
-			    											</a>
-			    										</div>
-			    										<input type="hidden" name="wpfm_food_listing_ids[]" value="' . $id . '" />
-			    									</li>';
-
+					$html[] =
+						'<li class="menu-item-handle" data-food-id="' . $id . '">
+							<div class="wpfm-admin-left-col">
+								<span class="dashicons dashicons-menu"></span>
+								<span class="item-title">' . get_the_title($id) . '</span>
+							</div>
+							<div class="wpfm-admin-right-col">
+								<a href="javascript:void(0);" class="wpfm-food-item-remove">
+									<span class="dashicons dashicons-dismiss"></span>
+								</a>
+							</div>
+							<input type="hidden" name="wpfm_food_listing_ids[]" value="' . $id . '" />
+						</li>';
 				endwhile;
 			endif;
 			wp_reset_postdata();
-
 			wp_send_json(array('html' => $html, 'success' => true));
 		} else {
 			$args = [
 				'post_type' => 'food_manager',
 				'post_per_page' => -1,
 				'post__not_in' => isset($_POST['exclude']) && !empty($_POST['exclude']) ? $_POST['exclude'] : array(),
-				// Rest of your arguments
 			];
-
 			$food_listing = new WP_Query($args);
 			$html = [];
 			if ($food_listing->have_posts()) :
 				while ($food_listing->have_posts()) : $food_listing->the_post();
 					$id = get_the_ID();
-					$html[] = '<li class="menu-item-handle" data-food-id="' . $id . '">
-			    										<div class="wpfm-admin-left-col">
-			    											<span class="dashicons dashicons-menu"></span>
-			    											<span class="item-title">' . get_the_title($id) . '</span>
-			    										</div>
-			    										<div class="wpfm-admin-right-col">
-			    											<a href="javascript:void(0);" class="wpfm-food-item-remove">
-			    												<span class="dashicons dashicons-dismiss"></span>
-			    											</a>
-			    										</div>
-			    										<input type="hidden" name="wpfm_food_listing_ids[]" value="' . $id . '" />
-			    									</li>';
-
+					$html[] =
+						'<li class="menu-item-handle" data-food-id="' . $id . '">
+							<div class="wpfm-admin-left-col">
+								<span class="dashicons dashicons-menu"></span>
+								<span class="item-title">' . get_the_title($id) . '</span>
+							</div>
+							<div class="wpfm-admin-right-col">
+								<a href="javascript:void(0);" class="wpfm-food-item-remove">
+									<span class="dashicons dashicons-dismiss"></span>
+								</a>
+							</div>
+							<input type="hidden" name="wpfm_food_listing_ids[]" value="' . $id . '" />
+						</li>';
 				endwhile;
 			endif;
 			wp_reset_postdata();
-
 			wp_send_json(array('html' => $html, 'success' => true));
 		}
 		wp_die();
@@ -1574,8 +1355,7 @@ class WPFM_Writepanels
 	 * @param array $actions
 	 * @return array
 	 */
-	public function row_actions($actions)
-	{
+	public function row_actions($actions) {
 		if ('food_manager' == get_post_type()) {
 			return array();
 		}
@@ -1590,8 +1370,7 @@ class WPFM_Writepanels
 	 * @param post Object
 	 * @return void
 	 */
-	public function food_manager_save_food_manager_menu_data($post_id, $post)
-	{
+	public function food_manager_save_food_manager_menu_data($post_id, $post) {
 		if (isset($_POST['radio_icons']) && !empty($_POST['radio_icons'])) {
 			$wpfm_radio_icon = $_POST['radio_icons'];
 			if (isset($wpfm_radio_icon)) {
@@ -1600,7 +1379,6 @@ class WPFM_Writepanels
 				}
 			}
 		}
-
 		if (isset($_POST['wpfm_food_listing_ids'])) {
 			$item_ids = array_map('esc_attr', $_POST['wpfm_food_listing_ids']);
 			update_post_meta($post_id, '_food_item_ids', $item_ids);
@@ -1615,53 +1393,51 @@ class WPFM_Writepanels
 	 * @param array $columns
 	 * @return array
 	 */
-
-	public function columns($columns)
-	{
-
+	public function columns($columns) {
 		if (!is_array($columns)) {
-
 			$columns = array();
 		}
-
 		unset($columns['title'], $columns['date'], $columns['author']);
-
 		$columns['food_title'] = __('Title', 'wp-food-manager');
-
 		$columns['food_banner'] = '<span class="tips dashicons dashicons-format-image" data-tip="' . __('Banner', 'wp-food-manager') . '">' . __('Banner', 'wp-food-manager') . '</span>';
-
 		$columns['fm_stock_status'] = __('Stock Status', 'wp-food-manager');
-
 		$columns['fm_categories'] = __('Categories', 'wp-food-manager');
-
 		$columns['food_menu_order'] = __('Order', 'wp-food-manager');
-
 		$columns['food_status'] = __('Status', 'wp-food-manager');
-
 		$columns['food_actions'] = __('Actions', 'wp-food-manager');
-
 		if (!get_option('food_manager_enable_food_types')) {
-
 			unset($columns['food_manager_type']);
 		}
 		return $columns;
 	}
 
-	public function set_shortcode_copy_columns($columns)
-	{
+	/**
+	 * Set Copy Shortcode
+	 *
+	 * @since 1.0.1
+	 */
+	public function set_shortcode_copy_columns($columns) {
 		$columns['shortcode'] = __('Shortcode', 'wp-food-manager');
 		return  $columns;
 	}
 
-	public function shortcode_copy_content_column($column, $post_id)
-	{
+	/**
+	 * content for Copy Shortcode
+	 *
+	 * @since 1.0.1
+	 */
+	public function shortcode_copy_content_column($column, $post_id) {
 		echo '<code>';
 		printf(__('[food_menu id=%d]', 'wp-food-manager'), $post_id);
 		echo '</code>';
 	}
 
-	public function set_custom_food_columns($columns)
-	{
+	/**
+	 * Custom columns
+	 *
+	 * @since 1.0.1
+	 */
+	public function set_custom_food_columns($columns) {
 		$custom_col_order = array(
 			'cb' => $columns['cb'],
 			'food_title' => $columns['title'],
@@ -1677,140 +1453,98 @@ class WPFM_Writepanels
 		return $custom_col_order;
 	}
 
-	public function set_custom_food_sortable_columns($columns)
-	{
+	/**
+	 * column Sortable
+	 *
+	 * @since 1.0.1
+	 */
+	public function set_custom_food_sortable_columns($columns) {
 		$columns['food_menu_order'] = 'menu_order';
 		$columns['food_title'] = 'food_title';
-
 		return  $columns;
 	}
 
-	public function custom_food_content_column($column, $post_id)
-	{
+	/**
+	 * column content
+	 *
+	 * @since 1.0.1
+	 */
+	public function custom_food_content_column($column, $post_id) {
 		global $post;
 		$thispost = get_post($post_id);
 		switch ($column) {
-
 			case 'food_title':
 				echo wp_kses_post('<div class="food_title">');
-
 				echo wp_kses_post('<a href="' . esc_url(admin_url('post.php?post=' . $post->ID . '&action=edit')) . '" class="tips food_title" data-tip="' . sprintf(wp_kses('ID: %d', 'wp-food-manager'), $post->ID) . '">' . esc_html($post->post_title) . '</a>');
-
 				echo wp_kses_post('</div>');
-
 				echo wp_kses_post('<button type="button" class="toggle-row"><span class="screen-reader-text">' . esc_html__('Show more details', 'wp-food-manager') . '</span></button>');
-
 				break;
-
 			case 'food_banner':
 				echo wp_kses_post('<div class="food_banner">');
-
 				display_food_banner();
-
 				echo wp_kses_post('</div>');
-
 				display_food_veg_nonveg_icon_tag();
-
 				break;
-
 			case 'fm-price':
 				display_food_price_tag();
-
 				break;
-
 			case 'fm_categories':
 				echo display_food_category();
-
 				break;
-
 			case 'fm_stock_status':
 				echo display_stock_status();
-
 				break;
-
 			case 'food_menu_order':
 				echo $thispost->menu_order;
-
 				break;
-
 			case 'food_status':
 				echo ucfirst($thispost->post_status);
-
 				break;
-
 			case 'food_actions':
 				echo wp_kses_post('<div class="actions">');
-
 				$admin_actions = apply_filters('post_row_actions', array(), $post);
-
 				if (in_array($post->post_status, array('pending', 'pending_payment')) && current_user_can('publish_post', $post->ID)) {
-
 					$admin_actions['publish'] = array(
-
 						'action' => 'publish',
-
 						'name'   => __('Publish', 'wp-food-manager'),
-
 						'url'    => wp_nonce_url(add_query_arg('approve_food', $post->ID), 'approve_food'),
 					);
 				}
-
 				if ($post->post_status !== 'trash') {
-
 					if (current_user_can('read_post', $post->ID)) {
-
 						$admin_actions['view'] = array(
-
 							'action' => 'view',
-
 							'name'   => __('View', 'wp-food-manager'),
-
 							'url'    => get_permalink($post->ID),
 						);
 					}
-
 					if (current_user_can('edit_post', $post->ID)) {
-
 						$admin_actions['edit'] = array(
-
 							'action' => 'edit',
-
 							'name'   => __('Edit', 'wp-food-manager'),
-
 							'url'    => get_edit_post_link($post->ID),
 						);
 					}
-
 					if (current_user_can('delete_post', $post->ID)) {
-
 						$admin_actions['delete'] = array(
-
 							'action' => 'delete',
-
 							'name'   => __('Delete', 'wp-food-manager'),
-
 							'url'    => get_delete_post_link($post->ID),
 						);
 					}
 				}
-
 				$admin_actions = apply_filters('food_manager_admin_actions', $admin_actions, $post);
-
 				foreach ($admin_actions as $action) {
-
 					if (is_array($action)) {
-
 						printf('<a class="button button-icon tips icon-%1$s" href="%2$s" data-tip="%3$s">%4$s</a>', $action['action'], esc_url($action['url']), esc_attr($action['name']), esc_html($action['name']));
 					} else {
-
 						echo esc_attr(str_replace('class="', 'class="button ', $action));
 					}
 				}
-
 				echo wp_kses_post('</div>');
-
 				break;
 		}
 	}
 }
+
 WPFM_Writepanels::instance();

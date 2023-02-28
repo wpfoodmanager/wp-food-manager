@@ -1,16 +1,4 @@
 <?php
-
-/**
- * Shows the url field on food listing forms.
- *
- * This template can be overridden by copying it to yourtheme/wp-food-manager/form-fields/text-field.php.
- *
- * @author      WP Food Manager
- * @package     WP Food Manager
- * @category    Template
- * @version     1.8
- */
-
 $field_val_num = '';
 if (!empty($field['value']) && is_array($field['value'])) {
     $tmp_cnt = explode("_", $key);

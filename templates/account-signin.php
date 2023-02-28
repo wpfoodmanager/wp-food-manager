@@ -25,14 +25,14 @@
 	</div>
 	<?php if ($registration_enabled) :
 		if (!empty($registration_fields)) {
-			foreach ($registration_fields as $key => $field) {			?>
+			foreach ($registration_fields as $key => $field) { ?>
 				<div class="wpfm-form-group fieldset-<?php echo esc_attr($key); ?>">
 					<label class="wpfm-form-label-text" for="<?php echo esc_attr($key); ?>"><?php echo esc_html($field['label']) . apply_filters('add_food_required_label', $field['required'] ?   '<span class="require-field">*</span>' : ' <small>' . __('(optional)', 'wp-food-manager') . '</small>', $field); ?></label>
 					<div class="field <?php echo esc_attr($field['required']) ? 'required-field' : ''; ?>">
 						<?php get_food_manager_template('form-fields/' . $field['type'] . '-field.php', array('key'   => $key, 'field' => $field)); ?>
 					</div>
 				</div>
-<?php
+			<?php
 			}
 			do_action('food_manager_register_form');
 		}

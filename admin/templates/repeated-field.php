@@ -1,6 +1,5 @@
 <div class="wpfm-content" data-field="1">
-	<?php foreach ($field['fields'] as $subkey => $subfield) : ?>
-		<?php
+	<?php foreach ($field['fields'] as $subkey => $subfield) :
 		echo $subkey;
 		$subfield['name']  	=  $subkey . '_%%attribute_label%%[]';
 		$subfield['id']  	=   $subkey . '_%%repeated-field-index%%';
@@ -15,7 +14,6 @@
 		} elseif (method_exists($this, 'input_' . $type)) {
 			call_user_func(array($this, 'input_' . $type), $key, $subfield);
 		}
-		?>
-	<?php endforeach; ?>
+	endforeach; ?>
 	<a class="wpfm-remove-attribute-field" data-id="wpfm-attributes-box-%%repeated-row-index%%"><?php _e('Delete', 'wp-food-manager'); ?></a>
 </div>

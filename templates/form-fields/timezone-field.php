@@ -1,18 +1,3 @@
-<?php
-
-/**
- * Shows the timezone field on food listing forms.
- *
- * This template can be overridden by copying it to yourtheme/wp-food-manager/form-fields/timezone-field.php.
- *
- * @see         https://www.wp-foodmanager.com/documentation/template-files-override/
- * @author      WP Food Manager
- * @package     WP Food Manager
- * @category    Template
- * @since 		3.0
- * @version     3.0
- */
-?>
 <select name="<?php echo esc_attr(isset($field['name']) ? $field['name'] : $key); ?>" id="<?php echo isset($field['id']) ? esc_attr($field['id']) :  esc_attr($key); ?>" class="input-select <?php echo esc_attr(isset($field['class']) ? $field['class'] : $key); ?>">
 	<?php
 	$value = isset($field['value']) ? $field['value'] : $field['default'];

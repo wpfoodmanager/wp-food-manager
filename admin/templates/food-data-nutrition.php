@@ -6,9 +6,7 @@
 
 echo '<div id="nutritions_food_data_content" class="panel wpfm_panel wpfm-metaboxes-wrapper">
 <div class="wp_food_manager_meta_data">';
-
 do_action('food_manager_food_data_nutrition_start', $thepostid);
-
 $metaNutritions = get_post_meta($post->ID, '_nutrition');
 $excludeNutritions = [];
 if (!empty($metaNutritions)) {
@@ -18,7 +16,6 @@ if (!empty($metaNutritions)) {
 		}
 	}
 }
-
 $nutrition_terms = get_terms(
 	[
 		'taxonomy'   => 'food_manager_nutrition',

@@ -9,7 +9,6 @@ var WPFMTermMultiselect = function () {
         /// <since>1.0.0</since> 
         init: function () {
             WPFMCommon.logInfo("WPFMTermMultiselect.init...");
-            //jQuery('.food-manager-category-dropdown').chosen({ search_contains: true });
             jQuery(".food-manager-category-dropdown").chosen({ search_contains: !0 });
         }
     } //enf of return

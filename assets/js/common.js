@@ -17,30 +17,24 @@ var WPFMCommon = function () {
                     jQuery('.wpfm-modal-close').trigger('click');
                 }
             });
-
             jQuery(".wpfm-modal-button").click(function () {
                 jQuery('body').addClass("wpfm-modal-open");
                 var modal_id = jQuery(this).attr('data-modal-id');
                 if (jQuery('#' + modal_id).length > 0)
                     jQuery('#' + modal_id).addClass("wpfm-modal-open");
             });
-
             jQuery(".wpfm-modal-overlay").click(function () {
                 jQuery('body').removeClass("wpfm-modal-open");
                 jQuery('.wpfm-modal').removeClass("wpfm-modal-open");
             });
-
             jQuery(".wpfm-modal-close").click(function () {
                 jQuery('body').removeClass("wpfm-modal-open");
                 jQuery('.wpfm-modal').removeClass("wpfm-modal-open");
             });
-
         },
         tabChanged: function (food) {
             jQuery(this).addClass('active').parents('ul.wpfm-tabs-wrap').find('li').not(jQuery(this)).removeClass('active');
-
             var tabId = jQuery(this).data('tab');
-
             jQuery(this).closest('.wpfm-tabs-wrapper').find('.wpfm-tab-content .wpfm-tab-pane').not('#' + tabId).removeClass('active');
             jQuery(this).closest('.wpfm-tabs-wrapper').find('.wpfm-tab-content .wpfm-tab-pane#' + tabId).addClass('active');
         },
@@ -55,7 +49,6 @@ var WPFMCommon = function () {
             }
             return JSON.stringify(jsonObject);
         },
-
         stringToJson: function (jsonString) {
             /// <summary>Converts a json string to a json object.</summary>
             /// <param name="jsonString" type="string">The json string.</param>
@@ -67,7 +60,6 @@ var WPFMCommon = function () {
             }
             return eval('(' + jsonString + ')');
         },
-
         getCurrentDateTime: function () {
             /// <summary>Get Current Date Time.</summary>
             /// <since>1.0.0</since>
@@ -77,7 +69,6 @@ var WPFMCommon = function () {
             var dateTime = today.getFullYear() + '-' + month + '-' + today.getDate() + ' ' + today.getHours() + ':' + today.getMinutes() + ':' + today.getSeconds();
             return dateTime;
         },
-
         setLogValue: function (value) {
             /// <summary>set data value.</summary>
             /// <since>1.0.0</since>
@@ -87,7 +78,6 @@ var WPFMCommon = function () {
             }
             javaScriptInfoLoggingEnabled = value;
         },
-
         setTraceValue: function (value) {
             /// <summary>set data value.</summary>
             /// <since>1.0.0</since>
@@ -97,7 +87,6 @@ var WPFMCommon = function () {
             }
             javaScriptTraceLoggingEnabled = value;
         },
-
         logInfo: function (data) {
             /// <summary>Logs some info data if JavaScript info logging is enabled.</summary>
             /// <since>1.0.0</since>
@@ -108,7 +97,6 @@ var WPFMCommon = function () {
                 }
             }
         },
-
         logTrace: function (data) {
             /// <summary>Logs some trace data if JavaScript trace logging is enabled.</summary>
             /// <since>1.0.0</since>
@@ -119,7 +107,6 @@ var WPFMCommon = function () {
                 }
             }
         },
-
         logForce: function (data) {
             /// <summary>Logs some data, always.</summary>
             /// <since>1.0.0</since>
@@ -128,7 +115,6 @@ var WPFMCommon = function () {
                 console.log(data);
             }
         },
-
         logError: function (data) {
             /// <summary>Logs some error data, always.</summary>
             /// <since>1.0.0</since>
@@ -137,7 +123,6 @@ var WPFMCommon = function () {
                 console.error(data);
             }
         },
-
         htmlEncode: function (value) {
             /// <summary>Encode html text or code.</summary>
             /// <since>1.0.0</since>
@@ -157,7 +142,6 @@ var WPFMCommon = function () {
             }
             return (unescape(value));
         },
-
         /// <summary>
         /// Validate email address field of th e post food before submitting a form. 
         /// Make sure that user has entered correct email address.   
@@ -170,7 +154,6 @@ var WPFMCommon = function () {
             var expr = /^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
             return expr.test(email);
         },
-
         /// <summary>
         /// Validate pincode field of th e post food before submitting a form. 
         /// Make sure that user has entered correct pincode (area code).   
@@ -183,7 +166,6 @@ var WPFMCommon = function () {
             var expr = /^[0-9]+$/;
             return expr.test(email);
         },
-
         /// <summary>
         /// Validate contact person name for food submit. 
         /// Make sure that user has entered correct contact person name.  Also allow german umlaut.
@@ -196,7 +178,6 @@ var WPFMCommon = function () {
             var expr = /[A-Za-z \-_.\u00C0-\u00D6\u00D8-\u00F6\u00F8-\u00FF]/;
             return expr.test(name);
         },
-
         /// <summary>
         /// Validate website url or any url.
         /// Make sure that user has entered correct valid website or url address.   
@@ -210,7 +191,6 @@ var WPFMCommon = function () {
             var url = new RegExp(urlRegex, 'i');
             return str.length < 2083 && url.test(str);
         },
-
         /// <summary>
         /// show toggle content.    
         ///  </summary>
@@ -223,7 +203,6 @@ var WPFMCommon = function () {
 
             event.preventDefault();
         },
-
         /// <summary>
         /// Cancel button click for close toggle content.    
         ///  </summary>
@@ -236,8 +215,6 @@ var WPFMCommon = function () {
             //jQuery('#wpfm_contact_organizer_form').slideUp("slow");
             event.preventDefault();
         },
-
-
     }
 };
 

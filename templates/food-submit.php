@@ -6,11 +6,9 @@
 if (!defined('ABSPATH')) exit;
 
 global $food_manager;
-
 $add_food_page_id = get_option('food_manager_add_food_page_id');
 $food_dashboard_page_id = get_option('food_manager_food_dashboard_page_id');
 $extra_fields_options = get_post_meta($food_id, '_wpfm_extra_options', true) ? get_post_meta($food_id, '_wpfm_extra_options', true) : '';
-
 if (!empty($extra_fields_options)) {
 	$option_value_counts1 = array();
 	for ($i = 1; $i <= count($extra_fields_options); $i++) {
@@ -20,14 +18,12 @@ if (!empty($extra_fields_options)) {
 			}
 		}
 	}
-
 	$option_value_counts = array();
 	foreach ($option_value_counts1 as $option_value_count) {
 		$option_value_counts[] = array_unique($option_value_count);
 	}
 	array_unshift($option_value_counts, "");
 	unset($option_value_counts[0]);
-
 	$option_value_counts2 = array();
 	for ($i = 1; $i <= count($extra_fields_options); $i++) {
 		foreach ($extra_fields_options as $key => $value) {
@@ -36,7 +32,6 @@ if (!empty($extra_fields_options)) {
 			}
 		}
 	}
-
 	$option_value_counts3 = array();
 	foreach ($option_value_counts2 as $option_value2_count) {
 		$option_value_counts3[] = $option_value2_count;
@@ -57,7 +52,6 @@ if (!empty($extra_fields_options)) {
 			printf('<p class="wpfm-alert wpfm-alert-info"><strong>' . __("You are editing an existing food. %s", "wp-food-manager") . '</strong></p>', '<a href="?new=1&key=' . $resume_edit . '">' . __('Create A New Food', 'wp-food-manager') . '</a>');
 		}
 		?>
-
 		<?php do_action('add_food_fields_start'); ?>
 		<?php foreach ($food_fields as $key => $field) : ?>
 			<fieldset class="wpfm-form-group fieldset-<?php echo esc_attr($key); ?>">
@@ -68,7 +62,6 @@ if (!empty($extra_fields_options)) {
 			</fieldset>
 		<?php endforeach; ?>
 		<?php do_action('add_food_fields_end'); ?>
-
 		<!-- Extra options Fields -->
 		<?php
 		if ((isset($_POST['food_id']) && !empty($_POST['food_id'])) || (isset($_GET['action']) == 'edit')) {
@@ -81,11 +74,9 @@ if (!empty($extra_fields_options)) {
 							$selected_check = ($extra_fields_option['option_type'] === 'checkbox') ? 'selected' : '';
 							$selected_radio = ($extra_fields_option['option_type'] === 'radio') ? 'selected' : '';
 							$selected_select = ($extra_fields_option['option_type'] === 'select') ? 'selected' : '';
-
 							$option_required = ($extra_fields_option['option_required'] === 'yes') ? 'checked' : '';
-
 							$option_key = str_replace(" ", "_", strtolower($extra_fields_option['option_name']));
-					?>
+							?>
 							<div class="wpfm-options-wrap wpfm-metabox postbox wpfm-options-box-<?php echo $key; ?>">
 								<input type="hidden" name="repeated_options[]" value="<?php echo $key; ?>" class="repeated-options">
 								<h3 class="">
@@ -98,25 +89,21 @@ if (!empty($extra_fields_options)) {
 								<div class="wpfm-metabox-content wpfm-options-box">
 									<div class="wpfm-content">
 										<?php
-
 										foreach ($food_extra_fields as $key2 => $field) :
-
 											if ($key2 !== 'option_options') {
 												if ($key2 !== 'option_name') {
 													$key2 = "_" . $key2 . "_" . $key;
 												} else {
 													$key2 = $key2 . "_" . $key;
 												}
-
 												if (empty($field['value'])) {
 													$field['value'] = get_post_meta($food_id, $key2, true);
 												}
-
 												$fieldClassLabel = '';
 												if (!empty($field['type']) && $field['type'] == 'wp-editor') {
 													$fieldClassLabel = 'wp-editor-field';
 												}
-										?>
+												?>
 												<fieldset class="wpfm-form-group fieldset<?php echo $key2; ?> <?php echo $fieldClassLabel; ?>" data-field-name="<?php echo $key2; ?>">
 													<label for="<?php echo $key2; ?>" class="wpfm-form-label-text"><?php echo $field['label'] . apply_filters('add_food_required_label', $field['required'] ? '<span class="require-field">*</span>' : ' <small>' . __('(optional)', 'wp-food-manager') . '</small>', $field); ?></label>
 													<div class="field <?php echo $field['required'] ? 'required-field' : ''; ?>">
@@ -146,7 +133,7 @@ if (!empty($extra_fields_options)) {
 																	$option_value_default = ($values['option_value_default'] === 'on') ? 'checked' : '';
 																	$option_fixed_amount = ($values['option_value_price_type'] === 'fixed_amount') ? 'selected' : '';
 																	$option_quantity_based = ($values['option_value_price_type'] === 'quantity_based') ? 'selected' : '';
-																?>
+																	?>
 																	<tr class="option-tr-<?php echo $sub_value_count; ?>">
 																		<td><span class="wpfm-option-sort">☰</span></td>
 																		<td><?php echo $sub_value_count; ?></td>
@@ -200,7 +187,6 @@ if (!empty($extra_fields_options)) {
 							</div>
 					<?php }
 					}
-					//} 
 					?>
 					<div class="wpfm-actions">
 						<button type="button" class="wpfm-add-button button button-primary" id="wpfm-add-new-option" data-row='<div class="wpfm-options-wrap wpfm-metabox postbox wpfm-options-box-%%repeated-option-index%%">
@@ -227,18 +213,15 @@ if (!empty($extra_fields_options)) {
 													$key  = "_" . $key . "_%%repeated-option-index%%";
 												}
 											}
-
 											$fieldClassLabel = '';
 											if (!empty($field['type']) && $field['type'] == 'wp-editor') {
 												$fieldClassLabel = 'wp-editor-field';
 											}
-
 											$type = !empty($field["type"]) ? $field["type"] : "text";
 											if ($type == "wp-editor") $type = "textarea";
 
 											$field['value'] = '';
-
-										?>
+											?>
 											<fieldset class="wpfm-form-group fieldset<?php echo esc_attr($key); ?> <?php echo esc_attr($fieldClassLabel); ?>" data-field-name="<?php echo $key; ?>">
 													<label for="<?php esc_attr_e($key); ?>" class="wpfm-form-label-text"><?php echo esc_attr($field['label']) . apply_filters('add_food_required_label', $field['required'] ? '<span class="require-field">*</span>' : ' <small>' . __('(optional)', 'wp-food-manager') . '</small>', $field); ?></label>
 												<div class="field <?php echo esc_attr($field['required'] ? 'required-field' : ''); ?>">
@@ -252,10 +235,9 @@ if (!empty($extra_fields_options)) {
 						</button>
 					</div>
 				</div>
-		<?php
+			<?php
 			endif;
 		} ?>
-
 		<div class="wpfm-form-footer">
 			<input type="hidden" name="food_manager_form" value="<?php echo $form; ?>" />
 			<input type="hidden" name="food_id" value="<?php echo esc_attr($food_id); ?>" />
@@ -263,8 +245,6 @@ if (!empty($extra_fields_options)) {
 			<input type="submit" name="submit_food" class="wpfm-theme-button" value="<?php esc_attr_e($submit_button_text); ?>" />
 		</div>
 	<?php else : ?>
-
 		<?php do_action('add_food_disabled'); ?>
-
 	<?php endif; ?>
 </form>

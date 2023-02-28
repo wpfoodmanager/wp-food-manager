@@ -7,7 +7,6 @@ if (!defined('ABSPATH')) exit; // Exit if accessed directly
 if ($max_num_pages <= 1) {
 	return;
 }
-
 // Calculate pages to output 
 $end_size    = 3;
 $mid_size    = 3;
@@ -17,7 +16,6 @@ $mid_pages   = range($current_page - $mid_size, $current_page + $mid_size);
 $pages       = array_intersect(range(1, $max_num_pages), array_merge($start_pages, $end_pages, $mid_pages));
 $prev_page   = 0;
 ?>
-
 <nav class="food-manager-pagination">
 	<ul class="page-numbers">
 		<?php if ($current_page && $current_page > 1) : ?>
@@ -28,13 +26,11 @@ $prev_page   = 0;
 			if ($prev_page != $page - 1) {
 				echo '<li><span class="gap">...</span></li>';
 			}
-
 			if ($current_page == $page) {
 				echo '<li><span  data-page="' . $page . '" class="page-numbers current">' . $page . '</span></li>';
 			} else {
 				echo '<li><a href="#" data-page="' . $page . '" class="page-numbers">' . $page . '</a></li>';
 			}
-
 			$prev_page = $page;
 		}
 		?>

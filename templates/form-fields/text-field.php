@@ -12,7 +12,6 @@
  * @version     1.8
  */
 global $post;
-
 $field_val_num = '';
 if (!empty($field['value']) && is_array($field['value']) && isset($field['value'])) {
     $tmp_cnt = explode("_", $key);
@@ -21,7 +20,6 @@ if (!empty($field['value']) && is_array($field['value']) && isset($field['value'
 } else {
     $field_val_num = !empty($field['value']) ? $field['value'] : '';
 }
-
 if (is_array($field_val_num)) {
     $field_val_num = '';
 }

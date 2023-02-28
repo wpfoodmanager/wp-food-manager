@@ -7,10 +7,6 @@
 		<?php endforeach; ?>
 		<?php do_action('wpfm_food_write_panel_tabs'); ?>
 	</ul>
-
-	<?php
-	//output tab
-	self::output_tabs();
-	?>
+	<?php /* Output tab */ self::output_tabs(); ?>
 	<div class="clear"></div>
 </div>

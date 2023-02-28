@@ -3,16 +3,12 @@
 /**
  * The template for displaying archive.
  */
-
 get_header();
-
 global $wp_query;
-
 $term = get_queried_object();
 $image_id = !empty($term) ? get_term_meta($term->term_id, 'food_cat_image_id', true) : '';
 $image_url = wp_get_attachment_image_src($image_id);
 ?>
-
 <div class="wpfm-container">
     <div class="wpfm-main wpfm-food-listing-category-page">
         <div class="wpfm-row">
@@ -32,30 +28,19 @@ $image_url = wp_get_attachment_image_src($image_id);
                 <?php } ?>
                 <div class="food_listings">
                     <?php if (have_posts()) : ?>
-
                         <?php get_food_manager_template('food-listings-start.php', array('layout_type' => 'all')); ?>
-
                         <?php while (have_posts()) : the_post(); ?>
-
                             <?php get_food_manager_template_part('content', 'food_manager'); ?>
-
                         <?php endwhile; ?>
-
                         <?php get_food_manager_template('food-listings-end.php'); ?>
-
                         <?php get_food_manager_template('pagination.php', array('max_num_pages' => $wp_query->max_num_pages)); ?>
-
                     <?php else :
-
                         do_action('food_manager_output_foods_no_results');
-
                     endif;
-
                     wp_reset_postdata(); ?>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
 <?php get_footer(); ?>

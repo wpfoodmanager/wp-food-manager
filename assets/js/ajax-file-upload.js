@@ -2,12 +2,11 @@ var WPFMAjaxFileUpload = function () {
 	/// <summary>Constructor function of the food WPFMAjaxFileUpload class.</summary>
 	/// <returns type="Home" />      
 	return {
-		///<summary>
-		///Initializes the ajax file upload.  
-		///</summary>     
-		///<returns type="initialization settings" />   
+		/// <summary>
+		/// Initializes the ajax file upload.  
+		/// </summary>     
+		/// <returns type="initialization settings" />   
 		/// <since>1.0.0</since>
-
 		init: function () {
 			WPFMCommon.logInfo("WPFMAjaxFileUpload.init...");
 			jQuery('.wp-food-manager-file-upload').each(function () {
@@ -19,13 +18,11 @@ var WPFMAjaxFileUpload = function () {
 					formData: {
 						script: true
 					},
-
 					add: function (e, data) {
 						var $file_field = jQuery(this);
 						var $form = $file_field.closest('form');
 						var $uploaded_files = $file_field.parent().find('.food-manager-uploaded-files');
 						var uploadErrors = [];
-						
 						// Validate type
 						var allowed_types = jQuery(this).data('file_types');
 						if (allowed_types) {
@@ -42,20 +39,17 @@ var WPFMAjaxFileUpload = function () {
 							data.submit();
 						}
 					},
-
 					progress: function (e, data) {
 						var $file_field = jQuery(this);
 						var $uploaded_files = $file_field.parent().find('.food-manager-uploaded-files');
 						var progress = parseInt(data.loaded / data.total * 100, 10);
 						data.context.val(progress);
 					},
-
 					fail: function (e, data) {
 						var $file_field = jQuery(this);
 						var $form = $file_field.closest('form');
 						$form.find(':input[type="submit"]').removeAttr('disabled');
 					},
-
 					done: function (e, data) {
 						var $file_field = jQuery(this);
 						var $form = $file_field.closest('form');

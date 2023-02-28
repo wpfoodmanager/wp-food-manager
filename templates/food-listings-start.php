@@ -1,6 +1,4 @@
-<?php
-wp_enqueue_script('wpfm-content-food-listing');
-?>
+<?php wp_enqueue_script('wpfm-content-food-listing'); ?>
 <?php if ($layout_type == 'all') : ?>
     <div class="wpfm-main wpfm-food-listings-header">
         <div class="wpfm-row">
@@ -28,6 +26,5 @@ if ($layout_type == 'box')
     $list_type_class = 'wpfm-row wpfm-food-listing-box-view';
 else
     $list_type_class = 'wpfm-food-listing-list-view';
-
 $list_type_class = apply_filters('wpfm_default_listing_layout_class', $list_type_class, $layout_type); ?>
 <div id="food-listing-view" class="wpfm-main wpfm-food-listings food_listings <?php echo $list_type_class; ?>">

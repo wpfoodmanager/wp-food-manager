@@ -4,7 +4,6 @@ if (empty($field_key)) {
 }
 $taxonomies = get_object_taxonomies((object) array('post_type' => 'food_manager'));
 unset($taxonomies['5']);
-
 if ($field_key !== 'option_options') {
 	$field_types    = apply_filters(
 		'food_manager_form_field_types',

@@ -8,7 +8,6 @@
 	} else {
 		$field_val_num = !empty($field['value']) ? $field['value'] : '';
 	}
-
 	$my_check_value_arr = [];
 	if (is_array($field_val_num)) {
 		if (isset($field_val_num[$field['taxonomy']])) {
@@ -17,9 +16,7 @@
 			}
 		}
 	}
-
 	ob_start();
-
 	wpfm_category_checklist($field['taxonomy'], $key, $my_check_value_arr);
 	$checklist = ob_get_clean();
 	echo str_replace("disabled='disabled'", '', $checklist);

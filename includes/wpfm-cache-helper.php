@@ -1,4 +1,5 @@
 <?php
+
 if (!defined('ABSPATH')) {
 	exit;
 }
@@ -6,46 +7,38 @@ if (!defined('ABSPATH')) {
 /**
  * WP_Food_Manager_Cache_Helper class.
  */
-
-class WPFM_Cache_Helper
-{
+class WPFM_Cache_Helper {
 
 	/**
 	 * The single instance of the class.
 	 *
 	 * @var self
-	 * @since  2.5
+	 * @since 1.0.0
 	 */
 	private static $_instance = null;
-
 	/**
 	 * Allows for accessing single instance of class. Class should only be constructed once per call.
 	 *
-	 * @since  2.5
+	 * @since 1.0.0
 	 * @static
 	 * @return self Main instance.
 	 */
-	public static function instance()
-	{
+	public static function instance() {
 		if (is_null(self::$_instance)) {
 			self::$_instance = new self();
 		}
 		return self::$_instance;
 	}
 
-	public function __construct()
-	{
+	public function __construct() {
 		add_action('save_post', array(__CLASS__, 'flush_get_food_managers_cache'));
 		add_action('delete_post', array(__CLASS__, 'flush_get_food_managers_cache'));
 		add_action('trash_post', array(__CLASS__, 'flush_get_food_managers_cache'));
-
 		add_action('food_manager_my_food_do_action', array(__CLASS__, 'food_manager_my_food_do_action'));
 		add_action('set_object_terms', array(__CLASS__, 'set_term'), 10, 4);
-
 		add_action('edited_term', array(__CLASS__, 'edited_term'), 10, 3);
 		add_action('create_term', array(__CLASS__, 'edited_term'), 10, 3);
 		add_action('delete_term', array(__CLASS__, 'edited_term'), 10, 3);
-
 		add_action('food_manager_clear_expired_transients', array(__CLASS__, 'clear_expired_transients'), 10);
 		add_action('transition_post_status', array(__CLASS__, 'maybe_clear_count_transients'), 10, 3);
 	}
@@ -53,12 +46,8 @@ class WPFM_Cache_Helper
 	/**
 	 * Flush the cache
 	 */
-
-	public static function flush_get_food_managers_cache($post_id)
-	{
-
+	public static function flush_get_food_managers_cache($post_id) {
 		if ('food_manager' === get_post_type($post_id)) {
-
 			self::get_transient_version('get_food_managers', true);
 		}
 	}
@@ -66,12 +55,8 @@ class WPFM_Cache_Helper
 	/**
 	 * Flush the cache
 	 */
-
-	public static function food_manager_my_food_do_action($action)
-	{
-
+	public static function food_manager_my_food_do_action($action) {
 		if ('mark_cancelled' === $action || 'mark_not_cancelled' === $action) {
-
 			self::get_transient_version('get_food_managers', true);
 		}
 	}
@@ -79,19 +64,14 @@ class WPFM_Cache_Helper
 	/**
 	 * When any post has a term set
 	 */
-
-	public static function set_term($object_id = '', $terms = '', $tt_ids = '', $taxonomy = '')
-	{
-
+	public static function set_term($object_id = '', $terms = '', $tt_ids = '', $taxonomy = '') {
 		self::get_transient_version('fm_get_' . sanitize_text_field($taxonomy), true);
 	}
 
 	/**
 	 * When any term is edited
 	 */
-	public static function edited_term($term_id = '', $tt_id = '', $taxonomy = '')
-	{
-
+	public static function edited_term($term_id = '', $tt_id = '', $taxonomy = '') {
 		self::get_transient_version('fm_get_' . sanitize_text_field($taxonomy), true);
 	}
 
@@ -112,21 +92,13 @@ class WPFM_Cache_Helper
 	 * @param  boolean $refresh true to force a new version
 	 * @return string transient version based on time(), 10 digits
 	 */
-
-	public static function get_transient_version($group, $refresh = false)
-	{
-
+	public static function get_transient_version($group, $refresh = false) {
 		$transient_name  = $group . '-transient-version';
-
 		$transient_value = get_transient($transient_name);
-
 		if (false === $transient_value || true === $refresh) {
-
 			self::delete_version_transients($transient_value);
-
 			set_transient($transient_name, $transient_value = time());
 		}
-
 		return $transient_value;
 	}
 
@@ -135,14 +107,9 @@ class WPFM_Cache_Helper
 	 *
 	 * Note; this only works on transients appended with the transient version, and when object caching is not being used.
 	 */
-
-	private static function delete_version_transients($version)
-	{
-
+	private static function delete_version_transients($version) {
 		if (!wp_using_ext_object_cache() && !empty($version)) {
-
 			global $wpdb;
-
 			$wpdb->query($wpdb->prepare("DELETE FROM {$wpdb->options} WHERE option_name LIKE %s;", "\_transient\_%" . $version));
 		}
 	}
@@ -150,13 +117,9 @@ class WPFM_Cache_Helper
 	/**
 	 * Clear expired transients
 	 */
-	public static function clear_expired_transients()
-	{
-
+	public static function clear_expired_transients() {
 		global $wpdb;
-
 		if (!wp_using_ext_object_cache() && !defined('WP_SETUP_CONFIG') && !defined('WP_INSTALLING')) {
-
 			$sql = "
 			    DELETE a, b FROM $wpdb->options a, $wpdb->options b	
  				WHERE a.option_name LIKE %s	
@@ -177,10 +140,8 @@ class WPFM_Cache_Helper
 	 * @param string  $old_status Old post status.
 	 * @param WP_Post $post       Post object.
 	 */
-	public static function maybe_clear_count_transients($new_status, $old_status, $post)
-	{
+	public static function maybe_clear_count_transients($new_status, $old_status, $post) {
 		global $wpdb;
-
 		/**
 		 * Get supported post types for count caching
 		 * @param array   $post_types Post types that should be cached.
@@ -189,12 +150,10 @@ class WPFM_Cache_Helper
 		 * @param WP_Post $post       Post object.
 		 */
 		$post_types = apply_filters('wp_foodmanager_count_cache_supported_post_types', array('food_manager'), $new_status, $old_status, $post);
-
 		// Only proceed when statuses do not match, and post type is supported post type
 		if ($new_status === $old_status || !in_array($post->post_type, $post_types)) {
 			return;
 		}
-
 		/**
 		 * Get supported post statuses for count caching
 		 * @param array   $post_statuses Post statuses that should be cached.
@@ -203,7 +162,6 @@ class WPFM_Cache_Helper
 		 * @param WP_Post $post          Post object.
 		 */
 		$valid_statuses = apply_filters('wp_foodmanager_count_cache_supported_statuses', array('pending'), $new_status, $old_status, $post);
-
 		$rlike = array();
 		// New status transient option name
 		if (in_array($new_status, $valid_statuses)) {
@@ -213,14 +171,11 @@ class WPFM_Cache_Helper
 		if (in_array($old_status, $valid_statuses)) {
 			$rlike[] = "^_transient_fm_{$old_status}_{$post->post_type}_count_user_";
 		}
-
 		if (empty($rlike)) {
 			return;
 		}
-
 		$sql        = $wpdb->prepare("SELECT option_name FROM $wpdb->options WHERE option_name RLIKE '%s'", implode('|', $rlike));
 		$transients = $wpdb->get_col($sql);
-
 		// For each transient...
 		foreach ($transients as $transient) {
 			// Strip away the WordPress prefix in order to arrive at the transient key.
@@ -228,7 +183,6 @@ class WPFM_Cache_Helper
 			// Now that we have the key, use WordPress core to the delete the transient.
 			delete_transient($key);
 		}
-
 		// Sometimes transients are not in the DB, so we have to do this too:
 		wp_cache_flush();
 	}
@@ -242,16 +196,12 @@ class WPFM_Cache_Helper
 	 *
 	 * @return int
 	 */
-	public static function get_listings_count($post_type = 'food_manager', $status = 'pending', $force = false)
-	{
-
+	public static function get_listings_count($post_type = 'food_manager', $status = 'pending', $force = false) {
 		// Get user based cache transient
 		$user_id   = get_current_user_id();
 		$transient = "em_{$status}_{$post_type}_count_user_{$user_id}";
-
 		// Set listings_count value from cache if exists, otherwise set to 0 as default
 		$status_count = ($cached_count = get_transient($transient)) ? $cached_count : 0;
-
 		// $cached_count will be false if transient does not exist
 		if ($cached_count === false || $force) {
 			$count_posts = wp_count_posts($post_type, 'readable');
@@ -259,7 +209,6 @@ class WPFM_Cache_Helper
 			$status_count = isset($count_posts->$status) ? $count_posts->$status : 0;
 			set_transient($transient, $status_count, DAY_IN_SECONDS * 7);
 		}
-
 		return $status_count;
 	}
 }

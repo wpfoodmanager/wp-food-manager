@@ -3,9 +3,7 @@
 /**
  * The template for displaying archive.
  */
-
 get_header();
-
 global $wp_query;
 ?>
 <div class="wpfm-container">
@@ -18,19 +16,12 @@ global $wp_query;
                 </div>
                 <div class="food_listings">
                     <?php if (have_posts()) : ?>
-
                         <?php get_food_manager_template('food-listings-start.php', array('layout_type' => 'all')); ?>
-
                         <?php while (have_posts()) : the_post(); ?>
-
                             <?php get_food_manager_template_part('content', 'food_manager'); ?>
-
                         <?php endwhile; ?>
-
                         <?php get_food_manager_template('food-listings-end.php'); ?>
-
                         <?php get_food_manager_template('pagination.php', array('max_num_pages' => $wp_query->max_num_pages)); ?>
-
                     <?php else :
                         do_action('food_manager_output_foods_no_results');
                     endif;
@@ -40,5 +31,4 @@ global $wp_query;
         </div>
     </div>
 </div>
-
 <?php get_footer(); ?>

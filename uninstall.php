@@ -1,4 +1,10 @@
 <?php
+
+/**
+ * Call when the plugin is uninstalled.
+ */
+
+// If WP_UNINSTALL_PLUGIN not called from WordPress, then exit.
 if (!defined('WP_UNINSTALL_PLUGIN')) {
 	exit();
 }
@@ -7,7 +13,6 @@ if (!defined('WP_UNINSTALL_PLUGIN')) {
 require 'includes/wpfm-data-cleaner.php';
 
 if (!is_multisite()) {
-
 	// Only do deletion if the setting is true.
 	$do_deletion = get_option('food_manager_delete_data_on_uninstall');
 	if ($do_deletion) {
@@ -15,23 +20,18 @@ if (!is_multisite()) {
 	}
 } else {
 	global $wpdb;
-
 	$blog_ids         = $wpdb->get_col("SELECT blog_id FROM $wpdb->blogs");
 	$original_blog_id = get_current_blog_id();
-
 	foreach ($blog_ids as $blog_id) {
 		switch_to_blog($blog_id);
-
 		// Only do deletion if the setting is true.
 		$do_deletion = get_option('food_manager_delete_data_on_uninstall');
 		if ($do_deletion) {
 			WPFM_Data_Cleaner::cleanup_all();
 		}
 	}
-
 	switch_to_blog($original_blog_id);
 }
-
 $options = array(
 	'food_manager_installed_terms',
 	'wp_food_manager_db_version',
@@ -72,7 +72,6 @@ $options = array(
 	'wpfm_installation',
 	'wpfm_installation_skip',
 );
-
 foreach ($options as $option) {
 	delete_option($option);
 }

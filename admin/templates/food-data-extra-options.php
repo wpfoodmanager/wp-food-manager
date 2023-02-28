@@ -3,17 +3,14 @@
 /**
  *  Template Extra Option panel
  */
-
 $extra_options = get_post_meta($thepostid, '_wpfm_extra_options', true);
 ?>
 <div id="extra_options_food_data_content" class="panel wpfm_panel wpfm-metaboxes-wrapper">
 	<div class="wp_food_manager_meta_data">
 		<div class="wpfm-options-wrapper wpfm-metaboxes">
-
 			<?php if (!empty($extra_options)) {
 				$count = 1;
-				foreach ($extra_options as $option_key => $option) {
-			?>
+				foreach ($extra_options as $option_key => $option) { ?>
 					<div class="wpfm-options-wrap wpfm-metabox postbox wpfm-options-box-<?php echo esc_attr($count); ?>">
 						<input type="hidden" name="repeated_options[]" value="<?php echo esc_attr($count); ?>" class="repeated-options">
 						<h3 class="">
@@ -31,11 +28,9 @@ $extra_options = get_post_meta($thepostid, '_wpfm_extra_options', true);
 								$food_extra_fields = $this->food_manager_data_fields();
 								if (isset($food_extra_fields['extra_options']))
 									foreach ($food_extra_fields['extra_options'] as $key => $field) {
-
 										if (!isset($field['value']) || empty($field['value'])) {
 											$field['value'] = isset($option[$key]) ? $option[$key] : '';
 										}
-
 										if ($key == "option_name") {
 											if (strpos($key, '_') !== 0) {
 												$key  = $key . '_' . $count;
@@ -45,27 +40,23 @@ $extra_options = get_post_meta($thepostid, '_wpfm_extra_options', true);
 												$key  = '_' . $key . '_' . $count;
 											}
 										}
-
-
 										$type = !empty($field['type']) ? $field['type'] : 'text';
-
 										if ($type == 'wp-editor') $type = 'wp_editor';
-
 										if (has_action('food_manager_input_' . $type)) {
 											do_action('food_manager_input_' . $type, $key, $field);
 										} elseif (method_exists($this, 'input_' . $type)) {
 											call_user_func(array($this, 'input_' . $type), $key, $field);
 										}
 									}
-								do_action('food_manager_food_data_end', $thepostid);
-								?>
+								do_action('food_manager_food_data_end', $thepostid); ?>
 							</div>
 						</div>
-						<?php
-						$count++; ?>
+						<?php $count++; ?>
 					</div>
-			<?php }
-			} ?>
+			<?php
+				}
+			}
+			?>
 			<div class="wpfm-actions">
 				<button type="button" class="wpfm-add-button button button-primary" id="wpfm-add-new-option" data-row='<div class="wpfm-options-wrap wpfm-metabox postbox wpfm-options-box-%%repeated-option-index%%">
 					<input type="hidden" name="repeated_options[]" value="%%repeated-option-index%%" class="repeated-options">
@@ -84,7 +75,6 @@ $extra_options = get_post_meta($thepostid, '_wpfm_extra_options', true);
 							$food_extra_fields = $this->food_manager_data_fields();
 							if (isset($food_extra_fields["extra_options"]))
 								foreach ($food_extra_fields["extra_options"] as $key => $field) {
-
 									if ($key == "option_name") {
 										if (strpos($key, '_') !== 0) {
 											$key  = $key . '_%%repeated-option-index%%';
@@ -94,19 +84,15 @@ $extra_options = get_post_meta($thepostid, '_wpfm_extra_options', true);
 											$key  = "_" . $key . "_%%repeated-option-index%%";
 										}
 									}
-
-
 									$type = !empty($field["type"]) ? $field["type"] : "text";
 									if ($type == "wp-editor") $type = "textarea";
-
 									if (has_action("food_manager_input_" . $type)) {
 										do_action("food_manager_input_" . $type, $key, $field);
 									} elseif (method_exists($this, "input_" . $type)) {
 										call_user_func(array($this, "input_" . $type), $key, $field);
 									}
 								}
-							do_action("food_manager_food_data_end", $thepostid);
-							?>
+							do_action("food_manager_food_data_end", $thepostid); ?>
 						</div>
 					</div>
 				</div>'>+ Add Option

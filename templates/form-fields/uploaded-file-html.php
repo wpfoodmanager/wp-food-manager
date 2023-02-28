@@ -5,7 +5,6 @@ if (is_numeric($value)) {
 } else {
 	$image_src = $value;
 }
-
 $image_src_class = !empty($image_src) ? '' : 'empty-src';
 if (!is_array($image_src)) { ?>
 	<div class="food-manager-uploaded-file">

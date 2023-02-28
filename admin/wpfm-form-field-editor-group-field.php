@@ -53,7 +53,6 @@ $taxonomies = get_object_taxonomies((object) array('post_type' => 'food_manager'
 																			?>
 		" placeholder="<?php esc_attr_e('N/A', 'wp-food-manager'); ?>" />
 		<input type="text" class="input-text options" name="<?php echo esc_attr($group_key); ?>[<?php echo esc_attr($field_key); ?>][fields][<?php echo esc_attr($child_field_key); ?>][options]" placeholder="<?php esc_attr_e('Pipe (|) separate options.', 'wp-food-manager'); ?>" value="<?php echo esc_attr($child_options); ?>" />
-
 		<div class="file-options">
 			<label class="multiple-files"><input type="checkbox" class="input-text" name="<?php echo esc_attr($group_key); ?>[<?php echo esc_attr($field_key); ?>][fields][<?php echo esc_attr($child_field_key); ?>][multiple]" value="1" <?php checked(!empty($child_field['multiple']), true); ?> /> <?php esc_attr_e('Multiple Files?', 'wp-food-manager'); ?></label>
 		</div>
@@ -75,15 +74,12 @@ $taxonomies = get_object_taxonomies((object) array('post_type' => 'food_manager'
 		</div>
 		<span class="na">&ndash;</span>
 	</td>
-
 	<td> <input type="text" value="_<?php echo esc_attr($child_field_key); ?>" readonly></td>
-
 	<td>
 		<?php if (!in_array($child_field_key, $disbled_fields)) : ?>
 			<input type="checkbox" name="<?php echo esc_attr($group_key); ?>[<?php echo esc_attr($field_key); ?>][fields][<?php echo esc_attr($child_field_key); ?>][admin_only]" value="1" <?php checked(!empty($child_field['admin_only']), true); ?> />
 		<?php endif; ?>
 	</td>
-
 	<td>
 		<input type="text" class="input-text placeholder" name="<?php echo esc_attr($group_key); ?>[<?php echo esc_attr($field_key); ?>][fields][<?php echo esc_attr($child_field_key); ?>][priority]" value="
 																		   <?php
@@ -93,7 +89,6 @@ $taxonomies = get_object_taxonomies((object) array('post_type' => 'food_manager'
 																			?>
 		" placeholder="<?php esc_attr_e('N/A', 'wp-food-manager'); ?>" disabled />
 	</td>
-
 	<td class="field-rules">
 		<?php if (!in_array($child_field_key, $disbled_fields)) : ?>
 			<div class="rules">

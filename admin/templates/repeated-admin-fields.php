@@ -9,9 +9,7 @@
 global $post;
 $food_attributes = get_post_meta($post->ID, '_fa_keys', true);
 ?>
-
 <div class="wpfm-main-metabox-container">
-
 	<input type="text" name="attribute_label" id="attribute-label" placeholder="<?php _e('Enter attribute lable', 'wp-food-manager'); ?>">
 	<a href="javascript:void(0)" class="button button-primary wpfm-add-attributes" data-row='<div class="wpfm-attributes-wrap wpfm-metabox postbox-%%repeated-row-index%%">
 	<input type="hidden" class="repeated-attribute-row" name="repeated-attribute-row[]" value="%%repeated-row-index%%" />
@@ -22,30 +20,26 @@ $food_attributes = get_post_meta($post->ID, '_fa_keys', true);
 		<div class="tips wpfm-sort"></div>
 		<strong class="attribute_name">%%attribute_label%%</strong>
 	</h3>
-	<div class="wpfm-attribute-type"><p class="wpfm-admin-postbox-form-field">
+	<div class="wpfm-attribute-type">
+		<p class="wpfm-admin-postbox-form-field">
 			<label>Selection type</label>
 				<input type="radio" class="radio" name="attribute_type_%%attribute_label%%[]" value="single"> Single							
 				<input type="radio" class="radio" name="attribute_type_%%attribute_label%%[]" value="multiple"> Multiple
-
 				<input type="radio" class="radio" name="attribute_type_%%attribute_label%%[]" value="multiple"> Multiple 2
-												</p>
+		</p>
 	</div>
 	<div class="wpfm-metabox-content wpfm-attributes-box" id="wpfm-attributes-box-%%repeated-row-index%%">
 		<?php include 'repeated-field.php'; ?>
-
 		<div class="wpfm-metabox-footer wpfm-actions">
 			<input type="button" value="Add new" class="button wpfm-add-button wpfm-add-attribute-fields" >
 		</div>
-
 	</div>
 </div>'><?php _e('Add attribute', 'wp-food-manager'); ?></a>
-
 	<?php if ($food_attributes && is_array($food_attributes)) {
 		$count = 0;
 		foreach ($food_attributes as $attribute) {
 			$count = +1;
-			$attribute_values = get_post_meta($post->ID, '_fa_' . $attribute, true);
-	?>
+			$attribute_values = get_post_meta($post->ID, '_fa_' . $attribute, true); ?>
 			<div class="wpfm-attributes-wrap wpfm-metabox postbox-<?= $count; ?>">
 				<input type="hidden" class="repeated-attribute-row" name="repeated-attribute-row[]" value="<?= $count; ?>" />
 				<input type="hidden" class="repeated-attribute-row" name="repeated_attribute_label[]" value="<?= $attribute; ?>" />
@@ -66,12 +60,10 @@ $food_attributes = get_post_meta($post->ID, '_fa_keys', true);
 				<div class="wpfm-metabox-content wpfm-attributes-box" id="wpfm-attributes-box-<?= $count; ?>">
 					<?php
 					unset($attribute_values['type']);
-					foreach ($attribute_values as $attr_key => $attr_value) {
-					?>
+					foreach ($attribute_values as $attr_key => $attr_value) { ?>
 						<div class="wpfm-content" data-field="1">
 							<?php foreach ($field['fields'] as $subkey => $subfield) : ?>
 								<?php
-
 								$subfield['name']  	=  $subkey . '_%%attribute_label%%[]';
 								$subfield['id']  	=   $subkey . '_%%repeated-field-index%%';
 								$subfield['attribute'] = $key;
@@ -82,8 +74,7 @@ $food_attributes = get_post_meta($post->ID, '_fa_keys', true);
 									do_action('food_manager_input_' . $type, $key, $subfield);
 								} elseif (method_exists($this, 'input_' . $type)) {
 									call_user_func(array($this, 'input_' . $type), $key, $subfield);
-								}
-								?>
+								} ?>
 							<?php endforeach; ?>
 							<a class="wpfm-remove-attribute-field" data-id="wpfm-attributes-box-%%repeated-row-index%%"><?php _e('Delete', 'wp-food-manager'); ?></a>
 						</div>

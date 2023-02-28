@@ -19,7 +19,6 @@ $editor = apply_filters('add_food_wp_editor_args', array(
 		'toolbar4'                      => ''
 	),
 ));
-
 $field_val_num = '';
 if (!empty($field['value']) && is_array($field['value'])) {
 	$tmp_cnt = explode("_", $key);
@@ -31,7 +30,5 @@ if (!empty($field['value']) && is_array($field['value'])) {
 if (wpfm_begnWith($field_val_num, "http") || is_array($field_val_num)) {
 	$field_val_num = '';
 }
-
 wp_editor(isset($field_val_num) ? $field_val_num : '', $key, $editor);
-
 if (!empty($field['description'])) : ?><small class="description"><?php echo $field['description']; ?></small><?php endif; ?>

@@ -2,7 +2,6 @@ var WPFMAdmin = function () {
     /// <summary>Constructor function of the event settings class.</summary>
     /// <returns type="WPFMAdmin" />   
     // Uploading files
-
     var file_frame;
     var file_target_input;
     var file_target_wrapper;
@@ -13,34 +12,29 @@ var WPFMAdmin = function () {
         ///<returns type="initialization AdminSettings" />   
         /// <since>1.0.0</since> 
         init: function () {
-
             jQuery('div.food tr.wpfm-admin-common td.field-type select option').each(function () {
                 if (jQuery(this).val() == 'term-checklist' || jQuery(this).val() == 'term-multiselect' || jQuery(this).val() == 'term-select') {
                     jQuery(this).remove();
                 }
             });
-
-            //Tooltips
+            // Tooltips
             jQuery(".tips, .help_tip").tipTip({
                 'attribute': 'data-tip',
                 'fadeIn': 50,
                 'fadeOut': 50,
                 'delay': 200
             });
-
             jQuery("body").on("click", ".food-manager-remove-uploaded-file", function () {
                 return jQuery(this).closest(".food-manager-uploaded-file").remove();
             });
-
-            //if field type is date then load datepicker
+            // if field type is date then load datepicker
             if (jQuery('input[data-picker="datepicker"]').length > 0) {
                 if (wpfm_admin.show_past_date) {
                     jQuery('input[data-picker="datepicker"]').datepicker({
                         dateFormat: wpfm_admin.i18n_datepicker_format,
                         firstDay: wpfm_admin.start_of_week
                     });
-                }
-                else {
+                } else {
                     jQuery('input[data-picker="datepicker"]').datepicker({
                         minDate: 0,
                         dateFormat: wpfm_admin.i18n_datepicker_format,
@@ -48,33 +42,24 @@ var WPFMAdmin = function () {
                     });
                 }
             }
-
-            //Bind on click event of the settings section
+            // Bind on click event of the settings section
             jQuery(".wpfm-tabs li a").on('click', WPFMAdmin.actions.tabClick);
-
-            //show by default first Event Listings Settings Tab
+            // Show by default first Event Listings Settings Tab
             jQuery('.wpfm-tabs li a:first').click();
-
             jQuery(document).on('change', '.wpfm-admin-menu-selection select.food-manager-category-dropdown', WPFMAdmin.actions.updateFoodinMenu);
-
-            //use body to call after dom update
+            // Use body to call after dom update
             jQuery("body").on('click', 'a.wpfm-food-item-remove', WPFMAdmin.actions.removeFoodItem);
-
-            //sortable 
+            // Sortable 
             jQuery('.wpfm-admin-food-menu-items ul.wpfm-food-menu').sortable();
-
-            //file upload
+            // File upload
             jQuery('body').on('click', '.wp_food_manager_upload_file_button_multiple', WPFMAdmin.fileUpload.multipleFile);
             jQuery('body').on('click', '.wp_food_manager_upload_file_button', WPFMAdmin.fileUpload.addFile);
             jQuery(".wp_food_manager_add_another_file_button").on('click', WPFMAdmin.fileUpload.addAnotherFile);
-
-            //food extra options
+            // Food extra options
             jQuery('#wpfm-add-new-option').on('click', WPFMAdmin.actions.addNewOption);
-
             jQuery(document).on("click", ".wpfm-togglediv", function (e) {
                 var row_count = jQuery(this).data('row-count');
                 var menuItem = jQuery(e.currentTarget);
-
                 if (menuItem.attr('aria-expanded') === 'true') {
                     jQuery('.wpfm-options-wrap.wpfm-options-box-' + row_count).removeClass("closed");
                     jQuery(this).attr('aria-expanded', 'false');
@@ -82,14 +67,11 @@ var WPFMAdmin = function () {
                     jQuery('.wpfm-options-wrap.wpfm-options-box-' + row_count).addClass("closed");
                     jQuery(this).attr('aria-expanded', 'true');
                 }
-
                 jQuery(this).parents('.postbox').find('.wpfm-options-box-' + row_count + ' .wpfm-metabox-content').slideToggle("slow");
             });
-
             /* General tab - Regular and Sale price validation */
             jQuery('body').on('wpfm_add_error_tip', function (e, element, error_type) {
                 var offset = element.position();
-
                 if (element.parent().find('.wpfm_error_tip').length === 0) {
                     element.after('<div class="wpfm_error_tip ' + error_type + '">' + wpfm_accounting_params[error_type] + '</div>');
                     element.parent().find('.wpfm_error_tip')
@@ -101,25 +83,21 @@ var WPFMAdmin = function () {
             jQuery('body').on('wpfm_remove_error_tip', function (e, element, error_type) {
                 element.parent().find('.wpfm_error_tip.' + error_type).fadeOut('100', function () { jQuery(this).remove(); });
             });
-
             jQuery('body').on('click', function () {
                 jQuery('.wpfm_error_tip').fadeOut('100', function () { jQuery(this).remove(); });
             });
-
             jQuery('body').on('blur', '#_food_sale_price', function () {
                 jQuery('.wpfm_error_tip').fadeOut('100', function () { jQuery(this).remove(); });
             });
             jQuery('body').on('keyup', '#_food_sale_price', function (s, l) {
                 var sale_price_field = jQuery(this), regular_price_field;
                 regular_price_field = jQuery('#_food_price');
-
                 var sale_price = parseFloat(
                     window.accounting.unformat(sale_price_field.val())
                 );
                 var regular_price = parseFloat(
                     window.accounting.unformat(regular_price_field.val())
                 );
-
                 if (sale_price >= regular_price) {
                     jQuery(document.body).triggerHandler('wpfm_add_error_tip', [jQuery(this), 'wpfm_sale_less_than_regular_error']);
                 } else {
@@ -129,20 +107,17 @@ var WPFMAdmin = function () {
             jQuery('body').on('change', '#_food_sale_price', function () {
                 var sale_price_field = jQuery(this), regular_price_field;
                 regular_price_field = jQuery('#_food_price');
-
                 var sale_price = parseFloat(
                     window.accounting.unformat(sale_price_field.val())
                 );
                 var regular_price = parseFloat(
                     window.accounting.unformat(regular_price_field.val())
                 );
-
                 if (sale_price >= regular_price) {
                     jQuery(this).val('');
                 }
             });
-
-            /*For Food menu icon search*/
+            /* For Food menu icon search */
             jQuery('body').on("keyup", "#wpfm_icon_search", (function () {
                 jQuery(this).next().show();
                 var t = jQuery(this),
@@ -158,8 +133,7 @@ var WPFMAdmin = function () {
                     jQuery(".no-radio-icons").hide();
                 }
             }));
-
-            /*For Clear food icon search text*/
+            /* For Clear food icon search text */
             jQuery('body').on("click", "span.wpfm-searh-clear", function () {
                 jQuery(this).prev().val("");
                 jQuery(this).hide();
@@ -167,8 +141,7 @@ var WPFMAdmin = function () {
                 jQuery("div.inside").find(".wpfm-food-font-icon-class .sub-font-icon").show();
                 jQuery(".no-radio-icons").hide();
             });
-
-            /*For Ingredient and Nutrition tab*/
+            /* For Ingredient and Nutrition tab */
             jQuery('body').on("keyup", ".wpfm-item-search input[type=text]", (function () {
                 var t = jQuery(this),
                     i = t.parents("ul.wpfm-available-list").find("li.available-item"),
@@ -198,7 +171,6 @@ var WPFMAdmin = function () {
                     } else n.find(".wpfm-sortable-item-values").html(""), n.removeClass("active-item").addClass("available-item")
                 }
             }).disableSelection();
-
             jQuery(".post-type-food_manager table.posts #the-list").length && jQuery(".post-type-food_manager table.posts #the-list").sortable({
                 items: "tr",
                 axis: "y",
@@ -224,7 +196,6 @@ var WPFMAdmin = function () {
                     })
                 }
             });
-
             jQuery(".post-type-food_manager .wpfm-admin-options-table table.widefat tbody").sortable({
                 connectWith: ".post-type-food_manager .wpfm-admin-options-table table.widefat tbody",
                 items: "tr",
@@ -252,7 +223,6 @@ var WPFMAdmin = function () {
                     });
                 }
             }).disableSelection();
-
             jQuery("#wpfm-nutrition-container .wpfm-sortable-list").sortable({
                 connectWith: ".wpfm-sortable-list",
                 update: function (t, i) {
@@ -272,7 +242,6 @@ var WPFMAdmin = function () {
                     } else n.find(".wpfm-sortable-item-values").html(""), n.removeClass("active-item").addClass("available-item")
                 }
             }).disableSelection()
-
             jQuery('body').on('change', 'input[name^="option_name"]', WPFMAdmin.actions.updateOptionTitle);
             jQuery('body').on('change', 'select[name^="_option_type"]', WPFMAdmin.actions.changeFieldType);
             jQuery(document).on("click", ".wpfm-add-row", WPFMAdmin.actions.addElementRow)
@@ -281,8 +250,7 @@ var WPFMAdmin = function () {
 
         },
 
-        actions:
-        {
+        actions: {
             /// <summary>
             /// Click on tab food manager genera or other food tab.     
             /// </summary>
@@ -302,8 +270,6 @@ var WPFMAdmin = function () {
                     jQuery('#setting-event_manager_submission_duration').closest('tr').hide();
                 return false;
             },
-
-
             /// <summary>
             /// Click on category dropdown to update food menu   
             /// </summary>
@@ -311,25 +277,21 @@ var WPFMAdmin = function () {
             /// <returns type="actions" />
             /// <since>1.0.0</since> 
             updateFoodinMenu: function (event) {
-
                 var category_id = jQuery(this).val();
                 var taxonomy = jQuery(this).attr('data-taxonomy');
                 var post_count = jQuery(this).find(":selected").attr('data-count');
                 var exclude = [];
-
                 if (post_count == 0) {
                     var NoMenuItemText = (taxonomy == 'food_manager_type') ? 'Selected food-type has no food.' : 'Selected category has no food.';
                     jQuery('.no-menu-item-handle').html(NoMenuItemText);
                     jQuery('.no-menu-item-handle').show();
                     return false;
                 }
-
                 if (jQuery('ul.wpfm-food-menu li').length > 0) {
                     jQuery('ul.wpfm-food-menu li').each(function () {
                         exclude.push(jQuery(this).attr('data-food-id'));
                     });
                 }
-
                 if (category_id.length > 0) {
                     jQuery.ajax({
                         type: 'POST',
@@ -341,7 +303,6 @@ var WPFMAdmin = function () {
                             exclude: exclude,
                         },
                         success: function (response) {
-
                             if (response.html.length !== 0) {
                                 jQuery('ul.wpfm-food-menu').append(response.html);
                                 jQuery('.no-menu-item-handle').hide();
@@ -363,7 +324,6 @@ var WPFMAdmin = function () {
                             exclude: exclude,
                         },
                         success: function (response) {
-
                             if (response.html.length !== 0) {
                                 jQuery('ul.wpfm-food-menu').append(response.html);
                                 jQuery('.no-menu-item-handle').hide();
@@ -377,7 +337,6 @@ var WPFMAdmin = function () {
                     });
                 }
             },
-
             /// <summary>
             /// Remove food item from food menu
             /// </summary>
@@ -386,12 +345,10 @@ var WPFMAdmin = function () {
             /// <since>1.0.0</since>
             removeFoodItem: function (event) {
                 jQuery(this).parents('li').remove();
-
                 if (jQuery("ul.wpfm-food-menu li").length == 0) {
                     jQuery("#wpfm-admin-food-selection option").removeAttr('selected');
                 }
             },
-
             removeFoodSelectionVal: function (event) {
                 var selected_val = jQuery(this).val();
                 if (selected_val == 'options') {
@@ -399,7 +356,6 @@ var WPFMAdmin = function () {
                     jQuery(this).find(".options").prop("disabled", false);
                 }
             },
-
             /// <summary>
             /// add options
             /// </summary>
@@ -415,9 +371,7 @@ var WPFMAdmin = function () {
                 }
                 max_index = max_index + 1;
                 var html = jQuery(this).data('row').replace(/%%repeated-option-index%%/g, max_index);
-
                 jQuery('#extra_options_food_data_content .wpfm-options-wrapper .wpfm-actions').before(html);
-
                 jQuery(".post-type-food_manager .wpfm-admin-options-table table.widefat tbody").sortable({
                     connectWith: ".post-type-food_manager .wpfm-admin-options-table table.widefat tbody",
                     items: "tr",
@@ -445,13 +399,11 @@ var WPFMAdmin = function () {
                         });
                     }
                 }).disableSelection();
-
-                //initialize WP editor on click for new WP editor's field.
+                // Initialize WP editor on click for new WP editor's field.
                 var repeater_row_counts = jQuery(this).parents(".wpfm-options-wrapper").children(".wpfm-options-wrap").length;
                 fieldLabel = jQuery(this).parents(".wpfm-options-wrapper").find("p.wpfm-admin-postbox-form-field.wp-editor-field").attr("data-field-name");
                 var fieldChangedLabel = fieldLabel.replace(fieldLabel.match(/(\d+)/g)[0], '');
                 var editorId = fieldChangedLabel + repeater_row_counts;
-
                 wp.editor.initialize(editorId, {
                     tinymce: {
                         wpautop: false,
@@ -464,7 +416,6 @@ var WPFMAdmin = function () {
                     mediaButtons: false,
                 });
             },
-
             /// <summary>
             /// updateOptionTitle
             /// </summary>
@@ -473,17 +424,14 @@ var WPFMAdmin = function () {
             /// <since>1.0.0</since>
             updateOptionTitle: function (event) {
                 jQuery(this).closest('.postbox').children('h3').children('.attribute_name').text(this.value);
-
-                //convert text into key
+                // Convert text into key
                 var option_key = this.value.replace(/\s/g, '_').toLowerCase();
                 jQuery(this).closest('.postbox').children('h3').children('.attribute_key').children('input').val(option_key);
-
                 if (this.value == '') {
                     jQuery(this).closest('.postbox').children('h3').children('.attribute_name').text("Option Key");
                     jQuery(this).closest('.postbox').children('h3').children('.attribute_key').children('input').val("option_key");
                 }
             },
-
             /// <summary>
             /// changeFieldType
             /// </summary>
@@ -498,14 +446,12 @@ var WPFMAdmin = function () {
                     jQuery(this).closest('.postbox').children('.wpfm-metabox-content').children('.wpfm-content').children('.wpfm-admin-postbox-form-field._option_price_type_' + row_count).hide();
                     jQuery(this).closest('.postbox').children('.wpfm-metabox-content').children('.wpfm-content').children('.wpfm-admin-postbox-form-field._option_price_' + row_count).hide();
 
-                }
-                else {
+                } else {
                     jQuery(this).closest('.postbox').children('.wpfm-metabox-content').children('.wpfm-content').children('.wpfm-admin-options-table').hide();
                     jQuery(this).closest('.postbox').children('.wpfm-metabox-content').children('.wpfm-content').children('.wpfm-admin-postbox-form-field._option_price_type_' + row_count).show();
                     jQuery(this).closest('.postbox').children('.wpfm-metabox-content').children('.wpfm-content').children('.wpfm-admin-postbox-form-field._option_price_' + row_count).show();
                 }
             },
-
             /// <summary>
             /// addElementRow
             /// </summary>
@@ -513,7 +459,6 @@ var WPFMAdmin = function () {
             /// <returns type="actions" />     
             /// <since>1.0.0</since>
             addElementRow: function (event) {
-
                 var total_rows = 0;
                 total_rows = jQuery(this).parents('table').find('tbody tr').length;
                 total_rows = total_rows + 1;
@@ -522,8 +467,6 @@ var WPFMAdmin = function () {
                 html.replace('value="1"', total_rows);
                 jQuery(this).parents('table').find('tbody').append(html);
             },
-
-
             /// <summary>
             /// add attributes fields
             /// </summary>
@@ -532,14 +475,12 @@ var WPFMAdmin = function () {
             /// <since>1.0.0</since>
             addAttributesFields: function (event) {
                 var attributes_box = jQuery(this).parents('.wpfm-attributes-box');
-
                 var field_index = 0;
                 if (attributes_box) {
                     jQuery(attributes_box).find('.wpfm-content').each(function () {
                         field_index++;
                     });
                 }
-
                 field_index = field_index + 1
                 var wpfm_content = jQuery(attributes_box).find('.wpfm-content:first').html();
                 jQuery(this).parents('.wpfm-metabox-footer').before('<div class="wpfm-content" data-field="' + field_index + '">' + wpfm_content + '</div>');
@@ -552,15 +493,12 @@ var WPFMAdmin = function () {
             /// <returns type="actions" />     
             /// <since>1.0.0</since>
             removeAttributes: function (event) {
-
                 jQuery('.wpfm-options-box-' + jQuery(this).data('id')).remove();
             },
-
             removeAttributesOptions: function (event) {
                 var row_count3 = jQuery(this).closest('.postbox').children('.repeated-options').val();
                 jQuery('.wpfm-options-box-' + row_count3 + ' div.wpfm-admin-options-table table tbody tr.option-tr-' + jQuery(this).data('id')).remove();
             },
-
             /// <summary>
             /// add attributes fields
             /// </summary>
@@ -571,8 +509,6 @@ var WPFMAdmin = function () {
                 var field_content = jQuery(this).data('id');
                 jQuery(field_content).remove();
             },
-
-
             /// <summary>
             /// save attributes
             /// </summary>
@@ -580,14 +516,11 @@ var WPFMAdmin = function () {
             /// <returns type="actions" />     
             /// <since>1.0.0</since>
             saveAttributes: function () {
-
                 jQuery('input[name="repeated-attribute-row[]"]').each(function (index, attribute) {
                     var attr_val = jQuery(attribute).val();
                     var attr_label = jQuery(index).closest('input[name="repeated_attribute_lable"]').val();
                     console.log(attr_label);
                 });
-
-
                 jQuery.ajax({
                     type: 'POST',
                     url: wpfm_admin.ajax_url,
@@ -598,13 +531,9 @@ var WPFMAdmin = function () {
                     success: function (response) { },
                     error: function (result) { }
                 });
-
             },
-
-
         },
-        fileUpload:
-        {
+        fileUpload: {
             /// <summary>
             /// Upload new file from admin area.
             /// </summary>
@@ -617,15 +546,12 @@ var WPFMAdmin = function () {
                 file_target_input = file_target_wrapper.find('input');
                 var data_field_name = jQuery(this).parents(".wpfm-admin-postbox-form-field")[0].dataset.fieldName;
                 var image_types = ['jpg', 'gif', 'png', 'jpeg', 'jpe'];
-
                 file_target_wrapper_append = jQuery(this).closest('.food-manager-uploaded-file2');
                 // If the media frame already exists, reopen it.
-
                 if (file_frame) {
                     file_frame.open();
                     return;
                 }
-
                 // Create the media frame.
                 file_frame = wp.media.frames.file_frame = wp.media({
                     title: jQuery(this).data('uploader_title'),
@@ -634,7 +560,6 @@ var WPFMAdmin = function () {
                     },
                     multiple: false  // Set to true to allow multiple files to be selected
                 });
-
                 // When an image is selected, run a callback.
                 file_frame.on('select', function () {
                     // We set multiple to false so only get one image from the uploader
@@ -646,7 +571,6 @@ var WPFMAdmin = function () {
                     } else {
                         jQuery(file_target_wrapper_append).prepend("<span class='food-manager-uploaded-file'><input type='hidden' name='" + data_field_name + "' id='" + data_field_name + "' placeholder='' value='" + attachment.url + "'><span class='food-manager-uploaded-file-preview'><span class='wpfm-icon'><strong style='display: block; padding-top: 5px;'>" + attachment.filename + "</strong><a target='_blank' href='" + attachment.url + "'><i class='wpfm-icon-download3' style='margin-right: 3px;'></i>Download</a></span><a class='food-manager-remove-uploaded-file' href='javascript:void(0);'>[remove]</a></span></span>");
                     }
-
                 });
                 // Finally, open the modal
                 file_frame.open();
@@ -657,15 +581,12 @@ var WPFMAdmin = function () {
                 file_target_input = file_target_wrapper.find('input');
                 var data_field_name = jQuery(this).parents(".wpfm-admin-postbox-form-field")[0].dataset.fieldName;
                 var image_types = ['jpg', 'gif', 'png', 'jpeg', 'jpe'];
-
                 file_target_wrapper_apeend = jQuery(this).prev();
-
                 // If the media frame already exists, reopen it.
                 if (file_frame) {
                     file_frame.open();
                     return;
                 }
-
                 // Create the media frame.
                 file_frame = wp.media.frames.file_frame = wp.media({
                     title: jQuery(this).data('uploader_title'),
@@ -674,7 +595,6 @@ var WPFMAdmin = function () {
                     },
                     multiple: true  // Set to true to allow multiple files to be selected
                 });
-
                 // When an image is selected, run a callback.
                 file_frame.on('select', function () {
                     // We set multiple to false so only get one image from the uploader
@@ -691,12 +611,10 @@ var WPFMAdmin = function () {
                             jQuery(file_target_wrapper_apeend).append("<span class='food-manager-uploaded-file multiple-file'><input type='hidden' name='" + data_field_name + "[]' placeholder='' value='" + attach.attributes.url + "'><span class='food-manager-uploaded-file-preview'><span class='wpfm-icon'><strong style='display: block; padding-top: 5px;'>" + attach.attributes.filename + "</strong><a target='_blank' href='" + attach.attributes.url + "'><i class='wpfm-icon-download3' style='margin-right: 3px;'></i>Download</a></span><a class='food-manager-remove-uploaded-file' href='javascript:void(0);'>[remove]</a></span></span>");
                         }
                     });
-
                 });
                 // Finally, open the modal
                 file_frame.open();
             },
-
             /// <summary>
             /// Upload new file from admi area. when admin want to add another file then admin can add new file.
             /// </summary>

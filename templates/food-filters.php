@@ -1,6 +1,4 @@
-<?php
-wp_enqueue_script('wpfm-ajax-filters');
-?>
+<?php wp_enqueue_script('wpfm-ajax-filters'); ?>
 <?php do_action('food_manager_food_filters_before', $atts); ?>
 <form class="wpfm-main wpfm-form-wrapper wpfm-food-filter-wrapper food_filters" id="food_filters">
 	<?php do_action('food_manager_food_filters_start', $atts); ?>
@@ -17,7 +15,6 @@ wp_enqueue_script('wpfm-ajax-filters');
 				<!-- shows default keywords text field end -->
 			</div>
 			<!-- Search by keywords section end-->
-
 			<!-- Search by location section start -->
 			<div class="wpfm-col">
 				<div class="wpfm-form-group">
@@ -25,10 +22,8 @@ wp_enqueue_script('wpfm-ajax-filters');
 					<input type="text" name="search_location" id="search_location" placeholder="<?php esc_attr_e('Location', 'wp-food-manager'); ?>" value="<?php echo esc_attr($location); ?>" />
 				</div>
 			</div>
-
 			<!-- Search by location section end -->
-
-		</div> <!-- /row -->
+		</div><!-- /row -->
 		<div class="wpfm-row">
 			<!-- Search by food categories section start -->
 			<?php if ($categories) : ?>
@@ -48,7 +43,6 @@ wp_enqueue_script('wpfm-ajax-filters');
 				</div>
 			<?php endif; ?>
 			<!-- Search by food categories section end -->
-
 			<!-- Search by food type section start -->
 			<?php if ($food_types) : ?>
 				<?php foreach ($food_types as $food_type) : ?>

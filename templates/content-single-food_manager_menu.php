@@ -1,22 +1,17 @@
 <?php
 global $post;
-
 $featured_img_url = get_the_post_thumbnail_url(get_the_ID(), 'full');
-
 if (isset($featured_img_url) && empty($featured_img_url)) {
     $featured_img_url = '';
 } else {
     $featured_img_url = get_the_post_thumbnail_url(get_the_ID(), 'full');
 }
-
 $term = get_queried_object();
 $term_id = !empty($term) ? get_post_meta($term->ID, '_food_item_cat_ids', true) : '';
 $term_name = !empty($term_id[0]) ? get_term($term_id[0])->name : '';
-
 $image_id = !empty($term_id) ? get_term_meta($term_id[0], 'food_cat_image_id', true) : '';
 $image_url = wp_get_attachment_image_src($image_id, 'full');
 ?>
-
 <div class="wpfm-main wpfm-single-food-menu-page">
     <?php if (!empty($featured_img_url)) : ?>
         <div class="wpfm-single-food-image">
@@ -24,7 +19,6 @@ $image_url = wp_get_attachment_image_src($image_id, 'full');
         </div>
     <?php endif; ?>
     <?php the_content(); ?>
-
     <h3>
         <?php the_title();
         $wpfm_radio_icons = get_post_meta(get_the_ID(), 'wpfm_radio_icons', true);
@@ -32,7 +26,6 @@ $image_url = wp_get_attachment_image_src($image_id, 'full');
         $without_fa_str = str_replace("fa-", "", $wpfm_radio_icons);
         $data_food_menu = ucwords(str_replace("-", " ", $without_fa_str));
         $data_food_menu2 = ucwords(str_replace("-", " ", $without_food_str));
-
         if (wpfm_begnWith($wpfm_radio_icons, "fa")) {
             if ($wpfm_radio_icons) {
                 echo "<span class='wpfm-front-radio-icon fa-icon' data-food-menu='" . $data_food_menu . "'><i class='fa " . $wpfm_radio_icons . "'></i></span>";
@@ -48,7 +41,6 @@ $image_url = wp_get_attachment_image_src($image_id, 'full');
                 }
             }
         }
-
         ?>
     </h3>
     <?php
@@ -65,7 +57,6 @@ $image_url = wp_get_attachment_image_src($image_id, 'full');
     } else {
         echo "<h2>" . $term_name . "</h2>";
     }
-
     $po_ids = get_post_meta($post->ID, '_food_item_ids', true);
     if (!empty($po_ids)) {
         $food_listings = get_posts(array(
@@ -82,7 +73,6 @@ $image_url = wp_get_attachment_image_src($image_id, 'full');
             $menu_food_desc = '';
             $sale_price = get_post_meta($food_listing->ID, '_food_sale_price', true);
             $regular_price = get_post_meta($food_listing->ID, '_food_price', true);
-
             if (!empty($sale_price)) {
                 $formatted_sale_price = number_format($sale_price, $price_decimals, $price_decimal_separator, $price_thousand_separator);
             }
@@ -108,7 +98,6 @@ $image_url = wp_get_attachment_image_src($image_id, 'full');
             echo "</div>";
             echo "</a>";
             echo "$menu_food_desc";
-
             echo "</div>";
         }
         echo "</div>";

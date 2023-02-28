@@ -9,9 +9,7 @@ if (isset($field['value'])) {
 } else {
 	$selected = '';
 }
-
 wp_enqueue_script('wp-food-manager-term-multiselect');
-
 $args = array(
 	'taxonomy'     => $field['taxonomy'],
 	'hierarchical' => 1,
@@ -20,9 +18,6 @@ $args = array(
 	'selected'     => $selected,
 	'hide_empty'   => false
 );
-
 if (isset($field['placeholder']) && !empty($field['placeholder'])) $args['placeholder'] = $field['placeholder'];
-
 food_manager_dropdown_selection(apply_filters('food_manager_term_multiselect_field_args', $args));
-
 if (!empty($field['description'])) : ?><small class="description"><?php echo $field['description']; ?></small><?php endif; ?>

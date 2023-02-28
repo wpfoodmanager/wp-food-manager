@@ -1,24 +1,22 @@
 var WPFMAdminSettings = function () {
 	/// <summary>Constructor function of the event settings class.</summary>
-	/// <returns type="Settings" />   
+	/// <returns type="Settings" />
 	return {
-		///<summary>
-		///Initializes the WPFMAdminSettings.  
-		///</summary>     
-		///<returns type="initialization WPFMAdminSettings" />   
+		/// <summary>
+		/// Initializes the WPFMAdminSettings.  
+		/// </summary>     
+		/// <returns type="initialization WPFMAdminSettings" />   
 		/// <since>1.0.0</since> 
 		init: function () {
-			//Bind on click event of the settings section
+			// Bind on click event of the settings section
 			jQuery(".food-manager-settings-wrap .nav-tab-wrapper a").on('click', WPFMAdminSettings.actions.tabClick);
-			//show by default first Event Listings Settings Tab
+			// Show by default first Event Listings Settings Tab
 			jQuery('.food-manager-settings-wrap .nav-tab-wrapper a:first').click();
 			jQuery("#setting-event_manager_enable_registration").on('change', WPFMAdminSettings.actions.allowAccountCreation);
 			jQuery("#setting-event_manager_submission_expire_options").on('change', WPFMAdminSettings.actions.selectEventExpiryOption);
 
 		},
-
-		actions:
-		{
+		actions: {
 			/// <summary>
 			/// Click on tab either Event Listings, Event Submission or Pages.     
 			/// </summary>
@@ -38,7 +36,6 @@ var WPFMAdminSettings = function () {
 					jQuery('#setting-event_manager_submission_duration').closest('tr').hide();
 				return false;
 			},
-
 			/// <summary>
 			/// If enabled, non-logged in users will be able to create an account by entering their email address on the submission form.  
 			/// </summary>
@@ -55,11 +52,9 @@ var WPFMAdminSettings = function () {
 				}
 				event.preventDefault();
 			},
-
-
 		}
-	} //enf of return
-}; //end of class
+	} // Enf of return
+}; // End of class
 
 WPFMAdminSettings = WPFMAdminSettings();
 jQuery(document).ready(function ($) {
