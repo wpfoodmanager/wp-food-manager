@@ -10,7 +10,7 @@
   font-display: block;
 }
 
-i, [class*="wpfm-icon"] {
+[class*="wpfm-icon"] {
   /* use !important to prevent issues with browser extensions that change fonts */
   font-family: 'wp-food-manager' !important;
   speak: never;
