@@ -54,7 +54,7 @@ class WPFM_Form_Edit_Food extends WPFM_Form_Submit_Food {
 		//Get merged fields from db and default fields.
 		$this->merge_with_custom_fields('frontend');
 		$parent_row_fields_count = !empty(get_post_meta($food->ID, 'wpfm_repeated_options', true)) ? get_post_meta($food->ID, 'wpfm_repeated_options', true) : array();
-		$extra_fields_options = get_post_meta($food->ID, '_wpfm_extra_options', true) ? get_post_meta($food->ID, '_wpfm_extra_options', true) : ''
+		$extra_fields_options = get_post_meta($food->ID, '_wpfm_extra_options', true) ? get_post_meta($food->ID, '_wpfm_extra_options', true) : '';
 		foreach ($this->fields as $group_key => $group_fields) {
 			foreach ($group_fields as $key => $field) {
 				if ($group_key == 'extra_options') {
