@@ -1,18 +1,19 @@
 @font-face {
   font-family: 'wp-food-manager';
-  src:  url('wp-food-manager.eot?6oinus');
-  src:  url('wp-food-manager.eot?6oinus#iefix') format('embedded-opentype'),
-    url('wp-food-manager.ttf?6oinus') format('truetype'),
-    url('wp-food-manager.woff?6oinus') format('woff'),
-    url('wp-food-manager.svg?6oinus#wp-food-manager') format('svg');
+  src:  url('wp-food-manager.eot?ei1gwa');
+  src:  url('wp-food-manager.eot?ei1gwa#iefix') format('embedded-opentype'),
+    url('wp-food-manager.ttf?ei1gwa') format('truetype'),
+    url('wp-food-manager.woff?ei1gwa') format('woff'),
+    url('wp-food-manager.svg?ei1gwa#wp-food-manager') format('svg');
   font-weight: normal;
   font-style: normal;
+  font-display: block;
 }
 
-i[class*="wpfm-"] {
-  /* use !important to prfood issues with browser extensions that change fonts */
+i, [class*="wpfm-icon"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
   font-family: 'wp-food-manager' !important;
-  speak: none;
+  speak: never;
   font-style: normal !important;
   font-weight: normal;
   font-variant: normal;
@@ -24,6 +25,142 @@ i[class*="wpfm-"] {
   -moz-osx-font-smoothing: grayscale;
 }
 
+
+.wpfm-icon-broccoli:before {
+  content: "\eaeb";
+}
+.wpfm-icon-buffet-breakfast:before {
+  content: "\eaec";
+}
+.wpfm-icon-chili-pepper .path1:before {
+  content: "\eaed";
+}
+.wpfm-icon-chili-pepper .path2:before {
+  content: "\eaee";
+}
+.wpfm-icon-chocolate-bar:before {
+  content: "\eaef";
+}
+.wpfm-icon-cinnamon-roll:before {
+  content: "\eaf0";
+}
+.wpfm-icon-cutlery:before {
+  content: "\eaf1";
+}
+.wpfm-icon-deliver-food:before {
+  content: "\eaf2";
+}
+.wpfm-icon-dog-bowl:before {
+  content: "\eaf3";
+}
+.wpfm-icon-energy-drink:before {
+  content: "\eaf4";
+}
+.wpfm-icon-fast-cart .path1:before {
+  content: "\eaf5";
+}
+.wpfm-icon-fast-cart .path2:before {
+  content: "\eaf6";
+}
+.wpfm-icon-fast-cart .path3:before {
+  content: "\eaf7";
+}
+.wpfm-icon-fast-cart .path4:before {
+  content: "\eaf8";
+}
+.wpfm-icon-fast-cart .path5:before {
+  content: "\eaf9";
+}
+.wpfm-icon-food:before {
+  content: "\eafa";
+}
+.wpfm-icon-food-bar:before {
+  content: "\eafb";
+}
+.wpfm-icon-food-receiver:before {
+  content: "\eafc";
+}
+.wpfm-icon-french-fries:before {
+  content: "\eafd";
+}
+.wpfm-icon-hamburger:before {
+  content: "\eafe";
+}
+.wpfm-icon-hot-breakfast:before {
+  content: "\eaff";
+}
+.wpfm-icon-hot-dog:before {
+  content: "\eb00";
+}
+.wpfm-icon-ice-cream-bowl:before {
+  content: "\eb01";
+}
+.wpfm-icon-ingredients:before {
+  content: "\eb02";
+}
+.wpfm-icon-meal:before {
+  content: "\eb03";
+}
+.wpfm-icon-melting-ice-cream:before {
+  content: "\eb04";
+}
+.wpfm-icon-motorcycle-delivery-multiple-boxes:before {
+  content: "\eb05";
+}
+.wpfm-icon-no-food:before {
+  content: "\eb06";
+}
+.wpfm-icon-noodles:before {
+  content: "\eb07";
+}
+.wpfm-icon-organic-food:before {
+  content: "\eb08";
+}
+.wpfm-icon-paprika:before {
+  content: "\eb09";
+}
+.wpfm-icon-pizza:before {
+  content: "\eb0a";
+}
+.wpfm-icon-restaurant-pickup:before {
+  content: "\eb0b";
+}
+.wpfm-icon-rice-bowl .path1:before {
+  content: "\eb0c";
+}
+.wpfm-icon-rice-bowl .path2:before {
+  content: "\eb0d";
+}
+.wpfm-icon-rice-bowl .path3:before {
+  content: "\eb0e";
+}
+.wpfm-icon-rice-bowl .path4:before {
+  content: "\eb0f";
+}
+.wpfm-icon-samosa:before {
+  content: "\eb10";
+}
+.wpfm-icon-spaghetti:before {
+  content: "\eb11";
+}
+.wpfm-icon-sushi:before {
+  content: "\eb12";
+}
+.wpfm-icon-taco:before {
+  content: "\eb13";
+}
+.wpfm-icon-vegan-food:before {
+  content: "\eb14";
+}
+.wpfm-icon-weber:before {
+  content: "\eb15";
+}
+.wpfm-icon-wedding-cake:before {
+  content: "\eb16";
+}
+.wpfm-icon-wrap:before {
+  content: "\eb17";
+}
 .wpfm-icon-home:before {
   content: "\e900";
 }

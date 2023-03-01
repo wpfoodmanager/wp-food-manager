@@ -6,33 +6,26 @@
   position: relative !important;
 }
 
-.wpfm-font-awesome-class,
-.wpfm-food-font-icon-class {
+
+.wpfm-food-icon-class {
   display: grid;
   grid-template-columns: auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto;
-  height: 192px;
   overflow-y: auto;
   grid-auto-rows: 48px;
-  margin-bottom: 30px;
-}
-
-.wpfm-food-font-icon-class {
   height: auto;
   margin-bottom: 0;
+}
+.wpfm-food-icon-class i.fa {
+  font-size: 18px;
+}
+.wpfm-food-icon-class span.wpfm-menu {
+  font-size: 26px;
 }
 
 h2.wp-food-menu-icon-title {
   background: #dddddd;
   font-size: 16px !important;
   font-weight: 500 !important;
-}
-
-.wpfm-font-awesome-class i.fa {
-  font-size: 18px;
-}
-
-.wpfm-font-awesome-class span.wpfm-menu {
-  font-size: 26px;
 }
 
 .no-radio-icons {
@@ -66,7 +59,7 @@ span.wpfm-searh-clear {
   height: 22px;
 }
 
-.sub-font-icon input[type=radio]:hover+label span.wpfm-icon-key-name {
+.sub-font-icon input[type=radio]:hover+label span.wpfm-key-name {
   font-size: 10px;
   position: absolute;
   top: 1px;
@@ -80,7 +73,7 @@ span.wpfm-searh-clear {
   padding: 1px 0 3px;
 }
 
-.sub-font-icon input[type=radio]:hover+label span.wpfm-icon-key-name::before {
+.sub-font-icon input[type=radio]:hover+label span.wpfm-key-name::before {
   background: #000;
   content: '';
   height: 10px;

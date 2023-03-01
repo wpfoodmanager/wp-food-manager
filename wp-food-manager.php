@@ -157,14 +157,14 @@ class WP_Food_Manager {
 			wp_register_script('wp-food-manager-term-multiselect', WPFM_PLUGIN_URL . '/assets/js/term-multiselect.min.js', array('jquery', 'chosen'), WPFM_VERSION, true);
 			wp_register_script('wp-food-manager-term-select-multi-appearance', WPFM_PLUGIN_URL . '/assets/js/term-select-multi-appearance.min.js', array('jquery', 'chosen'), WPFM_VERSION, true);
 			wp_register_script('wp-food-manager-multiselect', WPFM_PLUGIN_URL . '/assets/js/multiselect.min.js', array('jquery', 'chosen'), WPFM_VERSION, true);
-			wp_enqueue_style('chosen', WPFM_PLUGIN_URL . '/assets/css/chosen.css');
+			wp_enqueue_style('chosen', WPFM_PLUGIN_URL . '/assets/css/chosen.min.css');
 			$ajax_filter_deps[] = 'chosen';
 		}
 
 		// File upload - vendor
 		if (apply_filters('wpfm_ajax_file_upload_enabled', true)) {
-			wp_register_script('jquery-iframe-transport', WPFM_PLUGIN_URL . '/assets/js/jquery-fileupload/jquery.iframe-transport.js', array('jquery'), '1.8.3', true);
-			wp_register_script('jquery-fileupload', WPFM_PLUGIN_URL . '/assets/js/jquery-fileupload/jquery.fileupload.js', array('jquery', 'jquery-iframe-transport', 'jquery-ui-widget'), '5.42.3', true);
+			wp_register_script('jquery-iframe-transport', WPFM_PLUGIN_URL . '/assets/js/jquery-fileupload/jquery.iframe-transport.min.js', array('jquery'), '1.8.3', true);
+			wp_register_script('jquery-fileupload', WPFM_PLUGIN_URL . '/assets/js/jquery-fileupload/jquery.fileupload.min.js', array('jquery', 'jquery-iframe-transport', 'jquery-ui-widget'), '5.42.3', true);
 			wp_register_script('wpfm-ajax-file-upload', WPFM_PLUGIN_URL . '/assets/js/ajax-file-upload.min.js', array('jquery', 'jquery-fileupload'), WPFM_VERSION, true);
 			ob_start();
 			get_food_manager_template('form-fields/uploaded-file-html.php', array('name' => '', 'value' => '', 'extension' => 'jpg'));
@@ -188,11 +188,8 @@ class WP_Food_Manager {
 		wp_register_script('jquery-deserialize', WPFM_PLUGIN_URL . '/assets/js/jquery-deserialize/jquery.deserialize.js', array('jquery'), '1.2.1', true);
 		wp_enqueue_style('wpfm-frontend', WPFM_PLUGIN_URL . '/assets/css/frontend.min.css');
 
-		// Font awesome
-		wp_enqueue_style('wpfm-font-awesome-front-css', WPFM_PLUGIN_URL . '/assets/font-awesome/css/font-awesome.css');
-
 		// Common js
-		wp_register_script('wp-food-manager-frontend', WPFM_PLUGIN_URL . '/assets/js/frontend.js', array('jquery'), WPFM_VERSION, true);
+		wp_register_script('wp-food-manager-frontend', WPFM_PLUGIN_URL . '/assets/js/frontend.min.js', array('jquery'), WPFM_VERSION, true);
 		wp_enqueue_script('wp-food-manager-frontend');
 
 		// Common js
@@ -236,7 +233,7 @@ class WP_Food_Manager {
 		));
 
 		// Ajax filters js
-		wp_register_script('wpfm-ajax-filters', WPFM_PLUGIN_URL . '/assets/js/food-ajax-filters.js', $ajax_filter_deps, WPFM_VERSION, true);
+		wp_register_script('wpfm-ajax-filters', WPFM_PLUGIN_URL . '/assets/js/food-ajax-filters.min.js', $ajax_filter_deps, WPFM_VERSION, true);
 		wp_localize_script('wpfm-ajax-filters', 'wpfm_ajax_filters', array(
 			'ajax_url'                => $ajax_url,
 			'is_rtl'                  => is_rtl() ? 1 : 0,
@@ -251,13 +248,12 @@ class WP_Food_Manager {
 			'i18n_confirm_delete' => __('Are you sure you want to delete this food?', 'wp-food-manager')
 		));
 
-		wp_enqueue_style('wpfm-jquery-ui-css', WPFM_PLUGIN_URL . '/assets/js/jquery-ui/jquery-ui.css');
+		wp_enqueue_style('wpfm-jquery-ui-css', WPFM_PLUGIN_URL . '/assets/js/jquery-ui/jquery-ui.min.css');
 		wp_register_script('wpfm-slick-script', WPFM_PLUGIN_URL . '/assets/js/slick/slick.min.js', array('jquery'));
-		wp_register_style('wpfm-slick-style', WPFM_PLUGIN_URL . '/assets/js/slick/slick.css', array());
-		wp_register_style('wpfm-slick-theme-style', WPFM_PLUGIN_URL . '/assets/js/slick/slick-theme.css', array());
+		wp_register_style('wpfm-slick-style', WPFM_PLUGIN_URL . '/assets/js/slick/slick.min.css', array());
+		wp_register_style('wpfm-slick-theme-style', WPFM_PLUGIN_URL . '/assets/js/slick/slick-theme.min.css', array());
 		wp_register_style('wpfm-grid-style', WPFM_PLUGIN_URL . '/assets/css/wpfm-grid.min.css');
-		wp_register_style('wp-food-manager-font-style', WPFM_PLUGIN_URL . '/assets/fonts/style.css');
-		wp_register_style('wp-food-manager-food-icons-style', WPFM_PLUGIN_URL . '/assets/fonts-food-icons/style.css');
+		wp_register_style('wp-food-manager-font-style', WPFM_PLUGIN_URL . '/assets/fonts/style.min.css');
 		wp_enqueue_style('wpfm-grid-style');
 		wp_enqueue_style('wp-food-manager-font-style');
 		wp_enqueue_style('wp-food-manager-food-icons-style');
