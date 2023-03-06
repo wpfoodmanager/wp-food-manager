@@ -463,7 +463,7 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
 							'username' => (food_manager_generate_username_from_email() || empty($_POST['create_account_username'])) ? '' : $_POST['create_account_username'],
 							'password' => (food_manager_use_standard_password_setup_email() || empty($_POST['create_account_password'])) ? '' : $_POST['create_account_password'],
 							'email'    => $_POST['create_account_email'],
-							'role'     => get_option('food_manager_registration_role', 'food_owner')
+							'role'     => get_option('food_manager_registration_role', 'restaurant_owner')
 						));
 					}
 				}
@@ -872,11 +872,11 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
 		}
 		// And user meta to save time in future
 		if (is_user_logged_in()) {
-			update_user_meta(get_current_user_id(), '_organizer_website', isset($values['food_owner']['organizer_website']) ? $values['food_owner']['organizer_website'] : '');
-			update_user_meta(get_current_user_id(), '_organizer_tagline', isset($values['food_owner']['organizer_tagline']) ? $values['food_owner']['organizer_tagline'] : '');
-			update_user_meta(get_current_user_id(), '_organizer_twitter', isset($values['food_owner']['organizer_twitter']) ? $values['food_owner']['organizer_twitter'] : '');
-			update_user_meta(get_current_user_id(), '_organizer_logo', isset($values['food_owner']['organizer_logo']) ? $values['food_owner']['organizer_logo'] : '');
-			update_user_meta(get_current_user_id(), '_organizer_video', isset($values['food_owner']['organizer_video']) ? $values['food_owner']['organizer_video'] : '');
+			update_user_meta(get_current_user_id(), '_organizer_website', isset($values['restaurant_owner']['organizer_website']) ? $values['restaurant_owner']['organizer_website'] : '');
+			update_user_meta(get_current_user_id(), '_organizer_tagline', isset($values['restaurant_owner']['organizer_tagline']) ? $values['restaurant_owner']['organizer_tagline'] : '');
+			update_user_meta(get_current_user_id(), '_organizer_twitter', isset($values['restaurant_owner']['organizer_twitter']) ? $values['restaurant_owner']['organizer_twitter'] : '');
+			update_user_meta(get_current_user_id(), '_organizer_logo', isset($values['restaurant_owner']['organizer_logo']) ? $values['restaurant_owner']['organizer_logo'] : '');
+			update_user_meta(get_current_user_id(), '_organizer_video', isset($values['restaurant_owner']['organizer_video']) ? $values['restaurant_owner']['organizer_video'] : '');
 		}
 		do_action('food_manager_update_food_data', $this->food_id, $values);
 	}

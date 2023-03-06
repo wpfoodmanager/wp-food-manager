@@ -70,7 +70,7 @@ class WPFM_Install {
 			$wp_roles = new WP_Roles();
 		}
 		if (is_object($wp_roles)) {
-			add_role('food_owner', __('Food Owner', 'wp-food-manager'), array(
+			add_role('restaurant_owner', __('Restaurant Owner', 'wp-food-manager'), array(
 				'read'         => true,
 				'edit_posts'   => false,
 				'delete_posts' => false

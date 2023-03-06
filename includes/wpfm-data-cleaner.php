@@ -86,7 +86,7 @@ class WPFM_Data_Cleaner {
 	 *
 	 * @var $role
 	 */
-	private static $role = 'food_owner';
+	private static $role = 'restaurant_owner';
 
 	/**
 	 * Capabilities to be deleted.
