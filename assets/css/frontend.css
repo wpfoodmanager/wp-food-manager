@@ -1406,6 +1406,9 @@ a.button.wpfm-add-row:hover {
     background: var(--wpfm-gray-color);
     color: var(--wpfm-white-color);
 }
+.wpfm-food-listings .food-stock-status {
+    margin: 5px;
+}
 
 /* ===== FOOD LISTING END ===== */
 
@@ -1434,10 +1437,6 @@ a.button.wpfm-add-row:hover {
     background-size: cover;
 }
 
-.wpfm-food-listing-box-view .food-stock-status {
-    margin: 5px;
-}
-
 .wpfm-food-listing-box-view .wpfm-food-layout-wrapper .wpfm-food-banner .wpfm-food-register-label {
     display: block;
 }
@@ -1459,18 +1458,15 @@ a.button.wpfm-add-row:hover {
 .wpfm-food-listing-list-view {
     padding-bottom: 30px;
 }
-
 .wpfm-food-listing-list-view .wpfm-food-box-col {
     max-width: 100%;
     width: 100%;
     margin: 0;
     padding: 0;
 }
-
 .wpfm-food-listing-list-view .wpfm-food-layout-wrapper .wpfm-food-infomation {
     padding-left: 10px;
 }
-
 .wpfm-food-listing-list-view .wpfm-food-layout-wrapper .wpfm-food-banner .wpfm-food-banner-img {
     height: 90px;
     width: 90px;
@@ -1501,6 +1497,14 @@ a.button.wpfm-add-row:hover {
     border-width: 7px;
     border-color: var(--wpfm-primary-color);
     box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.12);
+}
+.wpfm-food-listing-list-view .wpfm-food-layout-wrapper .food_manager > .wpfm-food-action-url {
+    display: flex;
+}
+.wpfm-food-listing-list-view .wpfm-food-layout-wrapper .food_manager > .wpfm-food-action-url .wpfm-food-banner {
+    width: 90px;
+    height: 90px;
+    background-color: transparent;
 }
 
 /* ===== FOOD LISTING LIST VIEW END ===== */
@@ -2657,7 +2661,6 @@ span.fm-divider {
     font-size: 12px;
     display: inline-block;
     vertical-align: top;
-    margin-bottom: 10px;
     background: #f74747;
     color: var(--wpfm-white-color);
     border-radius: 2px;
