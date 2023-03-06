@@ -192,13 +192,12 @@ $food = $post;
                                                 echo '<div class="wpfm-inner-field-content ' . $more_class . '">';
                                                 foreach ($ext_option['option_options'] as $key2 => $value2) {
                                                     $checked = ($value2['option_value_default']) == 'on' ? 'checked' : '';
+                                                    do_action('wpfm_singular_option_input_before');
                                                     echo "<div class='wpfm-input-singular'>";
                                                     echo '<input type="checkbox" id="' . esc_attr(str_replace(" ", "-", strtolower($value2['option_value_name']))) . '" name="' . esc_attr($key) . '" value="' . esc_attr($value2['option_value_price']) . '" ' . $checked . ' data-val="' . $value2['option_value_price'] . '" data-price-type=' . esc_attr($value2['option_value_price_type']) . ' data-attr-name=' . esc_attr(str_replace(" ", "-", strtolower($value2['option_value_name']))) . ' ' . $field_required . '>';
                                                     echo '<label for="' . esc_attr(str_replace(" ", "-", strtolower($value2['option_value_name']))) . '"> ' . esc_html($value2['option_value_name']) . ' - ' . get_food_manager_currency_symbol() . $value2['option_value_price'] . '</label>';
                                                     echo "</div>";
-                                                    echo "<div class='wpfm-input-singular quantity-based'>";
-                                                    echo '<input type="number" id="wpfm-qty-based-check" class="wpfm-qty-based" placeholder="Enter Qty" value="">';
-                                                    echo "</div>";
+                                                    do_action('wpfm_singular_option_input_after');
                                                 }
                                                 if (!empty($additional_fields_extra_topping)) {
                                                     echo "<div class='wpfm-additional-main-row'>";
