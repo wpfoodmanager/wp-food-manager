@@ -122,7 +122,6 @@ class WPFM_Form_Edit_Food extends WPFM_Form_Submit_Food {
 			'step'               => $this->get_step(),
 			'submit_button_text' => __('Save changes', 'wp-food-manager')
 		));
-						}
 		do_action('wpfm_edit_food_form', $this->food_id, $food);
 	}
 
