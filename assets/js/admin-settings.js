@@ -14,7 +14,6 @@ var WPFMAdminSettings = function () {
 			jQuery('.food-manager-settings-wrap .nav-tab-wrapper a:first').click();
 			jQuery("#setting-event_manager_enable_registration").on('change', WPFMAdminSettings.actions.allowAccountCreation);
 			jQuery("#setting-event_manager_submission_expire_options").on('change', WPFMAdminSettings.actions.selectEventExpiryOption);
-
 		},
 		actions: {
 			/// <summary>

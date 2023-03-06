@@ -9,8 +9,8 @@ WPFMFoodSubmission = function () {
         /// <since>1.0.0</since>
         init: function () {
             WPFMCommon.logInfo("WPFMFoodSubmission.init...");
-            jQuery('body').on('click', '.event-manager-remove-uploaded-file', function () {
-                jQuery(this).closest('.event-manager-uploaded-file').remove();
+            jQuery('body').on('click', '.food-manager-remove-uploaded-file', function () {
+                jQuery(this).closest('.food-manager-uploaded-file').remove();
                 return false;
             });
             if (jQuery('#event_start_time').length > 0) {
