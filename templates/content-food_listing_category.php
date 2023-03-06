@@ -7,7 +7,7 @@ get_header();
 global $wp_query;
 $term = get_queried_object();
 $image_id = !empty($term) ? get_term_meta($term->term_id, 'food_cat_image_id', true) : '';
-$image_url = wp_get_attachment_image_src($image_id);
+$image_url = wp_get_attachment_image_src($image_id, 'full');
 ?>
 <div class="wpfm-container">
     <div class="wpfm-main wpfm-food-listing-category-page">
