@@ -3,7 +3,7 @@ $field_val_num = '';
 if (!empty($field['value']) && is_array($field['value']) && isset($field['value'])) {
 	$tmp_cnt = explode("_", $key);
 	$counter = end($tmp_cnt);
-	$field_val_num = isset($field['value'][$counter]) ? $field['value'][$counter] : '';
+	$field_val_num = isset($field['value'][0]) ? $field['value'][0] : '';
 } else {
 	$field_val_num = !empty($field['value']) ? $field['value'] : '';
 }
