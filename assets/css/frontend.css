@@ -1,3 +1,29 @@
+/*--------------------------------------------------------------
+>>> TABLE OF CONTENTS:
+----------------------------------------------------------------
+# 0. NORMALIZE
+# 1. ALERT
+# 2. PAGINATION
+# 3. FORM
+# 4. BUTTON
+# 5. TAB WRAPPER
+# 6. CATEGORY & TYPE
+# 7. DASHBOARD HEADER 
+# 8. CHOSEN
+# 9. ADD FOOD FORM
+# 10. FOOD LISTING
+  10.1 BOX VIEW
+  10.2 LIST VIEW
+# 11. FOOD SINGLE PAGE
+# 12. TOOLTIPS
+# 13. TABLE
+# 14. FOOD MENU
+# 15. ALL MIX
+# 16. MEDIA QUERY 
+
+--------------------------------------------------------------*/
+
+
 :root {
     --wpfm-primary-color: #ff4600;
     --wpfm-dark-color: #000000;
@@ -42,6 +68,10 @@
 .wpfm-loading {
     position: relative;
 }
+.wpfm-main .wpfm-heading-text {
+    font-weight: 400;
+}
+
 
 .wpfm-loading::before {
     content: "";
@@ -69,6 +99,8 @@
     z-index: 100;
 }
 
+
+/* ===== 1. WPFM ALERT START ===== */
 .wpfm-alert {
     position: relative;
     padding: 15px;
@@ -117,19 +149,6 @@
     border-color: #f5c6cb;
 }
 
-.wpfm-food-listing-box-view .no_food_listings_found {
-    padding: 15px;
-    text-align: center;
-    color: #721c24 !important;
-    display: inline-block;
-    width: 100%;
-}
-
-.wpfm-food-listing-box-view .no_food_listings_found {
-    margin-left: 15px;
-    margin-right: 15px;
-}
-
 .wpfm-alert-warning {
     color: #856404;
     background-color: #fff3cd;
@@ -153,7 +172,10 @@
     background-color: #d6d8d9;
     border-color: #c6c8ca;
 }
+/* ===== 1. WPFM ALERT END ===== */
 
+
+/* ===== 2. WPFM PAGINATION START ===== */
 .food-manager-pagination {
     text-align: center;
     display: inline-block;
@@ -192,11 +214,10 @@
     background: var(--wpfm-primary-color);
     color: var(--wpfm-white-color);
 }
+/* ===== 2. WPFM PAGINATION END ===== */
 
-.wpfm-main .wpfm-heading-text {
-    font-weight: 400;
-}
 
+/* ===== 3. WPFM FORM START ===== */
 .wpfm-form-wrapper {
     margin-bottom: 20px;
     line-height: 25px;
@@ -423,10 +444,13 @@
     float: right;
     margin: 2px;
 }
+.wpfm-main fieldset {
+    border: none;
+}
+/* ===== 3. WPFM FORM END ===== */
 
 
-
-/* ===== WPFM BUTTON START ===== */
+/* ===== 4. WPFM BUTTON START ===== */
 .wpfm-theme-button,
 a.wpfm-theme-button,
 button.wpfm-theme-button,
@@ -494,10 +518,6 @@ input.wpfm-theme-button:hover span {
     color: var(--wpfm-dark-color);
 }
 
-.wpfm-main fieldset {
-    border: none;
-}
-
 .wpfm-theme-button i {
     line-height: normal;
 }
@@ -542,11 +562,11 @@ input.wpfm-theme-button:hover span {
     color: var(--wpfm-dark-color);
 }
 
-/* ===== WPFM BUTTON END ===== */
+/* ===== 4. WPFM BUTTON END ===== */
 
 
 
-/* ===== TAB WRAPPER START ===== */
+/* ===== 5. TAB WRAPPER START ===== */
 .wpfm-tabs-wrapper {
     width: 100%;
     margin-bottom: 20px;
@@ -613,10 +633,10 @@ input.wpfm-theme-button:hover span {
     border: 1px solid var(--wpfm-gray-border-color);
 }
 
-/* ===== TAB WRAPPER END ===== */
+/* ===== 5. TAB WRAPPER END ===== */
 
 
-/* ===== CATEGORY & TYPE START ===== */
+/* ===== 6. CATEGORY & TYPE START ===== */
 .wpfm-with-bg-image {
     background-size: cover;
     background-position: center;
@@ -686,11 +706,11 @@ span.wpfm-view-less {
     border-bottom: 1px solid var(--wpfm-gray-border-color);
 }
 
-/* ===== CATEGORY & TYPE END ===== */
+/* ===== 6. CATEGORY & TYPE END ===== */
 
 
 
-/* ===== FOOD DASHBOARD HEADER START ===== */
+/* ===== 7. FOOD DASHBOARD HEADER START ===== */
 .wpfm-dashboard-main-header .wpfm-foods-filter {
     background: var(--wpfm-gray-bg-color);
     padding: 10px 15px;
@@ -773,11 +793,11 @@ span.wpfm-view-less {
     align-items: center;
 }
 
-/* ===== FOOD DASHBOARD HEADER END ===== */
+/* ===== 7. FOOD DASHBOARD HEADER END ===== */
 
 
 
-/* ===== FORM WRAPPER START ===== */
+/* ===== 8. FORM CHOSEN START ===== */
 .wpfm-form-wrapper .chosen-container {
     width: 100% !important;
     outline: 0;
@@ -884,11 +904,11 @@ span.wpfm-view-less {
     background: var(--wpfm-primary-color);
 }
 
-/* ===== FORM WRAPPER END ===== */
+/* ===== 8. FORM CHOSEN END ===== */
 
 
 
-/* ===== ADD FOOD FORM OPTION START ===== */
+/* ===== 9. ADD FOOD FORM OPTION START ===== */
 .wpfm-options-box fieldset.wpfm-form-group:last-child table.widefat {
     font-size: 14px;
     margin: 0;
@@ -1248,10 +1268,10 @@ a.button.wpfm-add-row:hover {
     margin-top: 5px;
 }
 
-/* ===== ADD FOOD FORM OPTION END ===== */
+/* ===== 9. ADD FOOD FORM OPTION END ===== */
 
 
-/* ===== FOOD LISTING START ===== */
+/* ===== 10. FOOD LISTING START ===== */
 .wpfm-food-listings-header {
     margin-bottom: 20px;
 }
@@ -1410,9 +1430,9 @@ a.button.wpfm-add-row:hover {
     margin: 5px;
 }
 
-/* ===== FOOD LISTING END ===== */
+/* ===== 10. FOOD LISTING END ===== */
 
-/* ===== FOOD LISTING BOX VIEW START ===== */
+/* ===== 10.1 FOOD LISTING BOX VIEW START ===== */
 .wpfm-food-listing-box-view .wpfm-food-box-col {
     padding-bottom: 30px;
 }
@@ -1450,11 +1470,23 @@ a.button.wpfm-add-row:hover {
 .wpfm-food-listing-box-view .wpfm-food-layout-wrapper .wpfm-food-infomation .wpfm-food-details {
     padding: 10px;
 }
+.wpfm-food-listing-box-view .no_food_listings_found {
+    padding: 15px;
+    text-align: center;
+    color: #721c24 !important;
+    display: inline-block;
+    width: 100%;
+}
 
-/* ===== FOOD LISTING BOX VIEW END ===== */
+.wpfm-food-listing-box-view .no_food_listings_found {
+    margin-left: 15px;
+    margin-right: 15px;
+}
+
+/* ===== 10.1 FOOD LISTING BOX VIEW END ===== */
 
 
-/* ===== FOOD LISTING LIST VIEW START ===== */
+/* ===== 10.2 FOOD LISTING LIST VIEW START ===== */
 .wpfm-food-listing-list-view {
     padding-bottom: 30px;
 }
@@ -1507,10 +1539,10 @@ a.button.wpfm-add-row:hover {
     background-color: transparent;
 }
 
-/* ===== FOOD LISTING LIST VIEW END ===== */
+/* ===== 10.2 FOOD LISTING LIST VIEW END ===== */
 
 
-/* ===== FOOD SINGLE PAGE START ===== */
+/* ===== 11. FOOD SINGLE PAGE START ===== */
 .wpfm-input-field-common {
     position: relative;
     padding: 20px;
@@ -1749,16 +1781,6 @@ a.button.wpfm-add-row:hover {
     letter-spacing: 0.5px;
 }
 
-.wpfm-single-food-page .wpfm-single-food-wrapper .wpfm-single-food-header-top .wpfm-food-details .wpfm-food-organizer .wpfm-food-organizer-name {
-    font-size: 18px;
-    line-height: 25px;
-}
-
-.wpfm-food-organizer-name a {
-    text-transform: capitalize;
-    font-weight: 500;
-}
-
 .wpfm-single-food-page .wpfm-single-food-wrapper .wpfm-single-food-body .wpfm-single-food-left-content {
     position: relative;
 }
@@ -1852,11 +1874,6 @@ a.button.wpfm-add-row:hover {
 
 .post-thumbnail .wp-post-image {
     display: none;
-}
-
-.wpfm-single-food-page .wpfm-single-food-wrapper .wpfm-single-food-body .wpfm-single-food-left-content .wpfm-single-food-short-info .wpfm-food-organizer {
-    display: inline-block;
-    margin-right: 10px;
 }
 
 .single_food_listing .wpfm-food-details .wpfm-tooltip .wpfm-tooltiptext {
@@ -2153,27 +2170,6 @@ a.button.wpfm-add-row:hover {
     top: 0;
 }
 
-.wpfm-single-food-page .wpfm-single-food-footer .wpfm-organizer-profile-wrapper .wpfm-organizer-profile .wpfm-organizer-contact-actions {
-    display: inline-block;
-    margin: 0 auto;
-    margin-top: 15px;
-    margin-bottom: 20px;
-}
-
-.wpfm-single-food-page .wpfm-single-food-footer .wpfm-organizer-profile-wrapper .wpfm-organizer-profile .wpfm-organizer-contact-actions .wpfm-organizer-page-url-button {
-    display: inline-block;
-    margin: 4px;
-}
-
-.wpfm-single-food-page .wpfm-single-food-footer .wpfm-organizer-profile-wrapper .wpfm-organizer-profile .wpfm-organizer-contact-actions .wpfm-organizer-contact-button {
-    display: inline-block;
-    margin: 4px;
-}
-
-.wpfm-single-food-page .wpfm-single-food-footer .wpfm-organizer-profile-wrapper .wpfm-organizer-profile .wpfm-organizer-contact-actions .wpfm-form-group {
-    text-align: left;
-}
-
 .food_listing_preview_action_button .food-manager-button-submit-listing {
     float: right;
 }
@@ -2237,11 +2233,11 @@ form#food_preview {
     color: var(--wpfm-dark-color);
 }
 
-/* ===== FOOD SINGLE PAGE END ===== */
+/* ===== 11. FOOD SINGLE PAGE END ===== */
 
 
 
-/* ===== TOOLTIPS START ===== */
+/* ===== 12. TOOLTIPS START ===== */
 .wpfm-tooltip {
     position: relative;
     display: inline-block;
@@ -2291,10 +2287,10 @@ form#food_preview {
     opacity: 1;
 }
 
-/* ===== TOOLTIPS END ===== */
+/* ===== 12. TOOLTIPS END ===== */
 
 
-/* ===== TABLE START ===== */
+/* ===== 13. TABLE START ===== */
 table.wpfm-responsive-table-wrapper {
     font-size: 14px;
     font-weight: 500;
@@ -2427,11 +2423,11 @@ table.wpfm-responsive-table-wrapper tbody tr td .wpfm-dboard-food-action .wpfm-d
     width: 270px;
 }
 
-/* ===== TABLE END===== */
+/* ===== 13. TABLE END ===== */
 
 
 
-/* ===== FOOD MENU START===== */
+/* ===== 14. FOOD MENU START ===== */
 .wpfm-single-food-image {
     margin-bottom: 20px;
 }
@@ -2596,16 +2592,15 @@ span.fm-divider {
     width: 100%;
 }
 
-/* ===== FOOD MENU END ===== */
+/* ===== 14. FOOD MENU END ===== */
 
 
-/* ===== ALL MIX START ===== */
+/* ===== 15. ALL MIX START ===== */
 .wpfm-single-food-page .wpfm-single-food-body-content .wpfm-food-ingredients .wpfm-heading-text,
 .wpfm-single-food-page .wpfm-single-food-body-content .wpfm-food-nutritions .wpfm-heading-text{
     font-size: 18px;
     margin-bottom: 10px !important;
 }
-
 
 .wpfm-single-food-page .wpfm-single-food-body-content .wpfm-food-ingredients span.food-ingredients,
 .wpfm-single-food-page .wpfm-single-food-body-content .wpfm-food-nutritions span.food-nutritions {
@@ -2625,8 +2620,7 @@ span.fm-divider {
     margin: 5px 1px;
 }
 
-.wpfm-front-radio-icon span.wpfm-menu,
-.wpfm-front-radio-icon i.fa {
+.wpfm-front-radio-icon span.wpfm-menu {
     margin-left: 10px;
     font-size: 20px;
     border-radius: 4px;
@@ -2719,11 +2713,10 @@ img.wpfm-organic-tag-icon {
     object-fit: cover;
 }
 
-/* ===== ALL MIX END ===== */
+/* ===== 15. ALL MIX END ===== */
 
 
-
-/* ===== MEDIA QUERY START ===== */
+/* ===== 16. MEDIA QUERY START ===== */
 @media screen and (max-width: 1024px) {
     .wpfm-single-food-page .wpfm-single-food-body .wpfm-single-food-left-content {
         max-width: 60%;
@@ -2909,11 +2902,6 @@ img.wpfm-organic-tag-icon {
         padding: 15px;
     }
 
-    .wpfm-single-food-page .wpfm-single-food-footer .wpfm-organizer-profile-wrapper .wpfm-organizer-profile .wpfm-organizer-contact-actions .wpfm-col-md-6 {
-        max-width: 100%;
-        flex: 0 0 100%;
-    }
-
     .wpfm-tabs-wrapper .wpfm-tabs-wrap {
         display: inline-block;
         width: 100%;
@@ -3027,4 +3015,4 @@ img.wpfm-organic-tag-icon {
     }
 }
 
-/* ===== MEDIA QUERY END ===== */
+/* ===== 16. MEDIA QUERY END ===== */
