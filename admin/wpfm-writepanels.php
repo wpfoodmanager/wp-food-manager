@@ -938,7 +938,7 @@ class WPFM_Writepanels {
 					'order' => 'DESC',
 					'post_status' => 'any',
 				));
-				if ($last_inserted_post) {
+				if (count($last_inserted_post) > 1) {
 					$last_menu_order = $wpdb->get_results("SELECT menu_order FROM $wpdb->posts WHERE ID = " . intval($last_inserted_post[1]->ID));
 					$next_menu_order = $last_menu_order[0]->menu_order + 1;
 					$wpdb->update($wpdb->posts, ['menu_order' => $next_menu_order], ['ID' => intval($post_id)]);
