@@ -86,8 +86,6 @@ class WPFM_Admin {
 				'security' => wp_create_nonce('wpfm-admin-security'),
 				'start_of_week'                      => get_option('start_of_week'),
 				'i18n_datepicker_format'             => WPFM_Date_Time::get_datepicker_format(),
-				'i18n_timepicker_format'             => WPFM_Date_Time::get_timepicker_format(),
-				'i18n_timepicker_step'               => WPFM_Date_Time::get_timepicker_step(),
 			)
 		);
 		wp_localize_script(
@@ -105,9 +103,6 @@ class WPFM_Admin {
 		wp_register_script('chosen', WPFM_PLUGIN_URL . '/assets/js/jquery-chosen/chosen.jquery.min.js', array('jquery'), '1.1.0', true);
 		wp_enqueue_script('chosen');
 		wp_enqueue_style('chosen', WPFM_PLUGIN_URL . '/assets/css/chosen.min.css');
-		wp_enqueue_style('wpfm-jquery-timepicker-css', WPFM_PLUGIN_URL . '/assets/js/jquery-timepicker/jquery.timepicker.min.css');
-		wp_register_script('wpfm-jquery-timepicker', WPFM_PLUGIN_URL . '/assets/js/jquery-timepicker/jquery.timepicker.min.js', array('jquery', 'jquery-ui-core', 'jquery-ui-datepicker'), WPFM_VERSION, true);
-		wp_enqueue_script('wpfm-jquery-timepicker');
 		wp_enqueue_style('wpfm-font-style', WPFM_PLUGIN_URL . '/assets/fonts/style.min.css');
 		wp_enqueue_script('jquery');
 		wp_enqueue_script('jquery-ui-core');

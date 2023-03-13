@@ -160,22 +160,6 @@ class WPFM_Date_Time {
 	}
 
 	/**
-	 * Get timepicker format function will return all the date formats for timepicker
-	 *
-	 * @since 1.0.0
-	 * @param null
-	 * @return string format
-	 **/
-	public static function get_timepicker_format() {
-		$selected_format = get_option('food_manager_timepicker_format', 12);
-		$formats =  array('h:i A', 'H:i');
-		if ($selected_format && $selected_format == 24) {
-			return $formats[1];
-		} else
-			return  $formats[0];
-	}
-
-	/**
 	 * Returns the time only.
 	 *
 	 * @since 1.0.0
@@ -204,16 +188,6 @@ class WPFM_Date_Time {
 		// Convert date and time value into DB formatted format and save eg. 1970-01-01 00:00:00
 		$db_date_time = self::date_parse_from_format($php_date_format . ' H:i:s', $date . ' ' . $time);
 		return $db_date_time;
-	}
-
-	/**
-	 * Get timepicker format function will return all the date formats for timepicker
-	 *
-	 * @since 1.0.0
-	 **/
-	public static function get_timepicker_step() {
-		$selected_step = get_option('food_manager_timepicker_step', 30);
-		return isset($selected_step) && $selected_step >= 1 && $selected_step <= 60 ? $selected_step : 30;
 	}
 
 	/**
