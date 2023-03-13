@@ -116,6 +116,7 @@ class WPFM_Admin {
 			)
 		);
 		wp_enqueue_script('wpfm-accounting');
+		wp_enqueue_style( 'dashicons' );
 		// File upload - vendor
 		if (apply_filters('wpfm_ajax_file_upload_enabled', true)) {
 			wp_register_script('jquery-iframe-transport', WPFM_PLUGIN_URL . '/assets/js/jquery-fileupload/jquery.iframe-transport.min.js', array('jquery'), '1.8.3', true);

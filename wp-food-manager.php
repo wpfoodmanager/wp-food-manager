@@ -204,6 +204,7 @@ class WP_Food_Manager {
 			'ajax_url' 	 => admin_url('admin-ajax.php'),
 		));
 		wp_enqueue_script('wpfm-accounting');
+		wp_enqueue_style( 'dashicons' );
 		wp_register_script('wpfm-accounting', WPFM_PLUGIN_URL . '/assets/js/accounting/accounting.min.js', array('jquery'), WPFM_VERSION, true);
 		wp_localize_script(
 			'wpfm-accounting',

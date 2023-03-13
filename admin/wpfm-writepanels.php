@@ -167,15 +167,14 @@ class WPFM_Writepanels {
 		$thepostid = $post->ID;
 		wp_enqueue_script('wpfm-admin');
 		wp_nonce_field('save_meta_data', 'food_manager_nonce');
-		$icon_arrs = wpfm_get_font_icons();
+		$icon_arrs = wpfm_get_dashicons();
 		$food_icon_arrs = wpfm_get_font_food_icons();
 		echo '<div class="wpfm-parent-icons"><input type="text" id="wpfm_icon_search" name="wpfm_icon_search" placeholder="Icon Search"><span class="wpfm-searh-clear"><i class="fa fa-times"></i></span></div>';
 		echo '<div class="no-radio-icons"><strong>No icons found!</strong></div>';
 		echo "<div class='wpfm-food-icon-class'>";
 		foreach ($icon_arrs as $key => $icon_arr) {
 			$radio_checked = (get_post_meta($thepostid, 'wpfm_radio_icons', true) === $key) ? "checked" : "";
-			$key_name = str_replace("fa-", "", $key);
-			echo '<div class="sub-font-icon"><input type="radio" id="' . $key . '" name="radio_icons" value="' . $key . '" ' . $radio_checked . '><label for="' . $key . '"><span class="wpfm-key-name">' . $key_name . '</span><i class="fa ' . $key . '"></i></label></div>';
+			echo '<div class="sub-font-icon"><input type="radio" id="' . $key . '" name="radio_icons" value="' . $key . '" ' . $radio_checked . '><label for="' . $key . '"><span class="wpfm-key-name">' . $key . '</span><i class="dashicons ' . $key . '"></i></label></div>';
 		}
 		foreach ($food_icon_arrs as $key => $icon_arr) {
 			$radio_checked = (get_post_meta($thepostid, 'wpfm_radio_icons', true) === $key) ? "checked" : "";

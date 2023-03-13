@@ -23,12 +23,12 @@ $image_url = wp_get_attachment_image_src($image_id, 'full');
         <?php the_title();
         $wpfm_radio_icons = get_post_meta(get_the_ID(), 'wpfm_radio_icons', true);
         $without_food_str = str_replace("wpfm-menu-", "", $wpfm_radio_icons);
-        $without_fa_str = str_replace("fa-", "", $wpfm_radio_icons);
-        $data_food_menu = ucwords(str_replace("-", " ", $without_fa_str));
+        $without_dashicons_str = str_replace("dashicons-", "", $wpfm_radio_icons);
+        $data_food_menu = ucwords(str_replace("-", " ", $without_dashicons_str));
         $data_food_menu2 = ucwords(str_replace("-", " ", $without_food_str));
-        if (wpfm_begnWith($wpfm_radio_icons, "fa")) {
+        if (wpfm_begnWith($wpfm_radio_icons, "dashicons")) {
             if ($wpfm_radio_icons) {
-                echo "<span class='wpfm-front-radio-icon fa-icon' data-food-menu='" . $data_food_menu . "'><i class='fa " . $wpfm_radio_icons . "'></i></span>";
+                echo "<span class='wpfm-front-radio-icon food-icon' data-food-menu='" . $data_food_menu2 . "'><span class='wpfm-menu dashicons " . $wpfm_radio_icons . "'></span></span>";
             }
         } else {
             if ($wpfm_radio_icons) {
