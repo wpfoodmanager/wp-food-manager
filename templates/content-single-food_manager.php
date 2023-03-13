@@ -158,14 +158,13 @@ $food = $post;
                                                     echo '<input type="radio" id="' . esc_attr(str_replace(" ", "-", strtolower($value2['option_value_name']))) . '" name="' . esc_attr($key) . '" value="' . esc_attr($value2['option_value_price']) . '" ' . $checked . ' data-price-type=' . esc_attr($value2['option_value_price_type']) . ' data-attr-name=' . esc_attr(str_replace(" ", "-", strtolower($value2['option_value_name']))) . ' ' . $field_required . '>';
                                                     echo '<label for="' . esc_attr(str_replace(" ", "-", strtolower($value2['option_value_name']))) . '"> ' . esc_html($value2['option_value_name']) . ' - ' . get_food_manager_currency_symbol() . $value2['option_value_price'] . '</label>';
                                                     echo "</div>";
-                                                }
+                                                } 
+                                                do_action('wpfm_singular_option_input_before');
                                                 echo "<div class='wpfm-input-singular'>";
                                                 echo '<input type="radio" id="radio-none" name="' . esc_attr($key) . '" value="0">';
                                                 echo '<label for="radio-none"> None</label>';
                                                 echo "</div>";
-                                                echo "<div class='wpfm-input-singular quantity-based'>";
-                                                echo '<input type="number" id="wpfm-qty-based-select" class="wpfm-qty-based" placeholder="Enter Qty" value="">';
-                                                echo "</div>";
+                                                do_action('wpfm_singular_option_input_after');
                                                 if (!empty($additional_fields_extra_topping)) {
                                                     echo "<div class='wpfm-additional-main-row'>";
                                                     echo '<hr style="margin:25px 0 15px; display: block; background-color: #e4e4e4; height: 2px;"></hr>';
@@ -222,6 +221,7 @@ $food = $post;
                                                 if (!empty($ext_option['option_description'])) {
                                                     echo '<div class="wpfm-input-description">' . $ext_option['option_description'] . '</div>';
                                                 }
+                                                do_action('wpfm_singular_option_input_before');
                                                 echo '<select name="' . esc_attr($key) . '">';
                                                 $d_selected_flg = 'selected';
                                                 foreach ($ext_option['option_options'] as $key2 => $value2) {
@@ -231,9 +231,7 @@ $food = $post;
                                                 }
                                                 echo '<option value="" ' . $d_selected_flg . '>None</option>';
                                                 echo '</select>';
-                                                echo "<div class='wpfm-input-singular quantity-based'>";
-                                                echo '<input type="number" id="wpfm-qty-based-select" class="wpfm-qty-based" placeholder="Enter Qty" value="">';
-                                                echo "</div>";
+                                                do_action('wpfm_singular_option_input_after');
                                                 if (!empty($additional_fields_extra_topping)) {
                                                     echo "<div class='wpfm-additional-main-row'>";
                                                     echo '<hr style="margin:25px 0 15px; display: block; background-color: #e4e4e4; height: 2px;"></hr>';
