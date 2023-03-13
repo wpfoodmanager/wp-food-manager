@@ -663,7 +663,7 @@ class WPFM_Writepanels {
 						}
 					}
 				}
-				wp_redirect(add_query_arg('published_foods', $published_foods, remove_query_arg(array('published_foods', 'expired_events'), admin_url('edit.php?post_type=food_manager'))));
+				wp_redirect(add_query_arg('published_foods', $published_foods, remove_query_arg(array('published_foods'), admin_url('edit.php?post_type=food_manager'))));
 				exit;
 				break;
 		}

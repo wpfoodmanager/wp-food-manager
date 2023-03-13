@@ -1,5 +1,5 @@
 var WPFMAdmin = function () {
-    /// <summary>Constructor function of the event settings class.</summary>
+    /// <summary>Constructor function of the food settings class.</summary>
     /// <returns type="WPFMAdmin" />   
     // Uploading files
     var file_frame;
@@ -42,9 +42,9 @@ var WPFMAdmin = function () {
                     });
                 }
             }
-            // Bind on click event of the settings section
+            // Bind on click food of the settings section
             jQuery(".wpfm-tabs li a").on('click', WPFMAdmin.actions.tabClick);
-            // Show by default first Event Listings Settings Tab
+            // Show by default first food Listings Settings Tab
             jQuery('.wpfm-tabs li a:first').click();
             jQuery(document).on('change', '.wpfm-admin-menu-selection select.food-manager-category-dropdown', WPFMAdmin.actions.updateFoodinMenu);
             // Use body to call after dom update
@@ -262,11 +262,6 @@ var WPFMAdmin = function () {
                 jQuery('.nav-tab-active').removeClass('nav-tab-active');
                 jQuery(jQuery(this).attr('href')).show();
                 jQuery(this).addClass('nav-tab-active');
-                var option = jQuery("#setting-event_manager_submission_expire_options:last option:selected").val();
-                if (option == 'days')
-                    jQuery('#setting-event_manager_submission_duration').closest('tr').show();
-                else
-                    jQuery('#setting-event_manager_submission_duration').closest('tr').hide();
                 return false;
             },
             /// <summary>
@@ -339,7 +334,7 @@ var WPFMAdmin = function () {
             /// <summary>
             /// Remove food item from food menu
             /// </summary>
-            /// <param name="parent" type="Event"></param> 
+            /// <param name="parent" type="food"></param> 
             /// <returns type="actions" />     
             /// <since>1.0.0</since>
             removeFoodItem: function (event) {

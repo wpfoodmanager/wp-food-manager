@@ -329,94 +329,6 @@ class WPFM_Post_Types {
 	}
 
 	/**
-	 * Add extra content when showing organizer content
-	 */
-	public function nutritions_content($content) {
-		global $post;
-		if (!is_singular('food_nutritions') || !in_the_loop()) {
-			return $content;
-		}
-		remove_filter('the_content', array($this, 'nutritions_content'));
-		if ('food_nutritions' === $post->post_type) {
-			ob_start();
-			$paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
-			$per_page = 10;
-			$today_date = date("Y-m-d");
-			$nutritions_id = get_the_ID();
-			$show_pagination = true;
-			$args_upcoming = array(
-				'post_type'   => 'food_manager',
-				'post_status' => 'publish',
-				'posts_per_page' => $per_page,
-				'paged' => $paged
-			);
-			$args_upcoming['meta_query'] = array(
-				'relation' => 'AND',
-				array(
-					'key'     => '_food_nutritions_ids',
-					'value'   => $nutritions_id,
-					'compare' => 'LIKE',
-				)
-			);
-			$upcomingEvents = new WP_Query($args_upcoming);
-			wp_reset_query();
-			$args_current = $args_upcoming;
-			$args_current['meta_query'] = array(
-				'relation' => 'AND',
-				array(
-					'key'     => '_food_nutritions_ids',
-					'value'   => $nutritions_id,
-					'compare' => 'LIKE',
-				)
-			);
-			$currentEvents = new WP_Query($args_current);
-			wp_reset_query();
-			$args_past = array(
-				'post_type'   => 'food_manager',
-				'post_status' => array('expired', 'publish'),
-				'posts_per_page' => $per_page,
-				'paged' => $paged
-			);
-			$args_past['meta_query'] = array(
-				'relation' => 'AND',
-				array(
-					'key'     => '_food_organizer_ids',
-					'value'   => $nutritions_id,
-					'compare' => 'LIKE',
-				),
-				array(
-					'key'     => '_food_end_date',
-					'value'   => $today_date,
-					'type'    => 'date',
-					'compare' => '<'
-				)
-			);
-			$pastEvents = new WP_Query($args_past);
-			wp_reset_query();
-			do_action('organizer_content_start');
-			wp_enqueue_script('wp-food-manager-organizer');
-			get_food_manager_template(
-				'content-single-food_organizer.php',
-				array(
-					'organizer_id'	=> $nutritions_id,
-					'per_page'		=> $per_page,
-					'show_pagination'	=> $show_pagination,
-					'upcomingEvents' => $upcomingEvents,
-					'currentEvents' => $currentEvents,
-					'pastEvents' 	=> $pastEvents,
-				),
-				'wp-food-manager',
-				EVENT_MANAGER_PLUGIN_DIR . '/templates/organizer/'
-			);
-			wp_reset_postdata();
-			do_action('organizer_content_end');
-			$content = ob_get_clean();
-		}
-		add_filter('the_content', array($this, 'organizer_content'));
-		return apply_filters('food_manager_single_organizer_content', $content, $post);
-	}
-
-	/**
 	 * Food listing feeds
 	 */
 	public function food_feed() {
@@ -542,20 +454,6 @@ class WPFM_Post_Types {
 	}
 
 	/**
-	 * The registration content when the registration method is an email
-	 */
-	public function registration_details_email($register) {
-		get_food_manager_template('food-registration-email.php', array('register' => $register));
-	}
-
-	/**
-	 * The registration content when the registration method is a url
-	 */
-	public function registration_details_url($register) {
-		get_food_manager_template('food-registration-url.php', array('register' => $register));
-	}
-
-	/**
 	 * Fix post name when wp_update_post changes it
 	 * @param  array $data
 	 * @return array
@@ -566,19 +464,7 @@ class WPFM_Post_Types {
 		}
 		return $data;
 	}
-
-	/**
-	 * Generate location data if a post is added
-	 * @param  int $post_id
-	 * @param  array $post
-	 */
-	public function maybe_add_geolocation_data($object_id, $meta_key, $_meta_value) {
-		if ('_food_location' !== $meta_key || 'food_manager' !== get_post_type($object_id)) {
-			return;
-		}
-		do_action('food_manager_food_location_edited', $object_id, $_meta_value);
-	}
-
+	
 	/**
 	 * Triggered when updating meta on a food listing.
 	 *
@@ -688,7 +574,7 @@ class WPFM_Post_Types {
 		if (!$post || 'food_manager' !== $post->post_type) {
 			return;
 		}
-		if (food_manager_allow_indexing_food_listing()) {
+		if (wpfm_allow_indexing_food_listing()) {
 			return;
 		}
 		$robots['noindex'] = true;
@@ -711,10 +597,10 @@ class WPFM_Post_Types {
 		if (!is_single()) {
 			return;
 		}
-		if (!food_manager_output_food_listing_structured_data()) {
+		if (!wpfm_output_food_listing_structured_data()) {
 			return;
 		}
-		$structured_data = food_manager_get_food_listing_structured_data();
+		$structured_data = wpfm_get_food_listing_structured_data();
 		if (!empty($structured_data)) {
 			echo '<script type="application/ld+json">' . wp_json_encode($structured_data) . '</script>';
 		}
@@ -762,15 +648,15 @@ class WPFM_Post_Types {
 	public function bulk_post_updated_messages($bulk_messages, $bulk_counts) {
 		$bulk_messages['food_manager'] = array(
 			/* translators: %s: product count */
-			'updated'   => _n('%s event updated.', '%s foods updated.', $bulk_counts['updated'], 'wp-food-manager'),
+			'updated'   => _n('%s food updated.', '%s foods updated.', $bulk_counts['updated'], 'wp-food-manager'),
 			/* translators: %s: product count */
-			'locked'    => _n('%s event not updated, somebody is editing it.', '%s foods not updated, somebody is editing them.', $bulk_counts['locked'], 'wp-food-manager'),
+			'locked'    => _n('%s food not updated, somebody is editing it.', '%s foods not updated, somebody is editing them.', $bulk_counts['locked'], 'wp-food-manager'),
 			/* translators: %s: product count */
-			'deleted'   => _n('%s event permanently deleted.', '%s foods permanently deleted.', $bulk_counts['deleted'], 'wp-food-manager'),
+			'deleted'   => _n('%s food permanently deleted.', '%s foods permanently deleted.', $bulk_counts['deleted'], 'wp-food-manager'),
 			/* translators: %s: product count */
-			'trashed'   => _n('%s event moved to the Trash.', '%s foods moved to the Trash.', $bulk_counts['trashed'], 'wp-food-manager'),
+			'trashed'   => _n('%s food moved to the Trash.', '%s foods moved to the Trash.', $bulk_counts['trashed'], 'wp-food-manager'),
 			/* translators: %s: product count */
-			'untrashed' => _n('%s event restored from the Trash.', '%s foods restored from the Trash.', $bulk_counts['untrashed'], 'wp-food-manager'),
+			'untrashed' => _n('%s food restored from the Trash.', '%s foods restored from the Trash.', $bulk_counts['untrashed'], 'wp-food-manager'),
 		);
 		return $bulk_messages;
 	}

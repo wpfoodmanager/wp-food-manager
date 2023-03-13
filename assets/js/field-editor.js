@@ -13,8 +13,6 @@ var WPFMFieldEditor = function () {
 			jQuery('.wp-food-manager-food-form-field-editor').on('change', '.field-type select', WPFMFieldEditor.actions.changeFieldTypeOptions);
 			jQuery('.delete-field').on('click', WPFMFieldEditor.actions.deleteField); //delete field
 			jQuery('.reset').on('click', WPFMFieldEditor.actions.resetFields); //reset field
-			jQuery('.wp-food-manager-organizer-form-field-editor').on('init', WPFMFieldEditor.actions.initSortable);
-			jQuery('.wp-food-manager-organizer-form-field-editor').trigger('init');
 		},
 		actions: {
 			/// <summary>

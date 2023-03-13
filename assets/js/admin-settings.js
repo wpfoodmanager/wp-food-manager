@@ -1,5 +1,5 @@
 var WPFMAdminSettings = function () {
-	/// <summary>Constructor function of the event settings class.</summary>
+	/// <summary>Constructor function of the food settings class.</summary>
 	/// <returns type="Settings" />
 	return {
 		/// <summary>
@@ -8,18 +8,16 @@ var WPFMAdminSettings = function () {
 		/// <returns type="initialization WPFMAdminSettings" />   
 		/// <since>1.0.0</since> 
 		init: function () {
-			// Bind on click event of the settings section
+			// Bind on click food of the settings section
 			jQuery(".food-manager-settings-wrap .nav-tab-wrapper a").on('click', WPFMAdminSettings.actions.tabClick);
-			// Show by default first Event Listings Settings Tab
+			// Show by default first food Listings Settings Tab
 			jQuery('.food-manager-settings-wrap .nav-tab-wrapper a:first').click();
-			jQuery("#setting-event_manager_enable_registration").on('change', WPFMAdminSettings.actions.allowAccountCreation);
-			jQuery("#setting-event_manager_submission_expire_options").on('change', WPFMAdminSettings.actions.selectEventExpiryOption);
 		},
 		actions: {
 			/// <summary>
-			/// Click on tab either Event Listings, Event Submission or Pages.     
+			/// Click on tab either food Listings, food Submission or Pages.     
 			/// </summary>
-			/// <param name="parent" type="Event"></param>    
+			/// <param name="parent" type="food"></param>    
 			/// <returns type="actions" />
 			/// <since>1.0.0</since>    
 			tabClick: function (event) {
@@ -28,28 +26,7 @@ var WPFMAdminSettings = function () {
 				jQuery('.nav-tab-active').removeClass('nav-tab-active');
 				jQuery(jQuery(this).attr('href')).show();
 				jQuery(this).addClass('nav-tab-active');
-				var option = jQuery("#setting-event_manager_submission_expire_options:last option:selected").val();
-				if (option == 'days')
-					jQuery('#setting-event_manager_submission_duration').closest('tr').show();
-				else
-					jQuery('#setting-event_manager_submission_duration').closest('tr').hide();
 				return false;
-			},
-			/// <summary>
-			/// If enabled, non-logged in users will be able to create an account by entering their email address on the submission form.  
-			/// </summary>
-			/// <param name="parent" type="Event"></param> 
-			/// <returns type="actions" />     
-			/// <since>1.0.0</since>      
-			allowAccountCreation: function (event) {
-				if (jQuery(this).is(':checked')) {
-					jQuery('#setting-event_manager_registration_role').closest('tr').show();
-					jQuery('#setting-event_manager_registration_username_from_email').closest('tr').show();
-				} else {
-					jQuery('#setting-event_manager_registration_role').closest('tr').hide();
-					jQuery('#setting-event_manager_registration_username_from_email').closest('tr').hide();
-				}
-				event.preventDefault();
 			},
 		}
 	} // Enf of return

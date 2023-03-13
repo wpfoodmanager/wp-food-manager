@@ -250,14 +250,14 @@ class WPFM_Data_Cleaner {
 			wp_delete_post($foods_page_id, true);
 		}
 		// Trash the Food Categories page.
-		$submit_organizer_form_page_id = get_option('food_manager_food_categories_page_id');
-		if ($submit_organizer_form_page_id) {
-			wp_delete_post($submit_organizer_form_page_id, true);
+		$submit_categories_form_page_id = get_option('food_manager_food_categories_page_id');
+		if ($submit_categories_form_page_id) {
+			wp_delete_post($submit_categories_form_page_id, true);
 		}
 		// Trash the Food Type page.
-		$organizer_dashboard_page_id = get_option('food_manager_food_type_page_id');
-		if ($organizer_dashboard_page_id) {
-			wp_delete_post($organizer_dashboard_page_id, true);
+		$food_type_dashboard_page_id = get_option('food_manager_food_type_page_id');
+		if ($food_type_dashboard_page_id) {
+			wp_delete_post($food_type_dashboard_page_id, true);
 		}
 	}
 

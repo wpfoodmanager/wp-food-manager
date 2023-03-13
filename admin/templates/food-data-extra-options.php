@@ -3,8 +3,7 @@
 /**
  *  Template Extra Option panel
  */
-$extra_options = get_post_meta($thepostid, '_wpfm_extra_options', true);
-?>
+$extra_options = get_post_meta($thepostid, '_wpfm_extra_options', true); ?>
 <div id="extra_options_food_data_content" class="panel wpfm_panel wpfm-metaboxes-wrapper">
 	<div class="wp_food_manager_meta_data">
 		<div class="wpfm-options-wrapper wpfm-metaboxes">

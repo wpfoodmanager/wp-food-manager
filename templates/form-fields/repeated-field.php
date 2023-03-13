@@ -2,7 +2,7 @@
     <?php foreach ($field['value'] as $index => $value) : ?>
         <div class="repeated-row-<?php echo esc_attr($key); ?>">
             <input type="hidden" class="repeated-row" name="repeated-row-<?php echo esc_attr($key); ?>[]" value="<?php echo absint($index); ?>" />
-            <div class="wpfm-tabs-wrapper wpfm-add-tickets-tab-wrapper">
+            <div class="wpfm-tabs-wrapper wpfm-add-tab-wrapper">
                 <div id="repeated-field-details-<?php echo $key . '-' . $index; ?>">
                     <?php foreach ($field['fields'] as $subkey => $subfield) : ?>
                         <div class="row">
@@ -31,24 +31,20 @@
 <a href="#" class="wpfm-theme-text-button wpfm_repeated_add_field" data-row="<?php ob_start(); ?>
 		<div class=" repeated-row-<?php echo esc_attr($key . '_%%repeated-row-index%%'); ?>">
     <input type="hidden" class="repeated-row" name="repeated-row-<?php echo esc_attr($key); ?>[]" value="%%repeated-row-index%%" />
-    <div class="wpfm-tabs-wrapper wpfm-add-tickets-tab-wrapper">
+    <div class="wpfm-tabs-wrapper wpfm-add-tab-wrapper">
         <div class="wpfm-tabs-action-buttons">
-            <div class="wpfm-ticket-counter-wrapper">
-                <div class="wpfm-ticket-counter"><?php echo '%%repeated-row-index%%'; ?></div>
+            <div class="wpfm-counter-wrapper">
+                <div class="wpfm-counter"><?php echo '%%repeated-row-index%%'; ?></div>
             </div>
-            <div class="wpfm-ticket-close-button"><a href="#remove" class="remove-row" title="<?php _e('Remove', 'wp-food-manager'); ?>" id="repeated-row-<?php echo esc_attr($key . '_%%repeated-row-index%%'); ?>"><i class="wpfm-icon-cross"></i></a></div>
+            <div class="wpfm-close-button"><a href="#remove" class="remove-row" title="<?php _e('Remove', 'wp-food-manager'); ?>" id="repeated-row-<?php echo esc_attr($key . '_%%repeated-row-index%%'); ?>"><i class="wpfm-icon-cross"></i></a></div>
         </div>
         <ul class="wpfm-tabs-wrap">
-            <li class="wpfm-tab-link active" data-tab="sell-ticket-details_%%repeated-row-index%%"><?php _e('Ticket details', 'wp-food-manager'); ?></li>
+            <li class="wpfm-tab-link active" data-tab="%%repeated-row-index%%"><?php _e('Details', 'wp-food-manager'); ?></li>
             <li class="wpfm-tab-link" data-tab="<?php echo $key; ?>_%%repeated-row-index%%"><?php _e('Settings', 'wp-food-manager'); ?></li>
         </ul>
-        <div id="sell-ticket-details-<?php echo $key . '-' . '%%repeated-row-index%%'; ?>" class="wpfm-tab-content current">
-            <div id="sell-ticket-details_%%repeated-row-index%%" class="wpfm-tab-pane active">
-                <?php foreach ($field['fields'] as $subkey => $subfield) :
-                    if ($subkey == 'ticket_description') : ?>
-            </div><!------------end ticket details tab------>
-            <div id="<?php echo $key; ?>_%%repeated-row-index%%" class="wpfm-tab-pane">
-            <?php endif; ?>
+        <div id="<?php echo $key . '-' . '%%repeated-row-index%%'; ?>" class="wpfm-tab-content current">
+            <div id="%%repeated-row-index%%" class="wpfm-tab-pane active">
+                <?php foreach ($field['fields'] as $subkey => $subfield) : ?>
             <fieldset class="wpfm-form-group fieldset-<?php esc_attr_e($subkey); ?>">
                 <?php if (!empty($subfield['label'])) : ?>
                     <label for="<?php esc_attr_e($subkey); ?>" class="wpfm-form-label-text"><?php echo $subfield['label'] . ($subfield['required'] ? '' : ' <small>' . __('(optional)', 'wp-food-manager') . '</small>'); ?></label>

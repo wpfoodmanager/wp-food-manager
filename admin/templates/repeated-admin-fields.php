@@ -3,8 +3,6 @@
 /**
  * This if only for Admin Panel
  * Repeated fields is generated from this page .
- * Repeated fields for the paid and free tickets.
- * This is field is used tickets metabox in edit event at admin panel.
  **/
 global $post;
 $food_attributes = get_post_meta($post->ID, '_fa_keys', true);

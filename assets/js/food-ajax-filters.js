@@ -6,23 +6,15 @@ var WPFMFoodAjaxFilters = function () {
             WPFMCommon.logInfo("WPFMFoodAjaxFilters.init...");
             if (jQuery.isFunction(jQuery.fn.chosen)) {
                 if (wpfm_ajax_filters.is_rtl == 1) {
-                    jQuery('select[name^="search_datetimes"]').addClass('chosen-rtl');
                     jQuery('select[name^="search_categories"]').addClass('chosen-rtl');
                     jQuery('select[name^="search_food_types"]').addClass('chosen-rtl');
-                    jQuery('select[name^="search_ticket_prices"]').addClass('chosen-rtl')
                 }
-                jQuery('select[name^="search_datetimes"]').chosen({
-                    search_contains: true
-                });
                 jQuery('select[name^="search_categories"]').chosen({
                     search_contains: true
                 });
                 jQuery('select[name^="search_food_types"]').chosen({
                     search_contains: true
                 });
-                jQuery('select[name^="search_ticket_prices"]').chosen({
-                    search_contains: true
-                })
             }
             if (window.history && window.history.pushState) {
                 supportHtml5History = true
@@ -34,7 +26,7 @@ var WPFMFoodAjaxFilters = function () {
             jQuery('.food_filters').on('click', '.reset', WPFMFoodAjaxFilters.actions.WPFMFoodAjaxFiltersReset);
             jQuery('div.food_listings').on('click', '.food-manager-pagination a', WPFMFoodAjaxFilters.actions.foodPagination);
             jQuery('.food_listings').on('update_food_listings', WPFMFoodAjaxFilters.actions.getfoodListings);
-            jQuery('#search_keywords, #search_location, #search_datetimes, #search_categories, #search_food_types, #search_ticket_prices, .food-manager-filter').change(function () {
+            jQuery('#search_keywords, #search_location, #search_categories, #search_food_types, .food-manager-filter').change(function () {
                 var target = jQuery(this).closest('div.food_listings');
                 target.triggerHandler('update_food_listings', [1, false]);
                 WPFMFoodAjaxFilters.food_manager_store_state(target, 1)
@@ -75,10 +67,7 @@ var WPFMFoodAjaxFilters = function () {
                             // set initial_page with 1 on page refresh
                             inital_page = 1;
                             form.deserialize(state.data);
-                            form.find(':input[name^="search_datetimes"]').not(':input[type="hidden"]').trigger('chosen:updated');
                             form.find(':input[name^="search_categories"]').not(':input[type="hidden"]').trigger('chosen:updated');
-                            form.find(':input[name^="search_event_types"]').not(':input[type="hidden"]').trigger('chosen:updated');
-                            form.find(':input[name^="search_ticket_prices"]').not(':input[type="hidden"]').trigger('chosen:updated')
                         }
                     }
                     target.triggerHandler('update_food_listings', [inital_page, false])
@@ -89,10 +78,8 @@ var WPFMFoodAjaxFilters = function () {
                 var target = jQuery(this).closest('div.food_listings');
                 var form = jQuery(this).closest('form');
                 form.find(':input[name="search_keywords"], :input[name="search_location"], .food-manager-filter').not(':input[type="hidden"]').val('').trigger('chosen:updated');
-                form.find(':input[name^="search_datetimes"]').not(':input[type="hidden"]').val(0).trigger('chosen:updated');
                 form.find(':input[name^="search_categories"]').not(':input[type="hidden"]').val('').trigger('chosen:updated');
                 form.find(':input[name^="search_food_types"]').not(':input[type="hidden"]').val('').trigger('chosen:updated');
-                form.find(':input[name^="search_ticket_prices"]').not(':input[type="hidden"]').val(0).trigger('chosen:updated');
                 target.triggerHandler('reset');
                 target.triggerHandler('update_food_listings', [1, false]);
                 WPFMFoodAjaxFilters.food_manager_store_state(target, 1);
@@ -148,17 +135,10 @@ var WPFMFoodAjaxFilters = function () {
                     target.find('.load_more_foods').data('page', page)
                 }
                 if (true == target.data('show_filters')) {
-                    var filter_food_type = [];
-                    var datetimes = form.find(':input[name^="search_datetimes"]').map(function () {
-                        return jQuery(this).val()
-                    }).get();
                     var categories = form.find(':input[name^="search_categories"]').map(function () {
                         return jQuery(this).val()
                     }).get();
                     var food_types = form.find(':input[name^="search_food_types"]').map(function () {
-                        return jQuery(this).val()
-                    }).get();
-                    var ticket_prices = form.find(':input[name^="search_ticket_prices"]').map(function () {
                         return jQuery(this).val()
                     }).get();
                     var keywords = '';
@@ -175,10 +155,8 @@ var WPFMFoodAjaxFilters = function () {
                         lang: wpfm_ajax_filters.lang,
                         search_keywords: keywords,
                         search_location: location,
-                        search_datetimes: datetimes,
                         search_categories: categories,
                         search_food_types: food_types,
-                        search_ticket_prices: ticket_prices,
                         per_page: per_page,
                         orderby: orderby,
                         order: order,
@@ -194,7 +172,6 @@ var WPFMFoodAjaxFilters = function () {
                     var datetimes = target.data('datetimes');
                     var categories = target.data('categories');
                     var food_types = target.data('food_types');
-                    var ticket_prices = target.data('ticket_prices');
                     if (categories) {
                         categories = categories.split(',')
                     }
@@ -202,10 +179,8 @@ var WPFMFoodAjaxFilters = function () {
                         lang: wpfm_ajax_filters.lang,
                         search_keywords: keywords,
                         search_location: location,
-                        search_datetimes: datetimes,
                         search_categories: categories,
                         search_food_types: food_types,
-                        search_ticket_prices: ticket_prices,
                         per_page: per_page,
                         orderby: orderby,
                         order: order,

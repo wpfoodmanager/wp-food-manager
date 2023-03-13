@@ -134,17 +134,10 @@ class WPFM_Ajax {
 		$result            = array();
 		$search_location   = sanitize_text_field(stripslashes($_REQUEST['search_location']));
 		$search_keywords   = sanitize_text_field(stripslashes($_REQUEST['search_keywords']));
-		$search_datetimes = isset($_REQUEST['search_datetimes']) ? $_REQUEST['search_datetimes'] : '';
 		$search_categories = isset($_REQUEST['search_categories']) ? $_REQUEST['search_categories'] : '';
-		$search_food_types = isset($_REQUEST['search_food_types']) ? $_REQUEST['search_food_types'] : '';
-		$search_ticket_prices = isset($_REQUEST['search_ticket_prices']) ? $_REQUEST['search_ticket_prices'] : '';
+		$search_food_types = isset($_REQUEST['search_food_types']) ? $_REQUEST['search_food_types'] : ''
 		$post_type_label   = $wp_post_types['food_manager']->labels->name;
 		$orderby           = sanitize_text_field($_REQUEST['orderby']);
-		if (is_array($search_datetimes)) {
-			$search_datetimes = array_filter(array_map('sanitize_text_field', array_map('stripslashes', $search_datetimes)));
-		} else {
-			$search_datetimes = array_filter(array(sanitize_text_field(stripslashes($search_datetimes))));
-		}
 		if (is_array($search_categories)) {
 			$search_categories = array_filter(array_map('sanitize_text_field', array_map('stripslashes', $search_categories)));
 		} else {
@@ -154,11 +147,6 @@ class WPFM_Ajax {
 			$search_food_types = array_filter(array_map('sanitize_text_field', array_map('stripslashes', $search_food_types)));
 		} else {
 			$search_food_types = array_filter(array(sanitize_text_field(stripslashes($search_food_types))));
-		}
-		if (is_array($search_ticket_prices)) {
-			$search_ticket_prices = array_filter(array_map('sanitize_text_field', array_map('stripslashes', $search_ticket_prices)));
-		} else {
-			$search_ticket_prices = array_filter(array(sanitize_text_field(stripslashes($search_ticket_prices))));
 		}
 		$args = array(
 			'search_location'    => $search_location,
@@ -217,14 +205,6 @@ class WPFM_Ajax {
 				}
 			}
 			$result['filter_value'][] = implode(', ', $showing_food_types);
-		}
-		// Ticket prices	
-		if ($search_ticket_prices) {
-			$showing_ticket_prices = array();
-			foreach ($search_ticket_prices as $ticket_price) {
-				$showing_ticket_prices[] = WP_food_Manager_Filters::get_ticket_price_value($ticket_price);
-			}
-			$result['filter_value'][] = implode(', ', $showing_ticket_prices);
 		}
 		if ($search_keywords) {
 			$result['filter_value'][] = '&ldquo;' . $search_keywords . '&rdquo;';

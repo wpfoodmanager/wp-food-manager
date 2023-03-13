@@ -3,7 +3,8 @@
 if (!function_exists('get_food_listings')) :
 	/**
 	 * Queries food listings with certain criteria and returns them
-	 *
+	 * 
+	 * @since 1.0.0
 	 * @access public
 	 * @return WP_Query
 	 */
@@ -12,7 +13,6 @@ if (!function_exists('get_food_listings')) :
 		$args = wp_parse_args($args, array(
 			'search_location'   => '',
 			'search_keywords'   => '',
-			'search_datetimes' => array(),
 			'search_categories' => array(),
 			'search_food_types' => array(),
 			'offset'            => 0,
@@ -75,114 +75,6 @@ if (!function_exists('get_food_listings')) :
 				'compare' => $args['cancelled'] ? '=' : '!='
 			);
 		}
-		if (!empty($args['search_datetimes'][0])) {
-			$date_search = array();
-			if ($args['search_datetimes'][0] == 'datetime_today') {
-				$datetime = date('Y-m-d');
-				$date_search[] = array(
-					'key'     => '_food_start_date',
-					'value'   => $datetime,
-					'compare' => 'LIKE',
-				);
-			} elseif ($args['search_datetimes'][0] == 'datetime_tomorrow') {
-				$datetime = date('Y-m-d', strtotime("+1 day"));
-				$date_search[] = array(
-					'key'     => '_food_start_date',
-					'value'   => $datetime,
-					'compare' => 'LIKE',
-				);
-			} elseif ($args['search_datetimes'][0] == 'datetime_thisweek') {
-				$year = date('Y');
-				$weekNumber = date('W');
-				$dates[0] = date('Y-m-d', strtotime($year . 'W' . str_pad($weekNumber, 2, 0, STR_PAD_LEFT)));
-				$dates[1] = date('Y-m-d', strtotime($year . 'W' . str_pad($weekNumber, 2, 0, STR_PAD_LEFT) . ' +6 days'));
-				$date_search[] = array(
-					'key'     => '_food_start_date',
-					'value'   => $dates,
-					'compare' => 'BETWEEN',
-					'type'    => 'date'
-				);
-			} elseif ($args['search_datetimes'][0] == 'datetime_thisweekend') {
-				$saturday_date = date('Y-m-d', strtotime('this Saturday', time()));
-				$sunday_date = date('Y-m-d', strtotime('this Saturday +1 day', time()));
-				$dates[0] = $saturday_date;
-				$dates[1] = $sunday_date;
-				$date_search[] = array(
-					'key'     => '_food_start_date',
-					'value'   => $dates,
-					'compare' => 'BETWEEN',
-					'type'    => 'date'
-				);
-			} elseif ($args['search_datetimes'][0] == 'datetime_thismonth') {
-				$dates[0] = date('Y-m-d', strtotime('first day of this month', time()));
-				$dates[1] = date('Y-m-d', strtotime('last day of this month', time()));
-				$date_search[] = array(
-					'key'     => '_food_start_date',
-					'value'   => $dates,
-					'compare' => 'BETWEEN',
-					'type'    => 'date'
-				);
-			} elseif ($args['search_datetimes'][0] == 'datetime_thisyear') {
-				$dates[0] = date('Y-m-d', strtotime('first day of january', time()));
-				$dates[1] = date('Y-m-d', strtotime('last day of december', time()));
-				$date_search[] = array(
-					'key'     => '_food_start_date',
-					'value'   => $dates,
-					'compare' => 'BETWEEN',
-					'type'    => 'date'
-				);
-			} elseif ($args['search_datetimes'][0] == 'datetime_nextweek') {
-				$year = date('Y');
-				$weekNumber = date('W') + 1;
-				$dates[0] = date('Y-m-d', strtotime($year . 'W' . str_pad($weekNumber, 2, 0, STR_PAD_LEFT)));
-				$dates[1] = date('Y-m-d', strtotime($year . 'W' . str_pad($weekNumber, 2, 0, STR_PAD_LEFT) . ' +6 days'));
-				$date_search[] = array(
-					'key'     => '_food_start_date',
-					'value'   => $dates,
-					'compare' => 'BETWEEN',
-					'type'    => 'date'
-				);
-			} elseif ($args['search_datetimes'][0] == 'datetime_nextweekend') {
-				$next_saturday_date = date('Y-m-d', strtotime('next week Saturday', time()));
-				$next_sunday_date = date('Y-m-d', strtotime('next week Sunday', time()));
-				$dates[0] = $next_saturday_date;
-				$dates[1] = $next_sunday_date;
-				$date_search[] = array(
-					'key'     => '_food_start_date',
-					'value'   => $dates,
-					'compare' => 'BETWEEN',
-					'type'    => 'date'
-				);
-			} elseif ($args['search_datetimes'][0] == 'datetime_nextmonth') {
-				$dates[0] = date('Y-m-d', strtotime('first day of next month', time()));
-				$dates[1] = date('Y-m-d', strtotime('last day of next month', time()));
-				$date_search[] = array(
-					'key'     => '_food_start_date',
-					'value'   => $dates,
-					'compare' => 'BETWEEN',
-					'type'    => 'date'
-				);
-			} elseif ($args['search_datetimes'][0] == 'datetime_nextyear') {
-				$year = date('Y') + 1;
-				$dates[0] = date('Y-m-d', strtotime('first day of January ' . $year, time()));
-				$dates[1] = date('Y-m-d', strtotime('last day of december ' . $year, time()));
-				$date_search[] = array(
-					'key'     => '_food_start_date',
-					'value'   => $dates,
-					'compare' => 'BETWEEN',
-					'type'    => 'date'
-				);
-			} else {
-				$dates = json_decode($args['search_datetimes'][0], true);
-				$date_search[] = array(
-					'key'     => '_food_start_date',
-					'value'   => [$dates['start'], $dates['end']],
-					'compare' => 'BETWEEN',
-					'type'    => 'date'
-				);
-			}
-			$query_args['meta_query'][] = $date_search;
-		}
 		if (!empty($args['search_categories'][0])) {
 			$field    = is_numeric($args['search_categories'][0]) ? 'term_id' : 'slug';
 			$operator = 'all' === get_option('food_manager_category_filter_type', 'all') && sizeof($args['search_categories']) > 1 ? 'AND' : 'IN';
@@ -215,21 +107,6 @@ if (!function_exists('get_food_listings')) :
 				'include_children' => $operator !== 'AND',
 				'operator'         => $operator
 			);
-		}
-		// Must match with food_ticket_options options value at wp-food-manager-form-submit-food.php
-		if (!empty($args['search_ticket_prices'][0])) {
-			$ticket_price_value = '';
-			if ($args['search_ticket_prices'][0] == 'ticket_price_paid') {
-				$ticket_price_value = 'paid';
-			} else if ($args['search_ticket_prices'][0] == 'ticket_price_free') {
-				$ticket_price_value = 'free';
-			}
-			$ticket_search[] = array(
-				'key'     => '_food_ticket_options',
-				'value'   => $ticket_price_value,
-				'compare' => 'LIKE',
-			);
-			$query_args['meta_query'][] = $ticket_search;
 		}
 		if ('featured' === $args['orderby']) {
 			$query_args['orderby'] = array(
@@ -319,12 +196,13 @@ endif;
 /**
  * True if an the user can post a food. If accounts are required, and reg is enabled, users can post (they signup at the same time).
  *
+ * @since 1.0.0
  * @return bool
  */
 function wpfm_user_can_post_food() {
 	$can_post = true;
 	if (!is_user_logged_in()) {
-		if (food_manager_user_requires_account() && !food_manager_enable_registration()) {
+		if (food_manager_user_requires_account()) {
 			$can_post = false;
 		}
 	}
@@ -335,6 +213,7 @@ if (!function_exists('wp_food_manager_notify_new_user')) :
 	/**
 	 * Handle account creation.
 	 *
+	 * @since 1.0.0
 	 * @param  int $user_id
 	 * @param  string $password
 	 */
@@ -356,6 +235,7 @@ if (!function_exists('wp_food_manager_create_account')) :
 	/**
 	 * Handle account creation.
 	 *
+	 * @since 1.0.0
 	 * @param  array $args containing username, email, role
 	 * @param  string $deprecated role string
 	 * @return WP_error | bool was an account created?
@@ -427,7 +307,6 @@ if (!function_exists('wp_food_manager_create_account')) :
 		 * Send notification to new users.
 		 *
 		 * @since 1.0.0
-		 *
 		 * @param  int         $user_id
 		 * @param  string|bool $password
 		 * @param  array       $new_user {
@@ -451,6 +330,7 @@ endif;
 /**
  * True if an the user can edit a food.
  *
+ * @since 1.0.0
  * @return bool
  */
 function food_manager_user_can_edit_food($food_id) {
@@ -467,17 +347,9 @@ function food_manager_user_can_edit_food($food_id) {
 }
 
 /**
- * True if registration is enabled.
- *
- * @return bool
- */
-function food_manager_enable_registration() {
-	return apply_filters('food_manager_enable_registration', get_option('food_manager_enable_registration') == 1 ? true : false);
-}
-
-/**
  * True if usernames are generated from email addresses.
  *
+ * @since 1.0.0
  * @return bool
  */
 function food_manager_generate_username_from_email() {
@@ -487,6 +359,7 @@ function food_manager_generate_username_from_email() {
 /**
  * True if an account is required to post a food.
  *
+ * @since 1.0.0
  * @return bool
  */
 function food_manager_user_requires_account() {
@@ -496,6 +369,7 @@ function food_manager_user_requires_account() {
 /**
  * True if users are allowed to edit submissions that are pending approval.
  *
+ * @since 1.0.0
  * @return bool
  */
 function food_manager_user_can_edit_pending_submissions() {
@@ -521,6 +395,8 @@ function wpfm_user_can_upload_file_via_ajax() {
 
 /**
  * Based on wp_dropdown_categories, with the exception of supporting multiple selected categories, food types.
+ * 
+ * @since 1.0.0
  * @see  wp_dropdown_categories
  */
 function food_manager_dropdown_selection($args = '') {
@@ -611,6 +487,7 @@ function food_manager_dropdown_selection($args = '') {
 /**
  * Checks if the provided content or the current single page or post has a WPFM shortcode.
  *
+ * @since 1.0.0
  * @param string|null       $content   Content to check. If not provided, it uses the current post content.
  * @param string|array|null $tag Check specifically for one or more shortcodes. If not provided, checks for any WPJM shortcode.
  * @return bool
@@ -665,6 +542,9 @@ function is_wpfm_food_listing() {
 if (!function_exists('wpfm_get_filtered_links')) :
 	/**
 	 * Shows links after filtering foods
+	 * 
+	 * @since 1.0.0
+	 * @param array $args
 	 */
 	function wpfm_get_filtered_links($args = array()) {
 		$search_categories = array();
@@ -719,8 +599,10 @@ endif;
 if (!function_exists('get_food_manager_rss_link')) :
 	/**
 	 * Get the Food Listing RSS link
-	 *
+	 * 
+	 * @since 1.0.0
 	 * @return string
+	 * @param array $args
 	 */
 	function get_food_manager_rss_link($args = array()) {
 		$rss_link = add_query_arg(urlencode_deep(array_merge(array('feed' => 'food_feed'), $args)), home_url());
@@ -730,6 +612,8 @@ endif;
 
 /**
  * Filters the upload dir when $food_manager_upload is true
+ * 
+ * @since 1.0.0
  * @param  array $pathdata
  * @return array
  */
@@ -754,6 +638,8 @@ add_filter('upload_dir', 'wpfm_upload_dir');
 
 /**
  * Prepare files for upload by standardizing them into an array. This adds support for multiple file upload fields.
+ * 
+ * @since 1.0.0
  * @param  array $file_data
  * @return array
  */
@@ -782,6 +668,8 @@ function wpfm_prepare_uploaded_files($file_data) {
 
 /**
  * Upload a file using WordPress file API.
+ * 
+ * @since 1.0.0
  * @param  array $file_data Array of $_FILE data to upload.
  * @param  array $args Optional arguments
  * @return array|WP_Error Array of objects containing either file information or an error
@@ -864,26 +752,20 @@ function get_food_order_by() {
 
 /**
  * Allowed Mime types specifically for WP Food Manager.
+ * 
+ * @since 1.0.0
  * @param   string $field Field used.
  * @return  array  Array of allowed mime types
  */
 function wpfm_get_allowed_mime_types($field = '') {
-	if ('organizer_logo' === $field) {
-		$allowed_mime_types = array(
-			'jpg|jpeg|jpe' => 'image/jpeg',
-			'gif'          => 'image/gif',
-			'png'          => 'image/png',
-		);
-	} else {
-		$allowed_mime_types = array(
-			'jpg|jpeg|jpe' => 'image/jpeg',
-			'gif'          => 'image/gif',
-			'png'          => 'image/png',
-			'pdf'          => 'application/pdf',
-			'doc'          => 'application/msword',
-			'docx'         => 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-		);
-	}
+	$allowed_mime_types = array(
+		'jpg|jpeg|jpe' => 'image/jpeg',
+		'gif'          => 'image/gif',
+		'png'          => 'image/png',
+		'pdf'          => 'application/pdf',
+		'doc'          => 'application/msword',
+		'docx'         => 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+	);
 	/**
 	 * Mime types to accept in uploaded files.
 	 * Default is image, pdf, and doc(x) files.
@@ -1626,9 +1508,7 @@ function get_advanced_tab_fields() {
  * @since  1.0.0
  */
 function wpfm_get_font_icons() {
-	return array(
-		
-	);
+	return array();
 }
 
 /**
@@ -1701,7 +1581,6 @@ if (!function_exists('get_food_listings_keyword_search')) :
 		// Searchable Meta Keys: set to empty to search all meta keys
 		$searchable_meta_keys = array(
 			'_food_location',
-			'_organizer_name',
 			'_food_tags',
 		);
 		$searchable_meta_keys = apply_filters('food_listing_searchable_meta_keys', $searchable_meta_keys);

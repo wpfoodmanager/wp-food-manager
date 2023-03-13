@@ -201,7 +201,7 @@ var WPFMCommon = function () {
             WPFMCommon.logInfo("WPFMCommon.actions.showToggleContent...");
             jQuery(this).toggleClass("wpfm-active-button");
 
-            event.preventDefault();
+            food.preventDefault();
         },
         /// <summary>
         /// Cancel button click for close toggle content.    
@@ -211,9 +211,7 @@ var WPFMCommon = function () {
         /// <since>3.1.6</since>       
         hideToggleContent: function (food) {
             WPFMCommon.logInfo("WPFMCommon.actions.hideToggleContent...");
-            //jQuery('#wpfm_contact_organizer').removeClass("wpfm-active-button");
-            //jQuery('#wpfm_contact_organizer_form').slideUp("slow");
-            event.preventDefault();
+            food.preventDefault();
         },
     }
 };

@@ -25,114 +25,9 @@ function get_food_manager_current_user_role() {
 }
 
 /**
- * Returns the registration fields used when an account is required.
- *
- * @since 1.0.0
- * @return array $registration_fields
- */
-function wp_food_manager_get_registration_fields() {
-	$generate_username_from_email = food_manager_generate_username_from_email();
-	$use_standard_password_setup_email = food_manager_use_standard_password_setup_email();
-	$account_required  = food_manager_user_requires_account();
-	$registration_fields = array();
-	if (food_manager_enable_registration()) {
-		$registration_fields['create_account_email'] = array(
-			'type'        => 'text',
-			'label'       => __('Your email', 'wp-food-manager'),
-			'placeholder' => __('you@yourdomain.com', 'wp-food-manager'),
-			'required'    => $account_required,
-			'value'       => isset($_POST['create_account_email']) ? sanitize_email($_POST['create_account_email']) : '',
-		);
-		if (!$generate_username_from_email) {
-			$registration_fields['create_account_username'] = array(
-				'type'     => 'text',
-				'label'    => __('Username', 'wp-food-manager'),
-				'required' => $account_required,
-				'value'    => isset($_POST['create_account_username']) ? sanitize_text_field($_POST['create_account_username']) : '',
-			);
-		}
-		if (!$use_standard_password_setup_email) {
-			$registration_fields['create_account_password'] = array(
-				'type'         => 'password',
-				'label'        => __('Password', 'wp-food-manager'),
-				'placeholder' => __('Password', 'wp-food-manager'),
-				'autocomplete' => false,
-				'required'     => $account_required,
-			);
-			$password_hint = food_manager_get_password_rules_hint();
-			if ($password_hint) {
-				$registration_fields['create_account_password']['description'] = $password_hint;
-			}
-			$registration_fields['create_account_password_verify'] = array(
-				'type'         => 'password',
-				'label'        => __('Verify Password', 'wp-food-manager'),
-				'placeholder' => __('Confirm Password', 'wp-food-manager'),
-				'autocomplete' => false,
-				'required'     => $account_required,
-			);
-		}
-	}
-	return apply_filters('food_manager_get_registration_fields', $registration_fields);
-}
-
-/**
- * Returns the registration fields used when an account is required.
- *
- * @since 1.0.0
- * @return array $registration_fields
- */
-function food_manager_get_registration_fields() {
-	$generate_username_from_email      = food_manager_generate_username_from_email();
-	$use_standard_password_setup_email = food_manager_use_standard_password_setup_email();
-	$account_required  = food_manager_user_requires_account();
-	$registration_fields = array();
-	if (food_manager_enable_registration()) {
-		if (!$generate_username_from_email) {
-			$registration_fields['create_account_username'] = array(
-				'type'     => 'text',
-				'label'    => __('Username', 'wp-food-manager'),
-				'required' => $account_required,
-				'value'    => isset($_POST['create_account_username']) ? sanitize_text_field($_POST['create_account_username']) : '',
-			);
-		}
-		if (!$use_standard_password_setup_email) {
-			$registration_fields['create_account_password'] = array(
-				'type'         => 'password',
-				'label'        => __('Password', 'wp-food-manager'),
-				'autocomplete' => false,
-				'required'     => $account_required,
-			);
-			$password_hint = food_manager_get_password_rules_hint();
-			if ($password_hint) {
-				$registration_fields['create_account_password']['description'] = $password_hint;
-			}
-			$registration_fields['create_account_password_verify'] = array(
-				'type'         => 'password',
-				'label'        => __('Verify Password', 'wp-food-manager'),
-				'autocomplete' => false,
-				'required'     => $account_required,
-			);
-		}
-		$registration_fields['create_account_email'] = array(
-			'type'        => 'text',
-			'label'       => __('Your email', 'wp-food-manager'),
-			'placeholder' => __('you@yourdomain.com', 'wp-food-manager'),
-			'required'    => $account_required,
-			'value'       => isset($_POST['create_account_email']) ? sanitize_email($_POST['create_account_email']) : '',
-		);
-	}
-	/**
-	 * Filters the fields used at registration.
-	 *
-	 * @since 1.0.0
-	 * @param array $registration_fields
-	 */
-	return apply_filters('food_manager_get_registration_fields', $registration_fields);
-}
-
-/**
  * Get and include template files.
  *
+ * @since 1.0.0
  * @param mixed $template_name
  * @param array $args (default: array())
  * @param string $template_path (default: '')
@@ -154,6 +49,7 @@ function get_food_manager_template($template_name, $args = array(), $template_pa
  * wp-food-manager	/ $template_name
  * $default_path	/ $template_name
  *
+ * @since 1.0.0
  * @param string $template_name
  * @param string $template_path (default: 'wp-food-manager')
  * @param string|bool $default_path (default: '') False to not load a default
@@ -181,6 +77,7 @@ function locate_food_manager_template($template_name, $template_path = 'wp-food-
 /**
  * Get template part (for templates in loops).
  *
+ * @since 1.0.0
  * @param string $slug
  * @param string $name (default: '')
  * @param string $template_path (default: 'wp-food-manager')
@@ -202,6 +99,7 @@ function get_food_manager_template_part($slug, $name = '', $template_path = 'wp-
 /**
  * Return whether or not the position has been marked as cancelled
  *
+ * @since 1.0.0
  * @param  object $post
  * @return boolean
  */
@@ -213,6 +111,7 @@ function is_food_cancelled($post = null) {
 /**
  * Return whether or not the position has been featured
  *
+ * @since 1.0.0
  * @param  object $post
  * @return boolean
  */
@@ -224,6 +123,7 @@ function is_food_featured($post = null) {
 /**
  * get_food_location function.
  *
+ * @since 1.0.0
  * @access public
  * @param mixed $post (default: null)
  * @return void
@@ -237,6 +137,8 @@ function get_food_location($post = null) {
 
 /**
  * display_food_location function.
+ * 
+ * @since 1.0.0
  * @param  boolean $map_link whether or not to link to the map on google maps
  * @return [type]
  */
@@ -255,6 +157,7 @@ function display_food_location($map_link = true, $post = null) {
 /**
  * get_food_banner function.
  *
+ * @since 1.0.0
  * @access public
  * @param mixed $post (default: null)
  * @return string
@@ -273,6 +176,7 @@ function get_food_banner($post = null) {
 /**
  * get_food_thumbnail function.
  *
+ * @since 1.0.0
  * @access public
  * @param mixed $post (default: null)
  * @return string
@@ -290,6 +194,7 @@ function get_food_thumbnail($post = null, $size = 'full') {
 /**
  * display_food_price_tag function.
  *
+ * @since 1.0.0
  * @access public
  * @param mixed $post (default: null)
  * @return string
@@ -326,6 +231,7 @@ function display_food_price_tag($post = null) {
 /**
  * display_food_banner function.
  *
+ * @since 1.0.0
  * @access public
  * @param string $size (default: 'full')
  * @param mixed $default (default: null)
@@ -349,6 +255,8 @@ function display_food_banner($size = 'full', $default = null, $post = null) {
 
 /** This function is use to get the counts the food views and attendee views.
  *  This function also used at food, attendee dashboard file.
+ * 
+ *  @since 1.0.0
  *  @return number counted view.
  *  @param $post
  **/
@@ -365,6 +273,9 @@ function get_food_views_count($post) {
 
 /**
  * Count food view on the single food page
+ * 
+ * @since 1.0.0
+ * @param $post
  */
 function get_single_food_listing_view_count($post) {
 	get_food_views_count($post);
@@ -373,6 +284,7 @@ function get_single_food_listing_view_count($post) {
 /**
  * display_food_veg_nonveg_icon_tag function.
  *
+ * @since 1.0.0
  * @access public
  * @return void
  */
@@ -410,6 +322,7 @@ function display_food_veg_nonveg_icon_tag($post = null, $after = '') {
 /**
  * get_food_veg_nonveg_icon_tag function.
  *
+ * @since 1.0.0
  * @access public
  * @param mixed $post (default: null)
  * @return void
@@ -426,6 +339,7 @@ function get_food_veg_nonveg_icon_tag($post = null) {
 /**
  * display_food_type function.
  *
+ * @since 1.0.0
  * @access public
  * @return void
  */
@@ -455,6 +369,7 @@ function display_food_type($post = null, $after = '') {
 /**
  * get_food_type function.
  *
+ * @since 1.0.0
  * @access public
  * @param mixed $post (default: null)
  * @return void
@@ -473,6 +388,7 @@ function get_food_type($post = null) {
 /**
  * display_food_tag function.
  *
+ * @since 1.0.0
  * @access public
  * @return void
  */
@@ -502,6 +418,7 @@ function display_food_tag($post = null, $after = '') {
 /**
  * get_food_tag function.
  *
+ * @since 1.0.0
  * @access public
  * @param mixed $post (default: null)
  * @return void
@@ -520,6 +437,7 @@ function get_food_tag($post = null) {
 /**
  * display_food_category function.
  *
+ * @since 1.0.0
  * @access public
  * @return void
  */
@@ -552,6 +470,7 @@ function display_food_category($post = null, $after = '') {
 /**
  * get_food_category function.
  *
+ * @since 1.0.0
  * @access public
  * @param mixed $post (default: null)
  * @return void
@@ -568,7 +487,10 @@ function get_food_category($post = null) {
 /**
  * display_food_ingredients function.
  *
+ * @since 1.0.0
  * @access public
+ * @param $post
+ * @param $after
  * @return void
  */
 function display_food_ingredients($post = null, $after = '') {
@@ -596,6 +518,7 @@ function display_food_ingredients($post = null, $after = '') {
 /**
  * get_food_ingredients function.
  *
+ * @since 1.0.0
  * @access public
  * @param mixed $post (default: null)
  * @return void
@@ -611,7 +534,8 @@ function get_food_ingredients($post = null) {
 
 /**
  * display_food_nutritions function.
- *
+ * 
+ * @since 1.0.0
  * @access public
  * @return void
  */
@@ -640,6 +564,7 @@ function display_food_nutritions($post = null, $after = '') {
 /**
  * get_food_nutritions function.
  *
+ * @since 1.0.0
  * @access public
  * @param mixed $post (default: null)
  * @return void
@@ -656,7 +581,10 @@ function get_food_nutritions($post = null) {
 /**
  * display_food_units function.
  *
+ * @since 1.0.0
  * @access public
+ * @param mixed $post
+ * @param mixed $after
  * @return void
  */
 function display_food_units($post = null, $after = '') {
@@ -677,6 +605,7 @@ function display_food_units($post = null, $after = '') {
 /**
  * get_food_units function.
  *
+ * @since 1.0.0
  * @access public
  * @param mixed $post (default: null)
  * @return void
@@ -693,7 +622,9 @@ function get_food_units($post = null) {
 /**
  * display_food_permalink function.
  *
+ * @since 1.0.0
  * @access public
+ * @param mixed $post (default: null)
  * @return void
  */
 function display_food_permalink($post = null) {
@@ -703,6 +634,7 @@ function display_food_permalink($post = null) {
 /**
  * get_food_permalink function
  *
+ * @since 1.0.0
  * @access public
  * @param mixed $post (default: null)
  * @return string
@@ -716,6 +648,7 @@ function get_food_permalink($post = null) {
 /**
  * food_manager_class function.
  *
+ * @since 1.0.0
  * @access public
  * @param string $class (default: '')
  * @param mixed $post_id (default: null)
@@ -727,9 +660,12 @@ function food_manager_class($class = '', $post_id = null) {
 }
 
 /**
- * get_food_listing_class function.
+ * get_food_manager_class function.
  *
+ * @since 1.0.0
  * @access public
+ * @param $class (default: '')
+ * @param $post_id (default: null)
  * @return array
  */
 function get_food_manager_class($class = '', $post_id = null) {
@@ -762,8 +698,10 @@ function get_food_manager_class($class = '', $post_id = null) {
 }
 
 /**
- * Outputs the Foods status
- *
+ * Outputs the Foods status.
+ * 
+ * @since 1.0.0
+ * @param $post (default: null)
  * @return void
  */
 function display_food_status($post = null) {
@@ -771,8 +709,10 @@ function display_food_status($post = null) {
 }
 
 /**
- * Gets the foods status
- *
+ * Gets the food status.
+ * 
+ * @since 1.0.0
+ * @param $post (default: null)
  * @return string
  */
 function get_food_status($post = null) {
@@ -790,7 +730,10 @@ function get_food_status($post = null) {
 /**
  * display_stock_status function.
  *
+ * @since 1.0.0
  * @access public
+ * @param $post (default: null)
+ * @param $after (default: '')
  * @return void
  */
 function display_stock_status($post = null, $after = '') {
@@ -811,6 +754,7 @@ function display_stock_status($post = null, $after = '') {
 /**
  * get_stock_status function.
  *
+ * @since 1.0.0
  * @access public
  * @param mixed $post (default: null)
  * @return void
@@ -894,64 +838,13 @@ function get_food_title($post = null) {
 }
 
 /**
- * Gets the food listing location data.
- * @see http://schema.org/PostalAddress
- *
- * @param WP_Post $post
- * @return array|bool
- */
-function food_manager_get_food_listing_location_structured_data($post) {
-	$post = get_post($post);
-	if ($post && $post->post_type !== 'food_manager') {
-		return false;
-	}
-	$mapping = array();
-	$mapping['streetAddress'] = array('street_number', 'street');
-	$mapping['addressLocality'] = 'city';
-	$mapping['addressRegion'] = 'state_short';
-	$mapping['postalCode'] = 'postcode';
-	$mapping['addressCountry'] = 'country_short';
-	$address = array();
-	$address['@type'] = 'PostalAddress';
-	foreach ($mapping as $schema_key => $geolocation_key) {
-		if (is_array($geolocation_key)) {
-			$values = array();
-			foreach ($geolocation_key as $sub_geo_key) {
-				$geo_value = get_post_meta($post->ID, 'geolocation_' . $sub_geo_key, true);
-				if (!empty($geo_value)) {
-					$values[] = $geo_value;
-				}
-			}
-			$value = implode(' ', $values);
-		} else {
-			$value = get_post_meta($post->ID, 'geolocation_' . $geolocation_key, true);
-		}
-		if (!empty($value)) {
-			$address[$schema_key] = $value;
-		}
-	}
-	// No address parts were found
-	if (1 === count($address)) {
-		$address = false;
-	}
-	/**
-	 * Gets the food listing location structured data.
-	 *
-	 * @since 1.0.0
-	 * @param array|bool $address Array of address data.
-	 * @param WP_Post $post
-	 */
-	return apply_filters('food_manager_get_food_listing_location_structured_data', $address, $post);
-}
-
-/**
  * Returns if we allow indexing of a food listing.
  *
  * @since 1.0.0
  * @param WP_Post|int|null $post
  * @return bool
  */
-function food_manager_allow_indexing_food_listing($post = null) {
+function wpfm_allow_indexing_food_listing($post = null) {
 	$post = get_post($post);
 	if ($post && $post->post_type !== 'food_manager') {
 		return true;
@@ -964,7 +857,7 @@ function food_manager_allow_indexing_food_listing($post = null) {
 	 * @since 1.0.0
 	 * @param bool $index_food_listing True if we should allow indexing of food listing.
 	 */
-	return apply_filters('food_manager_allow_indexing_food_listing', $index_food_listing);
+	return apply_filters('wpfm_allow_indexing_food_listing', $index_food_listing);
 }
 
 /**
@@ -974,7 +867,7 @@ function food_manager_allow_indexing_food_listing($post = null) {
  * @param WP_Post|int|null $post
  * @return bool
  */
-function food_manager_output_food_listing_structured_data($post = null) {
+function wpfm_output_food_listing_structured_data($post = null) {
 	$post = get_post($post);
 	if ($post && $post->post_type !== 'food_manager') {
 		return false;
@@ -987,7 +880,7 @@ function food_manager_output_food_listing_structured_data($post = null) {
 	 * @since 1.0.0
 	 * @param bool $output_structured_data True if we should show structured data for post.
 	 */
-	return apply_filters('food_manager_output_food_listing_structured_data', $output_structured_data);
+	return apply_filters('wpfm_output_food_listing_structured_data', $output_structured_data);
 }
 
 /**
@@ -999,7 +892,7 @@ function food_manager_output_food_listing_structured_data($post = null) {
  * @param WP_Post|int|null $post
  * @return bool|array False if functionality is disabled; otherwise array of structured data.
  */
-function food_manager_get_food_listing_structured_data($post = null) {
+function wpfm_get_food_listing_structured_data($post = null) {
 	$post = get_post($post);
 	if ($post && $post->post_type !== 'food_manager') {
 		return false;
@@ -1023,5 +916,5 @@ function food_manager_get_food_listing_structured_data($post = null) {
 	 * @param bool|array $structured_data False if functionality is disabled; otherwise array of structured data.
 	 * @param WP_Post $post
 	 */
-	return apply_filters('food_manager_get_food_listing_structured_data', $data, $post);
+	return apply_filters('wpfm_get_food_listing_structured_data', $data, $post);
 }

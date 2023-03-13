@@ -2,7 +2,7 @@
 
 /**
  * Repeated fields is generated from this page .
- * Repeated fields for the paid and free tickets.
+ * Repeated fields for options.
  * This field is used in submit food form.
  **/
 ?>

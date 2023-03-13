@@ -110,7 +110,7 @@ class WPFM_Field_Editor {
 		wp_enqueue_style('chosen', WPFM_PLUGIN_URL . '/assets/css/chosen.min.css');
 		wp_enqueue_script('wp-food-manager-form-field-editor');
 ?>
-		<div class="wrap wp-food-manager-registrations-form-editor">
+		<div class="wrap wp-food-manager-form-editor">
 			<h1 class="wp-heading-inline"><?php esc_attr_e('Form fields'); ?></h1>
 
 			<div class="wpfm-wrap wp-food-manager-form-field-editor">

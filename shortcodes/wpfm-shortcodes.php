@@ -49,34 +49,30 @@ class WPFM_Shortcodes {
 
 	/**
 	 * Handle actions which need to be run before the shortcode e.g. post actions
+	 * 
+	 * @since 1.0.1
 	 */
 	public function shortcode_action_handler() {
 		global $post;
 		if (is_page() && strstr($post->post_content, '[food_dashboard')) {
 			$this->food_dashboard_handler();
-		} elseif (is_page() && strstr($post->post_content, '[nutritions_dashboard')) {
-			$this->nutritions_dashboard_handler();
-		} elseif (is_page() && strstr($post->post_content, '[ingredients_dashboard')) {
-			$this->ingredients_dashboard_handler();
 		}
 	}
 
 	/**
 	 * Show the food submission form
+	 * 
+	 * @since 1.0.1
+	 * @param array $atts
 	 */
 	public function add_food($atts = array()) {
 		return $GLOBALS['food_manager']->forms->get_form('submit-food', $atts);
 	}
 
 	/**
-	 * Show the organizer submission form
-	 */
-	public function submit_organizer_form($atts = array()) {
-		return $GLOBALS['food_manager']->forms->get_form('submit-nutritions', $atts);
-	}
-
-	/**
 	 * Handles actions on food dashboard
+	 * 
+	 * @since 1.0.1
 	 */
 	public function food_dashboard_handler() {
 		if (!empty($_REQUEST['action']) && !empty($_REQUEST['_wpnonce']) && wp_verify_nonce($_REQUEST['_wpnonce'], 'food_manager_my_food_actions')) {
@@ -145,6 +141,9 @@ class WPFM_Shortcodes {
 
 	/**
 	 * Shortcode which lists the logged in user's foods
+	 * 
+	 * @since 1.0.1
+	 * @param $atts
 	 */
 	public function food_dashboard($atts) {
 		global $wpdb, $food_manager_keyword;
@@ -224,6 +223,8 @@ class WPFM_Shortcodes {
 
 	/**
 	 * Edit food form
+	 * 
+	 * @since 1.0.1
 	 */
 	public function edit_food() {
 		global $food_manager;
@@ -233,6 +234,7 @@ class WPFM_Shortcodes {
 	/**
 	 * output_foods function.
 	 *
+	 * @since 1.0.1
 	 * @access public
 	 * @param mixed $args
 	 * @return void
@@ -298,7 +300,7 @@ class WPFM_Shortcodes {
 		// Array handling
 		$categories           = is_array($categories) ? $categories : array_filter(array_map('trim', explode(',', $categories)));
 		$food_types          = is_array($food_types) ? $food_types : array_filter(array_map('trim', explode(',', $food_types)));
-		// Get keywords, location, datetime, category, food type and ticket price from query string if set
+		// Get keywords, location, category and food type from query string if set
 		if (!empty($_GET['search_keywords'])) {
 			$keywords = sanitize_text_field($_GET['search_keywords']);
 		}
@@ -313,9 +315,6 @@ class WPFM_Shortcodes {
 		}
 		if (!empty($_GET['search_food_type'])) {
 			$selected_food_type = sanitize_text_field($_GET['search_food_type']);
-		}
-		if (!empty($_GET['search_ticket_price'])) {
-			$selected_ticket_price = sanitize_text_field($_GET['search_ticket_price']);
 		}
 		if ($show_filters) {
 			get_food_manager_template('food-filters.php', array(
@@ -344,10 +343,8 @@ class WPFM_Shortcodes {
 			$foods = get_food_managers(apply_filters('food_manager_output_foods_args', array(
 				'search_location'   => $location,
 				'search_keywords'   => $keywords,
-				'search_datetimes'  => $datetimes,
 				'search_categories' => $categories,
-				'search_food_types'       => $food_types,
-				'search_ticket_prices'       => $ticket_prices,
+				'search_food_types' => $food_types,
 				'orderby'           => $orderby,
 				'order'             => $order,
 				'posts_per_page'    => $per_page,
@@ -384,7 +381,6 @@ class WPFM_Shortcodes {
 			'order'           => $order,
 			'categories'      => !empty($selected_category) ? implode(',', $selected_category) : '',
 			'food_types'     => !empty($selected_food_type) ? implode(',', $selected_food_type) : '',
-			'ticket_prices'   => !empty($selected_ticket_price) ? $selected_ticket_price : ''
 		);
 		if (!is_null($featured)) {
 			$data_attributes['featured'] = $featured ? 'true' : 'false';
@@ -401,6 +397,8 @@ class WPFM_Shortcodes {
 
 	/**
 	 * Output content of food categories
+	 * 
+	 * @since 1.0.1
 	 */
 	public function output_foods_categories() { ?>
 		<h2>
@@ -413,6 +411,8 @@ class WPFM_Shortcodes {
 
 	/**
 	 * Output content of food types
+	 * 
+	 * @since 1.0.1
 	 */
 	public function output_foods_types() { ?>
 		<h2>
@@ -425,6 +425,8 @@ class WPFM_Shortcodes {
 
 	/**
 	 * Output some content when no results were found
+	 * 
+	 * @since 1.0.1
 	 */
 	public function output_no_results() {
 		get_food_manager_template('content-no-foods-found.php');
@@ -432,6 +434,8 @@ class WPFM_Shortcodes {
 
 	/**
 	 * Get string as a bool
+	 * 
+	 * @since 1.0.1
 	 * @param  string $value
 	 * @return bool
 	 */
@@ -441,6 +445,7 @@ class WPFM_Shortcodes {
 
 	/**
 	 * Show results div
+	 * @since 1.0.1
 	 */
 	public function food_filter_results() {
 		echo '<div class="showing_applied_filters"></div>';
@@ -449,6 +454,7 @@ class WPFM_Shortcodes {
 	/**
 	 * output_food function.
 	 *
+	 * @since 1.0.0
 	 * @access public
 	 * @param array $args
 	 * @return string
@@ -479,6 +485,7 @@ class WPFM_Shortcodes {
 	/**
 	 * food Summary shortcode
 	 *
+	 * @since 1.0.0
 	 * @access public
 	 * @param array $args
 	 * @return string
@@ -522,360 +529,31 @@ class WPFM_Shortcodes {
 	}
 
 	/**
-	 * Show the registration area
-	 */
-	public function output_food_register($atts) {
-		extract(shortcode_atts(array(
-			'id'       => ''
-		), $atts));
-		ob_start();
-		$args = array(
-			'post_type'   => 'food_manager',
-			'post_status' => 'publish'
-		);
-		if (!$id) {
-			return '';
-		} else {
-			$args['p'] = absint($id);
-		}
-		$foods = new WP_Query($args);
-		if ($foods->have_posts()) : ?>
-				<?php while ($foods->have_posts()) : $foods->the_post(); ?>
-					<div class="food-manager-registration-wrapper">
-						<?php
-						$register = get_food_registration_method();
-						do_action('food_manager_registration_details_' . $register->type, $register);
-						?>
-					</div>
-				<?php endwhile; ?>
-			<?php endif;
-		wp_reset_postdata();
-		return ob_get_clean();
-	}
-
-	/**
-	 * output_foods function.
+	 * output food menu
 	 *
-	 * @access public
-	 * @param mixed $args
-	 * @return void
-	 */
-	public function output_past_foods($atts) {
-
-		ob_start();
-
-		extract(shortcode_atts(array(
-
-			'show_pagination'           => true,
-
-			'per_page'                  => get_option('food_manager_per_page'),
-
-			'order'                     => 'DESC',
-
-			'orderby'                   => 'menu_order', // meta_value
-
-			'meta_key'  				=> 'food_start_date',
-
-			'location'                  => '',
-
-			'keywords'                  => '',
-
-			'selected_datetime'         => '',
-
-			'selected_categories'       => '',
-
-			'selected_food_types'     => '',
-		), $atts));
-
-		$paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
-
-		if (substr($meta_key, 0, 1) !== "_") {
-			$meta_key = '_' . $meta_key;
-		}
-
-		$args_past = array(
-			'post_type'  	=> 'food_manager',
-			'post_status'	=> array('expired'),
-			'posts_per_page' => $per_page,
-			'paged'			=> $paged,
-			'order'			=> $order,
-			'orderby'		=> $orderby,
-			'meta_key'		=> $meta_key,
-		);
-
-		if (!empty($keywords)) {
-			$args_past['s'] = $keywords;
-		}
-
-		if (!empty($selected_categories)) {
-			$categories = explode(',', sanitize_text_field($selected_categories));
-
-			$args_past['tax_query'][] = [
-				'taxonomy'	=> 'food_manager_category',
-				'field'   	=> 'name',
-				'terms'   	=> $categories,
-			];
-		}
-
-		if (!empty($selected_food_types)) {
-			$food_types = explode(',', sanitize_text_field($selected_food_types));
-
-			$args_past['tax_query'][] = [
-				'taxonomy'	=> 'food_manager_type',
-				'field'   	=> 'name',
-				'terms'   	=> $food_types,
-			];
-		}
-
-		$past_foods = new WP_Query($args_past);
-
-		wp_reset_query();
-
-		if ($past_foods->have_posts()) : ?>
-				<div id="food-listing-view" class="wpfm-main wpfm-food-listings food_managers wpfm-food-listing-list-view">
-					<?php while ($past_foods->have_posts()) : $past_foods->the_post(); ?>
-
-						<?php get_food_manager_template_part('content', 'past_food_manager'); ?>
-
-					<?php endwhile; ?>
-
-					<?php if ($past_foods->found_posts > $per_page) : ?>
-						<?php if ($show_pagination == "true") : ?>
-							<div class="food-organizer-pagination">
-								<?php get_food_manager_template('pagination.php', array('max_num_pages' => $past_foods->max_num_pages)); ?>
-							</div>
-						<?php endif; ?>
-					<?php endif; ?>
-
-				</div>
-			<?php else :
-
-			do_action('food_manager_output_foods_no_results');
-
-		endif;
-
-		wp_reset_postdata();
-
-		$food_managers_output = apply_filters('food_manager_food_managers_output', ob_get_clean());
-
-		return  $food_managers_output;
-	}
-
-	/**
-	 *  It is very simply a plugin that outputs a list of all organizers that have listed foods on your website. 
-	 *  Once you have installed " WP food Manager - Organizer Profiles" simply visit "Pages > Add New". 
-	 *  Once you have added a title to your page add the this shortcode: [food_organizers]
-	 *  This will output a grouped and alphabetized list of all organizers.
-	 *
-	 * @access public
-	 * @param array $args
-	 * @return string
-	 */
-	public function output_food_organizers($atts) {
-		$organizers   = get_all_organizer_array();
-		$countAllfoods = get_food_organizer_count();
-		$organizers_array = [];
-
-		if (!empty($organizers)) {
-			foreach ($organizers as $organizer_id => $organizer) {
-				$organizers_array[strtoupper($organizer[0])][$organizer_id] = $organizer;
-			}
-		}
-
-		get_food_manager_template(
-			'food-organizers.php',
-			array(
-				'organizers'		=> $organizers,
-				'organizers_array'  => $organizers_array,
-				'countAllfoods'    => $countAllfoods,
-			),
-			'wp-food-manager',
-			food_MANAGER_PLUGIN_DIR . '/templates/organizer/'
-		);
-
-		wp_reset_postdata();
-
-		return ob_get_clean();
-	}
-
-
-	/**
-	 *  It is very simply a plugin that outputs a list of all organizers that have listed foods on your website. 
-	 *  Once you have installed " WP food Manager - Organizer Profiles" simply visit "Pages > Add New". 
-	 *  Once you have added a title to your page add the this shortcode: [food_organizer]
-	 *  This will output a grouped and alphabetized list of all organizers.
-	 *
-	 * @access public
-	 * @param array $args
-	 * @return string
-	 */
-	public function output_food_organizer($atts) {
-		extract(shortcode_atts(array(
-			'id' => '',
-		), $atts));
-
-		if (!$id)
-			return;
-
-		ob_start();
-
-		$args = array(
-			'post_type'   => 'food_organizer',
-			'post_status' => 'publish',
-			'p'           => $id
-		);
-
-		$organizers = new WP_Query($args);
-
-		if (empty($organizers->posts))
-			return;
-
-		ob_start();
-
-		$organizer    = $organizers->posts[0];
-
-		$paged           = (get_query_var('paged')) ? get_query_var('paged') : 1;
-		$per_page        = 10;
-		$today_date      = date("Y-m-d");
-		$organizer_id    = $organizer->ID;
-		$show_pagination = true;
-
-		$args_upcoming = array(
-			'post_type'      => 'food_manager',
-			'post_status'    => 'publish',
-			'posts_per_page' => $per_page,
-			'paged'          => $paged
-		);
-
-		$args_upcoming['meta_query'] = array(
-			'relation' => 'AND',
-			array(
-				'key'     => '_food_organizer_ids',
-				'value'   => $organizer_id,
-				'compare' => 'LIKE',
-			),
-			array(
-				'key'     => '_food_start_date',
-				'value'   => $today_date,
-				'type'    => 'date',
-				'compare' => '>'
-			)
-		);
-
-		$upcomingfoods = new WP_Query($args_upcoming);
-		wp_reset_query();
-
-		$args_current = $args_upcoming;
-
-		$args_current['meta_query'] = array(
-			'relation' => 'AND',
-			array(
-				'key'     => '_food_organizer_ids',
-				'value'   => $organizer_id,
-				'compare' => 'LIKE',
-			),
-			array(
-				'key'     => '_food_start_date',
-				'value'   => $today_date,
-				'type'    => 'date',
-				'compare' => '<='
-			),
-			array(
-				'key'     => '_food_end_date',
-				'value'   => $today_date,
-				'type'    => 'date',
-				'compare' => '>='
-			)
-		);
-
-		$currentfoods = new WP_Query($args_current);
-		wp_reset_query();
-
-		$args_past = array(
-			'post_type'      => 'food_manager',
-			'post_status'    => array('expired', 'publish'),
-			'posts_per_page' => $per_page,
-			'paged'          => $paged
-		);
-
-		$args_past['meta_query'] = array(
-			'relation' => 'AND',
-			array(
-				'key'     => '_food_organizer_ids',
-				'value'   => $organizer_id,
-				'compare' => 'LIKE',
-			),
-			array(
-				'key'     => '_food_end_date',
-				'value'   => $today_date,
-				'type'    => 'date',
-				'compare' => '<'
-			)
-		);
-		$pastfoods              = new WP_Query($args_past);
-		wp_reset_query();
-
-		do_action('organizer_content_start');
-
-		wp_enqueue_script('wp-food-manager-organizer');
-
-		get_food_manager_template(
-			'content-single-food_organizer.php',
-			array(
-				'organizer_id'    => $organizer_id,
-				'per_page'        => $per_page,
-				'show_pagination' => $show_pagination,
-				'upcomingfoods'  => $upcomingfoods,
-				'currentfoods'   => $currentfoods,
-				'pastfoods'      => $pastfoods,
-			),
-			'wp-food-manager',
-			food_MANAGER_PLUGIN_DIR . '/templates/organizer/'
-		);
-
-		wp_reset_postdata();
-
-		do_action('organizer_content_end');
-
-		return ob_get_clean();
-	}
-
-	/**
-	 *  output food menu
-	 *
+	 * @since 1.0.0
 	 * @access public
 	 * @param array $args
 	 * @return string
 	 */
 	public function output_food_menu($atts) {
-
 		ob_start();
-
 		extract(shortcode_atts(array(
 			'id' => '',
 		), $atts));
-
 		$args = array(
 			'post_type'   => 'food_manager_menu',
 			'post_status' => 'publish',
 			'p'           => $id
 		);
-
 		$food_menus = new WP_Query($args);
-
 		if ($food_menus->have_posts()) : ?>
-
 				<?php while ($food_menus->have_posts()) : $food_menus->the_post(); ?>
-
 					<div class="clearfix">
 						<?php get_food_manager_template_part('content-single', 'food_manager_menu'); ?>
-
 					<?php endwhile; ?>
-
 		<?php endif;
-
 		wp_reset_postdata();
-
 		return ob_get_clean();
 	}
 }
