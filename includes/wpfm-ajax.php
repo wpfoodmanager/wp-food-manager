@@ -135,7 +135,7 @@ class WPFM_Ajax {
 		$search_location   = sanitize_text_field(stripslashes($_REQUEST['search_location']));
 		$search_keywords   = sanitize_text_field(stripslashes($_REQUEST['search_keywords']));
 		$search_categories = isset($_REQUEST['search_categories']) ? $_REQUEST['search_categories'] : '';
-		$search_food_types = isset($_REQUEST['search_food_types']) ? $_REQUEST['search_food_types'] : ''
+		$search_food_types = isset($_REQUEST['search_food_types']) ? $_REQUEST['search_food_types'] : '';
 		$post_type_label   = $wp_post_types['food_manager']->labels->name;
 		$orderby           = sanitize_text_field($_REQUEST['orderby']);
 		if (is_array($search_categories)) {
