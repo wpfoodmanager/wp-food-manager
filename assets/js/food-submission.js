@@ -17,6 +17,12 @@ WPFMFoodSubmission = function () {
             jQuery('.add-group-row').on('click', WPFMFoodSubmission.actions.addGroupField);
             //delete groups 
             jQuery(document).delegate('.remove-group-row', 'click', WPFMFoodSubmission.actions.removeGroupField);
+            // Datepicker
+            if (jQuery('input[data-picker="datepicker"]').length > 0) {
+                jQuery('input[data-picker="datepicker"]').datepicker({
+                    dateFormat: wp_food_manager_food_submission.i18n_datepicker_format,
+                });
+            }
         },
         actions: {
             /// <summary>
