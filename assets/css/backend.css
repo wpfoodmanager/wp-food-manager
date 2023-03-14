@@ -1501,6 +1501,47 @@ a.tips.food_title {
 
 /*helpful end*/
 
+
+/*tooltips start*/
+.wpfm-tooltip {
+  position: relative;
+}
+.wpfm-tooltip:hover:before {
+  content: attr(wpfm-data-tip);
+  background: #464646;
+  color: #fff;
+  font-size: 11px;
+  border-radius: 4px;
+  position: absolute;
+  left: 50%;
+  top: calc(100% + 6px);
+  padding: 3px 10px;
+  z-index: 9999999999;
+  width: auto;
+  transform: translate(-50%, 0px);
+  white-space: nowrap;
+}
+.wpfm-tooltip:hover:after {
+  content: '';
+  background: #464646;
+  height: 9px;
+  width: 9px;
+  position: absolute;
+  transform: rotate(45deg);
+  top: calc(100% + 2px);
+  left: calc(50% - 4.5px);
+}
+.widefat .column-food_actions a.wpfm-tooltip{
+  overflow: inherit;
+}
+.widefat .column-food_actions a.wpfm-tooltip span {
+  line-height: 30px;
+  margin: 0 auto;
+  font-size: 16px;
+}
+/*tooltips end*/
+
+
 @media only screen and (max-width: 1280px) {
 
   .wpfm_panel .wpfm-small-field,
