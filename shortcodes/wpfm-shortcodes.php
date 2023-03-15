@@ -17,7 +17,7 @@ class WPFM_Shortcodes {
 	 * @since 1.0.0
 	 */
 	private static $_instance = null;
-	public static $food_dashboard_message = '';
+	public $food_dashboard_message = '';
 
 	/**
 	 * Allows for accessing single instance of class. Class should only be constructed once per call.
