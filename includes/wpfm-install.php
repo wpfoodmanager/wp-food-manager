@@ -22,7 +22,6 @@ class WPFM_Install {
 		// Update featured posts ordering.
 		if (version_compare(get_option('wp_food_manager_version', WPFM_VERSION), '2.5', '<')) {
 			$wpdb->query("UPDATE {$wpdb->posts} p SET p.menu_order = 0 WHERE p.post_type='food_manager';");
-			$wpdb->query("UPDATE {$wpdb->posts} p LEFT JOIN {$wpdb->postmeta} pm ON p.ID = pm.post_id SET p.menu_order = -1 WHERE pm.meta_key = '_featured' AND pm.meta_value='1' AND p.post_type='food_manager';");
 		}
 		// Update legacy options
 		if (false === get_option('food_manager_add_food_page_id', false) && get_option('food_manager_submit_page_slug')) {

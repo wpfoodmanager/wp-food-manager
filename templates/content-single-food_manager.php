@@ -10,13 +10,7 @@ $food = $post;
     <div class="wpfm-main wpfm-single-food-page">
         <?php if (get_option('food_manager_hide_expired_content', 1) && 'expired' === $post->post_status) : ?>
             <div class="food-manager-info wpfm-alert wpfm-alert-danger"><?php _e('This listing has been expired.', 'wp-food-manager'); ?></div>
-        <?php else : ?>
-            <?php if (is_food_cancelled()) : ?>
-                <div class="wpfm-alert wpfm-alert-danger">
-                    <span class="food-cancelled"><?php _e('This food has been cancelled', 'wp-food-manager'); ?></span>
-                </div>
-            <?php endif; ?>
-            <?php
+        <?php else :
             /**
              * single_food_listing_start hook
              */

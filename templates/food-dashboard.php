@@ -119,12 +119,6 @@
 														'label' => __('Edit', 'wp-food-manager'),
 														'nonce' => false
 													);
-													if (is_food_cancelled($food)) {
-														$actions['mark_not_cancelled'] = array(
-															'label' => __('Mark not cancelled', 'wp-food-manager'),
-															'nonce' => true
-														);
-													}
 													$actions['duplicate'] = array(
 														'label' => __('Duplicate', 'wp-food-manager'),
 														'nonce' => true

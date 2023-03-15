@@ -148,30 +148,6 @@ function get_food_manager_template_part($slug, $name = '', $template_path = 'wp-
 }
 
 /**
- * Return whether or not the position has been marked as cancelled
- *
- * @since 1.0.0
- * @param  object $post
- * @return boolean
- */
-function is_food_cancelled($post = null) {
-	$post = get_post($post);
-	return $post->_cancelled ? true : false;
-}
-
-/**
- * Return whether or not the position has been featured
- *
- * @since 1.0.0
- * @param  object $post
- * @return boolean
- */
-function is_food_featured($post = null) {
-	$post = get_post($post);
-	return $post->_featured ? true : false;
-}
-
-/**
  * get_food_location function.
  *
  * @since 1.0.0
@@ -736,9 +712,6 @@ function get_food_manager_class($class = '', $post_id = null) {
 			}
 		}
 	}
-	if (is_food_featured($post)) {
-		$classes[] = 'food_featured';
-	}
 	if (!empty($class)) {
 		if (!is_array($class)) {
 			$class = preg_split('#\s+#', $class);
@@ -901,7 +874,7 @@ function wpfm_allow_indexing_food_listing($post = null) {
 		return true;
 	}
 	// Only index food listings that are not expired and published.
-	$index_food_listing = !is_food_cancelled($post) && 'publish' === $post->post_status;
+	$index_food_listing = 'publish' === $post->post_status;
 	/**
 	 * Filter if we should allow indexing of food listing.
 	 *
@@ -924,7 +897,7 @@ function wpfm_output_food_listing_structured_data($post = null) {
 		return false;
 	}
 	// Only show structured data for un-filled and published food listings.
-	$output_structured_data = !is_food_cancelled($post) && 'publish' === $post->post_status;
+	$output_structured_data = 'publish' === $post->post_status;
 	/**
 	 * Filter if we should output structured data.
 	 *

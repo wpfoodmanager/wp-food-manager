@@ -663,8 +663,6 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
 	 */
 	protected function update_food_data($values) {
 		// Set defaults
-		add_post_meta($this->food_id, '_cancelled', 0, true);
-		add_post_meta($this->food_id, '_featured', 0, true);
 		$maybe_attach = array();
 		//get date and time setting defined in admin panel food listing -> Settings -> Date & Time formatting
 		$datepicker_date_format 	= WPFM_Date_Time::get_datepicker_format();

@@ -61,20 +61,6 @@ if (!function_exists('get_food_listings')) :
 			}
 			$query_args['meta_query'][] = $location_search;
 		}
-		if (!is_null($args['featured'])) {
-			$query_args['meta_query'][] = array(
-				'key'     => '_featured',
-				'value'   => '1',
-				'compare' => $args['featured'] ? '=' : '!='
-			);
-		}
-		if (!is_null($args['cancelled']) || 1 === absint(get_option('food_manager_hide_cancelled_foods'))) {
-			$query_args['meta_query'][] = array(
-				'key'     => '_cancelled',
-				'value'   => '1',
-				'compare' => $args['cancelled'] ? '=' : '!='
-			);
-		}
 		if (!empty($args['search_categories'][0])) {
 			$field    = is_numeric($args['search_categories'][0]) ? 'term_id' : 'slug';
 			$operator = 'all' === get_option('food_manager_category_filter_type', 'all') && sizeof($args['search_categories']) > 1 ? 'AND' : 'IN';
@@ -835,14 +821,12 @@ function food_manager_duplicate_listing($post_id) {
 	if (!empty($post_meta)) {
 		$post_meta = wp_list_pluck($post_meta, 'meta_value', 'meta_key');
 		foreach ($post_meta as $meta_key => $meta_value) {
-			if (in_array($meta_key, apply_filters('food_manager_duplicate_listing_ignore_keys', array('_cancelled', '_featured', '_food_expires', '_food_duration')))) {
+			if (in_array($meta_key, apply_filters('food_manager_duplicate_listing_ignore_keys', array('_food_expires', '_food_duration')))) {
 				continue;
 			}
 			update_post_meta($new_post_id, $meta_key, maybe_unserialize($meta_value));
 		}
 	}
-	update_post_meta($new_post_id, '_cancelled', 0);
-	update_post_meta($new_post_id, '_featured', 0);
 	do_action('food_manager_duplicate_listing_meta_end', $post_meta, $post, $new_post_id);
 	return $new_post_id;
 }

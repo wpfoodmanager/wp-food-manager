@@ -128,7 +128,6 @@ class WPFM_ActionHooks {
         add_action('save_post', array(__CLASS__, 'flush_get_food_managers_cache'));
         add_action('delete_post', array(__CLASS__, 'flush_get_food_managers_cache'));
         add_action('trash_post', array(__CLASS__, 'flush_get_food_managers_cache'));
-        add_action('food_manager_my_food_do_action', array(__CLASS__, 'food_manager_my_food_do_action'));
         add_action('set_object_terms', array(__CLASS__, 'set_term'), 10, 4);
         add_action('edited_term', array(__CLASS__, 'edited_term'), 10, 3);
         add_action('create_term', array(__CLASS__, 'edited_term'), 10, 3);
@@ -139,8 +138,6 @@ class WPFM_ActionHooks {
         // wpfm custom post-types
         add_action('init', array($this->post_types, 'register_post_types'), 0);
         add_action('wp_footer', array($this, 'output_structured_data'));
-        add_action('wp_head', array($this, 'noindex_expired_cancelled_food_listings'));
-        add_action('wp_insert_post', array($this, 'maybe_add_default_meta_data'), 10, 2);
         // View count action
         add_action('set_single_listing_view_count', array($this, 'set_single_listing_view_count'));
         if (get_option('food_manager_enable_categories')) {
@@ -275,49 +272,6 @@ class WPFM_ActionHooks {
         } else {
             $post_types->set_post_views($post->ID);
         }
-    }
-
-    /**
-     * Maybe set default meta data for food listings
-     * 
-     * @since 1.0.0
-     * @param  int $post_id
-     * @param  WP_Post $post
-     */
-    public function maybe_add_default_meta_data($post_id, $post = '') {
-        if (empty($post) || 'food_manager' === $post->post_type) {
-            add_post_meta($post_id, '_cancelled', 0, true);
-            add_post_meta($post_id, '_featured', 0, true);
-        }
-    }
-
-    /**
-     * Add noindex for expired and filled food listings.
-     * 
-     * @since 1.0.0
-     */
-    public function noindex_expired_cancelled_food_listings() {
-        if (!is_single()) {
-            return;
-        }
-        $post = get_post();
-        if (!$post || 'food_manager' !== $post->post_type) {
-            return;
-        }
-        if (wpfm_allow_indexing_food_listing()) {
-            return;
-        }
-        die('test');
-        $robots['noindex'] = true;
-        $robots['follow'] = true;
-        $robots_arr = wp_robots_no_robots($robots);
-        $content_arr = array();
-        if ($robots_arr) {
-            foreach ($robots_arr as $r_key => $r_val) {
-                $content_arr[] = $r_key;
-            }
-        }
-        echo '<meta name="robots" content="' . implode(',', $content_arr) . '" />';
     }
 
     /**
@@ -459,17 +413,6 @@ class WPFM_ActionHooks {
      */
     public static function edited_term($term_id = '', $tt_id = '', $taxonomy = '') {
         WPFM_Cache_Helper::get_transient_version('fm_get_' . sanitize_text_field($taxonomy), true);
-    }
-
-    /**
-     * Flush the cache
-     * 
-     * @since 1.0.0
-     */
-    public static function food_manager_my_food_do_action($action) {
-        if ('mark_cancelled' === $action || 'mark_not_cancelled' === $action) {
-            WPFM_Cache_Helper::get_transient_version('get_food_managers', true);
-        }
     }
 
     /**

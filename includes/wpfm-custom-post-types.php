@@ -301,9 +301,6 @@ class WPFM_Post_Types {
 				case '_food_location':
 					$this->maybe_update_geolocation_data($meta_id, $object_id, $meta_key, $meta_value);
 					break;
-				case '_featured':
-					$this->maybe_update_menu_order($meta_id, $object_id, $meta_key, $meta_value);
-					break;
 			}
 		}
 	}
@@ -322,7 +319,7 @@ class WPFM_Post_Types {
 	 * Maybe set menu_order if the featured status of a food is changed
 	 */
 	public function maybe_update_menu_order($meta_id, $object_id, $meta_key, $_meta_value) {
-		if ('_featured' !== $meta_key || 'food_manager' !== get_post_type($object_id)) {
+		if ('food_manager' !== get_post_type($object_id)) {
 			return;
 		}
 		global $wpdb;

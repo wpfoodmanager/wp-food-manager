@@ -17,7 +17,7 @@ class WPFM_Shortcodes {
 	 * @since 1.0.0
 	 */
 	private static $_instance = null;
-	private $food_dashboard_message = '';
+	public static $food_dashboard_message = '';
 
 	/**
 	 * Allows for accessing single instance of class. Class should only be constructed once per call.
@@ -70,25 +70,6 @@ class WPFM_Shortcodes {
 					throw new Exception(__('Invalid ID', 'wp-food-manager'));
 				}
 				switch ($action) {
-					case 'mark_cancelled':
-						// Check status
-						if ($food->_cancelled == 1)
-							throw new Exception(__('This food has already been cancelled', 'wp-food-manager'));
-						// Update
-						update_post_meta($food_id, '_cancelled', 1);
-						// Message
-						$this->food_dashboard_message = '<div class="food-manager-message wpfm-alert wpfm-alert-success">' . sprintf(__('%s has been cancelled.', 'wp-food-manager'), esc_html($food->post_title)) . '</div>';
-						break;
-					case 'mark_not_cancelled':
-						// Check status
-						if ($food->_cancelled != 1) {
-							throw new Exception(__('This food is not cancelled', 'wp-food-manager'));
-						}
-						// Update
-						update_post_meta($food_id, '_cancelled', 0);
-						// Message
-						$this->food_dashboard_message = '<div class="food-manager-message wpfm-alert wpfm-alert-success">' . sprintf(__('%s has been marked as not cancelled.', 'wp-food-manager'), esc_html($food->post_title)) . '</div>';
-						break;
 					case 'delete':
 						$foods_status = get_post_status($food_id);
 						// Trash it
@@ -453,7 +434,6 @@ class WPFM_Shortcodes {
 			'id'       => '',
 			'width'    => '250px',
 			'align'    => 'left',
-			'featured' => null, // True to show only featured, false to hide featured, leave null to show both (when leaving out id)
 			'limit'    => 1
 		), $atts));
 		ob_start();
@@ -464,13 +444,6 @@ class WPFM_Shortcodes {
 		if (!$id) {
 			$args['posts_per_page'] = $limit;
 			$args['orderby']        = 'rand';
-			if (!is_null($featured)) {
-				$args['meta_query'] = array(array(
-					'key'     => '_featured',
-					'value'   => '1',
-					'compare' => $featured ? '=' : '!='
-				));
-			}
 		} else {
 			$args['p'] = absint($id);
 		}
