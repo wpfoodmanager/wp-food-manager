@@ -470,7 +470,7 @@ label.add-food-small {
   vertical-align: middle;
 }
 
-.tips {
+.wpfm-tooltip {
   cursor: help;
   text-decoration: none;
 }
@@ -1078,37 +1078,6 @@ div#wpfm-loading {
   padding: 0 !important;
 }
 
-.widefat .column-food_actions a.button-icon:before {
-  font-family: wp-food-manager !important;
-  font-style: normal;
-  font-weight: 400;
-  speak: none;
-  display: inline-block;
-  text-decoration: inherit;
-  text-align: center;
-  font-variant: normal;
-  text-transform: none;
-  float: left;
-  width: 2em !important;
-  line-height: 2em;
-}
-
-.widefat .column-food_actions .icon-view:before {
-  content: "\e9ce";
-}
-
-.widefat .column-food_actions .icon-publish:before {
-  content: "\ea10";
-}
-
-.widefat .column-food_actions .icon-edit:before {
-  content: "\e905";
-}
-
-.widefat .column-food_actions .icon-delete:before {
-  content: "\e9ac";
-}
-
 .wp-food-manager-food-form-field-editor table tr:nth-child(odd) td {
   background-color: #f9f9f9;
 }
@@ -1273,84 +1242,7 @@ span.no-menu-item-handle {
   display: inline-block;
 }
 
-#tiptip_holder {
-  display: none;
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 99999;
-}
-
-#tiptip_holder.tip_top {
-  padding-bottom: 5px;
-}
-
-#tiptip_holder.tip_bottom {
-  padding-top: 5px;
-}
-
-#tiptip_holder.tip_right {
-  padding-left: 5px;
-}
-
-#tiptip_holder.tip_left {
-  padding-right: 5px;
-}
-
-#tiptip_content {
-  font-size: 11px;
-  color: #fff;
-  padding: 4px 8px;
-  background: #464646;
-  border-radius: 3px;
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
-  -webkit-box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
-  -moz-box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
-  text-align: center;
-}
-
-#tiptip_content code {
-  background: #999;
-  padding: 1px;
-}
-
-#tiptip_arrow,
-#tiptip_arrow_inner {
-  position: absolute;
-  border-color: transparent;
-  border-style: solid;
-  border-width: 6px;
-  height: 0;
-  width: 0;
-}
-
-#tiptip_holder.tip_top #tiptip_arrow_inner {
-  margin-top: -7px;
-  margin-left: -6px;
-  border-top-color: #464646;
-}
-
-#tiptip_holder.tip_bottom #tiptip_arrow_inner {
-  margin-top: -5px;
-  margin-left: -6px;
-  border-bottom-color: #464646;
-}
-
-#tiptip_holder.tip_right #tiptip_arrow_inner {
-  margin-top: -6px;
-  margin-left: -5px;
-  border-right-color: #464646;
-}
-
-#tiptip_holder.tip_left #tiptip_arrow_inner {
-  margin-top: -6px;
-  margin-left: -7px;
-  border-left-color: #464646;
-}
-
-a.tips.food_title {
+a.wpfm-tooltip.food_title {
   cursor: pointer;
 }
 
@@ -1532,7 +1424,11 @@ a.tips.food_title {
   left: calc(50% - 4.5px);
 }
 .widefat .column-food_actions a.wpfm-tooltip{
-  overflow: inherit;
+    padding: 0 !important;
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    overflow: inherit;
 }
 .widefat .column-food_actions a.wpfm-tooltip span {
   line-height: 30px;

@@ -15,7 +15,7 @@ $extra_options = get_post_meta($thepostid, '_wpfm_extra_options', true); ?>
 						<h3 class="">
 							<a href="javascript: void(0);" data-id="<?php echo esc_attr($count); ?>" class="wpfm-delete-btn">Remove</a>
 							<div class="wpfm-togglediv" title="Click to toggle" aria-expanded="false" data-row-count="<?php echo esc_attr($count); ?>"></div>
-							<div class="tips wpfm-sort"></div>
+							<div class="wpfm-sort"></div>
 							<strong class="attribute_name"><?php printf(__('%s', 'wp-food-manager'), $option['option_name']); ?></strong>
 							<span class="attribute_key"> <input type="hidden" name="option_key_<?php echo esc_attr($count); ?>" value="<?php echo $option_key; ?>" readonly>
 							</span>
@@ -62,7 +62,7 @@ $extra_options = get_post_meta($thepostid, '_wpfm_extra_options', true); ?>
 					<h3 class="">
 						<a href="javascript: void(0);" data-id="%%repeated-option-index%%" class="wpfm-delete-btn">Remove</a>
 						<div class="wpfm-togglediv" title="Click to toggle" aria-expanded="false" data-row-count="%%repeated-option-index%%"></div>
-						<div class="tips wpfm-sort"></div>
+						<div class="wpfm-sort"></div>
 						<strong class="attribute_name"><?php _e("Option %%repeated-option-index%%", "wp-food-manager"); ?></strong>
 						<span class="attribute_key"><input type="hidden" name="option_key_%%repeated-option-index%%" value="option_%%repeated-option-index%%" readonly>
 							</span>

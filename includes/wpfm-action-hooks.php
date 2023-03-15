@@ -682,7 +682,7 @@ class WPFM_ActionHooks {
         switch ($column) {
             case 'food_title':
                 echo wp_kses_post('<div class="food_title">');
-                echo wp_kses_post('<a href="' . esc_url(admin_url('post.php?post=' . $post->ID . '&action=edit')) . '" class="tips food_title" data-tip="' . sprintf(wp_kses('ID: %d', 'wp-food-manager'), $post->ID) . '">' . esc_html($post->post_title) . '</a>');
+                echo '<a href="' . esc_url(admin_url('post.php?post=' . $post->ID . '&action=edit')) . '" class="wpfm-tooltip food_title" wpfm-data-tip="' . sprintf(wp_kses('ID: %d', 'wp-food-manager'), $post->ID) . '">' . esc_html($post->post_title) . '</a>';
                 echo wp_kses_post('</div>');
                 echo wp_kses_post('<button type="button" class="toggle-row"><span class="screen-reader-text">' . esc_html__('Show more details', 'wp-food-manager') . '</span></button>');
                 break;
@@ -712,7 +712,7 @@ class WPFM_ActionHooks {
                 $admin_actions = apply_filters('post_row_actions', array(), $post);
                 if (in_array($post->post_status, array('pending', 'pending_payment')) && current_user_can('publish_post', $post->ID)) {
                     $admin_actions['publish'] = array(
-                        'action' => 'publish',
+                        'action' => 'saved',
                         'name'   => __('Publish', 'wp-food-manager'),
                         'url'    => wp_nonce_url(add_query_arg('approve_food', $post->ID), 'approve_food'),
                     );
@@ -720,7 +720,7 @@ class WPFM_ActionHooks {
                 if ($post->post_status !== 'trash') {
                     if (current_user_can('read_post', $post->ID)) {
                         $admin_actions['view'] = array(
-                            'action' => 'view',
+                            'action' => 'welcome-view-site',
                             'name'   => __('View', 'wp-food-manager'),
                             'url'    => get_permalink($post->ID),
                         );
@@ -734,7 +734,7 @@ class WPFM_ActionHooks {
                     }
                     if (current_user_can('delete_post', $post->ID)) {
                         $admin_actions['delete'] = array(
-                            'action' => 'delete',
+                            'action' => 'trash',
                             'name'   => __('Delete', 'wp-food-manager'),
                             'url'    => get_delete_post_link($post->ID),
                         );
@@ -743,7 +743,7 @@ class WPFM_ActionHooks {
                 $admin_actions = apply_filters('food_manager_admin_actions', $admin_actions, $post);
                 foreach ($admin_actions as $action) {
                     if (is_array($action)) {
-                        printf('<a class="button button-icon tips icon-%1$s" href="%2$s" data-tip="%3$s">%4$s</a>', $action['action'], esc_url($action['url']), esc_attr($action['name']), esc_html($action['name']));
+                        printf('<a class="button button-icon wpfm-tooltip" href="%2$s" wpfm-data-tip="%3$s"><span class="dashicons dashicons-%1$s"></span></a>', $action['action'], esc_url($action['url']), esc_attr($action['name']), esc_html($action['name']));
                     } else {
                         echo esc_attr(str_replace('class="', 'class="button ', $action));
                     }
@@ -1871,8 +1871,7 @@ class WPFM_ActionHooks {
                 $unitList[$unit->term_id] = $unit->name;
             }
         }
-        wp_register_script('wpfm-jquery-tiptip', WPFM_PLUGIN_URL . '/assets/js/jquery-tiptip/jquery.tipTip.min.js', array('jquery'), WPFM_VERSION, true);
-        wp_register_script('wpfm-admin', WPFM_PLUGIN_URL . '/assets/js/admin.min.js', array('jquery', 'wpfm-jquery-tiptip', 'jquery-ui-core', 'jquery-ui-datepicker'), WPFM_VERSION, true);
+        wp_register_script('wpfm-admin', WPFM_PLUGIN_URL . '/assets/js/admin.min.js', array('jquery', 'jquery-ui-core', 'jquery-ui-datepicker'), WPFM_VERSION, true);
         wp_localize_script(
             'wpfm-admin',
             'wpfm_admin',

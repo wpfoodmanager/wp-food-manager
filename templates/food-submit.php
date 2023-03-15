@@ -82,7 +82,7 @@ if (!empty($extra_fields_options)) {
 								<h3 class="">
 									<a href="javascript: void(0);" data-id="<?php echo $key; ?>" class="wpfm-delete-btn dashicons dashicons-dismiss">Remove</a>
 									<div class="wpfm-togglediv" title="Click to toggle" aria-expanded="false" data-row-count="<?php echo $key; ?>"></div>
-									<div class="tips wpfm-sort"></div>
+									<div class="wpfm-sort"></div>
 									<strong class="attribute_name"><?php echo $extra_fields_option['option_name']; ?></strong>
 									<span class="attribute_key"><input type="hidden" name="option_key_<?php echo esc_attr($key); ?>" value="<?php echo $option_key; ?>" readonly=""></span>
 								</h3>
@@ -194,7 +194,7 @@ if (!empty($extra_fields_options)) {
 						        <h3 class="">
 						            <a href="javascript: void(0);" data-id="%%repeated-option-index%%" class="wpfm-delete-btn dashicons dashicons-dismiss">Remove</a>
 						            <div class="wpfm-togglediv" title="Click to toggle" aria-expanded="false" data-row-count="%%repeated-option-index%%"></div>
-						            <div class="tips wpfm-sort"></div>
+						            <div class="wpfm-sort"></div>
 						            <strong class="attribute_name"><?php _e("Topping Option %%repeated-option-index%%", "wp-food-manager"); ?></strong>
 						            <span class="attribute_key"><input type="hidden" name="option_key_%%repeated-option-index%%" value="option_%%repeated-option-index%%" readonly>
 						                </span>

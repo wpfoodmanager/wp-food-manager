@@ -17,13 +17,6 @@ var WPFMAdmin = function () {
                     jQuery(this).remove();
                 }
             });
-            // Tooltips
-            jQuery(".tips, .help_tip").tipTip({
-                'attribute': 'data-tip',
-                'fadeIn': 50,
-                'fadeOut': 50,
-                'delay': 200
-            });
             jQuery("body").on("click", ".food-manager-remove-uploaded-file", function () {
                 return jQuery(this).closest(".food-manager-uploaded-file").remove();
             });

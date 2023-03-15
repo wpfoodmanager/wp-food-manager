@@ -265,7 +265,7 @@ class WPFM_Writepanels {
 		<p class="wpfm-admin-postbox-form-field <?= $name; ?>" data-field-name="<?= $name; ?>">
 			<label for="<?php echo esc_attr($key); ?>"><?php echo esc_html($field['label']); ?>:
 				<?php if (!empty($field['description'])) : ?>
-					<span class="tips" data-tip="<?php echo esc_attr($field['description']); ?>">[?]</span>
+					<span class="wpfm-tooltip" wpfm-data-tip="<?php echo esc_attr($field['description']); ?>">[?]</span>
 				<?php endif; ?>
 			</label>
 			<span class="wpfm-input-field">
@@ -350,7 +350,7 @@ class WPFM_Writepanels {
 		<p class="wpfm-admin-postbox-form-field <?= $name; ?>">
 			<label for="<?php echo esc_attr($key); ?>"><?php echo esc_html($field['label']); ?>:
 				<?php if (!empty($field['description'])) : ?>
-					<span class="tips" data-tip="<?php echo esc_attr($field['description']); ?>">[?]</span>
+					<span class="wpfm-tooltip" wpfm-data-tip="<?php echo esc_attr($field['description']); ?>">[?]</span>
 				<?php endif; ?>
 			</label>
 			<span class="wpfm-input-field">
@@ -377,7 +377,7 @@ class WPFM_Writepanels {
 			$name = $key;
 		} ?>
 		<p class="wpfm-admin-postbox-form-field <?= $name; ?>">
-			<label for="<?php echo esc_attr($key); ?>"><?php echo esc_html($field['label']); ?> : <?php if (!empty($field['description'])) : ?><span class="tips" data-tip="<?php echo esc_attr($field['description']); ?>">[?]</span><?php endif; ?></label>
+			<label for="<?php echo esc_attr($key); ?>"><?php echo esc_html($field['label']); ?> : <?php if (!empty($field['description'])) : ?><span class="wpfm-tooltip" wpfm-data-tip="<?php echo esc_attr($field['description']); ?>">[?]</span><?php endif; ?></label>
 			<span class="wpfm-input-field">
 				<input type="text" class="wpfm-small-field" name="<?php echo esc_attr($name); ?>" id="<?php echo esc_attr($key); ?>" placeholder="<?php echo esc_attr($field['placeholder']); ?>" value="<?php echo esc_attr($field['value']); ?>" />
 			</span>
@@ -412,7 +412,7 @@ class WPFM_Writepanels {
 			<p class="wpfm-admin-postbox-form-field <?= $name; ?>">
 				<label for="<?php echo esc_attr($key); ?>"><?php echo esc_html($field['label']); ?>:
 					<?php if (!empty($field['description'])) : ?>
-						<span class="tips" data-tip="<?php echo esc_attr($field['description']); ?>">[?]</span>
+						<span class="wpfm-tooltip" wpfm-data-tip="<?php echo esc_attr($field['description']); ?>">[?]</span>
 					<?php endif; ?>
 				</label>
 			</p>
@@ -451,7 +451,7 @@ class WPFM_Writepanels {
 		<p class="wpfm-admin-postbox-form-field">
 			<label for="<?php echo esc_attr($key); ?>"> <?php echo esc_html($field['label']); ?>:
 				<?php if (!empty($field['description'])) : ?>
-					<span class="tips" data-tip="<?php echo esc_attr($field['description']); ?>">[?]</span>
+					<span class="wpfm-tooltip" wpfm-data-tip="<?php echo esc_attr($field['description']); ?>">[?]</span>
 				<?php endif; ?>
 			</label>
 			<input type="hidden" name="date_format" id="date_format" value="<?php echo esc_attr($php_date_format); ?>" />
@@ -485,7 +485,7 @@ class WPFM_Writepanels {
 			$field['value'] = '';
 		} ?>
 		<p class="wpfm-admin-postbox-form-field <?= $name; ?> <?php echo $fieldLabel; ?>" data-field-name="<?= $name; ?>">
-			<label for="<?php echo esc_attr($key); ?>"><?php echo esc_html($field['label']); ?> : <?php if (!empty($field['description'])) : ?>: <span class="tips" data-tip="<?php echo esc_attr($field['description']); ?>">[?]</span><?php endif; ?></label>
+			<label for="<?php echo esc_attr($key); ?>"><?php echo esc_html($field['label']); ?> : <?php if (!empty($field['description'])) : ?>: <span class="wpfm-tooltip" wpfm-data-tip="<?php echo esc_attr($field['description']); ?>">[?]</span><?php endif; ?></label>
 			<span class="wpfm-input-field">
 				<textarea name="<?php echo esc_attr($name); ?>" id="<?php echo esc_attr($key); ?>" rows="4" cols="63" placeholder="<?php echo esc_attr($field['placeholder']); ?>"><?php echo esc_html($field['value']); ?></textarea>
 			</span>
@@ -510,7 +510,7 @@ class WPFM_Writepanels {
 			$name = $key;
 		} ?>
 		<p class="wpfm-admin-postbox-form-field <?= $name; ?>">
-			<label for="<?php echo esc_attr($key); ?>"><?php echo esc_html($field['label']); ?> : <?php if (!empty($field['description'])) : ?><span class="tips" data-tip="<?php echo esc_attr($field['description']); ?>">[?]</span><?php endif; ?></label>
+			<label for="<?php echo esc_attr($key); ?>"><?php echo esc_html($field['label']); ?> : <?php if (!empty($field['description'])) : ?><span class="wpfm-tooltip" wpfm-data-tip="<?php echo esc_attr($field['description']); ?>">[?]</span><?php endif; ?></label>
 			<span class="wpfm-input-field">
 				<select name="<?php echo esc_attr($name); ?>" id="<?php echo esc_attr($key); ?>" class="input-select wpfm-small-field <?php echo esc_attr(isset($field['class']) ? $field['class'] : $key); ?>">
 					<?php foreach ($field['options'] as $key => $value) : ?>
@@ -539,7 +539,7 @@ class WPFM_Writepanels {
 			$name = $key;
 		} ?>
 		<p class="wpfm-admin-postbox-form-field <?= $name; ?>">
-			<label for="<?php echo esc_attr($key); ?>"><?php echo esc_html($field['label']); ?> : <?php if (!empty($field['description'])) : ?><span class="tips" data-tip="<?php echo esc_attr($field['description']); ?>">[?]</span><?php endif; ?></label>
+			<label for="<?php echo esc_attr($key); ?>"><?php echo esc_html($field['label']); ?> : <?php if (!empty($field['description'])) : ?><span class="wpfm-tooltip" wpfm-data-tip="<?php echo esc_attr($field['description']); ?>">[?]</span><?php endif; ?></label>
 			<select multiple="multiple" name="<?php echo esc_attr($name); ?>[]" id="<?php echo esc_attr($key); ?>" class="input-select <?php echo esc_attr(isset($field['class']) ? $field['class'] : $key); ?>">
 				<?php foreach ($field['options'] as $key => $value) : ?>
 					<option value="<?php echo esc_attr($key); ?>" <?php if (!empty($field['value']) && is_array($field['value'])) selected(in_array($key, $field['value']), true); ?>><?php echo esc_html($value); ?></option>
@@ -615,7 +615,7 @@ class WPFM_Writepanels {
 			$field['value'] = $field['value'];
 		} ?>
 		<p class="wpfm-admin-postbox-form-field <?= $name; ?>">
-			<label for="<?php echo esc_attr($key); ?>"><?php echo esc_html($field['label']); ?> <?php echo esc_html($cur_symbol); ?> : <?php if (!empty($field['description'])) : ?><span class="tips" data-tip="<?php echo esc_attr($field['description']); ?>">[?]</span><?php endif; ?></label>
+			<label for="<?php echo esc_attr($key); ?>"><?php echo esc_html($field['label']); ?> <?php echo esc_html($cur_symbol); ?> : <?php if (!empty($field['description'])) : ?><span class="wpfm-tooltip" wpfm-data-tip="<?php echo esc_attr($field['description']); ?>">[?]</span><?php endif; ?></label>
 			<span class="wpfm-input-field">
 				<input type="number" class="wpfm-small-field" name="<?php echo esc_attr($name); ?>" id="<?php echo esc_attr($key); ?>" placeholder="<?php echo esc_attr($field['placeholder']); ?>" value="<?php echo esc_attr($field['value']); ?>" maxlength="75" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" step="any" />
 			</span>

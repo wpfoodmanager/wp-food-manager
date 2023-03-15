@@ -287,7 +287,7 @@ class WPFM_FilterHooks {
         }
         unset($columns['title'], $columns['date'], $columns['author']);
         $columns['food_title'] = __('Title', 'wp-food-manager');
-        $columns['food_banner'] = '<span class="tips dashicons dashicons-format-image" data-tip="' . __('Banner', 'wp-food-manager') . '">' . __('Banner', 'wp-food-manager') . '</span>';
+        $columns['food_banner'] = '<span class="dashicons dashicons-format-image">' . __('Banner', 'wp-food-manager') . '</span>';
         $columns['fm_stock_status'] = __('Stock Status', 'wp-food-manager');
         $columns['fm_categories'] = __('Categories', 'wp-food-manager');
         $columns['food_menu_order'] = __('Order', 'wp-food-manager');

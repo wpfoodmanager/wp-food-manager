@@ -15,7 +15,7 @@ $food_attributes = get_post_meta($post->ID, '_fa_keys', true);
 	<h3 class="">
 		<a href="#" class="wpfm-delete-btn wpfm-remove-attribute" data-id="wpfm-metabox postbox-%%repeated-row-index%%">Remove</a>
 		<div class="wpfm-togglediv" title="Click to toggle" aria-expanded="false"></div>
-		<div class="tips wpfm-sort"></div>
+		<div class="wpfm-sort"></div>
 		<strong class="attribute_name">%%attribute_label%%</strong>
 	</h3>
 	<div class="wpfm-attribute-type">
@@ -44,7 +44,7 @@ $food_attributes = get_post_meta($post->ID, '_fa_keys', true);
 				<h3 class="">
 					<a href="#" class="wpfm-delete-btn wpfm-remove-attribute" data-id="wpfm-metabox postbox-<?= $count; ?>">Remove</a>
 					<div class="wpfm-togglediv" title="Click to toggle" aria-expanded="false"></div>
-					<div class="tips wpfm-sort"></div>
+					<div class="wpfm-sort"></div>
 					<strong class="attribute_name"><?= $attribute; ?></strong>
 				</h3>
 				<div class="wpfm-attribute-type">
