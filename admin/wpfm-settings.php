@@ -190,6 +190,15 @@ class WPFM_Settings {
 							'attributes' => array(),
 						),
 						array(
+							'name'       => 'food_manager_enable_registration',
+							'std'        => '1',
+							'label'      => __('Account Creation', 'wp-food-manager'),
+							'cb_label'   => __('Allow account creation.', 'wp-food-manager'),
+							'desc'       => __('If enabled, non-logged in users will be able to create an account by entering their email address on the submission form.', 'wp-food-manager'),
+							'type'       => 'checkbox',
+							'attributes' => array(),
+						),
+						array(
 							'name'       => 'food_manager_generate_username_from_email',
 							'std'        => '1',
 							'label'      => __('Account Username', 'wp-food-manager'),

@@ -202,7 +202,7 @@ endif;
 function wpfm_user_can_post_food() {
 	$can_post = true;
 	if (!is_user_logged_in()) {
-		if (food_manager_user_requires_account()) {
+		if (food_manager_user_requires_account() && !food_manager_enable_registration()) {
 			$can_post = false;
 		}
 	}
@@ -344,6 +344,16 @@ function food_manager_user_can_edit_food($food_id) {
 		}
 	}
 	return apply_filters('food_manager_user_can_edit_food', $can_edit, $food_id);
+}
+
+/**
+ * True if registration is enabled.
+ *
+ * @since 1.0.0
+ * @return bool
+ */
+function food_manager_enable_registration() {
+	return apply_filters('food_manager_enable_registration', get_option('food_manager_enable_registration') == 1 ? true : false);
 }
 
 /**

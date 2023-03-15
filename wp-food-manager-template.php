@@ -25,6 +25,57 @@ function get_food_manager_current_user_role() {
 }
 
 /**
+ * Returns the registration fields used when an account is required.
+ *
+ * @since 1.0.0
+ * @return array $registration_fields
+ */
+function wp_food_manager_get_registration_fields() {
+	$generate_username_from_email      = food_manager_generate_username_from_email();
+	$use_standard_password_setup_email = food_manager_use_standard_password_setup_email();
+	$account_required  = food_manager_user_requires_account();
+	$registration_fields = array();
+	if (food_manager_enable_registration()) {
+		$registration_fields['create_account_email'] = array(
+			'type'        => 'text',
+			'label'       => __('Your email', 'wp-food-manager'),
+			'placeholder' => __('you@yourdomain.com', 'wp-food-manager'),
+			'required'    => $account_required,
+			'value'       => isset($_POST['create_account_email']) ? sanitize_email($_POST['create_account_email']) : '',
+		);
+		if (!$generate_username_from_email) {
+			$registration_fields['create_account_username'] = array(
+				'type'     => 'text',
+				'label'    => __('Username', 'wp-food-manager'),
+				'required' => $account_required,
+				'value'    => isset($_POST['create_account_username']) ? sanitize_text_field($_POST['create_account_username']) : '',
+			);
+		}
+		if (!$use_standard_password_setup_email) {
+			$registration_fields['create_account_password'] = array(
+				'type'         => 'password',
+				'label'        => __('Password', 'wp-food-manager'),
+				'placeholder' => __('Password', 'wp-food-manager'),
+				'autocomplete' => false,
+				'required'     => $account_required,
+			);
+			$password_hint = food_manager_get_password_rules_hint();
+			if ($password_hint) {
+				$registration_fields['create_account_password']['description'] = $password_hint;
+			}
+			$registration_fields['create_account_password_verify'] = array(
+				'type'         => 'password',
+				'label'        => __('Verify Password', 'wp-food-manager'),
+				'placeholder' => __('Confirm Password', 'wp-food-manager'),
+				'autocomplete' => false,
+				'required'     => $account_required,
+			);
+		}
+	}
+	return apply_filters('food_manager_get_registration_fields', $registration_fields);
+}
+
+/**
  * Get and include template files.
  *
  * @since 1.0.0

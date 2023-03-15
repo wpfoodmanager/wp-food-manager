@@ -429,6 +429,49 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
 			if (is_wp_error(($return = $this->validate_fields($values)))) {
 				throw new Exception($return->get_error_message());
 			}
+			// Account creation
+			if (!is_user_logged_in()) {
+				$create_account = false;
+				if (food_manager_enable_registration()) {
+					if (food_manager_user_requires_account()) {
+						if (!food_manager_generate_username_from_email() && empty($_POST['create_account_username'])) {
+							throw new Exception(__('Please enter a username.', 'wp-food-manager'));
+						}
+						if (empty($_POST['create_account_email'])) {
+							throw new Exception(__('Please enter your email address.', 'wp-food-manager'));
+						}
+						if (empty($_POST['create_account_email'])) {
+							throw new Exception(__('Please enter your email address.', 'wp-food-manager'));
+						}
+					}
+					if (!food_manager_use_standard_password_setup_email() && !empty($_POST['create_account_password'])) {
+						if (empty($_POST['create_account_password_verify']) || $_POST['create_account_password_verify'] !== $_POST['create_account_password']) {
+							throw new Exception(__('Passwords must match.', 'wp-food-manager'));
+						}
+						if (!food_manager_validate_new_password($_POST['create_account_password'])) {
+							$password_hint = food_manager_get_password_rules_hint();
+							if ($password_hint) {
+								throw new Exception(sprintf(__('Invalid Password: %s', 'wp-food-manager'), $password_hint));
+							} else {
+								throw new Exception(__('Password is not valid.', 'wp-food-manager'));
+							}
+						}
+					}
+
+					if (!empty($_POST['create_account_email'])) {
+						$create_account = wp_food_manager_create_account(array(
+							'username' => (food_manager_generate_username_from_email() || empty($_POST['create_account_username'])) ? '' : $_POST['create_account_username'],
+							'password' => (food_manager_use_standard_password_setup_email() || empty($_POST['create_account_password'])) ? '' : $_POST['create_account_password'],
+							'email'    => $_POST['create_account_email'],
+							'role'     => get_option('food_manager_registration_role', 'food_owner')
+						));
+					}
+				}
+
+				if (is_wp_error($create_account)) {
+					throw new Exception($create_account->get_error_message());
+				}
+			}
 			if (food_manager_user_requires_account() && !is_user_logged_in()) {
 				throw new Exception(__('You must be signed in to post a new listing.', 'wp-food-manager'));
 			}

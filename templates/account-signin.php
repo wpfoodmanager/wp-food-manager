@@ -8,6 +8,8 @@
 	</div>
 <?php else :
 	$account_required             = food_manager_user_requires_account();
+	$registration_enabled         = food_manager_enable_registration();
+	$registration_fields          = wp_food_manager_get_registration_fields();
 	$generate_username_from_email = food_manager_generate_username_from_email(); ?>
 	<div class="wpfm-form-group">
 		<label class="wpfm-form-label-text"><?php _e('Have an account?', 'wp-food-manager'); ?></label>
@@ -18,4 +20,18 @@
 			<?php endif; ?>
 		</div>
 	</div>
-<?php endif; ?>
+	<?php if ($registration_enabled) :
+		if (!empty($registration_fields)) {
+			foreach ($registration_fields as $key => $field) {			?>
+				<div class="wpfm-form-group fieldset-<?php echo esc_attr($key); ?>">
+					<label class="wpfm-form-label-text" for="<?php echo esc_attr($key); ?>"><?php echo esc_html($field['label']) . apply_filters('add_food_required_label', $field['required'] ?   '<span class="require-field">*</span>' : ' <small>' . __('(optional)', 'wp-food-manager') . '</small>', $field); ?></label>
+					<div class="field <?php echo esc_attr($field['required']) ? 'required-field' : ''; ?>">
+						<?php get_food_manager_template('form-fields/' . $field['type'] . '-field.php', array('key'   => $key, 'field' => $field)); ?>
+					</div>
+				</div>
+<?php
+			}
+			do_action('food_manager_register_form');
+		}
+	endif;
+endif; ?>

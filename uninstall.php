@@ -40,6 +40,7 @@ $options = array(
 	'food_manager_enable_food_tags',
 	'food_manager_user_requires_account',
 	'food_manager_generate_username_from_email',
+	'food_manager_enable_registration',
 	'food_manager_user_can_edit_pending_submissions',
 	'food_manager_use_standard_password_setup_email',
 	'food_manager_add_food_page_id',
