@@ -37,26 +37,10 @@ class WPFM_Shortcodes {
 	 * Constructor
 	 */
 	public function __construct() {
-		add_action('wp', array($this, 'shortcode_action_handler'));
-		add_action('food_manager_food_dashboard_content_edit', array($this, 'edit_food'));
-		add_action('food_manager_food_filters_end', array($this, 'food_filter_results'), 30);
-		add_action('food_manager_output_foods_no_results', array($this, 'output_no_results'));
 		add_shortcode('add_food', array($this, 'add_food'));
 		add_shortcode('food_dashboard', array($this, 'food_dashboard'));
 		add_shortcode('foods', array($this, 'output_foods'));
 		add_shortcode('food_menu', array($this, 'output_food_menu'));
-	}
-
-	/**
-	 * Handle actions which need to be run before the shortcode e.g. post actions
-	 * 
-	 * @since 1.0.1
-	 */
-	public function shortcode_action_handler() {
-		global $post;
-		if (is_page() && strstr($post->post_content, '[food_dashboard')) {
-			$this->food_dashboard_handler();
-		}
 	}
 
 	/**
@@ -74,7 +58,7 @@ class WPFM_Shortcodes {
 	 * 
 	 * @since 1.0.1
 	 */
-	public function food_dashboard_handler() {
+	public static function food_dashboard_handler() {
 		if (!empty($_REQUEST['action']) && !empty($_REQUEST['_wpnonce']) && wp_verify_nonce($_REQUEST['_wpnonce'], 'food_manager_my_food_actions')) {
 			$action = sanitize_title($_REQUEST['action']);
 			$food_id = absint($_REQUEST['food_id']);
@@ -219,16 +203,6 @@ class WPFM_Shortcodes {
 		));
 		get_food_manager_template('food-dashboard.php', array('foods' => $foods->query($args), 'max_num_pages' => $foods->max_num_pages, 'food_dashboard_columns' => $food_dashboard_columns));
 		return ob_get_clean();
-	}
-
-	/**
-	 * Edit food form
-	 * 
-	 * @since 1.0.1
-	 */
-	public function edit_food() {
-		global $food_manager;
-		echo $food_manager->forms->get_form('edit-food');
 	}
 
 	/**
@@ -421,15 +395,7 @@ class WPFM_Shortcodes {
 		<div id="food-listing-view" class="wpfm-main wpfm-food-listings food_listings wpfm-row wpfm-food-listing-box-view">
 			<?php get_food_manager_template('content-food-types.php'); ?>
 		</div>
-		<?php }
-
-	/**
-	 * Output some content when no results were found
-	 * 
-	 * @since 1.0.1
-	 */
-	public function output_no_results() {
-		get_food_manager_template('content-no-foods-found.php');
+		<?php
 	}
 
 	/**
@@ -441,14 +407,6 @@ class WPFM_Shortcodes {
 	 */
 	public function string_to_bool($value) {
 		return (is_bool($value) && $value) || in_array($value, array('1', 'true', 'yes')) ? true : false;
-	}
-
-	/**
-	 * Show results div
-	 * @since 1.0.1
-	 */
-	public function food_filter_results() {
-		echo '<div class="showing_applied_filters"></div>';
 	}
 
 	/**

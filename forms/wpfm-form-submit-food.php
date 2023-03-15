@@ -26,7 +26,6 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
 	 * Constructor.
 	 */
 	public function __construct() {
-		add_action('wp', array($this, 'process'));
 		$this->steps  = (array) apply_filters('submit_food_steps', array(
 			'submit' => array(
 				'name'     => __('Submit Details', 'wp-food-manager'),

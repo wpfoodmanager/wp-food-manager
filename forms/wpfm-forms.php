@@ -30,16 +30,6 @@ class WPFM_Forms {
 	 * Constructor
 	 */
 	public function __construct() {
-		add_action('init', array($this, 'load_posted_form'));
-	}
-
-	/**
-	 * If a form was posted, load its class so that it can be processed before display.
-	 */
-	public function load_posted_form() {
-		if (!empty($_POST['food_manager_form'])) {
-			$this->load_form_class(sanitize_title($_POST['food_manager_form']));
-		}
 	}
 
 	/**
@@ -48,7 +38,7 @@ class WPFM_Forms {
 	 * @param  string $form_name
 	 * @return string class name on success, false on failure
 	 */
-	private function load_form_class($form_name) {
+	public function load_form_class($form_name) {
 		if (!class_exists('WPFM_Form')) {
 			include 'wpfm-form-abstract.php';
 		}

@@ -611,32 +611,6 @@ if (!function_exists('get_food_manager_rss_link')) :
 endif;
 
 /**
- * Filters the upload dir when $food_manager_upload is true
- * 
- * @since 1.0.0
- * @param  array $pathdata
- * @return array
- */
-function wpfm_upload_dir($pathdata) {
-	global $food_manager_upload, $food_manager_uploading_file;
-	if (!empty($food_manager_upload)) {
-		$dir = untrailingslashit(apply_filters('wpfm_upload_dir', 'wpfm-uploads/' . sanitize_key($food_manager_uploading_file), sanitize_key($food_manager_uploading_file)));
-		if (empty($pathdata['subdir'])) {
-			$pathdata['path']   = $pathdata['path'] . '/' . $dir;
-			$pathdata['url']    = $pathdata['url'] . '/' . $dir;
-			$pathdata['subdir'] = '/' . $dir;
-		} else {
-			$new_subdir         = '/' . $dir . $pathdata['subdir'];
-			$pathdata['path']   = str_replace($pathdata['subdir'], $new_subdir, $pathdata['path']);
-			$pathdata['url']    = str_replace($pathdata['subdir'], $new_subdir, $pathdata['url']);
-			$pathdata['subdir'] = str_replace($pathdata['subdir'], $new_subdir, $pathdata['subdir']);
-		}
-	}
-	return $pathdata;
-}
-add_filter('upload_dir', 'wpfm_upload_dir');
-
-/**
  * Prepare files for upload by standardizing them into an array. This adds support for multiple file upload fields.
  * 
  * @since 1.0.0
@@ -1510,168 +1484,168 @@ function get_advanced_tab_fields() {
 function wpfm_get_dashicons() {
 	return array(
 		'dashicons-menu'                       => 'f333',
-        'dashicons-admin-site'                 => 'f319',
-        'dashicons-dashboard'                  => 'f226',
-        'dashicons-admin-media'                => 'f104',
-        'dashicons-admin-page'                 => 'f105',
-        'dashicons-admin-comments'             => 'f101',
-        'dashicons-admin-appearance'           => 'f100',
-        'dashicons-admin-plugins'              => 'f106',
-        'dashicons-admin-users'                => 'f110',
-        'dashicons-admin-tools'                => 'f107',
-        'dashicons-admin-settings'             => 'f108',
-        'dashicons-admin-network'              => 'f112',
-        'dashicons-admin-generic'              => 'f111',
-        'dashicons-admin-home'                 => 'f102',
-        'dashicons-admin-collapse'             => 'f148',
-        'dashicons-admin-links'                => '103',
-        'dashicons-format-links'               => 'f103',
-        'dashicons-admin-post'                 => '109',
-        'dashicons-format-standard'            => 'f109',
-        'dashicons-format-image'               => 'f128',
-        'dashicons-format-gallery'             => 'f161',
-        'dashicons-format-audio'               => 'f127',
-        'dashicons-format-video'               => 'f126',
-        'dashicons-format-chat'                => 'f125',
-        'dashicons-format-status'              => 'f130',
-        'dashicons-format-aside'               => 'f123',
-        'dashicons-format-quote'               => 'f122',
-        'dashicons-welcome-write-blog'         => 'f119',
-        'dashicons-welcome-edit-page'          => 'f119',
-        'dashicons-welcome-add-page'           => 'f133',
-        'dashicons-welcome-view-site'          => 'f115',
-        'dashicons-welcome-widgets-menus'      => 'f116',
-        'dashicons-welcome-comments'           => 'f117',
-        'dashicons-welcome-learn-more'         => 'f118',
-        'dashicons-image-crop'                 => 'f165',
-        'dashicons-image-rotate-left'          => 'f166',
-        'dashicons-image-rotate-right'         => 'f167',
-        'dashicons-image-flip-vertical'        => 'f168',
-        'dashicons-image-flip-horizontal'      => 'f169',
-        'dashicons-undo'                       => 'f171',
-        'dashicons-redo'                       => 'f172',
+		'dashicons-admin-site'                 => 'f319',
+		'dashicons-dashboard'                  => 'f226',
+		'dashicons-admin-media'                => 'f104',
+		'dashicons-admin-page'                 => 'f105',
+		'dashicons-admin-comments'             => 'f101',
+		'dashicons-admin-appearance'           => 'f100',
+		'dashicons-admin-plugins'              => 'f106',
+		'dashicons-admin-users'                => 'f110',
+		'dashicons-admin-tools'                => 'f107',
+		'dashicons-admin-settings'             => 'f108',
+		'dashicons-admin-network'              => 'f112',
+		'dashicons-admin-generic'              => 'f111',
+		'dashicons-admin-home'                 => 'f102',
+		'dashicons-admin-collapse'             => 'f148',
+		'dashicons-admin-links'                => '103',
+		'dashicons-format-links'               => 'f103',
+		'dashicons-admin-post'                 => '109',
+		'dashicons-format-standard'            => 'f109',
+		'dashicons-format-image'               => 'f128',
+		'dashicons-format-gallery'             => 'f161',
+		'dashicons-format-audio'               => 'f127',
+		'dashicons-format-video'               => 'f126',
+		'dashicons-format-chat'                => 'f125',
+		'dashicons-format-status'              => 'f130',
+		'dashicons-format-aside'               => 'f123',
+		'dashicons-format-quote'               => 'f122',
+		'dashicons-welcome-write-blog'         => 'f119',
+		'dashicons-welcome-edit-page'          => 'f119',
+		'dashicons-welcome-add-page'           => 'f133',
+		'dashicons-welcome-view-site'          => 'f115',
+		'dashicons-welcome-widgets-menus'      => 'f116',
+		'dashicons-welcome-comments'           => 'f117',
+		'dashicons-welcome-learn-more'         => 'f118',
+		'dashicons-image-crop'                 => 'f165',
+		'dashicons-image-rotate-left'          => 'f166',
+		'dashicons-image-rotate-right'         => 'f167',
+		'dashicons-image-flip-vertical'        => 'f168',
+		'dashicons-image-flip-horizontal'      => 'f169',
+		'dashicons-undo'                       => 'f171',
+		'dashicons-redo'                       => 'f172',
 		'dashicons-editor-bold'                => 'f200',
-        'dashicons-editor-italic'              => 'f201',
-        'dashicons-editor-ul'                  => 'f203',
-        'dashicons-editor-ol'                  => 'f204',
-        'dashicons-editor-quote'               => 'f205',
-        'dashicons-editor-alignleft'           => 'f206',
-        'dashicons-editor-aligncenter'         => 'f207',
-        'dashicons-editor-alignright'          => 'f208',
-        'dashicons-editor-insertmore'          => 'f209',
-        'dashicons-editor-spellcheck'          => 'f210',
-        'dashicons-editor-distractionfree'     => 'f211',
-        'dashicons-editor-kitchensink'         => 'f212',
-        'dashicons-editor-underline'           => 'f213',
-        'dashicons-editor-justify'             => 'f214',
-        'dashicons-editor-textcolor'           => 'f215',
-        'dashicons-editor-paste-word'          => 'f216',
-        'dashicons-editor-paste-text'          => 'f217',
-        'dashicons-editor-removeformatting'    => 'f218',
-        'dashicons-editor-video'               => 'f219',
-        'dashicons-editor-customchar'          => 'f220',
-        'dashicons-editor-outdent'             => 'f221',
-        'dashicons-editor-indent'              => 'f222',
-        'dashicons-editor-help'                => 'f223',
-        'dashicons-editor-strikethrough'       => 'f224',
-        'dashicons-editor-unlink'              => 'f225',
-        'dashicons-editor-rtl'                 => 'f320',
+		'dashicons-editor-italic'              => 'f201',
+		'dashicons-editor-ul'                  => 'f203',
+		'dashicons-editor-ol'                  => 'f204',
+		'dashicons-editor-quote'               => 'f205',
+		'dashicons-editor-alignleft'           => 'f206',
+		'dashicons-editor-aligncenter'         => 'f207',
+		'dashicons-editor-alignright'          => 'f208',
+		'dashicons-editor-insertmore'          => 'f209',
+		'dashicons-editor-spellcheck'          => 'f210',
+		'dashicons-editor-distractionfree'     => 'f211',
+		'dashicons-editor-kitchensink'         => 'f212',
+		'dashicons-editor-underline'           => 'f213',
+		'dashicons-editor-justify'             => 'f214',
+		'dashicons-editor-textcolor'           => 'f215',
+		'dashicons-editor-paste-word'          => 'f216',
+		'dashicons-editor-paste-text'          => 'f217',
+		'dashicons-editor-removeformatting'    => 'f218',
+		'dashicons-editor-video'               => 'f219',
+		'dashicons-editor-customchar'          => 'f220',
+		'dashicons-editor-outdent'             => 'f221',
+		'dashicons-editor-indent'              => 'f222',
+		'dashicons-editor-help'                => 'f223',
+		'dashicons-editor-strikethrough'       => 'f224',
+		'dashicons-editor-unlink'              => 'f225',
+		'dashicons-editor-rtl'                 => 'f320',
 		'dashicons-align-left'                 => 'f135',
-        'dashicons-align-right'                => 'f136',
-        'dashicons-align-center'               => 'f134',
-        'dashicons-align-none'                 => 'f138',
-        'dashicons-lock'                       => 'f160',
-        'dashicons-calendar'                   => 'f145',
-        'dashicons-visibility'                 => 'f177',
-        'dashicons-post-status'                => 'f173',
-        'dashicons-post-trash'                 => 'f182',
-        'dashicons-edit'                       => 'f327',
-        'dashicons-trash'                      => 'rtin',
-        'dashicons-arrow-up'                   => 'f142',
-        'dashicons-arrow-down'                 => 'f140',
-        'dashicons-arrow-left'                 => 'f141',
-        'dashicons-arrow-right'                => 'f139',
-        'dashicons-arrow-up-alt'               => 'f342',
-        'dashicons-arrow-down-alt'             => 'f346',
-        'dashicons-arrow-left-alt'             => 'f340',
-        'dashicons-arrow-right-alt'            => 'f344',
-        'dashicons-arrow-up-alt2'              => 'f343',
-        'dashicons-arrow-down-alt2'            => 'f347',
-        'dashicons-arrow-left-alt2'            => 'f341',
-        'dashicons-arrow-right-alt2'           => 'f345',
-        'dashicons-leftright'                  => 'f229',
-        'dashicons-sort'                       => 'f156',
-        'dashicons-list-view'                  => 'f163',
-        'dashicons-exerpt-view'                => 'f164',
+		'dashicons-align-right'                => 'f136',
+		'dashicons-align-center'               => 'f134',
+		'dashicons-align-none'                 => 'f138',
+		'dashicons-lock'                       => 'f160',
+		'dashicons-calendar'                   => 'f145',
+		'dashicons-visibility'                 => 'f177',
+		'dashicons-post-status'                => 'f173',
+		'dashicons-post-trash'                 => 'f182',
+		'dashicons-edit'                       => 'f327',
+		'dashicons-trash'                      => 'rtin',
+		'dashicons-arrow-up'                   => 'f142',
+		'dashicons-arrow-down'                 => 'f140',
+		'dashicons-arrow-left'                 => 'f141',
+		'dashicons-arrow-right'                => 'f139',
+		'dashicons-arrow-up-alt'               => 'f342',
+		'dashicons-arrow-down-alt'             => 'f346',
+		'dashicons-arrow-left-alt'             => 'f340',
+		'dashicons-arrow-right-alt'            => 'f344',
+		'dashicons-arrow-up-alt2'              => 'f343',
+		'dashicons-arrow-down-alt2'            => 'f347',
+		'dashicons-arrow-left-alt2'            => 'f341',
+		'dashicons-arrow-right-alt2'           => 'f345',
+		'dashicons-leftright'                  => 'f229',
+		'dashicons-sort'                       => 'f156',
+		'dashicons-list-view'                  => 'f163',
+		'dashicons-exerpt-view'                => 'f164',
 		'dashicons-share'                      => 'f237',
-        'dashicons-share-alt'                  => 'f240',
-        'dashicons-share-alt2'                 => 'f242',
-        'dashicons-twitter'                    => 'f301',
-        'dashicons-rss'                        => 'f303',
-        'dashicons-facebook'                   => 'f304',
-        'dashicons-facebook-alt'               => 'f305',
-        'dashicons-networking'                 => 'f325',
-        'dashicons-googleplus'                 => 'f462',
+		'dashicons-share-alt'                  => 'f240',
+		'dashicons-share-alt2'                 => 'f242',
+		'dashicons-twitter'                    => 'f301',
+		'dashicons-rss'                        => 'f303',
+		'dashicons-facebook'                   => 'f304',
+		'dashicons-facebook-alt'               => 'f305',
+		'dashicons-networking'                 => 'f325',
+		'dashicons-googleplus'                 => 'f462',
 		'dashicons-hammer'                     => 'f308',
-        'dashicons-art'                        => 'f309',
-        'dashicons-migrate'                    => 'f310',
-        'dashicons-performance'                => 'f311',
-        'dashicons-wordpress'                  => 'f120',
-        'dashicons-wordpress-alt'              => 'f324',
-        'dashicons-pressthis'                  => 'f157',
-        'dashicons-update'                     => 'f113',
-        'dashicons-screenoptions'              => 'f180',
-        'dashicons-info'                       => 'f348',
-        'dashicons-cart'                       => 'f174',
-        'dashicons-feedback'                   => 'f175',
-        'dashicons-cloud'                      => 'f176',
-        'dashicons-translation'                => 'f326',
+		'dashicons-art'                        => 'f309',
+		'dashicons-migrate'                    => 'f310',
+		'dashicons-performance'                => 'f311',
+		'dashicons-wordpress'                  => 'f120',
+		'dashicons-wordpress-alt'              => 'f324',
+		'dashicons-pressthis'                  => 'f157',
+		'dashicons-update'                     => 'f113',
+		'dashicons-screenoptions'              => 'f180',
+		'dashicons-info'                       => 'f348',
+		'dashicons-cart'                       => 'f174',
+		'dashicons-feedback'                   => 'f175',
+		'dashicons-cloud'                      => 'f176',
+		'dashicons-translation'                => 'f326',
 		'dashicons-tag'                        => 'f323',
-        'dashicons-category'                   => 'f318',
-        'dashicons-yes'                        => 'f147',
-        'dashicons-no'                         => 'f158',
-        'dashicons-no-alt'                     => 'f335',
-        'dashicons-plus'                       => 'f132',
-        'dashicons-minus'                      => 'f460',
-        'dashicons-dismiss'                    => 'f153',
-        'dashicons-marker'                     => 'f159',
-        'dashicons-star-filled'                => 'f155',
-        'dashicons-star-half'                  => 'f459',
-        'dashicons-star-empty'                 => 'f154',
-        'dashicons-flag'                       => 'f227',
+		'dashicons-category'                   => 'f318',
+		'dashicons-yes'                        => 'f147',
+		'dashicons-no'                         => 'f158',
+		'dashicons-no-alt'                     => 'f335',
+		'dashicons-plus'                       => 'f132',
+		'dashicons-minus'                      => 'f460',
+		'dashicons-dismiss'                    => 'f153',
+		'dashicons-marker'                     => 'f159',
+		'dashicons-star-filled'                => 'f155',
+		'dashicons-star-half'                  => 'f459',
+		'dashicons-star-empty'                 => 'f154',
+		'dashicons-flag'                       => 'f227',
 		'dashicons-location'                   => 'f230',
-        'dashicons-location-alt'               => 'f231',
-        'dashicons-camera'                     => 'f306',
-        'dashicons-images-alt'                 => 'f232',
-        'dashicons-images-alt2'                => 'f233',
-        'dashicons-video-alt'                  => 'f234',
-        'dashicons-video-alt2'                 => 'f235',
-        'dashicons-video-alt3'                 => 'f236',
-        'dashicons-vault'                      => 'f178',
-        'dashicons-shield'                     => 'f332',
-        'dashicons-shield-alt'                 => 'f334',
-        'dashicons-search'                     => 'f179',
-        'dashicons-slides'                     => 'f181',
-        'dashicons-analytics'                  => 'f183',
-        'dashicons-chart-pie'                  => 'f184',
-        'dashicons-chart-bar'                  => 'f185',
-        'dashicons-chart-line'                 => 'f238',
-        'dashicons-chart-area'                 => 'f239',
-        'dashicons-groups'                     => 'f307',
-        'dashicons-businessman'                => 'f338',
-        'dashicons-id'                         => 'f336',
-        'dashicons-id-alt'                     => 'f337',
-        'dashicons-products'                   => 'f312',
-        'dashicons-awards'                     => 'f313',
-        'dashicons-forms'                      => 'f314',
-        'dashicons-portfolio'                  => 'f322',
-        'dashicons-book'                       => 'f330',
-        'dashicons-book-alt'                   => 'f331',
-        'dashicons-download'                   => 'f316',
-        'dashicons-upload'                     => 'f317',
-        'dashicons-backup'                     => 'f321',
-        'dashicons-lightbulb'                  => 'f339',
-        'dashicons-smiley'                     => 'f328',
+		'dashicons-location-alt'               => 'f231',
+		'dashicons-camera'                     => 'f306',
+		'dashicons-images-alt'                 => 'f232',
+		'dashicons-images-alt2'                => 'f233',
+		'dashicons-video-alt'                  => 'f234',
+		'dashicons-video-alt2'                 => 'f235',
+		'dashicons-video-alt3'                 => 'f236',
+		'dashicons-vault'                      => 'f178',
+		'dashicons-shield'                     => 'f332',
+		'dashicons-shield-alt'                 => 'f334',
+		'dashicons-search'                     => 'f179',
+		'dashicons-slides'                     => 'f181',
+		'dashicons-analytics'                  => 'f183',
+		'dashicons-chart-pie'                  => 'f184',
+		'dashicons-chart-bar'                  => 'f185',
+		'dashicons-chart-line'                 => 'f238',
+		'dashicons-chart-area'                 => 'f239',
+		'dashicons-groups'                     => 'f307',
+		'dashicons-businessman'                => 'f338',
+		'dashicons-id'                         => 'f336',
+		'dashicons-id-alt'                     => 'f337',
+		'dashicons-products'                   => 'f312',
+		'dashicons-awards'                     => 'f313',
+		'dashicons-forms'                      => 'f314',
+		'dashicons-portfolio'                  => 'f322',
+		'dashicons-book'                       => 'f330',
+		'dashicons-book-alt'                   => 'f331',
+		'dashicons-download'                   => 'f316',
+		'dashicons-upload'                     => 'f317',
+		'dashicons-backup'                     => 'f321',
+		'dashicons-lightbulb'                  => 'f339',
+		'dashicons-smiley'                     => 'f328',
 	);
 }
 
@@ -1799,317 +1773,6 @@ function food_manager_user_can_upload_file_via_ajax() {
 	 * @param bool $can_upload True if they can upload files from Ajax endpoint.
 	 */
 	return apply_filters('food_manager_user_can_upload_file_via_ajax', $can_upload);
-}
-
-/**
- * Use radio inputs instead of checkboxes for term checklists in specified taxonomies such as 'food_manager_type'.
- *
- * @param   array   $args
- * @return  array
- */
-function wpfm_term_radio_checklist_for_food_type($args) {
-	/* Change to your required taxonomy */
-	if (!empty($args['taxonomy']) && $args['taxonomy'] === 'food_manager_type') {
-		// Don't override 3rd party walkers.
-		if (empty($args['walker']) || is_a($args['walker'], 'Walker')) {
-			if (!class_exists('WPFM_Walker_Category_Radio_Checklist_For_Food_Type')) {
-				/**
-				 * Custom walker for switching checkbox inputs to radio.
-				 *
-				 * @see Walker_Category_Checklist
-				 */
-				class WPFM_Walker_Category_Radio_Checklist_For_Food_Type extends Walker_Category_Checklist {
-					function walk($elements, $max_depth, ...$args) {
-						$output = parent::walk($elements, $max_depth, ...$args);
-						$output = str_replace(
-							array('type="checkbox"', "type='checkbox'"),
-							array('type="radio"', "type='radio'"),
-							$output
-						);
-						return $output;
-					}
-				}
-			}
-			$args['walker'] = new WPFM_Walker_Category_Radio_Checklist_For_Food_Type;
-		}
-	}
-	return $args;
-}
-add_filter('wp_terms_checklist_args', 'wpfm_term_radio_checklist_for_food_type');
-
-// Add image field in 'food_manager_type' taxonomy page
-add_action('food_manager_type_add_form_fields', 'wpfm_add_custom_taxonomy_image_for_food_type', 10, 2);
-function wpfm_add_custom_taxonomy_image_for_food_type($taxonomy) {
-?>
-	<div class="form-field term-group">
-		<label for="image_id" class="wpfm-food-type-tax-image"><?php _e('Image/Icon', 'taxt-domain'); ?></label>
-		<input type="hidden" id="image_id" name="image_id" class="custom_media_url" value="">
-		<div id="image_wrapper"></div>
-		<p>
-			<input type="button" class="button button-secondary taxonomy_media_button" id="taxonomy_media_button" name="taxonomy_media_button" value="<?php _e('Add Image', 'taxt-domain'); ?>">
-			<input type="button" class="button button-secondary taxonomy_media_remove" id="taxonomy_media_remove" name="taxonomy_media_remove" value="<?php _e('Remove Image', 'taxt-domain'); ?>">
-		</p>
-
-	</div>
-<?php
-}
-
-// Save the 'food_manager_type' taxonomy image field
-add_action('created_food_manager_type', 'wpfm_save_custom_taxonomy_image_for_food_type', 10, 2);
-function wpfm_save_custom_taxonomy_image_for_food_type($term_id, $tt_id) {
-	if (isset($_POST['image_id']) && '' !== $_POST['image_id']) {
-		$image = $_POST['image_id'];
-		add_term_meta($term_id, 'image_id', $image, true);
-	}
-}
-
-// Add the image field in edit form page
-add_action('food_manager_type_edit_form_fields', 'wpfm_update_custom_taxonomy_image_for_food_type', 10, 2);
-function wpfm_update_custom_taxonomy_image_for_food_type($term, $taxonomy) { ?>
-	<tr class="form-field term-group-wrap">
-		<th scope="row">
-			<label for="image_id"><?php _e('Image', 'taxt-domain'); ?></label>
-		</th>
-		<td>
-			<?php $image_id = get_term_meta($term->term_id, 'image_id', true); ?>
-			<input type="hidden" id="image_id" name="image_id" value="<?php echo $image_id; ?>">
-			<div id="image_wrapper">
-				<?php if ($image_id) { ?>
-					<?php echo wp_get_attachment_image($image_id, 'thumbnail'); ?>
-				<?php } ?>
-			</div>
-			<p>
-				<input type="button" class="button button-secondary taxonomy_media_button" id="taxonomy_media_button" name="taxonomy_media_button" value="<?php _e('Add Image', 'taxt-domain'); ?>">
-				<input type="button" class="button button-secondary taxonomy_media_remove" id="taxonomy_media_remove" name="taxonomy_media_remove" value="<?php _e('Remove Image', 'taxt-domain'); ?>">
-			</p>
-			</div>
-		</td>
-	</tr>
-<?php
-}
-
-// Update the 'food_manager_type' taxonomy image field
-add_action('edited_food_manager_type', 'wpfm_updated_custom_taxonomy_image_for_food_type', 10, 2);
-function wpfm_updated_custom_taxonomy_image_for_food_type($term_id, $tt_id) {
-	if (isset($_POST['image_id']) && '' !== $_POST['image_id']) {
-		$image = $_POST['image_id'];
-		update_term_meta($term_id, 'image_id', $image);
-	} else {
-		update_term_meta($term_id, 'image_id', '');
-	}
-}
-
-// Enqueue the wp_media library
-add_action('admin_enqueue_scripts', 'wpfm_custom_taxonomy_load_media_for_food_type');
-function wpfm_custom_taxonomy_load_media_for_food_type() {
-	if (!isset($_GET['taxonomy']) || $_GET['taxonomy'] != 'food_manager_type') {
-		return;
-	}
-	wp_enqueue_media();
-}
-
-// Custom script
-add_action('admin_footer', 'wpfm_add_custom_taxonomy_script_for_food_type');
-function wpfm_add_custom_taxonomy_script_for_food_type() {
-	if (!isset($_GET['taxonomy']) || $_GET['taxonomy'] != 'food_manager_type') {
-		return;
-	}
-?>
-	<script>
-		jQuery(document).ready(function($) {
-			function taxonomy_media_upload(button_class) {
-				var custom_media = true,
-					original_attachment = wp.media.editor.send.attachment;
-				$('body').on('click', button_class, function(e) {
-					var button_id = '#' + $(this).attr('id');
-					var send_attachment = wp.media.editor.send.attachment;
-					var button = $(button_id);
-					custom_media = true;
-					wp.media.editor.send.attachment = function(props, attachment) {
-						if (custom_media) {
-							$('#image_id').val(attachment.id);
-							$('#image_wrapper').html('<img class="custom_media_image" src="" style="margin:0;padding:0;max-height:100px;float:none;" />');
-							$('#image_wrapper .custom_media_image').attr('src', attachment.url).css('display', 'block');
-						} else {
-							return original_attachment.apply(button_id, [props, attachment]);
-						}
-					}
-					wp.media.editor.open(button);
-					return false;
-				});
-			}
-			taxonomy_media_upload('.taxonomy_media_button.button');
-			$('body').on('click', '.taxonomy_media_remove', function() {
-				$('#image_id').val('');
-				$('#image_wrapper').html('<img class="custom_media_image" src="" style="margin:0;padding:0;max-height:100px;float:none;display:none;" />');
-			});
-			$(document).ajaxComplete(function(event, xhr, settings) {
-				var queryStringArr = settings.data.split('&');
-				if ($.inArray('action=add-tag', queryStringArr) !== -1) {
-					var xml = xhr.responseXML;
-					$response = $(xml).find('term_id').text();
-					if ($response != "") {
-						$('#image_wrapper').html('');
-					}
-				}
-			});
-		});
-	</script>
-<?php
-}
-
-// Add new column heading
-add_filter('manage_edit-food_manager_type_columns', 'wpfm_display_custom_taxonomy_image_column_heading_for_food_type');
-function wpfm_display_custom_taxonomy_image_column_heading_for_food_type($columns) {
-	$columns['category_image'] = __('Image', 'taxt-domain');
-	return $columns;
-}
-
-// Display new columns values
-add_action('manage_food_manager_type_custom_column', 'wpfm_display_custom_taxonomy_image_column_value_for_food_type', 10, 3);
-function wpfm_display_custom_taxonomy_image_column_value_for_food_type($columns, $column, $id) {
-	if ('category_image' == $column) {
-		$image_id = esc_html(get_term_meta($id, 'image_id', true));
-		$columns = wp_get_attachment_image($image_id, array('50', '50'));
-	}
-	return $columns;
-}
-
-// Add image field in 'food_manager_category' taxonomy page
-add_action('food_manager_category_add_form_fields', 'wpfm_add_custom_taxonomy_image_for_food_category', 10, 2);
-function wpfm_add_custom_taxonomy_image_for_food_category($taxonomy) {
-?>
-	<div class="form-field term-group">
-		<label for="food_cat_image_id" class="wpfm-food-category-tax-image"><?php _e('Image/Icon', 'taxt-domain'); ?></label>
-		<input type="hidden" id="food_cat_image_id" name="food_cat_image_id" class="custom_media_url" value="">
-		<div id="image_wrapper"></div>
-		<p>
-			<input type="button" class="button button-secondary taxonomy_media_button" id="taxonomy_media_button" name="taxonomy_media_button" value="<?php _e('Add Image', 'taxt-domain'); ?>">
-			<input type="button" class="button button-secondary taxonomy_media_remove" id="taxonomy_media_remove" name="taxonomy_media_remove" value="<?php _e('Remove Image', 'taxt-domain'); ?>">
-		</p>
-	</div>
-<?php
-}
-
-// Save the 'food_manager_category' taxonomy image field
-add_action('created_food_manager_category', 'wpfm_save_custom_taxonomy_image_for_food_category', 10, 2);
-function wpfm_save_custom_taxonomy_image_for_food_category($term_id, $tt_id) {
-	if (isset($_POST['food_cat_image_id']) && '' !== $_POST['food_cat_image_id']) {
-		$image = $_POST['food_cat_image_id'];
-		add_term_meta($term_id, 'food_cat_image_id', $image, true);
-	}
-}
-
-// Add the image field in edit form page
-add_action('food_manager_category_edit_form_fields', 'wpfm_update_custom_taxonomy_image_for_food_category', 10, 2);
-function wpfm_update_custom_taxonomy_image_for_food_category($term, $taxonomy) { ?>
-	<tr class="form-field term-group-wrap">
-		<th scope="row">
-			<label for="food_cat_image_id"><?php _e('Image', 'taxt-domain'); ?></label>
-		</th>
-		<td>
-			<?php $food_cat_image_id = get_term_meta($term->term_id, 'food_cat_image_id', true); ?>
-			<input type="hidden" id="food_cat_image_id" name="food_cat_image_id" value="<?php echo $food_cat_image_id; ?>">
-			<div id="image_wrapper">
-				<?php if ($food_cat_image_id) { ?>
-					<?php echo wp_get_attachment_image($food_cat_image_id, 'thumbnail'); ?>
-				<?php } ?>
-			</div>
-			<p>
-				<input type="button" class="button button-secondary taxonomy_media_button" id="taxonomy_media_button" name="taxonomy_media_button" value="<?php _e('Add Image', 'taxt-domain'); ?>">
-				<input type="button" class="button button-secondary taxonomy_media_remove" id="taxonomy_media_remove" name="taxonomy_media_remove" value="<?php _e('Remove Image', 'taxt-domain'); ?>">
-			</p>
-			</div>
-		</td>
-	</tr>
-<?php
-}
-
-// Update the 'food_manager_category' taxonomy image field
-add_action('edited_food_manager_category', 'wpfm_updated_custom_taxonomy_image_for_food_category', 10, 2);
-function wpfm_updated_custom_taxonomy_image_for_food_category($term_id, $tt_id) {
-	if (isset($_POST['food_cat_image_id']) && '' !== $_POST['food_cat_image_id']) {
-		$image = $_POST['food_cat_image_id'];
-		update_term_meta($term_id, 'food_cat_image_id', $image);
-	} else {
-		update_term_meta($term_id, 'food_cat_image_id', '');
-	}
-}
-
-// Enqueue the wp_media library
-add_action('admin_enqueue_scripts', 'wpfm_custom_taxonomy_load_media_for_food_category');
-function wpfm_custom_taxonomy_load_media_for_food_category() {
-	if (!isset($_GET['taxonomy']) || $_GET['taxonomy'] != 'food_manager_category') {
-		return;
-	}
-	wp_enqueue_media();
-}
-
-// Custom script
-add_action('admin_footer', 'wpfm_add_custom_taxonomy_script_for_food_category');
-function wpfm_add_custom_taxonomy_script_for_food_category() {
-	if (!isset($_GET['taxonomy']) || $_GET['taxonomy'] != 'food_manager_category') {
-		return;
-	}
-?>
-	<script>
-		jQuery(document).ready(function($) {
-			function taxonomy_media_upload(button_class) {
-				var custom_media = true,
-					original_attachment = wp.media.editor.send.attachment;
-				$('body').on('click', button_class, function(e) {
-					var button_id = '#' + $(this).attr('id');
-					var send_attachment = wp.media.editor.send.attachment;
-					var button = $(button_id);
-					custom_media = true;
-					wp.media.editor.send.attachment = function(props, attachment) {
-						if (custom_media) {
-							$('#food_cat_image_id').val(attachment.id);
-							$('#image_wrapper').html('<img class="custom_media_image" src="" style="margin:0;padding:0;max-height:100px;float:none;" />');
-							$('#image_wrapper .custom_media_image').attr('src', attachment.url).css('display', 'block');
-						} else {
-							return original_attachment.apply(button_id, [props, attachment]);
-						}
-					}
-					wp.media.editor.open(button);
-					return false;
-				});
-			}
-			taxonomy_media_upload('.taxonomy_media_button.button');
-			$('body').on('click', '.taxonomy_media_remove', function() {
-				$('#food_cat_image_id').val('');
-				$('#image_wrapper').html('<img class="custom_media_image" src="" style="margin:0;padding:0;max-height:100px;float:none;display:none;" />');
-			});
-			$(document).ajaxComplete(function(event, xhr, settings) {
-				var queryStringArr = settings.data.split('&');
-				if ($.inArray('action=add-tag', queryStringArr) !== -1) {
-					var xml = xhr.responseXML;
-					$response = $(xml).find('term_id').text();
-					if ($response != "") {
-						$('#image_wrapper').html('');
-					}
-				}
-			});
-		});
-	</script>
-	<?php
-}
-
-// Add new column heading
-add_filter('manage_edit-food_manager_category_columns', 'wpfm_display_custom_taxonomy_image_column_heading_for_food_category');
-function wpfm_display_custom_taxonomy_image_column_heading_for_food_category($columns) {
-	$columns['category_image'] = __('Image', 'taxt-domain');
-	return $columns;
-}
-
-// Display new columns values
-add_action('manage_food_manager_category_custom_column', 'wpfm_display_custom_taxonomy_image_column_value_for_food_category', 10, 3);
-function wpfm_display_custom_taxonomy_image_column_value_for_food_category($columns, $column, $id) {
-	if ('category_image' == $column) {
-		$food_cat_image_id = esc_html(get_term_meta($id, 'food_cat_image_id', true));
-		$columns = wp_get_attachment_image($food_cat_image_id, array('50', '50'));
-	}
-	return $columns;
 }
 
 // Display fields according to field type
@@ -2317,6 +1980,42 @@ function wpfm_extra_topping_form_fields($post, $field, $field_value) {
 }
 
 /**
+ * Use radio inputs instead of checkboxes for term checklists in specified taxonomies such as 'food_manager_type'.
+ *
+ * @since 1.0.0
+ * @param array $args
+ * @return array
+ */
+function wpfm_term_radio_checklist_for_food_type($args) {
+	/* Change to your required taxonomy */
+	if (!empty($args['taxonomy']) && $args['taxonomy'] === 'food_manager_type') {
+		// Don't override 3rd party walkers.
+		if (empty($args['walker']) || is_a($args['walker'], 'Walker')) {
+			if (!class_exists('WPFM_Walker_Category_Radio_Checklist_For_Food_Type')) {
+				/**
+				 * Custom walker for switching checkbox inputs to radio.
+				 *
+				 * @see Walker_Category_Checklist
+				 */
+				class WPFM_Walker_Category_Radio_Checklist_For_Food_Type extends Walker_Category_Checklist {
+					function walk($elements, $max_depth, ...$args) {
+						$output = parent::walk($elements, $max_depth, ...$args);
+						$output = str_replace(
+							array('type="checkbox"', "type='checkbox'"),
+							array('type="radio"', "type='radio'"),
+							$output
+						);
+						return $output;
+					}
+				}
+			}
+			$args['walker'] = new WPFM_Walker_Category_Radio_Checklist_For_Food_Type;
+		}
+	}
+	return $args;
+}
+
+/**
  * wpfm_isMultiArray function
  *
  * @since  1.0.1
@@ -2349,7 +2048,7 @@ function wpfm_category_checklist($taxonomy, $key_name, $checked_term) {
 		$popular_ids[] = $term->term_id;
 		$id      = "$taxonomy-$term->term_id";
 		$checked = in_array($term->term_id, $checked_term) ? 'checked="checked"' : '';
-	?>
+?>
 		<li id="<?php echo $tax->name; ?>-<?php echo $id; ?>" class="<?php echo $tax->name; ?>">
 			<label class="selectit">
 				<input id="in-<?php echo $tax->name; ?>-<?php echo $id; ?>" type="checkbox" <?php echo $checked; ?> name="<?php echo $key_name; ?>[<?php echo $tax->name; ?>][]" value="<?php echo (int) $term->term_id; ?>" <?php disabled(!current_user_can($tax->cap->assign_terms)); ?> />

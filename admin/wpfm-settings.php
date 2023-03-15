@@ -21,6 +21,20 @@ class WPFM_Settings {
 	private static $_instance = null;
 
 	/**
+	 * Init settings_group.
+	 *
+	 * @since 1.0.0
+	 */
+	public $settings_group;
+
+	/**
+	 * Init settings.
+	 *
+	 * @since 1.0.0
+	 */
+	public $settings;
+
+	/**
 	 * Allows for accessing single instance of class. Class should only be constructed once per call.
 	 *
 	 * @since 1.0.0
@@ -42,7 +56,6 @@ class WPFM_Settings {
 	 */
 	public function __construct() {
 		$this->settings_group = 'food_manager';
-		add_action('admin_init', array($this, 'register_settings'));
 	}
 
 	/**
@@ -51,7 +64,7 @@ class WPFM_Settings {
 	 * @access protected
 	 * @return void
 	 */
-	protected function init_settings() {
+	public function init_settings() {
 		// Prepare roles option
 		$roles         = get_editable_roles();
 		$account_roles = array();
@@ -306,23 +319,6 @@ class WPFM_Settings {
 				),
 			)
 		);
-	}
-
-	/**
-	 * register_settings function.
-	 *
-	 * @access public
-	 * @return void
-	 */
-	public function register_settings() {
-		$this->init_settings();
-		foreach ($this->settings as $section) {
-			foreach ($section[1] as $option) {
-				if (isset($option['std']))
-					add_option($option['name'], $option['std']);
-				register_setting($this->settings_group, $option['name']);
-			}
-		}
 	}
 
 	/**

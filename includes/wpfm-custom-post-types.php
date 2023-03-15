@@ -31,29 +31,12 @@ class WPFM_Post_Types {
 	 * Constructor
 	 */
 	public function __construct() {
-		add_action('init', array($this, 'register_post_types'), 0);
-		add_filter('admin_head', array($this, 'admin_head'));
-		add_filter('the_content', array($this, 'food_content'));
-		add_filter('the_content', array($this, 'food_menu_content'));
-		add_filter('archive_template', array($this, 'food_archive'), 20);
-		add_action('wp_footer', array($this, 'output_structured_data'));
-		add_action('wp_head', array($this, 'noindex_expired_cancelled_food_listings'));
-		add_filter('use_block_editor_for_post_type', array($this, 'wpfm_disable_gutenberg'), 10, 2);
-		add_filter('wp_insert_post_data', array($this, 'fix_post_name'), 10, 2);
-		add_action('wp_insert_post', array($this, 'maybe_add_default_meta_data'), 10, 2);
-		// View count action
-		add_action('set_single_listing_view_count', array($this, 'set_single_listing_view_count'));
-		if (get_option('food_manager_enable_categories')) {
-			add_action('restrict_manage_posts', array($this, 'foods_by_category'));
-		}
-		if (get_option('food_manager_enable_food_types') && get_option('food_manager_enable_categories')) {
-			add_action('restrict_manage_posts', array($this, 'foods_by_food_type'));
-		}
 	}
 
 	/**
 	 * register_post_types function.
 	 *
+	 * @since 1.0.0
 	 * @access public
 	 * @return void
 	 */
@@ -90,40 +73,40 @@ class WPFM_Post_Types {
 			"food_manager",
 			apply_filters("register_post_type_food_manager", array(
 				'labels' => array(
-					'name' 					=> $plural,
-					'singular_name' 		=> $singular,
+					'name'                     => $plural,
+					'singular_name'         => $singular,
 					'menu_name'             => __('Food Manager', 'wp-food-manager'),
 					'all_items'             => sprintf(wp_kses('All %s', 'wp-food-manager'), $plural),
-					'add_new' 				=> __('Add Food', 'wp-food-manager'),
-					'add_new_item' 			=> sprintf(wp_kses('Add %s', 'wp-food-manager'), $singular),
-					'edit' 					=> __('Edit', 'wp-food-manager'),
-					'edit_item' 			=> sprintf(wp_kses('Edit %s', 'wp-food-manager'), $singular),
-					'new_item' 				=> sprintf(wp_kses('New %s', 'wp-food-manager'), $singular),
-					'view' 					=> sprintf(wp_kses('View %s', 'wp-food-manager'), $singular),
-					'view_item' 			=> sprintf(wp_kses('View %s', 'wp-food-manager'), $singular),
-					'search_items' 			=> sprintf(wp_kses('Search %s', 'wp-food-manager'), $plural),
-					'not_found' 			=> sprintf(wp_kses('No %s found', 'wp-food-manager'), $plural),
-					'not_found_in_trash' 	=> sprintf(wp_kses('No %s found in trash', 'wp-food-manager'), $plural),
-					'parent' 				=> sprintf(wp_kses('Parent %s', 'wp-food-manager'), $singular),
+					'add_new'                 => __('Add Food', 'wp-food-manager'),
+					'add_new_item'             => sprintf(wp_kses('Add %s', 'wp-food-manager'), $singular),
+					'edit'                     => __('Edit', 'wp-food-manager'),
+					'edit_item'             => sprintf(wp_kses('Edit %s', 'wp-food-manager'), $singular),
+					'new_item'                 => sprintf(wp_kses('New %s', 'wp-food-manager'), $singular),
+					'view'                     => sprintf(wp_kses('View %s', 'wp-food-manager'), $singular),
+					'view_item'             => sprintf(wp_kses('View %s', 'wp-food-manager'), $singular),
+					'search_items'             => sprintf(wp_kses('Search %s', 'wp-food-manager'), $plural),
+					'not_found'             => sprintf(wp_kses('No %s found', 'wp-food-manager'), $plural),
+					'not_found_in_trash'     => sprintf(wp_kses('No %s found in trash', 'wp-food-manager'), $plural),
+					'parent'                 => sprintf(wp_kses('Parent %s', 'wp-food-manager'), $singular),
 					'featured_image'        => __('Food Thumbnail', 'wp-food-manager'),
 					'set_featured_image'    => __('Set food thumbnail', 'wp-food-manager'),
 					'remove_featured_image' => __('Remove food thumbnail', 'wp-food-manager'),
 					'use_featured_image'    => __('Use as food thumbnail', 'wp-food-manager'),
 				),
 				'description' => sprintf(wp_kses('This is where you can create and manage %s.', 'wp-food-manager'), $plural),
-				'public' 				=> true,
-				'show_ui' 				=> true,
-				'capability_type' 		=> 'post',
+				'public'                 => true,
+				'show_ui'                 => true,
+				'capability_type'         => 'post',
 				'map_meta_cap'          => true,
-				'publicly_queryable' 	=> true,
-				'exclude_from_search' 	=> false,
-				'hierarchical' 			=> false,
-				'rewrite' 				=> $rewrite,
-				'query_var' 			=> true,
-				'show_in_rest' 			=> true,
-				'supports' 				=> array('title', 'editor', 'custom-fields', 'publicize', 'thumbnail'),
-				'has_archive' 			=> $has_archive,
-				'show_in_nav_menus' 	=> true,
+				'publicly_queryable'     => true,
+				'exclude_from_search'     => false,
+				'hierarchical'             => false,
+				'rewrite'                 => $rewrite,
+				'query_var'             => true,
+				'show_in_rest'             => true,
+				'supports'                 => array('title', 'editor', 'custom-fields', 'publicize', 'thumbnail'),
+				'has_archive'             => $has_archive,
+				'show_in_nav_menus'     => true,
 				'menu_icon' => WPFM_PLUGIN_URL . '/assets/images/wpfm-icon.png' // It's use to display food manager icon at admin site. 
 			))
 		);
@@ -148,21 +131,21 @@ class WPFM_Post_Types {
 			"food_manager_menu",
 			apply_filters("register_post_type_food_manager_menu", array(
 				'labels' => array(
-					'name' 					=> $plural_menu,
-					'singular_name' 		=> $singular_menu,
+					'name'                     => $plural_menu,
+					'singular_name'         => $singular_menu,
 					'menu_name'             => __('Food Menu', 'wp-food-manager'),
 					'all_items'             => sprintf(__('%s', 'wp-food-manager'), $plural_menu),
-					'add_new' 				=> __('Add New', 'wp-food-manager'),
-					'add_new_item' 			=> sprintf(__('Add %s', 'wp-food-manager'), $singular_menu),
-					'edit' 					=> __('Edit', 'wp-food-manager'),
-					'edit_item' 			=> sprintf(__('Edit %s', 'wp-food-manager'), $singular_menu),
-					'new_item' 				=> sprintf(__('New %s', 'wp-food-manager'), $singular_menu),
-					'view' 					=> sprintf(__('View %s', 'wp-food-manager'), $singular_menu),
-					'view_item' 			=> sprintf(__('View %s', 'wp-food-manager'), $singular_menu),
-					'search_items' 			=> sprintf(__('Search %s', 'wp-food-manager'), $plural_menu),
-					'not_found' 			=> sprintf(__('No %s found', 'wp-food-manager'), $plural_menu),
-					'not_found_in_trash' 	=> sprintf(__('No %s found in trash', 'wp-food-manager'), $plural_menu),
-					'parent' 				=> sprintf(__('Parent %s', 'wp-food-manager'), $singular_menu),
+					'add_new'                 => __('Add New', 'wp-food-manager'),
+					'add_new_item'             => sprintf(__('Add %s', 'wp-food-manager'), $singular_menu),
+					'edit'                     => __('Edit', 'wp-food-manager'),
+					'edit_item'             => sprintf(__('Edit %s', 'wp-food-manager'), $singular_menu),
+					'new_item'                 => sprintf(__('New %s', 'wp-food-manager'), $singular_menu),
+					'view'                     => sprintf(__('View %s', 'wp-food-manager'), $singular_menu),
+					'view_item'             => sprintf(__('View %s', 'wp-food-manager'), $singular_menu),
+					'search_items'             => sprintf(__('Search %s', 'wp-food-manager'), $plural_menu),
+					'not_found'             => sprintf(__('No %s found', 'wp-food-manager'), $plural_menu),
+					'not_found_in_trash'     => sprintf(__('No %s found in trash', 'wp-food-manager'), $plural_menu),
+					'parent'                 => sprintf(__('Parent %s', 'wp-food-manager'), $singular_menu),
 					'featured_image'        => __('Food Menu Image', 'wp-food-manager'),
 					'set_featured_image'    => __('Add Image', 'wp-food-manager'),
 					'remove_featured_image' => __('Remove Image', 'wp-food-manager'),
@@ -170,17 +153,17 @@ class WPFM_Post_Types {
 					'view_items'    => sprintf(__('View %s', 'wp-food-manager'), $plural_menu),
 				),
 				'description' => sprintf(__('This is where you can create and manage %s.', 'wp-food-manager'), $plural_menu),
-				'public' 				=> true,
-				'show_ui' 				=> true,
+				'public'                 => true,
+				'show_ui'                 => true,
 				'map_meta_cap'          => true,
-				'publicly_queryable' 	=> true,
-				'exclude_from_search' 	=> false,
-				'hierarchical' 			=> false,
-				'rewrite' 				=> $rewrite_menu,
-				'query_var' 			=> true,
-				'show_in_rest' 			=> true,
-				'supports' 				=> array('title', 'thumbnail', 'publicize'),
-				'has_archive' 			=> true,
+				'publicly_queryable'     => true,
+				'exclude_from_search'     => false,
+				'hierarchical'             => false,
+				'rewrite'                 => $rewrite_menu,
+				'query_var'             => true,
+				'show_in_rest'             => true,
+				'supports'                 => array('title', 'thumbnail', 'publicize'),
+				'has_archive'             => true,
 				'show_in_menu' => 'edit.php?post_type=food_manager'
 			))
 		);
@@ -195,137 +178,6 @@ class WPFM_Post_Types {
 			'show_in_admin_status_list' => true,
 			'label_count'               => _n_noop('Preview <span class="count">(%s)</span>', 'Preview <span class="count">(%s)</span>', 'wp-food-manager')
 		));
-	}
-
-	/**
-	 * Show category dropdown
-	 */
-	public function foods_by_category() {
-		global $typenow, $wp_query;
-		if ($typenow != 'food_manager' || !taxonomy_exists('food_manager_category')) {
-			return;
-		}
-		include_once WPFM_PLUGIN_DIR . '/includes/wpfm-category-walker.php';
-		$r = array();
-		$r['pad_counts'] = 1;
-		$r['hierarchical'] = 1;
-		$r['hide_empty'] = 0;
-		$r['show_count'] = 1;
-		$r['selected'] = (isset($wp_query->query['food_manager_category'])) ? $wp_query->query['food_manager_category'] : '';
-		$r['menu_order'] = false;
-		$terms = get_terms('food_manager_category', $r);
-		$walker = WPFM_Category_Walker::instance();
-		if (!$terms) {
-			return;
-		}
-		$output = "<select name='food_manager_category' id='dropdown_food_manager_category'>";
-		$output .= '<option value="" ' . selected(isset($_GET['food_manager_category']) ? $_GET['food_manager_category'] : '', '', false) . '>' . __('Select Food Category', 'wp-food-manager') . '</option>';
-		$output .= $walker->walk($terms, 0, $r);
-		$output .= '</select>';
-		printf($output);
-	}
-
-	/**
-	 * Show Food type dropdown
-	 */
-	public function foods_by_food_type() {
-		global $typenow, $wp_query;
-		if ($typenow != 'food_manager' || !taxonomy_exists('food_manager_type')) {
-			return;
-		}
-		$r                 = array();
-		$r['pad_counts']   = 1;
-		$r['hierarchical'] = 1;
-		$r['hide_empty']   = 0;
-		$r['show_count']   = 1;
-		$r['selected']     = (isset($wp_query->query['food_manager_type'])) ? $wp_query->query['food_manager_type'] : '';
-		$r['menu_order']   = false;
-		$terms             = get_terms('food_manager_type', $r);
-		$walker            = WPFM_Category_Walker::instance();
-		if (!$terms) {
-			return;
-		}
-		$output  = "<select name='food_manager_type' id='dropdown_food_manager_type'>";
-		$output .= '<option value="" ' . selected(isset($_GET['food_manager_type']) ? $_GET['food_manager_type'] : '', '', false) . '>' . __('Select Food Type', 'wp-food-manager') . '</option>';
-		$output .= $walker->walk($terms, 0, $r);
-		$output .= '</select>';
-		printf($output);
-	}
-
-	/**
-	 * Change label
-	 */
-	public function admin_head() {
-		global $menu;
-		$plural     = __('Food Manager', 'wp-food-manager');
-		$count_foods = wp_count_posts('food_manager', 'readable');
-		if (!empty($menu) && is_array($menu)) {
-			foreach ($menu as $key => $menu_item) {
-				if (strpos($menu_item[0], $plural) === 0) {
-					if ($order_count = $count_foods->pending) {
-						$menu[$key][0] .= " <span class='awaiting-mod update-plugins count-$order_count'><span class='pending-count'>" . number_format_i18n($count_foods->pending) . "</span></span>";
-					}
-					break;
-				}
-			}
-		}
-	}
-
-	/**
-	 * Add extra content when showing food content
-	 */
-	public function food_content($content) {
-		global $post;
-		if (!is_singular('food_manager') || !in_the_loop()) {
-			return $content;
-		}
-		remove_filter('the_content', array($this, 'food_content'));
-		if ('food_manager' === $post->post_type) {
-			ob_start();
-			do_action('food_content_start');
-			get_food_manager_template_part('content-single', 'food_manager');
-			do_action('food_content_end');
-			$content = ob_get_clean();
-		}
-		add_filter('the_content', array($this, 'food_content'));
-		return apply_filters('food_manager_single_food_content', $content, $post);
-	}
-
-	/**
-	 * food_archive function.
-	 *
-	 * @access public
-	 * @return void
-	 */
-	public function food_archive($template) {
-		if (is_tax('food_manager_category')) {
-			$template = WPFM_PLUGIN_DIR . '/templates/content-food_listing_category.php';
-		} elseif (is_tax('food_manager_type')) {
-			$template = WPFM_PLUGIN_DIR . '/templates/content-food_listing_type.php';
-		} elseif (is_tax('food_manager_tag')) {
-			$template = WPFM_PLUGIN_DIR . '/templates/content-food_listing_tag.php';
-		}
-		return $template;
-	}
-
-	/**
-	 * Add Food menu content
-	 */
-	public function food_menu_content($content) {
-		global $post;
-		if (!is_singular('food_manager_menu') || !in_the_loop()) {
-			return $content;
-		}
-		remove_filter('the_content', array($this, 'food_menu_content'));
-		if ('food_manager_menu' === $post->post_type) {
-			ob_start();
-			do_action('food_menu_content_start');
-			get_food_manager_template_part('content-single', 'food_manager_menu');
-			do_action('food_menu_content_end');
-			$content = ob_get_clean();
-		}
-		add_filter('the_content', array($this, 'food_menu_content'));
-		return apply_filters('food_manager_single_food_menu_content', $content, $post);
 	}
 
 	/**
@@ -418,24 +270,6 @@ class WPFM_Post_Types {
 	}
 
 	/**
-	 * Set post view on the single listing page
-	 * @param  array $post	 
-	 */
-	public function set_single_listing_view_count($post) {
-		global $post;
-		// Get the user role. 
-		if (is_user_logged_in()) {
-			$role = get_food_manager_current_user_role();
-			$current_user = wp_get_current_user();
-			if ($role != 'Administrator' && ($post->post_author != $current_user->ID)) {
-				$this->set_post_views($post->ID);
-			}
-		} else {
-			$this->set_post_views($post->ID);
-		}
-	}
-
-	/**
 	 * This function is use to set the counts the food views and attendees views.
 	 * This function also used at attendees dashboard file.
 	 * @param  int $post_id	 
@@ -453,18 +287,6 @@ class WPFM_Post_Types {
 		}
 	}
 
-	/**
-	 * Fix post name when wp_update_post changes it
-	 * @param  array $data
-	 * @return array
-	 */
-	public function fix_post_name($data, $postarr) {
-		if ('food_manager' === $data['post_type'] && 'pending' === $data['post_status'] && !current_user_can('publish_posts')) {
-			$data['post_name'] = $postarr['post_name'];
-		}
-		return $data;
-	}
-	
 	/**
 	 * Triggered when updating meta on a food listing.
 	 *
@@ -520,27 +342,13 @@ class WPFM_Post_Types {
 	}
 
 	/**
-	 * Maybe set default meta data for food listings
-	 * @param  int $post_id
-	 * @param  WP_Post $post
-	 */
-	public function maybe_add_default_meta_data($post_id, $post = '') {
-		if (empty($post) || 'food_manager' === $post->post_type) {
-			add_post_meta($post_id, '_cancelled', 0, true);
-			add_post_meta($post_id, '_featured', 0, true);
-		}
-	}
-
-	/**
 	 * After importing via WP ALL Import, add default meta data
 	 * @param  int $post_id
 	 */
 	public function pmxi_saved_post($post_id) {
 		if ('food_manager' === get_post_type($post_id)) {
-			$this->maybe_add_default_meta_data($post_id);
-			if (!WP_Food_Manager_Geocode::has_location_data($post_id) && ($location = get_post_meta($post_id, '_food_location', true))) {
-				WP_Food_Manager_Geocode::generate_location_data($post_id, $location);
-			}
+			$actionhooks = WPFM_ActionHooks::instance();
+			$actionhooks->maybe_add_default_meta_data($post_id);
 		}
 	}
 
@@ -560,49 +368,6 @@ class WPFM_Post_Types {
 					@unlink(get_attached_file($attachment->ID));
 				}
 			}
-		}
-	}
-
-	/**
-	 * Add noindex for expired and filled food listings.
-	 */
-	public function noindex_expired_cancelled_food_listings() {
-		if (!is_single()) {
-			return;
-		}
-		$post = get_post();
-		if (!$post || 'food_manager' !== $post->post_type) {
-			return;
-		}
-		if (wpfm_allow_indexing_food_listing()) {
-			return;
-		}
-		$robots['noindex'] = true;
-		$robots['follow'] = true;
-		$robots_arr = wp_robots_no_robots($robots);
-		$content_arr = array();
-		if ($robots_arr) {
-			foreach ($robots_arr as $r_key => $r_val) {
-				$content_arr[] = $r_key;
-			}
-		}
-		echo '<meta name="robots" content="' . implode(',', $content_arr) . '" />';
-	}
-
-	/**
-	 * output_structured_data
-	 * @since 1.0.0
-	 */
-	public function output_structured_data() {
-		if (!is_single()) {
-			return;
-		}
-		if (!wpfm_output_food_listing_structured_data()) {
-			return;
-		}
-		$structured_data = wpfm_get_food_listing_structured_data();
-		if (!empty($structured_data)) {
-			echo '<script type="application/ld+json">' . wp_json_encode($structured_data) . '</script>';
 		}
 	}
 
@@ -659,16 +424,5 @@ class WPFM_Post_Types {
 			'untrashed' => _n('%s food restored from the Trash.', '%s foods restored from the Trash.', $bulk_counts['untrashed'], 'wp-food-manager'),
 		);
 		return $bulk_messages;
-	}
-
-	/**
-	 * 
-	 * @param boolean
-	 * @param string
-	 * @since 1.0.0
-	 */
-	public function wpfm_disable_gutenberg($is_enabled, $post_type) {
-		if (apply_filters('wpfm_disable_gutenberg', true) && $post_type === 'food_manager') return false;
-		return $is_enabled;
 	}
 }
