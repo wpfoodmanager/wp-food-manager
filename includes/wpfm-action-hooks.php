@@ -102,11 +102,6 @@ class WPFM_ActionHooks {
         add_action('manage_food_manager_posts_custom_column', array($this, 'custom_food_content_column'), 10, 2);
         add_action('admin_notices', array($this, 'display_notice'));
 
-        // Food form submit's actions
-        if (class_exists('WPFM_Form_Submit_Food')) {
-            add_action('wp', array(WPFM_Form_Submit_Food::instance(), 'process'));
-        }
-
         // wpfm form's action
         add_action('init', array($this, 'load_posted_form'));
 
