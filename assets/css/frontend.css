@@ -488,7 +488,7 @@ button.wpfm-theme-button:focus,
 button.wpfm-theme-button:hover,
 input.wpfm-theme-button:focus,
 input.wpfm-theme-button:hover {
-    background: var(--wpfm-theme-button-color);
+    background: var(--wpfm-dark-color);
     border: none;
     outline: 0;
 }
