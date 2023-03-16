@@ -1092,12 +1092,14 @@ class WPFM_ActionHooks {
                     $additional_fields = apply_filters('food_manager_show_additional_details_fields', $additional_fields);
                 }
                 // Find how many total reapeated extra option there then store it.
+                $options_arr = array();
                 if (isset($_POST['repeated_options']) && is_array($_POST['repeated_options'])) {
                     foreach ($_POST['repeated_options'] as $option_count) {
                         $counter = 0;
                         if (isset($_POST['option_key_' . $option_count])) {
                             $option_key = $_POST['option_key_' . $option_count];
                             $option_name = $_POST['option_name_' . $option_count];
+                            $options_arr[] = $option_name;
                             $option_type = $_POST['_option_type_' . $option_count];
                             $option_required = $_POST['_option_required_' . $option_count];
                             $option_enable_desc = isset($_POST['_option_enable_desc_' . $option_count]) ? $_POST['_option_enable_desc_' . $option_count] : '';
@@ -1169,7 +1171,18 @@ class WPFM_ActionHooks {
                             }
                         }
                     }
+                    wp_set_object_terms($post_id, $options_arr, 'food_manager_topping');
                     $counter++;
+                }
+                $exist_toppings = get_the_terms($post_id, 'food_manager_topping');
+                if ($exist_toppings) {
+                    $removed_toppings_ids = [];
+                    foreach ($exist_toppings as $toppings) {
+                        if (!in_array($toppings->slug, $options_arr)) {
+                            $removed_toppings_ids[] = (int)$toppings->term_id;
+                        }
+                    }
+                    wp_remove_object_terms($post_id, $removed_toppings_ids, 'food_manager_topping');
                 }
                 update_post_meta($post_id, '_wpfm_extra_options', $extra_options);
             }

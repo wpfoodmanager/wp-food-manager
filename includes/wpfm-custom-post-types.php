@@ -386,12 +386,14 @@ class WPFM_Post_Types {
 				'food_base'      => '',
 				'category_base' => '',
 				'type_base'     => '',
+				'topping_base'     => '',
 			)
 		);
 		// Ensure rewrite slugs are set.
 		$permalinks['food_rewrite_slug']      = untrailingslashit(empty($permalinks['food_base']) ? _x('food', 'Food permalink - resave permalinks after changing this', 'wp-food-manager') : $permalinks['food_base']);
 		$permalinks['category_rewrite_slug'] = untrailingslashit(empty($permalinks['category_base']) ? _x('food-category', 'Food category slug - resave permalinks after changing this', 'wp-food-manager') : $permalinks['category_base']);
 		$permalinks['type_rewrite_slug']     = untrailingslashit(empty($permalinks['type_base']) ? _x('food-type', 'Food type slug - resave permalinks after changing this', 'wp-food-manager') : $permalinks['type_base']);
+		$permalinks['topping_rewrite_slug']     = untrailingslashit(empty($permalinks['topping_base']) ? _x('food-topping', 'Food topping slug - resave permalinks after changing this', 'wp-food-manager') : $permalinks['topping_base']);
 		// Restore the original locale.
 		if (function_exists('restore_current_locale') && did_action('admin_init')) {
 			restore_current_locale();

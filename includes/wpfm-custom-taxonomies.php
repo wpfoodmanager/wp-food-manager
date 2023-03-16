@@ -194,6 +194,52 @@ register_taxonomy(
 		'rewrite' 				=> $rewrite,
 	))
 );
+$singular  = __('Food Topping', 'wp-food-manager');
+$plural    = __('Toppings', 'wp-food-manager');
+if (current_theme_supports('food-manager-templates')) {
+	$rewrite   = array(
+		'slug'         => $permalink_structure['topping_rewrite_slug'],
+		'with_front'   => false,
+		'hierarchical' => false
+	);
+	$public    = true;
+} else {
+	$rewrite   = false;
+	$public    = false;
+}
+register_taxonomy(
+	"food_manager_topping",
+	apply_filters('register_taxonomy_food_manager_toppings_object_type', array('food_manager')),
+	apply_filters('register_taxonomy_food_manager_toppings_args', array(
+		'hierarchical' 			=> true,
+		'label' 				=> $plural,
+		'labels' => array(
+			'name' 				=> $plural,
+			'singular_name' 	=> $singular,
+			'menu_name'         => ucwords($plural),
+			'search_items' 		=> sprintf(__('Search %s', 'wp-food-manager'), $plural),
+			'all_items' 		=> sprintf(__('All %s', 'wp-food-manager'), $plural),
+			'parent_item' 		=> sprintf(__('Parent %s', 'wp-food-manager'), $singular),
+			'parent_item_colon' => sprintf(__('Parent %s:', 'wp-food-manager'), $singular),
+			'edit_item' 		=> sprintf(__('Edit %s', 'wp-food-manager'), $singular),
+			'update_item' 		=> sprintf(__('Update %s', 'wp-food-manager'), $singular),
+			'add_new_item' 		=> sprintf(__('Add New %s', 'wp-food-manager'), $singular),
+			'new_item_name' 	=> sprintf(__('New %s Name', 'wp-food-manager'),  $singular),
+			'back_to_items'     => sprintf(__('← Go to %s', 'wp-food-manager'),  $plural)
+		),
+		'show_ui' 				=> true,
+		'show_in_rest'          => true,
+		'meta_box_cb'		    => false,
+		'public' 			    => $public,
+		'capabilities'			=> array(
+			'manage_terms' 		=> $admin_capability,
+			'edit_terms' 		=> $admin_capability,
+			'delete_terms' 		=> $admin_capability,
+			'assign_terms' 		=> $admin_capability,
+		),
+		'rewrite' 				=> $rewrite,
+	))
+);
 $singular  = __('Food Nutritions', 'wp-food-manager');
 $plural    = __('Nutritions', 'wp-food-manager');
 if (current_theme_supports('food-manager-templates')) {
