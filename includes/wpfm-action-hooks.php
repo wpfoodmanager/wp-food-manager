@@ -1837,11 +1837,11 @@ class WPFM_ActionHooks {
      */
     public function admin_menu() {
         $this->settings_page = WPFM_Settings::instance();
-        add_submenu_page('edit.php?post_type=food_manager', __('Settings', 'wp-food-manager'), __('Settings', 'wp-food-manager'), 'manage_options', 'food-manager-settings', array($this->settings_page, 'output'));
-        add_dashboard_page(__('Setup', 'wp-food-manager'), __('Setup', 'wp-food-manager'), 'manage_options', 'food-manager-setup', array(WPFM_Setup::instance(), 'output'));
         if (get_option('food_manager_enable_field_editor', true)) {
             add_submenu_page('edit.php?post_type=food_manager', __('Field Editor', 'wp-food-manager'), __('Field Editor', 'wp-food-manager'), 'manage_options', 'food-manager-form-editor', array(WPFM_Field_Editor::instance(), 'output'));
         }
+        add_submenu_page('edit.php?post_type=food_manager', __('Settings', 'wp-food-manager'), __('Settings', 'wp-food-manager'), 'manage_options', 'food-manager-settings', array($this->settings_page, 'output'));
+        add_dashboard_page(__('Setup', 'wp-food-manager'), __('Setup', 'wp-food-manager'), 'manage_options', 'food-manager-setup', array(WPFM_Setup::instance(), 'output'));
     }
 
     /**
