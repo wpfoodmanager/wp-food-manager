@@ -1084,11 +1084,11 @@ class WPFM_ActionHooks {
                     foreach ($_POST['repeated_options'] as $option_count) {
                         $counter = 0;
                         if (isset($_POST['option_key_' . $option_count])) {
-                            $option_key = $_POST['option_key_' . $option_count];
-                            $option_name = $_POST['option_name_' . $option_count];
+                            $option_key = isset($_POST['option_key_' . $option_count]) ? $_POST['option_key_' . $option_count] : '';
+                            $option_name = isset($_POST['option_name_' . $option_count]) ? $_POST['option_name_' . $option_count] : '';
                             $options_arr[] = $option_name;
-                            $option_type = $_POST['_option_type_' . $option_count];
-                            $option_required = $_POST['_option_required_' . $option_count];
+                            $option_type = isset($_POST['_option_type_' . $option_count]) ? $_POST['_option_type_' . $option_count] : '';
+                            $option_required = isset($_POST['_option_required_' . $option_count]) ? $_POST['_option_required_' . $option_count] : '';
                             $option_enable_desc = isset($_POST['_option_enable_desc_' . $option_count]) ? $_POST['_option_enable_desc_' . $option_count] : '';
                             $option_description = isset($_POST['_option_description_' . $option_count]) ? $_POST['_option_description_' . $option_count] : '';
                             $option_values = array();
