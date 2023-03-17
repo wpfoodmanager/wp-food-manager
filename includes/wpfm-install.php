@@ -16,11 +16,11 @@ class WPFM_Install {
 		self::init_user_roles();
 		self::default_terms();
 		// Redirect to setup screen for new installs
-		if (!get_option('wp_food_manager_version')) {
+		if (!get_option('food_manager_version')) {
 			set_transient('_food_manager_activation_redirect', 1, HOUR_IN_SECONDS);
 		}
 		// Update featured posts ordering.
-		if (version_compare(get_option('wp_food_manager_version', WPFM_VERSION), '2.5', '<')) {
+		if (version_compare(get_option('food_manager_version', WPFM_VERSION), '2.5', '<')) {
 			$wpdb->query("UPDATE {$wpdb->posts} p SET p.menu_order = 0 WHERE p.post_type='food_manager';");
 		}
 		// Update legacy options
@@ -32,11 +32,8 @@ class WPFM_Install {
 			$page_id = get_page_by_path(get_option('food_manager_food_dashboard_page_slug'))->ID;
 			update_option('food_manager_food_dashboard_page_id', $page_id);
 		}
-		if (false === get_option('wp_food_manager_db_version', false)) {
-			update_option('wp_food_manager_db_version', '3.1.13');
-		}
-		delete_transient('wp_food_manager_addons_html');
-		update_option('wp_food_manager_version', WPFM_VERSION);
+		delete_transient('food_manager_addons_html');
+		update_option('food_manager_version', WPFM_VERSION);
 	}
 
 	/**
@@ -56,8 +53,8 @@ class WPFM_Install {
 				update_option('food_manager_submit_extra_options_form_fields', array('extra_options' => $all_fields['extra_options']));
 			}
 		}
-		delete_transient('wp_food_manager_addons_html');
-		update_option('wp_food_manager_version', WPFM_VERSION);
+		delete_transient('food_manager_addons_html');
+		update_option('food_manager_version', WPFM_VERSION);
 	}
 
 	/**

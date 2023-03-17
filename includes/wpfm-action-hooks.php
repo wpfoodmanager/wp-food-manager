@@ -2024,7 +2024,7 @@ class WPFM_ActionHooks {
     public function redirect() {
         global $pagenow;
         if (isset($_GET['page']) && $_GET['page'] === 'food-manager-setup') {
-            if (get_option('wpfm_installation', false)) {
+            if (get_option('food_manager_installation', false)) {
                 wp_redirect(admin_url('index.php'));
                 exit;
             }

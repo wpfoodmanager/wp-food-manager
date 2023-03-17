@@ -381,7 +381,7 @@ class WPFM_Post_Types {
 			switch_to_locale(get_locale());
 		}
 		$permalinks = wp_parse_args(
-			(array) get_option('wpfm_permalinks', array()),
+			(array) get_option('food_manager_permalinks', array()),
 			array(
 				'food_base'      => '',
 				'category_base' => '',

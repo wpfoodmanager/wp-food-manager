@@ -34,7 +34,6 @@ if (!is_multisite()) {
 }
 $options = array(
 	'food_manager_installed_terms',
-	'wp_food_manager_db_version',
 	'food_manager_enable_categories',
 	'food_manager_enable_food_types',
 	'food_manager_enable_food_tags',
@@ -62,14 +61,13 @@ $options = array(
 	'food_manager_enable_field_editor',
 	'food_manager_delete_data_on_uninstall',
 	'food-manager-setup',
-	'wpfm_installed_terms',
 	'food_manager_login_page_url',
 	'food_manager_rating_showcase_admin_notices_dismiss',
-	'wp_food_manager_version',
-	'wpfm_permalinks',
+	'food_manager_version',
+	'food_manager_permalinks',
 	'food_manager_upgrade_database',
-	'wpfm_installation',
-	'wpfm_installation_skip',
+	'food_manager_installation',
+	'food_manager_installation_skip',
 );
 foreach ($options as $option) {
 	delete_option($option);

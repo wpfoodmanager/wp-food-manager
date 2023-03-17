@@ -74,8 +74,8 @@ class WPFM_Setup {
 	public function output() {
 		$step = !empty($_GET['step']) ? absint($_GET['step']) : 1;
 		if (isset($_GET['skip-food-manager-setup']) === 1) {
-			update_option('wpfm_installation', 0);
-			update_option('wpfm_installation_skip', 1);
+			update_option('food_manager_installation', 0);
+			update_option('food_manager_installation_skip', 1);
 			wp_redirect(admin_url('index.php'));
 			exit;
 		}
@@ -96,8 +96,8 @@ class WPFM_Setup {
 				}
 				$this->create_page(sanitize_text_field($page_titles[$page]), $content, 'food_manager_' . $page . '_page_id');
 			}
-			update_option('wpfm_installation', 1);
-			update_option('wpfm_installation_skip', 0);
+			update_option('food_manager_installation', 1);
+			update_option('food_manager_installation_skip', 0);
 		} ?>
 		<div class="wrap wp_food_manager wp_food_manager_addons_wrap">
 			<h2><?php esc_attr_e('WP Food Manager Setup', 'wp-food-manager'); ?></h2>

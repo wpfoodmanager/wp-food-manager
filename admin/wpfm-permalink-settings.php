@@ -113,11 +113,11 @@ class WPFM_Permalink_Settings {
 			if (function_exists('switch_to_locale')) {
 				switch_to_locale(get_locale());
 			}
-			$permalinks                  = (array) get_option('wpfm_permalinks', array());
+			$permalinks                  = (array) get_option('food_manager_permalinks', array());
 			$permalinks['food_base']      = sanitize_title_with_dashes($_POST['wpfm_food_base_slug']);
 			$permalinks['category_base'] = sanitize_title_with_dashes($_POST['wpfm_food_category_slug']);
 			$permalinks['type_base']     = sanitize_title_with_dashes($_POST['wpfm_food_type_slug']);
-			update_option('wpfm_permalinks', $permalinks);
+			update_option('food_manager_permalinks', $permalinks);
 			if (function_exists('restore_current_locale')) {
 				restore_current_locale();
 			}

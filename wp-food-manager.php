@@ -126,7 +126,7 @@ class WP_Food_Manager {
 	 * @since 1.0.0
 	 */
 	public function updater() {
-		if (version_compare(WPFM_VERSION, get_option('wp_food_manager_version'), '>')) {
+		if (version_compare(WPFM_VERSION, get_option('food_manager_version'), '>')) {
 			WPFM_Install::update();
 			flush_rewrite_rules();
 		}
