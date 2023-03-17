@@ -498,6 +498,26 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
 	 */
 	protected function save_food($post_title, $post_content, $status = 'preview', $values = array(), $update_slug = true) {
 		global $wpdb;
+
+		$options_arr = array();
+		if (isset($_POST['repeated_options']) && !empty($_POST['repeated_options'])) {
+			foreach ($_POST['repeated_options'] as $count) {
+				$options_arr[] = $_POST['option_name_' . $count];
+			}
+		}
+
+		$exist_toppings = get_the_terms($this->food_id, 'food_manager_topping');
+		if ($exist_toppings) {
+			$removed_toppings_ids = [];
+			foreach ($exist_toppings as $toppings) {
+				if (!in_array($toppings->slug, $options_arr)) {
+					$removed_toppings_ids[] = (int)$toppings->term_id;
+				}
+			}
+			wp_remove_object_terms($this->food_id, $removed_toppings_ids, 'food_manager_topping');
+		}
+		wp_set_object_terms($this->food_id, $options_arr, 'food_manager_topping');
+
 		$food_data = array(
 			'post_title'     => $post_title,
 			'post_content'   => $post_content,

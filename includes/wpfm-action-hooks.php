@@ -1171,7 +1171,6 @@ class WPFM_ActionHooks {
                             }
                         }
                     }
-                    wp_set_object_terms($post_id, $options_arr, 'food_manager_topping');
                     $counter++;
                 }
                 $exist_toppings = get_the_terms($post_id, 'food_manager_topping');
@@ -1184,6 +1183,7 @@ class WPFM_ActionHooks {
                     }
                     wp_remove_object_terms($post_id, $removed_toppings_ids, 'food_manager_topping');
                 }
+                wp_set_object_terms($post_id, $options_arr, 'food_manager_topping');
                 update_post_meta($post_id, '_wpfm_extra_options', $extra_options);
             }
         }
