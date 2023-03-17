@@ -326,10 +326,10 @@ function display_food_veg_nonveg_icon_tag($post = null, $after = '') {
 		foreach ($wpfm_veg_nonveg_tags as $wpfm_veg_nonveg_tag) {
 			$imagePath = '';
 			if (empty($image_src)) {
-				if ($wpfm_veg_nonveg_tag->slug === 'vegeterian') {
+				if ($wpfm_veg_nonveg_tag->slug === 'vegetarian') {
 					$imagePath = WPFM_PLUGIN_URL . "/assets/images/wpfm-veg-organic.png";
 				}
-				if ($wpfm_veg_nonveg_tag->slug === 'non-vegeterian') {
+				if ($wpfm_veg_nonveg_tag->slug === 'non-vegetarian') {
 					$imagePath = WPFM_PLUGIN_URL . "/assets/images/wpfm-non-veg-organic.png";
 				}
 				if ($wpfm_veg_nonveg_tag->slug === 'vegan') {

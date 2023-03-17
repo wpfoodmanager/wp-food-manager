@@ -658,27 +658,27 @@ input[name="_food_veg_nonveg"] {
   align-items: center;
 }
 
-._food_veg_nonveg .radio.vegeterian {
+._food_veg_nonveg .radio.vegetarian {
   border-color: #22aa00;
 }
 
-._food_veg_nonveg .radio.vegeterian:focus {
+._food_veg_nonveg .radio.vegetarian:focus {
   box-shadow: 0 0 0 1px #22aa00;
 }
 
-._food_veg_nonveg .radio.vegeterian:checked::before {
+._food_veg_nonveg .radio.vegetarian:checked::before {
   background-color: #22aa00;
 }
 
-._food_veg_nonveg .radio.non-vegeterian {
+._food_veg_nonveg .radio.non-vegetarian {
   border-color: #ff0000;
 }
 
-._food_veg_nonveg .radio.non-vegeterian:focus {
+._food_veg_nonveg .radio.non-vegetarian:focus {
   box-shadow: 0 0 0 1px #ff0000;
 }
 
-._food_veg_nonveg .radio.non-vegeterian:checked::before {
+._food_veg_nonveg .radio.non-vegetarian:checked::before {
   background-color: #ff0000;
 }
 

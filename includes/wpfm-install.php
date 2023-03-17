@@ -146,8 +146,8 @@ class WPFM_Install {
 			),
 			'food_manager_type' => array(
 				'Vegan',
-				'Vegeterian',
-				'Non Vegeterian',
+				'Vegetarian',
+				'Non Vegetarian',
 			),
 			'food_manager_unit' => array(
 				'Gram',

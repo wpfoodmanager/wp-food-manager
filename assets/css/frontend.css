@@ -1276,7 +1276,7 @@ a.button.wpfm-add-row:hover {
     margin-bottom: 20px;
 }
 
-.wpfm-food-listings .parent-organic-tag.non-vegeterian:hover::before {
+.wpfm-food-listings .parent-organic-tag.non-vegetarian:hover::before {
     content: 'Non Veg';
 }
 
