@@ -143,7 +143,6 @@ class WPFM_ActionHooks {
         }
 
         // wpfm shortcode's action
-        add_action('wp', array($this, 'shortcode_action_handler'));
         add_action('food_manager_food_dashboard_content_edit', array($this, 'edit_food'));
         add_action('food_manager_food_filters_end', array($this, 'food_filter_results'), 30);
         add_action('food_manager_output_foods_no_results', array($this, 'output_no_results'));
@@ -175,18 +174,6 @@ class WPFM_ActionHooks {
     public function edit_food() {
         global $food_manager;
         echo $food_manager->forms->get_form('edit-food');
-    }
-
-    /**
-     * Handle actions which need to be run before the shortcode e.g. post actions
-     * 
-     * @since 1.0.1
-     */
-    public function shortcode_action_handler() {
-        global $post;
-        if (is_page() && strstr($post->post_content, '[food_dashboard')) {
-            WPFM_Shortcodes::food_dashboard_handler();
-        }
     }
 
     /**

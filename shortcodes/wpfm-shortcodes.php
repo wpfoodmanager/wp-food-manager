@@ -17,7 +17,7 @@ class WPFM_Shortcodes {
 	 * @since 1.0.0
 	 */
 	private static $_instance = null;
-	public $food_dashboard_message = '';
+	public $food_dashboard_message;
 
 	/**
 	 * Allows for accessing single instance of class. Class should only be constructed once per call.
@@ -37,6 +37,7 @@ class WPFM_Shortcodes {
 	 * Constructor
 	 */
 	public function __construct() {
+		add_action('wp', array($this, 'shortcode_action_handler'));
 		add_shortcode('add_food', array($this, 'add_food'));
 		add_shortcode('food_dashboard', array($this, 'food_dashboard'));
 		add_shortcode('foods', array($this, 'output_foods'));
@@ -58,7 +59,7 @@ class WPFM_Shortcodes {
 	 * 
 	 * @since 1.0.1
 	 */
-	public static function food_dashboard_handler() {
+	public function food_dashboard_handler() {
 		if (!empty($_REQUEST['action']) && !empty($_REQUEST['_wpnonce']) && wp_verify_nonce($_REQUEST['_wpnonce'], 'food_manager_my_food_actions')) {
 			$action = sanitize_title($_REQUEST['action']);
 			$food_id = absint($_REQUEST['food_id']);
@@ -101,6 +102,18 @@ class WPFM_Shortcodes {
 			} catch (Exception $e) {
 				$this->food_dashboard_message = '<div class="food-manager-error wpfm-alert wpfm-alert-danger">' . $e->getMessage() . '</div>';
 			}
+		}
+	}
+
+	/**
+	 * Handle actions which need to be run before the shortcode e.g. post actions
+	 * 
+	 * @since 1.0.1
+	 */
+	public function shortcode_action_handler() {
+		global $post;
+		if (is_page() && strstr($post->post_content, '[food_dashboard')) {
+			$this->food_dashboard_handler();
 		}
 	}
 
