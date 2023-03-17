@@ -3,7 +3,18 @@ if (empty($field_key)) {
 	$field_key = $index;
 }
 $taxonomies = get_object_taxonomies((object) array('post_type' => 'food_manager'));
-unset($taxonomies['5']);
+if( $taxonomies ){
+	$count = $remove_tax = 0;
+	foreach( $taxonomies as $taxonomy ){
+		if( $taxonomy == 'food_manager_unit' ){
+			$remove_tax = $count;
+		}
+		$count++;
+	}
+}
+if( $remove_tax != 0 ){
+	unset($taxonomies[$remove_tax]);
+}
 if ($field_key !== 'option_options') {
 	$field_types    = apply_filters(
 		'food_manager_form_field_types',
