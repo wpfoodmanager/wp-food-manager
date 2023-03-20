@@ -94,7 +94,7 @@ $extra_options = get_post_meta($thepostid, '_wpfm_extra_options', true); ?>
 							do_action("food_manager_food_data_end", $thepostid); ?>
 						</div>
 					</div>
-				</div>'>+ Add Option
+				</div>'>+ Add Topping
 				</button>
 			</div>
 		</div>

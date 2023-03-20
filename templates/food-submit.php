@@ -231,7 +231,7 @@ if (!empty($extra_fields_options)) {
 										<?php endforeach; ?>
 						            </div>
 						        </div>
-						    </div>'>+ Add Option
+						    </div>'>+ Add Topping
 						</button>
 					</div>
 				</div>
