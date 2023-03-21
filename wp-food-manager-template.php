@@ -280,8 +280,8 @@ function display_food_banner($size = 'full', $default = null, $post = null) {
 	}
 }
 
-/** This function is use to get the counts the food views and attendee views.
- *  This function also used at food, attendee dashboard file.
+/** This function is use to get the counts the food views.
+ *  This function also used at food.
  * 
  *  @since 1.0.0
  *  @return number counted view.

@@ -96,7 +96,7 @@ $food = $post;
                             </div>
                             <form class="wpfm-single-food-body-content wpfm-extra-options" method="post" action="">
                                 <?php
-                                $ext_options = get_post_meta(get_the_ID(), '_wpfm_extra_options', true);
+                                $ext_options = get_post_meta(get_the_ID(), '_toppings', true);
                                 $food_data_option_value_count = get_post_meta(get_the_ID(), 'wpfm_option_value_count', true);
                                 $repeated_count = get_post_meta(get_the_ID(), 'wpfm_repeated_options', true);
                                 if (!class_exists('WPFM_Form_Submit_Food')) {
@@ -124,10 +124,6 @@ $food = $post;
                                             }
                                         }
                                     }
-                                    if (isset($additional_fields_extra_topping['attendee_information_type']))
-                                        unset($additional_fields_extra_topping['attendee_information_type']);
-                                    if (isset($additional_fields_extra_topping['attendee_information_fields']))
-                                        unset($additional_fields_extra_topping['attendee_information_fields']);
                                     $additional_fields_extra_topping = apply_filters('food_manager_show_additional_details_fields', $additional_fields_extra_topping);
                                 }
                                 $more_class = !empty($additional_fields_extra_topping) ? 'with-more' : '';
@@ -277,10 +273,6 @@ $food = $post;
                                             }
                                         }
                                     }
-                                    if (isset($additional_fields['attendee_information_type']))
-                                        unset($additional_fields['attendee_information_type']);
-                                    if (isset($additional_fields['attendee_information_fields']))
-                                        unset($additional_fields['attendee_information_fields']);
                                     $additional_fields = apply_filters('food_manager_show_additional_details_fields', $additional_fields);
                                 }
                                 if (!empty($additional_fields)) : ?>
@@ -608,10 +600,6 @@ $food = $post;
                                             }
                                         }
                                     }
-                                    if (isset($additional_fields_extra_topping['attendee_information_type']))
-                                        unset($additional_fields_extra_topping['attendee_information_type']);
-                                    if (isset($additional_fields_extra_topping['attendee_information_fields']))
-                                        unset($additional_fields_extra_topping['attendee_information_fields']);
                                     $additional_fields_extra_topping = apply_filters('food_manager_show_additional_details_fields', $additional_fields_extra_topping);
                                 }
                             endif; ?>

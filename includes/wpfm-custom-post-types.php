@@ -270,9 +270,9 @@ class WPFM_Post_Types {
 	}
 
 	/**
-	 * This function is use to set the counts the food views and attendees views.
-	 * This function also used at attendees dashboard file.
-	 * @param  int $post_id	 
+	 * This function is use to set the counts the food views.
+	 * This function also used at Foods dashboard file.
+	 * @param  int $post_id
 	 */
 	public function set_post_views($post_id) {
 		$count_key = '_view_count';

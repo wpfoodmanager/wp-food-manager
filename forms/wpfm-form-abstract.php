@@ -257,7 +257,6 @@ abstract class WPFM_Form {
 								$output = $this->get_posted_field("current_" . $key2, $field);
 								update_post_meta($food_id, "current_" . $key2, $output);
 							}
-							update_post_meta($food_id, $key2, $output);
 							$values[$group_key][$first_out][$key] = $output;
 							$output2 = array();
 							if ($key == "option_options") {
@@ -280,7 +279,7 @@ abstract class WPFM_Form {
 					}
 				}
 			}
-			update_post_meta($food_id, '_wpfm_extra_options', $values[$group_key]);
+			update_post_meta($food_id, '_toppings', $values[$group_key]);
 		} else {
 			foreach ($this->fields as $group_key => $group_fields) {
 				foreach ($group_fields as $key => $field) {
@@ -304,7 +303,7 @@ abstract class WPFM_Form {
 					delete_post_meta($food_id, "_" . $key . "_" . $i, "");
 				}
 			}
-			update_post_meta($food_id, '_wpfm_extra_options', '');
+			update_post_meta($food_id, '_toppings', '');
 		}
 		return $values;
 	}

@@ -1072,10 +1072,6 @@ class WPFM_ActionHooks {
                             }
                         }
                     }
-                    if (isset($additional_fields['attendee_information_type']))
-                        unset($additional_fields['attendee_information_type']);
-                    if (isset($additional_fields['attendee_information_fields']))
-                        unset($additional_fields['attendee_information_fields']);
                     $additional_fields = apply_filters('food_manager_show_additional_details_fields', $additional_fields);
                 }
                 // Find how many total reapeated extra option there then store it.
@@ -1110,38 +1106,28 @@ class WPFM_ActionHooks {
                                 }
                             }
                             if (!empty($custom_extra_options_fields)) {
-                                $extra_options[$option_key] = array(
+                                $extra_options[$option_count] = array(
+                                    'option_key' => $option_key,
                                     'option_name' => $option_name,
                                 );
                                 foreach ($custom_extra_options_fields as $custom_ext_key => $custom_extra_options_field) {
                                     foreach ($custom_extra_options_field as $custom_ext_single_key => $custom_extra_options_single_field) {
                                         if ($custom_ext_single_key !== 'option_name' && $custom_ext_single_key !== 'option_options') {
                                             $custom_ext_key_post = isset($_POST["_" . $custom_ext_single_key . "_" . $option_count]) ? $_POST["_" . $custom_ext_single_key . "_" . $option_count] : '';
-                                            $extra_options[$option_key][$custom_ext_single_key] = $custom_ext_key_post;
-                                            if (!empty($custom_ext_key_post)) {
-                                                update_post_meta($post_id, "_" . $custom_ext_single_key . "_" . $option_count, $custom_ext_key_post);
-                                            } else {
-                                                update_post_meta($post_id, "_" . $custom_ext_single_key . "_" . $option_count, "");
-                                            }
+                                            $extra_options[$option_count][$custom_ext_single_key] = $custom_ext_key_post;
                                         }
                                         if ($custom_ext_single_key == 'option_name') {
                                             $custom_ext_key_post = isset($_POST[$custom_ext_single_key . "_" . $option_count]) ? $_POST[$custom_ext_single_key . "_" . $option_count] : '';
-                                            $extra_options[$option_key][$custom_ext_single_key] = $custom_ext_key_post;
-                                            if (!empty($custom_ext_key_post)) {
-                                                update_post_meta($post_id, $custom_ext_single_key . "_" . $option_count, $custom_ext_key_post);
-                                            }
+                                            $extra_options[$option_count][$custom_ext_single_key] = $custom_ext_key_post;
                                         }
                                         if ($custom_ext_single_key == 'option_options') {
-                                            $extra_options[$option_key][$custom_ext_single_key] = $option_values;
+                                            $extra_options[$option_count][$custom_ext_single_key] = $option_values;
                                         }
                                     }
                                 }
                             } else {
-                                update_post_meta($post_id, 'option_name_' . $option_count, $option_name);
-                                update_post_meta($post_id, '_option_description_' . $option_count, $option_description);
-                                update_post_meta($post_id, '_option_type_' . $option_count, $option_type);
-                                update_post_meta($post_id, '_option_required_' . $option_count, $option_required);
-                                $extra_options[$option_key] = array(
+                                $extra_options[$option_count] = array(
+                                    'option_key' => $option_key,
                                     'option_name' => $option_name,
                                     'option_type' => $option_type,
                                     'option_required' => $option_required,
@@ -1150,14 +1136,16 @@ class WPFM_ActionHooks {
                                     'option_options' => $option_values,
                                 );
                             }
+
                             if (!empty($additional_fields)) {
                                 foreach ($additional_fields as $add_key => $additional_field) {
                                     $key_post = isset($_POST["_" . $add_key . "_" . $option_count]) ? $_POST["_" . $add_key . "_" . $option_count] : '';
-                                    $extra_options[$option_key][$add_key] = $key_post;
+                                    $extra_options[$option_count][$add_key] = $key_post;
                                 }
                             }
                         }
                     }
+
                     $counter++;
                 }
                 $exist_toppings = get_the_terms($post_id, 'food_manager_topping');
@@ -1171,7 +1159,7 @@ class WPFM_ActionHooks {
                     wp_remove_object_terms($post_id, $removed_toppings_ids, 'food_manager_topping');
                 }
                 wp_set_object_terms($post_id, $options_arr, 'food_manager_topping');
-                update_post_meta($post_id, '_wpfm_extra_options', $extra_options);
+                update_post_meta($post_id, '_toppings', $extra_options);
             }
         }
         remove_action('food_manager_save_food_manager', array($this, 'food_manager_save_food_manager_data'), 20, 2);

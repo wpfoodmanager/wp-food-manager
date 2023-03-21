@@ -8,7 +8,7 @@ if (!defined('ABSPATH')) exit;
 global $food_manager;
 $add_food_page_id = get_option('food_manager_add_food_page_id');
 $food_dashboard_page_id = get_option('food_manager_food_dashboard_page_id');
-$extra_fields_options = get_post_meta($food_id, '_wpfm_extra_options', true) ? get_post_meta($food_id, '_wpfm_extra_options', true) : '';
+$extra_fields_options = get_post_meta($food_id, '_toppings', true) ? get_post_meta($food_id, '_toppings', true) : '';
 if (!empty($extra_fields_options)) {
 	$option_value_counts1 = array();
 	for ($i = 1; $i <= count($extra_fields_options); $i++) {
@@ -53,14 +53,19 @@ if (!empty($extra_fields_options)) {
 		}
 		?>
 		<?php do_action('add_food_fields_start'); ?>
-		<?php foreach ($food_fields as $key => $field) : ?>
+		<?php
+		$count = 1;
+		foreach ($food_fields as $key => $field) :
+		?>
 			<fieldset class="wpfm-form-group fieldset-<?php echo esc_attr($key); ?>">
 				<label for="<?php esc_attr_e($key); ?>" class="wpfm-form-label-text"><?php echo $field['label'] . apply_filters('add_food_required_label', $field['required'] ? '<span class="require-field">*</span>' : ' <small>' . __('(optional)', 'wp-food-manager') . '</small>', $field); ?></label>
 				<div class="field <?php echo $field['required'] ? 'required-field' : ''; ?>">
 					<?php get_food_manager_template('form-fields/' . $field['type'] . '-field.php', array('key' => $key, 'field' => $field)); ?>
 				</div>
 			</fieldset>
-		<?php endforeach; ?>
+		<?php
+	$count++;
+	endforeach; ?>
 		<?php do_action('add_food_fields_end'); ?>
 		<!-- Extra options Fields -->
 		<?php

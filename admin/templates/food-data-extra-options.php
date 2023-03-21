@@ -3,7 +3,7 @@
 /**
  *  Template Extra Option panel
  */
-$extra_options = get_post_meta($thepostid, '_wpfm_extra_options', true); ?>
+$extra_options = get_post_meta($thepostid, '_toppings', true); ?>
 <div id="extra_options_food_data_content" class="panel wpfm_panel wpfm-metaboxes-wrapper">
 	<div class="wp_food_manager_meta_data">
 		<div class="wpfm-options-wrapper wpfm-metaboxes">
@@ -17,7 +17,7 @@ $extra_options = get_post_meta($thepostid, '_wpfm_extra_options', true); ?>
 							<div class="wpfm-togglediv" title="Click to toggle" aria-expanded="false" data-row-count="<?php echo esc_attr($count); ?>"></div>
 							<div class="wpfm-sort"></div>
 							<strong class="attribute_name"><?php printf(__('%s', 'wp-food-manager'), $option['option_name']); ?></strong>
-							<span class="attribute_key"> <input type="hidden" name="option_key_<?php echo esc_attr($count); ?>" value="<?php echo $option_key; ?>" readonly>
+							<span class="attribute_key"> <input type="hidden" name="option_key_<?php echo esc_attr($count); ?>" value="<?php echo $option['option_key']; ?>" readonly>
 							</span>
 						</h3>
 						<div class="wpfm-metabox-content wpfm-options-box-<?php echo esc_attr($count); ?>">
