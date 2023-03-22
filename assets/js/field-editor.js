@@ -118,7 +118,7 @@ var WPFMFieldEditor = function () {
 					jQuery(this).closest('tr').find('.field-options .options').show();
 				} else if ('file' === jQuery(this).val()) {
 					jQuery(this).closest('tr').find('.field-options .file-options').show();
-				} else if ('term-select' === jQuery(this).val() || 'term-checklist' === jQuery(this).val() || 'term-select-multi-appearance' === jQuery(this).val() || 'term-multiselect' === jQuery(this).val()) {
+				} else if ('term-select' === jQuery(this).val() || 'term-autocomplete' === jQuery(this).val() || 'term-checklist' === jQuery(this).val() || 'term-select-multi-appearance' === jQuery(this).val() || 'term-multiselect' === jQuery(this).val()) {
 					jQuery(this).closest('tr').find('.field-options .taxonomy-select').show();
 				} else if ('group' === jQuery(this).val()) {
 					if (jQuery(this).closest('tr').next().hasClass('group')) {

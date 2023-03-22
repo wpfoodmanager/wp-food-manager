@@ -2712,6 +2712,16 @@ img.wpfm-organic-tag-icon {
 /* ===== 15. ALL MIX END ===== */
 
 
+/* ===== AUTOCOMPLETE START ===== */
+.ui-autocomplete {
+    list-style: none;
+    padding-left: 10px;
+    margin: 0;
+    position: absolute !important;
+}
+/* ===== AUTOCOMPLETE END ===== */
+
+
 /* ===== 16. MEDIA QUERY START ===== */
 @media screen and (max-width: 1024px) {
     .wpfm-single-food-page .wpfm-single-food-body .wpfm-single-food-left-content {

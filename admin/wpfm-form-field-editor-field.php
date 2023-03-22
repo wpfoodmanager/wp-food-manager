@@ -35,6 +35,7 @@ if ($field_key !== 'option_options') {
 			'textarea'         => __('Textarea', 'wp-food-manager'),
 			'wp-editor'        => __('WP Editor', 'wp-food-manager'),
 			'url'              => __('URL', 'wp-food-manager'),
+			'term-autocomplete'     => __('Term Autocomplete', 'wp-food-manager'),
 		)
 	);
 } else {
@@ -58,6 +59,7 @@ if ($field_key !== 'option_options') {
 			'wp-editor'        => __('WP Editor', 'wp-food-manager'),
 			'url'              => __('URL', 'wp-food-manager'),
 			'options'    => __('Options', 'wp-food-manager'),
+			'term-autocomplete'=> __('Term Autocomplete', 'wp-food-manager'),
 		)
 	);
 }

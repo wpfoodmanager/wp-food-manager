@@ -296,13 +296,6 @@ abstract class WPFM_Form {
 					$this->fields[$group_key][$key]['value'] = $values[$group_key][$key];
 				}
 			}
-			for ($i = 1; $i <= 100; $i++) {
-				if ($key == 'option_name') {
-					delete_post_meta($food_id, $key . "_" . $i, "");
-				} else {
-					delete_post_meta($food_id, "_" . $key . "_" . $i, "");
-				}
-			}
 			update_post_meta($food_id, '_toppings', '');
 		}
 		return $values;

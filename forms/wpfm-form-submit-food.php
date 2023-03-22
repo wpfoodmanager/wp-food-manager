@@ -224,10 +224,11 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
 			'extra_options' => array(
 				'option_name' => array(
 					'label'       => __('Topping Name', 'wp-food-manager'),
-					'type'        => 'text',
+					'type'        => 'term-autocomplete',
 					'required'    => true,
 					'placeholder' => __('Enter Topping option name', 'wp-food-manager'),
-					'priority'    => 1
+					'priority'    => 1,
+					'taxonomy'    => 'food_manager_topping'
 				),
 				'option_type' => array(
 					'label'       => __('Topping Selection Type', 'wp-food-manager'),
@@ -516,8 +517,18 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
 			}
 			wp_remove_object_terms($this->food_id, $removed_toppings_ids, 'food_manager_topping');
 		}
-		wp_set_object_terms($this->food_id, $options_arr, 'food_manager_topping');
-
+		$term_ids = wp_set_object_terms($this->food_id, $options_arr, 'food_manager_topping');
+		if ($term_ids) {
+			foreach ($term_ids as $key => $term_id) {
+				$key++;
+				$description = (isset($_POST['_option_description_' . $key]) && !empty($_POST['_option_description_' . $key])) ? $_POST['_option_description_' . $key] : '';
+				$topping_required = (isset($_POST['_option_required_' . $key]) && !empty($_POST['_option_required_' . $key])) ? $_POST['_option_required_' . $key] : '';
+				$topping_type = (isset($_POST['_option_type_' . $key]) && !empty($_POST['_option_type_' . $key])) ? $_POST['_option_type_' . $key] : '';
+				wp_update_term($term_id, 'food_manager_topping', array('description' => $description));
+				update_term_meta($term_id, 'topping_required', $topping_required);
+				update_term_meta($term_id, 'topping_type', $topping_type);
+			}
+		}
 		$food_data = array(
 			'post_title'     => $post_title,
 			'post_content'   => $post_content,

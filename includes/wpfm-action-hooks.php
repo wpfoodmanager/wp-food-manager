@@ -146,6 +146,42 @@ class WPFM_ActionHooks {
         add_action('food_manager_food_dashboard_content_edit', array($this, 'edit_food'));
         add_action('food_manager_food_filters_end', array($this, 'food_filter_results'), 30);
         add_action('food_manager_output_foods_no_results', array($this, 'output_no_results'));
+
+        // Register topping's meta fields
+        add_action('init', array($this, 'register_topping_fields'));
+        if (class_exists('WPFM_Writepanels')) {
+            add_action('food_manager_topping_add_form_fields', array(WPFM_Writepanels::instance(), 'add_topping_fields'));
+            add_action('food_manager_topping_edit_form_fields', array(WPFM_Writepanels::instance(), 'edit_topping_fields'));
+        }
+        add_action('edit_food_manager_topping', array($this, 'save_topping_fields'), 9);
+        add_action('create_food_manager_topping', array($this, 'save_topping_fields'));
+
+        add_action('wp_ajax_term_ajax_search',        array($this, 'term_ajax_search'));
+        add_action('wp_ajax_nopriv_term_ajax_search', array($this, 'term_ajax_search'));
+    }
+
+    /**
+     * Save Topping fields
+     * 
+     * @since 1.0.1
+     */
+    public function save_topping_fields($term_id) {
+        if (!isset($_POST['topping_nonce']) || !wp_verify_nonce($_POST['topping_nonce'], 'save_toppings'))
+            return;
+        $topping_type = isset($_POST['topping_type']) ? $_POST['topping_type'] : '';
+        $topping_required = isset($_POST['topping_required']) ? $_POST['topping_required'] : '';
+        update_term_meta($term_id, 'topping_type', $topping_type);
+        update_term_meta($term_id, 'topping_required', $topping_required);
+    }
+
+    /**
+     * This will register topping's meta fields
+     * 
+     * @since 1.0.1
+     */
+    public function register_topping_fields() {
+        register_meta('term', 'topping_required', array());
+        register_meta('term', 'topping_type', array());
     }
 
     /**
@@ -587,10 +623,6 @@ class WPFM_ActionHooks {
             'search_categories' => $search_categories,
             'search_food_types' => $search_food_types,
         ));
-        // Generate pagination
-        if (isset($_REQUEST['show_pagination']) && $_REQUEST['show_pagination'] === 'true') {
-            $result['pagination'] = get_food_listing_pagination($foods->max_num_pages, absint($_REQUEST['page']));
-        }
         $result['max_num_pages'] = $foods->max_num_pages;
         wp_send_json(apply_filters('food_manager_get_listings_result', $result, $foods));
     }
@@ -1158,8 +1190,19 @@ class WPFM_ActionHooks {
                     }
                     wp_remove_object_terms($post_id, $removed_toppings_ids, 'food_manager_topping');
                 }
-                wp_set_object_terms($post_id, $options_arr, 'food_manager_topping');
+                $term_ids = wp_set_object_terms($post_id, $options_arr, 'food_manager_topping');
                 update_post_meta($post_id, '_toppings', $extra_options);
+                if ($term_ids) {
+                    foreach ($term_ids as $key => $term_id) {
+                        $key++;
+                        $description = (isset($_POST['_option_description_' . $key]) && !empty($_POST['_option_description_' . $key])) ? $_POST['_option_description_' . $key] : '';
+                        $topping_required = (isset($_POST['_option_required_' . $key]) && !empty($_POST['_option_required_' . $key])) ? $_POST['_option_required_' . $key] : '';
+                        $topping_type = (isset($_POST['_option_type_' . $key]) && !empty($_POST['_option_type_' . $key])) ? $_POST['_option_type_' . $key] : '';
+                        wp_update_term($term_id, 'food_manager_topping', array('description' => $description));
+                        update_term_meta($term_id, 'topping_required', $topping_required);
+                        update_term_meta($term_id, 'topping_type', $topping_type);
+                    }
+                }
             }
         }
         remove_action('food_manager_save_food_manager', array($this, 'food_manager_save_food_manager_data'), 20, 2);
@@ -1809,6 +1852,14 @@ class WPFM_ActionHooks {
         wp_enqueue_style('wp-food-manager-font-style');
         wp_enqueue_style('wp-food-manager-food-icons-style');
         wp_enqueue_editor();
+        wp_register_script('wpfm-term-autocomplete', WPFM_PLUGIN_URL . '/assets/js/term-autocomplete.js', array('jquery'), '1.0.1', true);
+        wp_localize_script(
+            'wpfm-term-autocomplete',
+            'wpfm_term_autocomplete',
+            array(
+                'ajax_url' => admin_url('admin-ajax.php')
+            )
+        );
     }
 
     /**
@@ -1928,6 +1979,15 @@ class WPFM_ActionHooks {
         if (isset($_GET['page']) && 'food-manager-setup' === $_GET['page']) {
             wp_enqueue_style('food_manager_setup_css', WPFM_PLUGIN_URL . '/assets/css/setup.min.css', array('dashicons'));
         }
+        wp_register_script('wpfm-term-autocomplete', WPFM_PLUGIN_URL . '/assets/js/term-autocomplete.js', array('jquery', 'jquery-ui-autocomplete'), '1.0.1', true);
+        wp_localize_script(
+            'wpfm-term-autocomplete',
+            'wpfm_term_autocomplete',
+            array(
+                'ajax_url' => admin_url('admin-ajax.php'),
+                'security' => wp_create_nonce('wpfm-autocomplete-security'),
+            )
+        );
     }
 
     /**
@@ -2035,6 +2095,34 @@ class WPFM_ActionHooks {
         }
         wp_redirect(admin_url('index.php?page=food-manager-setup'));
         exit;
+    }
+
+    /**
+     * autocomplete term search feature.
+     *
+     * @since 1.0.1
+     */
+    function term_ajax_search() {
+        if (!isset($_REQUEST['term']) && empty($_REQUEST['term']) && !isset($_REQUEST['taxonomy']) && empty($_REQUEST['taxonomy']))
+            return;
+        $results = new WP_Term_Query([
+            'search'        => stripslashes($_REQUEST['term']),
+            'taxonomy'        => stripslashes($_REQUEST['taxonomy']),
+            'hide_empty'    => false
+        ]);
+        $items = array();
+        foreach ($results->terms as $term) {
+            $topping_type = get_term_meta($term->term_id, 'topping_type', true);
+            $topping_required = get_term_meta($term->term_id, 'topping_required', true);
+            $items[] = [
+                'id' => $term->term_id,
+                'label' => $term->name,
+                'description' => term_description($term->term_id, $_REQUEST['taxonomy']),
+                'selection_type' => $topping_type,
+                'required' => $topping_required,
+            ];;
+        }
+        wp_send_json_success($items);
     }
 }
 WPFM_ActionHooks::instance();

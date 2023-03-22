@@ -361,6 +361,34 @@ class WPFM_Writepanels {
 	}
 
 	/**
+	 * input_term_autocomplete function.
+	 *
+	 * @since 1.0.2
+	 * @param mixed $key
+	 * @param mixed $field
+	 */
+	public static function input_term_autocomplete($key, $field) {
+		global $thepostid;
+		if (!isset($field['value'])) {
+			$field['value'] = get_post_meta($thepostid, $key, true);
+		}
+		if (!empty($field['name'])) {
+			$name = $field['name'];
+		} else {
+			$name = $key;
+		}
+		wp_enqueue_script('wpfm-term-autocomplete');
+		?>
+		<p class="wpfm-admin-postbox-form-field <?= $name; ?>">
+			<label for="<?php echo esc_attr($key); ?>"><?php echo esc_html($field['label']); ?> : <?php if (!empty($field['description'])) : ?><span class="wpfm-tooltip" wpfm-data-tip="<?php echo esc_attr($field['description']); ?>">[?]</span><?php endif; ?></label>
+			<span class="wpfm-input-field">
+				<input type="text" class="wpfm-small-field wpfm-autocomplete" name="<?php echo esc_attr($name); ?>" id="<?php echo esc_attr($key); ?>" placeholder="<?php echo esc_attr($field['placeholder']); ?>" data-taxonomy="<?php echo esc_attr($field['taxonomy']); ?>" value="<?php echo esc_attr($field['value']); ?>" />
+			</span>
+		</p>
+	<?php
+	}
+
+	/**
 	 * input_text function.
 	 *
 	 * @param mixed $key
@@ -726,6 +754,77 @@ class WPFM_Writepanels {
 					</td>
 				</tfoot>
 			</table>
+		</div>
+	<?php
+	}
+
+	/**
+	 * Edit toppings field in admin
+	 * 
+	 * @since 1.0.1
+	 * @param object $term
+	 */
+	public function edit_topping_fields($term) {
+		wp_nonce_field('save_toppings', 'topping_nonce');
+		$topping_type = get_term_meta($term->term_id, 'topping_type', true);
+		$topping_required = get_term_meta($term->term_id, 'topping_required', true);
+		$topping_type_options = array(
+			'checkbox' => __('Checkbox', 'wp-food-manager'),
+			'radio' => __('Radio Buttons', 'wp-food-manager'),
+			'select' => __('Select Box', 'wp-food-manager'),
+		);
+		$topping_required_options = array(
+			'no' => __('No', 'wp-food-manager'),
+			'yes' => __('Yes', 'wp-food-manager'),
+		);
+		?>
+		<tr class="form-field">
+			<th scope="row"><label for="topping_type"><?php _e('Selection Type', 'wp-food-manager'); ?></label></th>
+			<td>
+				<select name="topping_type" id="topping_type" class="input-select wpfm-small-field">
+					<?php foreach ($topping_type_options as $key => $options) {
+						$selected = ($key == $topping_type) ? 'selected': '';
+						echo "<option value='{$key}' {$selected}>{$options}</option>";
+					} ?>
+				</select>
+			</td>
+		</tr>
+		<tr class="form-field">
+			<th scope="row"><label><?php _e('Required', 'wp-food-manager'); ?></label></th>
+			<td>
+				<?php foreach ($topping_required_options as $key => $options) {
+					$checked = ($key == $topping_required) ? 'checked': '';
+					echo "<input type='radio' id='{$key}' class='radio {$key}' name='topping_required' value='{$key}' {$checked}>";
+					echo "<label for='{$key}'>{$options}</label>";
+				} ?>
+			</td>
+		</tr>
+	<?php
+	}
+
+	/**
+	 * Add toppings field in admin
+	 * 
+	 * @since 1.0.1
+	 */
+	public function add_topping_fields() { ?>
+		<?php wp_nonce_field('save_toppings', 'topping_nonce'); ?>
+		<div class="form-field">
+			<label for="topping_type"><?php _e('Selection Type', 'wp-food-manager'); ?></label>
+			<select name="topping_type" id="topping_type" class="input-select wpfm-small-field">
+				<option value="checkbox">Checkbox</option>
+				<option value="radio">Radio Buttons</option>
+				<option value="select">Select Box</option>
+			</select>
+		</div>
+		<div class="form-field">
+			<label><?php _e('Required', 'text_domain'); ?></label>
+			<span class="wpfm-input-field">
+				<input type="radio" id="no" class="radio no" name="topping_required" value="no">
+				<label for="no">No</label>
+				<input type="radio" id="yes" class="radio yes" name="topping_required" value="yes">
+				<label for="yes">Yes</label>
+			</span>
 		</div>
 <?php
 	}

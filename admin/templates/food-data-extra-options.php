@@ -17,7 +17,7 @@ $extra_options = get_post_meta($thepostid, '_toppings', true); ?>
 							<div class="wpfm-togglediv" title="Click to toggle" aria-expanded="false" data-row-count="<?php echo esc_attr($count); ?>"></div>
 							<div class="wpfm-sort"></div>
 							<strong class="attribute_name"><?php printf(__('%s', 'wp-food-manager'), $option['option_name']); ?></strong>
-							<span class="attribute_key"> <input type="hidden" name="option_key_<?php echo esc_attr($count); ?>" value="<?php echo $option['option_key']; ?>" readonly>
+							<span class="attribute_key"> <input type="hidden" name="option_key_<?php echo esc_attr($count); ?>" value="<?php echo ( isset($option['option_key']) && !empty($option['option_key']) ? $option['option_key'] : '' ); ?>" readonly>
 							</span>
 						</h3>
 						<div class="wpfm-metabox-content wpfm-options-box-<?php echo esc_attr($count); ?>">
@@ -41,6 +41,7 @@ $extra_options = get_post_meta($thepostid, '_toppings', true); ?>
 										}
 										$type = !empty($field['type']) ? $field['type'] : 'text';
 										if ($type == 'wp-editor') $type = 'wp_editor';
+										if ($type == "term-autocomplete") $type = "term_autocomplete";
 										if (has_action('food_manager_input_' . $type)) {
 											do_action('food_manager_input_' . $type, $key, $field);
 										} elseif (method_exists($this, 'input_' . $type)) {
@@ -85,6 +86,7 @@ $extra_options = get_post_meta($thepostid, '_toppings', true); ?>
 									}
 									$type = !empty($field["type"]) ? $field["type"] : "text";
 									if ($type == "wp-editor") $type = "textarea";
+									if ($type == "term-autocomplete") $type = "term_autocomplete";
 									if (has_action("food_manager_input_" . $type)) {
 										do_action("food_manager_input_" . $type, $key, $field);
 									} elseif (method_exists($this, "input_" . $type)) {
