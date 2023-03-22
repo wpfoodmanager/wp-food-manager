@@ -1,7 +1,7 @@
 var WPFMFront = function () {
     return {
         init: function () {
-            jQuery(".wpfm-form-group.fieldset-option_description").hide();
+            jQuery(".wpfm-form-group.fieldset-topping_description").hide();
             //use body to call after dom update
             jQuery("body").on('click', 'a.wpfm-food-item-remove', WPFMFront.actions.removeFoodItem);
             //Action button For Extra topping field's content to View more and View less
@@ -59,7 +59,7 @@ var WPFMFront = function () {
             jQuery(document).on("click", ".option-delete-btn", WPFMFront.actions.removeAttributesOptions)
             jQuery(document).on("click", ".wpfm-delete-btn", WPFMFront.actions.removeAttributes)
             jQuery('#wpfm-add-new-option').on('click', WPFMFront.actions.addNewOption);
-            jQuery('body').on('change', 'input[name^="option_name"]', WPFMFront.actions.updateOptionTitle);
+            jQuery('body').on('change', 'input[name^="topping_name"]', WPFMFront.actions.updateOptionTitle);
             jQuery(document).on("click", ".wpfm-togglediv", function (e) {
                 var row_count = jQuery(this).data('row-count');
                 var menuItem = jQuery(e.currentTarget);
@@ -91,10 +91,10 @@ var WPFMFront = function () {
                         jQuery(this).children('td:nth-child(2)').html(humanNum);
                         jQuery(this).attr('class', 'option-tr-' + humanNum);
                         jQuery(this).children('.option-value-class').val(humanNum);
-                        jQuery(this).children('td').children('.opt_name').attr('name', repeater_row_count + '_option_value_name_' + humanNum);
-                        jQuery(this).children('td').children('.opt_default').attr('name', repeater_row_count + '_option_value_default_' + humanNum);
-                        jQuery(this).children('td').children('.opt_price').attr('name', repeater_row_count + '_option_value_price_' + humanNum);
-                        jQuery(this).children('td').children('.opt_select').attr('name', repeater_row_count + '_option_value_price_type_' + humanNum);
+                        jQuery(this).children('td').children('.opt_name').attr('name', repeater_row_count + '_option_name_' + humanNum);
+                        jQuery(this).children('td').children('.opt_default').attr('name', repeater_row_count + '_option_default_' + humanNum);
+                        jQuery(this).children('td').children('.opt_price').attr('name', repeater_row_count + '_option_price_' + humanNum);
+                        jQuery(this).children('td').children('.opt_select').attr('name', repeater_row_count + '_option_price_type_' + humanNum);
                         jQuery(this).children('td').children('.option-delete-btn').attr('data-id', humanNum);
                     });
                 }
@@ -180,11 +180,11 @@ var WPFMFront = function () {
             },
             updateOptionTitle: function (event) {
                 jQuery(this).closest('.postbox').children('h3').children('.attribute_name').text(this.value);
-                var option_key = this.value.replace(/\s/g, '_').toLowerCase();
-                jQuery(this).closest('.postbox').children('h3').children('.attribute_key').children('input').val(option_key);
+                var topping_key = this.value.replace(/\s/g, '_').toLowerCase();
+                jQuery(this).closest('.postbox').children('h3').children('.attribute_key').children('input').val(topping_key);
                 if (this.value == '') {
                     jQuery(this).closest('.postbox').children('h3').children('.attribute_name').text("Option Key");
-                    jQuery(this).closest('.postbox').children('h3').children('.attribute_key').children('input').val("option_key");
+                    jQuery(this).closest('.postbox').children('h3').children('.attribute_key').children('input').val("topping_key");
                 }
             },
             addNewOption: function (event) {
@@ -217,10 +217,10 @@ var WPFMFront = function () {
                             jQuery(this).children('td:nth-child(2)').html(humanNum);
                             jQuery(this).attr('class', 'option-tr-' + humanNum);
                             jQuery(this).children('.option-value-class').val(humanNum);
-                            jQuery(this).children('td').children('.opt_name').attr('name', repeater_row_count + '_option_value_name_' + humanNum);
-                            jQuery(this).children('td').children('.opt_default').attr('name', repeater_row_count + '_option_value_default_' + humanNum);
-                            jQuery(this).children('td').children('.opt_price').attr('name', repeater_row_count + '_option_value_price_' + humanNum);
-                            jQuery(this).children('td').children('.opt_select').attr('name', repeater_row_count + '_option_value_price_type_' + humanNum);
+                            jQuery(this).children('td').children('.opt_name').attr('name', repeater_row_count + '_option_name_' + humanNum);
+                            jQuery(this).children('td').children('.opt_default').attr('name', repeater_row_count + '_option_default_' + humanNum);
+                            jQuery(this).children('td').children('.opt_price').attr('name', repeater_row_count + '_option_price_' + humanNum);
+                            jQuery(this).children('td').children('.opt_select').attr('name', repeater_row_count + '_option_price_type_' + humanNum);
                             jQuery(this).children('td').children('.option-delete-btn').attr('data-id', humanNum);
                         });
                     }

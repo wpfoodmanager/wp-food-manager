@@ -384,7 +384,7 @@ class WPFM_ActionHooks {
         if (empty($rlike)) {
             return;
         }
-        $sql        = $wpdb->prepare("SELECT option_name FROM $wpdb->options WHERE option_name RLIKE '%s'", implode('|', $rlike));
+        $sql        = $wpdb->prepare("SELECT topping_name FROM $wpdb->options WHERE topping_name RLIKE '%s'", implode('|', $rlike));
         $transients = $wpdb->get_col($sql);
         // For each transient...
         foreach ($transients as $transient) {
@@ -407,9 +407,9 @@ class WPFM_ActionHooks {
         if (!wp_using_ext_object_cache() && !defined('WP_SETUP_CONFIG') && !defined('WP_INSTALLING')) {
             $sql = "
 			    DELETE a, b FROM $wpdb->options a, $wpdb->options b	
- 				WHERE a.option_name LIKE %s	
- 				AND a.option_name NOT LIKE %s
- 				AND b.option_name = CONCAT( '_transient_timeout_', SUBSTRING( a.option_name, 12 ) )
+ 				WHERE a.topping_name LIKE %s	
+ 				AND a.topping_name NOT LIKE %s
+ 				AND b.topping_name = CONCAT( '_transient_timeout_', SUBSTRING( a.topping_name, 12 ) )
 				AND b.option_value < %s;";
             $wpdb->query($wpdb->prepare($sql, $wpdb->esc_like('_transient_fm_') . '%', $wpdb->esc_like('_transient_timeout_fm_') . '%', time()));
         }
@@ -1107,18 +1107,18 @@ class WPFM_ActionHooks {
                     $additional_fields = apply_filters('food_manager_show_additional_details_fields', $additional_fields);
                 }
                 // Find how many total reapeated extra option there then store it.
-                $options_arr = array();
+                $toppings_arr = array();
                 if (isset($_POST['repeated_options']) && is_array($_POST['repeated_options'])) {
                     foreach ($_POST['repeated_options'] as $option_count) {
                         $counter = 0;
-                        if (isset($_POST['option_key_' . $option_count])) {
-                            $option_key = isset($_POST['option_key_' . $option_count]) ? $_POST['option_key_' . $option_count] : '';
-                            $option_name = isset($_POST['option_name_' . $option_count]) ? $_POST['option_name_' . $option_count] : '';
-                            $options_arr[] = $option_name;
-                            $option_type = isset($_POST['_option_type_' . $option_count]) ? $_POST['_option_type_' . $option_count] : '';
-                            $option_required = isset($_POST['_option_required_' . $option_count]) ? $_POST['_option_required_' . $option_count] : '';
-                            $option_enable_desc = isset($_POST['_option_enable_desc_' . $option_count]) ? $_POST['_option_enable_desc_' . $option_count] : '';
-                            $option_description = isset($_POST['_option_description_' . $option_count]) ? $_POST['_option_description_' . $option_count] : '';
+                        if (isset($_POST['topping_key_' . $option_count])) {
+                            $topping_key = isset($_POST['topping_key_' . $option_count]) ? $_POST['topping_key_' . $option_count] : '';
+                            $topping_name = isset($_POST['topping_name_' . $option_count]) ? $_POST['topping_name_' . $option_count] : '';
+                            $toppings_arr[] = $topping_name;
+                            $topping_type = isset($_POST['_topping_type_' . $option_count]) ? $_POST['_topping_type_' . $option_count] : '';
+                            $topping_required = isset($_POST['_topping_required_' . $option_count]) ? $_POST['_topping_required_' . $option_count] : '';
+                            $topping_enable_desc = isset($_POST['_topping_enable_desc_' . $option_count]) ? $_POST['_topping_enable_desc_' . $option_count] : '';
+                            $topping_description = isset($_POST['_topping_description_' . $option_count]) ? $_POST['_topping_description_' . $option_count] : '';
                             $option_values = array();
                             if (isset($_POST['option_value_count'])) {
                                 $find_option = array_search('%%repeated-option-index%%', $_POST['option_value_count']);
@@ -1127,28 +1127,28 @@ class WPFM_ActionHooks {
                                     unset($_POST['option_value_count'][$find_option]);
                                 }
                                 foreach ($_POST['option_value_count'] as $option_value_count) {
-                                    if (!empty($_POST[$option_count . '_option_value_name_' . $option_value_count]) || !empty($_POST[$option_count . '_option_value_default_' . $option_value_count]) || !empty($_POST[$option_count . '_option_value_price_' . $option_value_count])) {
+                                    if (!empty($_POST[$option_count . '_option_name_' . $option_value_count]) || !empty($_POST[$option_count . '_option_default_' . $option_value_count]) || !empty($_POST[$option_count . '_option_price_' . $option_value_count])) {
                                         $option_values[$option_value_count] = array(
-                                            'option_value_name' => isset($_POST[$option_count . '_option_value_name_' . $option_value_count]) ? $_POST[$option_count . '_option_value_name_' . $option_value_count] : '',
-                                            'option_value_default' => isset($_POST[$option_count . '_option_value_default_' . $option_value_count]) ? $_POST[$option_count . '_option_value_default_' . $option_value_count] : '',
-                                            'option_value_price' => isset($_POST[$option_count . '_option_value_price_' . $option_value_count]) ? $_POST[$option_count . '_option_value_price_' . $option_value_count] : '',
-                                            'option_value_price_type' => isset($_POST[$option_count . '_option_value_price_type_' . $option_value_count]) ? $_POST[$option_count . '_option_value_price_type_' . $option_value_count] : ''
+                                            'option_name' => isset($_POST[$option_count . '_option_name_' . $option_value_count]) ? $_POST[$option_count . '_option_name_' . $option_value_count] : '',
+                                            'option_default' => isset($_POST[$option_count . '_option_default_' . $option_value_count]) ? $_POST[$option_count . '_option_default_' . $option_value_count] : '',
+                                            'option_price' => isset($_POST[$option_count . '_option_price_' . $option_value_count]) ? $_POST[$option_count . '_option_price_' . $option_value_count] : '',
+                                            'option_price_type' => isset($_POST[$option_count . '_option_price_type_' . $option_value_count]) ? $_POST[$option_count . '_option_price_type_' . $option_value_count] : ''
                                         );
                                     }
                                 }
                             }
                             if (!empty($custom_extra_options_fields)) {
                                 $extra_options[$option_count] = array(
-                                    'option_key' => $option_key,
-                                    'option_name' => $option_name,
+                                    'topping_key' => $topping_key,
+                                    'topping_name' => $topping_name,
                                 );
                                 foreach ($custom_extra_options_fields as $custom_ext_key => $custom_extra_options_field) {
                                     foreach ($custom_extra_options_field as $custom_ext_single_key => $custom_extra_options_single_field) {
-                                        if ($custom_ext_single_key !== 'option_name' && $custom_ext_single_key !== 'option_options') {
+                                        if ($custom_ext_single_key !== 'topping_name' && $custom_ext_single_key !== 'option_options') {
                                             $custom_ext_key_post = isset($_POST["_" . $custom_ext_single_key . "_" . $option_count]) ? $_POST["_" . $custom_ext_single_key . "_" . $option_count] : '';
                                             $extra_options[$option_count][$custom_ext_single_key] = $custom_ext_key_post;
                                         }
-                                        if ($custom_ext_single_key == 'option_name') {
+                                        if ($custom_ext_single_key == 'topping_name') {
                                             $custom_ext_key_post = isset($_POST[$custom_ext_single_key . "_" . $option_count]) ? $_POST[$custom_ext_single_key . "_" . $option_count] : '';
                                             $extra_options[$option_count][$custom_ext_single_key] = $custom_ext_key_post;
                                         }
@@ -1159,13 +1159,13 @@ class WPFM_ActionHooks {
                                 }
                             } else {
                                 $extra_options[$option_count] = array(
-                                    'option_key' => $option_key,
-                                    'option_name' => $option_name,
-                                    'option_type' => $option_type,
-                                    'option_required' => $option_required,
-                                    'option_enable_desc' => $option_enable_desc,
-                                    'option_description' => $option_description,
-                                    'option_options' => $option_values,
+                                    'topping_key' => $topping_key,
+                                    'topping_name' => $topping_name,
+                                    'topping_type' => $topping_type,
+                                    'topping_required' => $topping_required,
+                                    'topping_enable_desc' => $topping_enable_desc,
+                                    'topping_description' => $topping_description,
+                                    'topping_options' => $option_values,
                                 );
                             }
 
@@ -1184,20 +1184,20 @@ class WPFM_ActionHooks {
                 if ($exist_toppings) {
                     $removed_toppings_ids = [];
                     foreach ($exist_toppings as $toppings) {
-                        if (!in_array($toppings->slug, $options_arr)) {
+                        if (!in_array($toppings->slug, $toppings_arr)) {
                             $removed_toppings_ids[] = (int)$toppings->term_id;
                         }
                     }
                     wp_remove_object_terms($post_id, $removed_toppings_ids, 'food_manager_topping');
                 }
-                $term_ids = wp_set_object_terms($post_id, $options_arr, 'food_manager_topping');
+                $term_ids = wp_set_object_terms($post_id, $toppings_arr, 'food_manager_topping');
                 update_post_meta($post_id, '_toppings', $extra_options);
                 if ($term_ids) {
                     foreach ($term_ids as $key => $term_id) {
                         $key++;
-                        $description = (isset($_POST['_option_description_' . $key]) && !empty($_POST['_option_description_' . $key])) ? $_POST['_option_description_' . $key] : '';
-                        $topping_required = (isset($_POST['_option_required_' . $key]) && !empty($_POST['_option_required_' . $key])) ? $_POST['_option_required_' . $key] : '';
-                        $topping_type = (isset($_POST['_option_type_' . $key]) && !empty($_POST['_option_type_' . $key])) ? $_POST['_option_type_' . $key] : '';
+                        $description = (isset($_POST['_topping_description_' . $key]) && !empty($_POST['_topping_description_' . $key])) ? $_POST['_topping_description_' . $key] : '';
+                        $topping_required = (isset($_POST['_topping_required_' . $key]) && !empty($_POST['_topping_required_' . $key])) ? $_POST['_topping_required_' . $key] : '';
+                        $topping_type = (isset($_POST['_topping_type_' . $key]) && !empty($_POST['_topping_type_' . $key])) ? $_POST['_topping_type_' . $key] : '';
                         wp_update_term($term_id, 'food_manager_topping', array('description' => $description));
                         update_term_meta($term_id, 'topping_required', $topping_required);
                         update_term_meta($term_id, 'topping_type', $topping_type);

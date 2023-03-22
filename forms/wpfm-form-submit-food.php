@@ -222,7 +222,7 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
 				),
 			),
 			'extra_options' => array(
-				'option_name' => array(
+				'topping_name' => array(
 					'label'       => __('Topping Name', 'wp-food-manager'),
 					'type'        => 'term-autocomplete',
 					'required'    => true,
@@ -230,7 +230,7 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
 					'priority'    => 1,
 					'taxonomy'    => 'food_manager_topping'
 				),
-				'option_type' => array(
+				'topping_type' => array(
 					'label'       => __('Topping Selection Type', 'wp-food-manager'),
 					'type'        => 'select',
 					'required'    => false,
@@ -241,7 +241,7 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
 					),
 					'priority'    => 2
 				),
-				'option_required' => array(
+				'topping_required' => array(
 					'label'       => __('Topping Required', 'wp-food-manager'),
 					'type'        => 'radio',
 					'required'    => false,
@@ -253,7 +253,7 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
 					),
 					'priority'    => 3
 				),
-				'option_description' => array(
+				'topping_description' => array(
 					'label'       => __('Topping Description', 'wp-food-manager'),
 					'type'        => 'wp-editor',
 					'required'    => true,
@@ -284,7 +284,7 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
 				if ($group_key == 'extra_options') {
 					if (isset($_POST['repeated_options'])) {
 						foreach ($_POST['repeated_options'] as $repeated_options) {
-							$key = ($key == 'option_description') ? '_' . $key : $key;
+							$key = ($key == 'topping_description') ? '_' . $key : $key;
 							if ($field['required'] && empty($_POST[$key . '_' . $repeated_options])) {
 								return new WP_Error('validation-error', sprintf(__('Extra Toppings Option - %s is a required field.', 'wp-food-manager'), $field['label']));
 							}
@@ -500,10 +500,10 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
 	protected function save_food($post_title, $post_content, $status = 'preview', $values = array(), $update_slug = true) {
 		global $wpdb;
 
-		$options_arr = array();
+		$toppings_arr = array();
 		if (isset($_POST['repeated_options']) && !empty($_POST['repeated_options'])) {
 			foreach ($_POST['repeated_options'] as $count) {
-				$options_arr[] = $_POST['option_name_' . $count];
+				$toppings_arr[] = $_POST['topping_name_' . $count];
 			}
 		}
 
@@ -511,19 +511,19 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
 		if ($exist_toppings) {
 			$removed_toppings_ids = [];
 			foreach ($exist_toppings as $toppings) {
-				if (!in_array($toppings->slug, $options_arr)) {
+				if (!in_array($toppings->slug, $toppings_arr)) {
 					$removed_toppings_ids[] = (int)$toppings->term_id;
 				}
 			}
 			wp_remove_object_terms($this->food_id, $removed_toppings_ids, 'food_manager_topping');
 		}
-		$term_ids = wp_set_object_terms($this->food_id, $options_arr, 'food_manager_topping');
+		$term_ids = wp_set_object_terms($this->food_id, $toppings_arr, 'food_manager_topping');
 		if ($term_ids) {
 			foreach ($term_ids as $key => $term_id) {
 				$key++;
-				$description = (isset($_POST['_option_description_' . $key]) && !empty($_POST['_option_description_' . $key])) ? $_POST['_option_description_' . $key] : '';
-				$topping_required = (isset($_POST['_option_required_' . $key]) && !empty($_POST['_option_required_' . $key])) ? $_POST['_option_required_' . $key] : '';
-				$topping_type = (isset($_POST['_option_type_' . $key]) && !empty($_POST['_option_type_' . $key])) ? $_POST['_option_type_' . $key] : '';
+				$description = (isset($_POST['_topping_description_' . $key]) && !empty($_POST['_topping_description_' . $key])) ? $_POST['_topping_description_' . $key] : '';
+				$topping_required = (isset($_POST['_topping_required_' . $key]) && !empty($_POST['_topping_required_' . $key])) ? $_POST['_topping_required_' . $key] : '';
+				$topping_type = (isset($_POST['_topping_type_' . $key]) && !empty($_POST['_topping_type_' . $key])) ? $_POST['_topping_type_' . $key] : '';
 				wp_update_term($term_id, 'food_manager_topping', array('description' => $description));
 				update_term_meta($term_id, 'topping_required', $topping_required);
 				update_term_meta($term_id, 'topping_type', $topping_type);

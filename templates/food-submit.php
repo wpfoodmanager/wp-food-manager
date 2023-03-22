@@ -76,11 +76,11 @@ if (!empty($extra_fields_options)) {
 				<div class="wpfm-options-wrapper wpfm-metaboxes">
 					<?php if (!empty($extra_fields_options)) {
 						foreach ($option_value_counts3 as $key => $extra_fields_option) {
-							$selected_check = ($extra_fields_option['option_type'] === 'checkbox') ? 'selected' : '';
-							$selected_radio = ($extra_fields_option['option_type'] === 'radio') ? 'selected' : '';
-							$selected_select = ($extra_fields_option['option_type'] === 'select') ? 'selected' : '';
-							$option_required = ($extra_fields_option['option_required'] === 'yes') ? 'checked' : '';
-							$option_key = str_replace(" ", "_", strtolower($extra_fields_option['option_name']));
+							$selected_check = ($extra_fields_option['topping_type'] === 'checkbox') ? 'selected' : '';
+							$selected_radio = ($extra_fields_option['topping_type'] === 'radio') ? 'selected' : '';
+							$selected_select = ($extra_fields_option['topping_type'] === 'select') ? 'selected' : '';
+							$topping_required = ($extra_fields_option['topping_required'] === 'yes') ? 'checked' : '';
+							$topping_key = str_replace(" ", "_", strtolower($extra_fields_option['topping_name']));
 							?>
 							<div class="wpfm-options-wrap wpfm-metabox postbox wpfm-options-box-<?php echo $key; ?>">
 								<input type="hidden" name="repeated_options[]" value="<?php echo $key; ?>" class="repeated-options">
@@ -88,15 +88,15 @@ if (!empty($extra_fields_options)) {
 									<a href="javascript: void(0);" data-id="<?php echo $key; ?>" class="wpfm-delete-btn dashicons dashicons-dismiss">Remove</a>
 									<div class="wpfm-togglediv" title="Click to toggle" aria-expanded="false" data-row-count="<?php echo $key; ?>"></div>
 									<div class="wpfm-sort"></div>
-									<strong class="attribute_name"><?php echo $extra_fields_option['option_name']; ?></strong>
-									<span class="attribute_key"><input type="hidden" name="option_key_<?php echo esc_attr($key); ?>" value="<?php echo $option_key; ?>" readonly=""></span>
+									<strong class="attribute_name"><?php echo $extra_fields_option['topping_name']; ?></strong>
+									<span class="attribute_key"><input type="hidden" name="topping_key_<?php echo esc_attr($key); ?>" value="<?php echo $topping_key; ?>" readonly=""></span>
 								</h3>
 								<div class="wpfm-metabox-content wpfm-options-box">
 									<div class="wpfm-content">
 										<?php
 										foreach ($food_extra_fields as $key2 => $field) :
 											if ($key2 !== 'option_options') {
-												if ($key2 !== 'option_name') {
+												if ($key2 !== 'topping_name') {
 													$key2 = "_" . $key2 . "_" . $key;
 												} else {
 													$key2 = $key2 . "_" . $key;
@@ -135,24 +135,24 @@ if (!empty($extra_fields_options)) {
 															<tbody class="ui-sortable">
 																<?php
 																foreach ($extra_fields_option['option_options'] as $sub_value_count => $values) {
-																	$option_value_default = ($values['option_value_default'] === 'on') ? 'checked' : '';
-																	$option_fixed_amount = ($values['option_value_price_type'] === 'fixed_amount') ? 'selected' : '';
-																	$option_quantity_based = ($values['option_value_price_type'] === 'quantity_based') ? 'selected' : '';
+																	$option_default = ($values['option_default'] === 'on') ? 'checked' : '';
+																	$option_fixed_amount = ($values['option_price_type'] === 'fixed_amount') ? 'selected' : '';
+																	$option_quantity_based = ($values['option_price_type'] === 'quantity_based') ? 'selected' : '';
 																	?>
 																	<tr class="option-tr-<?php echo $sub_value_count; ?>">
 																		<td><span class="wpfm-option-sort">☰</span></td>
 																		<td><?php echo $sub_value_count; ?></td>
 																		<td>
-																			<input type="text" name="<?php echo $key; ?>_option_value_name_<?php echo $sub_value_count; ?>" value="<?php echo $values['option_value_name']; ?>" class="opt_name" pattern=".*\S+.*" required>
+																			<input type="text" name="<?php echo $key; ?>_option_name_<?php echo $sub_value_count; ?>" value="<?php echo $values['option_name']; ?>" class="opt_name" pattern=".*\S+.*" required>
 																		</td>
 																		<td>
-																			<input type="checkbox" name="<?php echo $key; ?>_option_value_default_<?php echo $sub_value_count; ?>" class="opt_default" <?php echo $option_value_default; ?>>
+																			<input type="checkbox" name="<?php echo $key; ?>_option_default_<?php echo $sub_value_count; ?>" class="opt_default" <?php echo $option_default; ?>>
 																		</td>
 																		<td>
-																			<input type="number" name="<?php echo $key; ?>_option_value_price_<?php echo $sub_value_count; ?>" value="<?php echo $values['option_value_price']; ?>" class="opt_price" step="any" required>
+																			<input type="number" name="<?php echo $key; ?>_option_price_<?php echo $sub_value_count; ?>" value="<?php echo $values['option_price']; ?>" class="opt_price" step="any" required>
 																		</td>
 																		<td>
-																			<select name="<?php echo $key; ?>_option_value_price_type_<?php echo $sub_value_count; ?>" class="opt_select">
+																			<select name="<?php echo $key; ?>_option_price_type_<?php echo $sub_value_count; ?>" class="opt_select">
 																				<option value="quantity_based" <?php echo $option_quantity_based; ?>>Quantity Based</option>
 																				<option value="fixed_amount" <?php echo $option_fixed_amount; ?>>Fixed Amount</option>
 																			</select>
@@ -167,11 +167,11 @@ if (!empty($extra_fields_options)) {
 																	<td colspan="7"> <a class="button wpfm-add-row" data-row="<tr class='option-tr-%%repeated-option-index3%%'>
 								                    <td><span class='wpfm-option-sort'>☰</span></td>
 								                    <td>%%repeated-option-index3%%</td>
-								                    <td><input type='text' name='%%repeated-option-index2%%_option_value_name_%%repeated-option-index3%%' value='' class='opt_name' pattern='.*\S+.*' required></td>
-								                    <td><input type='checkbox' name='%%repeated-option-index2%%_option_value_default_%%repeated-option-index3%%' class='opt_default'></td>
-								                    <td><input type='number' name='%%repeated-option-index2%%_option_value_price_%%repeated-option-index3%%' value='' class='opt_price' required></td>
+								                    <td><input type='text' name='%%repeated-option-index2%%_option_name_%%repeated-option-index3%%' value='' class='opt_name' pattern='.*\S+.*' required></td>
+								                    <td><input type='checkbox' name='%%repeated-option-index2%%_option_default_%%repeated-option-index3%%' class='opt_default'></td>
+								                    <td><input type='number' name='%%repeated-option-index2%%_option_price_%%repeated-option-index3%%' value='' class='opt_price' required></td>
 								                    <td>
-								                        <select name='%%repeated-option-index2%%_option_value_price_type_%%repeated-option-index3%%' class='opt_select'>
+								                        <select name='%%repeated-option-index2%%_option_price_type_%%repeated-option-index3%%' class='opt_select'>
 								                        <option value='quantity_based'>Quantity Based</option>
 								                        <option value='fixed_amount'>Fixed Amount</option>
 								                        </select>
@@ -201,7 +201,7 @@ if (!empty($extra_fields_options)) {
 						            <div class="wpfm-togglediv" title="Click to toggle" aria-expanded="false" data-row-count="%%repeated-option-index%%"></div>
 						            <div class="wpfm-sort"></div>
 						            <strong class="attribute_name"><?php _e("Topping Option %%repeated-option-index%%", "wp-food-manager"); ?></strong>
-						            <span class="attribute_key"><input type="hidden" name="option_key_%%repeated-option-index%%" value="option_%%repeated-option-index%%" readonly>
+						            <span class="attribute_key"><input type="hidden" name="topping_key_%%repeated-option-index%%" value="option_%%repeated-option-index%%" readonly>
 						                </span>
 						        </h3>
 						        <div class="wpfm-metabox-content wpfm-options-box">
@@ -209,7 +209,7 @@ if (!empty($extra_fields_options)) {
 						                <?php
 										foreach ($food_extra_fields as $key => $field) :
 
-											if ($key == "option_name") {
+											if ($key == "topping_name") {
 												if (strpos($key, '_') !== 0) {
 													$key  = $key . '_%%repeated-option-index%%';
 												}

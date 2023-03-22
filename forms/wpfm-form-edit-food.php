@@ -60,7 +60,7 @@ class WPFM_Form_Edit_Food extends WPFM_Form_Submit_Food {
 				if ($group_key == 'extra_options') {
 					foreach ($parent_row_fields_count as $row_key => $row_value) {
 						$key_row_val = '';
-						if ($key !== 'option_name') {
+						if ($key !== 'topping_name') {
 							$key_row_val = '_' . $key . '_' . $row_value;
 						} else {
 							$key_row_val = $key . '_' . $row_value;

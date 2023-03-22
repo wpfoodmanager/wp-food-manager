@@ -245,7 +245,7 @@ abstract class WPFM_Form {
 							$values[$group_key][$key] = call_user_func($handler, $key, $field);
 						} elseif ($group_key == "extra_options") {
 							$key2 = "";
-							if ($key == "option_name") {
+							if ($key == "topping_name") {
 								$first_key = $key . "_" . $option_count;
 								$key2 = $key . "_" . $option_count;
 							} else {
@@ -263,10 +263,10 @@ abstract class WPFM_Form {
 								foreach ($option_value as $option_value_count) {
 									$output2[$option_value_count] =
 										array(
-											'option_value_name' => isset($_POST[$option_count . '_option_value_name_' . $option_value_count]) ? $_POST[$option_count . '_option_value_name_' . $option_value_count] : '',
-											'option_value_default' => isset($_POST[$option_count . '_option_value_default_' . $option_value_count]) ? $_POST[$option_count . '_option_value_default_' . $option_value_count] : '',
-											'option_value_price' => isset($_POST[$option_count . '_option_value_price_' . $option_value_count]) ? $_POST[$option_count . '_option_value_price_' . $option_value_count] : '',
-											'option_value_price_type' => isset($_POST[$option_count . '_option_value_price_type_' . $option_value_count]) ? $_POST[$option_count . '_option_value_price_type_' . $option_value_count] : ''
+											'option_name' => isset($_POST[$option_count . '_option_name_' . $option_value_count]) ? $_POST[$option_count . '_option_name_' . $option_value_count] : '',
+											'option_default' => isset($_POST[$option_count . '_option_default_' . $option_value_count]) ? $_POST[$option_count . '_option_default_' . $option_value_count] : '',
+											'option_price' => isset($_POST[$option_count . '_option_price_' . $option_value_count]) ? $_POST[$option_count . '_option_price_' . $option_value_count] : '',
+											'option_price_type' => isset($_POST[$option_count . '_option_price_type_' . $option_value_count]) ? $_POST[$option_count . '_option_price_type_' . $option_value_count] : ''
 										);
 									$values[$group_key][$first_out][$key] = $output2;
 								}

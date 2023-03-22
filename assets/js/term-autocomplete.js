@@ -35,19 +35,19 @@ var WPFMTermAutocomplete = function () {
                         var wrapper = jQuery($this).parents('.wpfm-options-wrap');
                         var count = wrapper.find('.repeated-options').val();
                         if (ui.item.selection_type != '') {
-                            wrapper.find('[name="_option_type_' + count + '"]').val(ui.item.selection_type);
+                            wrapper.find('[name="_topping_type_' + count + '"]').val(ui.item.selection_type);
                         } else {
-                            wrapper.find('[name="_option_type_' + count + '"]').val('');
+                            wrapper.find('[name="_topping_type_' + count + '"]').val('');
                         }
                         if (ui.item.required != '') {
-                            wrapper.find('[name="_option_required_' + count + '"][value="'+ui.item.required+'"]').prop('checked', true);
+                            wrapper.find('[name="_topping_required_' + count + '"][value="'+ui.item.required+'"]').prop('checked', true);
                         } else {
-                            wrapper.find('[name="_option_required_' + count + '"]').prop('checked', false);
+                            wrapper.find('[name="_topping_required_' + count + '"]').prop('checked', false);
                         }
                         if (ui.item.description != '') {
-                            tinyMCE.get('_option_description_' + count).setContent(ui.item.description);
+                            tinyMCE.get('_topping_description_' + count).setContent(ui.item.description);
                         } else {
-                            tinyMCE.get('_option_description_' + count).setContent('');
+                            tinyMCE.get('_topping_description_' + count).setContent('');
                         }
                     },
                 });

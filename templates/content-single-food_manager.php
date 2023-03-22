@@ -132,21 +132,21 @@ $food = $post;
                                         echo "<h3 class='wpfm-heading-text'>Extra Toppings</h3>";
                                         foreach ($ext_options as $key => $ext_option) {
                                             $field_required = '';
-                                            if ($ext_option['option_required'] == 'yes') {
+                                            if ($ext_option['topping_required'] == 'yes') {
                                                 $field_required = 'required';
                                             }
-                                            if ($ext_option['option_type'] == 'radio') {
+                                            if ($ext_option['topping_type'] == 'radio') {
                                                 echo "<div class='wpfm-radio-options wpfm-input-field-common' data-attribute_name='attribute_pa_" . esc_attr($key) . "'>";
-                                                echo '<label for="' . str_replace(" ", "-", strtolower($ext_option['option_name'])) . '"><strong>' . $ext_option['option_name'] . '</strong></label>';
-                                                if (!empty($ext_option['option_description'])) {
-                                                    echo '<div class="wpfm-input-description">' . $ext_option['option_description'] . '</div>';
+                                                echo '<label for="' . str_replace(" ", "-", strtolower($ext_option['topping_name'])) . '"><strong>' . $ext_option['topping_name'] . '</strong></label>';
+                                                if (!empty($ext_option['topping_description'])) {
+                                                    echo '<div class="wpfm-input-description">' . $ext_option['topping_description'] . '</div>';
                                                 }
                                                 echo '<div class="wpfm-inner-field-content ' . $more_class . '">';
                                                 foreach ($ext_option['option_options'] as $key2 => $value2) {
-                                                    $checked = ($value2['option_value_default']) == 'on' ? 'checked' : '';
+                                                    $checked = ($value2['option_default']) == 'on' ? 'checked' : '';
                                                     echo "<div class='wpfm-input-singular'>";
-                                                    echo '<input type="radio" id="' . esc_attr(str_replace(" ", "-", strtolower($value2['option_value_name']))) . '" name="' . esc_attr($key) . '" value="' . esc_attr($value2['option_value_price']) . '" ' . $checked . ' data-price-type=' . esc_attr($value2['option_value_price_type']) . ' data-attr-name=' . esc_attr(str_replace(" ", "-", strtolower($value2['option_value_name']))) . ' ' . $field_required . '>';
-                                                    echo '<label for="' . esc_attr(str_replace(" ", "-", strtolower($value2['option_value_name']))) . '"> ' . esc_html($value2['option_value_name']) . ' - ' . get_food_manager_currency_symbol() . $value2['option_value_price'] . '</label>';
+                                                    echo '<input type="radio" id="' . esc_attr(str_replace(" ", "-", strtolower($value2['option_name']))) . '" name="' . esc_attr($key) . '" value="' . esc_attr($value2['option_price']) . '" ' . $checked . ' data-price-type=' . esc_attr($value2['option_price_type']) . ' data-attr-name=' . esc_attr(str_replace(" ", "-", strtolower($value2['option_name']))) . ' ' . $field_required . '>';
+                                                    echo '<label for="' . esc_attr(str_replace(" ", "-", strtolower($value2['option_name']))) . '"> ' . esc_html($value2['option_name']) . ' - ' . get_food_manager_currency_symbol() . $value2['option_price'] . '</label>';
                                                     echo "</div>";
                                                 } 
                                                 do_action('wpfm_singular_option_input_before');
@@ -172,19 +172,19 @@ $food = $post;
                                                 echo "</div>";
                                                 echo "</div>";
                                             }
-                                            if ($ext_option['option_type'] == 'checkbox') {
+                                            if ($ext_option['topping_type'] == 'checkbox') {
                                                 echo "<div class='wpfm-checkbox-options wpfm-input-field-common'>";
-                                                echo '<label for="' . str_replace(" ", "-", strtolower($ext_option['option_name'])) . '"><strong>' . $ext_option['option_name'] . '</strong></label>';
-                                                if (!empty($ext_option['option_description'])) {
-                                                    echo '<div class="wpfm-input-description">' . $ext_option['option_description'] . '</div>';
+                                                echo '<label for="' . str_replace(" ", "-", strtolower($ext_option['topping_name'])) . '"><strong>' . $ext_option['topping_name'] . '</strong></label>';
+                                                if (!empty($ext_option['topping_description'])) {
+                                                    echo '<div class="wpfm-input-description">' . $ext_option['topping_description'] . '</div>';
                                                 }
                                                 echo '<div class="wpfm-inner-field-content ' . $more_class . '">';
                                                 foreach ($ext_option['option_options'] as $key2 => $value2) {
-                                                    $checked = ($value2['option_value_default']) == 'on' ? 'checked' : '';
+                                                    $checked = ($value2['option_default']) == 'on' ? 'checked' : '';
                                                     do_action('wpfm_singular_option_input_before');
                                                     echo "<div class='wpfm-input-singular'>";
-                                                    echo '<input type="checkbox" id="' . esc_attr(str_replace(" ", "-", strtolower($value2['option_value_name']))) . '" name="' . esc_attr($key) . '" value="' . esc_attr($value2['option_value_price']) . '" ' . $checked . ' data-val="' . $value2['option_value_price'] . '" data-price-type=' . esc_attr($value2['option_value_price_type']) . ' data-attr-name=' . esc_attr(str_replace(" ", "-", strtolower($value2['option_value_name']))) . ' ' . $field_required . '>';
-                                                    echo '<label for="' . esc_attr(str_replace(" ", "-", strtolower($value2['option_value_name']))) . '"> ' . esc_html($value2['option_value_name']) . ' - ' . get_food_manager_currency_symbol() . $value2['option_value_price'] . '</label>';
+                                                    echo '<input type="checkbox" id="' . esc_attr(str_replace(" ", "-", strtolower($value2['option_name']))) . '" name="' . esc_attr($key) . '" value="' . esc_attr($value2['option_price']) . '" ' . $checked . ' data-val="' . $value2['option_price'] . '" data-price-type=' . esc_attr($value2['option_price_type']) . ' data-attr-name=' . esc_attr(str_replace(" ", "-", strtolower($value2['option_name']))) . ' ' . $field_required . '>';
+                                                    echo '<label for="' . esc_attr(str_replace(" ", "-", strtolower($value2['option_name']))) . '"> ' . esc_html($value2['option_name']) . ' - ' . get_food_manager_currency_symbol() . $value2['option_price'] . '</label>';
                                                     echo "</div>";
                                                     do_action('wpfm_singular_option_input_after');
                                                 }
@@ -205,19 +205,19 @@ $food = $post;
                                                 echo "</div>";
                                                 echo "</div>";
                                             }
-                                            if ($ext_option['option_type'] == 'select') {
+                                            if ($ext_option['topping_type'] == 'select') {
                                                 echo "<div class='wpfm-select-options wpfm-input-field-common " . $more_class . "'>";
-                                                echo '<label for="' . str_replace(" ", "-", strtolower($ext_option['option_name'])) . '"><strong>' . $ext_option['option_name'] . '</strong></label>';
-                                                if (!empty($ext_option['option_description'])) {
-                                                    echo '<div class="wpfm-input-description">' . $ext_option['option_description'] . '</div>';
+                                                echo '<label for="' . str_replace(" ", "-", strtolower($ext_option['topping_name'])) . '"><strong>' . $ext_option['topping_name'] . '</strong></label>';
+                                                if (!empty($ext_option['topping_description'])) {
+                                                    echo '<div class="wpfm-input-description">' . $ext_option['topping_description'] . '</div>';
                                                 }
                                                 do_action('wpfm_singular_option_input_before');
                                                 echo '<select name="' . esc_attr($key) . '">';
                                                 $d_selected_flg = 'selected';
                                                 foreach ($ext_option['option_options'] as $key2 => $value2) {
-                                                    $selected = ($value2['option_value_default']) == 'on' ? 'selected' : '';
+                                                    $selected = ($value2['option_default']) == 'on' ? 'selected' : '';
                                                     $d_selected_flg = ($selected) ? '' : $d_selected_flg;
-                                                    echo '<option value="' . esc_attr($value2['option_value_price']) . '" ' . $selected . ' data-price-type=' . esc_attr($value2['option_value_price_type']) . ' data-attr-name=' . esc_attr(str_replace(" ", "-", strtolower($value2['option_value_name']))) . '>' . esc_attr($value2['option_value_name']) . ' - ' . get_food_manager_currency_symbol() . $value2['option_value_price'] . '</option>';
+                                                    echo '<option value="' . esc_attr($value2['option_price']) . '" ' . $selected . ' data-price-type=' . esc_attr($value2['option_price_type']) . ' data-attr-name=' . esc_attr(str_replace(" ", "-", strtolower($value2['option_name']))) . '>' . esc_attr($value2['option_name']) . ' - ' . get_food_manager_currency_symbol() . $value2['option_price'] . '</option>';
                                                 }
                                                 echo '<option value="" ' . $d_selected_flg . '>None</option>';
                                                 echo '</select>';
