@@ -68,7 +68,7 @@ class WPFM_Cache_Helper {
 	private static function delete_version_transients($version) {
 		if (!wp_using_ext_object_cache() && !empty($version)) {
 			global $wpdb;
-			$wpdb->query($wpdb->prepare("DELETE FROM {$wpdb->options} WHERE topping_name LIKE %s;", "\_transient\_%" . $version));
+			$wpdb->query($wpdb->prepare("DELETE FROM {$wpdb->options} WHERE option_name LIKE %s;", "\_transient\_%" . $version));
 		}
 	}
 

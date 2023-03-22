@@ -294,7 +294,7 @@ class WPFM_Data_Cleaner {
 			foreach (self::$transients as $transient) {
 				$wpdb->query(
 					$wpdb->prepare(
-						"DELETE FROM $wpdb->options WHERE topping_name RLIKE %s",
+						"DELETE FROM $wpdb->options WHERE option_name RLIKE %s",
 						$prefix . $transient
 					)
 				);
