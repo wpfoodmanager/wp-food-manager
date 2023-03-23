@@ -36,6 +36,7 @@ if (get_option('food_manager_enable_categories', true)) {
 				'update_item'       => sprintf(__('Update %s', 'wp-food-manager'), $singular),
 				'add_new_item'      => sprintf(__('Add New %s', 'wp-food-manager'), $singular),
 				'new_item_name'     => sprintf(__('New %s Name', 'wp-food-manager'),  $singular),
+				'not_found' 	=> sprintf(__('No Food %s Found.', 'wp-food-manager'),  $plural),
 				'back_to_items'     => sprintf(__('← Go to Food %s', 'wp-food-manager'),  $plural)
 			),
 			'show_ui' 				=> true,
@@ -85,6 +86,7 @@ if (get_option('food_manager_enable_food_types', true)) {
 				'update_item' 		=> sprintf(__('Update %s', 'wp-food-manager'), $singular),
 				'add_new_item' 		=> sprintf(__('Add New %s', 'wp-food-manager'), $singular),
 				'new_item_name' 	=> sprintf(__('New %s Name', 'wp-food-manager'),  $singular),
+				'not_found' 	=> sprintf(__('No Food %s Found.', 'wp-food-manager'),  $plural),
 				'back_to_items'     => sprintf(__('← Go to Food %s', 'wp-food-manager'),  $plural)
 			),
 			'show_ui' 				=> true,
@@ -132,6 +134,7 @@ if (get_option('food_manager_enable_food_tags', true)) {
 				'update_item' 		=> sprintf(__('Update %s', 'wp-food-manager'), $singular),
 				'add_new_item' 		=> sprintf(__('Add New %s', 'wp-food-manager'), $singular),
 				'new_item_name' 	=> sprintf(__('New %s Name', 'wp-food-manager'),  $singular),
+				'not_found' 	=> sprintf(__('No Food %s Found.', 'wp-food-manager'),  $plural),
 				'back_to_items'     => sprintf(__('← Go to Food %s', 'wp-food-manager'),  $plural)
 			),
 			'show_ui' 				=> true,
@@ -179,6 +182,7 @@ register_taxonomy(
 			'update_item' 		=> sprintf(__('Update %s', 'wp-food-manager'), $singular),
 			'add_new_item' 		=> sprintf(__('Add New %s', 'wp-food-manager'), $singular),
 			'new_item_name' 	=> sprintf(__('New %s Name', 'wp-food-manager'),  $singular),
+			'not_found' 	=> sprintf(__('No %s Found.', 'wp-food-manager'),  $plural),
 			'back_to_items'     => sprintf(__('← Go to %s', 'wp-food-manager'),  $plural)
 		),
 		'show_ui' 				=> true,
@@ -225,6 +229,7 @@ register_taxonomy(
 			'update_item' 		=> sprintf(__('Update %s', 'wp-food-manager'), $singular),
 			'add_new_item' 		=> sprintf(__('Add New %s', 'wp-food-manager'), $singular),
 			'new_item_name' 	=> sprintf(__('New %s Name', 'wp-food-manager'),  $singular),
+			'not_found' 	=> sprintf(__('No %s Found.', 'wp-food-manager'),  $plural),
 			'back_to_items'     => sprintf(__('← Go to %s', 'wp-food-manager'),  $plural)
 		),
 		'show_ui' 				=> true,
@@ -271,6 +276,7 @@ register_taxonomy(
 			'update_item' 		=> sprintf(__('Update %s', 'wp-food-manager'), $singular),
 			'add_new_item' 		=> sprintf(__('Add New %s', 'wp-food-manager'), $singular),
 			'new_item_name' 	=> sprintf(__('New %s Name', 'wp-food-manager'),  $singular),
+			'not_found' 	=> sprintf(__('No %s Found.', 'wp-food-manager'),  $plural),
 			'back_to_items'     => sprintf(__('← Go to %s', 'wp-food-manager'),  $plural)
 		),
 		'show_ui' 				=> true,
@@ -317,6 +323,7 @@ register_taxonomy(
 			'update_item' 		=> sprintf(__('Update %s', 'wp-food-manager'), $singular),
 			'add_new_item' 		=> sprintf(__('Add New %s', 'wp-food-manager'), $singular),
 			'new_item_name' 	=> sprintf(__('New %s Name', 'wp-food-manager'),  $singular),
+			'not_found' 	=> sprintf(__('No %s Found.', 'wp-food-manager'),  $plural),
 			'back_to_items'     => sprintf(__('← Go to Food %s', 'wp-food-manager'),  $plural)
 		),
 		'show_ui' 				=> true,
