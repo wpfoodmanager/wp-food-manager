@@ -14,7 +14,7 @@
             <th>label</th>
             <th>Default</th>
             <th>Price</th>
-            <th>Type of price</th>
+            <th>Type of Price</th>
             <th></th>
         </tr>
     </thead>
