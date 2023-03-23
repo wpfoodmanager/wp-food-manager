@@ -626,11 +626,6 @@ $food = $post;
                                         <h3 class="wpfm-heading-text"><?php _e('Food Category', 'wp-food-manager'); ?></h3>
                                         <div class="wpfm-food-category"><?php display_food_category(); ?></div>
                                     <?php endif; ?>
-                                    <?php if (get_food_units()) : ?>
-                                        <div class="clearfix">&nbsp;</div>
-                                        <h3 class="wpfm-heading-text"><?php _e('Food Units', 'wp-food-manager'); ?></h3>
-                                        <div class="wpfm-food-units"><?php display_food_units(); ?></div>
-                                    <?php endif; ?>
                                     <?php do_action('single_food_sidebar_end'); ?>
                                 </div>
                                 <?php
