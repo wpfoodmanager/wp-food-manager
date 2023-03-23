@@ -7,7 +7,7 @@
 echo '<div id="ingredient_food_data_content" class="panel wpfm_panel wpfm-metaboxes-wrapper">
 <div class="wp_food_manager_meta_data">';
 do_action('food_manager_food_data_ingredient_start', $thepostid);
-$metaIngredients = get_post_meta($post->ID, '_ingredient');
+$metaIngredients = get_post_meta($post->ID, '_ingredients');
 $excludeIngredients = [];
 if (!empty($metaIngredients)) {
 	foreach ($metaIngredients as $items) {

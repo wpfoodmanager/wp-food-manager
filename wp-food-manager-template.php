@@ -531,8 +531,8 @@ function display_food_ingredients($post = null, $after = '') {
 					'food_manager_ingredient'
 				);
 				if (!empty($ingTerm->term_id)) {
-					$ingredient_slug = strtolower(str_replace(" ", "_", $ingredient['term_name']));
-					echo '<span class="food-ingredients ' . esc_attr(sanitize_title($ingredient_slug)) . ' ">' . $ingredient['term_name'] . ' - ' . $ingredient['value'] . ' ' . $ingredient['unit_name'] . '</span>';
+					$ingredient_slug = strtolower(str_replace(" ", "_", $ingredient['ingredient_term_name']));
+					echo '<span class="food-ingredients ' . esc_attr(sanitize_title($ingredient_slug)) . ' ">' . $ingredient['ingredient_term_name'] . ' - ' . $ingredient['value'] . ' ' . $ingredient['unit_term_name'] . '</span>';
 					if ($numIngredient > ++$i) {
 						echo $after;
 					}
@@ -555,7 +555,7 @@ function get_food_ingredients($post = null) {
 	if ($post->post_type !== 'food_manager') {
 		return;
 	}
-	$ingredients = get_post_meta(get_the_ID(), '_ingredient', true);
+	$ingredients = get_post_meta(get_the_ID(), '_ingredients', true);
 	return apply_filters('display_food_ingredients', $ingredients, $post);
 }
 
@@ -577,8 +577,8 @@ function display_food_nutritions($post = null, $after = '') {
 					'food_manager_nutrition'
 				);
 				if (!empty($nutriTerm->term_id)) {
-					$nutrition_slug = strtolower(str_replace(" ", "_", $nutrition['term_name']));
-					echo '<span class="food-nutritions ' . esc_attr(sanitize_title($nutrition_slug)) . ' ">' . $nutrition['term_name'] . ' - ' . $nutrition['value'] . ' ' . $nutrition['unit_name'] . '</span>';
+					$nutrition_slug = strtolower(str_replace(" ", "_", $nutrition['nutrition_term_name']));
+					echo '<span class="food-nutritions ' . esc_attr(sanitize_title($nutrition_slug)) . ' ">' . $nutrition['nutrition_term_name'] . ' - ' . $nutrition['value'] . ' ' . $nutrition['unit_term_name'] . '</span>';
 					if ($numNutrition > ++$i) {
 						echo $after;
 					}
@@ -601,7 +601,7 @@ function get_food_nutritions($post = null) {
 	if ($post->post_type !== 'food_manager') {
 		return;
 	}
-	$nutritions = get_post_meta(get_the_ID(), '_nutrition', true);
+	$nutritions = get_post_meta(get_the_ID(), '_nutritions', true);
 	return apply_filters('display_food_nutritions', $nutritions, $post);
 }
 

@@ -226,11 +226,11 @@ abstract class WPFM_Form {
 		if (!empty($repeated_options) && !empty($option_value_count)) {
 			$ext_multi_options = isset($_POST['option_value_count']) ? $_POST['option_value_count'] : '';
 		}
-		if (isset($_POST['_nutrition']) && !empty($_POST['_nutrition'])) {
-			$values['_nutrition'] = $_POST['_nutrition'];
+		if (isset($_POST['_nutritions']) && !empty($_POST['_nutritions'])) {
+			$values['_nutritions'] = $_POST['_nutritions'];
 		}
-		if (isset($_POST['_ingredient']) && !empty($_POST['_ingredient'])) {
-			$values['_ingredient'] = $_POST['_ingredient'];
+		if (isset($_POST['_ingredients']) && !empty($_POST['_ingredients'])) {
+			$values['_ingredients'] = $_POST['_ingredients'];
 		}
 		if (!add_post_meta($food_id, 'wpfm_repeated_options', $repeated_options, true)) {
 			update_post_meta($food_id, 'wpfm_repeated_options', $repeated_options);

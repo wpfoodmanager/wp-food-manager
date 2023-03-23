@@ -918,10 +918,10 @@ class WPFM_ActionHooks {
             update_post_meta($post_id, '_enable_food_nutri', '');
         }
         // Ingredients.
-        delete_post_meta($post_id, '_ingredient');
+        delete_post_meta($post_id, '_ingredients');
         $multiArrayIng = array();
-        if (!empty($_POST['_ingredient'])) {
-            foreach ($_POST['_ingredient'] as $id => $ingredient) {
+        if (!empty($_POST['_ingredients'])) {
+            foreach ($_POST['_ingredients'] as $id => $ingredient) {
                 $term_name = get_term($id)->name;
                 $unit_name = "Unit";
                 if ($ingredient['unit_id'] == '' && empty($ingredient['unit_id'])) {
@@ -933,20 +933,20 @@ class WPFM_ActionHooks {
                     'id'      => $id,
                     'unit_id' => !empty($ingredient['unit_id']) ? $ingredient['unit_id'] : null,
                     'value'   => !empty($ingredient['value']) ? $ingredient['value'] : null,
-                    'term_name' => $term_name,
-                    'unit_name' => $unit_name
+                    'ingredient_term_name' => $term_name,
+                    'unit_term_name' => $unit_name
                 ];
                 $multiArrayIng[$id] = $item;
             }
-            if (!add_post_meta($post_id, '_ingredient', $multiArrayIng, true)) {
-                update_post_meta($post_id, '_ingredient', $multiArrayIng);
+            if (!add_post_meta($post_id, '_ingredients', $multiArrayIng, true)) {
+                update_post_meta($post_id, '_ingredients', $multiArrayIng);
             }
         }
         // Nutritions.
-        delete_post_meta($post_id, '_nutrition');
+        delete_post_meta($post_id, '_nutritions');
         $multiArrayNutri = array();
-        if (!empty($_POST['_nutrition'])) {
-            foreach ($_POST['_nutrition'] as $id => $nutrition) {
+        if (!empty($_POST['_nutritions'])) {
+            foreach ($_POST['_nutritions'] as $id => $nutrition) {
                 $term_name = get_term($id)->name;
                 $unit_name = "Unit";
                 if ($nutrition['unit_id'] == '' && empty($nutrition['unit_id'])) {
@@ -958,13 +958,13 @@ class WPFM_ActionHooks {
                     'id'      => $id,
                     'unit_id' => !empty($nutrition['unit_id']) ? $nutrition['unit_id'] : null,
                     'value'   => !empty($nutrition['value']) ? $nutrition['value'] : null,
-                    'term_name' => $term_name,
-                    'unit_name' => $unit_name
+                    'nutrition_term_name' => $term_name,
+                    'unit_term_name' => $unit_name
                 ];
                 $multiArrayNutri[$id] = $item;
             }
-            if (!add_post_meta($post_id, '_nutrition', $multiArrayNutri, true)) {
-                update_post_meta($post_id, '_nutrition', $multiArrayNutri);
+            if (!add_post_meta($post_id, '_nutritions', $multiArrayNutri, true)) {
+                update_post_meta($post_id, '_nutritions', $multiArrayNutri);
             }
         }
         // Food price
@@ -1294,13 +1294,13 @@ class WPFM_ActionHooks {
         global $wpdb;
         $ingredient_ids = [];
         $nutrition_ids = [];
-        $meta_ingredient = get_post_meta($post_id, '_ingredient', true);
+        $meta_ingredient = get_post_meta($post_id, '_ingredients', true);
         if ($meta_ingredient) {
             foreach ($meta_ingredient as $value) {
                 $ingredient_ids[] = $value['id'];
             }
         }
-        $meta_nutrition = get_post_meta($post_id, '_nutrition', true);
+        $meta_nutrition = get_post_meta($post_id, '_nutritions', true);
         if ($meta_nutrition) {
             foreach ($meta_nutrition as $value) {
                 $nutrition_ids[] = $value['id'];
@@ -1323,8 +1323,8 @@ class WPFM_ActionHooks {
             $unit_ids = [];
             $ingredient_ids = [];
             $nutrition_ids = [];
-            if (isset($_POST['_ingredient']) && !empty($_POST['_ingredient'])) {
-                $ingredients = $_POST['_ingredient'];
+            if (isset($_POST['_ingredients']) && !empty($_POST['_ingredients'])) {
+                $ingredients = $_POST['_ingredients'];
                 foreach ($ingredients as $ingredient_id => $ingredient) {
                     $ingredient_ids[] = $ingredient_id;
                     if (trim($ingredient['unit_id'])) {
@@ -1345,8 +1345,8 @@ class WPFM_ActionHooks {
             if (!empty($ingredient_ids)) {
                 wp_set_object_terms($post_id, $ingredient_ids, 'food_manager_ingredient');
             }
-            if (isset($_POST['_nutrition']) && !empty($_POST['_nutrition'])) {
-                $nutritions = $_POST['_nutrition'];
+            if (isset($_POST['_nutritions']) && !empty($_POST['_nutritions'])) {
+                $nutritions = $_POST['_nutritions'];
                 foreach ($nutritions as $nutrition_id => $nutrition) {
                     $nutrition_ids[] = $nutrition_id;
                     if (trim($nutrition['unit_id'])) {

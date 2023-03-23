@@ -46,7 +46,8 @@ $args = array(
 $preview_htm = '';
 if (isset($_GET['food_id']) && !empty($_GET['food_id'])) {
     $food_id = $_GET['food_id'];
-    $meta_key = ($field['taxonomy'] == 'food_manager_nutrition') ? '_nutrition' : ($field['taxonomy'] == 'food_manager_ingredient' ? '_ingredient' : '');
+    $meta_key = ($field['taxonomy'] == 'food_manager_nutrition') ? '_nutritions' : ($field['taxonomy'] == 'food_manager_ingredient' ? '_ingredients' : '');
+    $term_name = ($meta_key == '_nutritions') ? 'nutrition_term_name' : ($meta_key == '_ingredients' ? 'ingredient_term_name' : '');
     if ($meta_key) {
         $tax_values = get_post_meta($food_id, $meta_key, true);
         $unit_terms = get_terms(array(
@@ -62,7 +63,7 @@ if (isset($_GET['food_id']) && !empty($_GET['food_id'])) {
                     }
                 }
                 $preview_htm .= '<li class="term-item" data-id="' . $tax_value['id'] . '">';
-                $preview_htm .= '<label>' . $tax_value['term_name'] . '</label>';
+                $preview_htm .= '<label>' . $tax_value[$term_name] . '</label>';
                 $preview_htm .= '<div class="term-item-flex">';
                 $preview_htm .= '<input type="number" value="' . $tax_value['value'] . '" name="' . $meta_key . '[' . $tax_value['id'] . '][value]">';
                 $preview_htm .= '<select name="' . $meta_key . '[' . $tax_value['id'] . '][unit_id]">' . $unit_option . '</select>';
@@ -77,7 +78,7 @@ echo '<div class="multiselect_appearance">';
 food_manager_dropdown_selection(apply_filters('food_manager_term_select_multi_appearance_field_args', $args));
 echo '</div>';
 if (!empty($field['description'])) : ?><small class="description"><?php echo $field['description']; ?></small><?php endif; ?>
-<div class="<?php echo isset($field['name']) ? $field['name'] : $key; ?>-preview selection-preview" data-name="<?php echo ($field['taxonomy'] == 'food_manager_ingredient') ? '_ingredient' : '_nutrition'; ?>">
+<div class="<?php echo isset($field['name']) ? $field['name'] : $key; ?>-preview selection-preview" data-name="<?php echo ($field['taxonomy'] == 'food_manager_ingredient') ? '_ingredients' : '_nutritions'; ?>">
     <legend>Preview:</legend>
     <ul class="preview-items"><?php echo $preview_htm; ?></ul>
 </div>

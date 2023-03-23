@@ -581,8 +581,8 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
 		}
 		// Set ingredients
 		$multiArrayIng = array();
-		if (isset($values['_ingredient']) && !empty($values['_ingredient'])) {
-			foreach ($_POST['_ingredient'] as $id => $ingredient) {
+		if (isset($values['_ingredients']) && !empty($values['_ingredients'])) {
+			foreach ($_POST['_ingredients'] as $id => $ingredient) {
 				$term_name = get_term($id)->name;
 				$unit_name = "Unit";
 				if ($ingredient['unit_id'] == '' && empty($ingredient['unit_id'])) {
@@ -594,20 +594,20 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
 					'id'      => $id,
 					'unit_id' => !empty($ingredient['unit_id']) ? $ingredient['unit_id'] : null,
 					'value'   => !empty($ingredient['value']) ? $ingredient['value'] : null,
-					'term_name' => $term_name,
-					'unit_name' => $unit_name
+					'ingredient_term_name' => $term_name,
+					'unit_term_name' => $unit_name
 				];
 				$multiArrayIng[$id] = $item;
 			}
-			update_post_meta($this->food_id, '_ingredient', $multiArrayIng);
+			update_post_meta($this->food_id, '_ingredients', $multiArrayIng);
 			// Enable ingredients to display
 			update_post_meta($this->food_id, '_enable_food_ingre', true);
 		}
 
 		// Set nutritions
 		$multiArrayNutri = array();
-		if (isset($values['_nutrition']) && !empty($values['_nutrition'])) {
-			foreach ($_POST['_nutrition'] as $id => $nutrition) {
+		if (isset($values['_nutritions']) && !empty($values['_nutritions'])) {
+			foreach ($_POST['_nutritions'] as $id => $nutrition) {
 				$term_name = get_term($id)->name;
 				$unit_name = "Unit";
 				if ($nutrition['unit_id'] == '' && empty($nutrition['unit_id'])) {
@@ -619,12 +619,12 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
 					'id'      => $id,
 					'unit_id' => !empty($nutrition['unit_id']) ? $nutrition['unit_id'] : null,
 					'value'   => !empty($nutrition['value']) ? $nutrition['value'] : null,
-					'term_name' => $term_name,
-					'unit_name' => $unit_name
+					'nutrition_term_name' => $term_name,
+					'unit_term_name' => $unit_name
 				];
 				$multiArrayNutri[$id] = $item;
 			}
-			update_post_meta($this->food_id, '_nutrition', $multiArrayNutri);
+			update_post_meta($this->food_id, '_nutritions', $multiArrayNutri);
 			// Enable nutritions to display
 			update_post_meta($this->food_id, '_enable_food_nutri', true);
 		}
@@ -705,16 +705,16 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
 			foreach ($group_fields as $key => $field) {
 				// Set units taxonomy to food
 				$unit_ids = array();
-				if (isset($values['_nutrition']) && !empty($values['_nutrition'])) {
-					$nutritions = $values['_nutrition'];
+				if (isset($values['_nutritions']) && !empty($values['_nutritions'])) {
+					$nutritions = $values['_nutritions'];
 					foreach ($nutritions as $nutrition_id => $nutrition) {
 						if (trim($nutrition['unit_id'])) {
 							$unit_ids[] = (int)$nutrition['unit_id'];
 						}
 					}
 				}
-				if (isset($values['_ingredient']) && !empty($values['_ingredient'])) {
-					$ingredients = $values['_ingredient'];
+				if (isset($values['_ingredients']) && !empty($values['_ingredients'])) {
+					$ingredients = $values['_ingredients'];
 					foreach ($ingredients as $ingredient_id => $ingredient) {
 						if (trim($ingredient['unit_id'])) {
 							$unit_ids[] = (int)$ingredient['unit_id'];
