@@ -259,7 +259,7 @@ abstract class WPFM_Form {
 							}
 							$values[$group_key][$first_out][$key] = $output;
 							$output2 = array();
-							if ($key == "option_options") {
+							if ($key == "topping_options") {
 								foreach ($option_value as $option_value_count) {
 									$output2[$option_value_count] =
 										array(

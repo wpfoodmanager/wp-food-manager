@@ -15,7 +15,7 @@ if( $taxonomies ){
 if( $remove_tax != 0 ){
 	unset($taxonomies[$remove_tax]);
 }
-if ($field_key !== 'option_options') {
+if ($field_key !== 'topping_options') {
 	$field_types    = apply_filters(
 		'food_manager_form_field_types',
 		array(

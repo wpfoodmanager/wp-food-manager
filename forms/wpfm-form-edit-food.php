@@ -67,23 +67,23 @@ class WPFM_Form_Edit_Food extends WPFM_Form_Submit_Food {
 						}
 						if (count($parent_row_fields_count) == "1") {
 							$this->fields[$group_key][$key]['value'] = get_post_meta($food->ID, $key_row_val, true);
-							if ($key == 'option_options') {
+							if ($key == 'topping_options') {
 								if (!empty($extra_fields_options)) {
 									foreach ($extra_fields_options as $ext_key => $extra_fields_option) {
-										$this->fields[$group_key][$key]['value'] = $extra_fields_option['option_options'];
+										$this->fields[$group_key][$key]['value'] = $extra_fields_option['topping_options'];
 									}
 								}
 							}
 						} else {
-							if ($key !== 'option_options') {
+							if ($key !== 'topping_options') {
 								$this->fields[$group_key][$key]['value'][] = get_post_meta($food->ID, $key_row_val, true);
 								array_unshift($this->fields[$group_key][$key]['value'], "");
 								unset($this->fields[$group_key][$key]['value'][0]);
 							}
-							if ($key == 'option_options') {
+							if ($key == 'topping_options') {
 								if (!empty($extra_fields_options)) {
 									foreach ($extra_fields_options as $ext_key => $extra_fields_option) {
-										$this->fields[$group_key][$key]['value'][$ext_key] = $extra_fields_option['option_options'];
+										$this->fields[$group_key][$key]['value'][$ext_key] = $extra_fields_option['topping_options'];
 										array_unshift($this->fields[$group_key][$key]['value'], "");
 										unset($this->fields[$group_key][$key]['value'][0]);
 									}

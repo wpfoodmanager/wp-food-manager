@@ -1144,7 +1144,7 @@ class WPFM_ActionHooks {
                                 );
                                 foreach ($custom_extra_options_fields as $custom_ext_key => $custom_extra_options_field) {
                                     foreach ($custom_extra_options_field as $custom_ext_single_key => $custom_extra_options_single_field) {
-                                        if ($custom_ext_single_key !== 'topping_name' && $custom_ext_single_key !== 'option_options') {
+                                        if ($custom_ext_single_key !== 'topping_name' && $custom_ext_single_key !== 'topping_options') {
                                             $custom_ext_key_post = isset($_POST["_" . $custom_ext_single_key . "_" . $option_count]) ? $_POST["_" . $custom_ext_single_key . "_" . $option_count] : '';
                                             $extra_options[$option_count][$custom_ext_single_key] = $custom_ext_key_post;
                                         }
@@ -1152,7 +1152,7 @@ class WPFM_ActionHooks {
                                             $custom_ext_key_post = isset($_POST[$custom_ext_single_key . "_" . $option_count]) ? $_POST[$custom_ext_single_key . "_" . $option_count] : '';
                                             $extra_options[$option_count][$custom_ext_single_key] = $custom_ext_key_post;
                                         }
-                                        if ($custom_ext_single_key == 'option_options') {
+                                        if ($custom_ext_single_key == 'topping_options') {
                                             $extra_options[$option_count][$custom_ext_single_key] = $option_values;
                                         }
                                     }

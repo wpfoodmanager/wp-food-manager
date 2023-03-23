@@ -86,7 +86,7 @@ var WPFMFront = function () {
                 opacity: .65,
                 update: function (event, ui) {
                     var repeater_row_count = jQuery(this).closest(".postbox").children(".repeated-options").val();
-                    jQuery('.container .wpfm-form-group.fieldset_option_options_' + repeater_row_count + ' table.widefat tbody tr').each(function (i) {
+                    jQuery('.container .wpfm-form-group.fieldset_topping_options_' + repeater_row_count + ' table.widefat tbody tr').each(function (i) {
                         var humanNum = i + 1;
                         jQuery(this).children('td:nth-child(2)').html(humanNum);
                         jQuery(this).attr('class', 'option-tr-' + humanNum);
@@ -212,7 +212,7 @@ var WPFMFront = function () {
                     opacity: .65,
                     update: function (event, ui) {
                         var repeater_row_count = jQuery(this).closest(".postbox").children(".repeated-options").val();
-                        jQuery('.container .wpfm-form-group.fieldset_option_options_' + repeater_row_count + ' table.widefat tbody tr').each(function (i) {
+                        jQuery('.container .wpfm-form-group.fieldset_topping_options_' + repeater_row_count + ' table.widefat tbody tr').each(function (i) {
                             var humanNum = i + 1;
                             jQuery(this).children('td:nth-child(2)').html(humanNum);
                             jQuery(this).attr('class', 'option-tr-' + humanNum);

@@ -202,7 +202,7 @@ var WPFMAdmin = function () {
                 opacity: .65,
                 update: function (event, ui) {
                     var repeater_row_count = jQuery(this).closest(".postbox").children(".repeated-options").val();
-                    jQuery('.post-type-food_manager .wpfm-admin-options-table._option_options_' + repeater_row_count + ' table.widefat tbody tr').each(function (i) {
+                    jQuery('.post-type-food_manager .wpfm-admin-options-table._topping_options_' + repeater_row_count + ' table.widefat tbody tr').each(function (i) {
                         var humanNum = i + 1;
                         jQuery(this).children('td:nth-child(2)').html(humanNum);
                         jQuery(this).attr('class', 'option-tr-' + humanNum);
@@ -373,7 +373,7 @@ var WPFMAdmin = function () {
                     opacity: .65,
                     update: function (event, ui) {
                         var repeater_row_count = jQuery(this).closest(".postbox").children(".repeated-options").val();
-                        jQuery('.post-type-food_manager .wpfm-admin-options-table._option_options_' + repeater_row_count + ' table.widefat tbody tr').each(function (i) {
+                        jQuery('.post-type-food_manager .wpfm-admin-options-table._topping_options_' + repeater_row_count + ' table.widefat tbody tr').each(function (i) {
                             var humanNum = i + 1;
                             jQuery(this).children('td:nth-child(2)').html(humanNum);
                             jQuery(this).attr('class', 'option-tr-' + humanNum);

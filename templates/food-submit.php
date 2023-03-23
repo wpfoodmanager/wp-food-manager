@@ -13,7 +13,7 @@ if (!empty($extra_fields_options)) {
 	$option_value_counts1 = array();
 	for ($i = 1; $i <= count($extra_fields_options); $i++) {
 		foreach ($extra_fields_options as $key => $value) {
-			for ($j = 1; $j <= count($value['option_options']); $j++) {
+			for ($j = 1; $j <= count($value['topping_options']); $j++) {
 				$option_value_counts1[$key][] = $j;
 			}
 		}
@@ -27,7 +27,7 @@ if (!empty($extra_fields_options)) {
 	$option_value_counts2 = array();
 	for ($i = 1; $i <= count($extra_fields_options); $i++) {
 		foreach ($extra_fields_options as $key => $value) {
-			for ($j = 1; $j <= count($value['option_options']); $j++) {
+			for ($j = 1; $j <= count($value['topping_options']); $j++) {
 				$option_value_counts2[$key] = $value;
 			}
 		}
@@ -95,7 +95,7 @@ if (!empty($extra_fields_options)) {
 									<div class="wpfm-content">
 										<?php
 										foreach ($food_extra_fields as $key2 => $field) :
-											if ($key2 !== 'option_options') {
+											if ($key2 !== 'topping_options') {
 												if ($key2 !== 'topping_name') {
 													$key2 = "_" . $key2 . "_" . $key;
 												} else {
@@ -116,9 +116,9 @@ if (!empty($extra_fields_options)) {
 													</div>
 												</fieldset>
 											<?php }
-											if ($key2 == 'option_options') { ?>
-												<fieldset class="wpfm-form-group fieldset_option_options_<?php echo $key; ?> ">
-													<label for="_option_options_<?php echo $key; ?>">Options <small>(optional)</small></label>
+											if ($key2 == 'topping_options') { ?>
+												<fieldset class="wpfm-form-group fieldset_topping_options_<?php echo $key; ?> ">
+													<label for="_topping_options_<?php echo $key; ?>">Options <small>(optional)</small></label>
 													<div class="field ">
 														<table class="widefat">
 															<thead>
@@ -134,7 +134,7 @@ if (!empty($extra_fields_options)) {
 															</thead>
 															<tbody class="ui-sortable">
 																<?php
-																foreach ($extra_fields_option['option_options'] as $sub_value_count => $values) {
+																foreach ($extra_fields_option['topping_options'] as $sub_value_count => $values) {
 																	$option_default = ($values['option_default'] === 'on') ? 'checked' : '';
 																	$option_fixed_amount = ($values['option_price_type'] === 'fixed_amount') ? 'selected' : '';
 																	$option_quantity_based = ($values['option_price_type'] === 'quantity_based') ? 'selected' : '';

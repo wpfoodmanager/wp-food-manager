@@ -142,7 +142,7 @@ $food = $post;
                                                     echo '<div class="wpfm-input-description">' . $ext_option['topping_description'] . '</div>';
                                                 }
                                                 echo '<div class="wpfm-inner-field-content ' . $more_class . '">';
-                                                foreach ($ext_option['option_options'] as $key2 => $value2) {
+                                                foreach ($ext_option['topping_options'] as $key2 => $value2) {
                                                     $checked = ($value2['option_default']) == 'on' ? 'checked' : '';
                                                     echo "<div class='wpfm-input-singular'>";
                                                     echo '<input type="radio" id="' . esc_attr(str_replace(" ", "-", strtolower($value2['option_name']))) . '" name="' . esc_attr($key) . '" value="' . esc_attr($value2['option_price']) . '" ' . $checked . ' data-price-type=' . esc_attr($value2['option_price_type']) . ' data-attr-name=' . esc_attr(str_replace(" ", "-", strtolower($value2['option_name']))) . ' ' . $field_required . '>';
@@ -179,7 +179,7 @@ $food = $post;
                                                     echo '<div class="wpfm-input-description">' . $ext_option['topping_description'] . '</div>';
                                                 }
                                                 echo '<div class="wpfm-inner-field-content ' . $more_class . '">';
-                                                foreach ($ext_option['option_options'] as $key2 => $value2) {
+                                                foreach ($ext_option['topping_options'] as $key2 => $value2) {
                                                     $checked = ($value2['option_default']) == 'on' ? 'checked' : '';
                                                     do_action('wpfm_singular_option_input_before');
                                                     echo "<div class='wpfm-input-singular'>";
@@ -214,7 +214,7 @@ $food = $post;
                                                 do_action('wpfm_singular_option_input_before');
                                                 echo '<select name="' . esc_attr($key) . '">';
                                                 $d_selected_flg = 'selected';
-                                                foreach ($ext_option['option_options'] as $key2 => $value2) {
+                                                foreach ($ext_option['topping_options'] as $key2 => $value2) {
                                                     $selected = ($value2['option_default']) == 'on' ? 'selected' : '';
                                                     $d_selected_flg = ($selected) ? '' : $d_selected_flg;
                                                     echo '<option value="' . esc_attr($value2['option_price']) . '" ' . $selected . ' data-price-type=' . esc_attr($value2['option_price_type']) . ' data-attr-name=' . esc_attr(str_replace(" ", "-", strtolower($value2['option_name']))) . '>' . esc_attr($value2['option_name']) . ' - ' . get_food_manager_currency_symbol() . $value2['option_price'] . '</option>';
