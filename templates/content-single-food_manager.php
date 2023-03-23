@@ -612,7 +612,12 @@ $food = $post;
                                 <?php do_action('single_food_listing_button_end'); ?>
                                 <div class="wpfm-single-food-sidebar-info">
                                     <?php do_action('single_food_sidebar_start'); ?>
+                                    <?php if (get_option('food_manager_enable_categories') && get_food_category()) : ?>
+                                        <h3 class="wpfm-heading-text"><?php _e('Food Category', 'wp-food-manager'); ?></h3>
+                                        <div class="wpfm-food-category"><?php display_food_category(); ?></div>
+                                    <?php endif; ?>
                                     <?php if (get_option('food_manager_enable_food_types') && get_food_type()) : ?>
+                                        <div class="clearfix">&nbsp;</div>
                                         <h3 class="wpfm-heading-text"><?php _e('Food Types', 'wp-food-manager'); ?></h3>
                                         <div class="wpfm-food-type"><?php display_food_type(); ?></div>
                                     <?php endif; ?>
@@ -620,11 +625,6 @@ $food = $post;
                                         <div class="clearfix">&nbsp;</div>
                                         <h3 class="wpfm-heading-text"><?php _e('Food Tags', 'wp-food-manager'); ?></h3>
                                         <div class="wpfm-food-tag"><?php display_food_tag(); ?></div>
-                                    <?php endif; ?>
-                                    <?php if (get_option('food_manager_enable_categories') && get_food_category()) : ?>
-                                        <div class="clearfix">&nbsp;</div>
-                                        <h3 class="wpfm-heading-text"><?php _e('Food Category', 'wp-food-manager'); ?></h3>
-                                        <div class="wpfm-food-category"><?php display_food_category(); ?></div>
                                     <?php endif; ?>
                                     <?php do_action('single_food_sidebar_end'); ?>
                                 </div>
