@@ -11,7 +11,7 @@
         <tr>
             <th> </th>
             <th>#</th>
-            <th>label</th>
+            <th>Label</th>
             <th>Default</th>
             <th>Price</th>
             <th>Type of Price</th>

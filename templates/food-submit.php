@@ -125,7 +125,7 @@ if (!empty($extra_fields_options)) {
 																<tr>
 																	<th> </th>
 																	<th>#</th>
-																	<th>label</th>
+																	<th>Label</th>
 																	<th>Default</th>
 																	<th>Price</th>
 																	<th>Type of Price</th>
