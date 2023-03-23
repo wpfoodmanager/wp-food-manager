@@ -157,7 +157,7 @@ var WPFMAdmin = function () {
                             o && jQuery.map(o, (function (e, t) {
                                 l = l + "<option value='" + t + "'>" + e + "</option>"
                             }));
-                            var s = "<input type='number' name='_ingredient[" + r + "][value]'><select name='_ingredient[" + r + "][unit_id]'><option value=''>Unit</option>" + l + "</select>";
+                            var s = "<input type='number' name='_ingredients[" + r + "][value]'><select name='_ingredients[" + r + "][unit_id]'><option value=''>Unit</option>" + l + "</select>";
                             n.find(".wpfm-sortable-item-values").html(s), n.removeClass("available-item").addClass("active-item")
                         }
                     } else n.find(".wpfm-sortable-item-values").html(""), n.removeClass("active-item").addClass("available-item")
@@ -228,7 +228,7 @@ var WPFMAdmin = function () {
                             o && jQuery.map(o, (function (e, t) {
                                 l = l + "<option value='" + t + "'>" + e + "</option>"
                             }));
-                            var s = "<input type='number' name='_nutrition[" + r + "][value]'><select name='_nutrition[" + r + "][unit_id]'><option value=''>Unit</option>" + l + "</select>";
+                            var s = "<input type='number' name='_nutritions[" + r + "][value]'><select name='_nutritions[" + r + "][unit_id]'><option value=''>Unit</option>" + l + "</select>";
                             n.find(".wpfm-sortable-item-values").html(s), n.removeClass("available-item").addClass("active-item")
                         }
                     } else n.find(".wpfm-sortable-item-values").html(""), n.removeClass("active-item").addClass("available-item")

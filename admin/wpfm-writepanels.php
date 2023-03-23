@@ -179,7 +179,7 @@ class WPFM_Writepanels {
 					'class'    => array(),
 					'priority' => 2,
 				),
-				'ingredient'        => array(
+				'ingredients'        => array(
 					'label'    => __('Ingredients', 'wp-food-manager'),
 					'target'   => 'ingredient_food_data_content',
 					'class'    => array(''),
