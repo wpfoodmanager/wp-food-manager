@@ -11,7 +11,7 @@
         <tr>
             <th> </th>
             <th>#</th>
-            <th>Option name</th>
+            <th>label</th>
             <th>Default</th>
             <th>Price</th>
             <th>Type of price</th>

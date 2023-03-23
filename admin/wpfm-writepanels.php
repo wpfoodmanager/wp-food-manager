@@ -704,7 +704,7 @@ class WPFM_Writepanels {
 				<thead>
 					<th> </th>
 					<th>#</th>
-					<th>Option name</th>
+					<th>Label</th>
 					<th>Default</th>
 					<th>Price</th>
 					<th>Type of price</th>
