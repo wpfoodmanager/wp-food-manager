@@ -1008,8 +1008,9 @@ class WPFM_ActionHooks {
             // food banner
             if ('_food_banner' === "_" . $key) {
                 if (isset($_POST["_" . $key]) && !empty($_POST["_" . $key])) {
-                    $thumbnail_image = $_POST["_" . $key];
-                    update_post_meta($post_id, "_" . $key, $_POST["_" . $key]);
+                    $thumbnail_image = array_values(array_filter($_POST["_" . $key]));
+                    update_post_meta($post_id, "_" . $key, $thumbnail_image);
+                    $_POST["_" . $key] = array_values(array_filter($_POST["_" . $key]));
                 }
                 $image = get_the_post_thumbnail_url($post_id);
                 if (empty($image)) {

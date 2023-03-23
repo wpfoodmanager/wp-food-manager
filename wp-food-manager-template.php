@@ -273,8 +273,11 @@ function display_food_banner($size = 'full', $default = null, $post = null) {
 		echo '<img itemprop="image" content="' . esc_attr($banner) . '" src="' . esc_attr($banner) . '" alt="" />';
 	} else if ($default) {
 		echo '<img itemprop="image" content="' . esc_attr($default) . '" src="' . esc_attr($default) . '" alt="" />';
-	} else if (is_array($banner) && isset($banner[0])) {
-		echo '<img itemprop="image" content="' . esc_attr($banner[0]) . '" src="' . esc_attr($banner[0]) . '" alt="' .  '" />';
+	} else if (is_array($banner)) {
+		$banner = array_values(array_filter($banner));
+		if( isset($banner[0]) ){
+			echo '<img itemprop="image" content="' . esc_attr($banner[0]) . '" src="' . esc_attr($banner[0]) . '" alt="' .  '" />';
+		}
 	} else {
 		echo '<img itemprop="image" content="' . esc_attr(apply_filters('food_manager_default_food_banner', WPFM_PLUGIN_URL . '/assets/images/wpfm-placeholder.jpg')) . '" src="' . esc_attr(apply_filters('food_manager_default_food_banner', WPFM_PLUGIN_URL . '/assets/images/wpfm-placeholder.jpg')) . '" alt="' . esc_attr(get_the_title()) . '" />';
 	}
