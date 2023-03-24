@@ -478,7 +478,9 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
 				throw new Exception(__('You must be signed in to post a new listing.', 'wp-food-manager'));
 			}
 			// Update the food
-			$this->save_food($values['food']['food_title'], $values['food']['food_description'], $this->food_id ? '' : 'preview', $values);
+			$food_description = isset($values['food']['food_description']) && !empty($values['food']['food_description']) ? $values['food']['food_description']: '';
+			$food_title = isset($values['food']['food_title']) && !empty($values['food']['food_title']) ? $values['food']['food_title']: '';
+			$this->save_food($food_title, $food_description, $this->food_id ? '' : 'preview', $values);
 			$this->update_food_data($values);
 			// Successful, show next step
 			$this->step++;
