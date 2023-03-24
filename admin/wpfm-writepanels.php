@@ -643,7 +643,7 @@ class WPFM_Writepanels {
 			$field['value'] = $field['value'];
 		} ?>
 		<p class="wpfm-admin-postbox-form-field <?= $name; ?>">
-			<label for="<?php echo esc_attr($key); ?>"><?php echo esc_html($field['label']); ?> <?php echo esc_html($cur_symbol); ?> : <?php if (!empty($field['description'])) : ?><span class="wpfm-tooltip" wpfm-data-tip="<?php echo esc_attr($field['description']); ?>">[?]</span><?php endif; ?></label>
+			<label for="<?php echo esc_attr($key); ?>"><?php echo esc_html($field['label']); ?> <?php echo ( $name == '_food_price' || $name == '_food_sale_price' ) ? esc_html($cur_symbol): ''; ?> : <?php if (!empty($field['description'])) : ?><span class="wpfm-tooltip" wpfm-data-tip="<?php echo esc_attr($field['description']); ?>">[?]</span><?php endif; ?></label>
 			<span class="wpfm-input-field">
 				<input type="number" class="wpfm-small-field" name="<?php echo esc_attr($name); ?>" id="<?php echo esc_attr($key); ?>" placeholder="<?php echo esc_attr($field['placeholder']); ?>" value="<?php echo esc_attr($field['value']); ?>" maxlength="75" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" step="any" />
 			</span>
