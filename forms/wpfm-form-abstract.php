@@ -245,6 +245,7 @@ abstract class WPFM_Form {
 							$values[$group_key][$key] = call_user_func($handler, $key, $field);
 						} elseif ($group_key == "extra_options") {
 							$key2 = "";
+							$first_key = '';
 							if ($key == "topping_name") {
 								$first_key = $key . "_" . $option_count;
 								$key2 = $key . "_" . $option_count;
