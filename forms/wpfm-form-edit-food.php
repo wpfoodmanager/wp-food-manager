@@ -140,7 +140,9 @@ class WPFM_Form_Edit_Food extends WPFM_Form_Submit_Food {
 				throw new Exception($return->get_error_message());
 			}
 			// Update the food
-			$this->save_food($values['food']['food_title'], $values['food']['food_description'], '', $values, false);
+			$food_title = isset( $values['food']['food_title'] ) && !empty($values['food']['food_title']) ? $values['food']['food_title']: '';
+			$food_description = isset($values['food']['food_description']) && !empty($values['food']['food_description']) ? $values['food']['food_description']: '';
+			$this->save_food($food_title, $food_description, '', $values, false);
 			$this->update_food_data($values);
 			// Successful
 			switch (get_post_status($this->food_id)) {
