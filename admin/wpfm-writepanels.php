@@ -819,11 +819,15 @@ class WPFM_Writepanels {
 		</div>
 		<div class="form-field">
 			<label><?php _e('Required', 'text_domain'); ?></label>
-			<span class="wpfm-input-field">
-				<input type="radio" id="no" class="radio no" name="topping_required" value="no">
-				<label for="no">No</label>
-				<input type="radio" id="yes" class="radio yes" name="topping_required" value="yes">
-				<label for="yes">Yes</label>
+			<span class="wpfm-input-field toppings-radio-btn">
+				<span class="btn-no">
+					<input type="radio" id="no" class="radio no" name="topping_required" value="no">
+					<label for="no">No</label>
+				</span>
+				<span class="btn-yes">
+					<input type="radio" id="yes" class="radio yes" name="topping_required" value="yes">
+					<label for="yes">Yes</label>
+				</span>
 			</span>
 		</div>
 <?php
