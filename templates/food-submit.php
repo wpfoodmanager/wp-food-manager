@@ -76,10 +76,10 @@ if (!empty($extra_fields_options)) {
 				<div class="wpfm-options-wrapper wpfm-metaboxes">
 					<?php if (!empty($extra_fields_options)) {
 						foreach ($option_value_counts3 as $key => $extra_fields_option) {
-							$selected_check = ($extra_fields_option['topping_type'] === 'checkbox') ? 'selected' : '';
-							$selected_radio = ($extra_fields_option['topping_type'] === 'radio') ? 'selected' : '';
-							$selected_select = ($extra_fields_option['topping_type'] === 'select') ? 'selected' : '';
-							$topping_required = ($extra_fields_option['topping_required'] === 'yes') ? 'checked' : '';
+							$selected_check = (isset($extra_fields_option['topping_type']) && !empty($extra_fields_option['topping_type']) ? (($extra_fields_option['topping_type'] === 'checkbox') ? 'selected' : '') : '');
+							$selected_radio = (isset($extra_fields_option['topping_type']) && !empty($extra_fields_option['topping_type']) ? (($extra_fields_option['topping_type'] === 'radio') ? 'selected' : ''): '');
+							$selected_select = (isset($extra_fields_option['topping_type']) && !empty($extra_fields_option['topping_type']) ? (($extra_fields_option['topping_type'] === 'select') ? 'selected' : ''): '');
+							$topping_required = (isset($extra_fields_option['topping_required']) && !empty($extra_fields_option['topping_required']) ? (($extra_fields_option['topping_required'] === 'yes') ? 'checked' : ''): '');
 							$topping_key = str_replace(" ", "_", strtolower($extra_fields_option['topping_name']));
 							?>
 							<div class="wpfm-options-wrap wpfm-metabox postbox wpfm-options-box-<?php echo $key; ?>">
