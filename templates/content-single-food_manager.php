@@ -15,7 +15,7 @@ $food = $post;
              * single_food_listing_start hook
              */
             do_action('single_food_listing_start');
-            ?>
+        ?>
             <div class="wpfm-single-food-wrapper">
                 <div class="wpfm-single-food-header-top">
                     <div class="wpfm-row">
@@ -148,7 +148,7 @@ $food = $post;
                                                     echo '<input type="radio" id="' . esc_attr(str_replace(" ", "-", strtolower($value2['option_name']))) . '" name="' . esc_attr($key) . '" value="' . esc_attr($value2['option_price']) . '" ' . $checked . ' data-price-type=' . esc_attr($value2['option_price_type']) . ' data-attr-name=' . esc_attr(str_replace(" ", "-", strtolower($value2['option_name']))) . ' ' . $field_required . '>';
                                                     echo '<label for="' . esc_attr(str_replace(" ", "-", strtolower($value2['option_name']))) . '"> ' . esc_html($value2['option_name']) . ' - ' . get_food_manager_currency_symbol() . $value2['option_price'] . '</label>';
                                                     echo "</div>";
-                                                } 
+                                                }
                                                 do_action('wpfm_singular_option_input_before');
                                                 echo "<div class='wpfm-input-singular'>";
                                                 echo '<input type="radio" id="radio-none" name="' . esc_attr($key) . '" value="0">';
@@ -269,7 +269,11 @@ $food = $post;
                                             $meta_key = '_' . $field_name;
                                             $field_value = $food->$meta_key;
                                             if (isset($field_value)) {
-                                                $additional_fields[$field_name] = $field_data;
+                                                $field_key = '_' . $field_name;
+                                                $field_value = $food->$field_key;
+                                                if (!empty($field_value)) {
+                                                    $additional_fields[$field_name] = $field_data;
+                                                }
                                             }
                                         }
                                     }
