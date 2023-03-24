@@ -277,10 +277,24 @@ abstract class WPFM_Form {
 						} else {
 							$values[$group_key][$key] = $this->get_posted_field($key, $field);
 						}
+						$topping_key = isset($_POST['topping_key_' . $option_count]) ? $_POST['topping_key_' . $option_count] : '';
+						$topping_name = isset($_POST['topping_name_' . $option_count]) ? $_POST['topping_name_' . $option_count] : '';
+						$toppings_arr[] = $topping_name;
+						$topping_type = isset($_POST['_topping_type_' . $option_count]) ? $_POST['_topping_type_' . $option_count] : '';
+						$topping_required = isset($_POST['_topping_required_' . $option_count]) ? $_POST['_topping_required_' . $option_count] : '';
+						$topping_description = isset($_POST['_topping_description_' . $option_count]) ? $_POST['_topping_description_' . $option_count] : '';
+						$extra_toppings[$option_count] = array(
+							'topping_key' => $topping_key,
+							'topping_name' => $topping_name,
+							'topping_type' => $topping_type,
+							'topping_required' => $topping_required,
+							'topping_description' => $topping_description,
+							'topping_options' => (isset($output2)) ? $output2 : array(),
+						);
 					}
 				}
 			}
-			update_post_meta($food_id, '_toppings', $values[$group_key]);
+			update_post_meta($food_id, '_toppings', $extra_toppings);
 		} else {
 			foreach ($this->fields as $group_key => $group_fields) {
 				foreach ($group_fields as $key => $field) {

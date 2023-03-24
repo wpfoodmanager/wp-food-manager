@@ -1120,7 +1120,6 @@ class WPFM_ActionHooks {
                             $toppings_arr[] = $topping_name;
                             $topping_type = isset($_POST['_topping_type_' . $option_count]) ? $_POST['_topping_type_' . $option_count] : '';
                             $topping_required = isset($_POST['_topping_required_' . $option_count]) ? $_POST['_topping_required_' . $option_count] : '';
-                            $topping_enable_desc = isset($_POST['_topping_enable_desc_' . $option_count]) ? $_POST['_topping_enable_desc_' . $option_count] : '';
                             $topping_description = isset($_POST['_topping_description_' . $option_count]) ? $_POST['_topping_description_' . $option_count] : '';
                             $option_values = array();
                             if (isset($_POST['option_value_count'])) {
@@ -1166,7 +1165,6 @@ class WPFM_ActionHooks {
                                     'topping_name' => $topping_name,
                                     'topping_type' => $topping_type,
                                     'topping_required' => $topping_required,
-                                    'topping_enable_desc' => $topping_enable_desc,
                                     'topping_description' => $topping_description,
                                     'topping_options' => $option_values,
                                 );
