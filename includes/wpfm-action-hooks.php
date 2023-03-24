@@ -1008,9 +1008,11 @@ class WPFM_ActionHooks {
             // food banner
             if ('_food_banner' === "_" . $key) {
                 if (isset($_POST["_" . $key]) && !empty($_POST["_" . $key])) {
-                    $thumbnail_image = array_values(array_filter($_POST["_" . $key]));
+                    $thumbnail_image = is_array($_POST["_" . $key]) ? array_values(array_filter($_POST["_" . $key])) : $_POST["_" . $key];
                     update_post_meta($post_id, "_" . $key, $thumbnail_image);
-                    $_POST["_" . $key] = array_values(array_filter($_POST["_" . $key]));
+                    if (is_array($_POST["_" . $key])) {
+                        $_POST["_" . $key] = array_values(array_filter($_POST["_" . $key]));
+                    }
                 }
                 $image = get_the_post_thumbnail_url($post_id);
                 if (empty($image)) {
@@ -2112,16 +2114,18 @@ class WPFM_ActionHooks {
             'hide_empty'    => false
         ]);
         $items = array();
-        foreach ($results->terms as $term) {
-            $topping_type = get_term_meta($term->term_id, 'topping_type', true);
-            $topping_required = get_term_meta($term->term_id, 'topping_required', true);
-            $items[] = [
-                'id' => $term->term_id,
-                'label' => $term->name,
-                'description' => term_description($term->term_id, $_REQUEST['taxonomy']),
-                'selection_type' => $topping_type,
-                'required' => $topping_required,
-            ];;
+        if ($results->terms) {
+            foreach ($results->terms as $term) {
+                $topping_type = get_term_meta($term->term_id, 'topping_type', true);
+                $topping_required = get_term_meta($term->term_id, 'topping_required', true);
+                $items[] = [
+                    'id' => $term->term_id,
+                    'label' => $term->name,
+                    'description' => term_description($term->term_id, $_REQUEST['taxonomy']),
+                    'selection_type' => $topping_type,
+                    'required' => $topping_required,
+                ];
+            }
         }
         wp_send_json_success($items);
     }
