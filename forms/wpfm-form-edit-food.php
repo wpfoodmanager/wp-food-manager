@@ -76,7 +76,7 @@ class WPFM_Form_Edit_Food extends WPFM_Form_Submit_Food {
 							}
 						} else {
 							if ($key !== 'topping_options') {
-								if ($this->fields[$group_key][$key]['value']) {
+								if (isset($this->fields[$group_key][$key]['value']) && !empty($this->fields[$group_key][$key]['value'])) {
 									$this->fields[$group_key][$key]['value'][] = get_post_meta($food->ID, $key_row_val, true);
 									array_unshift($this->fields[$group_key][$key]['value'], "");
 									unset($this->fields[$group_key][$key]['value'][0]);
