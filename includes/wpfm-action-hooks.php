@@ -2172,7 +2172,7 @@ class WPFM_ActionHooks {
                         $checked = checked($single_term_id, $term->term_id, false); ?>
                         <li id="<?php echo $id; ?>" class="popular-category">
                             <label class="selectit">
-                                <input id="in-<?php echo $id; ?>" type="radio" <?php echo $checked; ?> value="<?php echo (int) $term->term_id; ?>" <?php disabled(!current_user_can($taxonomy->cap->assign_terms)); ?> />
+                                <input id="in-<?php echo $id; ?>" type="radio" <?php echo $checked; ?> name="tax_input[<?php echo $tax_name ?>][]" value="<?php echo (int) $term->term_id; ?>" <?php disabled(!current_user_can($taxonomy->cap->assign_terms)); ?> />
                                 <?php
                                 /** This filter is documented in wp-includes/category-template.php */
                                 echo esc_html(apply_filters('the_category', $term->name, '', ''));
