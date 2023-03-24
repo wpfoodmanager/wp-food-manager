@@ -1404,9 +1404,14 @@ class WPFM_ActionHooks {
      */
     public function add_meta_boxes() {
         global $wp_post_types;
+        $taxonomy_slug = 'food_manager_type';
+        $taxonomy = get_taxonomy($taxonomy_slug);
         add_meta_box('food_manager_data', sprintf(__('%s Data', 'wp-food-manager'), $wp_post_types['food_manager']->labels->singular_name), array(WPFM_Writepanels::instance(), 'food_manager_data'), 'food_manager', 'normal', 'high');
         add_meta_box('food_manager_menu_data', __('Menu Icon', 'wp-food-manager'), array(WPFM_Writepanels::instance(), 'food_manager_menu_data'), 'food_manager_menu', 'normal', 'high');
         add_meta_box('food_manager_menu_data_icons', __('Select Food ', 'wp-food-manager'), array(WPFM_Writepanels::instance(), 'food_manager_menu_data_icons'), 'food_manager_menu', 'normal', 'high');
+        // Replace the food_manager_type taxonomy metabox for changing checkbox to radio button in backend.
+        remove_meta_box('food_manager_typediv', 'food_manager', 'side');
+        add_meta_box('radio-food_manager_typediv', $taxonomy->labels->name, array($this, 'replace_food_manager_type_metabox'), 'food_manager', 'side', 'core', array('taxonomy' => $taxonomy_slug));
     }
 
     /**
@@ -1710,7 +1715,7 @@ class WPFM_ActionHooks {
                 });
             });
         </script>
-<?php
+    <?php
     }
 
     /**
@@ -2126,6 +2131,99 @@ class WPFM_ActionHooks {
             }
         }
         wp_send_json_success($items);
+    }
+
+    /**
+     * Callback to set up the metabox
+     * Mimicks the traditional hierarchical term metabox, but modified with our nonces 
+     *
+     * @since 1.0.1
+     * 	 
+     * @param  object $post
+     * @param  array $args
+     */
+    public function replace_food_manager_type_metabox($post, $box) {
+        $defaults = array('taxonomy' => 'category');
+        if (!isset($box['args']) || !is_array($box['args'])) {
+            $args = array();
+        } else {
+            $args = $box['args'];
+        }
+        $r = wp_parse_args($args, $defaults);
+        $tax_name = esc_attr($r['taxonomy']);
+        $taxonomy = get_taxonomy($r['taxonomy']);
+        $checked_terms = isset($post->ID) ? get_the_terms($post->ID, $tax_name) : array();
+        $single_term = !empty($checked_terms) && !is_wp_error($checked_terms) ? array_pop($checked_terms) : false;
+        $single_term_id = $single_term ? (int) $single_term->term_id : 0; ?>
+        <div id="taxonomy-<?php echo $tax_name; ?>" class="radio-buttons-for-taxonomies categorydiv">
+            <ul id="<?php echo $tax_name; ?>-tabs" class="category-tabs">
+                <li class="tabs"><a href="#<?php echo $tax_name; ?>-all"><?php echo $taxonomy->labels->all_items; ?></a></li>
+                <li class="hide-if-no-js"><a href="#<?php echo $tax_name; ?>-pop"><?php echo esc_html($taxonomy->labels->most_used); ?></a></li>
+            </ul>
+            <div id="<?php echo $tax_name; ?>-pop" class="tabs-panel" style="display: none;">
+                <ul id="<?php echo $tax_name; ?>checklist-pop" class="categorychecklist form-no-clear">
+                    <?php
+                    $popular_terms = get_terms($tax_name, array('orderby' => 'count', 'order' => 'DESC', 'number' => 10, 'hierarchical' => false));
+                    $popular_ids = array();
+                    foreach ($popular_terms as $term) {
+                        $popular_ids[] = $term->term_id;
+                        $value = is_taxonomy_hierarchical($tax_name) ? $term->term_id : $term->slug;
+                        $id = 'popular-' . $tax_name . '-' . $term->term_id;
+                        $checked = checked($single_term_id, $term->term_id, false); ?>
+                        <li id="<?php echo $id; ?>" class="popular-category">
+                            <label class="selectit">
+                                <input id="in-<?php echo $id; ?>" type="radio" <?php echo $checked; ?> value="<?php echo (int) $term->term_id; ?>" <?php disabled(!current_user_can($taxonomy->cap->assign_terms)); ?> />
+                                <?php
+                                /** This filter is documented in wp-includes/category-template.php */
+                                echo esc_html(apply_filters('the_category', $term->name, '', ''));
+                                ?>
+                            </label>
+                        </li>
+                    <?php } ?>
+                </ul>
+            </div>
+            <div id="<?php echo $tax_name; ?>-all" class="tabs-panel">
+                <ul id="<?php echo $tax_name; ?>checklist" data-wp-lists="list:<?php echo $tax_name; ?>" class="categorychecklist form-no-clear">
+                    <?php wp_terms_checklist($post->ID, array('taxonomy' => $tax_name, 'popular_cats' => $popular_ids, 'selected_cats' => array($single_term_id))); ?>
+                </ul>
+            </div>
+            <?php if (current_user_can($taxonomy->cap->edit_terms)) : ?>
+                <div id="<?php echo $tax_name; ?>-adder" class="wp-hidden-children">
+                    <a id="<?php echo $tax_name; ?>-add-toggle" href="#<?php echo $tax_name; ?>-add" class="hide-if-no-js taxonomy-add-new">
+                        <?php
+                        /* translators: %s: add new taxonomy label */
+                        printf(__('+ %s'), $taxonomy->labels->add_new_item);
+                        ?>
+                    </a>
+                    <p id="<?php echo $tax_name; ?>-add" class="category-add wp-hidden-child">
+                        <label class="screen-reader-text" for="new<?php echo $tax_name; ?>"><?php echo $taxonomy->labels->add_new_item; ?></label>
+                        <input type="text" name="new<?php echo $tax_name; ?>" id="new<?php echo $tax_name; ?>" class="form-required form-input-tip" value="<?php echo esc_attr($taxonomy->labels->new_item_name); ?>" aria-required="true" />
+                        <label class="screen-reader-text" for="new<?php echo $tax_name; ?>_parent">
+                            <?php echo $taxonomy->labels->parent_item_colon; ?>
+                        </label>
+                        <?php
+                        // Only add parent option for hierarchical taxonomies.
+                        if (is_taxonomy_hierarchical($tax_name)) {
+                            $parent_dropdown_args = array(
+                                'taxonomy'         => $tax_name,
+                                'hide_empty'       => 0,
+                                'name'             => 'new' . $tax_name . '_parent',
+                                'orderby'          => 'name',
+                                'hierarchical'     => 1,
+                                'show_option_none' => '&mdash; ' . $taxonomy->labels->parent_item . ' &mdash;',
+                            );
+                            $parent_dropdown_args = apply_filters('post_edit_category_parent_dropdown_args', $parent_dropdown_args);
+                            wp_dropdown_categories($parent_dropdown_args);
+                        }
+                        ?>
+                        <input type="button" id="<?php echo $tax_name; ?>-add-submit" data-wp-lists="add:<?php echo $tax_name; ?>checklist:<?php echo $tax_name; ?>-add" class="button category-add-submit" value="<?php echo esc_attr($taxonomy->labels->add_new_item); ?>" />
+                        <?php wp_nonce_field('add-' . $tax_name, '_ajax_nonce-add-' . $tax_name, false); ?>
+                        <span id="<?php echo $tax_name; ?>-ajax-response"></span>
+                    </p>
+                </div>
+            <?php endif; ?>
+        </div>
+<?php
     }
 }
 WPFM_ActionHooks::instance();
