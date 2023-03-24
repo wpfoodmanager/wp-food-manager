@@ -76,9 +76,11 @@ class WPFM_Form_Edit_Food extends WPFM_Form_Submit_Food {
 							}
 						} else {
 							if ($key !== 'topping_options') {
-								$this->fields[$group_key][$key]['value'][] = get_post_meta($food->ID, $key_row_val, true);
-								array_unshift($this->fields[$group_key][$key]['value'], "");
-								unset($this->fields[$group_key][$key]['value'][0]);
+								if ($this->fields[$group_key][$key]['value']) {
+									$this->fields[$group_key][$key]['value'][] = get_post_meta($food->ID, $key_row_val, true);
+									array_unshift($this->fields[$group_key][$key]['value'], "");
+									unset($this->fields[$group_key][$key]['value'][0]);
+								}
 							}
 							if ($key == 'topping_options') {
 								if (!empty($extra_fields_options)) {
@@ -140,8 +142,8 @@ class WPFM_Form_Edit_Food extends WPFM_Form_Submit_Food {
 				throw new Exception($return->get_error_message());
 			}
 			// Update the food
-			$food_title = isset( $values['food']['food_title'] ) && !empty($values['food']['food_title']) ? $values['food']['food_title']: '';
-			$food_description = isset($values['food']['food_description']) && !empty($values['food']['food_description']) ? $values['food']['food_description']: '';
+			$food_title = isset($values['food']['food_title']) && !empty($values['food']['food_title']) ? $values['food']['food_title'] : '';
+			$food_description = isset($values['food']['food_description']) && !empty($values['food']['food_description']) ? $values['food']['food_description'] : '';
 			$this->save_food($food_title, $food_description, '', $values, false);
 			$this->update_food_data($values);
 			// Successful
