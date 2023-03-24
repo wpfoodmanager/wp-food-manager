@@ -76,6 +76,7 @@ if (!empty($extra_fields_options)) {
 				<div class="wpfm-options-wrapper wpfm-metaboxes">
 					<?php if (!empty($extra_fields_options)) {
 						foreach ($option_value_counts3 as $key => $extra_fields_option) {
+							$toppings = get_post_meta($food_id, '_toppings', true);
 							$selected_check = (isset($extra_fields_option['topping_type']) && !empty($extra_fields_option['topping_type']) ? (($extra_fields_option['topping_type'] === 'checkbox') ? 'selected' : '') : '');
 							$selected_radio = (isset($extra_fields_option['topping_type']) && !empty($extra_fields_option['topping_type']) ? (($extra_fields_option['topping_type'] === 'radio') ? 'selected' : ''): '');
 							$selected_select = (isset($extra_fields_option['topping_type']) && !empty($extra_fields_option['topping_type']) ? (($extra_fields_option['topping_type'] === 'select') ? 'selected' : ''): '');
@@ -94,15 +95,14 @@ if (!empty($extra_fields_options)) {
 								<div class="wpfm-metabox-content wpfm-options-box">
 									<div class="wpfm-content">
 										<?php
+										$count = 0;
 										foreach ($food_extra_fields as $key2 => $field) :
 											if ($key2 !== 'topping_options') {
+												$field['value'] = isset($toppings[$key][$key2]) && !empty($toppings[$key][$key2]) ? $toppings[$key][$key2]: '';
 												if ($key2 !== 'topping_name') {
 													$key2 = "_" . $key2 . "_" . $key;
 												} else {
 													$key2 = $key2 . "_" . $key;
-												}
-												if (empty($field['value'])) {
-													$field['value'] = get_post_meta($food_id, $key2, true);
 												}
 												$fieldClassLabel = '';
 												if (!empty($field['type']) && $field['type'] == 'wp-editor') {
