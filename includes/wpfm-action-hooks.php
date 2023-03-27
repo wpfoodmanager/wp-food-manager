@@ -1404,6 +1404,7 @@ class WPFM_ActionHooks {
      */
     public function add_meta_boxes() {
         global $wp_post_types;
+        $screen = get_current_screen();
         $taxonomy_slug = 'food_manager_type';
         $taxonomy = get_taxonomy($taxonomy_slug);
         add_meta_box('food_manager_data', sprintf(__('%s Data', 'wp-food-manager'), $wp_post_types['food_manager']->labels->singular_name), array(WPFM_Writepanels::instance(), 'food_manager_data'), 'food_manager', 'normal', 'high');
@@ -1412,6 +1413,10 @@ class WPFM_ActionHooks {
         // Replace the food_manager_type taxonomy metabox for changing checkbox to radio button in backend.
         remove_meta_box('food_manager_typediv', 'food_manager', 'side');
         add_meta_box('radio-food_manager_typediv', $taxonomy->labels->name, array($this, 'replace_food_manager_type_metabox'), 'food_manager', 'side', 'core', array('taxonomy' => $taxonomy_slug));
+        if ('add' != $screen->action) {
+            // Show food menu Shortcode on edit menu page - admin.
+            add_meta_box('wpfm_menu_shortcode', 'Shortcode', array($this, 'food_menu_shortcode'), 'food_manager_menu', 'side', 'core');
+        }
     }
 
     /**
@@ -2224,6 +2229,17 @@ class WPFM_ActionHooks {
             <?php endif; ?>
         </div>
 <?php
+    }
+
+    /**
+     * Show menu shortcode in single edit menu.
+     * 
+     * @since 1.0.2
+     */
+    function food_menu_shortcode() {
+        global $post;
+        $menu_id = $post->ID;
+        echo '<input type="text" value="[food_menu id=' . $menu_id . ']" readonly>';
     }
 }
 WPFM_ActionHooks::instance();
