@@ -152,9 +152,9 @@ class WPFM_Setup {
 								</tr>
 								<tr>
 									<td><input type="checkbox" checked="checked" name="wp-food-manager-create-page[add_food]" /></td>
-									<td><input type="text" value="<?php echo esc_attr(_x('Add Foods', 'Default page title (wizard)', 'wp-food-manager')); ?>" name="wp-food-manager-page-title[add_food]" /></td>
+									<td><input type="text" value="<?php echo esc_attr(_x('Add Food', 'Default page title (wizard)', 'wp-food-manager')); ?>" name="wp-food-manager-page-title[add_food]" /></td>
 									<td>
-										<p><?php esc_attr_e('This page allows peoples to add foods to your website from the front-end.', 'wp-food-manager'); ?></p>
+										<p><?php esc_attr_e('This page allows peoples to add food to your website from the front-end.', 'wp-food-manager'); ?></p>
 										<p><?php esc_attr_e('If you do not wish to accept submissions from users in this way (for example you just want to post foods from the admin dashboard) you can skip creating this page.', 'wp-food-manager'); ?></p>
 									</td>
 									<td><code>[add_food]</code></td>
