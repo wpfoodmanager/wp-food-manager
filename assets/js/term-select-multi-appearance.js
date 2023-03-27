@@ -43,8 +43,13 @@ var WPFM_MultiAppearanceSelect = function () {
                     preview_htm += '</div>';
                     preview_htm += '</li>';
                 });
-                // Append preview html
                 jQuery(this).parents('.wpfm-form-group').find('.selection-preview ul').html(preview_htm);
+                if( jQuery(this).parents('.wpfm-form-group').find('.selection-preview ul').find('li').length == 0 ){
+                    jQuery(this).parents('.wpfm-form-group').find('.selection-preview').hide();
+                }else{
+                    jQuery(this).parents('.wpfm-form-group').find('.selection-preview').show();
+                }
+                // Append preview html
                 if (selected_val) {
                     jQuery.each(selected_val, function (term_id, value) {
                         jQuery('.selection-preview .preview-items li[data-id="' + term_id + '"]').find('input').val(value.value);

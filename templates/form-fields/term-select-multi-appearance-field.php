@@ -44,6 +44,7 @@ $args = array(
 );
 // For Edit screen of food
 $preview_htm = '';
+$style = 'display:none;';
 if (isset($_GET['food_id']) && !empty($_GET['food_id'])) {
     $food_id = $_GET['food_id'];
     $meta_key = ($field['taxonomy'] == 'food_manager_nutrition') ? '_nutritions' : ($field['taxonomy'] == 'food_manager_ingredient' ? '_ingredients' : '');
@@ -69,6 +70,7 @@ if (isset($_GET['food_id']) && !empty($_GET['food_id'])) {
                 $preview_htm .= '<select name="' . $meta_key . '[' . $tax_value['id'] . '][unit_id]">' . $unit_option . '</select>';
                 $preview_htm .= '</div>';
                 $preview_htm .= '</li>';
+                $style = '';
             }
         }
     }
@@ -78,7 +80,7 @@ echo '<div class="multiselect_appearance">';
 food_manager_dropdown_selection(apply_filters('food_manager_term_select_multi_appearance_field_args', $args));
 echo '</div>';
 if (!empty($field['description'])) : ?><small class="description"><?php echo $field['description']; ?></small><?php endif; ?>
-<div class="<?php echo isset($field['name']) ? $field['name'] : $key; ?>-preview selection-preview" data-name="<?php echo ($field['taxonomy'] == 'food_manager_ingredient') ? '_ingredients' : '_nutritions'; ?>">
+<div class="<?php echo isset($field['name']) ? $field['name'] : $key; ?>-preview selection-preview" style="<?php echo $style; ?>" data-name="<?php echo ($field['taxonomy'] == 'food_manager_ingredient') ? '_ingredients' : '_nutritions'; ?>">
     <legend>Preview:</legend>
     <ul class="preview-items"><?php echo $preview_htm; ?></ul>
 </div>
