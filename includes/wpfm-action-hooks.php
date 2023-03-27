@@ -1415,7 +1415,7 @@ class WPFM_ActionHooks {
         add_meta_box('radio-food_manager_typediv', $taxonomy->labels->name, array($this, 'replace_food_manager_type_metabox'), 'food_manager', 'side', 'core', array('taxonomy' => $taxonomy_slug));
         if ('add' != $screen->action) {
             // Show food menu Shortcode on edit menu page - admin.
-            add_meta_box('wpfm_menu_shortcode', 'Shortcode', array($this, 'food_menu_shortcode'), 'food_manager_menu', 'side', 'core');
+            add_meta_box('wpfm_menu_shortcode', 'Shortcode', array($this, 'food_menu_shortcode'), 'food_manager_menu', 'side', 'low');
         }
     }
 
