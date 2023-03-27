@@ -1,6 +1,6 @@
-WPFMFoodSubmission = function () {
-    /// <summary>Constructor function of the event WPFMFoodSubmission class.</summary>
-    /// <returns type="WPFMFoodSubmission" />
+WPFM_FoodSubmission = function () {
+    /// <summary>Constructor function of the event WPFM_FoodSubmission class.</summary>
+    /// <returns type="WPFM_FoodSubmission" />
     return {
         /// <summary>
         /// Initializes the event submission.
@@ -8,15 +8,15 @@ WPFMFoodSubmission = function () {
         /// <returns type="initialization settings" />
         /// <since>1.0.0</since>
         init: function () {
-            WPFMCommon.logInfo("WPFMFoodSubmission.init...");
+            WPFM_Common.logInfo("WPFM_FoodSubmission.init...");
             jQuery('body').on('click', '.food-manager-remove-uploaded-file', function () {
                 jQuery(this).closest('.food-manager-uploaded-file').remove();
                 return false;
             });
             //add links for paid and free Group
-            jQuery('.add-group-row').on('click', WPFMFoodSubmission.actions.addGroupField);
+            jQuery('.add-group-row').on('click', WPFM_FoodSubmission.actions.addGroupField);
             //delete groups 
-            jQuery(document).delegate('.remove-group-row', 'click', WPFMFoodSubmission.actions.removeGroupField);
+            jQuery(document).delegate('.remove-group-row', 'click', WPFM_FoodSubmission.actions.removeGroupField);
             // Datepicker
             if (jQuery('input[data-picker="datepicker"]').length > 0) {
                 jQuery('input[data-picker="datepicker"]').datepicker({
@@ -60,7 +60,7 @@ WPFMFoodSubmission = function () {
     } //enf of return
 }; //end of class
 
-WPFMFoodSubmission = WPFMFoodSubmission();
+WPFM_FoodSubmission = WPFM_FoodSubmission();
 jQuery(document).ready(function ($) {
-    WPFMFoodSubmission.init();
+    WPFM_FoodSubmission.init();
 });

@@ -1,6 +1,6 @@
-var WPFMAdmin = function () {
+var WPFM_Admin = function () {
     /// <summary>Constructor function of the food settings class.</summary>
-    /// <returns type="WPFMAdmin" />   
+    /// <returns type="WPFM_Admin" />   
     // Uploading files
     var file_frame;
     var file_target_input;
@@ -36,20 +36,20 @@ var WPFMAdmin = function () {
                 }
             }
             // Bind on click food of the settings section
-            jQuery(".wpfm-tabs li a").on('click', WPFMAdmin.actions.tabClick);
+            jQuery(".wpfm-tabs li a").on('click', WPFM_Admin.actions.tabClick);
             // Show by default first food Listings Settings Tab
             jQuery('.wpfm-tabs li a:first').click();
-            jQuery(document).on('change', '.wpfm-admin-menu-selection select.food-manager-category-dropdown', WPFMAdmin.actions.updateFoodinMenu);
+            jQuery(document).on('change', '.wpfm-admin-menu-selection select.food-manager-category-dropdown', WPFM_Admin.actions.updateFoodinMenu);
             // Use body to call after dom update
-            jQuery("body").on('click', 'a.wpfm-food-item-remove', WPFMAdmin.actions.removeFoodItem);
+            jQuery("body").on('click', 'a.wpfm-food-item-remove', WPFM_Admin.actions.removeFoodItem);
             // Sortable 
             jQuery('.wpfm-admin-food-menu-items ul.wpfm-food-menu').sortable();
             // File upload
-            jQuery('body').on('click', '.wp_food_manager_upload_file_button_multiple', WPFMAdmin.fileUpload.multipleFile);
-            jQuery('body').on('click', '.wp_food_manager_upload_file_button', WPFMAdmin.fileUpload.addFile);
-            jQuery(".wp_food_manager_add_another_file_button").on('click', WPFMAdmin.fileUpload.addAnotherFile);
+            jQuery('body').on('click', '.wp_food_manager_upload_file_button_multiple', WPFM_Admin.fileUpload.multipleFile);
+            jQuery('body').on('click', '.wp_food_manager_upload_file_button', WPFM_Admin.fileUpload.addFile);
+            jQuery(".wp_food_manager_add_another_file_button").on('click', WPFM_Admin.fileUpload.addAnotherFile);
             // Food extra options
-            jQuery('#wpfm-add-new-option').on('click', WPFMAdmin.actions.addNewOption);
+            jQuery('#wpfm-add-new-option').on('click', WPFM_Admin.actions.addNewOption);
             jQuery(document).on("click", ".wpfm-togglediv", function (e) {
                 var row_count = jQuery(this).data('row-count');
                 var menuItem = jQuery(e.currentTarget);
@@ -234,11 +234,11 @@ var WPFMAdmin = function () {
                     } else n.find(".wpfm-sortable-item-values").html(""), n.removeClass("active-item").addClass("available-item")
                 }
             }).disableSelection()
-            jQuery('body').on('change', 'input[name^="topping_name"]', WPFMAdmin.actions.updateOptionTitle);
-            jQuery('body').on('change', 'select[name^="_topping_type"]', WPFMAdmin.actions.changeFieldType);
-            jQuery(document).on("click", ".wpfm-add-row", WPFMAdmin.actions.addElementRow)
-            jQuery(document).on("click", ".wpfm-delete-btn", WPFMAdmin.actions.removeAttributes)
-            jQuery(document).on("click", ".option-delete-btn", WPFMAdmin.actions.removeAttributesOptions)
+            jQuery('body').on('change', 'input[name^="topping_name"]', WPFM_Admin.actions.updateOptionTitle);
+            jQuery('body').on('change', 'select[name^="_topping_type"]', WPFM_Admin.actions.changeFieldType);
+            jQuery(document).on("click", ".wpfm-add-row", WPFM_Admin.actions.addElementRow)
+            jQuery(document).on("click", ".wpfm-delete-btn", WPFM_Admin.actions.removeAttributes)
+            jQuery(document).on("click", ".option-delete-btn", WPFM_Admin.actions.removeAttributesOptions)
 
         },
 
@@ -621,7 +621,7 @@ var WPFMAdmin = function () {
     } //enf of return
 }; //end of class
 
-WPFMAdmin = WPFMAdmin();
+WPFM_Admin = WPFM_Admin();
 jQuery(document).ready(function ($) {
-    WPFMAdmin.init();
+    WPFM_Admin.init();
 });

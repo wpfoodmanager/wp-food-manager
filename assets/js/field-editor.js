@@ -1,4 +1,4 @@
-var WPFMFieldEditor = function () {
+var WPFM_FieldEditor = function () {
 	return {
 		/// <summary>
 		/// Initializes the form editor.  
@@ -6,13 +6,13 @@ var WPFMFieldEditor = function () {
 		/// <returns type="initialization settings" />   
 		/// <since>1.0.0</since> 
 		init: function () {
-			jQuery('.wp-food-manager-food-form-field-editor').on('init', WPFMFieldEditor.actions.initSortable);
+			jQuery('.wp-food-manager-food-form-field-editor').on('init', WPFM_FieldEditor.actions.initSortable);
 			jQuery('.wp-food-manager-food-form-field-editor').trigger('init');
-			jQuery('.add-field').on('click', WPFMFieldEditor.actions.addNewFields); //add new field
-			jQuery('body').on('click', '.child-add-field', WPFMFieldEditor.actions.addNewChildFields);
-			jQuery('.wp-food-manager-food-form-field-editor').on('change', '.field-type select', WPFMFieldEditor.actions.changeFieldTypeOptions);
-			jQuery('.delete-field').on('click', WPFMFieldEditor.actions.deleteField); //delete field
-			jQuery('.reset').on('click', WPFMFieldEditor.actions.resetFields); //reset field
+			jQuery('.add-field').on('click', WPFM_FieldEditor.actions.addNewFields); //add new field
+			jQuery('body').on('click', '.child-add-field', WPFM_FieldEditor.actions.addNewChildFields);
+			jQuery('.wp-food-manager-food-form-field-editor').on('change', '.field-type select', WPFM_FieldEditor.actions.changeFieldTypeOptions);
+			jQuery('.delete-field').on('click', WPFM_FieldEditor.actions.deleteField); //delete field
+			jQuery('.reset').on('click', WPFM_FieldEditor.actions.resetFields); //reset field
 		},
 		actions: {
 			/// <summary>
@@ -40,7 +40,7 @@ var WPFMFieldEditor = function () {
 						ui.item.removeAttr('style');
 					}
 				});
-				jQuery(this).find('.field-type select').each(WPFMFieldEditor.actions.changeFieldTypeOptions);
+				jQuery(this).find('.field-type select').each(WPFM_FieldEditor.actions.changeFieldTypeOptions);
 				jQuery(this).find('.field-rules select:visible').chosen();
 			},
 			/// <summary>
@@ -82,7 +82,7 @@ var WPFMFieldEditor = function () {
 				row = row.replace(/\[-1\]/g, "[" + $tbody.find('tr').size() + "]");
 				$tbody.append(row);
 				jQuery('.wp-food-manager-food-form-field-editor').trigger('init');
-				jQuery('.delete-field').on('click', WPFMFieldEditor.actions.deleteField); //delete field
+				jQuery('.delete-field').on('click', WPFM_FieldEditor.actions.deleteField); //delete field
 				return false;
 			},
 			/// <summary>
@@ -99,7 +99,7 @@ var WPFMFieldEditor = function () {
 				row = row.replace(/\[\]/g, parnet_name);
 				$tbody.append(row);
 				jQuery('.wp-food-manager-food-form-field-editor').trigger('init');
-				jQuery('.delete-field').on('click', WPFMFieldEditor.actions.deleteField); //delete field
+				jQuery('.delete-field').on('click', WPFM_FieldEditor.actions.deleteField); //delete field
 				return false;
 			},
 			/// <summary>
@@ -154,6 +154,6 @@ var WPFMFieldEditor = function () {
 		}
 	}
 };
-WPFMFieldEditor = WPFMFieldEditor(), jQuery(document).ready(function (t) {
-	WPFMFieldEditor.init()
+WPFM_FieldEditor = WPFM_FieldEditor(), jQuery(document).ready(function (t) {
+	WPFM_FieldEditor.init()
 });

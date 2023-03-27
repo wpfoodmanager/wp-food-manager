@@ -1,15 +1,15 @@
-var WPFMAdminSettings = function () {
+var WPFM_AdminSettings = function () {
 	/// <summary>Constructor function of the food settings class.</summary>
 	/// <returns type="Settings" />
 	return {
 		/// <summary>
-		/// Initializes the WPFMAdminSettings.  
+		/// Initializes the WPFM_AdminSettings.  
 		/// </summary>     
-		/// <returns type="initialization WPFMAdminSettings" />   
+		/// <returns type="initialization WPFM_AdminSettings" />   
 		/// <since>1.0.0</since> 
 		init: function () {
 			// Bind on click food of the settings section
-			jQuery(".food-manager-settings-wrap .nav-tab-wrapper a").on('click', WPFMAdminSettings.actions.tabClick);
+			jQuery(".food-manager-settings-wrap .nav-tab-wrapper a").on('click', WPFM_AdminSettings.actions.tabClick);
 			// Show by default first food Listings Settings Tab
 			jQuery('.food-manager-settings-wrap .nav-tab-wrapper a:first').click();
 		},
@@ -32,7 +32,7 @@ var WPFMAdminSettings = function () {
 	} // Enf of return
 }; // End of class
 
-WPFMAdminSettings = WPFMAdminSettings();
+WPFM_AdminSettings = WPFM_AdminSettings();
 jQuery(document).ready(function ($) {
-	WPFMAdminSettings.init();
+	WPFM_AdminSettings.init();
 });

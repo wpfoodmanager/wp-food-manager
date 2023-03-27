@@ -1,5 +1,5 @@
-var WPFMAjaxFileUpload = function () {
-	/// <summary>Constructor function of the food WPFMAjaxFileUpload class.</summary>
+var WPFM_AjaxFileUpload = function () {
+	/// <summary>Constructor function of the food WPFM_AjaxFileUpload class.</summary>
 	/// <returns type="Home" />      
 	return {
 		/// <summary>
@@ -8,7 +8,7 @@ var WPFMAjaxFileUpload = function () {
 		/// <returns type="initialization settings" />   
 		/// <since>1.0.0</since>
 		init: function () {
-			WPFMCommon.logInfo("WPFMAjaxFileUpload.init...");
+			WPFM_Common.logInfo("WPFM_AjaxFileUpload.init...");
 			jQuery('.wp-food-manager-file-upload').each(function () {
 				jQuery(this).fileupload({
 					dataType: 'json',
@@ -85,7 +85,7 @@ var WPFMAjaxFileUpload = function () {
 	} //enf of return
 }; //end of class
 
-WPFMAjaxFileUpload = WPFMAjaxFileUpload();
+WPFM_AjaxFileUpload = WPFM_AjaxFileUpload();
 jQuery(document).ready(function ($) {
-	WPFMAjaxFileUpload.init();
+	WPFM_AjaxFileUpload.init();
 });

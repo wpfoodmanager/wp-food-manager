@@ -1,6 +1,6 @@
-var WPFMContentFoodListing = function () {
-	/// <summary>Constructor function of the food WPFMContentFoodListing class.</summary>
-	/// <returns type="WPFMContentFoodListing" />      
+var WPFM_ContentFoodListing = function () {
+	/// <summary>Constructor function of the food WPFM_ContentFoodListing class.</summary>
+	/// <returns type="WPFM_ContentFoodListing" />      
 	return {
 		///<summary>
 		///Initializes the content food listing.  
@@ -8,9 +8,9 @@ var WPFMContentFoodListing = function () {
 		///<returns type="initialization settings" />   
 		/// <since>1.0.0</since> 
 		init: function () {
-			WPFMCommon.logInfo("WPFMContentFoodListing.init...");
-			jQuery(document).delegate('#wpfm-food-list-layout', 'click', WPFMContentFoodListing.actions.lineLayoutIconClick);
-			jQuery(document).delegate('#wpfm-food-box-layout', 'click', WPFMContentFoodListing.actions.boxLayoutIconClick);
+			WPFM_Common.logInfo("WPFM_ContentFoodListing.init...");
+			jQuery(document).delegate('#wpfm-food-list-layout', 'click', WPFM_ContentFoodListing.actions.lineLayoutIconClick);
+			jQuery(document).delegate('#wpfm-food-box-layout', 'click', WPFM_ContentFoodListing.actions.boxLayoutIconClick);
 			// Check if default layout is set or icon are on the page to load according to localstorage
 			if (jQuery('.wpfm-food-list-layout').length > 0 || jQuery('.wpfm-food-box-layout').length > 0) {
 				// With show_pagination attribute in shortcodes. e.g [foods per_page="10" show_pagination="true"]
@@ -106,7 +106,7 @@ var WPFMContentFoodListing = function () {
 			/// <returns type="foods listing view" />    
 			/// <since>1.0.0</since>     
 			lineLayoutIconClick: function (food) {
-				WPFMCommon.logInfo("WPFMContentFoodListing.actions.lineLayoutIconClick...");
+				WPFM_Common.logInfo("WPFM_ContentFoodListing.actions.lineLayoutIconClick...");
 				jQuery(this).addClass("wpfm-active-layout");
 				jQuery("#wpfm-food-box-layout").removeClass("wpfm-active-layout");
 				jQuery(".wpfm-food-box-col").show();
@@ -121,7 +121,7 @@ var WPFMContentFoodListing = function () {
 			/// <returns type="foods listing view" />    
 			/// <since>1.0.0</since>     
 			boxLayoutIconClick: function (food) {
-				WPFMCommon.logInfo("WPFMContentFoodListing.actions.boxLayoutIconClick...");
+				WPFM_Common.logInfo("WPFM_ContentFoodListing.actions.boxLayoutIconClick...");
 				jQuery(this).addClass("wpfm-active-layout");
 				if (jQuery("#wpfm-food-list-layout").hasClass("wpfm-active-layout"))
 					jQuery("#wpfm-food-list-layout").removeClass("wpfm-active-layout");
@@ -135,7 +135,7 @@ var WPFMContentFoodListing = function () {
 	} //enf of return
 }; //end of class
 
-WPFMContentFoodListing = WPFMContentFoodListing();
+WPFM_ContentFoodListing = WPFM_ContentFoodListing();
 jQuery(document).ready(function ($) {
-	WPFMContentFoodListing.init();
+	WPFM_ContentFoodListing.init();
 });

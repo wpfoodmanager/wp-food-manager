@@ -1,12 +1,12 @@
-var WPFMFront = function () {
+var WPFM_Frontend = function () {
     return {
         init: function () {
             jQuery(".wpfm-form-group.fieldset-topping_description").hide();
             //use body to call after dom update
-            jQuery("body").on('click', 'a.wpfm-food-item-remove', WPFMFront.actions.removeFoodItem);
+            jQuery("body").on('click', 'a.wpfm-food-item-remove', WPFM_Frontend.actions.removeFoodItem);
             //Action button For Extra topping field's content to View more and View less
-            jQuery("body").on('click', 'span.wpfm-view-more', WPFMFront.actions.viewmoreFoodFields);
-            jQuery("body").on('click', 'span.wpfm-view-less', WPFMFront.actions.viewlessFoodFields);
+            jQuery("body").on('click', 'span.wpfm-view-more', WPFM_Frontend.actions.viewmoreFoodFields);
+            jQuery("body").on('click', 'span.wpfm-view-less', WPFM_Frontend.actions.viewlessFoodFields);
             /* General tab - Regular and Sale price validation */
             jQuery('body').on('wpfm_add_error_tip', function (e, element, error_type) {
                 var offset = element.position();
@@ -55,11 +55,11 @@ var WPFMFront = function () {
                     jQuery(this).val('');
                 }
             });
-            jQuery(document).on("click", ".wpfm-add-row", WPFMFront.actions.addElementRow)
-            jQuery(document).on("click", ".option-delete-btn", WPFMFront.actions.removeAttributesOptions)
-            jQuery(document).on("click", ".wpfm-delete-btn", WPFMFront.actions.removeAttributes)
-            jQuery('#wpfm-add-new-option').on('click', WPFMFront.actions.addNewOption);
-            jQuery('body').on('change', 'input[name^="topping_name"]', WPFMFront.actions.updateOptionTitle);
+            jQuery(document).on("click", ".wpfm-add-row", WPFM_Frontend.actions.addElementRow)
+            jQuery(document).on("click", ".option-delete-btn", WPFM_Frontend.actions.removeAttributesOptions)
+            jQuery(document).on("click", ".wpfm-delete-btn", WPFM_Frontend.actions.removeAttributes)
+            jQuery('#wpfm-add-new-option').on('click', WPFM_Frontend.actions.addNewOption);
+            jQuery('body').on('change', 'input[name^="topping_name"]', WPFM_Frontend.actions.updateOptionTitle);
             jQuery(document).on("click", ".wpfm-togglediv", function (e) {
                 var row_count = jQuery(this).data('row-count');
                 var menuItem = jQuery(e.currentTarget);
@@ -269,7 +269,7 @@ var WPFMFront = function () {
     }
 };
 
-WPFMFront = WPFMFront();
+WPFM_Frontend = WPFM_Frontend();
 jQuery(document).ready(function ($) {
-    WPFMFront.init();
+    WPFM_Frontend.init();
 });

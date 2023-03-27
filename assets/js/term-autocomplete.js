@@ -1,14 +1,14 @@
-var WPFMTermAutocomplete = function () {
-    /// <summary>Constructor function of the food WPFMTermAutocomplete class.</summary>
+var WPFM_TermAutoComplete = function () {
+    /// <summary>Constructor function of the food WPFM_TermAutoComplete class.</summary>
     /// <returns type="Home" />      
     return {
         ///<summary>
-        ///Initializes the WPFMTermAutocomplete.  
+        ///Initializes the WPFM_TermAutoComplete.  
         ///</summary>     
         ///<returns type="initialization settings" />   
         /// <since>1.0.0</since>         
         init: function () {
-            jQuery('#wpfm-add-new-option').on('click', WPFMTermAutocomplete.autocomplete);
+            jQuery('#wpfm-add-new-option').on('click', WPFM_TermAutoComplete.autocomplete);
         },
         autocomplete: function () {
             jQuery('.wpfm-autocomplete').each(function () {
@@ -56,8 +56,8 @@ var WPFMTermAutocomplete = function () {
     } //enf of returnmultiselect
 }; //end of class
 
-WPFMTermAutocomplete = WPFMTermAutocomplete();
+WPFM_TermAutoComplete = WPFM_TermAutoComplete();
 jQuery(document).ready(function ($) {
-    WPFMTermAutocomplete.init();
-    WPFMTermAutocomplete.autocomplete();
+    WPFM_TermAutoComplete.init();
+    WPFM_TermAutoComplete.autocomplete();
 });

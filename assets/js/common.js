@@ -1,16 +1,16 @@
-var WPFMCommon = function () {
-    /// <summary>Constructor function of the WPFMCommon class.</summary>
+var WPFM_Common = function () {
+    /// <summary>Constructor function of the WPFM_Common class.</summary>
     /// <since>1.0.0</since>
-    /// <returns type="WPFMCommon" />
+    /// <returns type="WPFM_Common" />
     var abortObjects = [];
     var javaScriptInfoLoggingEnabled = false;
     var javaScriptTraceLoggingEnabled = false;
     return {
         init: function () {
-            /// <summary>Initializes the WPFMCommon.</summary>
+            /// <summary>Initializes the WPFM_Common.</summary>
             /// <since>1.0.0</since>              
-            WPFMCommon.logInfo("WPFMCommon.init...");
-            jQuery(document).delegate("ul.wpfm-tabs-wrap li.wpfm-tab-link", "click", WPFMCommon.tabChanged);
+            WPFM_Common.logInfo("WPFM_Common.init...");
+            jQuery(document).delegate("ul.wpfm-tabs-wrap li.wpfm-tab-link", "click", WPFM_Common.tabChanged);
 
             window.addEventListener('keydown', function (e) {
                 if (e.keyCode === 27 && jQuery('.wpfm-modal-close').length > 0) {
@@ -54,7 +54,7 @@ var WPFMCommon = function () {
             /// <param name="jsonString" type="string">The json string.</param>
             /// <since>1.0.0</since>
             /// <returns type="json" />
-            WPFMCommon.logInfo("stringToJson...");
+            WPFM_Common.logInfo("stringToJson...");
             if (jsonString === undefined || jsonString.length === 0) {
                 return undefined;
             }
@@ -150,7 +150,7 @@ var WPFMCommon = function () {
         /// <returns type="bool" />     
         /// <since>1.0.0</since>       
         validateEmail: function (email) {
-            WPFMCommon.logInfo("WPFMCommon.validateEmail...");
+            WPFM_Common.logInfo("WPFM_Common.validateEmail...");
             var expr = /^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
             return expr.test(email);
         },
@@ -162,7 +162,7 @@ var WPFMCommon = function () {
         /// <returns type="bool" />     
         /// <since>1.0.0</since>       
         validatePincode: function (email) {
-            WPFMCommon.logInfo("WPFMCommon.validatePincode...");
+            WPFM_Common.logInfo("WPFM_Common.validatePincode...");
             var expr = /^[0-9]+$/;
             return expr.test(email);
         },
@@ -174,7 +174,7 @@ var WPFMCommon = function () {
         /// <returns type="bool" />     
         /// <since>1.0.0</since>       
         validateName: function (name) {
-            WPFMCommon.logInfo("WPFMCommon.validateName...");
+            WPFM_Common.logInfo("WPFM_Common.validateName...");
             var expr = /[A-Za-z \-_.\u00C0-\u00D6\u00D8-\u00F6\u00F8-\u00FF]/;
             return expr.test(name);
         },
@@ -186,7 +186,7 @@ var WPFMCommon = function () {
         /// <returns type="bool" />     
         /// <since>1.0.0</since>       
         isURL: function (str) {
-            WPFMCommon.logInfo("WPFMCommon.isURL...");
+            WPFM_Common.logInfo("WPFM_Common.isURL...");
             var urlRegex = '^(?!mailto:)(?:(?:http|https|ftp)://)(?:\\S+(?::\\S*)?@)?(?:(?:(?:[1-9]\\d?|1\\d\\d|2[01]\\d|22[0-3])(?:\\.(?:1?\\d{1,2}|2[0-4]\\d|25[0-5])){2}(?:\\.(?:[0-9]\\d?|1\\d\\d|2[0-4]\\d|25[0-4]))|(?:(?:[a-z\\u00a1-\\uffff0-9]+-?)*[a-z\\u00a1-\\uffff0-9]+)(?:\\.(?:[a-z\\u00a1-\\uffff0-9]+-?)*[a-z\\u00a1-\\uffff0-9]+)*(?:\\.(?:[a-z\\u00a1-\\uffff]{2,})))|localhost)(?::\\d{2,5})?(?:(/|\\?|#)[^\\s]*)?$';
             var url = new RegExp(urlRegex, 'i');
             return str.length < 2083 && url.test(str);
@@ -198,7 +198,7 @@ var WPFMCommon = function () {
         /// <returns type="actions" />    
         /// <since>3.1.5</since>       
         showToggleContent: function (food) {
-            WPFMCommon.logInfo("WPFMCommon.actions.showToggleContent...");
+            WPFM_Common.logInfo("WPFM_Common.actions.showToggleContent...");
             jQuery(this).toggleClass("wpfm-active-button");
 
             food.preventDefault();
@@ -210,13 +210,13 @@ var WPFMCommon = function () {
         /// <returns type="actions" />     
         /// <since>3.1.6</since>       
         hideToggleContent: function (food) {
-            WPFMCommon.logInfo("WPFMCommon.actions.hideToggleContent...");
+            WPFM_Common.logInfo("WPFM_Common.actions.hideToggleContent...");
             food.preventDefault();
         },
     }
 };
 
-WPFMCommon = WPFMCommon();
+WPFM_Common = WPFM_Common();
 jQuery(document).ready(function ($) {
-    WPFMCommon.init();
+    WPFM_Common.init();
 });

@@ -1,5 +1,5 @@
-var WPFMFoodDashboard = function () {
-	/// <summary>Constructor function of the food WPFMFoodDashboard class.</summary>
+var WPFM_FoodDashboard = function () {
+	/// <summary>Constructor function of the food WPFM_FoodDashboard class.</summary>
 	/// <returns type="Home" />      
 	return {
 		/// <summary>
@@ -8,16 +8,16 @@ var WPFMFoodDashboard = function () {
 		/// <returns type="initialization settings" />   
 		/// <since>1.0.0</since> 
 		init: function () {
-			WPFMCommon.logInfo("WPFMFoodDashboard.init...");
+			WPFM_Common.logInfo("WPFM_FoodDashboard.init...");
 			if (jQuery('.food-dashboard-action-delete').length > 0 && jQuery('td .wpfm-dboard-food-action').length == 0) {
 				jQuery('.food-dashboard-action-delete').css({ 'cursor': 'pointer' });
 				//for delete food confirmation dialog / tooltip 
-				jQuery('.food-dashboard-action-delete').on('click', WPFMFoodDashboard.confirmation.showDialog);
+				jQuery('.food-dashboard-action-delete').on('click', WPFM_FoodDashboard.confirmation.showDialog);
 			}
 			// For Dashboard Menu Toggle
 			if (jQuery('.wpfm-main-vmenu-dashboard-sub-menu .wpfm-main-vmenu-dashboard-link').length > 0) {
 				jQuery('.wpfm-main-vmenu-dashboard-sub-menu .wpfm-main-vmenu-dashboard-submenu-ul').hide();
-				jQuery('.wpfm-main-vmenu-dashboard-sub-menu .wpfm-main-vmenu-dashboard-link').on('click', WPFMFoodDashboard.actions.openSubmenu);
+				jQuery('.wpfm-main-vmenu-dashboard-sub-menu .wpfm-main-vmenu-dashboard-link').on('click', WPFM_FoodDashboard.actions.openSubmenu);
 			}
 			// For Active Dashboard Menu Open
 			if (jQuery('.wpfm-main-vmenu-dashboard-sub-menu .wpfm-main-vmenu-dashboard-link-active').length > 0) {
@@ -59,7 +59,7 @@ var WPFMFoodDashboard = function () {
 			/// <returns type="actions" />     
 			/// <since>1.0.0</since>       
 			showDialog: function (event) {
-				WPFMCommon.logInfo("WPFMFoodDashboard.confirmation.showDialog...");
+				WPFM_Common.logInfo("WPFM_FoodDashboard.confirmation.showDialog...");
 				return confirm(food_manager_food_dashboard.i18n_confirm_delete);
 				event.preventDefault();
 			},
@@ -80,7 +80,7 @@ var WPFMFoodDashboard = function () {
 	} //enf of return	
 }; //end of class
 
-WPFMFoodDashboard = WPFMFoodDashboard();
+WPFM_FoodDashboard = WPFM_FoodDashboard();
 jQuery(document).ready(function ($) {
-	WPFMFoodDashboard.init();
+	WPFM_FoodDashboard.init();
 });

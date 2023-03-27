@@ -1,5 +1,5 @@
-var WPFMTermMultiselect = function () {
-    /// <summary>Constructor function of the food WPFMTermMultiselect class.</summary>
+var WPFM_TermMultiSelect = function () {
+    /// <summary>Constructor function of the food WPFM_TermMultiSelect class.</summary>
     /// <returns type="Home" />      
     return {
         ///<summary>
@@ -8,13 +8,13 @@ var WPFMTermMultiselect = function () {
         ///<returns type="initialization settings" />   
         /// <since>1.0.0</since> 
         init: function () {
-            WPFMCommon.logInfo("WPFMTermMultiselect.init...");
+            WPFM_Common.logInfo("WPFM_TermMultiSelect.init...");
             jQuery(".food-manager-category-dropdown").chosen({ search_contains: !0 });
         }
     } //enf of return
 }; //end of class
 
-WPFMTermMultiselect = WPFMTermMultiselect();
+WPFM_TermMultiSelect = WPFM_TermMultiSelect();
 jQuery(document).ready(function ($) {
-    WPFMTermMultiselect.init();
+    WPFM_TermMultiSelect.init();
 });
