@@ -119,17 +119,15 @@ class WPFM_Install {
 	private static function get_default_taxonomy_terms() {
 		return array(
 			'food_manager_ingredient' => array(
-				'Vegetables',
-				'Spices and Herbs',
-				'Cereals and Pulses',
-				'Meat',
-				'Seafood',
 				'Salt',
 				'Pepper',
 				'Olive oil',
 				'Vegetable oil',
+				'All-purpose flour',
 				'Granulated sugar',
-				'Vegetable oil',
+				'Vegetables',
+				'Spices and Herbs',
+				'Cereals and Pulses',
 			),
 			'food_manager_nutrition' => array(
 				'Calcium',
@@ -166,13 +164,12 @@ class WPFM_Install {
 				'Non Vegetarian',
 			),
 			'food_manager_unit' => array(
-				'dozen',
-				'gram',
 				'litre',
 				'degrees Celcius',
 				'kg',
 				'hg',
 				'dag',
+				'g',
 				'dg',
 				'cg',
 				'mg',
@@ -183,7 +180,6 @@ class WPFM_Install {
 				'dL',
 				'cL',
 				'mL',
-				'pc',
 			)
 		);
 	}
