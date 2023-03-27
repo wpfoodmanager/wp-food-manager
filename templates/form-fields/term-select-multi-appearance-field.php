@@ -18,7 +18,7 @@ wp_enqueue_script('wp-food-manager-term-multiselect');
 wp_enqueue_script('wp-food-manager-term-select-multi-appearance');
 wp_localize_script(
     'wp-food-manager-term-select-multi-appearance',
-    'appearance_params',
+    'appearance_params', 
     array(
         'unit_terms' => json_encode($unit),
     )
