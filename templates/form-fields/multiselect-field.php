@@ -1,8 +1,5 @@
 <?php
 wp_enqueue_script('wp-food-manager-multiselect');
-wp_register_script('chosen', WPFM_PLUGIN_URL . '/assets/js/jquery-chosen/chosen.jquery.min.js', array('jquery'), '1.1.0', true);
-wp_register_script('wp-food-manager-multiselect', WPFM_PLUGIN_URL . '/assets/js/multiselect.min.js', array('jquery', 'chosen'), WPFM_VERSION, true);
-wp_enqueue_style('chosen', WPFM_PLUGIN_URL . '/assets/css/chosen.css');
 $field_val_num = '';
 if (!empty($field['value']) && is_array($field['value']) && isset($field['value'])) {
 	$tmp_cnt = explode("_", $key);
