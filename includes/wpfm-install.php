@@ -124,6 +124,12 @@ class WPFM_Install {
 				'Cereals and Pulses',
 				'Meat',
 				'Seafood',
+				'Salt',
+				'Pepper',
+				'Olive oil',
+				'Vegetable oil',
+				'Granulated sugar',
+				'Vegetable oil',
 			),
 			'food_manager_nutrition' => array(
 				'Calcium',
