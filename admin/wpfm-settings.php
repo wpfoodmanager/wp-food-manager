@@ -121,15 +121,6 @@ class WPFM_Settings {
 							'attributes' => array(),
 						),
 						array(
-							'name'       => 'food_manager_delete_data_on_uninstall',
-							'std'        => '0',
-							'label'      => __('Delete Data On Uninstall', 'wp-food-manager'),
-							'cb_label'   => __('Delete WP Food Manager data when the plugin is deleted. Once removed, this data cannot be restored.', 'wp-food-manager'),
-							'desc'       => '',
-							'type'       => 'checkbox',
-							'attributes' => array(),
-						),
-						array(
 							'name'       => 'food_manager_food_item_show_hide',
 							'label'      => __('Food Items', 'wp-food-manager'),
 							'type'       => 'radio',
@@ -139,6 +130,15 @@ class WPFM_Settings {
 								'0' => 'Completely hide Food Item which has stock status out of stock from the food listing page.',
 								'1' => 'Display Out of Stock label for the food item which has stock status out of stock.'
 							)
+						),
+						array(
+							'name'       => 'food_manager_delete_data_on_uninstall',
+							'std'        => '0',
+							'label'      => __('Delete Data On Uninstall', 'wp-food-manager'),
+							'cb_label'   => __('Delete WP Food Manager data when the plugin is deleted. Once removed, this data cannot be restored.', 'wp-food-manager'),
+							'desc'       => '',
+							'type'       => 'checkbox',
+							'attributes' => array(),
 						),
 					)
 				),
