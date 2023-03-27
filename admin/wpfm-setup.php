@@ -145,6 +145,12 @@ class WPFM_Setup {
 							</thead>
 							<tbody>
 								<tr>
+									<td><input type="checkbox" checked="checked" name="wp-food-manager-create-page[foods]" /></td>
+									<td><input type="text" value="<?php echo esc_attr(_x('Foods', 'Default page title (wizard)', 'wp-food-manager')); ?>" name="wp-food-manager-page-title[foods]" /></td>
+									<td><?php esc_attr_e('This page allows users to browse, search, and filter food listings on the front-end of your site.', 'wp-food-manager'); ?></td>
+									<td><code>[foods]</code></td>
+								</tr>
+								<tr>
 									<td><input type="checkbox" checked="checked" name="wp-food-manager-create-page[add_food]" /></td>
 									<td><input type="text" value="<?php echo esc_attr(_x('Add Foods', 'Default page title (wizard)', 'wp-food-manager')); ?>" name="wp-food-manager-page-title[add_food]" /></td>
 									<td>
@@ -161,12 +167,6 @@ class WPFM_Setup {
 										<p><?php esc_attr_e('If you plan on managing all listings from the admin dashboard you can skip creating this page.', 'wp-food-manager'); ?></p>
 									</td>
 									<td><code>[food_dashboard]</code></td>
-								</tr>
-								<tr>
-									<td><input type="checkbox" checked="checked" name="wp-food-manager-create-page[foods]" /></td>
-									<td><input type="text" value="<?php echo esc_attr(_x('Foods', 'Default page title (wizard)', 'wp-food-manager')); ?>" name="wp-food-manager-page-title[foods]" /></td>
-									<td><?php esc_attr_e('This page allows users to browse, search, and filter food listings on the front-end of your site.', 'wp-food-manager'); ?></td>
-									<td><code>[foods]</code></td>
 								</tr>
 							</tbody>
 							<tfoot>
