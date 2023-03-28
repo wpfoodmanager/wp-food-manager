@@ -209,8 +209,7 @@ class WPFM_Install {
 				'Non Vegetarian',
 			),
 			'food_manager_unit' => array(
-				'litre',
-				'degrees Celcius',
+				'°C',
 				'kg',
 				'hg',
 				'dag',
