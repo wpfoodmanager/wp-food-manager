@@ -51,7 +51,7 @@ class WPFM_Shortcodes {
 	 * @param array $atts
 	 */
 	public function add_food($atts = array()) {
-		return $GLOBALS['food_manager']->forms->get_form('submit-food', $atts);
+		return $GLOBALS['food_manager']->forms->get_form('add-food', $atts);
 	}
 
 	/**

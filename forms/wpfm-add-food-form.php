@@ -1,15 +1,15 @@
 <?php
 
 /**
- * WPFM_Form_Submit_Food class.
+ * WPFM_Add_Food_Form class.
  */
 
-class WPFM_Form_Submit_Food extends WPFM_Form {
+class WPFM_Add_Food_Form extends WPFM_Form {
 
-	public    $form_name = 'submit-food';
+	public    $form_name = 'add-food';
 	protected $food_id;
 	protected $preview_food;
-	/** @var WPFM_Form_Submit_Food The single instance of the class */
+	/** @var WPFM_Add_Food_Form The single instance of the class */
 	protected static $_instance = null;
 
 	/**
@@ -27,7 +27,7 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
 	 */
 	public function __construct() {
 		add_action('wp', array($this, 'process'));
-		$this->steps  = (array) apply_filters('submit_food_steps', array(
+		$this->steps  = (array) apply_filters('add_food_steps', array(
 			'submit' => array(
 				'name'     => __('Submit Details', 'wp-food-manager'),
 				'view'     => array($this, 'submit'),
@@ -59,10 +59,10 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
 		}
 		// Allow resuming from cookie.
 		$this->resume_edit = false;
-		if (!isset($_GET['new']) && ('before' === get_option('food_manager_paid_listings_flow') || !$this->food_id) && !empty($_COOKIE['wp-food-manager-submitting-food-id']) && !empty($_COOKIE['wp-food-manager-submitting-food-key'])) {
-			$food_id     = absint($_COOKIE['wp-food-manager-submitting-food-id']);
+		if (!isset($_GET['new']) && ('before' === get_option('food_manager_paid_listings_flow') || !$this->food_id) && !empty($_COOKIE['wp-food-manager-adding-food-id']) && !empty($_COOKIE['wp-food-manager-adding-food-key'])) {
+			$food_id     = absint($_COOKIE['wp-food-manager-adding-food-id']);
 			$food_status = get_post_status($food_id);
-			if ('preview' === $food_status && get_post_meta($food_id, '_submitting_key', true) === $_COOKIE['wp-food-manager-submitting-food-key']) {
+			if ('preview' === $food_status && get_post_meta($food_id, '_adding_key', true) === $_COOKIE['wp-food-manager-adding-food-key']) {
 				$this->food_id = $food_id;
 			}
 		}
@@ -74,7 +74,7 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
 					$this->food_id = 0;
 					$this->step   = 0;
 				}
-			} elseif (!in_array($food_status, apply_filters('food_manager_valid_submit_food_statuses', array('preview')))) {
+			} elseif (!in_array($food_status, apply_filters('food_manager_valid_add_food_statuses', array('preview')))) {
 				$this->food_id = 0;
 				$this->step   = 0;
 			}
@@ -389,7 +389,7 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
 			}
 			$this->fields = apply_filters('add_food_fields_get_food_data', $this->fields, $food);
 			// Get user meta
-		} elseif (is_user_logged_in() && empty($_POST['submit_food'])) {
+		} elseif (is_user_logged_in() && empty($_POST['add_food'])) {
 			if (!empty($this->fields['food']['registration'])) {
 				$allowed_registration_method = get_option('food_manager_allowed_registration_method', '');
 				if ($allowed_registration_method !== 'url') {
@@ -424,7 +424,7 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
 			$this->merge_with_custom_fields('frontend');
 			// Get posted values
 			$values = $this->get_posted_fields();
-			if (empty($_POST['submit_food'])) {
+			if (empty($_POST['add_food'])) {
 				return;
 			}
 			// Validate required
@@ -569,10 +569,10 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
 		} else {
 			$this->food_id = wp_insert_post($food_data);
 			if (!headers_sent()) {
-				$submitting_key = uniqid();
-				setcookie('wp-food-manager-submitting-food-id', $this->food_id, 0, COOKIEPATH, COOKIE_DOMAIN, false);
-				setcookie('wp-food-manager-submitting-food-key', $submitting_key, 0, COOKIEPATH, COOKIE_DOMAIN, false);
-				update_post_meta($this->food_id, '_submitting_key', $submitting_key);
+				$adding_key = uniqid();
+				setcookie('wp-food-manager-adding-food-id', $this->food_id, 0, COOKIEPATH, COOKIE_DOMAIN, false);
+				setcookie('wp-food-manager-adding-food-key', $adding_key, 0, COOKIEPATH, COOKIE_DOMAIN, false);
+				update_post_meta($this->food_id, '_adding_key', $adding_key);
 			}
 		}
 		// Set Food Tags
@@ -648,7 +648,7 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
 				$wpdb->update($wpdb->posts, ['menu_order' => 1], ['ID' => intval($this->food_id)]);
 			}
 		}
-		do_action('wpfm_submit_food_form', $this->food_id, $post_title, $post_content, $status, $values, $update_slug);
+		do_action('wpfm_add_food_form', $this->food_id, $post_title, $post_content, $status, $values, $update_slug);
 	}
 
 	/**
@@ -831,7 +831,7 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
 				// Update food listing
 				$update_food                  = array();
 				$update_food['ID']            = $food->ID;
-				$update_food['post_status']   = apply_filters('submit_food_post_status', get_option('food_manager_submission_requires_approval') ? 'pending' : 'publish', $food);
+				$update_food['post_status']   = apply_filters('add_food_post_status', get_option('food_manager_submission_requires_approval') ? 'pending' : 'publish', $food);
 				$update_food['post_date']     = current_time('mysql');
 				$update_food['post_date_gmt'] = current_time('mysql', 1);
 				wp_update_post($update_food);
@@ -854,7 +854,7 @@ class WPFM_Form_Submit_Food extends WPFM_Form {
 	 * @return fields Array
 	 */
 	public function get_food_manager_fieldeditor_fields() {
-		return apply_filters('food_manager_submit_food_form_fields', get_option('food_manager_submit_food_form_fields', false));
+		return apply_filters('food_manager_add_food_form_fields', get_option('food_manager_add_food_form_fields', false));
 	}
 
 	/**

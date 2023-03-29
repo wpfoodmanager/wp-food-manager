@@ -40,11 +40,11 @@ class WPFM_Forms {
 	 */
 	public function load_form_class($form_name) {
 		if (!class_exists('WPFM_Form')) {
-			include 'wpfm-form-abstract.php';
+			include 'wpfm-abstract-form.php';
 		}
 		// Now try to load the form_name
-		$form_class  = 'WPFM_Form_' . str_replace('-', '_', $form_name);
-		$form_file   = WPFM_PLUGIN_DIR . '/forms/wpfm-form-' . $form_name . '.php';
+		$form_class  = 'WPFM_' . str_replace('-', '_', $form_name).'_Form';
+		$form_file   = WPFM_PLUGIN_DIR . '/forms/wpfm-' . $form_name . '-form.php';
 		if (class_exists($form_class)) {
 			return call_user_func(array($form_class, 'instance'));
 		}

@@ -49,7 +49,7 @@ class WPFM_Install {
 					unset($all_fields['food']['food_address']);
 				if (isset($all_fields['food']['food_venue_name']))
 					unset($all_fields['food']['food_venue_name']);
-				update_option('food_manager_submit_food_form_fields', array('food' => $all_fields['food']));
+				update_option('food_manager_add_food_form_fields', array('food' => $all_fields['food']));
 				update_option('food_manager_submit_extra_options_form_fields', array('extra_options' => $all_fields['extra_options']));
 			}
 		}

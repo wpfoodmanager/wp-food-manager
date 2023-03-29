@@ -684,7 +684,7 @@ function wpfm_upload_file($file, $args = array()) {
 			return new WP_Error('upload', sprintf(__('Uploaded files need to be one of the following file types: %s.', 'wp-food-manager'), implode(', ', array_keys($args['allowed_mime_types']))));
 		}
 	} else {
-		$upload = wp_handle_upload($file, apply_filters('submit_food_wp_handle_upload_overrides', array('test_form' => false)));
+		$upload = wp_handle_upload($file, apply_filters('add_food_wp_handle_upload_overrides', array('test_form' => false)));
 		if (!empty($upload['error'])) {
 			return new WP_Error('upload', $upload['error']);
 		} else {
@@ -837,12 +837,12 @@ function food_manager_duplicate_listing($post_id) {
  * @return bool
  */
 function food_manager_multiselect_food_type() {
-	if (!class_exists('WPFM_Form_Submit_Food')) {
-		include_once(WPFM_PLUGIN_DIR . '/forms/wpfm-form-abstract.php');
-		include_once(WPFM_PLUGIN_DIR . '/forms/wpfm-form-submit-food.php');
+	if (!class_exists('WPFM_Add_Food_Form')) {
+		include_once(WPFM_PLUGIN_DIR . '/forms/wpfm-abstract-form.php');
+		include_once(WPFM_PLUGIN_DIR . '/forms/wpfm-add-food-form.php');
 	}
-	$form_submit_food_instance = call_user_func(array('WPFM_Form_Submit_Food', 'instance'));
-	$food_fields = $form_submit_food_instance->merge_with_custom_fields();
+	$form_add_food_instance = call_user_func(array('WPFM_Add_Food_Form', 'instance'));
+	$food_fields = $form_add_food_instance->merge_with_custom_fields();
 	if (isset($food_fields['food']['food_type']['type']) && $food_fields['food']['food_type']['type'] === 'term-multiselect') {
 		return apply_filters('food_manager_multiselect_food_type', true);
 	} else {
@@ -856,12 +856,12 @@ function food_manager_multiselect_food_type() {
  * @return bool
  */
 function food_manager_multiselect_food_category() {
-	if (!class_exists('WPFM_Form_Submit_Food')) {
-		include_once(WPFM_PLUGIN_DIR . '/forms/wpfm-form-abstract.php');
-		include_once(WPFM_PLUGIN_DIR . '/forms/wpfm-form-submit-food.php');
+	if (!class_exists('WPFM_Add_Food_Form')) {
+		include_once(WPFM_PLUGIN_DIR . '/forms/wpfm-abstract-form.php');
+		include_once(WPFM_PLUGIN_DIR . '/forms/wpfm-add-food-form.php');
 	}
-	$form_submit_food_instance = call_user_func(array('WPFM_Form_Submit_Food', 'instance'));
-	$food_fields = $form_submit_food_instance->merge_with_custom_fields();
+	$form_add_food_instance = call_user_func(array('WPFM_Add_Food_Form', 'instance'));
+	$food_fields = $form_add_food_instance->merge_with_custom_fields();
 	if (isset($food_fields['food']['food_category']['type']) && $food_fields['food']['food_category']['type'] === 'term-multiselect') {
 		return apply_filters('food_manager_multiselect_food_category', true);
 	} else {

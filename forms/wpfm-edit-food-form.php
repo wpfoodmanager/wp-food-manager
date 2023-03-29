@@ -1,10 +1,10 @@
 <?php
-include_once('wpfm-form-submit-food.php');
+include_once('wpfm-add-food-form.php');
 
 /**
  * WP_Food_Manager_Form_Edit_Food class.
  */
-class WPFM_Form_Edit_Food extends WPFM_Form_Submit_Food {
+class WPFM_Edit_Food_Form extends WPFM_Add_Food_Form {
 
 	public $form_name           = 'edit-food';
 	/** @var WP_Food_Manager_Form_Edit_Food The single instance of the class */
@@ -131,7 +131,7 @@ class WPFM_Form_Edit_Food extends WPFM_Form_Submit_Food {
 	 * Submit Step is posted
 	 */
 	public function submit_handler() {
-		if (empty($_POST['submit_food'])) {
+		if (empty($_POST['add_food'])) {
 			return;
 		}
 		try {

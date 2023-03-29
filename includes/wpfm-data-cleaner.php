@@ -234,7 +234,7 @@ class WPFM_Data_Cleaner {
 	 * @access private
 	 */
 	private static function cleanup_pages() {
-		// Trash the Submit Food page.
+		// Trash the Add Food page.
 		$add_food_page_id = get_option('food_manager_add_food_page_id');
 		if ($add_food_page_id) {
 			wp_delete_post($add_food_page_id, true);

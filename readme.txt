@@ -82,9 +82,9 @@ You can add your foods from the front-end. And also you can add, update and dele
 
 == Screenshots ==
 
-1. The submit Food Form.
+1. The add Food Form.
 
-2. Submit Food Preview.
+2. Add Food Preview.
 
 
 == Changelog ==

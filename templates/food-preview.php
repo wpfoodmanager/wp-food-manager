@@ -17,7 +17,7 @@ if (!defined('ABSPATH')) {
 	<div class="food_listing_preview_title">
 		<input type="submit" name="edit_food" class="button food-manager-button-edit-listing wpfm-theme-button" value="<?php esc_attr_e('← Edit listing', 'wp-food-manager'); ?>" />
 		<h2><?php esc_html_e('Preview', 'wp-food-manager'); ?></h2>
-		<input type="submit" name="continue" id="food_preview_submit_button" class="button food-manager-button-submit-listing wpfm-theme-button" value="<?php echo esc_attr(apply_filters('submit_food_step_preview_submit_text', __('Submit Listing →', 'wp-food-manager'))); ?>" />
+		<input type="submit" name="continue" id="food_preview_submit_button" class="button food-manager-button-submit-listing wpfm-theme-button" value="<?php echo esc_attr(apply_filters('add_food_step_preview_submit_text', __('Submit Listing →', 'wp-food-manager'))); ?>" />
 	</div>
 	<div class="food_listing_preview single_food_listing">
 		<?php get_food_manager_template_part('content-single', 'food_manager'); ?>

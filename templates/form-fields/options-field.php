@@ -3,7 +3,7 @@
 /**
  * Repeated fields is generated from this page .
  * Repeated fields for options.
- * This field is used in submit food form.
+ * This field is used in add food form.
  **/
 ?>
 <table class="widefat">

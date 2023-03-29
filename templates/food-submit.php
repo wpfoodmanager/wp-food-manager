@@ -40,7 +40,7 @@ if (!empty($extra_fields_options)) {
 	unset($option_value_counts3[0]);
 }
 ?>
-<form action="<?php echo esc_url($action); ?>" method="post" id="submit-food-form" class="wpfm-form-wrapper wpfm-main food-manager-form" enctype="multipart/form-data">
+<form action="<?php echo esc_url($action); ?>" method="post" id="add-food-form" class="wpfm-form-wrapper wpfm-main food-manager-form" enctype="multipart/form-data">
 	<?php if (apply_filters('add_food_show_signin', true)) : ?>
 		<?php get_food_manager_template('account-signin.php'); ?>
 	<?php endif; ?>
@@ -247,7 +247,7 @@ if (!empty($extra_fields_options)) {
 			<input type="hidden" name="food_manager_form" value="<?php echo $form; ?>" />
 			<input type="hidden" name="food_id" value="<?php echo esc_attr($food_id); ?>" />
 			<input type="hidden" name="step" value="<?php echo esc_attr($step); ?>" />
-			<input type="submit" name="submit_food" class="wpfm-theme-button" value="<?php esc_attr_e($submit_button_text); ?>" />
+			<input type="submit" name="add_food" class="wpfm-theme-button" value="<?php esc_attr_e($submit_button_text); ?>" />
 		</div>
 	<?php else : ?>
 		<?php do_action('add_food_disabled'); ?>

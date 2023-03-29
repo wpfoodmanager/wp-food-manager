@@ -1086,16 +1086,16 @@ class WPFM_ActionHooks {
                 $type = !empty($field['type']) ? $field['type'] : '';
                 $extra_options = array();
                 $food = $post;
-                $form_submit_food_instance = call_user_func(array('WPFM_Form_Submit_Food', 'instance'));
-                $custom_food_fields  = !empty($form_submit_food_instance->get_food_manager_fieldeditor_fields()) ? $form_submit_food_instance->get_food_manager_fieldeditor_fields() : array();
-                $custom_extra_options_fields  = !empty($form_submit_food_instance->get_food_manager_fieldeditor_extra_options_fields()) ? $form_submit_food_instance->get_food_manager_fieldeditor_extra_options_fields() : array();
+                $form_add_food_instance = call_user_func(array('WPFM_Add_Food_Form', 'instance'));
+                $custom_food_fields  = !empty($form_add_food_instance->get_food_manager_fieldeditor_fields()) ? $form_add_food_instance->get_food_manager_fieldeditor_fields() : array();
+                $custom_extra_options_fields  = !empty($form_add_food_instance->get_food_manager_fieldeditor_extra_options_fields()) ? $form_add_food_instance->get_food_manager_fieldeditor_extra_options_fields() : array();
                 $custom_fields = '';
                 if (!empty($custom_extra_options_fields)) {
                     $custom_fields = array_merge($custom_food_fields, $custom_extra_options_fields);
                 } else {
                     $custom_fields = $custom_food_fields;
                 }
-                $default_fields = $form_submit_food_instance->get_default_food_fields();
+                $default_fields = $form_add_food_instance->get_default_food_fields();
                 $additional_fields = [];
                 if (!empty($custom_fields) && isset($custom_fields) && !empty($custom_fields['extra_options'])) {
                     foreach ($custom_fields['extra_options'] as $field_name => $field_data) {

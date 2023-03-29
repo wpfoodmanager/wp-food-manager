@@ -58,7 +58,7 @@ class WPFM_Field_Editor {
 	 */
 	private function form_editor() {
 		if (!empty($_GET['food-reset-fields']) && !empty($_GET['_wpnonce']) && wp_verify_nonce($_GET['_wpnonce'], 'reset')) {
-			delete_option('food_manager_submit_food_form_fields');
+			delete_option('food_manager_add_food_form_fields');
 			echo wp_kses_post('<div class="updated"><p>' . esc_attr('The fields were successfully reset.', 'wp-food-manager') . '</p></div>');
 		}
 		if (!empty($_GET['extra_options-reset-fields']) && !empty($_GET['_wpnonce']) && wp_verify_nonce($_GET['_wpnonce'], 'reset')) {
@@ -91,11 +91,11 @@ class WPFM_Field_Editor {
 				'options'    => __('Options', 'wp-food-manager'),
 			)
 		);
-		$GLOBALS['food_manager']->forms->get_form('submit-food', array());
-		$form_submit_food_instance = call_user_func(array('WPFM_Form_Submit_Food', 'instance'));
-		$food_fields               = $form_submit_food_instance->merge_with_custom_fields('backend');
+		$GLOBALS['food_manager']->forms->get_form('add-food', array());
+		$form_add_food_instance = call_user_func(array('WPFM_Add_Food_Form', 'instance'));
+		$food_fields               = $form_add_food_instance->merge_with_custom_fields('backend');
 		$fields = array_merge($food_fields);
-		$submit_food_form_fields = get_option('food_manager_submit_food_form_fields');
+		$add_food_form_fields = get_option('food_manager_add_food_form_fields');
 		foreach ($fields  as $group_key => $group_fields) {
 			if (empty($group_fields)) {
 				continue;
@@ -144,8 +144,8 @@ class WPFM_Field_Editor {
 					if (isset($group_fields) && !empty($group_fields)) {
 						foreach ($group_fields as $field_key => $field) {
 							if ($group_key == 'food') {
-								if ($submit_food_form_fields) {
-									if (trim($field['label']) != '' && isset($submit_food_form_fields['food'][$field_key])) {
+								if ($add_food_form_fields) {
+									if (trim($field['label']) != '' && isset($add_food_form_fields['food'][$field_key])) {
 										$index++;
 										include 'wpfm-form-field-editor-field.php';
 									}
@@ -270,9 +270,9 @@ class WPFM_Field_Editor {
 					}
 				}
 				// merge field with default fields
-				$GLOBALS['food_manager']->forms->get_form('submit-food', array());
-				$form_submit_food_instance = call_user_func(array('WPFM_Form_Submit_Food', 'instance'));
-				$food_fields = $form_submit_food_instance->get_default_food_fields();
+				$GLOBALS['food_manager']->forms->get_form('add-food', array());
+				$form_add_food_instance = call_user_func(array('WPFM_Add_Food_Form', 'instance'));
+				$food_fields = $form_add_food_instance->get_default_food_fields();
 				// if field in not exist in new fields array then make visiblity false
 				if (!empty($food_fields)) {
 					foreach ($food_fields as $group_key => $group_fields) {
@@ -285,7 +285,7 @@ class WPFM_Field_Editor {
 					}
 				}
 				if (isset($new_fields['food'])) {
-					update_option('food_manager_submit_food_form_fields', array('food' => $new_fields['food']));
+					update_option('food_manager_add_food_form_fields', array('food' => $new_fields['food']));
 				}
 				if (isset($new_fields['extra_options'])) {
 					update_option('food_manager_submit_extra_options_form_fields', array('extra_options' => $new_fields['extra_options']));

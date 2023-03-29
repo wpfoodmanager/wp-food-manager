@@ -33,10 +33,10 @@ abstract class WPFM_Form {
 	 */
 	public function process() {
 		// reset cookie
-		if (isset($_GET['new']) && isset($_COOKIE['wpfm-submitting-food-id']) && isset($_COOKIE['wpfm-submitting-food-key']) && get_post_meta(sanitize_text_field($_COOKIE['wpfm-submitting-food-id']), '_submitting_key', true) == $_COOKIE['wpfm-submitting-food-key']) {
-			delete_post_meta($_COOKIE['wpfm-submitting-food-id'], '_submitting_key');
-			setcookie('wpfm-submitting-food-id', '', 0, COOKIEPATH, COOKIE_DOMAIN, false);
-			setcookie('wpfm-submitting-food-key', '', 0, COOKIEPATH, COOKIE_DOMAIN, false);
+		if (isset($_GET['new']) && isset($_COOKIE['wpfm-adding-food-id']) && isset($_COOKIE['wpfm-adding-food-key']) && get_post_meta(sanitize_text_field($_COOKIE['wpfm-adding-food-id']), '_adding_key', true) == $_COOKIE['wpfm-adding-food-key']) {
+			delete_post_meta($_COOKIE['wpfm-adding-food-id'], '_adding_key');
+			setcookie('wpfm-adding-food-id', '', 0, COOKIEPATH, COOKIE_DOMAIN, false);
+			setcookie('wpfm-adding-food-key', '', 0, COOKIEPATH, COOKIE_DOMAIN, false);
 			wp_redirect(remove_query_arg(array('new', 'key'), $_SERVER['REQUEST_URI']));
 		}
 		$step_key = $this->get_step_key($this->step);

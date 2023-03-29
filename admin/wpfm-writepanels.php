@@ -223,7 +223,7 @@ class WPFM_Writepanels {
 	public function food_manager_data_fields() {
 		global $post;
 		$current_user = wp_get_current_user();
-		$fields =  $GLOBALS['food_manager']->forms->get_form_fields('submit-food', 'backend');
+		$fields =  $GLOBALS['food_manager']->forms->get_form_fields('add-food', 'backend');
 		$fields = apply_filters('food_manager_food_data_fields', $fields);
 		if (isset($fields['food']['food_title']))
 			unset($fields['food']['food_title']);
