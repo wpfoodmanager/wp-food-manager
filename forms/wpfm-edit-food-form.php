@@ -101,6 +101,8 @@ class WPFM_Edit_Food_Form extends WPFM_Add_Food_Form {
 							$this->fields[$group_key][$key]['value'] = $food->post_content;
 						} elseif (!empty($field['taxonomy'])) {
 							$this->fields[$group_key][$key]['value'] = wp_get_object_terms($food->ID, $field['taxonomy'], array('fields' => 'ids'));
+						}elseif ('food_tag' === $key) {
+							$this->fields[$group_key][$key]['value'] = wp_get_object_terms($food->ID, 'food_manager_tag', array('fields' => 'ids'));
 						} else {
 							$this->fields[$group_key][$key]['value'] = get_post_meta($food->ID, '_' . $key, true);
 						}
