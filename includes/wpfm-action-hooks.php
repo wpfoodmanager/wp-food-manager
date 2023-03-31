@@ -545,9 +545,14 @@ class WPFM_ActionHooks {
         ob_start();
         $foods = get_food_listings(apply_filters('food_manager_get_listings_args', $args));
         $result['found_foods'] = false;
+        $food_cnt = 0;
         if ($foods->have_posts()) : $result['found_foods'] = true; ?>
             <?php while ($foods->have_posts()) : $foods->the_post(); ?>
-                <?php get_food_manager_template_part('content', 'food_manager'); ?>
+                <?php
+                if (get_option('food_manager_food_item_show_hide') == 0 && get_stock_status() !== 'fm_outofstock') {
+                    $food_cnt++;
+                }
+                get_food_manager_template_part('content', 'food_manager'); ?>
             <?php endwhile; ?>
             <?php else :
             // Check there is a publish food or not.
@@ -603,7 +608,7 @@ class WPFM_ActionHooks {
             $result['filter_value'][] = sprintf(__('located in &ldquo;%s&rdquo;', 'wp-food-manager'), $search_location);
         }
         if (sizeof($result['filter_value']) > 1) {
-            $message = sprintf(_n('Search completed. Found %d matching record.', 'Search completed. Found %d matching records.', $foods->found_posts, 'wp-food-manager'), $foods->found_posts);
+            $message = sprintf(_n('Search completed. Found %d matching record.', 'Search completed. Found %d matching records.', $food_cnt, 'wp-food-manager'), $food_cnt);
             $result['showing_applied_filters'] = true;
         } else {
             $message = "";
