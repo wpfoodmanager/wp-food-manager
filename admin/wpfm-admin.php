@@ -28,9 +28,9 @@ class WPFM_Admin {
 	/**
 	 * Allows for accessing single instance of class. Class should only be constructed once per call.
 	 *
-	 * @since 1.0.0
 	 * @static
 	 * @return self Main instance.
+	 * @since 1.0.0
 	 */
 	public static function instance() {
 		if (is_null(self::$_instance)) {
@@ -42,9 +42,9 @@ class WPFM_Admin {
 	/**
 	 * __construct function
 	 *
-	 * @since 1.0.0
 	 * @access public
 	 * @return void
+	 * @since 1.0.0
 	 */
 	public function __construct() {
 		include_once('wpfm-settings.php');

@@ -18,9 +18,9 @@ class WPFM_Writepanels {
 	/**
 	 * Allows for accessing single instance of class. Class should only be constructed once per call.
 	 *
-	 * @since 1.0.0
 	 * @static
 	 * @return self Main instance.
+	 * @since 1.0.0
 	 */
 	public static function instance() {
 		if (is_null(self::$_instance)) {
@@ -363,9 +363,9 @@ class WPFM_Writepanels {
 	/**
 	 * input_term_autocomplete function.
 	 *
-	 * @since 1.0.2
 	 * @param mixed $key
 	 * @param mixed $field
+	 * @since 1.0.2
 	 */
 	public static function input_term_autocomplete($key, $field) {
 		global $thepostid;
@@ -761,8 +761,8 @@ class WPFM_Writepanels {
 	/**
 	 * Edit toppings field in admin
 	 * 
-	 * @since 1.0.1
 	 * @param object $term
+	 * @since 1.0.1
 	 */
 	public function edit_topping_fields($term) {
 		wp_nonce_field('save_toppings', 'topping_nonce');

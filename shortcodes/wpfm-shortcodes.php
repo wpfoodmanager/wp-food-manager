@@ -22,9 +22,9 @@ class WPFM_Shortcodes {
 	/**
 	 * Allows for accessing single instance of class. Class should only be constructed once per call.
 	 *
-	 * @since 1.0.1
 	 * @static
 	 * @return self Main instance.
+	 * @since 1.0.1
 	 */
 	public static function instance() {
 		if (is_null(self::$_instance)) {
@@ -47,8 +47,8 @@ class WPFM_Shortcodes {
 	/**
 	 * Show the food submission form
 	 * 
-	 * @since 1.0.1
 	 * @param array $atts
+	 * @since 1.0.1
 	 */
 	public function add_food($atts = array()) {
 		return $GLOBALS['food_manager']->forms->get_form('add-food', $atts);
@@ -120,8 +120,8 @@ class WPFM_Shortcodes {
 	/**
 	 * Shortcode which lists the logged in user's foods
 	 * 
-	 * @since 1.0.1
 	 * @param $atts
+	 * @since 1.0.1
 	 */
 	public function food_dashboard($atts) {
 		global $wpdb, $food_manager_keyword;
@@ -202,10 +202,10 @@ class WPFM_Shortcodes {
 	/**
 	 * output_foods function.
 	 *
-	 * @since 1.0.1
 	 * @access public
 	 * @param mixed $args
 	 * @return void
+	 * @since 1.0.1
 	 */
 	public function output_foods($atts) {
 		ob_start();
@@ -395,9 +395,9 @@ class WPFM_Shortcodes {
 	/**
 	 * Get string as a bool
 	 * 
-	 * @since 1.0.1
 	 * @param  string $value
 	 * @return bool
+	 * @since 1.0.1
 	 */
 	public function string_to_bool($value) {
 		return (is_bool($value) && $value) || in_array($value, array('1', 'true', 'yes')) ? true : false;
@@ -406,10 +406,10 @@ class WPFM_Shortcodes {
 	/**
 	 * output_food function.
 	 *
-	 * @since 1.0.0
 	 * @access public
 	 * @param array $args
 	 * @return string
+	 * @since 1.0.0
 	 */
 	public function output_food($atts) {
 		extract(shortcode_atts(array(
@@ -437,10 +437,10 @@ class WPFM_Shortcodes {
 	/**
 	 * food Summary shortcode
 	 *
-	 * @since 1.0.0
 	 * @access public
 	 * @param array $args
 	 * @return string
+	 * @since 1.0.0
 	 */
 	public function output_food_summary($atts) {
 		extract(shortcode_atts(array(
@@ -475,10 +475,10 @@ class WPFM_Shortcodes {
 	/**
 	 * output food menu
 	 *
-	 * @since 1.0.0
 	 * @access public
 	 * @param array $args
 	 * @return string
+	 * @since 1.0.0
 	 */
 	public function output_food_menu($atts) {
 		ob_start();

@@ -2,12 +2,12 @@
 include_once('wpfm-add-food-form.php');
 
 /**
- * WP_Food_Manager_Form_Edit_Food class.
+ * WPFM_Edit_Food_Form class.
  */
 class WPFM_Edit_Food_Form extends WPFM_Add_Food_Form {
 
 	public $form_name           = 'edit-food';
-	/** @var WP_Food_Manager_Form_Edit_Food The single instance of the class */
+	/** @var WPFM_Edit_Food_Form The single instance of the class */
 	protected static $_instance = null;
 
 	/**

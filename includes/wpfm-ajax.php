@@ -6,7 +6,7 @@
 if (!defined('ABSPATH')) exit; // Exit if accessed directly
 
 /**
- * WP_food_Manager_Ajax class.
+ * WPFM_Ajax class.
  */
 class WPFM_Ajax {
 
@@ -21,9 +21,9 @@ class WPFM_Ajax {
 	/**
 	 * Allows for accessing single instance of class. Class should only be constructed once per call.
 	 *
-	 * @since 1.0.0
 	 * @static
 	 * @return self Main instance.
+	 * @since 1.0.0
 	 */
 	public static function instance() {
 		if (is_null(self::$_instance)) {

@@ -49,7 +49,7 @@ var WPFM_FieldEditor = function () {
 			/// <returns type="initialization settings" />   
 			/// <since>1.0</since> 
 			deleteField: function () {
-				if (window.confirm(wp_food_manager_form_editor.cofirm_delete_i18n)) {
+				if (window.confirm(wpfm_form_editor.cofirm_delete_i18n)) {
 					var field_type = jQuery(this).closest('tr').data('field-type');
 					if (field_type === 'group') {
 						jQuery(this).closest('tr').next('tr.group').remove();
@@ -66,7 +66,7 @@ var WPFM_FieldEditor = function () {
 			///<returns type="initialization settings" />   
 			/// <since>1.0</since> 
 			resetFields: function () {
-				if (window.confirm(wp_food_manager_form_editor.cofirm_reset_i18n)) {
+				if (window.confirm(wpfm_form_editor.cofirm_reset_i18n)) {
 					return true;
 				}
 				return false;
@@ -125,12 +125,12 @@ var WPFM_FieldEditor = function () {
 					} else {
 						var obj = jQuery(this);
 						jQuery.ajax({
-							url: wp_food_manager_form_editor.ajax_url,
+							url: wpfm_form_editor.ajax_url,
 							type: 'POST',
 							dataType: 'HTML',
 							data: {
 								action: 'get_group_field_html',
-								security: wp_food_manager_form_editor.wp_food_manager_form_editor_security,
+								security: wpfm_form_editor.wpfm_form_editor_security,
 							},
 							success: function (responce) {
 								obj.closest('tr').attr('data-field-type', 'group');

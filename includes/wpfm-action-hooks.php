@@ -38,9 +38,9 @@ class WPFM_ActionHooks {
     /**
      * Allows for accessing single instance of class. Class should only be constructed once per call.
      *
-     * @since 1.0.1
      * @static
      * @return self Main instance.
+     * @since 1.0.1
      */
     public static function instance() {
         if (is_null(self::$_instance)) {
@@ -77,7 +77,7 @@ class WPFM_ActionHooks {
         add_action('after_setup_theme', array($this, 'load_plugin_textdomain'));
         add_action('after_setup_theme', array($this, 'include_template_functions'), 11);
         add_action('wp_enqueue_scripts', array($this, 'frontend_scripts'));
-        add_action('food_manager_notify_new_user', 'wp_food_manager_notify_new_user', 10, 2);
+        add_action('food_manager_notify_new_user', 'wpfm_notify_new_user', 10, 2);
         add_action('admin_menu', array($this, 'admin_menu'), 12);
         add_action('admin_enqueue_scripts', array($this, 'admin_enqueue_scripts'));
         add_action('current_screen', array($this, 'conditional_includes'));
@@ -93,10 +93,9 @@ class WPFM_ActionHooks {
         add_action('load-edit.php', array($this, 'do_bulk_actions'));
         add_action('admin_footer-edit.php', array($this, 'add_bulk_actions'));
         add_action('food_manager_save_food_manager', array($this, 'food_manager_save_food_manager_data'), 20, 2);
-        // Save food attributes
-        add_action('wp_ajax_wpfm_update_food_attributes', array($this, 'wpfm_update_food_attributes'));
+
         // Food menu 
-        add_action('wp_ajax_wpfm_get_food_listings_by_category_id', array($this, 'wpfm_get_food_listings_by_category_id'));
+        add_action('wp_ajax_wpfm_get_food_listings_by_category_id', array($this, 'get_food_listings_by_category_id'));
         add_action('food_manager_save_food_manager_menu', array($this, 'food_manager_save_food_manager_menu_data'), 20, 2);
         add_action('manage_food_manager_menu_posts_custom_column', array($this, 'shortcode_copy_content_column'), 10, 2);
         add_action('manage_food_manager_posts_custom_column', array($this, 'custom_food_content_column'), 10, 2);
@@ -106,8 +105,8 @@ class WPFM_ActionHooks {
         add_action('init', array($this, 'load_posted_form'));
 
         // wpfm ajax's action
-        add_action('init', array(__CLASS__, 'add_endpoint'));
-        add_action('template_redirect', array(__CLASS__, 'do_fm_ajax'), 0);
+        add_action('init', array($this, 'add_endpoint'));
+        add_action('template_redirect', array($this, 'do_fm_ajax'), 0);
         // FM Ajax endpoints
         add_action('food_manager_ajax_get_listings', array($this, 'get_listings'));
         add_action('food_manager_ajax_upload_file', array($this, 'upload_file'));
@@ -120,15 +119,15 @@ class WPFM_ActionHooks {
         add_action('wp_ajax_wpfm-logo-update-menu-order', array($this, 'menuUpdateOrder'));
 
         // wpfm cache helper
-        add_action('save_post', array(__CLASS__, 'flush_get_food_managers_cache'));
-        add_action('delete_post', array(__CLASS__, 'flush_get_food_managers_cache'));
-        add_action('trash_post', array(__CLASS__, 'flush_get_food_managers_cache'));
-        add_action('set_object_terms', array(__CLASS__, 'set_term'), 10, 4);
-        add_action('edited_term', array(__CLASS__, 'edited_term'), 10, 3);
-        add_action('create_term', array(__CLASS__, 'edited_term'), 10, 3);
-        add_action('delete_term', array(__CLASS__, 'edited_term'), 10, 3);
-        add_action('food_manager_clear_expired_transients', array(__CLASS__, 'clear_expired_transients'), 10);
-        add_action('transition_post_status', array(__CLASS__, 'maybe_clear_count_transients'), 10, 3);
+        add_action('save_post', array($this, 'flush_get_food_managers_cache'));
+        add_action('delete_post', array($this, 'flush_get_food_managers_cache'));
+        add_action('trash_post', array($this, 'flush_get_food_managers_cache'));
+        add_action('set_object_terms', array($this, 'set_term'), 10, 4);
+        add_action('edited_term', array($this, 'edited_term'), 10, 3);
+        add_action('create_term', array($this, 'edited_term'), 10, 3);
+        add_action('delete_term', array($this, 'edited_term'), 10, 3);
+        add_action('food_manager_clear_expired_transients', array($this, 'clear_expired_transients'), 10);
+        add_action('transition_post_status', array($this, 'maybe_clear_count_transients'), 10, 3);
 
         // wpfm custom post-types
         add_action('init', array($this->post_types, 'register_post_types'), 0);
@@ -274,8 +273,8 @@ class WPFM_ActionHooks {
     /**
      * Set post view on the single listing page
      * 
-     * @since 1.0.0
      * @param object $post	 
+     * @since 1.0.0
      */
     public function set_single_listing_view_count($post) {
         global $post;
@@ -322,7 +321,7 @@ class WPFM_ActionHooks {
          *
          * @since 1.0.0
          */
-        remove_submenu_page('index.php', 'food-manager-setup');
+        remove_submenu_page('index.php', 'food_manager_setup');
 
         global $menu;
         $plural     = __('Food Manager', 'wp-food-manager');
@@ -345,10 +344,10 @@ class WPFM_ActionHooks {
      * When a supported post type status is updated, check if any cached count transients
      * need to be removed, and remove the
      *
-     * @since 1.0.0
      * @param string  $new_status New post status.
      * @param string  $old_status Old post status.
      * @param WP_Post $post       Post object.
+     * @since 1.0.0
      */
     public static function maybe_clear_count_transients($new_status, $old_status, $post) {
         global $wpdb;
@@ -447,8 +446,8 @@ class WPFM_ActionHooks {
     /**
      * Category order update.
      *
-     * @since 1.0.0
      * @return void|bool
+     * @since 1.0.0
      */
     public function menuUpdateOrder() {
         global $wpdb;
@@ -786,11 +785,11 @@ class WPFM_ActionHooks {
     /**
      * food_manager_save_food_manager_menu_data function.
      *
-     * @since 1.0.0
      * @access public
      * @param post_id numeric
      * @param post Object
      * @return void
+     * @since 1.0.0
      */
     public function food_manager_save_food_manager_menu_data($post_id, $post) {
         if (isset($_POST['radio_icons']) && !empty($_POST['radio_icons'])) {
@@ -810,14 +809,14 @@ class WPFM_ActionHooks {
     }
 
     /**
-     * wpfm_get_food_listings_by_category_id function.
+     * get_food_listings_by_category_id function.
      *
-     * @since 1.0.0
      * @access public
      * @param NULL
      * @return void
+     * @since 1.0.0
      */
-    public function wpfm_get_food_listings_by_category_id() {
+    public function get_food_listings_by_category_id() {
         if (isset($_POST['category_id']) && !empty($_POST['category_id'])) {
             $args = [
                 'post_type' => 'food_manager',
@@ -890,11 +889,11 @@ class WPFM_ActionHooks {
     /**
      * food_manager_save_food_manager_data function.
      *
-     * @since 1.0.0
      * @access public
      * @param mixed $post_id
      * @param mixed $post
      * @return void
+     * @since 1.0.0
      */
     public function food_manager_save_food_manager_data($post_id, $post) {
         global $wpdb;
@@ -1403,9 +1402,9 @@ class WPFM_ActionHooks {
     /**
      * add_meta_boxes function.
      *
-     * @since 1.0.0
      * @access public
      * @return void
+     * @since 1.0.0
      */
     public function add_meta_boxes() {
         global $wp_post_types;
@@ -1427,8 +1426,8 @@ class WPFM_ActionHooks {
     /**
      * Add image field in 'food_manager_type' taxonomy page
      * 
-     * @since 1.0.0
      * @param $taxonomy
+     * @since 1.0.0
      */
     function add_custom_taxonomy_image_for_food_type($taxonomy) { ?>
         <div class="form-field term-group">
@@ -1446,9 +1445,9 @@ class WPFM_ActionHooks {
     /**
      * Save the 'food_manager_type' taxonomy image field
      * 
-     * @since 1.0.0
      * @param $tt_id
      * @param $term_id
+     * @since 1.0.0
      */
     function save_custom_taxonomy_image_for_food_type($term_id, $tt_id) {
         if (isset($_POST['image_id']) && '' !== $_POST['image_id']) {
@@ -1460,9 +1459,9 @@ class WPFM_ActionHooks {
     /**
      * Add the image field in edit form page
      * 
-     * @since 1.0.0
      * @param $term
      * @param $taxonomy
+     * @since 1.0.0
      */
     function update_custom_taxonomy_image_for_food_type($term, $taxonomy) { ?>
         <tr class="form-field term-group-wrap">
@@ -1490,9 +1489,9 @@ class WPFM_ActionHooks {
     /**
      * Update the 'food_manager_type' taxonomy image field
      * 
-     * @since 1.0.0
      * @param $term_id
      * @param $tt_id
+     * @since 1.0.0
      */
     function updated_custom_taxonomy_image_for_food_type($term_id, $tt_id) {
         if (isset($_POST['image_id']) && '' !== $_POST['image_id']) {
@@ -1570,10 +1569,10 @@ class WPFM_ActionHooks {
     /**
      * Display new columns values
      * 
-     * @since 1.0.0
      * @param string $columns
      * @param string $column
      * @param int $id
+     * @since 1.0.0
      */
     function display_custom_taxonomy_image_column_value_for_food_type($columns, $column, $id) {
         if ('category_image' == $column) {
@@ -1586,8 +1585,8 @@ class WPFM_ActionHooks {
     /**
      * Add image field in 'food_manager_category' taxonomy page
      * 
-     * @since 1.0.0
      * @param string $taxonomy
+     * @since 1.0.0
      */
     function add_custom_taxonomy_image_for_food_category($taxonomy) {
     ?>
@@ -1606,9 +1605,9 @@ class WPFM_ActionHooks {
     /**
      * Save the 'food_manager_category' taxonomy image field
      * 
-     * @since 1.0.0
      * @param string $term_id
      * @param string $tt_id
+     * @since 1.0.0
      */
     function save_custom_taxonomy_image_for_food_category($term_id, $tt_id) {
         if (isset($_POST['food_cat_image_id']) && '' !== $_POST['food_cat_image_id']) {
@@ -1620,9 +1619,9 @@ class WPFM_ActionHooks {
     /**
      * Add the image field in edit form page
      * 
-     * @since 1.0.0
      * @param object $term
      * @param string $taxonomy
+     * @since 1.0.0
      */
     function update_custom_taxonomy_image_for_food_category($term, $taxonomy) { ?>
         <tr class="form-field term-group-wrap">
@@ -1650,9 +1649,9 @@ class WPFM_ActionHooks {
     /**
      * Update the 'food_manager_category' taxonomy image field
      * 
-     * @since 1.0.0
      * @param string $term_id
      * @param string $tt_id
+     * @since 1.0.0
      */
     function updated_custom_taxonomy_image_for_food_category($term_id, $tt_id) {
         if (isset($_POST['food_cat_image_id']) && '' !== $_POST['food_cat_image_id']) {
@@ -1731,10 +1730,10 @@ class WPFM_ActionHooks {
     /**
      * Display new columns values
      * 
-     * @since 1.0.0
      * @param string $columns
      * @param string $column
      * @param int $id
+     * @since 1.0.0
      */
     function display_custom_taxonomy_image_column_value_for_food_category($columns, $column, $id) {
         if ('category_image' == $column) {
@@ -1818,7 +1817,7 @@ class WPFM_ActionHooks {
         // Food submission forms and validation js
         wp_register_script('wp-food-manager-food-submission', WPFM_PLUGIN_URL . '/assets/js/food-submission.min.js', array('jquery', 'jquery-ui-core', 'jquery-ui-datepicker'), WPFM_VERSION, true);
         wp_enqueue_script('wp-food-manager-food-submission');
-        wp_localize_script('wp-food-manager-food-submission', 'wp_food_manager_food_submission', array(
+        wp_localize_script('wp-food-manager-food-submission', 'wpfm_food_submission', array(
             'i18n_datepicker_format' => WPFM_Date_Time::get_datepicker_format(),
             'ajax_url'      => admin_url('admin-ajax.php'),
         ));
@@ -1881,9 +1880,9 @@ class WPFM_ActionHooks {
     /**
      * admin_menu function.
      *
-     * @since 1.0.0
      * @access public
      * @return void
+     * @since 1.0.0
      */
     public function admin_menu() {
         $this->settings_page = WPFM_Settings::instance();
@@ -1891,15 +1890,15 @@ class WPFM_ActionHooks {
             add_submenu_page('edit.php?post_type=food_manager', __('Field Editor', 'wp-food-manager'), __('Field Editor', 'wp-food-manager'), 'manage_options', 'food-manager-form-editor', array(WPFM_Field_Editor::instance(), 'output'));
         }
         add_submenu_page('edit.php?post_type=food_manager', __('Settings', 'wp-food-manager'), __('Settings', 'wp-food-manager'), 'manage_options', 'food-manager-settings', array($this->settings_page, 'output'));
-        add_dashboard_page(__('Setup', 'wp-food-manager'), __('Setup', 'wp-food-manager'), 'manage_options', 'food-manager-setup', array(WPFM_Setup::instance(), 'output'));
+        add_dashboard_page(__('Setup', 'wp-food-manager'), __('Setup', 'wp-food-manager'), 'manage_options', 'food_manager_setup', array(WPFM_Setup::instance(), 'output'));
     }
 
     /**
      * admin_enqueue_scripts function.
      *
-     * @since 1.0.0
      * @access public
      * @return void
+     * @since 1.0.0
      */
     public function admin_enqueue_scripts() {
         global $wp_scripts;
@@ -1984,15 +1983,15 @@ class WPFM_ActionHooks {
         wp_register_script('wp-food-manager-form-field-editor', WPFM_PLUGIN_URL . '/assets/js/field-editor.min.js', array('jquery', 'jquery-ui-sortable', 'chosen'), WPFM_VERSION, true);
         wp_localize_script(
             'wp-food-manager-form-field-editor',
-            'wp_food_manager_form_editor',
+            'wpfm_form_editor',
             array(
                 'cofirm_delete_i18n'                    => __('Are you sure you want to delete this row?', 'wp-food-manager'),
                 'cofirm_reset_i18n'                     => __('Are you sure you want to reset your changes? This cannot be undone.', 'wp-food-manager'),
                 'ajax_url'                              => admin_url('admin-ajax.php'),
-                'wp_food_manager_form_editor_security' => wp_create_nonce('_nonce_wp_food_manager_form_editor_security'),
+                'wpfm_form_editor_security' => wp_create_nonce('_nonce_wpfm_form_editor_security'),
             )
         );
-        if (isset($_GET['page']) && 'food-manager-setup' === $_GET['page']) {
+        if (isset($_GET['page']) && 'food_manager_setup' === $_GET['page']) {
             wp_enqueue_style('food_manager_setup_css', WPFM_PLUGIN_URL . '/assets/css/setup.min.css', array('dashicons'));
         }
         wp_register_script('wpfm-term-autocomplete', WPFM_PLUGIN_URL . '/assets/js/term-autocomplete.js', array('jquery', 'jquery-ui-autocomplete'), '1.0.1', true);
@@ -2026,11 +2025,11 @@ class WPFM_ActionHooks {
     /**
      * get_group_field_html function.
      *
-     * @since 1.0.0
      * @access public
+     * @since 1.0.0
      */
     public function get_group_field_html() {
-        check_ajax_referer('_nonce_wp_food_manager_form_editor_security', 'security');
+        check_ajax_referer('_nonce_wpfm_form_editor_security', 'security');
         $field_types = apply_filters(
             'food_manager_form_group_field_types',
             array(
@@ -2064,9 +2063,9 @@ class WPFM_ActionHooks {
     /**
      * register_settings function.
      *
-     * @since 1.0.0
      * @access public
      * @return void
+     * @since 1.0.0
      */
     public function register_settings() {
         $wpfm_Settings = WPFM_Settings::instance();
@@ -2087,7 +2086,7 @@ class WPFM_ActionHooks {
      */
     public function redirect() {
         global $pagenow;
-        if (isset($_GET['page']) && $_GET['page'] === 'food-manager-setup') {
+        if (isset($_GET['page']) && $_GET['page'] === 'food_manager_setup') {
             if (get_option('food_manager_installation', false)) {
                 wp_redirect(admin_url('index.php'));
                 exit;
@@ -2109,7 +2108,7 @@ class WPFM_ActionHooks {
         if ((isset($_GET['action']) && 'upgrade-plugin' == $_GET['action']) && (isset($_GET['plugin']) && strstr($_GET['plugin'], 'wp-food-manager.php'))) {
             return;
         }
-        wp_redirect(admin_url('index.php?page=food-manager-setup'));
+        wp_redirect(admin_url('index.php?page=food_manager_setup'));
         exit;
     }
 
@@ -2146,11 +2145,10 @@ class WPFM_ActionHooks {
     /**
      * Callback to set up the metabox
      * Mimicks the traditional hierarchical term metabox, but modified with our nonces 
-     *
-     * @since 1.0.1
      * 	 
      * @param  object $post
      * @param  array $args
+     * @since 1.0.1
      */
     public function replace_food_manager_type_metabox($post, $box) {
         $defaults = array('taxonomy' => 'category');

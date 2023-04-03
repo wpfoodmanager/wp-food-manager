@@ -20,7 +20,7 @@ WPFM_FoodSubmission = function () {
             // Datepicker
             if (jQuery('input[data-picker="datepicker"]').length > 0) {
                 jQuery('input[data-picker="datepicker"]').datepicker({
-                    dateFormat: wp_food_manager_food_submission.i18n_datepicker_format,
+                    dateFormat: wpfm_food_submission.i18n_datepicker_format,
                 });
             }
         },

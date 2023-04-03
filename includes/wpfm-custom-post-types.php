@@ -16,9 +16,9 @@ class WPFM_Post_Types {
 	/**
 	 * Allows for accessing single instance of class. Class should only be constructed once per call.
 	 *
-	 * @since 1.0.0
 	 * @static
 	 * @return self Main instance.
+	 * @since 1.0.0
 	 */
 	public static function instance() {
 		if (is_null(self::$_instance)) {
@@ -36,9 +36,9 @@ class WPFM_Post_Types {
 	/**
 	 * register_post_types function.
 	 *
-	 * @since 1.0.0
 	 * @access public
 	 * @return void
+	 * @since 1.0.0
 	 */
 	public function register_post_types() {
 		if (post_type_exists("food_manager"))
@@ -54,9 +54,8 @@ class WPFM_Post_Types {
 		/**
 		 * Set whether to add archive page support when registering the food manager post type.
 		 *
-		 * @since 1.0.0
-		 *
 		 * @param bool $enable_food_archive_page
+		 * @since 1.0.0
 		 */
 		if (apply_filters('food_manager_enable_food_archive_page', current_theme_supports('food-manager-templates'))) {
 			$has_archive = _x('foods', 'Post type archive slug - resave permalinks after changing this', 'wp-food-manager');
@@ -372,8 +371,8 @@ class WPFM_Post_Types {
 	 * Retrieves permalink settings.
 	 *
 	 * @see https://github.com/woocommerce/woocommerce/blob/3.0.8/includes/wc-core-functions.php#L1573
-	 * @since 1.0.0
 	 * @return array
+	 * @since 1.0.0
 	 */
 	public static function get_permalink_structure() {
 		// Switch to the site's default locale, bypassing the active user's locale.
@@ -406,8 +405,8 @@ class WPFM_Post_Types {
 	 *
 	 * @param  array $bulk_messages Array of messages.
 	 * @param  array $bulk_counts Array of how many objects were updated.
-	 * @since 1.0.0
 	 * @return array
+	 * @since 1.0.0
 	 */
 	public function bulk_post_updated_messages($bulk_messages, $bulk_counts) {
 		$bulk_messages['food_manager'] = array(

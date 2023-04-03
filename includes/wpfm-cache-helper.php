@@ -5,7 +5,7 @@ if (!defined('ABSPATH')) {
 }
 
 /**
- * WP_Food_Manager_Cache_Helper class.
+ * WPFM_Cache_Helper class.
  */
 class WPFM_Cache_Helper {
 
@@ -19,9 +19,9 @@ class WPFM_Cache_Helper {
 	/**
 	 * Allows for accessing single instance of class. Class should only be constructed once per call.
 	 *
-	 * @since 1.0.0
 	 * @static
 	 * @return self Main instance.
+	 * @since 1.0.0
 	 */
 	public static function instance() {
 		if (is_null(self::$_instance)) {

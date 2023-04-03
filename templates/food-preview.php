@@ -7,7 +7,6 @@
  * @see         https://www.wpfoodmanager.com/
  * @author      WP Food Manager
  * @category    template
- * @version     1.0.0
  */
 if (!defined('ABSPATH')) {
 	exit; // Exit if accessed directly.

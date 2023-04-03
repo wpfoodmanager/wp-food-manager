@@ -24,9 +24,9 @@ class WPFM_Setup {
 	/**
 	 * Allows for accessing single instance of class. Class should only be constructed once per call.
 	 *
-	 * @since 1.0.0
 	 * @static
 	 * @return self Main instance.
+	 * @since 1.0.0
 	 */
 	public static function instance() {
 		if (is_null(self::$_instance)) {
@@ -126,7 +126,7 @@ class WPFM_Setup {
 					</div>
 					<p class="submit">
 						<a href="<?php echo esc_url(add_query_arg('step', 2)); ?>" class="button button-primary"><?php esc_attr_e('Continue to page setup', 'wp-food-manager'); ?></a>
-						<a href="<?php echo esc_url(add_query_arg('skip-food-manager-setup', 1, admin_url('index.php?page=food-manager-setup&step=3'))); ?>" class="button"><?php esc_attr_e('Skip for now', 'wp-food-manager'); ?></a>
+						<a href="<?php echo esc_url(add_query_arg('skip-food-manager-setup', 1, admin_url('index.php?page=food_manager_setup&step=3'))); ?>" class="button"><?php esc_attr_e('Skip for now', 'wp-food-manager'); ?></a>
 					</p>
 				<?php endif; ?>
 				<?php if (2 === $step) : ?>

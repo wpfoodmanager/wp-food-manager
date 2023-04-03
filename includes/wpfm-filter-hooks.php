@@ -17,9 +17,9 @@ class WPFM_FilterHooks {
     /**
      * Allows for accessing single instance of class. Class should only be constructed once per call.
      *
-     * @since 1.0.1
      * @static
      * @return self Main instance.
+     * @since 1.0.1
      */
     public static function instance() {
         if (is_null(self::$_instance)) {
@@ -46,14 +46,14 @@ class WPFM_FilterHooks {
         add_filter('the_content', array($this, 'food_content'));
         add_filter('the_content', array($this, 'food_menu_content'));
         add_filter('archive_template', array($this, 'food_archive'), 20);
-        add_filter('use_block_editor_for_post_type', array($this, 'wpfm_disable_gutenberg'), 10, 2);
+        add_filter('use_block_editor_for_post_type', array($this, 'disable_gutenberg'), 10, 2);
         add_filter('wp_insert_post_data', array($this, 'fix_post_name'), 10, 2);
 
         // wpfm functions
-        add_filter('upload_dir', array($this, 'wpfm_upload_dir'));
+        add_filter('upload_dir', array($this, 'upload_dir'));
         add_filter('wp_terms_checklist_args', 'wpfm_term_radio_checklist_for_food_type');
-        add_filter('manage_edit-food_manager_type_columns', array($this, 'wpfm_display_custom_taxonomy_image_column_heading_for_food_type'));
-        add_filter('manage_edit-food_manager_category_columns', array($this, 'wpfm_display_custom_taxonomy_image_column_heading_for_food_category'));
+        add_filter('manage_edit-food_manager_type_columns', array($this, 'display_custom_taxonomy_image_column_heading_for_food_type'));
+        add_filter('manage_edit-food_manager_category_columns', array($this, 'display_custom_taxonomy_image_column_heading_for_food_category'));
 
         // wpfm core file
         add_filter('pre_option_wpfm_enable_categories', '__return_true');
@@ -64,9 +64,9 @@ class WPFM_FilterHooks {
     /**
      * Create link on plugin page for food manager plugin settings
      * 
-     * @since 1.0.0
      * @param array $links
      * @return array
+     * @since 1.0.0
      */
     function add_plugin_page_food_manager_settings_link($links) {
         $links[] = '<a href="' .
@@ -78,11 +78,11 @@ class WPFM_FilterHooks {
     /**
      * Add new column heading
      *
-     * @since 1.0.0
      * @param array $columns
      * @return array
+     * @since 1.0.0
      */
-    function wpfm_display_custom_taxonomy_image_column_heading_for_food_category($columns) {
+    function display_custom_taxonomy_image_column_heading_for_food_category($columns) {
         $columns['category_image'] = __('Image', 'taxt-domain');
         return $columns;
     }
@@ -90,11 +90,11 @@ class WPFM_FilterHooks {
     /**
      * Add new column heading
      *
-     * @since 1.0.0
      * @param array $columns
      * @return array
+     * @since 1.0.0
      */
-    function wpfm_display_custom_taxonomy_image_column_heading_for_food_type($columns) {
+    function display_custom_taxonomy_image_column_heading_for_food_type($columns) {
         $columns['category_image'] = __('Image', 'taxt-domain');
         return $columns;
     }
@@ -102,11 +102,11 @@ class WPFM_FilterHooks {
     /**
      * Filters the upload dir when $food_manager_upload is true
      * 
-     * @since 1.0.0
      * @param  array $pathdata
      * @return array
+     * @since 1.0.0
      */
-    function wpfm_upload_dir($pathdata) {
+    function upload_dir($pathdata) {
         global $food_manager_upload, $food_manager_uploading_file;
         if (!empty($food_manager_upload)) {
             $dir = untrailingslashit(apply_filters('wpfm_upload_dir', 'wpfm-uploads/' . sanitize_key($food_manager_uploading_file), sanitize_key($food_manager_uploading_file)));
@@ -127,9 +127,9 @@ class WPFM_FilterHooks {
     /**
      * Fix post name when wp_update_post changes it
      * 
-     * @since 1.0.0
      * @param  array $data
      * @return array $postarr
+     * @since 1.0.0
      */
     public function fix_post_name($data, $postarr) {
         if ('food_manager' === $data['post_type'] && 'pending' === $data['post_status'] && !current_user_can('publish_posts')) {
@@ -139,13 +139,13 @@ class WPFM_FilterHooks {
     }
 
     /**
-     * wpfm_disable_gutenberg functions
+     * disable_gutenberg functions
      * 
-     * @since 1.0.0
      * @param boolean $is_enabled
      * @param string $post_type
+     * @since 1.0.0
      */
-    public function wpfm_disable_gutenberg($is_enabled, $post_type) {
+    public function disable_gutenberg($is_enabled, $post_type) {
         if (apply_filters('wpfm_disable_gutenberg', true) && $post_type === 'food_manager') return false;
         return $is_enabled;
     }
@@ -153,10 +153,10 @@ class WPFM_FilterHooks {
     /**
      * food_archive function.
      *
-     * @since 1.0.0
      * @param string $template
      * @access public
      * @return void
+     * @since 1.0.0
      */
     public function food_archive($template) {
         if (is_tax('food_manager_category')) {
@@ -172,8 +172,8 @@ class WPFM_FilterHooks {
     /**
      * Add Food menu content
      * 
-     * @since 1.0.0
      * @param string $content
+     * @since 1.0.0
      */
     public function food_menu_content($content) {
         global $post;
@@ -195,8 +195,8 @@ class WPFM_FilterHooks {
     /**
      * Add extra content when showing food content
      * 
-     * @since 1.0.0
      * @param string $content
+     * @since 1.0.0
      */
     public function food_content($content) {
         global $post;
@@ -220,10 +220,10 @@ class WPFM_FilterHooks {
      * Note: Removing all actions also remove mobile "Show more details" toggle button.
      * So the button need to be added manually in custom_columns callback for primary column.
      *
-     * @since 1.0.0
      * @access public
      * @param array $actions
      * @return array
+     * @since 1.0.0
      */
     public function row_actions($actions) {
         if ('food_manager' == get_post_type()) {
@@ -277,9 +277,9 @@ class WPFM_FilterHooks {
     /**
      * columns function.
      *
-     * @since 1.0.0
      * @param array $columns
      * @return array
+     * @since 1.0.0
      */
     public function columns($columns) {
         if (!is_array($columns)) {

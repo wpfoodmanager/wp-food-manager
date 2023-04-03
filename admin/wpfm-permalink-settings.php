@@ -28,9 +28,9 @@ class WPFM_Permalink_Settings {
 	/**
 	 * Allows for accessing single instance of class. Class should only be constructed once per call.
 	 *
-	 * @since 1.0.0
 	 * @static
 	 * @return self Main instance.
+	 * @since 1.0.0
 	 */
 	public static function instance() {
 		if (is_null(self::$_instance)) {
@@ -50,6 +50,8 @@ class WPFM_Permalink_Settings {
 
 	/**
 	 * Add setting fields related to permalinks.
+	 * 
+	 * @since 1.0.0
 	 */
 	public function setup_fields() {
 		add_settings_field(
@@ -77,6 +79,8 @@ class WPFM_Permalink_Settings {
 
 	/**
 	 * Show a slug input box for food post type slug.
+	 * 
+	 * @since 1.0.0
 	 */
 	public function food_base_slug_input() {
 ?>
@@ -86,6 +90,8 @@ class WPFM_Permalink_Settings {
 
 	/**
 	 * Show a slug input box for food category slug.
+	 * 
+	 * @since 1.0.0
 	 */
 	public function food_category_slug_input() {
 	?>
@@ -95,6 +101,8 @@ class WPFM_Permalink_Settings {
 
 	/**
 	 * Show a slug input box for food type slug.
+	 * 
+	 * @since 1.0.0
 	 */
 	public function food_type_slug_input() {
 	?>
@@ -104,6 +112,8 @@ class WPFM_Permalink_Settings {
 
 	/**
 	 * Save the settings.
+	 * 
+	 * @since 1.0.0
 	 */
 	public function settings_save() {
 		if (!is_admin()) {

@@ -461,7 +461,7 @@ class WPFM_Add_Food_Form extends WPFM_Form {
 					}
 
 					if (!empty($_POST['create_account_email'])) {
-						$create_account = wp_food_manager_create_account(array(
+						$create_account = wpfm_create_account(array(
 							'username' => (food_manager_generate_username_from_email() || empty($_POST['create_account_username'])) ? '' : $_POST['create_account_username'],
 							'password' => (food_manager_use_standard_password_setup_email() || empty($_POST['create_account_password'])) ? '' : $_POST['create_account_password'],
 							'email'    => $_POST['create_account_email'],

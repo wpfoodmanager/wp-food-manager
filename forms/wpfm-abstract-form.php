@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Abstract WP_food_Manager_Form class.
+ * Abstract WPFM_Form class.
  *
  * @abstract
  */
@@ -52,8 +52,9 @@ abstract class WPFM_Form {
 
 	/**
 	 * Get formn name.
-	 * @since 1.0.0
+	 * 
 	 * @return string
+	 * @since 1.0.0
 	 */
 	public function get_form_name() {
 		return $this->form_name;
@@ -368,10 +369,11 @@ abstract class WPFM_Form {
 
 	/**
 	 * Get the value of a posted repeated field
-	 * @since  1.0.0
+	 * 
 	 * @param  string $key
 	 * @param  array $field
 	 * @return string
+	 * @since  1.0.0
 	 */
 	protected function get_posted_repeated_field($key, $field) {
 		return  $this->get_repeated_field($key, $field['fields']);

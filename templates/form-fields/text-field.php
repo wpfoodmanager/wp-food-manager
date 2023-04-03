@@ -9,7 +9,6 @@
  * @author      WP Food Manager
  * @package     WP Food Manager
  * @category    Template
- * @version     1.8
  */
 global $post;
 $field_val_num = '';

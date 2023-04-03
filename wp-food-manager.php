@@ -52,10 +52,10 @@ class WP_Food_Manager {
 	 * Main WP Food Manager Instance.
 	 * Ensures only one instance of WP Food Manager is loaded or can be loaded.
 	 *
-	 * @since 1.0.0
 	 * @static
 	 * @see WP_Food_Manager()
 	 * @return self Main instance.
+	 * @since 1.0.0
 	 */
 	public static function instance() {
 		if (is_null(self::$_instance)) {

@@ -37,9 +37,9 @@ class WPFM_Settings {
 	/**
 	 * Allows for accessing single instance of class. Class should only be constructed once per call.
 	 *
-	 * @since 1.0.0
 	 * @static
 	 * @return self Main instance.
+	 * @since 1.0.0
 	 */
 	public static function instance() {
 		if (is_null(self::$_instance)) {
@@ -449,7 +449,7 @@ class WPFM_Settings {
 										$this->create_multi_select_checkbox($option);
 										break;
 									default:
-										do_action('wp_food_manager_admin_field_' . $option['type'], $option, $attributes, $value, $placeholder);
+										do_action('wpfm_admin_field_' . $option['type'], $option, $attributes, $value, $placeholder);
 										break;
 								} ?>
 								</td>

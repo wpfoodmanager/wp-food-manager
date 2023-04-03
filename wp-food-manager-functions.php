@@ -4,9 +4,9 @@ if (!function_exists('get_food_listings')) :
 	/**
 	 * Queries food listings with certain criteria and returns them
 	 * 
-	 * @since 1.0.0
 	 * @access public
 	 * @return WP_Query
+	 * @since 1.0.0
 	 */
 	function get_food_listings($args = array()) {
 		global $food_manager_keyword;
@@ -27,8 +27,8 @@ if (!function_exists('get_food_listings')) :
 		/**
 		 * Perform actions that need to be done prior to the start of the food listings query.
 		 *
-		 * @since 1.0.0
 		 * @param array $args Arguments used to retrieve food listings.
+		 * @since 1.0.0
 		 */
 		do_action('get_food_listings_init', $args);
 		$query_args = array(
@@ -182,8 +182,8 @@ endif;
 /**
  * True if an the user can post a food. If accounts are required, and reg is enabled, users can post (they signup at the same time).
  *
- * @since 1.0.0
  * @return bool
+ * @since 1.0.0
  */
 function wpfm_user_can_post_food() {
 	$can_post = true;
@@ -195,15 +195,15 @@ function wpfm_user_can_post_food() {
 	return apply_filters('wpfm_user_can_post_food', $can_post);
 }
 
-if (!function_exists('wp_food_manager_notify_new_user')) :
+if (!function_exists('wpfm_notify_new_user')) :
 	/**
 	 * Handle account creation.
 	 *
-	 * @since 1.0.0
 	 * @param  int $user_id
 	 * @param  string $password
+	 * @since 1.0.0
 	 */
-	function wp_food_manager_notify_new_user($user_id, $password) {
+	function wpfm_notify_new_user($user_id, $password) {
 		global $wp_version;
 		if (version_compare($wp_version, '4.3.1', '<')) {
 			wp_new_user_notification($user_id, $password);
@@ -217,16 +217,16 @@ if (!function_exists('wp_food_manager_notify_new_user')) :
 	}
 endif;
 
-if (!function_exists('wp_food_manager_create_account')) :
+if (!function_exists('wpfm_create_account')) :
 	/**
 	 * Handle account creation.
 	 *
-	 * @since 1.0.0
 	 * @param  array $args containing username, email, role
 	 * @param  string $deprecated role string
 	 * @return WP_error | bool was an account created?
+	 * @since 1.0.0
 	 */
-	function wp_food_manager_create_account($args, $deprecated = '') {
+	function wpfm_create_account($args, $deprecated = '') {
 		global $current_user;
 		// Soft Deprecated in 1.0
 		if (!is_array($args)) {
@@ -292,7 +292,6 @@ if (!function_exists('wp_food_manager_create_account')) :
 		/**
 		 * Send notification to new users.
 		 *
-		 * @since 1.0.0
 		 * @param  int         $user_id
 		 * @param  string|bool $password
 		 * @param  array       $new_user {
@@ -303,6 +302,7 @@ if (!function_exists('wp_food_manager_create_account')) :
 		 * @type string $user_email Email for the new user account.
 		 * @type string $role New user's role.
 		 * }
+		 * @since 1.0.0
 		 */
 		do_action('food_manager_notify_new_user', $user_id, $password, $new_user);
 		if (!is_user_logged_in()) {
@@ -316,8 +316,8 @@ endif;
 /**
  * True if an the user can edit a food.
  *
- * @since 1.0.0
  * @return bool
+ * @since 1.0.0
  */
 function food_manager_user_can_edit_food($food_id) {
 	$can_edit = true;
@@ -335,8 +335,8 @@ function food_manager_user_can_edit_food($food_id) {
 /**
  * True if registration is enabled.
  *
- * @since 1.0.0
  * @return bool
+ * @since 1.0.0
  */
 function food_manager_enable_registration() {
 	return apply_filters('food_manager_enable_registration', get_option('food_manager_enable_registration') == 1 ? true : false);
@@ -345,8 +345,8 @@ function food_manager_enable_registration() {
 /**
  * True if usernames are generated from email addresses.
  *
- * @since 1.0.0
  * @return bool
+ * @since 1.0.0
  */
 function food_manager_generate_username_from_email() {
 	return apply_filters('food_manager_generate_username_from_email', get_option('food_manager_generate_username_from_email') == 1 ? true : false);
@@ -355,8 +355,8 @@ function food_manager_generate_username_from_email() {
 /**
  * True if an account is required to post a food.
  *
- * @since 1.0.0
  * @return bool
+ * @since 1.0.0
  */
 function food_manager_user_requires_account() {
 	return apply_filters('food_manager_user_requires_account', get_option('food_manager_user_requires_account') == 1 ? true : false);
@@ -365,8 +365,8 @@ function food_manager_user_requires_account() {
 /**
  * True if users are allowed to edit submissions that are pending approval.
  *
- * @since 1.0.0
  * @return bool
+ * @since 1.0.0
  */
 function food_manager_user_can_edit_pending_submissions() {
 	return apply_filters('food_manager_user_can_edit_pending_submissions', get_option('food_manager_user_can_edit_pending_submissions') == 1 ? true : false);
@@ -375,16 +375,16 @@ function food_manager_user_can_edit_pending_submissions() {
 /**
  * Checks if the user can upload a file via the Ajax endpoint.
  *
- * @since 1.0.0
  * @return bool
+ * @since 1.0.0
  */
 function wpfm_user_can_upload_file_via_ajax() {
 	$can_upload = is_user_logged_in() && wpfm_user_can_post_food();
 	/**
 	 * Override ability of a user to upload a file via Ajax.
 	 *
-	 * @since 1.0.0
 	 * @param bool $can_upload True if they can upload files from Ajax endpoint.
+	 * @since 1.0.0
 	 */
 	return apply_filters('wpfm_user_can_upload_file_via_ajax', $can_upload);
 }
@@ -392,8 +392,8 @@ function wpfm_user_can_upload_file_via_ajax() {
 /**
  * Based on wp_dropdown_categories, with the exception of supporting multiple selected categories, food types.
  * 
- * @since 1.0.0
  * @see  wp_dropdown_categories
+ * @since 1.0.0
  */
 function food_manager_dropdown_selection($args = '') {
 	$defaults = array(
@@ -483,10 +483,10 @@ function food_manager_dropdown_selection($args = '') {
 /**
  * Checks if the provided content or the current single page or post has a WPFM shortcode.
  *
- * @since 1.0.0
  * @param string|null       $content   Content to check. If not provided, it uses the current post content.
  * @param string|array|null $tag Check specifically for one or more shortcodes. If not provided, checks for any WPJM shortcode.
  * @return bool
+ * @since 1.0.0
  */
 function has_wpfm_shortcode($content = null, $tag = null) {
 	global $post;
@@ -499,8 +499,8 @@ function has_wpfm_shortcode($content = null, $tag = null) {
 		/**
 		 * Filters a list of all shortcodes associated with WPFM.
 		 *
-		 * @since 1.0.0
 		 * @param string[] $has_wpfm_shortcode
+		 * @since 1.0.0
 		 */
 		$has_wpfm_shortcode = array_unique(apply_filters('food_manager_shortcodes', $has_wpfm_shortcode));
 		if (null !== $tag) {
@@ -519,8 +519,8 @@ function has_wpfm_shortcode($content = null, $tag = null) {
 	/**
 	 * Filter the result of has_wpfm_shortcode()
 	 *
-	 * @since 1.0.0
 	 * @param bool $has_wpfm_shortcode
+	 * @since 1.0.0
 	 */
 	return apply_filters('has_wpfm_shortcode', $has_wpfm_shortcode);
 }
@@ -528,8 +528,8 @@ function has_wpfm_shortcode($content = null, $tag = null) {
 /**
  * Checks if the current page is a food listing.
  *
- * @since 1.0.0
  * @return bool
+ * @since 1.0.0
  */
 function is_wpfm_food_listing() {
 	return is_singular(array('food_manager'));
@@ -539,8 +539,8 @@ if (!function_exists('wpfm_get_filtered_links')) :
 	/**
 	 * Shows links after filtering foods
 	 * 
-	 * @since 1.0.0
 	 * @param array $args
+	 * @since 1.0.0
 	 */
 	function wpfm_get_filtered_links($args = array()) {
 		$search_categories = array();
@@ -609,9 +609,9 @@ endif;
 /**
  * Prepare files for upload by standardizing them into an array. This adds support for multiple file upload fields.
  * 
- * @since 1.0.0
  * @param  array $file_data
  * @return array
+ * @since 1.0.0
  */
 function wpfm_prepare_uploaded_files($file_data) {
 	$files_to_upload = array();
@@ -639,10 +639,10 @@ function wpfm_prepare_uploaded_files($file_data) {
 /**
  * Upload a file using WordPress file API.
  * 
- * @since 1.0.0
  * @param  array $file_data Array of $_FILE data to upload.
  * @param  array $args Optional arguments
  * @return array|WP_Error Array of objects containing either file information or an error
+ * @since 1.0.0
  */
 function wpfm_upload_file($file, $args = array()) {
 	global $food_manager_upload, $food_manager_uploading_file;
@@ -667,11 +667,10 @@ function wpfm_upload_file($file, $args = array()) {
 	 * This filter can be used to modify the file arguments before being uploaded, or return a WP_Error
 	 * object to prevent the file from being uploaded, and return the error.
 	 *
-	 * @since 1.0.0
-	 *
 	 * @param array $file               Array of $_FILE data to upload.
 	 * @param array $args               Optional file arguments
 	 * @param array $allowed_mime_types Array of allowed mime types from field config or defaults
+	 * @since 1.0.0
 	 */
 	$file = apply_filters('wpfm_upload_file_pre_upload', $file, $args, $allowed_mime_types);
 	if (is_wp_error($file)) {
@@ -704,8 +703,8 @@ function wpfm_upload_file($file, $args = array()) {
 /**
  * get_food_order_by function
  * 
- * @since 1.0.0
  * @return array
+ * @since 1.0.0
  */
 function get_food_order_by() {
 	$args = [
@@ -723,9 +722,9 @@ function get_food_order_by() {
 /**
  * Allowed Mime types specifically for WP Food Manager.
  * 
- * @since 1.0.0
  * @param   string $field Field used.
  * @return  array  Array of allowed mime types
+ * @since 1.0.0
  */
 function wpfm_get_allowed_mime_types($field = '') {
 	$allowed_mime_types = array(
@@ -740,12 +739,12 @@ function wpfm_get_allowed_mime_types($field = '') {
 	 * Mime types to accept in uploaded files.
 	 * Default is image, pdf, and doc(x) files.
 	 *
-	 * @since 1.0.0
 	 * @param array  {
 	 *     Array of allowed file extensions and mime types.
 	 *     Key is pipe-separated file extensions. Value is mime type.
 	 * }
 	 * @param string $field The field key for the upload.
+	 * @since 1.0.0
 	 */
 	return apply_filters('wpfm_mime_types', $allowed_mime_types, $field);
 }
@@ -872,8 +871,8 @@ function food_manager_multiselect_food_category() {
 /**
  * Checks to see if the standard password setup email should be used.
  *
- * @since 1.0.0
  * @return bool True if they are to use standard email, false to allow user to set password at first food creation.
+ * @since 1.0.0
  */
 function food_manager_use_standard_password_setup_email() {
 	$use_standard_password_setup_email = false;
@@ -884,8 +883,8 @@ function food_manager_use_standard_password_setup_email() {
 	/**
 	 * Allows an override of the setting for if a password should be auto-generated for new users.
 	 *
-	 * @since 1.0.0
 	 * @param bool $use_standard_password_setup_email True if a standard account setup email should be sent.
+	 * @since 1.0.0
 	 */
 	return apply_filters('food_manager_use_standard_password_setup_email', $use_standard_password_setup_email);
 }
@@ -893,9 +892,9 @@ function food_manager_use_standard_password_setup_email() {
 /**
  * Checks if a password should be auto-generated for new users.
  *
- * @since 1.0.0
  * @param string $password Password to validate.
  * @return bool True if password meets rules.
+ * @since 1.0.0
  */
 function food_manager_validate_new_password($password) {
 	// Password must be at least 8 characters long. Trimming here because `wp_hash_password()` will later on.
@@ -903,9 +902,9 @@ function food_manager_validate_new_password($password) {
 	/**
 	 * Allows overriding default food Manager password validation rules.
 	 *
-	 * @since 1.0.0
 	 * @param bool   $is_valid_password True if new password is validated.
 	 * @param string $password          Password to validate.
+	 * @since 1.0.0
 	 */
 	return apply_filters('food_manager_validate_new_password', $is_valid_password, $password);
 }
@@ -914,13 +913,14 @@ function food_manager_validate_new_password($password) {
  * Returns the password rules hint.
  *
  * @return string
+ * @since 1.0.0
  */
 function food_manager_get_password_rules_hint() {
 	/**
 	 * Allows overriding the hint shown below the new password input field. Describes rules set in `food_manager_validate_new_password`.
 	 *
-	 * @since 1.0.0
 	 * @param string $password_rules Password rules description.
+	 * @since 1.0.0
 	 */
 	return apply_filters('food_manager_password_rules_hint', __('Passwords must be at least 8 characters long.', 'wp-food-manager'));
 }
@@ -988,8 +988,8 @@ if (!function_exists('get_food_listing_categories')) :
 		/**
 		 * Change the category query arguments.
 		 *
-		 * @since 1.0.0
 		 * @param array $args
+		 * @since 1.0.0
 		 */
 		$args = apply_filters('get_food_listing_category_args', $args);
 		// Prevent users from filtering the taxonomy.
@@ -1194,8 +1194,8 @@ function get_food_manager_currencies() {
  * Get all available Currency symbols.
  * Currency symbols and names should follow the Unicode CLDR recommendation (https://cldr.unicode.org/translation/currency-names-and-symbols)
  *
- * @since 1.0.0
  * @return array
+ * @since 1.0.0
  */
 function get_food_manager_currency_symbols() {
 	$symbols = apply_filters(
@@ -1414,8 +1414,8 @@ function get_food_manager_price_format() {
 /**
  * Return the thousand separator for prices.
  *
- * @since  1.0.0
  * @return string
+ * @since  1.0.0
  */
 function wpfm_get_price_thousand_separator() {
 	return stripslashes(apply_filters('wpfm_get_price_thousand_separator', get_option('wpfm_price_thousand_sep')));
@@ -1424,8 +1424,8 @@ function wpfm_get_price_thousand_separator() {
 /**
  * Return the decimal separator for prices.
  *
- * @since  1.0.0
  * @return string
+ * @since  1.0.0
  */
 function wpfm_get_price_decimal_separator() {
 	$separator = apply_filters('wpfm_get_price_decimal_separator', get_option('wpfm_price_decimal_sep'));
@@ -1435,8 +1435,8 @@ function wpfm_get_price_decimal_separator() {
 /**
  * Return the number of decimals after the decimal point.
  *
- * @since  1.0.0
  * @return int
+ * @since  1.0.0
  */
 function wpfm_get_price_decimals() {
 	return absint(apply_filters('wpfm_get_price_decimals', get_option('wpfm_price_num_decimals', 2)));
@@ -1450,7 +1450,7 @@ function wpfm_get_price_decimals() {
 function get_advanced_tab_fields() {
 	$adv_fields = apply_filters('advanced_food_form_fields', array(
 		'food' => array(
-			'enable_food_ingre' => array(
+			'enable_food_ingre' => array( 	
 				'label'       => __('Enable Ingredient', 'wp-food-manager'),
 				'type'        => 'checkbox',
 				'required'    => true,
@@ -1472,6 +1472,7 @@ function get_advanced_tab_fields() {
 }
 
 /**
+ * wpfm_get_dashicons function
  * 
  * @since  1.0.0
  */
@@ -1646,8 +1647,8 @@ function wpfm_get_dashicons() {
 /**
  * wpfm_get_font_food_icons function
  *
- * @since  1.0.1
  * @return array
+ * @since  1.0.1
  */
 function wpfm_get_font_food_icons() {
 	return array(
@@ -1732,10 +1733,9 @@ if (!function_exists('get_food_listings_keyword_search')) :
 		/**
 		 * Filters the conditions to use when querying food listings. Resulting array is joined with OR statements.
 		 *
-		 * @since 1.0.0
-		 *
 		 * @param array  $conditions          Conditions to join by OR when querying food listings.
 		 * @param string $food_manager_keyword Search query.
+		 * @since 1.0.0
 		 */
 		$conditions = apply_filters('food_listing_search_conditions', $conditions, $food_manager_keyword);
 		if (empty($conditions)) {
@@ -1755,16 +1755,16 @@ endif;
 /**
  * Checks if the user can upload a file via the Ajax endpoint.
  *
- * @since 1.0.0
  * @return bool
+ * @since 1.0.0
  */
 function food_manager_user_can_upload_file_via_ajax() {
 	$can_upload = is_user_logged_in() && wpfm_user_can_post_food();
 	/**
 	 * Override ability of a user to upload a file via Ajax.
 	 *
-	 * @since 1.0.0
 	 * @param bool $can_upload True if they can upload files from Ajax endpoint.
+	 * @since 1.0.0
 	 */
 	return apply_filters('food_manager_user_can_upload_file_via_ajax', $can_upload);
 }
@@ -1976,9 +1976,9 @@ function wpfm_extra_topping_form_fields($post, $field, $field_value) {
 /**
  * Use radio inputs instead of checkboxes for term checklists in specified taxonomies such as 'food_manager_type'.
  *
- * @since 1.0.0
  * @param array $args
  * @return array
+ * @since 1.0.0
  */
 function wpfm_term_radio_checklist_for_food_type($args) {
 	/* Change to your required taxonomy */
@@ -2012,8 +2012,8 @@ function wpfm_term_radio_checklist_for_food_type($args) {
 /**
  * wpfm_isMultiArray function
  *
- * @since  1.0.1
  * @return bool
+ * @since  1.0.1
  */
 function wpfm_isMultiArray($a) {
 	if (is_array($a)) {
@@ -2025,8 +2025,8 @@ function wpfm_isMultiArray($a) {
 /**
  * wpfm_category_checklist function
  *
- * @since  1.0.1
  * @return $popular_ids
+ * @since  1.0.1
  */
 function wpfm_category_checklist($taxonomy, $key_name, $checked_term) {
 	$terms = get_terms(
@@ -2057,8 +2057,8 @@ function wpfm_category_checklist($taxonomy, $key_name, $checked_term) {
 /**
  * wpfm_dropdown_categories function
  *
- * @since  1.0.1
  * @return $popular_ids
+ * @since  1.0.1
  */
 function wpfm_dropdown_categories($taxonomy, $key_name, $selected_term) {
 	$terms = get_terms(
@@ -2086,8 +2086,8 @@ function wpfm_dropdown_categories($taxonomy, $key_name, $selected_term) {
 /**
  * is_wpfm_terms_exist function
  *
- * @since  1.0.1
  * @return $displayTerms
+ * @since  1.0.1
  */
 function is_wpfm_terms_exist($terms, $taxonomy) {
 	$displayTerms = 0;

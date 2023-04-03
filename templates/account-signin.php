@@ -9,7 +9,7 @@
 <?php else :
 	$account_required             = food_manager_user_requires_account();
 	$registration_enabled         = food_manager_enable_registration();
-	$registration_fields          = wp_food_manager_get_registration_fields();
+	$registration_fields          = wpfm_get_registration_fields();
 	$generate_username_from_email = food_manager_generate_username_from_email(); ?>
 	<div class="wpfm-form-group">
 		<label class="wpfm-form-label-text"><?php _e('Have an account?', 'wp-food-manager'); ?></label>

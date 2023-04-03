@@ -18,9 +18,9 @@ class WPFM_Date_Time {
 	/**
 	 * Allows for accessing single instance of class. Class should only be constructed once per call.
 	 *
-	 * @since 1.0.0
 	 * @static
 	 * @return self Main instance.
+	 * @since 1.0.0
 	 */
 	public static function instance() {
 		if (is_null(self::$_instance)) {
@@ -55,11 +55,11 @@ class WPFM_Date_Time {
 	 **/
 	public static function get_default_date_formats() {
 		$date_formats['datepicker_date_formats']  = apply_filters(
-			'wp_food_manager_datepicker_date_formats',
+			'wpfm_datepicker_date_formats',
 			array('yy-mm-dd', 'm-d-yy', 'mm-dd-yy', 'd-m-yy', 'dd-mm-yy', 'm/d/yy', 'mm/dd/yy', 'd/m/yy', 'dd/mm/yy', 'yy.mm.dd', 'mm.dd.yy', 'dd.mm.yy')
 		);
 		$date_formats['view_date_formats'] = apply_filters(
-			'wp_food_manager_view_date_formats',
+			'wpfm_view_date_formats',
 			array('Y-m-d', 'n-j-Y', 'm-d-Y', 'j-n-Y', 'd-m-Y', 'n/j/Y', 'm/d/Y', 'j/n/Y', 'd/m/Y', 'Y.m.d', 'm.d.Y', 'd.m.Y')
 		);
 		return $date_formats;
@@ -162,9 +162,9 @@ class WPFM_Date_Time {
 	/**
 	 * Returns the time only.
 	 *
-	 * @since 1.0.0
 	 * @param string $time time in 24 hour or 12 hour.
 	 * @return string it will return time in DB formatted 24 hours time
+	 * @since 1.0.0
 	 */
 	public static function get_db_formatted_time($time) {
 		$time = is_numeric($time) ? $time : strtotime($time);
@@ -174,9 +174,9 @@ class WPFM_Date_Time {
 	/**
 	 * Returns the date time DB formatted.
 	 *
-	 * @since 1.0.0
 	 * @param string  $date and $time
 	 * @return string it will return time in DB formatted date and time
+	 * @since 1.0.0
 	 */
 	public static function get_db_formatted_date_time($date = '', $time = '00:00:00') {
 		if (empty($date)) return;
@@ -209,8 +209,8 @@ class WPFM_Date_Time {
 	 * Currentrly it is used at food listing -> settings -> date and time - datepicker format
 	 * In wp food manager settings we don't have way to generate html so we have generated array for select option
 	 *
-	 * @since 1.0.0
 	 * @return array
+	 * @since 1.0.0
 	 */
 	public static function get_food_manager_date_admin_settings() {
 		$dummy_date = strtotime('January 15 ' . date('Y'));
@@ -225,8 +225,8 @@ class WPFM_Date_Time {
 	/**
 	 * Get food manager timezone setting defined in food listing -> settings
 	 *
-	 * @since 1.0.0
 	 * @return string $selected_timezone
+	 * @since 1.0.0
 	 */
 	public static function get_food_manager_timezone_setting() {
 		$selected_timezone = get_option('food_manager_timezone_setting', 'site_timezone');
@@ -237,6 +237,7 @@ class WPFM_Date_Time {
 	 * get_current_site_timezone function
 	 * 
 	 * @return string
+	 * @since 1.0.0
 	 */
 	public static function get_current_site_timezone() {
 		$current_offset = get_option('gmt_offset');
@@ -259,18 +260,20 @@ class WPFM_Date_Time {
 	}
 
 	/**
-	 * wp_food_manager_timezone_choice function
+	 * timezone_choice function
 	 * @param string $tzstring
+	 * @since 1.0.0
 	 */
-	public static function wp_food_manager_timezone_choice($tzstring = null) {
+	public static function timezone_choice($tzstring = null) {
 		if (empty($tzstring))
 			$tzstring = self::get_current_site_timezone();
-		return apply_filters('wp_food_manager_timezone_choice', wp_timezone_choice($tzstring, get_user_locale()));
+		return apply_filters('wpfm_timezone_choice', wp_timezone_choice($tzstring, get_user_locale()));
 	}
 
 	/**
 	 * convert_food_timezone_into_abbr function
 	 * @param string $food_timezone
+	 * @since 1.0.0
 	 */
 	public static function convert_food_timezone_into_abbr($food_timezone) {
 		// Get string of food timezone if it is UTC offset
@@ -282,10 +285,11 @@ class WPFM_Date_Time {
 
 	/**
 	 * current_timestamp_from_food_timezone will return the current timestamp according to the
-	 *	timezone selected in food or passed in argument
-	 * @since 1.0.0
+	 * timezone selected in food or passed in argument
+	 *
 	 * @param $food_timezone
 	 * @return  timestamp
+	 * @since 1.0.0
 	 **/
 	public static function current_timestamp_from_food_timezone($food_timezone) {
 		if (empty($food_timezone))
@@ -302,6 +306,7 @@ class WPFM_Date_Time {
 	 *
 	 * @param string $timezone
 	 * @return bool
+	 * @since 1.0.0
 	 */
 	public static function is_utc_offset($timezone) {
 		$timezone = trim($timezone);
@@ -314,6 +319,7 @@ class WPFM_Date_Time {
 	 *
 	 * @param string $offset UTC offset
 	 * @return string
+	 * @since 1.0.0
 	 */
 	public static function generate_timezone_string_from_utc_offset($offset) {
 		if (!self::is_utc_offset($offset)) {
@@ -355,6 +361,9 @@ class WPFM_Date_Time {
 	 * @return string|bool The parsed date in the specified format and localized to the system or specified
 	 *                     timezone, or `false` if the specified date is not a valid date string or timestamp
 	 *                     or the specified timezone is not a valid timezone string.
+	 * 
+	 * 
+	 * @since 1.0.0
 	 */
 	public static function localize_date($date = null, $format = null,  $timezone = null) {
 		if (empty($timezone))
@@ -367,56 +376,6 @@ class WPFM_Date_Time {
 			return false;
 		}
 		return $date->format($format);
-	}
-
-	/**
-	 * Converts PHP/Wordpress default datetime format selectors to Moment.js/Date.js usable formats
-	 * @param string $format PHP/Wordpress datetime format selector
-	 * @return string Converted Datetime selectors to use with Moment.js/Date.js
-	 * @since 1.0.0
-	 */
-	public static function wpfm_convert_php_to_moment_format($format) {
-		$replacements = [
-			'd' => 'DD',
-			'D' => 'ddd',
-			'j' => 'D',
-			'l' => 'dddd',
-			'N' => 'E',
-			'S' => 'o',
-			'w' => 'e',
-			'z' => 'DDD',
-			'W' => 'W',
-			'F' => 'MMMM',
-			'm' => 'MM',
-			'M' => 'MMM',
-			'n' => 'M',
-			't' => '', // no equivalent
-			'L' => '', // no equivalent
-			'o' => 'YYYY',
-			'Y' => 'YYYY',
-			'y' => 'YY',
-			'a' => 'a',
-			'A' => 'A',
-			'B' => '', // no equivalent
-			'g' => 'h',
-			'G' => 'H',
-			'h' => 'hh',
-			'H' => 'HH',
-			'i' => 'mm',
-			's' => 'ss',
-			'u' => 'SSS',
-			'e' => 'zz', // deprecated since version 1.6.0 of moment.js
-			'I' => '', // no equivalent
-			'O' => '', // no equivalent
-			'P' => '', // no equivalent
-			'T' => '', // no equivalent
-			'Z' => '', // no equivalent
-			'c' => '', // no equivalent
-			'r' => '', // no equivalent
-			'U' => 'X',
-		];
-		$momentFormat = strtr($format, $replacements);
-		return $momentFormat;
 	}
 }
 

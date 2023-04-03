@@ -497,29 +497,6 @@ var WPFM_Admin = function () {
                 var field_content = jQuery(this).data('id');
                 jQuery(field_content).remove();
             },
-            /// <summary>
-            /// save attributes
-            /// </summary>
-            /// <param name="parent" type="Event"></param> 
-            /// <returns type="actions" />     
-            /// <since>1.0.0</since>
-            saveAttributes: function () {
-                jQuery('input[name="repeated-attribute-row[]"]').each(function (index, attribute) {
-                    var attr_val = jQuery(attribute).val();
-                    var attr_label = jQuery(index).closest('input[name="repeated_attribute_lable"]').val();
-                    console.log(attr_label);
-                });
-                jQuery.ajax({
-                    type: 'POST',
-                    url: wpfm_admin.ajax_url,
-                    data: {
-                        action: 'wpfm_update_food_attributes',
-                        security: wpfm_admin.security,
-                    },
-                    success: function (response) { },
-                    error: function (result) { }
-                });
-            },
         },
         fileUpload: {
             /// <summary>

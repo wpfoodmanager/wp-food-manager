@@ -16,9 +16,9 @@ class WPFM_Field_Editor {
 	/**
 	 * Allows for accessing single instance of class. Class should only be constructed once per call.
 	 *
-	 * @since 1.0.0
 	 * @static
 	 * @return self Main instance.
+	 * @since 1.0.0
 	 */
 	public static function instance() {
 		if (is_null(self::$_instance)) {
@@ -35,6 +35,8 @@ class WPFM_Field_Editor {
 
 	/**
 	 * Output the screen
+	 * 
+	 * @since 1.0.0
 	 */
 	public function output() {
 		wp_enqueue_style('chosen', WPFM_PLUGIN_URL . '/assets/css/chosen.min.css');
@@ -55,6 +57,8 @@ class WPFM_Field_Editor {
 
 	/**
 	 * Output the fronted form editor
+	 * 
+	 * @since 1.0.0
 	 */
 	private function form_editor() {
 		if (!empty($_GET['food-reset-fields']) && !empty($_GET['_wpnonce']) && wp_verify_nonce($_GET['_wpnonce'], 'reset')) {
@@ -173,6 +177,8 @@ class WPFM_Field_Editor {
 
 	/**
 	 * Save the form fields
+	 * 
+	 * @since 1.0.0
 	 */
 	private function child_form_editor_save($field) {
 		$index = 0;
@@ -215,6 +221,8 @@ class WPFM_Field_Editor {
 
 	/**
 	 * Save the form fields
+	 * 
+	 * @since 1.0.0
 	 */
 	private function form_editor_save() {
 		if (wp_verify_nonce($_POST['_wpnonce'], 'save-wp-food-manager-form-field-editor')) {
@@ -302,6 +310,7 @@ class WPFM_Field_Editor {
 	 *
 	 * @param  array $array
 	 * @return array
+	 * @since 1.0.0
 	 */
 	private function sanitize_array($input) {
 		if (is_array($input)) {
