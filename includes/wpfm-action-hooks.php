@@ -1857,7 +1857,7 @@ class WPFM_ActionHooks {
             'i18n_btnCancelLabel' => __('Cancel', 'wp-food-manager'),
             'i18n_confirm_delete' => __('Are you sure you want to delete this food?', 'wp-food-manager')
         ));
-        wp_enqueue_style('wpfm-jquery-ui-css', WPFM_PLUGIN_URL . '/assets/js/jquery-ui/jquery-ui.min.css');
+        wp_enqueue_style('wpfm-jquery-ui-css', WPFM_PLUGIN_URL . '/assets/css/jquery-ui/jquery-ui.min.css');
         wp_register_script('wpfm-slick-script', WPFM_PLUGIN_URL . '/assets/js/slick/slick.min.js', array('jquery'));
         wp_register_style('wpfm-slick-style', WPFM_PLUGIN_URL . '/assets/js/slick/slick.min.css', array());
         wp_register_style('wpfm-slick-theme-style', WPFM_PLUGIN_URL . '/assets/js/slick/slick-theme.min.css', array());
@@ -1905,7 +1905,7 @@ class WPFM_ActionHooks {
         $screen = get_current_screen();
         $jquery_version = isset($wp_scripts->registered['jquery-ui-core']->ver) ? $wp_scripts->registered['jquery-ui-core']->ver : '1.9.2';
         wp_enqueue_style('wpfm-backend-css', WPFM_PLUGIN_URL . '/assets/css/backend.min.css');
-        wp_enqueue_style('jquery-ui-style', WPFM_PLUGIN_URL . '/assets/js/jquery-ui/jquery-ui.min.css', array(), $jquery_version);
+        wp_enqueue_style('jquery-ui-style', WPFM_PLUGIN_URL . '/assets/css/jquery-ui/jquery-ui.min.css', array(), $jquery_version);
         $units    = get_terms(
             [
                 'taxonomy'   => 'food_manager_unit',
