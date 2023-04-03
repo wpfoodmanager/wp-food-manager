@@ -8,7 +8,7 @@ if (!defined('ABSPATH')) exit;
 global $food_manager;
 $add_food_page_id = get_option('food_manager_add_food_page_id');
 $food_dashboard_page_id = get_option('food_manager_food_dashboard_page_id');
-$extra_fields_options = get_post_meta($food_id, '_toppings', true) ? get_post_meta($food_id, '_toppings', true) : '';
+$extra_fields_options = get_post_meta($food_id, '_food_toppings', true) ? get_post_meta($food_id, '_food_toppings', true) : '';
 if (!empty($extra_fields_options)) {
 	$option_value_counts1 = array();
 	for ($i = 1; $i <= count($extra_fields_options); $i++) {
@@ -76,7 +76,7 @@ if (!empty($extra_fields_options)) {
 				<div class="wpfm-options-wrapper wpfm-metaboxes">
 					<?php if (!empty($extra_fields_options)) {
 						foreach ($option_value_counts3 as $key => $extra_fields_option) {
-							$toppings = get_post_meta($food_id, '_toppings', true);
+							$toppings = get_post_meta($food_id, '_food_toppings', true);
 							$selected_check = (isset($extra_fields_option['topping_type']) && !empty($extra_fields_option['topping_type']) ? (($extra_fields_option['topping_type'] === 'checkbox') ? 'selected' : '') : '');
 							$selected_radio = (isset($extra_fields_option['topping_type']) && !empty($extra_fields_option['topping_type']) ? (($extra_fields_option['topping_type'] === 'radio') ? 'selected' : ''): '');
 							$selected_select = (isset($extra_fields_option['topping_type']) && !empty($extra_fields_option['topping_type']) ? (($extra_fields_option['topping_type'] === 'select') ? 'selected' : ''): '');

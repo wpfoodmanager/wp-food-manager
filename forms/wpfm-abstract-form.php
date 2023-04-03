@@ -233,8 +233,8 @@ abstract class WPFM_Form {
 		if (isset($_POST['_ingredients']) && !empty($_POST['_ingredients'])) {
 			$values['_ingredients'] = $_POST['_ingredients'];
 		}
-		if (!add_post_meta($food_id, 'wpfm_repeated_options', $repeated_options, true)) {
-			update_post_meta($food_id, 'wpfm_repeated_options', $repeated_options);
+		if (!add_post_meta($food_id, '_food_repeated_options', $repeated_options, true)) {
+			update_post_meta($food_id, '_food_repeated_options', $repeated_options);
 		}
 		if (($option_value_count && is_array($option_value_count)) && ($repeated_options && is_array($repeated_options))) {
 			foreach ($ext_multi_options as $option_count => $option_value) {
@@ -295,7 +295,7 @@ abstract class WPFM_Form {
 					}
 				}
 			}
-			update_post_meta($food_id, '_toppings', $extra_toppings);
+			update_post_meta($food_id, '_food_toppings', $extra_toppings);
 		} else {
 			foreach ($this->fields as $group_key => $group_fields) {
 				foreach ($group_fields as $key => $field) {
@@ -312,7 +312,7 @@ abstract class WPFM_Form {
 					$this->fields[$group_key][$key]['value'] = $values[$group_key][$key];
 				}
 			}
-			update_post_meta($food_id, '_toppings', '');
+			update_post_meta($food_id, '_food_toppings', '');
 		}
 		return $values;
 	}

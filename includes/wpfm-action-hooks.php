@@ -988,8 +988,8 @@ class WPFM_ActionHooks {
         }
         // Repeated options
         $repeated_options = isset($_POST['repeated_options']) ? $_POST['repeated_options'] : '';
-        if (!add_post_meta($post_id, 'wpfm_repeated_options', $repeated_options, true)) {
-            update_post_meta($post_id, 'wpfm_repeated_options', $repeated_options);
+        if (!add_post_meta($post_id, '_food_repeated_options', $repeated_options, true)) {
+            update_post_meta($post_id, '_food_repeated_options', $repeated_options);
         }
         // Options value count
         $array_cnt = isset($_POST['option_value_count']) ? $_POST['option_value_count'] : '';
@@ -1196,7 +1196,7 @@ class WPFM_ActionHooks {
                     wp_remove_object_terms($post_id, $removed_toppings_ids, 'food_manager_topping');
                 }
                 $term_ids = wp_set_object_terms($post_id, $toppings_arr, 'food_manager_topping');
-                update_post_meta($post_id, '_toppings', $extra_options);
+                update_post_meta($post_id, '_food_toppings', $extra_options);
                 if ($term_ids) {
                     foreach ($term_ids as $key => $term_id) {
                         $key++;
