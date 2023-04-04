@@ -28,7 +28,7 @@ var WPFM_AjaxFileUpload = function () {
 						if (allowed_types) {
 							var acceptFileTypes = new RegExp("(\.|\/)(" + allowed_types + ")$", "i");
 							if (data.originalFiles[0]['name'].length && !acceptFileTypes.test(data.originalFiles[0]['name'])) {
-								uploadErrors.push(wpfm_ajax_file_upload.i18n_invalid_file_type + ' ' + allowed_types);
+								uploadErrors.push(wpfm_ajax_file_upload.i18n_invalid_file_type);
 							}
 						}
 						if (uploadErrors.length > 0) {

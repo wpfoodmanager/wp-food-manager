@@ -1802,7 +1802,7 @@ class WPFM_ActionHooks {
                 'ajax_url'               => $ajax_url,
                 'js_field_html_img'      => esc_js(str_replace("\n", "", $js_field_html_img)),
                 'js_field_html'          => esc_js(str_replace("\n", "", $js_field_html)),
-                'i18n_invalid_file_type' => __('Invalid file type. Accepted types:', 'wp-food-manager')
+                'i18n_invalid_file_type' => __('The file type you have mentioned is invalid.', 'wp-food-manager')
             ));
         }
         wp_enqueue_script('jquery');
@@ -1978,7 +1978,7 @@ class WPFM_ActionHooks {
                 'ajax_url'               => admin_url('admin-ajax.php'),
                 'js_field_html_img'      => esc_js(str_replace("\n", "", $js_field_html_img)),
                 'js_field_html'          => esc_js(str_replace("\n", "", $js_field_html)),
-                'i18n_invalid_file_type' => __('Invalid file type. Accepted types:', 'wp-food-manager')
+                'i18n_invalid_file_type' => __('The file type you have mentioned is invalid.', 'wp-food-manager')
             ));
         }
         wp_enqueue_editor();
