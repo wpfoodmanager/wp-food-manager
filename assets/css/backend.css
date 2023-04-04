@@ -1438,6 +1438,17 @@ a.wpfm-tooltip.food_title {
 }
 /*tooltips end*/
 
+span.toppings-radio-btn label {
+  display: inline-block;
+  margin-right: 10px;
+}
+
+span.toppings-radio-btn input[type=radio] {margin-right: 0;}
+
+span.toppings-radio-btn {
+  margin-top: 5px;
+  display: block;
+}
 
 @media only screen and (max-width: 1280px) {
 
