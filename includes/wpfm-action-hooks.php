@@ -898,6 +898,7 @@ class WPFM_ActionHooks {
     public function food_manager_save_food_manager_data($post_id, $post) {
         global $wpdb;
         $writepanels = WPFM_Writepanels::instance();
+        $disbled_fields = apply_filters('wpfm_db_disabled_fields', array('food_category', 'food_type', 'food_ingredient', 'food_nutrition', 'food_tag'));
         // Advanced tab fields
         if (!empty($_POST['_food_menu_order'])) {
             $fd_menu_order = sanitize_text_field($_POST['_food_menu_order']);
@@ -922,7 +923,7 @@ class WPFM_ActionHooks {
             update_post_meta($post_id, '_enable_food_nutri', '');
         }
         // Ingredients.
-        delete_post_meta($post_id, '_ingredients');
+        delete_post_meta($post_id, '_food_ingredients');
         $multiArrayIng = array();
         if (!empty($_POST['_ingredients'])) {
             foreach ($_POST['_ingredients'] as $id => $ingredient) {
@@ -942,12 +943,12 @@ class WPFM_ActionHooks {
                 ];
                 $multiArrayIng[$id] = $item;
             }
-            if (!add_post_meta($post_id, '_ingredients', $multiArrayIng, true)) {
-                update_post_meta($post_id, '_ingredients', $multiArrayIng);
+            if (!add_post_meta($post_id, '_food_ingredients', $multiArrayIng, true)) {
+                update_post_meta($post_id, '_food_ingredients', $multiArrayIng);
             }
         }
         // Nutritions.
-        delete_post_meta($post_id, '_nutritions');
+        delete_post_meta($post_id, '_food_nutritions');
         $multiArrayNutri = array();
         if (!empty($_POST['_nutritions'])) {
             foreach ($_POST['_nutritions'] as $id => $nutrition) {
@@ -967,8 +968,8 @@ class WPFM_ActionHooks {
                 ];
                 $multiArrayNutri[$id] = $item;
             }
-            if (!add_post_meta($post_id, '_nutritions', $multiArrayNutri, true)) {
-                update_post_meta($post_id, '_nutritions', $multiArrayNutri);
+            if (!add_post_meta($post_id, '_food_nutritions', $multiArrayNutri, true)) {
+                update_post_meta($post_id, '_food_nutritions', $multiArrayNutri);
             }
         }
         // Food price
@@ -1002,8 +1003,8 @@ class WPFM_ActionHooks {
                 }
                 $food_data_option_value_count[$index][] = $number;
             }
-            if (!add_post_meta($post_id, 'wpfm_option_value_count', $food_data_option_value_count, true)) {
-                update_post_meta($post_id, 'wpfm_option_value_count', $food_data_option_value_count);
+            if (!add_post_meta($post_id, '_food_option_value_count', $food_data_option_value_count, true)) {
+                update_post_meta($post_id, '_food_option_value_count', $food_data_option_value_count);
             }
         }
         // Save Food Form fields values
@@ -1042,7 +1043,9 @@ class WPFM_ActionHooks {
             if (isset($_POST["_" . $key]) && !empty($_POST["_" . $key])) {
                 update_post_meta($post_id, "_" . $key, $_POST["_" . $key]);
             } else {
-                update_post_meta($post_id, "_" . $key, "");
+                if( !in_array($key, $disbled_fields) ){
+                    update_post_meta($post_id, "_" . $key, "");
+                }
             }
             switch ($type) {
                 case 'textarea':
@@ -1299,13 +1302,13 @@ class WPFM_ActionHooks {
         global $wpdb;
         $ingredient_ids = [];
         $nutrition_ids = [];
-        $meta_ingredient = get_post_meta($post_id, '_ingredients', true);
+        $meta_ingredient = get_post_meta($post_id, '_food_ingredients', true);
         if ($meta_ingredient) {
             foreach ($meta_ingredient as $value) {
                 $ingredient_ids[] = $value['id'];
             }
         }
-        $meta_nutrition = get_post_meta($post_id, '_nutritions', true);
+        $meta_nutrition = get_post_meta($post_id, '_food_nutritions', true);
         if ($meta_nutrition) {
             foreach ($meta_nutrition as $value) {
                 $nutrition_ids[] = $value['id'];

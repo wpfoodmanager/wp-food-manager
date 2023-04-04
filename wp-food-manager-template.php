@@ -557,7 +557,7 @@ function get_food_ingredients($post = null) {
 	if ($post->post_type !== 'food_manager') {
 		return;
 	}
-	$ingredients = get_post_meta(get_the_ID(), '_ingredients', true);
+	$ingredients = get_post_meta(get_the_ID(), '_food_ingredients', true);
 	return apply_filters('display_food_ingredients', $ingredients, $post);
 }
 
@@ -603,7 +603,7 @@ function get_food_nutritions($post = null) {
 	if ($post->post_type !== 'food_manager') {
 		return;
 	}
-	$nutritions = get_post_meta(get_the_ID(), '_nutritions', true);
+	$nutritions = get_post_meta(get_the_ID(), '_food_nutritions', true);
 	return apply_filters('display_food_nutritions', $nutritions, $post);
 }
 

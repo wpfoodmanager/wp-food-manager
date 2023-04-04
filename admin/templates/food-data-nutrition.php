@@ -7,7 +7,7 @@
 echo '<div id="nutritions_food_data_content" class="panel wpfm_panel wpfm-metaboxes-wrapper">
 <div class="wp_food_manager_meta_data">';
 do_action('food_manager_food_data_nutrition_start', $thepostid);
-$metaNutritions = get_post_meta($post->ID, '_nutritions');
+$metaNutritions = get_post_meta($post->ID, '_food_nutritions');
 $excludeNutritions = [];
 if (!empty($metaNutritions)) {
 	foreach ($metaNutritions as $items) {

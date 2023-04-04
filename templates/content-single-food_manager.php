@@ -97,7 +97,7 @@ $food = $post;
                             <form class="wpfm-single-food-body-content wpfm-extra-options" method="post" action="">
                                 <?php
                                 $ext_options = get_post_meta(get_the_ID(), '_food_toppings', true);
-                                $food_data_option_value_count = get_post_meta(get_the_ID(), 'wpfm_option_value_count', true);
+                                $food_data_option_value_count = get_post_meta(get_the_ID(), '_food_option_value_count', true);
                                 $repeated_count = get_post_meta(get_the_ID(), '_food_repeated_options', true);
                                 if (!class_exists('WPFM_Add_Food_Form')) {
                                     include_once(WPFM_PLUGIN_DIR . '/forms/wpfm-abstract-form.php');

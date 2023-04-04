@@ -601,7 +601,7 @@ class WPFM_Add_Food_Form extends WPFM_Form {
 				];
 				$multiArrayIng[$id] = $item;
 			}
-			update_post_meta($this->food_id, '_ingredients', $multiArrayIng);
+			update_post_meta($this->food_id, '_food_ingredients', $multiArrayIng);
 			// Enable ingredients to display
 			update_post_meta($this->food_id, '_enable_food_ingre', true);
 		}
@@ -626,7 +626,7 @@ class WPFM_Add_Food_Form extends WPFM_Form {
 				];
 				$multiArrayNutri[$id] = $item;
 			}
-			update_post_meta($this->food_id, '_nutritions', $multiArrayNutri);
+			update_post_meta($this->food_id, '_food_nutritions', $multiArrayNutri);
 			// Enable nutritions to display
 			update_post_meta($this->food_id, '_enable_food_nutri', true);
 		}
