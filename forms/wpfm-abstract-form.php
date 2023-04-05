@@ -244,7 +244,7 @@ abstract class WPFM_Form {
 						$field_type = str_replace('-', '_', $field['type']);
 						if ($handler = apply_filters("food_manager_get_posted_{$field_type}_field", false)) {
 							$values[$group_key][$key] = call_user_func($handler, $key, $field);
-						} elseif ($group_key == "extra_options") {
+						} elseif ($group_key == "toppings") {
 							$key2 = "";
 							$first_key = '';
 							if ($key == "topping_name") {
@@ -521,10 +521,10 @@ abstract class WPFM_Form {
 	 */
 	public function merge_with_custom_fields($field_view = 'frontend') {
 		$custom_food_fields  = !empty($this->get_food_manager_fieldeditor_fields()) ? $this->get_food_manager_fieldeditor_fields() : array();
-		$custom_extra_options_fields  = !empty($this->get_food_manager_fieldeditor_extra_options_fields()) ? $this->get_food_manager_fieldeditor_extra_options_fields() : array();
+		$custom_toppings_fields  = !empty($this->get_food_manager_fieldeditor_toppings_fields()) ? $this->get_food_manager_fieldeditor_toppings_fields() : array();
 		$custom_fields = '';
-		if (!empty($custom_extra_options_fields)) {
-			$custom_fields = array_merge($custom_food_fields, $custom_extra_options_fields);
+		if (!empty($custom_toppings_fields)) {
+			$custom_fields = array_merge($custom_food_fields, $custom_toppings_fields);
 		} else {
 			$custom_fields = $custom_food_fields;
 		}

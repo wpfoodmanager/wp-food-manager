@@ -57,7 +57,7 @@ class WPFM_Edit_Food_Form extends WPFM_Add_Food_Form {
 		$extra_fields_options = get_post_meta($food->ID, '_food_toppings', true) ? get_post_meta($food->ID, '_food_toppings', true) : '';
 		foreach ($this->fields as $group_key => $group_fields) {
 			foreach ($group_fields as $key => $field) {
-				if ($group_key == 'extra_options') {
+				if ($group_key == 'toppings') {
 					foreach ($parent_row_fields_count as $row_key => $row_value) {
 						$key_row_val = '';
 						if ($key !== 'topping_name') {
@@ -122,7 +122,7 @@ class WPFM_Edit_Food_Form extends WPFM_Add_Food_Form {
 			'food_id'             => $this->get_food_id(),
 			'action'             => $this->get_action(),
 			'food_fields'         => $this->get_fields('food'),
-			'food_extra_fields'     => $this->get_fields('extra_options'),
+			'food_extra_fields'     => $this->get_fields('toppings'),
 			'step'               => $this->get_step(),
 			'submit_button_text' => __('Save changes', 'wp-food-manager')
 		));

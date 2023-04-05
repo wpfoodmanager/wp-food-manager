@@ -483,8 +483,8 @@ label.add-food-small {
   margin-right: 10px;
 }
 
-#extra_options_food_data_content .wpfm-admin-options-table .widefat thead,
-#extra_options_food_data_content .wpfm-admin-options-table .widefat tfoot {
+#toppings_food_data_content .wpfm-admin-options-table .widefat thead,
+#toppings_food_data_content .wpfm-admin-options-table .widefat tfoot {
   background: #f6f7f7;
 }
 

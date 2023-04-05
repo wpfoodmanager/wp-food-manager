@@ -340,7 +340,7 @@ var WPFM_Admin = function () {
             removeFoodSelectionVal: function (event) {
                 var selected_val = jQuery(this).val();
                 if (selected_val == 'options') {
-                    jQuery(".wp-food-manager-food-form-field-editor.extra_options td.field-type .field_type").find(".options").attr("disabled", "disabled");
+                    jQuery(".wp-food-manager-food-form-field-editor.toppings td.field-type .field_type").find(".options").attr("disabled", "disabled");
                     jQuery(this).find(".options").prop("disabled", false);
                 }
             },
@@ -359,7 +359,7 @@ var WPFM_Admin = function () {
                 }
                 max_index = max_index + 1;
                 var html = jQuery(this).data('row').replace(/%%repeated-option-index%%/g, max_index);
-                jQuery('#extra_options_food_data_content .wpfm-options-wrapper .wpfm-actions').before(html);
+                jQuery('#toppings_food_data_content .wpfm-options-wrapper .wpfm-actions').before(html);
                 jQuery(".post-type-food_manager .wpfm-admin-options-table table.widefat tbody").sortable({
                     connectWith: ".post-type-food_manager .wpfm-admin-options-table table.widefat tbody",
                     items: "tr",

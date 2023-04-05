@@ -4,7 +4,7 @@
  *  Template Extra Option panel
  */
 $extra_toppings = get_post_meta($thepostid, '_food_toppings', true); ?>
-<div id="extra_options_food_data_content" class="panel wpfm_panel wpfm-metaboxes-wrapper">
+<div id="toppings_food_data_content" class="panel wpfm_panel wpfm-metaboxes-wrapper">
 	<div class="wp_food_manager_meta_data">
 		<div class="wpfm-options-wrapper wpfm-metaboxes">
 			<?php if (!empty($extra_toppings)) {
@@ -25,8 +25,8 @@ $extra_toppings = get_post_meta($thepostid, '_food_toppings', true); ?>
 								<?php
 								do_action('food_manager_food_data_start', $thepostid);
 								$food_extra_fields = $this->food_manager_data_fields();
-								if (isset($food_extra_fields['extra_options'])) {
-									foreach ($food_extra_fields['extra_options'] as $key => $field) {
+								if (isset($food_extra_fields['toppings'])) {
+									foreach ($food_extra_fields['toppings'] as $key => $field) {
 										if (!isset($field['value']) || empty($field['value'])) {
 											$field['value'] = isset($topping[$key]) ? $topping[$key] : '';
 										}
@@ -74,8 +74,8 @@ $extra_toppings = get_post_meta($thepostid, '_food_toppings', true); ?>
 							<?php
 							do_action("food_manager_food_data_start", $thepostid);
 							$food_extra_fields = $this->food_manager_data_fields();
-							if (isset($food_extra_fields["extra_options"]))
-								foreach ($food_extra_fields["extra_options"] as $key => $field) {
+							if (isset($food_extra_fields["toppings"]))
+								foreach ($food_extra_fields["toppings"] as $key => $field) {
 									if ($key == "topping_name") {
 										if (strpos($key, '_') !== 0) {
 											$key  = $key . '_%%repeated-option-index%%';

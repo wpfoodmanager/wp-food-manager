@@ -1080,7 +1080,7 @@ class WPFM_ActionHooks {
             }
         }
         // Save Extra Options/Topping form fields values
-        foreach ($writepanels->food_manager_data_fields()['extra_options'] as $key => $field) {
+        foreach ($writepanels->food_manager_data_fields()['toppings'] as $key => $field) {
             // Author
             if ('_food_author' === $key) {
                 $wpdb->update($wpdb->posts, array('post_author' => $_POST[$key] > 0 ? absint($_POST[$key]) : 0), array('ID' => $post_id));
@@ -1088,22 +1088,22 @@ class WPFM_ActionHooks {
             // Everything else		
             else {
                 $type = !empty($field['type']) ? $field['type'] : '';
-                $extra_options = array();
+                $toppings = array();
                 $food = $post;
                 $form_add_food_instance = call_user_func(array('WPFM_Add_Food_Form', 'instance'));
                 $custom_food_fields  = !empty($form_add_food_instance->get_food_manager_fieldeditor_fields()) ? $form_add_food_instance->get_food_manager_fieldeditor_fields() : array();
-                $custom_extra_options_fields  = !empty($form_add_food_instance->get_food_manager_fieldeditor_extra_options_fields()) ? $form_add_food_instance->get_food_manager_fieldeditor_extra_options_fields() : array();
+                $custom_toppings_fields  = !empty($form_add_food_instance->get_food_manager_fieldeditor_toppings_fields()) ? $form_add_food_instance->get_food_manager_fieldeditor_toppings_fields() : array();
                 $custom_fields = '';
-                if (!empty($custom_extra_options_fields)) {
-                    $custom_fields = array_merge($custom_food_fields, $custom_extra_options_fields);
+                if (!empty($custom_toppings_fields)) {
+                    $custom_fields = array_merge($custom_food_fields, $custom_toppings_fields);
                 } else {
                     $custom_fields = $custom_food_fields;
                 }
                 $default_fields = $form_add_food_instance->get_default_food_fields();
                 $additional_fields = [];
-                if (!empty($custom_fields) && isset($custom_fields) && !empty($custom_fields['extra_options'])) {
-                    foreach ($custom_fields['extra_options'] as $field_name => $field_data) {
-                        if (!array_key_exists($field_name, $default_fields['extra_options'])) {
+                if (!empty($custom_fields) && isset($custom_fields) && !empty($custom_fields['toppings'])) {
+                    foreach ($custom_fields['toppings'] as $field_name => $field_data) {
+                        if (!array_key_exists($field_name, $default_fields['toppings'])) {
                             $meta_key = '_' . $field_name;
                             $field_value = $food->$meta_key;
                             if (isset($field_value)) {
@@ -1143,28 +1143,28 @@ class WPFM_ActionHooks {
                                     }
                                 }
                             }
-                            if (!empty($custom_extra_options_fields)) {
-                                $extra_options[$option_count] = array(
+                            if (!empty($custom_toppings_fields)) {
+                                $toppings[$option_count] = array(
                                     'topping_key' => $topping_key,
                                     'topping_name' => $topping_name,
                                 );
-                                foreach ($custom_extra_options_fields as $custom_ext_key => $custom_extra_options_field) {
-                                    foreach ($custom_extra_options_field as $custom_ext_single_key => $custom_extra_options_single_field) {
+                                foreach ($custom_toppings_fields as $custom_ext_key => $custom_toppings_field) {
+                                    foreach ($custom_toppings_field as $custom_ext_single_key => $custom_toppings_single_field) {
                                         if ($custom_ext_single_key !== 'topping_name' && $custom_ext_single_key !== 'topping_options') {
                                             $custom_ext_key_post = isset($_POST["_" . $custom_ext_single_key . "_" . $option_count]) ? $_POST["_" . $custom_ext_single_key . "_" . $option_count] : '';
-                                            $extra_options[$option_count][$custom_ext_single_key] = $custom_ext_key_post;
+                                            $toppings[$option_count][$custom_ext_single_key] = $custom_ext_key_post;
                                         }
                                         if ($custom_ext_single_key == 'topping_name') {
                                             $custom_ext_key_post = isset($_POST[$custom_ext_single_key . "_" . $option_count]) ? $_POST[$custom_ext_single_key . "_" . $option_count] : '';
-                                            $extra_options[$option_count][$custom_ext_single_key] = $custom_ext_key_post;
+                                            $toppings[$option_count][$custom_ext_single_key] = $custom_ext_key_post;
                                         }
                                         if ($custom_ext_single_key == 'topping_options') {
-                                            $extra_options[$option_count][$custom_ext_single_key] = $option_values;
+                                            $toppings[$option_count][$custom_ext_single_key] = $option_values;
                                         }
                                     }
                                 }
                             } else {
-                                $extra_options[$option_count] = array(
+                                $toppings[$option_count] = array(
                                     'topping_key' => $topping_key,
                                     'topping_name' => $topping_name,
                                     'topping_type' => $topping_type,
@@ -1177,7 +1177,7 @@ class WPFM_ActionHooks {
                             if (!empty($additional_fields)) {
                                 foreach ($additional_fields as $add_key => $additional_field) {
                                     $key_post = isset($_POST["_" . $add_key . "_" . $option_count]) ? $_POST["_" . $add_key . "_" . $option_count] : '';
-                                    $extra_options[$option_count][$add_key] = $key_post;
+                                    $toppings[$option_count][$add_key] = $key_post;
                                 }
                             }
                         }
@@ -1196,7 +1196,7 @@ class WPFM_ActionHooks {
                     wp_remove_object_terms($post_id, $removed_toppings_ids, 'food_manager_topping');
                 }
                 $term_ids = wp_set_object_terms($post_id, $toppings_arr, 'food_manager_topping');
-                update_post_meta($post_id, '_food_toppings', $extra_options);
+                update_post_meta($post_id, '_food_toppings', $toppings);
                 if ($term_ids) {
                     foreach ($term_ids as $key => $term_id) {
                         $key++;

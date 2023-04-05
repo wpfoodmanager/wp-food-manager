@@ -65,8 +65,8 @@ class WPFM_Field_Editor {
 			delete_option('food_manager_add_food_form_fields');
 			echo wp_kses_post('<div class="updated"><p>' . esc_attr('The fields were successfully reset.', 'wp-food-manager') . '</p></div>');
 		}
-		if (!empty($_GET['extra_options-reset-fields']) && !empty($_GET['_wpnonce']) && wp_verify_nonce($_GET['_wpnonce'], 'reset')) {
-			delete_option('food_manager_submit_extra_options_form_fields');
+		if (!empty($_GET['toppings-reset-fields']) && !empty($_GET['_wpnonce']) && wp_verify_nonce($_GET['_wpnonce'], 'reset')) {
+			delete_option('food_manager_submit_toppings_form_fields');
 			echo wp_kses_post('<div class="updated"><p>' . esc_attr('The fields were successfully reset.', 'wp-food-manager') . '</p></div>');
 		}
 		if (!empty($_POST) && !empty($_POST['_wpnonce'])) {
@@ -227,12 +227,12 @@ class WPFM_Field_Editor {
 	private function form_editor_save() {
 		if (wp_verify_nonce($_POST['_wpnonce'], 'save-wp-food-manager-form-field-editor')) {
 			$food_field     = !empty($_POST['food']) ? $this->sanitize_array($_POST['food']) : array();
-			$extra_options = !empty($_POST['extra_options']) ? $this->sanitize_array($_POST['extra_options']) : array();
+			$toppings = !empty($_POST['toppings']) ? $this->sanitize_array($_POST['toppings']) : array();
 			$index           = 0;
 			if (!empty($food_field)) {
 				$new_fields = array(
 					'food'     => $food_field,
-					'extra_options'     => $extra_options,
+					'toppings'     => $toppings,
 				);
 				// Find the numers keys from the fields array and replace with lable if label not exist remove that field
 				foreach ($new_fields as $group_key => $group_fields) {
@@ -295,8 +295,8 @@ class WPFM_Field_Editor {
 				if (isset($new_fields['food'])) {
 					update_option('food_manager_add_food_form_fields', array('food' => $new_fields['food']));
 				}
-				if (isset($new_fields['extra_options'])) {
-					update_option('food_manager_submit_extra_options_form_fields', array('extra_options' => $new_fields['extra_options']));
+				if (isset($new_fields['toppings'])) {
+					update_option('food_manager_submit_toppings_form_fields', array('toppings' => $new_fields['toppings']));
 				}
 				// This will be removed in future
 				$result = update_option('food_manager_form_fields', $new_fields);

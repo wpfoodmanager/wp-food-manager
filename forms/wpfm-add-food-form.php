@@ -221,7 +221,7 @@ class WPFM_Add_Food_Form extends WPFM_Form {
 					'priority'    => 11
 				),
 			),
-			'extra_options' => array(
+			'toppings' => array(
 				'topping_name' => array(
 					'label'       => __('Topping Name', 'wp-food-manager'),
 					'type'        => 'term-autocomplete',
@@ -281,7 +281,7 @@ class WPFM_Add_Food_Form extends WPFM_Form {
 		$this->fields =  apply_filters('before_add_food_validate_fields', $this->fields, $values);
 		foreach ($this->fields as $group_key => $group_fields) {
 			foreach ($group_fields as $key => $field) {
-				if ($group_key == 'extra_options') {
+				if ($group_key == 'toppings') {
 					if (isset($_POST['repeated_options'])) {
 						foreach ($_POST['repeated_options'] as $repeated_options) {
 							$key = ($key == 'topping_description') ? '_' . $key : $key;
@@ -406,7 +406,7 @@ class WPFM_Add_Food_Form extends WPFM_Form {
 			'resume_edit'        => $this->resume_edit,
 			'action'             => $this->get_action(),
 			'food_fields'         => $this->get_fields('food'),
-			'food_extra_fields'     => $this->get_fields('extra_options'),
+			'food_extra_fields'     => $this->get_fields('toppings'),
 			'step'               => $this->get_step(),
 			'submit_button_text' => apply_filters('add_food_submit_button_text', __('Preview', 'wp-food-manager'))
 		));
@@ -752,7 +752,7 @@ class WPFM_Add_Food_Form extends WPFM_Form {
 						update_post_meta($this->food_id, '_' . $key, '');
 				} else {
 					$values_ext = isset($values[$group_key][$key]) ? $values[$group_key][$key] : '';
-					if ($group_key !== 'extra_options') {
+					if ($group_key !== 'toppings') {
 						update_post_meta($this->food_id, '_' . $key, $values_ext);
 					}
 					// Handle attachments.
@@ -862,8 +862,8 @@ class WPFM_Add_Food_Form extends WPFM_Form {
 	 * 
 	 * @return fields Array
 	 */
-	public function get_food_manager_fieldeditor_extra_options_fields() {
-		return apply_filters('food_manager_submit_extra_options_form_fields', get_option('food_manager_submit_extra_options_form_fields', false));
+	public function get_food_manager_fieldeditor_toppings_fields() {
+		return apply_filters('food_manager_submit_toppings_form_fields', get_option('food_manager_submit_toppings_form_fields', false));
 	}
 
 	/**

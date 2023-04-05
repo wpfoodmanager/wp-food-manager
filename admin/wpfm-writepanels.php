@@ -175,7 +175,7 @@ class WPFM_Writepanels {
 				),
 				'extra-options'        => array(
 					'label'    => __('Toppings', 'wp-food-manager'),
-					'target'   => 'extra_options_food_data_content',
+					'target'   => 'toppings_food_data_content',
 					'class'    => array(),
 					'priority' => 2,
 				),

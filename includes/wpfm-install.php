@@ -50,7 +50,7 @@ class WPFM_Install {
 				if (isset($all_fields['food']['food_venue_name']))
 					unset($all_fields['food']['food_venue_name']);
 				update_option('food_manager_add_food_form_fields', array('food' => $all_fields['food']));
-				update_option('food_manager_submit_extra_options_form_fields', array('extra_options' => $all_fields['extra_options']));
+				update_option('food_manager_submit_toppings_form_fields', array('toppings' => $all_fields['toppings']));
 			}
 		}
 		delete_transient('food_manager_addons_html');
