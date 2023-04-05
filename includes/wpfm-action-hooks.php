@@ -898,7 +898,6 @@ class WPFM_ActionHooks {
     public function food_manager_save_food_manager_data($post_id, $post) {
         global $wpdb;
         $writepanels = WPFM_Writepanels::instance();
-        $disbled_fields = apply_filters('wpfm_db_disabled_fields', array('food_category', 'food_type', 'food_ingredient', 'food_nutrition', 'food_tag'));
         // Advanced tab fields
         if (!empty($_POST['_food_menu_order'])) {
             $fd_menu_order = sanitize_text_field($_POST['_food_menu_order']);
@@ -1043,9 +1042,7 @@ class WPFM_ActionHooks {
             if (isset($_POST["_" . $key]) && !empty($_POST["_" . $key])) {
                 update_post_meta($post_id, "_" . $key, $_POST["_" . $key]);
             } else {
-                if( !in_array($key, $disbled_fields) ){
-                    update_post_meta($post_id, "_" . $key, "");
-                }
+                update_post_meta($post_id, "_" . $key, "");
             }
             switch ($type) {
                 case 'textarea':
