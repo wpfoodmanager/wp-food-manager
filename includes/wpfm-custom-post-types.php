@@ -287,24 +287,6 @@ class WPFM_Post_Types {
 	}
 
 	/**
-	 * Triggered when updating meta on a food listing.
-	 *
-	 * @param int    $meta_id
-	 * @param int    $object_id
-	 * @param string $meta_key
-	 * @param mixed  $meta_value
-	 */
-	public function update_post_meta($meta_id, $object_id, $meta_key, $meta_value) {
-		if ('food_manager' === get_post_type($object_id)) {
-			switch ($meta_key) {
-				case '_food_location':
-					$this->maybe_update_geolocation_data($meta_id, $object_id, $meta_key, $meta_value);
-					break;
-			}
-		}
-	}
-
-	/**
 	 * Generate location data if a post is updated
 	 */
 	public function maybe_update_geolocation_data($meta_id, $object_id, $meta_key, $_meta_value) {

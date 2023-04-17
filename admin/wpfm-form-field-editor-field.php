@@ -3,16 +3,16 @@ if (empty($field_key)) {
 	$field_key = $index;
 }
 $taxonomies = get_object_taxonomies((object) array('post_type' => 'food_manager'));
-if( $taxonomies ){
+if ($taxonomies) {
 	$count = $remove_tax = 0;
-	foreach( $taxonomies as $taxonomy ){
-		if( $taxonomy == 'food_manager_unit' ){
+	foreach ($taxonomies as $taxonomy) {
+		if ($taxonomy == 'food_manager_unit') {
 			$remove_tax = $count;
 		}
 		$count++;
 	}
 }
-if( $remove_tax != 0 ){
+if ($remove_tax != 0) {
 	unset($taxonomies[$remove_tax]);
 }
 if ($field_key !== 'topping_options') {
@@ -36,6 +36,7 @@ if ($field_key !== 'topping_options') {
 			'wp-editor'        => __('WP Editor', 'wp-food-manager'),
 			'url'              => __('URL', 'wp-food-manager'),
 			'term-autocomplete'     => __('Term Autocomplete', 'wp-food-manager'),
+			'switch'    => __('Switch', 'wp-food-manager'),
 		)
 	);
 } else {
@@ -59,7 +60,8 @@ if ($field_key !== 'topping_options') {
 			'wp-editor'        => __('WP Editor', 'wp-food-manager'),
 			'url'              => __('URL', 'wp-food-manager'),
 			'options'    => __('Options', 'wp-food-manager'),
-			'term-autocomplete'=> __('Term Autocomplete', 'wp-food-manager'),
+			'term-autocomplete' => __('Term Autocomplete', 'wp-food-manager'),
+			'switch'    => __('Switch', 'wp-food-manager'),
 		)
 	);
 }
@@ -71,9 +73,9 @@ if ($field_key == 'food_category') {
 	$wpfm_admin_class = '';
 } elseif ($field_key == 'food_tag') {
 	$wpfm_admin_class = '';
-} elseif ($field_key == 'food_ingredient') {
+} elseif ($field_key == 'food_ingredients') {
 	$wpfm_admin_class = '';
-} elseif ($field_key == 'food_nutrition') {
+} elseif ($field_key == 'food_nutritions') {
 	$wpfm_admin_class = '';
 } else {
 	$wpfm_admin_class = 'wpfm-admin-common';
@@ -156,6 +158,20 @@ if ($field_key == 'food_category') {
 																																								echo esc_attr($field['priority']);
 																																							}
 																																							?>" placeholder="<?php esc_attr_e('N/A', 'wp-food-manager'); ?>" disabled />
+	</td>
+	<td>
+		<select <?php if (in_array($field_key, $disbled_fields)) echo 'disabled'; ?> name="<?php echo esc_attr($group_key); ?>[<?php echo esc_attr($field_key); ?>][tabgroup]" class="field_type">
+			<?php
+			$field['tabgroup'] = isset($field['tabgroup']) ? $field['tabgroup'] : 1;
+			$Writepanels = WPFM_Writepanels::instance();
+			$cnt = 1;
+			foreach ($Writepanels->get_food_data_tabs() as $key => $tab) {
+				$selected = ($field['tabgroup'] == $cnt) ? 'selected': '';
+				echo '<option value="' . $cnt . '"'.$selected.'>' . $tab['label'] . '</option>';
+				$cnt++;
+			}
+			?>
+		</select>
 	</td>
 	<td class="field-rules">
 		<?php if (!in_array($field_key, $disbled_fields)) : ?>

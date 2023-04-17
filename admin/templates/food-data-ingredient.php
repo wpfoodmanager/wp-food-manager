@@ -53,8 +53,8 @@ $units = get_terms(
 							echo "<li class='wpfm-sortable-item active-item' data-id='{$ingTermID}'>" .
 								"<label>{$ingTermName}</label>" .
 								"<div class='wpfm-sortable-item-values'>" .
-								"<input type='number' class='item-value' name='_ingredients[{$ingTermID}][value]' value='{$ingValue}'>" .
-								"<select name='_ingredients[{$ingTermID}][unit_id]' class='item-unit'>" .
+								"<input type='number' class='item-value' name='food_ingredients[{$ingTermID}][value]' value='{$ingValue}'>" .
+								"<select name='food_ingredients[{$ingTermID}][unit_id]' class='item-unit'>" .
 								"<option value=''>Unit</option>";
 							if (!empty($units)) {
 								foreach ($units as $unit) {
@@ -89,6 +89,20 @@ $units = get_terms(
 			?>
 		</ul>
 	</div>
+	<?php if (isset($food_fields['food']))
+		foreach ($food_fields['food'] as $key => $field) {
+			$field['tabgroup'] = isset($field['tabgroup']) ? $field['tabgroup'] : 0;
+			if (!in_array($key, $disbled_fields_for_admin) && $field['tabgroup'] == $tab['priority']) {
+				$type = !empty($field['type']) ? $field['type'] : 'text';
+				if ($type == 'wp-editor') $type = 'wp_editor'; ?>
+			<p class="wpfm-admin-postbox-form-field <?php echo $key; ?>">
+				<label for="<?php echo $key; ?>"><?php echo $field['label']; ?> : </label>
+				<span class="wpfm-input-field">
+					<?php get_food_manager_template('form-fields/' . $field['type'] . '-field.php', array('key' => $key, 'field' => $field)); ?>
+				</span>
+			</p>
+	<?php }
+		} ?>
 </div>
 <?php
 do_action('food_manager_food_data_ingredient_end', $thepostid);

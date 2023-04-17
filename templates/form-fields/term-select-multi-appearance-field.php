@@ -18,7 +18,7 @@ wp_enqueue_script('wp-food-manager-term-multiselect');
 wp_enqueue_script('wp-food-manager-term-select-multi-appearance');
 wp_localize_script(
     'wp-food-manager-term-select-multi-appearance',
-    'appearance_params', 
+    'appearance_params',
     array(
         'unit_terms' => json_encode($unit),
     )
@@ -40,17 +40,18 @@ $args = array(
     'name'         => isset($field['name']) ? $field['name'] : $key,
     'orderby'      => 'name',
     'selected'     => $selected,
-    'hide_empty'   => false
+    'hide_empty'   => false,
+    'name_attr'    => false,
 );
 // For Edit screen of food
 $preview_htm = '';
 $style = 'display:none;';
 if (isset($_GET['food_id']) && !empty($_GET['food_id'])) {
     $food_id = $_GET['food_id'];
-    $meta_key = ($field['taxonomy'] == 'food_manager_nutrition') ? '_nutritions' : ($field['taxonomy'] == 'food_manager_ingredient' ? '_ingredients' : '');
-    $term_name = ($meta_key == '_nutritions') ? 'nutrition_term_name' : ($meta_key == '_ingredients' ? 'ingredient_term_name' : '');
+    $meta_key = ($field['taxonomy'] == 'food_manager_nutrition') ? 'food_nutritions' : ($field['taxonomy'] == 'food_manager_ingredient' ? 'food_ingredients' : '');
+    $term_name = ($meta_key == 'food_nutritions') ? 'nutrition_term_name' : ($meta_key == 'food_ingredients' ? 'ingredient_term_name' : '');
     if ($meta_key) {
-        $tax_values = get_post_meta($food_id, $meta_key, true);
+        $tax_values = get_post_meta($food_id, '_' . $meta_key, true);
         $unit_terms = get_terms(array(
             'taxonomy' => 'food_manager_unit',
             'hide_empty' => false,
@@ -80,7 +81,7 @@ echo '<div class="multiselect_appearance">';
 food_manager_dropdown_selection(apply_filters('food_manager_term_select_multi_appearance_field_args', $args));
 echo '</div>';
 if (!empty($field['description'])) : ?><small class="description"><?php echo $field['description']; ?></small><?php endif; ?>
-<div class="<?php echo isset($field['name']) ? $field['name'] : $key; ?>-preview selection-preview" style="<?php echo $style; ?>" data-name="<?php echo ($field['taxonomy'] == 'food_manager_ingredient') ? '_ingredients' : '_nutritions'; ?>">
+<div class="<?php echo isset($field['name']) ? $field['name'] : $key; ?>-preview selection-preview" style="<?php echo $style; ?>" data-name="<?php echo ($field['taxonomy'] == 'food_manager_ingredient') ? 'food_ingredients' : 'food_nutritions'; ?>">
     <legend>Preview:</legend>
     <ul class="preview-items"><?php echo $preview_htm; ?></ul>
 </div>

@@ -437,6 +437,7 @@ function food_manager_dropdown_selection($args = '') {
 	$name       = esc_attr($name);
 	$class      = esc_attr($class);
 	$id = $r['id'] ? $r['id'] : $r['name'];
+	$args['name_attr'] = isset($args['name_attr']) ? $args['name_attr'] : true;
 	$data_taxonomy = '';
 	if ($taxonomy) {
 		$data_taxonomy = 'data-taxonomy="' . $taxonomy . '"';
@@ -454,7 +455,8 @@ function food_manager_dropdown_selection($args = '') {
 		$placeholder = __('Choose a Food type&hellip;', 'wp-food-manager');
 	endif;
 	$item_cat_ids = get_post_meta(get_the_ID(), '_food_item_cat_ids', true);
-	$output = '<select ' . $data_taxonomy . ' name="' . esc_attr($name) . '[]" id="' . esc_attr($id) . '" class="' . esc_attr($class) . '" ' . ($multiple ? 'multiple="multiple"' : "") . ' data-placeholder="' . esc_attr($placeholder) . '" data-no_results_text="' . esc_attr($no_results_text) . '" data-multiple_text="' . esc_attr($multiple_text) . '">\n';
+	$name_attr = ($args['name_attr'] == true) ? 'name="' . esc_attr($name) . '[]"' : '';
+	$output = '<select ' . $data_taxonomy . ' '.$name_attr.'  id="' . esc_attr($id) . '" class="' . esc_attr($class) . '" ' . ($multiple ? 'multiple="multiple"' : "") . ' data-placeholder="' . esc_attr($placeholder) . '" data-no_results_text="' . esc_attr($no_results_text) . '" data-multiple_text="' . esc_attr($multiple_text) . '">\n';
 	if (is_admin()) {
 		if (empty($item_cat_ids) && isset($item_cat_ids)) {
 			$output .= '<option value="" disabled selected>' . $placeholder . '</option>';
@@ -1440,35 +1442,6 @@ function wpfm_get_price_decimal_separator() {
  */
 function wpfm_get_price_decimals() {
 	return absint(apply_filters('wpfm_get_price_decimals', get_option('wpfm_price_num_decimals', 2)));
-}
-
-/**
- * Return fields of Advanced tab in Food data section.
- * 
- * @since  1.0.0
- */
-function get_advanced_tab_fields() {
-	$adv_fields = apply_filters('advanced_food_form_fields', array(
-		'food' => array(
-			'enable_food_ingre' => array( 	
-				'label'       => __('Enable Ingredient', 'wp-food-manager'),
-				'type'        => 'checkbox',
-				'required'    => true,
-				'placeholder' => '1',
-				'value' => 1,
-				'priority'    => 1
-			),
-			'enable_food_nutri' => array(
-				'label'       => __('Enable Nutrition', 'wp-food-manager'),
-				'value'         => 1,
-				'type'        => 'checkbox',
-				'required'    => true,
-				'placeholder' => '1',
-				'priority'    => 2
-			),
-		)
-	));
-	return $adv_fields;
 }
 
 /**

@@ -1224,8 +1224,7 @@ a.button.wpfm-add-row:hover {
 }
 
 
-.food_ingredient-preview ul,
-.food_nutrition-preview ul {
+.selection-preview ul{
     list-style: none;
     margin: 10px 0 0 0;
     padding: 0;
@@ -1233,34 +1232,28 @@ a.button.wpfm-add-row:hover {
     border-radius: 4px;
 }
 
-.food_ingredient-preview ul li,
-.food_nutrition-preview ul li {
+.selection-preview ul li{
     padding: 15px 0;
     border-bottom: 1px solid var(--wpfm-gray-border-color);
 }
 
-.food_ingredient-preview ul li:last-of-type,
-.food_nutrition-preview ul li:last-of-type {
+.selection-preview ul li:last-of-type{
     border: 0px;
 }
 
-.food_ingredient-preview ul li label,
-.food_nutrition-preview ul li label {
+.selection-preview ul li label{
     margin: 0 15px 5px;
     display: block;
     line-height: normal;
 }
 
-.food_ingredient-preview ul li .term-item-flex,
-.food_nutrition-preview ul li .term-item-flex {
+.selection-preview ul li .term-item-flex{
     display: flex;
     padding: 0 7.5px;
 }
 
-.food_ingredient-preview ul li .term-item-flex input,
-.food_ingredient-preview ul li .term-item-flex select,
-.food_nutrition-preview ul li .term-item-flex input,
-.food_nutrition-preview ul li .term-item-flex select {
+.selection-preview ul li .term-item-flex input,
+.selection-preview ul li .term-item-flex select{
     margin: 0 7.5px !important;
 }
 

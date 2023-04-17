@@ -227,14 +227,11 @@ abstract class WPFM_Form {
 		if (!empty($repeated_options) && !empty($option_value_count)) {
 			$ext_multi_options = isset($_POST['option_value_count']) ? $_POST['option_value_count'] : '';
 		}
-		if (isset($_POST['_nutritions']) && !empty($_POST['_nutritions'])) {
-			$values['_nutritions'] = $_POST['_nutritions'];
+		if (isset($_POST['food_nutritions']) && !empty($_POST['food_nutritions'])) {
+			$values['food_nutritions'] = $_POST['food_nutritions'];
 		}
-		if (isset($_POST['_ingredients']) && !empty($_POST['_ingredients'])) {
-			$values['_ingredients'] = $_POST['_ingredients'];
-		}
-		if (!add_post_meta($food_id, '_food_repeated_options', $repeated_options, true)) {
-			update_post_meta($food_id, '_food_repeated_options', $repeated_options);
+		if (isset($_POST['food_ingredients']) && !empty($_POST['food_ingredients'])) {
+			$values['food_ingredients'] = $_POST['food_ingredients'];
 		}
 		if (($option_value_count && is_array($option_value_count)) && ($repeated_options && is_array($repeated_options))) {
 			foreach ($ext_multi_options as $option_count => $option_value) {
@@ -256,8 +253,7 @@ abstract class WPFM_Form {
 							$first_out = str_replace(" ", "_", strtolower($this->get_posted_field($first_key, $field)));
 							$output = $this->get_posted_field($key2, $field);
 							if ($field['type'] == 'file') {
-								$output = $this->get_posted_field("current_" . $key2, $field);
-								update_post_meta($food_id, "current_" . $key2, $output);
+								$output = $this->get_posted_field($key2, $field);
 							}
 							$values[$group_key][$first_out][$key] = $output;
 							$output2 = array();
@@ -278,24 +274,9 @@ abstract class WPFM_Form {
 						} else {
 							$values[$group_key][$key] = $this->get_posted_field($key, $field);
 						}
-						$topping_key = isset($_POST['topping_key_' . $option_count]) ? $_POST['topping_key_' . $option_count] : '';
-						$topping_name = isset($_POST['topping_name_' . $option_count]) ? $_POST['topping_name_' . $option_count] : '';
-						$toppings_arr[] = $topping_name;
-						$topping_type = isset($_POST['_topping_type_' . $option_count]) ? $_POST['_topping_type_' . $option_count] : '';
-						$topping_required = isset($_POST['_topping_required_' . $option_count]) ? $_POST['_topping_required_' . $option_count] : '';
-						$topping_description = isset($_POST['_topping_description_' . $option_count]) ? $_POST['_topping_description_' . $option_count] : '';
-						$extra_toppings[$option_count] = array(
-							'topping_key' => $topping_key,
-							'topping_name' => $topping_name,
-							'topping_type' => $topping_type,
-							'topping_required' => $topping_required,
-							'topping_description' => $topping_description,
-							'topping_options' => (isset($output2)) ? $output2 : array(),
-						);
 					}
 				}
 			}
-			update_post_meta($food_id, '_food_toppings', $extra_toppings);
 		} else {
 			foreach ($this->fields as $group_key => $group_fields) {
 				foreach ($group_fields as $key => $field) {
@@ -312,7 +293,6 @@ abstract class WPFM_Form {
 					$this->fields[$group_key][$key]['value'] = $values[$group_key][$key];
 				}
 			}
-			update_post_meta($food_id, '_food_toppings', '');
 		}
 		return $values;
 	}
@@ -338,9 +318,9 @@ abstract class WPFM_Form {
 						case 'file':
 							$file = $this->upload_file($field_name, $field);
 							if (!$file) {
-								$file = $this->get_posted_field('current_' . $field_name, $field);
+								$file = $this->get_posted_field($field_name, $field);
 							} elseif (is_array($file)) {
-								$file = array_filter(array_merge($file, (array) $this->get_posted_field('current_' . $field_name, $field)));
+								$file = array_filter(array_merge($file, (array) $this->get_posted_field($field_name, $field)));
 							}
 							$item[$key] = $file;
 							break;
@@ -424,9 +404,9 @@ abstract class WPFM_Form {
 	protected function get_posted_file_field($key, $field) {
 		$file = $this->upload_file($key, $field);
 		if (!$file) {
-			$file = $this->get_posted_field('current_' . $key, $field);
+			$file = $this->get_posted_field($key, $field);
 		} elseif (is_array($file)) {
-			$file = array_filter(array_merge($file, (array) $this->get_posted_field('current_' . $key, $field)));
+			$file = array_filter(array_merge($file, (array) $this->get_posted_field($key, $field)));
 		}
 		return $file;
 	}
@@ -544,10 +524,10 @@ abstract class WPFM_Form {
 				$custom_fields['food']['food_type']['visibility'] = false;
 			unset($default_fields['food']['food_type']);
 		}
-		if ((wp_count_terms('food_manager_ingredient') == 0 && isset($custom_fields['food']['food_ingredient']))) {
-			if (isset($custom_fields['food']['food_ingredient']))
-				$custom_fields['food']['food_ingredient']['visibility'] = false;
-			unset($default_fields['food']['food_ingredient']);
+		if ((wp_count_terms('food_manager_ingredient') == 0 && isset($custom_fields['food']['food_ingredients']))) {
+			if (isset($custom_fields['food']['food_ingredients']))
+				$custom_fields['food']['food_ingredients']['visibility'] = false;
+			unset($default_fields['food']['food_ingredients']);
 		}
 		if (!is_array($custom_fields)) {
 			$this->fields = apply_filters('merge_with_custom_fields', $default_fields, $default_fields);

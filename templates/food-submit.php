@@ -70,8 +70,8 @@ if (!empty($extra_fields_options)) {
 		<!-- Extra options Fields -->
 		<?php
 		if ((isset($_POST['food_id']) && !empty($_POST['food_id'])) || (isset($_GET['action']) == 'edit')) {
-			if ($food_extra_fields) : ?>
-				<?php do_action('add_food_extra_fields_start'); ?>
+			if ($topping_fields) : ?>
+				<?php do_action('add_topping_fields_start'); ?>
 				<h3 class="wpfm-form-title wpfm-heading-text"><?php _e('Extra Toppings', 'wp-food-manager'); ?></h3>
 				<div class="wpfm-options-wrapper wpfm-metaboxes">
 					<?php if (!empty($extra_fields_options)) {
@@ -96,11 +96,11 @@ if (!empty($extra_fields_options)) {
 									<div class="wpfm-content">
 										<?php
 										$count = 0;
-										foreach ($food_extra_fields as $key2 => $field) :
+										foreach ($topping_fields as $key2 => $field) :
 											if ($key2 !== 'topping_options') {
 												$field['value'] = isset($toppings[$key][$key2]) && !empty($toppings[$key][$key2]) ? $toppings[$key][$key2]: '';
 												if ($key2 !== 'topping_name') {
-													$key2 = "_" . $key2 . "_" . $key;
+													$key2 = $key2 . "_" . $key;
 												} else {
 													$key2 = $key2 . "_" . $key;
 												}
@@ -157,7 +157,7 @@ if (!empty($extra_fields_options)) {
 																				<option value="fixed_amount" <?php echo $option_fixed_amount; ?>>Fixed Amount</option>
 																			</select>
 																		</td>
-																		<td><a href="javascript: void(0);" data-id="<?php echo $sub_value_count; ?>" class="option-delete-btn dashicons dashicons-dismiss">Remove</a></td>
+																		<td><a href="javascript: void(0);" data-id="<?php echo $sub_value_count; ?>" class="option-delete-btn dashicons dashicons-dismiss"></a></td>
 																		<input type="hidden" class="option-value-class" name="option_value_count[<?php echo $key; ?>][]" value="<?php echo $sub_value_count; ?>">
 																	</tr>
 																<?php } ?>
@@ -176,7 +176,7 @@ if (!empty($extra_fields_options)) {
 								                        <option value='fixed_amount'>Fixed Amount</option>
 								                        </select>
 								                    </td>
-								                    <td><a href='javascript: void(0);' data-id='%%repeated-option-index3%%' class='option-delete-btn dashicons dashicons-dismiss'>Remove</a></td>
+								                    <td><a href='javascript: void(0);' data-id='%%repeated-option-index3%%' class='option-delete-btn dashicons dashicons-dismiss'></a></td>
 								                    <input type='hidden' class='option-value-class' name='option_value_count[%%repeated-option-index2%%][]' value='%%repeated-option-index3%%'>
 								                </tr>">Add Row</a>
 																	</td>
@@ -207,7 +207,7 @@ if (!empty($extra_fields_options)) {
 						        <div class="wpfm-metabox-content wpfm-options-box">
 						            <div class="wpfm-content">
 						                <?php
-										foreach ($food_extra_fields as $key => $field) :
+										foreach ($topping_fields as $key => $field) :
 
 											if ($key == "topping_name") {
 												if (strpos($key, '_') !== 0) {
@@ -215,7 +215,7 @@ if (!empty($extra_fields_options)) {
 												}
 											} else {
 												if (strpos($key, '_') !== 0) {
-													$key  = "_" . $key . "_%%repeated-option-index%%";
+													$key  = $key . "_%%repeated-option-index%%";
 												}
 											}
 											$fieldClassLabel = '';

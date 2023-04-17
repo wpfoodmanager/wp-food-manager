@@ -3,13 +3,13 @@
 /**
  *  Template Extra Option panel
  */
-$extra_toppings = get_post_meta($thepostid, '_food_toppings', true); ?>
+$food_toppings = get_post_meta($thepostid, '_food_toppings', true); ?>
 <div id="toppings_food_data_content" class="panel wpfm_panel wpfm-metaboxes-wrapper">
 	<div class="wp_food_manager_meta_data">
 		<div class="wpfm-options-wrapper wpfm-metaboxes">
-			<?php if (!empty($extra_toppings)) {
+			<?php if (!empty($food_toppings)) {
 				$count = 1;
-				foreach ($extra_toppings as $topping_key => $topping) { ?>
+				foreach ($food_toppings as $topping_key => $topping) { ?>
 					<div class="wpfm-options-wrap wpfm-metabox postbox wpfm-options-box-<?php echo esc_attr($count); ?>">
 						<input type="hidden" name="repeated_options[]" value="<?php echo esc_attr($count); ?>" class="repeated-options">
 						<h3 class="">
@@ -24,9 +24,9 @@ $extra_toppings = get_post_meta($thepostid, '_food_toppings', true); ?>
 							<div class="wpfm-content">
 								<?php
 								do_action('food_manager_food_data_start', $thepostid);
-								$food_extra_fields = $this->food_manager_data_fields();
-								if (isset($food_extra_fields['toppings'])) {
-									foreach ($food_extra_fields['toppings'] as $key => $field) {
+								$topping_fields = $this->food_manager_data_fields();
+								if (isset($topping_fields['toppings'])) {
+									foreach ($topping_fields['toppings'] as $key => $field) {
 										if (!isset($field['value']) || empty($field['value'])) {
 											$field['value'] = isset($topping[$key]) ? $topping[$key] : '';
 										}
@@ -36,18 +36,20 @@ $extra_toppings = get_post_meta($thepostid, '_food_toppings', true); ?>
 											}
 										} else {
 											if (strpos($key, '_') !== 0) {
-												$key  = '_' . $key . '_' . $count;
+												$key  = $key . '_' . $count;
 											}
 										}
 										$type = !empty($field['type']) ? $field['type'] : 'text';
 										if ($type == 'wp-editor') $type = 'wp_editor';
-										if ($type == "term-autocomplete") $type = "term_autocomplete";
-										if (has_action('food_manager_input_' . $type)) {
-											do_action('food_manager_input_' . $type, $key, $field);
-										} elseif (method_exists($this, 'input_' . $type)) {
-											call_user_func(array($this, 'input_' . $type), $key, $field);
-										}
-									}
+										if ($type == "term-autocomplete") $type = "term_autocomplete"; ?>
+										<p class="wpfm-admin-postbox-form-field <?php echo $key;
+																				echo ($type == "wp_editor") ? ' wp-editor-field' : ''; ?>" <?php echo ($type == "wp_editor") ? 'data-field-name="' . $key . '"' : ''; ?>>
+											<label for="<?php echo $key; ?>"><?php echo $field['label']; ?> : </label>
+											<?php if ($type != 'options') echo '<span class="wpfm-input-field">'; ?>
+											<?php get_food_manager_template('form-fields/' . $field['type'] . '-field.php', array('key' => $key, 'field' => $field)); ?>
+											<?php if ($type != 'options') echo '</span>'; ?>
+										</p>
+								<?php }
 								}
 								do_action('food_manager_food_data_end', $thepostid); ?>
 							</div>
@@ -73,26 +75,30 @@ $extra_toppings = get_post_meta($thepostid, '_food_toppings', true); ?>
 						<div class="wpfm-content">
 							<?php
 							do_action("food_manager_food_data_start", $thepostid);
-							$food_extra_fields = $this->food_manager_data_fields();
-							if (isset($food_extra_fields["toppings"]))
-								foreach ($food_extra_fields["toppings"] as $key => $field) {
+							$topping_fields = $this->food_manager_data_fields();
+							if (isset($topping_fields["toppings"]))
+								foreach ($topping_fields["toppings"] as $key => $field) {
 									if ($key == "topping_name") {
 										if (strpos($key, '_') !== 0) {
 											$key  = $key . '_%%repeated-option-index%%';
 										}
 									} else {
 										if (strpos($key, '_') !== 0) {
-											$key  = "_" . $key . "_%%repeated-option-index%%";
+											$key  = $key . "_%%repeated-option-index%%";
 										}
 									}
 									$type = !empty($field["type"]) ? $field["type"] : "text";
-									if ($type == "wp-editor") $type = "textarea";
+									if ($type == "wp-editor") $type = "wp_editor";
 									if ($type == "term-autocomplete") $type = "term_autocomplete";
-									if (has_action("food_manager_input_" . $type)) {
-										do_action("food_manager_input_" . $type, $key, $field);
-									} elseif (method_exists($this, "input_" . $type)) {
-										call_user_func(array($this, "input_" . $type), $key, $field);
-									}
+							?>
+									<p class="wpfm-admin-postbox-form-field <?php echo $key;
+																			echo ($type == "wp_editor") ? ' wp-editor-field' : ''; ?>" <?php echo ($type == "wp_editor") ? 'data-field-name="' . $key . '"' : ''; ?>>
+										<label for="<?php echo $key; ?>"><?php echo $field['label']; ?> : </label>
+										<?php if ($type != 'options') echo '<span class="wpfm-input-field">'; ?>
+											<?php get_food_manager_template('form-fields/' . $field['type'] . '-field.php', array('key' => $key, 'field' => $field)); ?>
+										<?php if ($type != 'options') echo '</span>'; ?>
+									</p>
+									<?php
 								}
 							do_action("food_manager_food_data_end", $thepostid); ?>
 						</div>
@@ -100,6 +106,21 @@ $extra_toppings = get_post_meta($thepostid, '_food_toppings', true); ?>
 				</div>'>+ Add Topping
 				</button>
 			</div>
+			<?php
+			if (isset($food_fields['food']))
+				foreach ($food_fields['food'] as $key => $field) {
+					$field['tabgroup'] = isset($field['tabgroup']) ? $field['tabgroup'] : 0;
+					if (!in_array($key, $disbled_fields_for_admin) && $field['tabgroup'] == $tab['priority']) {
+						$type = !empty($field['type']) ? $field['type'] : 'text';
+						if ($type == 'wp-editor') $type = 'wp_editor'; ?>
+					<p class="wpfm-admin-postbox-form-field <?php echo $key; ?>">
+						<label for="<?php echo $key; ?>"><?php echo $field['label']; ?> : </label>
+						<span class="wpfm-input-field">
+							<?php get_food_manager_template('form-fields/' . $field['type'] . '-field.php', array('key' => $key, 'field' => $field)); ?>
+						</span>
+					</p>
+			<?php }
+				} ?>
 		</div>
 	</div>
 </div>

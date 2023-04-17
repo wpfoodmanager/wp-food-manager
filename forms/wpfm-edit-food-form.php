@@ -122,7 +122,7 @@ class WPFM_Edit_Food_Form extends WPFM_Add_Food_Form {
 			'food_id'             => $this->get_food_id(),
 			'action'             => $this->get_action(),
 			'food_fields'         => $this->get_fields('food'),
-			'food_extra_fields'     => $this->get_fields('toppings'),
+			'topping_fields'     => $this->get_fields('toppings'),
 			'step'               => $this->get_step(),
 			'submit_button_text' => __('Save changes', 'wp-food-manager')
 		));
@@ -147,7 +147,6 @@ class WPFM_Edit_Food_Form extends WPFM_Add_Food_Form {
 			$food_title = isset($values['food']['food_title']) && !empty($values['food']['food_title']) ? $values['food']['food_title'] : '';
 			$food_description = isset($values['food']['food_description']) && !empty($values['food']['food_description']) ? $values['food']['food_description'] : '';
 			$this->save_food($food_title, $food_description, '', $values, false);
-			$this->update_food_data($values);
 			// Successful
 			switch (get_post_status($this->food_id)) {
 				case 'publish':

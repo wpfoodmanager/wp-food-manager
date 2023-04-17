@@ -319,7 +319,7 @@ label.add-food-small {
   text-decoration: none;
 }
 
-#food_manager_data ul.wpfm-tabs li.extra-options_tab a::before {
+#food_manager_data ul.wpfm-tabs li.toppings_tab a::before {
   content: "\f509";
 }
 

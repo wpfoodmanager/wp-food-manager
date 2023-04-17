@@ -72,7 +72,7 @@ class WPFM_Field_Editor {
 		if (!empty($_POST) && !empty($_POST['_wpnonce'])) {
 			echo wp_kses_post($this->form_editor_save());
 		}
-		$disbled_fields = apply_filters('wpfm_admin_field_editor_disabled_fields', array('food_title', 'food_category', 'food_type', 'food_ingredient', 'food_nutrition', 'food_tag', 'topping_name', 'topping_type', 'topping_required', 'topping_description', 'topping_options'));
+		$disbled_fields = apply_filters('wpfm_admin_field_editor_disabled_fields', array('food_title', 'food_category', 'food_type', 'food_ingredients', 'food_nutritions', 'food_tag', 'topping_name', 'topping_type', 'topping_required', 'topping_description', 'topping_options'));
 		$field_types    = apply_filters(
 			'food_manager_form_field_types',
 			array(
@@ -93,6 +93,7 @@ class WPFM_Field_Editor {
 				'wp-editor'        => __('WP Editor', 'wp-food-manager'),
 				'url'              => __('URL', 'wp-food-manager'),
 				'options'    => __('Options', 'wp-food-manager'),
+				'switch'    => __('Switch', 'wp-food-manager'),
 			)
 		);
 		$GLOBALS['food_manager']->forms->get_form('add-food', array());
@@ -118,6 +119,7 @@ class WPFM_Field_Editor {
 							<th width="1%"><?php esc_attr_e('Meta Key', 'wp-food-manager'); ?></th>
 							<th width="1%"><?php esc_attr_e('Only For Admin', 'wp-food-manager'); ?></th>
 							<th width="1%"><?php esc_attr_e('Priority', 'wp-food-manager'); ?></th>
+							<th width="1%"><?php esc_attr_e('Tab Group', 'wp-food-manager'); ?></th>
 							<th width="1%"><?php esc_attr_e('Validation', 'wp-food-manager'); ?></th>
 							<th width="1%" class="field-actions">&nbsp;</th>
 						</tr>

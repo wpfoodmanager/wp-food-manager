@@ -35,6 +35,22 @@ var WPFM_Admin = function () {
                     });
                 }
             }
+            if (jQuery('.wpfm-options-wrapper div.wpfm-options-wrap p.wpfm-admin-postbox-form-field.wp-editor-field').length) {
+                jQuery('.wpfm-options-wrapper div.wpfm-options-wrap p.wpfm-admin-postbox-form-field.wp-editor-field').each(function () {
+                    var editorId = jQuery(this).parents(".wpfm-options-wrapper").find("p.wpfm-admin-postbox-form-field.wp-editor-field").attr("data-field-name");
+                    wp.editor.initialize(editorId, {
+                        tinymce: {
+                            wpautop: false,
+                            textarea_rows: 8,
+                            plugins: 'lists,paste,tabfocus,wplink,wordpress',
+                            toolbar1: 'bold,italic,|,bullist,numlist,|,link,unlink,|,undo,redo',
+                            toolbar2: '',
+                        },
+                        quicktags: { buttons: 'strong,em,link,block,del,ins,img,ul,ol,li,code,more,close' },
+                        mediaButtons: false,
+                    });
+                });
+            }
             // Bind on click food of the settings section
             jQuery(".wpfm-tabs li a").on('click', WPFM_Admin.actions.tabClick);
             // Show by default first food Listings Settings Tab
@@ -157,7 +173,7 @@ var WPFM_Admin = function () {
                             o && jQuery.map(o, (function (e, t) {
                                 l = l + "<option value='" + t + "'>" + e + "</option>"
                             }));
-                            var s = "<input type='number' name='_ingredients[" + r + "][value]'><select name='_ingredients[" + r + "][unit_id]'><option value=''>Unit</option>" + l + "</select>";
+                            var s = "<input type='number' name='food_ingredients[" + r + "][value]'><select name='food_ingredients[" + r + "][unit_id]'><option value=''>Unit</option>" + l + "</select>";
                             n.find(".wpfm-sortable-item-values").html(s), n.removeClass("available-item").addClass("active-item")
                         }
                     } else n.find(".wpfm-sortable-item-values").html(""), n.removeClass("active-item").addClass("available-item")
@@ -228,7 +244,7 @@ var WPFM_Admin = function () {
                             o && jQuery.map(o, (function (e, t) {
                                 l = l + "<option value='" + t + "'>" + e + "</option>"
                             }));
-                            var s = "<input type='number' name='_nutritions[" + r + "][value]'><select name='_nutritions[" + r + "][unit_id]'><option value=''>Unit</option>" + l + "</select>";
+                            var s = "<input type='number' name='food_nutritions[" + r + "][value]'><select name='food_nutritions[" + r + "][unit_id]'><option value=''>Unit</option>" + l + "</select>";
                             n.find(".wpfm-sortable-item-values").html(s), n.removeClass("available-item").addClass("active-item")
                         }
                     } else n.find(".wpfm-sortable-item-values").html(""), n.removeClass("active-item").addClass("available-item")
@@ -485,7 +501,7 @@ var WPFM_Admin = function () {
             },
             removeAttributesOptions: function (event) {
                 var row_count3 = jQuery(this).closest('.postbox').children('.repeated-options').val();
-                jQuery('.wpfm-options-box-' + row_count3 + ' div.wpfm-admin-options-table table tbody tr.option-tr-' + jQuery(this).data('id')).remove();
+                jQuery('.wpfm-options-box-' + row_count3 + ' tr.option-tr-' + jQuery(this).data('id')).remove();
             },
             /// <summary>
             /// add attributes fields

@@ -69,7 +69,7 @@ var WPFM_AjaxFileUpload = function () {
 									jQuery(html).find('.food-manager-uploaded-file-name code').text(file.name);
 								}
 								jQuery(html).find('.input-text').val(file.url);
-								jQuery(html).find('.input-text').attr('name', 'current_' + $file_field.attr('name'));
+								jQuery(html).find('.input-text').attr('name', $file_field.attr('name'));
 								if (multiple) {
 									$uploaded_files.append(html);
 								} else {
