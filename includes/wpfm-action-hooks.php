@@ -1125,7 +1125,7 @@ class WPFM_ActionHooks {
                                 unset($_POST['option_value_count'][$find_option]);
                             }
                             foreach ($_POST['option_value_count'] as $option_key_count) {
-                                if ($option_key_count) {
+                                if ($option_key_count && is_array($option_key_count)) {
                                     foreach ($option_key_count as $option_value_count) {
                                         if (!empty($_POST[$count . '_option_name_' . $option_value_count]) || !empty($_POST[$count . '_option_default_' . $option_value_count]) || !empty($_POST[$count . '_option_price_' . $option_value_count])) {
                                             $option_values[$option_value_count] = array(
@@ -1135,6 +1135,15 @@ class WPFM_ActionHooks {
                                                 'option_price_type' => isset($_POST[$count . '_option_price_type_' . $option_value_count]) ? $_POST[$count . '_option_price_type_' . $option_value_count] : ''
                                             );
                                         }
+                                    }
+                                } else {
+                                    if (!empty($_POST[$count . '_option_name_' . $option_key_count]) || !empty($_POST[$count . '_option_default_' . $option_key_count]) || !empty($_POST[$count . '_option_price_' . $option_key_count])) {
+                                        $option_values[$option_key_count] = array(
+                                            'option_name' => isset($_POST[$count . '_option_name_' . $option_key_count]) ? $_POST[$count . '_option_name_' . $option_key_count] : '',
+                                            'option_default' => isset($_POST[$count . '_option_default_' . $option_key_count]) ? $_POST[$count . '_option_default_' . $option_key_count] : '',
+                                            'option_price' => isset($_POST[$count . '_option_price_' . $option_key_count]) ? $_POST[$count . '_option_price_' . $option_key_count] : '',
+                                            'option_price_type' => isset($_POST[$count . '_option_price_type_' . $option_key_count]) ? $_POST[$count . '_option_price_type_' . $option_key_count] : ''
+                                        );
                                     }
                                 }
                             }

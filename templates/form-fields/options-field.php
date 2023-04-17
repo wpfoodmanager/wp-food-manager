@@ -22,6 +22,7 @@
         <?php
         if (isset($field['value']) && !empty($field['value']) && is_array($field['value'])) {
             $count = 1;
+            $wpfm_key_num = explode("_", $key)[2];
             foreach ($field['value'] as $op_key => $op_value) { ?>
                 <tr class="option-tr-<?php echo esc_attr($count); ?>">
                     <td><span class="wpfm-option-sort">☰</span></td>
