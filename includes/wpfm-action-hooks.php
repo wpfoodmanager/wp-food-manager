@@ -1729,10 +1729,9 @@ class WPFM_ActionHooks {
         wp_enqueue_script('jquery');
         wp_enqueue_script('jquery-ui-core');
         wp_enqueue_script('jquery-ui-sortable');
-        // jQuery Deserialize - vendor
-        wp_register_script('jquery-deserialize', WPFM_PLUGIN_URL . '/assets/js/jquery-deserialize/jquery.deserialize.js', array('jquery'), '1.2.1', true);
+        // Frontend Css
         wp_enqueue_style('wpfm-frontend', WPFM_PLUGIN_URL . '/assets/css/frontend.min.css');
-        // Common js
+        // Frontend js
         wp_register_script('wp-food-manager-frontend', WPFM_PLUGIN_URL . '/assets/js/frontend.min.js', array('jquery'), WPFM_VERSION, true);
         wp_enqueue_script('wp-food-manager-frontend');
         // Common js
