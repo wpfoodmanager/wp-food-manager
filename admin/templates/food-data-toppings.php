@@ -109,6 +109,9 @@ $food_toppings = get_post_meta($thepostid, '_food_toppings', true); ?>
 			<?php
 			if (isset($food_fields['food']))
 				foreach ($food_fields['food'] as $key => $field) {
+					if (!isset($field['value'])) {
+						$field['value'] = get_post_meta($thepostid, '_' . $key, true);
+					}
 					$field['tabgroup'] = isset($field['tabgroup']) ? $field['tabgroup'] : 0;
 					if (!in_array($key, $disbled_fields_for_admin) && $field['tabgroup'] == $tab['priority']) {
 						$type = !empty($field['type']) ? $field['type'] : 'text';
