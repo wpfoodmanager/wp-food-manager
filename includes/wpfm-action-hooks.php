@@ -1970,7 +1970,7 @@ class WPFM_ActionHooks {
             'label'       => '',
             'placeholder' => '',
         );
-        include WPFM_PLUGIN_DIR . '/admin/wpfm-form-field-editor-group-field-row.php';
+        include WPFM_PLUGIN_DIR . '/admin/wpfm-field-editor-group-form-field-row.php';
         echo esc_attr(ob_get_clean());
         wp_die();
     }

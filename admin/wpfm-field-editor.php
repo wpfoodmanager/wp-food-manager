@@ -145,7 +145,7 @@ class WPFM_Field_Editor {
 						'label'       => '',
 						'placeholder' => '',
 					);
-					include 'wpfm-form-field-editor-field.php';
+					include 'wpfm-field-editor-form-field.php';
 					echo esc_attr(ob_get_clean());
 					if (isset($group_fields) && !empty($group_fields)) {
 						foreach ($group_fields as $field_key => $field) {
@@ -153,18 +153,18 @@ class WPFM_Field_Editor {
 								if ($add_food_form_fields) {
 									if (trim($field['label']) != '' && isset($add_food_form_fields['food'][$field_key])) {
 										$index++;
-										include 'wpfm-form-field-editor-field.php';
+										include 'wpfm-field-editor-form-field.php';
 									}
 								} else {
 									if (trim($field['label']) != '') {
 										$index++;
-										include 'wpfm-form-field-editor-field.php';
+										include 'wpfm-field-editor-form-field.php';
 									}
 								}
 							} else {
 								if (trim($field['label']) != '') {
 									$index++;
-									include 'wpfm-form-field-editor-field.php';
+									include 'wpfm-field-editor-form-field.php';
 								}
 							}
 						}

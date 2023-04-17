@@ -254,7 +254,7 @@ if (isset($field['type']) && $field['type'] == 'group') {
 																			'label'       => '',
 																			'placeholder' => '',
 																		);
-																		include 'wpfm-form-field-editor-group-field.php';
+																		include 'wpfm-field-editor-group-form-field.php';
 																		echo wp_kses_post(ob_get_clean());
 																		?>
 							">
@@ -262,7 +262,7 @@ if (isset($field['type']) && $field['type'] == 'group') {
 					if (isset($field['fields']) && !empty($field['fields'])) {
 						foreach ($field['fields'] as $child_field_key => $child_field) {
 							$child_index++;
-							include 'wpfm-form-field-editor-group-field.php';
+							include 'wpfm-field-editor-group-form-field.php';
 						}
 					}
 					?>
