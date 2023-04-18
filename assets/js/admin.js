@@ -251,7 +251,6 @@ var WPFM_Admin = function () {
                 }
             }).disableSelection()
             jQuery('body').on('change', 'input[name^="topping_name"]', WPFM_Admin.actions.updateOptionTitle);
-            jQuery('body').on('change', 'select[name^="_topping_type"]', WPFM_Admin.actions.changeFieldType);
             jQuery(document).on("click", ".wpfm-add-row", WPFM_Admin.actions.addElementRow)
             jQuery(document).on("click", ".wpfm-delete-btn", WPFM_Admin.actions.removeAttributes)
             jQuery(document).on("click", ".option-delete-btn", WPFM_Admin.actions.removeAttributesOptions)

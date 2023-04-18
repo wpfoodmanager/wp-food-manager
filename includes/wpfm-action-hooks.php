@@ -167,9 +167,7 @@ class WPFM_ActionHooks {
     public function save_topping_fields($term_id) {
         if (!isset($_POST['topping_nonce']) || !wp_verify_nonce($_POST['topping_nonce'], 'save_toppings'))
             return;
-        $topping_type = isset($_POST['topping_type']) ? $_POST['topping_type'] : '';
         $topping_required = isset($_POST['topping_required']) ? $_POST['topping_required'] : '';
-        update_term_meta($term_id, '_topping_type', $topping_type);
         update_term_meta($term_id, '_topping_required', $topping_required);
     }
 
@@ -180,7 +178,6 @@ class WPFM_ActionHooks {
      */
     public function register_topping_fields() {
         register_meta('term', 'topping_required', array());
-        register_meta('term', 'topping_type', array());
     }
 
     /**
@@ -1175,10 +1172,8 @@ class WPFM_ActionHooks {
                         $t_key++;
                         $description = (isset($_POST['topping_description_' . $t_key]) && !empty($_POST['topping_description_' . $t_key])) ? $_POST['topping_description_' . $t_key] : '';
                         $topping_required = (isset($_POST['topping_required_' . $t_key]) && !empty($_POST['topping_required_' . $t_key])) ? $_POST['topping_required_' . $t_key] : '';
-                        $topping_type = (isset($_POST['topping_type_' . $t_key]) && !empty($_POST['topping_type_' . $t_key])) ? $_POST['topping_type_' . $t_key] : '';
                         wp_update_term($term_id, $taxonomy, array('description' => $description));
                         update_term_meta($term_id, '_topping_required', $topping_required);
-                        update_term_meta($term_id, '_topping_type', $topping_type);
                     }
                 }
             }
@@ -2055,13 +2050,11 @@ class WPFM_ActionHooks {
         $items = array();
         if ($results->terms) {
             foreach ($results->terms as $term) {
-                $topping_type = get_term_meta($term->term_id, '_topping_type', true);
                 $topping_required = get_term_meta($term->term_id, '_topping_required', true);
                 $items[] = [
                     'id' => $term->term_id,
                     'label' => $term->name,
                     'description' => term_description($term->term_id, $_REQUEST['taxonomy']),
-                    'selection_type' => $topping_type,
                     'required' => $topping_required,
                 ];
             }

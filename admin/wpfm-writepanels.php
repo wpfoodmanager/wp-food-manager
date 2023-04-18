@@ -241,29 +241,12 @@ class WPFM_Writepanels {
 	 */
 	public function edit_topping_fields($term) {
 		wp_nonce_field('save_toppings', 'topping_nonce');
-		$topping_type = get_term_meta($term->term_id, '_topping_type', true);
 		$topping_required = get_term_meta($term->term_id, '_topping_required', true);
-		$topping_type_options = array(
-			'checkbox' => __('Checkbox', 'wp-food-manager'),
-			'radio' => __('Radio Buttons', 'wp-food-manager'),
-			'select' => __('Select Box', 'wp-food-manager'),
-		);
 		$topping_required_options = array(
 			'no' => __('No', 'wp-food-manager'),
 			'yes' => __('Yes', 'wp-food-manager'),
 		);
 	?>
-		<tr class="form-field">
-			<th scope="row"><label for="topping_type"><?php _e('Selection Type', 'wp-food-manager'); ?></label></th>
-			<td>
-				<select name="topping_type" id="topping_type" class="input-select wpfm-small-field">
-					<?php foreach ($topping_type_options as $key => $options) {
-						$selected = ($key == $topping_type) ? 'selected' : '';
-						echo "<option value='{$key}' {$selected}>{$options}</option>";
-					} ?>
-				</select>
-			</td>
-		</tr>
 		<tr class="form-field">
 			<th scope="row"><label><?php _e('Required', 'wp-food-manager'); ?></label></th>
 			<td>
@@ -284,14 +267,6 @@ class WPFM_Writepanels {
 	 */
 	public function add_topping_fields() { ?>
 		<?php wp_nonce_field('save_toppings', 'topping_nonce'); ?>
-		<div class="form-field">
-			<label for="topping_type"><?php _e('Selection Type', 'wp-food-manager'); ?></label>
-			<select name="topping_type" id="topping_type" class="input-select wpfm-small-field">
-				<option value="checkbox">Checkbox</option>
-				<option value="radio">Radio Buttons</option>
-				<option value="select">Select Box</option>
-			</select>
-		</div>
 		<div class="form-field">
 			<label><?php _e('Required', 'text_domain'); ?></label>
 			<span class="toppings-radio-btn">

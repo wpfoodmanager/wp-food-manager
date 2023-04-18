@@ -77,9 +77,6 @@ if (!empty($extra_fields_options)) {
 					<?php if (!empty($extra_fields_options)) {
 						foreach ($option_value_counts3 as $key => $extra_fields_option) {
 							$toppings = get_post_meta($food_id, '_food_toppings', true);
-							$selected_check = (isset($extra_fields_option['topping_type']) && !empty($extra_fields_option['topping_type']) ? (($extra_fields_option['topping_type'] === 'checkbox') ? 'selected' : '') : '');
-							$selected_radio = (isset($extra_fields_option['topping_type']) && !empty($extra_fields_option['topping_type']) ? (($extra_fields_option['topping_type'] === 'radio') ? 'selected' : '') : '');
-							$selected_select = (isset($extra_fields_option['topping_type']) && !empty($extra_fields_option['topping_type']) ? (($extra_fields_option['topping_type'] === 'select') ? 'selected' : '') : '');
 							$topping_required = (isset($extra_fields_option['topping_required']) && !empty($extra_fields_option['topping_required']) ? (($extra_fields_option['topping_required'] === 'yes') ? 'checked' : '') : '');
 							$topping_key = str_replace(" ", "_", strtolower($extra_fields_option['topping_name']));
 					?>
