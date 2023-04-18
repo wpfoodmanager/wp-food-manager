@@ -38,6 +38,7 @@ class WPFM_Data_Cleaner {
 		'food_manager_nutrition',
 		'food_manager_unit',
 		'food_manager_category',
+		'food_manager_topping',
 		'food_manager_tag'
 	);
 
