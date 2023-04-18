@@ -80,6 +80,8 @@ if ($field_key == 'food_category') {
 } else {
 	$wpfm_admin_class = 'wpfm-admin-common';
 }
+// Disable field_types this array's field type is only for the core functionality types it doesn't usable in the field editor.
+$disable_field_types = array('term-autocomplete', 'term-select-multi-appearance');
 ?>
 <tr data-field-type="<?php echo esc_attr($field['type']); ?>" class="<?php echo esc_attr($wpfm_admin_class); ?> <?php echo esc_attr($field_key); ?>">
 	<td class="sort-column">&nbsp;</td>
@@ -95,7 +97,9 @@ if ($field_key == 'food_category') {
 						printf('<option value="' . esc_attr($key) . '" ' . selected($field['type'], $key, false) . ' class="wpfm-opt-val ' . esc_attr($key) . '">' . esc_html($type) . '</option>');
 					}
 				} else {
-					printf('<option value="' . esc_attr($key) . '" ' . selected($field['type'], $key, false) . ' class="wpfm-opt-val ' . esc_attr($key) . '">' . esc_html($type) . '</option>');
+					if( !in_array($key, $disable_field_types) ){
+						printf('<option value="' . esc_attr($key) . '" ' . selected($field['type'], $key, false) . ' class="wpfm-opt-val ' . esc_attr($key) . '">' . esc_html($type) . '</option>');
+					}
 				}
 			}
 			?>
