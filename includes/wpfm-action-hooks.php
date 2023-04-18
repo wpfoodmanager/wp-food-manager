@@ -961,6 +961,7 @@ class WPFM_ActionHooks {
                         break;
                     default:
                         if (!isset($_POST[$key])) {
+                            update_post_meta($post_id, '_' . $key, '');
                             continue 2;
                         } elseif (is_array($_POST[$key])) {
                             update_post_meta($post_id, '_' . $key, array_filter(array_map('sanitize_text_field', $_POST[$key])));

@@ -1,12 +1,10 @@
 <?php
 global $thepostid;
-$field_val = get_post_meta($thepostid, '_' . $key, true);
-if (empty($field['value']) || empty($field_val)) {
-    $field['value'] = get_post_meta($thepostid, '_' . $key, true);
-}
 $name = (!empty($field['name'])) ? $field['name'] : $key;
+$food_id = (isset($_GET['food_id']) && !empty($_GET['food_id'])) ? $_GET['food_id'] : $thepostid;
+$field['value'] = get_post_meta($food_id, '_' . $key, true);
 $exp_arr = explode("_", $key); ?>
 <label class="wpfm-field-switch" for="<?php echo esc_attr($key); ?>">
-    <input type="checkbox" id="<?php echo esc_attr($key); ?>" name="<?php echo esc_attr($name); ?>" value="1" <?php checked($field['value'], 1); ?>>
+    <input type="checkbox" id="<?php echo esc_attr($key); ?>" name="<?php echo esc_attr($name); ?>" value="1" <?php echo (!empty($field['value']) && $field['value'] == 1) ? 'checked' : ''; ?>>
     <span class="wpfm-field-switch-slider round"></span>
 </label>
