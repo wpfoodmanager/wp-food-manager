@@ -27,6 +27,7 @@ $food_toppings = get_post_meta($thepostid, '_food_toppings', true); ?>
 								$topping_fields = $this->food_manager_data_fields();
 								if (isset($topping_fields['toppings'])) {
 									foreach ($topping_fields['toppings'] as $key => $field) {
+										$field['required'] = false;
 										if (!isset($field['value']) || empty($field['value'])) {
 											$field['value'] = isset($topping[$key]) ? $topping[$key] : '';
 										}
@@ -78,6 +79,7 @@ $food_toppings = get_post_meta($thepostid, '_food_toppings', true); ?>
 							$topping_fields = $this->food_manager_data_fields();
 							if (isset($topping_fields["toppings"]))
 								foreach ($topping_fields["toppings"] as $key => $field) {
+									$field['required'] = false;
 									if ($key == "topping_name") {
 										if (strpos($key, '_') !== 0) {
 											$key  = $key . '_%%repeated-option-index%%';

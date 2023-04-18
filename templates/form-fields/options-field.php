@@ -27,9 +27,9 @@
                 <tr class="option-tr-<?php echo esc_attr($count); ?>">
                     <td><span class="wpfm-option-sort">☰</span></td>
                     <td><?php echo esc_html($count); ?></td>
-                    <td><input type="text" name="<?php echo esc_attr($wpfm_key_num); ?>_option_name_<?php echo esc_attr($count); ?>" value="<?php if (isset($op_value['option_name'])) echo $op_value['option_name']; ?>" class="opt_name" pattern=".*\S+.*" required></td>
+                    <td><input type="text" name="<?php echo esc_attr($wpfm_key_num); ?>_option_name_<?php echo esc_attr($count); ?>" value="<?php if (isset($op_value['option_name'])) echo $op_value['option_name']; ?>" class="opt_name" pattern=".*\S+.*" <?php echo (is_admin()) ? '' : 'required'; ?>></td>
                     <td><input type="checkbox" name="<?php echo esc_attr($wpfm_key_num); ?>_option_default_<?php echo esc_attr($count); ?>" <?php if (isset($op_value['option_default']) && $op_value['option_default'] == 'on') echo 'checked="checked"'; ?> class="opt_default"></td>
-                    <td><input type="number" name="<?php echo esc_attr($wpfm_key_num); ?>_option_price_<?php echo esc_attr($count); ?>" value="<?php if (isset($op_value['option_price'])) echo $op_value['option_price']; ?>" class="opt_price" step="any" required></td>
+                    <td><input type="number" name="<?php echo esc_attr($wpfm_key_num); ?>_option_price_<?php echo esc_attr($count); ?>" value="<?php if (isset($op_value['option_price'])) echo $op_value['option_price']; ?>" class="opt_price" step="any" <?php echo (is_admin()) ? '' : 'required'; ?>></td>
                     <td>
                         <select name="<?php echo esc_attr($wpfm_key_num); ?>_option_price_type_<?php echo esc_attr($count); ?>" class="opt_select">
                             <option value="quantity_based" <?php if (isset($op_value['option_price_type']) && $op_value['option_price_type'] == 'quantity_based') echo 'selected="selected"' ?>>Quantity Based</option>
@@ -49,9 +49,9 @@
                 <a class="button wpfm-add-row" data-row="<tr class=&apos;option-tr-%%repeated-option-index3%%&apos;>
                     <td><span class=&apos;wpfm-option-sort&apos;>☰</span></td>
                     <td>%%repeated-option-index3%%</td>
-                    <td><input type=&apos;text&apos; name=&apos;%%repeated-option-index2%%_option_name_%%repeated-option-index3%%&apos; value=&apos;&apos; class=&apos;opt_name&apos; pattern=&apos;.*\S+.*&apos; required></td>
+                    <td><input type=&apos;text&apos; name=&apos;%%repeated-option-index2%%_option_name_%%repeated-option-index3%%&apos; value=&apos;&apos; class=&apos;opt_name&apos; pattern=&apos;.*\S+.*&apos; <?php echo (is_admin()) ? '' : 'required'; ?>></td>
                     <td><input type=&apos;checkbox&apos; name=&apos;%%repeated-option-index2%%_option_default_%%repeated-option-index3%%&apos; class=&apos;opt_default&apos;></td>
-                    <td><input type=&apos;number&apos; name=&apos;%%repeated-option-index2%%_option_price_%%repeated-option-index3%%&apos; value=&apos;&apos; class=&apos;opt_price&apos;  step=&apos;any&apos; required></td>
+                    <td><input type=&apos;number&apos; name=&apos;%%repeated-option-index2%%_option_price_%%repeated-option-index3%%&apos; value=&apos;&apos; class=&apos;opt_price&apos;  step=&apos;any&apos; <?php echo (is_admin()) ? '' : 'required'; ?>></td>
                     <td>
                         <select name=&apos;%%repeated-option-index2%%_option_price_type_%%repeated-option-index3%%&apos; class=&apos;opt_select&apos;>
                         <option value=&apos;quantity_based&apos;>Quantity Based</option>
