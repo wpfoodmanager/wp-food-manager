@@ -91,6 +91,7 @@ $units = get_terms(
 	</div>
 	<?php if (isset($food_fields['food']))
 		foreach ($food_fields['food'] as $key => $field) {
+			$field['required'] = false;
 			if (!isset($field['value'])) {
 				$field['value'] = get_post_meta($thepostid, '_' . $key, true);
 			}

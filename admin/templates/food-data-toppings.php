@@ -109,6 +109,7 @@ $food_toppings = get_post_meta($thepostid, '_food_toppings', true); ?>
 			<?php
 			if (isset($food_fields['food']))
 				foreach ($food_fields['food'] as $key => $field) {
+					$field['required'] = false;
 					if (!isset($field['value'])) {
 						$field['value'] = get_post_meta($thepostid, '_' . $key, true);
 					}

@@ -29,6 +29,7 @@ $disbled_fields_for_admin = array('food_category', 'food_tag', 'food_nutritions'
 								if (!isset($field['value'])) {
 									$field['value'] = get_post_meta($thepostid, '_' . $key, true);
 								}
+								$field['required'] = false;
 								$field['tabgroup'] = isset($field['tabgroup']) ? $field['tabgroup'] : 0;
 								if (!in_array($key, $disbled_fields_for_admin) && $field['tabgroup'] == $tab['priority']) {
 									$type = !empty($field['type']) ? $field['type'] : 'text';
