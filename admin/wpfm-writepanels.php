@@ -241,8 +241,8 @@ class WPFM_Writepanels {
 	 */
 	public function edit_topping_fields($term) {
 		wp_nonce_field('save_toppings', 'topping_nonce');
-		$topping_type = get_term_meta($term->term_id, 'topping_type', true);
-		$topping_required = get_term_meta($term->term_id, 'topping_required', true);
+		$topping_type = get_term_meta($term->term_id, '_topping_type', true);
+		$topping_required = get_term_meta($term->term_id, '_topping_required', true);
 		$topping_type_options = array(
 			'checkbox' => __('Checkbox', 'wp-food-manager'),
 			'radio' => __('Radio Buttons', 'wp-food-manager'),

@@ -169,8 +169,8 @@ class WPFM_ActionHooks {
             return;
         $topping_type = isset($_POST['topping_type']) ? $_POST['topping_type'] : '';
         $topping_required = isset($_POST['topping_required']) ? $_POST['topping_required'] : '';
-        update_term_meta($term_id, 'topping_type', $topping_type);
-        update_term_meta($term_id, 'topping_required', $topping_required);
+        update_term_meta($term_id, '_topping_type', $topping_type);
+        update_term_meta($term_id, '_topping_required', $topping_required);
     }
 
     /**
@@ -1176,8 +1176,8 @@ class WPFM_ActionHooks {
                         $topping_required = (isset($_POST['topping_required_' . $t_key]) && !empty($_POST['topping_required_' . $t_key])) ? $_POST['topping_required_' . $t_key] : '';
                         $topping_type = (isset($_POST['topping_type_' . $t_key]) && !empty($_POST['topping_type_' . $t_key])) ? $_POST['topping_type_' . $t_key] : '';
                         wp_update_term($term_id, $taxonomy, array('description' => $description));
-                        update_term_meta($term_id, 'topping_required', $topping_required);
-                        update_term_meta($term_id, 'topping_type', $topping_type);
+                        update_term_meta($term_id, '_topping_required', $topping_required);
+                        update_term_meta($term_id, '_topping_type', $topping_type);
                     }
                 }
             }
@@ -2054,8 +2054,8 @@ class WPFM_ActionHooks {
         $items = array();
         if ($results->terms) {
             foreach ($results->terms as $term) {
-                $topping_type = get_term_meta($term->term_id, 'topping_type', true);
-                $topping_required = get_term_meta($term->term_id, 'topping_required', true);
+                $topping_type = get_term_meta($term->term_id, '_topping_type', true);
+                $topping_required = get_term_meta($term->term_id, '_topping_required', true);
                 $items[] = [
                     'id' => $term->term_id,
                     'label' => $term->name,
