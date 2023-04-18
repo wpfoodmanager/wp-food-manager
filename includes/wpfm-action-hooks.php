@@ -1699,7 +1699,7 @@ class WPFM_ActionHooks {
      */
     public function frontend_scripts() {
         $ajax_url         = WPFM_Ajax::get_endpoint();
-        $ajax_filter_deps = array('jquery', 'jquery-deserialize');
+        $ajax_filter_deps = array('jquery');
         $chosen_shortcodes   = array('add_food', 'food_dashboard', 'foods', 'food_categories', 'food_type');
         $chosen_used_on_page = has_wpfm_shortcode(null, $chosen_shortcodes);
         // jQuery Chosen - vendor
