@@ -680,8 +680,7 @@ input.wpfm-theme-button:hover span {
     height: 5px;
 }
 
-span.wpfm-view-more,
-span.wpfm-view-less {
+.wpfm-view-more{
     position: absolute;
     bottom: -12px;
     top: auto;
@@ -700,12 +699,15 @@ span.wpfm-view-less {
     font-size: 14px;
     margin-bottom: 0
 }
-
 .wpfm-additional-main-row .wpfm-additional-info-block-details-content-items {
     padding: 10px 0;
-    border-bottom: 1px solid var(--wpfm-gray-border-color);
+    border-top: 1px solid var(--wpfm-gray-border-color);
 }
-
+.wpfm-additional-main-row [class^="wpfm-col"] {
+    width: 100%;
+    flex: 0 0 100%;
+    max-width: 100%;
+}
 /* ===== 6. CATEGORY & TYPE END ===== */
 
 
@@ -1111,7 +1113,7 @@ label.wpfm-field-switch {
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: #d3d6df;
+    background-color: var(--wpfm-gray-border-color);
     -webkit-transition: .4s;
     -o-transition: .4s;
     transition: .4s;
@@ -1154,7 +1156,7 @@ input:checked+.wpfm-field-switch-slider:before {
 }
 
 input:checked+.wpfm-field-switch-slider {
-    background-color: #5d3dfd;
+    background-color: var(--wpfm-primary-color);
 }
 
 .wpfm-options-box fieldset.wpfm-form-group table.widefat a.option-delete-btn {
@@ -1204,18 +1206,6 @@ a.button.wpfm-add-row:hover {
     word-break: break-word;
 }
 
-.wpfm-view-less {
-    display: none;
-}
-
-.wpfm-additional-main-row {
-    visibility: hidden;
-    height: 0;
-    transition: all 300ms;
-    transform: scaleY(0);
-    transform-origin: top;
-}
-
 .wpfm-img-single img {
     width: 65%;
     border-radius: 10px;
@@ -1261,6 +1251,13 @@ a.button.wpfm-add-row:hover {
     margin-top: 5px;
 }
 
+.mce-btn button:hover {
+    background: transparent;
+    color: transparent;
+}
+.mce-btn.mce-active button, .mce-btn.mce-active:hover button, .mce-btn.mce-active i, .mce-btn.mce-active:hover i {
+    color: var(--wpfm-dark-color) !important;
+}
 /* ===== 9. ADD FOOD FORM OPTION END ===== */
 
 

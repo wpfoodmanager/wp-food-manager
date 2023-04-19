@@ -147,8 +147,7 @@ $food = $post;
                                             echo '</ul>';
                                             do_action('wpfm_singular_option_input_after');
                                             if (!empty($additional_fields_extra_topping)) {
-                                                echo "<div class='wpfm-additional-main-row'>";
-                                                echo '<hr style="margin:25px 0 15px; display: block; background-color: #e4e4e4; height: 2px;"></hr>';
+                                                echo "<div class='wpfm-additional-main-row wpfm-row'>";
                                                 foreach ($additional_fields_extra_topping as $name => $field) {
                                                     $field_key = '_' . $name;
                                                     $field_value = !empty($ext_option[$name]) ? $ext_option[$name] : '';
@@ -158,7 +157,6 @@ $food = $post;
                                                 }
                                                 echo "</div>";
                                                 echo '<span class="wpfm-view-more">View more +</span>';
-                                                echo '<span class="wpfm-view-less">View less -</span>';
                                             }
                                             echo "</div>";
                                         }

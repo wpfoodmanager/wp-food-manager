@@ -1,12 +1,21 @@
 var WPFM_Frontend = function () {
     return {
         init: function () {
+
+            // For Extra Toppings view Toggle
+            if (jQuery('.wpfm-additional-main-row').length > 0) {
+                jQuery('.wpfm-additional-main-row').hide();
+                jQuery(".wpfm-view-more").click(function(){
+                    jQuery(this).text((jQuery(this).text() == 'View less -') ? 'View more +' : 'View less -');
+                    jQuery(this).parent().find('.wpfm-additional-main-row').slideToggle()
+                });
+                
+            }
+
             jQuery(".wpfm-form-group.fieldset-topping_description").hide();
             //use body to call after dom update
             jQuery("body").on('click', 'a.wpfm-food-item-remove', WPFM_Frontend.actions.removeFoodItem);
-            //Action button For Extra topping field's content to View more and View less
-            jQuery("body").on('click', 'span.wpfm-view-more', WPFM_Frontend.actions.viewmoreFoodFields);
-            jQuery("body").on('click', 'span.wpfm-view-less', WPFM_Frontend.actions.viewlessFoodFields);
+            
             /* General tab - Regular and Sale price validation */
             jQuery('body').on('wpfm_add_error_tip', function (e, element, error_type) {
                 var offset = element.position();
@@ -151,16 +160,6 @@ var WPFM_Frontend = function () {
         actions: {
             removeFoodItem: function (event) {
                 jQuery(this).parents('li').remove();
-            },
-            viewmoreFoodFields: function (event) {
-                jQuery(this).prev().css({ "visibility": "visible", "height": "100%", "transform": "scaleY(1)" });
-                jQuery(this).fadeOut();
-                jQuery(this).next().fadeIn();
-            },
-            viewlessFoodFields: function (event) {
-                jQuery(this).prev().prev().css({ "visibility": "hidden", "height": "0", "transform": "scaleY(0)", "transition": "all 150ms" });
-                jQuery(this).fadeOut();
-                jQuery(this).prev().fadeIn();
             },
             addElementRow: function (event) {
                 var total_rows = 0;
