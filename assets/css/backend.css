@@ -1450,6 +1450,17 @@ span.toppings-radio-btn {
   display: block;
 }
 
+
+
+.mce-btn button:hover {
+  background: transparent;
+  color: transparent;
+}
+.mce-btn.mce-active button, .mce-btn.mce-active:hover button, .mce-btn.mce-active i, .mce-btn.mce-active:hover i {
+  color: #000 !important;
+}
+
+
 @media only screen and (max-width: 1280px) {
 
   .wpfm_panel .wpfm-small-field,
