@@ -163,6 +163,7 @@ $disable_field_types = array('term-autocomplete', 'term-select-multi-appearance'
 																																							}
 																																							?>" placeholder="<?php esc_attr_e('N/A', 'wp-food-manager'); ?>" disabled />
 	</td>
+	<?php if( $group_key != 'toppings' ){ ?>
 	<td>
 		<select <?php if (in_array($field_key, $disbled_fields)) echo 'disabled'; ?> name="<?php echo esc_attr($group_key); ?>[<?php echo esc_attr($field_key); ?>][tabgroup]" class="field_type">
 			<?php
@@ -177,6 +178,7 @@ $disable_field_types = array('term-autocomplete', 'term-select-multi-appearance'
 			?>
 		</select>
 	</td>
+	<?php } ?>
 	<td class="field-rules">
 		<?php if (!in_array($field_key, $disbled_fields)) : ?>
 			<div class="rules">

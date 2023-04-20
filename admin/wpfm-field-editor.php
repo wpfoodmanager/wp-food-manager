@@ -119,7 +119,9 @@ class WPFM_Field_Editor {
 							<th width="1%"><?php esc_attr_e('Meta Key', 'wp-food-manager'); ?></th>
 							<th width="1%"><?php esc_attr_e('Only For Admin', 'wp-food-manager'); ?></th>
 							<th width="1%"><?php esc_attr_e('Priority', 'wp-food-manager'); ?></th>
-							<th width="1%"><?php esc_attr_e('Tab Group (Only For Admin)', 'wp-food-manager'); ?></th>
+							<?php if( $group_key != 'toppings' ){ ?>
+								<th width="1%"><?php esc_attr_e('Tab Group (Only For Admin)', 'wp-food-manager'); ?></th>
+							<?php } ?>
 							<th width="1%"><?php esc_attr_e('Validation', 'wp-food-manager'); ?></th>
 							<th width="1%" class="field-actions">&nbsp;</th>
 						</tr>
