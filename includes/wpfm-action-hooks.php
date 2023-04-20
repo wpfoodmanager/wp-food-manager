@@ -1114,8 +1114,8 @@ class WPFM_ActionHooks {
                 // Set toppings meta and assign them into food.
                 $taxonomy = 'food_manager_topping';
                 if (isset($_POST['repeated_options']) && !empty($_POST['repeated_options'])) {
-                    $option_values = array();
                     foreach ($_POST['repeated_options'] as $count) {
+                        $option_values = array();
                         if (isset($_POST['option_value_count'])) {
                             $find_option = array_search('%%repeated-option-index%%', $_POST['option_value_count']);
                             if ($find_option !== false) {
