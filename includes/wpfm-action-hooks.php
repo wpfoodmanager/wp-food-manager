@@ -1105,13 +1105,13 @@ class WPFM_ActionHooks {
                 }
             }
         }
+        $toppings_arr = array();
         if (isset($form_fields['toppings'])) {
             $toppings_meta = array();
             $topping_cnt = 0;
             foreach ($form_fields['toppings'] as $key => $field) {
                 $topping_cnt++;
                 // Set toppings meta and assign them into food.
-                $toppings_arr = array();
                 $taxonomy = 'food_manager_topping';
                 if (isset($_POST['repeated_options']) && !empty($_POST['repeated_options'])) {
                     $option_values = array();
@@ -1160,7 +1160,7 @@ class WPFM_ActionHooks {
                 if ($exist_toppings) {
                     $removed_toppings_ids = [];
                     foreach ($exist_toppings as $toppings) {
-                        if (!in_array($toppings->slug, $toppings_arr)) {
+                        if (!in_array($toppings->name, $toppings_arr)) {
                             $removed_toppings_ids[] = (int)$toppings->term_id;
                         }
                     }
