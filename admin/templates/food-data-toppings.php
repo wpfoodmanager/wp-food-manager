@@ -16,7 +16,7 @@ $food_toppings = get_post_meta($thepostid, '_food_toppings', true); ?>
 							<a href="javascript: void(0);" data-id="<?php echo esc_attr($count); ?>" class="wpfm-delete-btn">Remove</a>
 							<div class="wpfm-togglediv" title="Click to toggle" aria-expanded="false" data-row-count="<?php echo esc_attr($count); ?>"></div>
 							<div class="wpfm-sort"></div>
-							<strong class="attribute_name"><?php printf(__('%s', 'wp-food-manager'), $topping['topping_name']); ?></strong>
+							<strong class="attribute_name"><?php printf(__('%s', 'wp-food-manager'), $topping['_topping_name']); ?></strong>
 							<span class="attribute_key"> <input type="hidden" name="topping_key_<?php echo esc_attr($count); ?>" value="<?php echo (isset($topping['topping_key']) && !empty($topping['topping_key']) ? $topping['topping_key'] : ''); ?>" readonly>
 							</span>
 						</h3>
@@ -29,9 +29,9 @@ $food_toppings = get_post_meta($thepostid, '_food_toppings', true); ?>
 									foreach ($topping_fields['toppings'] as $key => $field) {
 										$field['required'] = false;
 										if (!isset($field['value']) || empty($field['value'])) {
-											$field['value'] = isset($topping[$key]) ? $topping[$key] : '';
+											$field['value'] = isset($topping['_' . $key]) ? $topping['_' . $key] : '';
 										}
-										if ($key == "topping_name") {
+										if ($key == "_topping_name") {
 											if (strpos($key, '_') !== 0) {
 												$key  = $key . '_' . $count;
 											}
@@ -80,7 +80,7 @@ $food_toppings = get_post_meta($thepostid, '_food_toppings', true); ?>
 							if (isset($topping_fields["toppings"]))
 								foreach ($topping_fields["toppings"] as $key => $field) {
 									$field['required'] = false;
-									if ($key == "topping_name") {
+									if ($key == "_topping_name") {
 										if (strpos($key, '_') !== 0) {
 											$key  = $key . '_%%repeated-option-index%%';
 										}

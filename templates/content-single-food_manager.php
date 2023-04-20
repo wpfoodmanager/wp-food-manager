@@ -48,18 +48,18 @@ $food = $post;
                             <div class="wpfm-single-food-short-info">
                                 <div class="wpfm-food-details">
                                     <div class="food-details-row">
-                                    <?php if (get_option('food_manager_food_item_show_hide') && get_stock_status()) : ?>
-                                        <div class="food-stock-status">
-                                            <?php display_stock_status(); ?>
-                                        </div>
-                                    <?php endif; ?>
-                                    <?php
-                                    $view_count = get_food_views_count($post);
-                                    if ($view_count) : ?>
-                                        <div class="wpfm-viewed-food wpfm-tooltip wpfm-tooltip-bottom"><i class="wpfm-icon-eye"></i> <?php printf(__(' %d', 'wp-food-manager'), $view_count); ?>
-                                            <span class="wpfm-tooltiptext"><?php printf(__('%d people viewed this food.', 'wp-food-manager'), $view_count); ?></span>
-                                        </div>
-                                    <?php endif; ?>
+                                        <?php if (get_option('food_manager_food_item_show_hide') && get_stock_status()) : ?>
+                                            <div class="food-stock-status">
+                                                <?php display_stock_status(); ?>
+                                            </div>
+                                        <?php endif; ?>
+                                        <?php
+                                        $view_count = get_food_views_count($post);
+                                        if ($view_count) : ?>
+                                            <div class="wpfm-viewed-food wpfm-tooltip wpfm-tooltip-bottom"><i class="wpfm-icon-eye"></i> <?php printf(__(' %d', 'wp-food-manager'), $view_count); ?>
+                                                <span class="wpfm-tooltiptext"><?php printf(__('%d people viewed this food.', 'wp-food-manager'), $view_count); ?></span>
+                                            </div>
+                                        <?php endif; ?>
                                     </div>
                                     <div class="wpfm-food-title">
                                         <h3 class="wpfm-heading-text"><?php the_title(); ?></h3>
@@ -71,7 +71,7 @@ $food = $post;
                                     <?php /* ?><div class="wpfm-food-author">
                                         <div class="wpfm-food-author-name">by <?php echo the_author_posts_link(); ?></div>
                                     </div><?php */ ?>
-                                    
+
                                 </div>
                             </div>
                             <div class="wpfm-single-food-body-content">
@@ -134,18 +134,20 @@ $food = $post;
                                         echo "<h3 class='wpfm-heading-text'>Extra Toppings</h3>";
                                         foreach ($ext_options as $key => $ext_option) {
                                             $field_required = '';
-                                            if ($ext_option['topping_required'] == 'yes') {
+                                            if ($ext_option['_topping_required'] == 'yes') {
                                                 $field_required = 'required';
                                             }
                                             echo "<div class='wpfm-input-field-common " . $more_class . "'>";
-                                            echo '<label for="' . str_replace(" ", "-", strtolower($ext_option['topping_name'])) . '"><strong>' . $ext_option['topping_name'] . '</strong></label>';
-                                            if (!empty($ext_option['topping_description'])) {
-                                                echo '<div class="wpfm-input-description">' . $ext_option['topping_description'] . '</div>';
+                                            echo '<label for="' . str_replace(" ", "-", strtolower($ext_option['_topping_name'])) . '"><strong>' . $ext_option['_topping_name'] . '</strong></label>';
+                                            if (!empty($ext_option['_topping_description'])) {
+                                                echo '<div class="wpfm-input-description">' . $ext_option['_topping_description'] . '</div>';
                                             }
                                             do_action('wpfm_singular_option_input_before');
                                             echo '<ul class="wpfm-topping-options">';
-                                            foreach ($ext_option['topping_options'] as $key2 => $value2) {
-                                                echo '<li class="wpfm-topping-items">' . esc_attr($value2['option_name']) . ' - ' . get_food_manager_currency_symbol() . $value2['option_price'] . '</li>';
+                                            if (isset($ext_option['_topping_options']) && !empty($ext_option['_topping_options'])) {
+                                                foreach ($ext_option['_topping_options'] as $key2 => $value2) {
+                                                    echo '<li class="wpfm-topping-items">' . esc_attr($value2['option_name']) .  (isset($value2['option_price']) && !empty($value2['option_price']) ? ' - ' . get_food_manager_currency_symbol() . $value2['option_price']: ''). '</li>';
+                                                }
                                             }
                                             echo '</ul>';
                                             do_action('wpfm_singular_option_input_after');
@@ -153,7 +155,7 @@ $food = $post;
                                                 echo "<div class='wpfm-additional-main-row wpfm-row'>";
                                                 foreach ($additional_fields_extra_topping as $name => $field) {
                                                     $field_key = '_' . $name;
-                                                    $field_value = !empty($ext_option[$name]) ? $ext_option[$name] : '';
+                                                    $field_value = !empty($ext_option[$field_key]) ? $ext_option[$field_key] : '';
                                                     if (isset($field_value)) {
                                                         wpfm_extra_topping_form_fields($post, $field, $field_value);
                                                     }

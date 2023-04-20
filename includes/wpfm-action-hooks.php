@@ -1150,9 +1150,9 @@ class WPFM_ActionHooks {
                             $toppings_arr[] = $_POST[$key . '_' . $count];
                         }
                         // Toppings Array
-                        $toppings_meta[$count][$key] = isset($_POST[$key . '_' . $count]) && !empty($_POST[$key . '_' . $count]) ? $_POST[$key . '_' . $count] : '';
+                        $toppings_meta[$count]['_' . $key] = isset($_POST[$key . '_' . $count]) && !empty($_POST[$key . '_' . $count]) ? $_POST[$key . '_' . $count] : '';
                         if ($key == 'topping_options') {
-                            $toppings_meta[$count][$key] = $option_values;
+                            $toppings_meta[$count]['_' . $key] = $option_values;
                         }
                     }
                 }
