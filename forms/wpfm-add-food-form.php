@@ -183,7 +183,7 @@ class WPFM_Add_Food_Form extends WPFM_Form {
 					'placeholder' => '',
 					'priority'    => 7,
 					'ajax'        => true,
-					'multiple'    => get_option('food_manager_user_can_add_multiple_banner') == 1 ? true : false,
+					'multiple'    => false,
 					'allowed_mime_types' => array(
 						'jpg'  => 'image/jpeg',
 						'jpeg' => 'image/jpeg',

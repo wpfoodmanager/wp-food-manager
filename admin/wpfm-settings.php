@@ -233,15 +233,6 @@ class WPFM_Settings {
 							'type'       => 'checkbox',
 							'attributes' => array(),
 						),
-						array(
-							'name'       => 'food_manager_user_can_add_multiple_banner',
-							'std'        => '0',
-							'label'      => __('Allow Multiple Banners', 'wp-food-manager'),
-							'cb_label'   => __('User can submit multiple banner.', 'wp-food-manager'),
-							'desc'       => __('If enabled, Multiple banner can add at frontend by user and backend side by admin.', 'wp-food-manager'),
-							'type'       => 'checkbox',
-							'attributes' => array(),
-						),
 					),
 				),
 				'food_pages' => array(
