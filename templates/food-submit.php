@@ -13,7 +13,7 @@ if (!empty($extra_fields_options)) {
 	$option_value_counts1 = array();
 	for ($i = 1; $i <= count($extra_fields_options); $i++) {
 		foreach ($extra_fields_options as $key => $value) {
-			for ($j = 1; $j <= count($value['topping_options']); $j++) {
+			for ($j = 1; $j <= count($value['_topping_options']); $j++) {
 				$option_value_counts1[$key][] = $j;
 			}
 		}
@@ -27,7 +27,7 @@ if (!empty($extra_fields_options)) {
 	$option_value_counts2 = array();
 	for ($i = 1; $i <= count($extra_fields_options); $i++) {
 		foreach ($extra_fields_options as $key => $value) {
-			for ($j = 1; $j <= count($value['topping_options']); $j++) {
+			for ($j = 1; $j <= count($value['_topping_options']); $j++) {
 				$option_value_counts2[$key] = $value;
 			}
 		}
@@ -78,7 +78,7 @@ if (!empty($extra_fields_options)) {
 						foreach ($option_value_counts3 as $key => $extra_fields_option) {
 							$toppings = get_post_meta($food_id, '_food_toppings', true);
 							$topping_required = (isset($extra_fields_option['topping_required']) && !empty($extra_fields_option['topping_required']) ? (($extra_fields_option['topping_required'] === 'yes') ? 'checked' : '') : '');
-							$topping_key = str_replace(" ", "_", strtolower($extra_fields_option['topping_name']));
+							$topping_key = str_replace(" ", "_", strtolower($extra_fields_option['_topping_name']));
 					?>
 							<div class="wpfm-options-wrap wpfm-metabox postbox wpfm-options-box-<?php echo $key; ?>">
 								<input type="hidden" name="repeated_options[]" value="<?php echo $key; ?>" class="repeated-options">
@@ -86,7 +86,7 @@ if (!empty($extra_fields_options)) {
 									<a href="javascript: void(0);" data-id="<?php echo $key; ?>" class="wpfm-delete-btn dashicons dashicons-dismiss">Remove</a>
 									<div class="wpfm-togglediv" title="Click to toggle" aria-expanded="false" data-row-count="<?php echo $key; ?>"></div>
 									<div class="wpfm-sort"></div>
-									<strong class="attribute_name"><?php echo $extra_fields_option['topping_name']; ?></strong>
+									<strong class="attribute_name"><?php echo $extra_fields_option['_topping_name']; ?></strong>
 									<span class="attribute_key"><input type="hidden" name="topping_key_<?php echo esc_attr($key); ?>" value="<?php echo $topping_key; ?>" readonly=""></span>
 								</h3>
 								<div class="wpfm-metabox-content wpfm-options-box">
@@ -95,7 +95,7 @@ if (!empty($extra_fields_options)) {
 										$count = 0;
 										foreach ($topping_fields as $key2 => $field) :
 											if ($key2 !== 'topping_options') {
-												$field['value'] = isset($toppings[$key][$key2]) && !empty($toppings[$key][$key2]) ? $toppings[$key][$key2] : '';
+												$field['value'] = isset($toppings[$key]['_' . $key2]) && !empty($toppings[$key]['_' . $key2]) ? $toppings[$key]['_' . $key2] : '';
 												if ($key2 !== 'topping_name') {
 													$key2 = $key2 . "_" . $key;
 												} else {
@@ -131,7 +131,7 @@ if (!empty($extra_fields_options)) {
 															</thead>
 															<tbody class="ui-sortable">
 																<?php
-																foreach ($extra_fields_option['topping_options'] as $sub_value_count => $values) {
+																foreach ($extra_fields_option['_topping_options'] as $sub_value_count => $values) {
 																	$option_default = ($values['option_default'] === 'on') ? 'checked' : '';
 																	$option_fixed_amount = ($values['option_price_type'] === 'fixed_amount') ? 'selected' : '';
 																	$option_quantity_based = ($values['option_price_type'] === 'quantity_based') ? 'selected' : '';

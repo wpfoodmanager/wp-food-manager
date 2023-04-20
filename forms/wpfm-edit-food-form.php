@@ -70,7 +70,7 @@ class WPFM_Edit_Food_Form extends WPFM_Add_Food_Form {
 							if ($key == 'topping_options') {
 								if (!empty($extra_fields_options)) {
 									foreach ($extra_fields_options as $ext_key => $extra_fields_option) {
-										$this->fields[$group_key][$key]['value'] = $extra_fields_option['topping_options'];
+										$this->fields[$group_key][$key]['value'] = $extra_fields_option['_topping_options'];
 									}
 								}
 							}
@@ -85,7 +85,7 @@ class WPFM_Edit_Food_Form extends WPFM_Add_Food_Form {
 							if ($key == 'topping_options') {
 								if (!empty($extra_fields_options)) {
 									foreach ($extra_fields_options as $ext_key => $extra_fields_option) {
-										$this->fields[$group_key][$key]['value'][$ext_key] = $extra_fields_option['topping_options'];
+										$this->fields[$group_key][$key]['value'][$ext_key] = $extra_fields_option['_topping_options'];
 										array_unshift($this->fields[$group_key][$key]['value'], "");
 										unset($this->fields[$group_key][$key]['value'][0]);
 									}
