@@ -47,11 +47,20 @@ $food = $post;
                             <?php do_action('single_food_overview_before'); ?>
                             <div class="wpfm-single-food-short-info">
                                 <div class="wpfm-food-details">
+                                    <div class="food-details-row">
                                     <?php if (get_option('food_manager_food_item_show_hide') && get_stock_status()) : ?>
                                         <div class="food-stock-status">
                                             <?php display_stock_status(); ?>
                                         </div>
                                     <?php endif; ?>
+                                    <?php
+                                    $view_count = get_food_views_count($post);
+                                    if ($view_count) : ?>
+                                        <div class="wpfm-viewed-food wpfm-tooltip wpfm-tooltip-bottom"><i class="wpfm-icon-eye"></i> <?php printf(__(' %d', 'wp-food-manager'), $view_count); ?>
+                                            <span class="wpfm-tooltiptext"><?php printf(__('%d people viewed this food.', 'wp-food-manager'), $view_count); ?></span>
+                                        </div>
+                                    <?php endif; ?>
+                                    </div>
                                     <div class="wpfm-food-title">
                                         <h3 class="wpfm-heading-text"><?php the_title(); ?></h3>
                                         <?php display_food_veg_nonveg_icon_tag(); ?>
@@ -62,13 +71,7 @@ $food = $post;
                                     <?php /* ?><div class="wpfm-food-author">
                                         <div class="wpfm-food-author-name">by <?php echo the_author_posts_link(); ?></div>
                                     </div><?php */ ?>
-                                    <?php
-                                    $view_count = get_food_views_count($post);
-                                    if ($view_count) : ?>
-                                        <div class="wpfm-viewed-food wpfm-tooltip wpfm-tooltip-bottom"><i class="wpfm-icon-eye"></i> <?php printf(__(' %d', 'wp-food-manager'), $view_count); ?>
-                                            <span class="wpfm-tooltiptext"><?php printf(__('%d people viewed this food.', 'wp-food-manager'), $view_count); ?></span>
-                                        </div>
-                                    <?php endif; ?>
+                                    
                                 </div>
                             </div>
                             <div class="wpfm-single-food-body-content">

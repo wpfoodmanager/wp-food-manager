@@ -1568,7 +1568,7 @@ a.button.wpfm-add-row:hover {
 }
 
 .wpfm-single-food-page .wpfm-food-price {
-    margin: 15px 0;
+    margin: 10px 0;
     font-size: 22px;
     font-weight: 500;
     display: flex;
@@ -1820,6 +1820,7 @@ a.button.wpfm-add-row:hover {
 
 .wpfm-single-food-page .wpfm-single-food-wrapper .wpfm-single-food-body .wpfm-single-food-left-content .wpfm-single-food-body-content {
     padding: 30px;
+    padding-top: 10px;
 }
 
 .wpfm-single-food-page .wpfm-single-food-wrapper .wpfm-single-food-body .wpfm-single-food-left-content .wpfm-single-food-body-content .wpfm-heading-text {
@@ -2221,6 +2222,11 @@ form#food_preview {
     display: inline-block;
     vertical-align: top;
     color: var(--wpfm-dark-color);
+}
+.wpfm-food-details .food-details-row{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
 /* ===== 11. FOOD SINGLE PAGE END ===== */
