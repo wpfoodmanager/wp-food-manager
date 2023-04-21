@@ -997,10 +997,6 @@ class WPFM_ActionHooks {
                             }
                         }
                         update_post_meta($post_id, '_' . $key, $multiArrayIng);
-                        // Enable ingredients to display
-                        if (!is_admin()) {
-                            update_post_meta($post_id, '_enable_food_ingre', true);
-                        }
                     } else {
                         update_post_meta($post_id, '_' . $key, array());
                     }
@@ -1045,10 +1041,6 @@ class WPFM_ActionHooks {
                             }
                         }
                         update_post_meta($post_id, '_' . $key, $multiArrayNutri);
-                        // Enable nutritions to display
-                        if (!is_admin()) {
-                            update_post_meta($post_id, '_enable_food_nutri', true);
-                        }
                     } else {
                         update_post_meta($post_id, '_' . $key, array());
                     }
