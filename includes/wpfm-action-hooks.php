@@ -908,13 +908,6 @@ class WPFM_ActionHooks {
                             update_post_meta($post_id, '_' . $key, wp_kses_post(stripslashes($_POST[$key])));
                         }
                         break;
-                    case 'checkbox':
-                        if (isset($_POST[$key])) {
-                            update_post_meta($post_id, '_' . $key, 1);
-                        } else {
-                            update_post_meta($post_id, '_' . $key, 0);
-                        }
-                        break;
                     case 'date':
                         if (isset($_POST[$key])) {
                             $date = $_POST[$key];
