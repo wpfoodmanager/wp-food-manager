@@ -263,7 +263,7 @@ class WPFM_Add_Food_Form extends WPFM_Form {
 					'priority'    => 3
 				),
 				'topping_options' => array(
-					'label'       => __('Choices', 'wp-food-manager'),
+					'label'       => __('Options', 'wp-food-manager'),
 					'type'        => 'options',
 					'required'    => false,
 					'placeholder' => __('Enter option name', 'wp-food-manager'),
