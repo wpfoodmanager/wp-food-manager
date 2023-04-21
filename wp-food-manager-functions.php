@@ -75,13 +75,17 @@ if (!function_exists('get_food_listings')) :
 		if (!empty($args['search_food_types'][0])) {
 			$field    = is_numeric($args['search_food_types'][0]) ? 'term_id' : 'slug';
 			$operator = 'all' === get_option('food_manager_food_type_filter_type', 'all') && sizeof($args['search_food_types']) > 1 ? 'AND' : 'IN';
-			$query_args['tax_query'][] = array(
-				'taxonomy'         => 'food_manager_type',
-				'field'            => $field,
-				'terms'            => array_values($args['search_food_types']),
-				'include_children' => $operator !== 'AND',
-				'operator'         => $operator
-			);
+			$query_args['tax_query']['relation'] = 'OR';
+			$search_food_types = array_values($args['search_food_types']);
+			foreach( $search_food_types as $search_food_type ){
+				$query_args['tax_query'][] = array(
+					'taxonomy'         => 'food_manager_type',
+					'field'            => $field,
+					'terms'            => $search_food_type,
+					'include_children' => $operator !== 'AND',
+					'operator'         => $operator
+				);
+			}
 		}
 		if (!empty($args['search_tags'][0])) {
 			$field    = is_numeric($args['search_tags'][0]) ? 'term_id' : 'slug';

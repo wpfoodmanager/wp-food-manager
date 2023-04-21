@@ -517,6 +517,8 @@ class WPFM_ActionHooks {
                 <?php
                 if (get_option('food_manager_food_item_show_hide') == 0 && get_stock_status() !== 'fm_outofstock') {
                     $food_cnt++;
+                } elseif (get_option('food_manager_food_item_show_hide') == 1 && get_stock_status()) {
+                    $food_cnt++;
                 }
                 get_food_manager_template_part('content', 'food_manager'); ?>
             <?php endwhile; ?>
