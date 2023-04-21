@@ -72,7 +72,6 @@ Once you add food items to your site, make it easy for your customers to find th
  * Driver app 
  * Order tracking app
  * WhatsApp and SMS notifications
- * Online order calendar 
  * Tips and rewards
 * MailChimp and SendinBlue integrations
 * Restaurant reservations
