@@ -101,9 +101,7 @@ var WPFM_Frontend = function () {
                         jQuery(this).attr('class', 'option-tr-' + humanNum);
                         jQuery(this).children('.option-value-class').val(humanNum);
                         jQuery(this).children('td').children('.opt_name').attr('name', repeater_row_count + '_option_name_' + humanNum);
-                        jQuery(this).children('td').children('.opt_default').attr('name', repeater_row_count + '_option_default_' + humanNum);
                         jQuery(this).children('td').children('.opt_price').attr('name', repeater_row_count + '_option_price_' + humanNum);
-                        jQuery(this).children('td').children('.opt_select').attr('name', repeater_row_count + '_option_price_type_' + humanNum);
                         jQuery(this).children('td').children('.option-delete-btn').attr('data-id', humanNum);
                     });
                 }
@@ -217,9 +215,7 @@ var WPFM_Frontend = function () {
                             jQuery(this).attr('class', 'option-tr-' + humanNum);
                             jQuery(this).children('.option-value-class').val(humanNum);
                             jQuery(this).children('td').children('.opt_name').attr('name', repeater_row_count + '_option_name_' + humanNum);
-                            jQuery(this).children('td').children('.opt_default').attr('name', repeater_row_count + '_option_default_' + humanNum);
                             jQuery(this).children('td').children('.opt_price').attr('name', repeater_row_count + '_option_price_' + humanNum);
-                            jQuery(this).children('td').children('.opt_select').attr('name', repeater_row_count + '_option_price_type_' + humanNum);
                             jQuery(this).children('td').children('.option-delete-btn').attr('data-id', humanNum);
                         });
                     }

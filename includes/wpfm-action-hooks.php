@@ -146,38 +146,8 @@ class WPFM_ActionHooks {
         add_action('food_manager_food_filters_end', array($this, 'food_filter_results'), 30);
         add_action('food_manager_output_foods_no_results', array($this, 'output_no_results'));
 
-        // Register topping's meta fields
-        add_action('init', array($this, 'register_topping_fields'));
-        if (class_exists('WPFM_Writepanels')) {
-            add_action('food_manager_topping_add_form_fields', array(WPFM_Writepanels::instance(), 'add_topping_fields'));
-            add_action('food_manager_topping_edit_form_fields', array(WPFM_Writepanels::instance(), 'edit_topping_fields'));
-        }
-        add_action('edit_food_manager_topping', array($this, 'save_topping_fields'), 9);
-        add_action('create_food_manager_topping', array($this, 'save_topping_fields'));
-
         add_action('wp_ajax_term_ajax_search',        array($this, 'term_ajax_search'));
         add_action('wp_ajax_nopriv_term_ajax_search', array($this, 'term_ajax_search'));
-    }
-
-    /**
-     * Save Topping fields
-     * 
-     * @since 1.0.1
-     */
-    public function save_topping_fields($term_id) {
-        if (!isset($_POST['topping_nonce']) || !wp_verify_nonce($_POST['topping_nonce'], 'save_toppings'))
-            return;
-        $topping_required = isset($_POST['topping_required']) ? $_POST['topping_required'] : '';
-        update_term_meta($term_id, '_topping_required', $topping_required);
-    }
-
-    /**
-     * This will register topping's meta fields
-     * 
-     * @since 1.0.1
-     */
-    public function register_topping_fields() {
-        register_meta('term', 'topping_required', array());
     }
 
     /**
@@ -1117,22 +1087,18 @@ class WPFM_ActionHooks {
                             foreach ($_POST['option_value_count'] as $option_key_count) {
                                 if ($option_key_count && is_array($option_key_count)) {
                                     foreach ($option_key_count as $option_value_count) {
-                                        if (!empty($_POST[$count . '_option_name_' . $option_value_count]) || !empty($_POST[$count . '_option_default_' . $option_value_count]) || !empty($_POST[$count . '_option_price_' . $option_value_count])) {
+                                        if (!empty($_POST[$count . '_option_name_' . $option_value_count]) || !empty($_POST[$count . '_option_price_' . $option_value_count])) {
                                             $option_values[$option_value_count] = array(
                                                 'option_name' => isset($_POST[$count . '_option_name_' . $option_value_count]) ? $_POST[$count . '_option_name_' . $option_value_count] : '',
-                                                'option_default' => isset($_POST[$count . '_option_default_' . $option_value_count]) ? $_POST[$count . '_option_default_' . $option_value_count] : '',
                                                 'option_price' => isset($_POST[$count . '_option_price_' . $option_value_count]) ? $_POST[$count . '_option_price_' . $option_value_count] : '',
-                                                'option_price_type' => isset($_POST[$count . '_option_price_type_' . $option_value_count]) ? $_POST[$count . '_option_price_type_' . $option_value_count] : ''
                                             );
                                         }
                                     }
                                 } else {
-                                    if (!empty($_POST[$count . '_option_name_' . $option_key_count]) || !empty($_POST[$count . '_option_default_' . $option_key_count]) || !empty($_POST[$count . '_option_price_' . $option_key_count])) {
+                                    if (!empty($_POST[$count . '_option_name_' . $option_key_count]) || !empty($_POST[$count . '_option_price_' . $option_key_count])) {
                                         $option_values[$option_key_count] = array(
                                             'option_name' => isset($_POST[$count . '_option_name_' . $option_key_count]) ? $_POST[$count . '_option_name_' . $option_key_count] : '',
-                                            'option_default' => isset($_POST[$count . '_option_default_' . $option_key_count]) ? $_POST[$count . '_option_default_' . $option_key_count] : '',
                                             'option_price' => isset($_POST[$count . '_option_price_' . $option_key_count]) ? $_POST[$count . '_option_price_' . $option_key_count] : '',
-                                            'option_price_type' => isset($_POST[$count . '_option_price_type_' . $option_key_count]) ? $_POST[$count . '_option_price_type_' . $option_key_count] : ''
                                         );
                                     }
                                 }
@@ -1163,9 +1129,7 @@ class WPFM_ActionHooks {
                     foreach ($term_ids as $t_key => $term_id) {
                         $t_key++;
                         $description = (isset($_POST['topping_description_' . $t_key]) && !empty($_POST['topping_description_' . $t_key])) ? $_POST['topping_description_' . $t_key] : '';
-                        $topping_required = (isset($_POST['topping_required_' . $t_key]) && !empty($_POST['topping_required_' . $t_key])) ? $_POST['topping_required_' . $t_key] : '';
                         wp_update_term($term_id, $taxonomy, array('description' => $description));
-                        update_term_meta($term_id, '_topping_required', $topping_required);
                     }
                 }
             }
@@ -2042,12 +2006,10 @@ class WPFM_ActionHooks {
         $items = array();
         if ($results->terms) {
             foreach ($results->terms as $term) {
-                $topping_required = get_term_meta($term->term_id, '_topping_required', true);
                 $items[] = [
                     'id' => $term->term_id,
                     'label' => $term->name,
                     'description' => term_description($term->term_id, $_REQUEST['taxonomy']),
-                    'required' => $topping_required,
                 ];
             }
         }

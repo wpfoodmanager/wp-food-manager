@@ -224,9 +224,7 @@ var WPFM_Admin = function () {
                         jQuery(this).attr('class', 'option-tr-' + humanNum);
                         jQuery(this).children('.option-value-class').val(humanNum);
                         jQuery(this).children('td').children('.opt_name').attr('name', repeater_row_count + '_option_name_' + humanNum);
-                        jQuery(this).children('td').children('.opt_default').attr('name', repeater_row_count + '_option_default_' + humanNum);
                         jQuery(this).children('td').children('.opt_price').attr('name', repeater_row_count + '_option_price_' + humanNum);
-                        jQuery(this).children('td').children('.opt_select').attr('name', repeater_row_count + '_option_price_type_' + humanNum);
                         jQuery(this).children('td').children('.option-delete-btn').attr('data-id', humanNum);
                     });
                 }
@@ -395,9 +393,7 @@ var WPFM_Admin = function () {
                             jQuery(this).attr('class', 'option-tr-' + humanNum);
                             jQuery(this).children('.option-value-class').val(humanNum);
                             jQuery(this).children('td').children('.opt_name').attr('name', repeater_row_count + '_option_name_' + humanNum);
-                            jQuery(this).children('td').children('.opt_default').attr('name', repeater_row_count + '_option_default_' + humanNum);
                             jQuery(this).children('td').children('.opt_price').attr('name', repeater_row_count + '_option_price_' + humanNum);
-                            jQuery(this).children('td').children('.opt_select').attr('name', repeater_row_count + '_option_price_type_' + humanNum);
                             jQuery(this).children('td').children('.option-delete-btn').attr('data-id', humanNum);
                         });
                     }
@@ -446,12 +442,10 @@ var WPFM_Admin = function () {
                 var row_count = jQuery(this).closest(".postbox").children(".repeated-options").val();
                 if (jQuery.inArray(field_type, ["checkbox", "select", "radio"]) !== -1) {
                     jQuery(this).closest('.postbox').children('.wpfm-metabox-content').children('.wpfm-content').children('.wpfm-admin-options-table').show();
-                    jQuery(this).closest('.postbox').children('.wpfm-metabox-content').children('.wpfm-content').children('.wpfm-admin-postbox-form-field._option_price_type_' + row_count).hide();
                     jQuery(this).closest('.postbox').children('.wpfm-metabox-content').children('.wpfm-content').children('.wpfm-admin-postbox-form-field._option_price_' + row_count).hide();
 
                 } else {
                     jQuery(this).closest('.postbox').children('.wpfm-metabox-content').children('.wpfm-content').children('.wpfm-admin-options-table').hide();
-                    jQuery(this).closest('.postbox').children('.wpfm-metabox-content').children('.wpfm-content').children('.wpfm-admin-postbox-form-field._option_price_type_' + row_count).show();
                     jQuery(this).closest('.postbox').children('.wpfm-metabox-content').children('.wpfm-content').children('.wpfm-admin-postbox-form-field._option_price_' + row_count).show();
                 }
             },

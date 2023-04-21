@@ -254,18 +254,6 @@ class WPFM_Add_Food_Form extends WPFM_Form {
 					'priority'    => 1,
 					'taxonomy'    => 'food_manager_topping'
 				),
-				'topping_required' => array(
-					'label'       => __('Topping Required', 'wp-food-manager'),
-					'type'        => 'radio',
-					'required'    => false,
-					'placeholder' => __('Topping Required', 'wp-food-manager'),
-					'default'	  => 'no',
-					'options' 	  => array(
-						'no' => __('No', 'wp-food-manager'),
-						'yes' => __('Yes', 'wp-food-manager'),
-					),
-					'priority'    => 2
-				),
 				'topping_description' => array(
 					'label'       => __('Topping Description', 'wp-food-manager'),
 					'type'        => 'wp-editor',

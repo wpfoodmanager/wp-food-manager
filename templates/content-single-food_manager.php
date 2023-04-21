@@ -134,9 +134,6 @@ $food = $post;
                                         echo "<h3 class='wpfm-heading-text'>Extra Toppings</h3>";
                                         foreach ($ext_options as $key => $ext_option) {
                                             $field_required = '';
-                                            if ($ext_option['_topping_required'] == 'yes') {
-                                                $field_required = 'required';
-                                            }
                                             echo "<div class='wpfm-input-field-common " . $more_class . "'>";
                                             echo '<label for="' . str_replace(" ", "-", strtolower($ext_option['_topping_name'])) . '"><strong>' . $ext_option['_topping_name'] . '</strong></label>';
                                             if (!empty($ext_option['_topping_description'])) {

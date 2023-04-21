@@ -77,7 +77,6 @@ if (!empty($extra_fields_options)) {
 					<?php if (!empty($extra_fields_options)) {
 						foreach ($option_value_counts3 as $key => $extra_fields_option) {
 							$toppings = get_post_meta($food_id, '_food_toppings', true);
-							$topping_required = (isset($extra_fields_option['topping_required']) && !empty($extra_fields_option['topping_required']) ? (($extra_fields_option['topping_required'] === 'yes') ? 'checked' : '') : '');
 							$topping_key = str_replace(" ", "_", strtolower($extra_fields_option['_topping_name']));
 					?>
 							<div class="wpfm-options-wrap wpfm-metabox postbox wpfm-options-box-<?php echo $key; ?>">
@@ -123,18 +122,13 @@ if (!empty($extra_fields_options)) {
 																	<th> </th>
 																	<th>#</th>
 																	<th>Label</th>
-																	<th>Default</th>
 																	<th>Price</th>
-																	<th>Type of Price</th>
 																	<th></th>
 																</tr>
 															</thead>
 															<tbody class="ui-sortable">
 																<?php
 																foreach ($extra_fields_option['_topping_options'] as $sub_value_count => $values) {
-																	$option_default = ($values['option_default'] === 'on') ? 'checked' : '';
-																	$option_fixed_amount = ($values['option_price_type'] === 'fixed_amount') ? 'selected' : '';
-																	$option_quantity_based = ($values['option_price_type'] === 'quantity_based') ? 'selected' : '';
 																?>
 																	<tr class="option-tr-<?php echo $sub_value_count; ?>">
 																		<td><span class="wpfm-option-sort">☰</span></td>
@@ -143,16 +137,7 @@ if (!empty($extra_fields_options)) {
 																			<input type="text" name="<?php echo $key; ?>_option_name_<?php echo $sub_value_count; ?>" value="<?php echo $values['option_name']; ?>" class="opt_name" pattern=".*\S+.*" required>
 																		</td>
 																		<td>
-																			<input type="checkbox" name="<?php echo $key; ?>_option_default_<?php echo $sub_value_count; ?>" class="opt_default" <?php echo $option_default; ?>>
-																		</td>
-																		<td>
 																			<input type="number" name="<?php echo $key; ?>_option_price_<?php echo $sub_value_count; ?>" value="<?php echo $values['option_price']; ?>" class="opt_price" step="any" min="0" required>
-																		</td>
-																		<td>
-																			<select name="<?php echo $key; ?>_option_price_type_<?php echo $sub_value_count; ?>" class="opt_select">
-																				<option value="quantity_based" <?php echo $option_quantity_based; ?>>Quantity Based</option>
-																				<option value="fixed_amount" <?php echo $option_fixed_amount; ?>>Fixed Amount</option>
-																			</select>
 																		</td>
 																		<td><a href="javascript: void(0);" data-id="<?php echo $sub_value_count; ?>" class="option-delete-btn dashicons dashicons-dismiss"></a></td>
 																		<input type="hidden" class="option-value-class" name="option_value_count[<?php echo $key; ?>][]" value="<?php echo $sub_value_count; ?>">
@@ -165,14 +150,7 @@ if (!empty($extra_fields_options)) {
 								                    <td><span class='wpfm-option-sort'>☰</span></td>
 								                    <td>%%repeated-option-index3%%</td>
 								                    <td><input type='text' name='%%repeated-option-index2%%_option_name_%%repeated-option-index3%%' value='' class='opt_name' pattern='.*\S+.*' required></td>
-								                    <td><input type='checkbox' name='%%repeated-option-index2%%_option_default_%%repeated-option-index3%%' class='opt_default'></td>
 								                    <td><input type='number' name='%%repeated-option-index2%%_option_price_%%repeated-option-index3%%' value='' class='opt_price' min='0' required></td>
-								                    <td>
-								                        <select name='%%repeated-option-index2%%_option_price_type_%%repeated-option-index3%%' class='opt_select'>
-								                        <option value='quantity_based'>Quantity Based</option>
-								                        <option value='fixed_amount'>Fixed Amount</option>
-								                        </select>
-								                    </td>
 								                    <td><a href='javascript: void(0);' data-id='%%repeated-option-index3%%' class='option-delete-btn dashicons dashicons-dismiss'></a></td>
 								                    <input type='hidden' class='option-value-class' name='option_value_count[%%repeated-option-index2%%][]' value='%%repeated-option-index3%%'>
 								                </tr>">Add Row</a>

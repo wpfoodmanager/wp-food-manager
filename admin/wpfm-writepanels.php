@@ -118,7 +118,7 @@ class WPFM_Writepanels {
 				<?php } ?>
 			</div>
 		</div>
-	<?php
+<?php
 	}
 
 	/**
@@ -231,56 +231,6 @@ class WPFM_Writepanels {
 			return 0;
 		}
 		return ($a['priority'] < $b['priority']) ? -1 : 1;
-	}
-
-	/**
-	 * Edit toppings field in admin
-	 * 
-	 * @param object $term
-	 * @since 1.0.1
-	 */
-	public function edit_topping_fields($term) {
-		wp_nonce_field('save_toppings', 'topping_nonce');
-		$topping_required = get_term_meta($term->term_id, '_topping_required', true);
-		$topping_required_options = array(
-			'no' => __('No', 'wp-food-manager'),
-			'yes' => __('Yes', 'wp-food-manager'),
-		);
-	?>
-		<tr class="form-field">
-			<th scope="row"><label><?php _e('Required', 'wp-food-manager'); ?></label></th>
-			<td>
-				<?php foreach ($topping_required_options as $key => $options) {
-					$checked = ($key == $topping_required) ? 'checked' : '';
-					echo "<input type='radio' id='{$key}' class='radio {$key}' name='topping_required' value='{$key}' {$checked}>";
-					echo "<label for='{$key}'>{$options}</label>";
-				} ?>
-			</td>
-		</tr>
-	<?php
-	}
-
-	/**
-	 * Add toppings field in admin
-	 * 
-	 * @since 1.0.1
-	 */
-	public function add_topping_fields() { ?>
-		<?php wp_nonce_field('save_toppings', 'topping_nonce'); ?>
-		<div class="form-field">
-			<label><?php _e('Required', 'text_domain'); ?></label>
-			<span class="toppings-radio-btn">
-				<span class="btn-no">
-					<input type="radio" id="no" class="radio no" name="topping_required" value="no">
-					<label for="no">No</label>
-				</span>
-				<span class="btn-yes">
-					<input type="radio" id="yes" class="radio yes" name="topping_required" value="yes">
-					<label for="yes">Yes</label>
-				</span>
-			</span>
-		</div>
-<?php
 	}
 }
 
