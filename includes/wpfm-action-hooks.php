@@ -1766,7 +1766,7 @@ class WPFM_ActionHooks {
         wp_enqueue_style('wp-food-manager-font-style');
         wp_enqueue_style('wp-food-manager-food-icons-style');
         wp_enqueue_editor();
-        wp_register_script('wpfm-term-autocomplete', WPFM_PLUGIN_URL . '/assets/js/term-autocomplete.js', array('jquery'), '1.0.1', true);
+        wp_register_script('wpfm-term-autocomplete', WPFM_PLUGIN_URL . '/assets/js/term-autocomplete.js', array('jquery'), WPFM_VERSION, true);
         wp_localize_script(
             'wpfm-term-autocomplete',
             'wpfm_term_autocomplete',
@@ -1893,7 +1893,7 @@ class WPFM_ActionHooks {
         if (isset($_GET['page']) && 'food_manager_setup' === $_GET['page']) {
             wp_enqueue_style('food_manager_setup_css', WPFM_PLUGIN_URL . '/assets/css/setup.min.css', array('dashicons'));
         }
-        wp_register_script('wpfm-term-autocomplete', WPFM_PLUGIN_URL . '/assets/js/term-autocomplete.js', array('jquery', 'jquery-ui-autocomplete'), '1.0.1', true);
+        wp_register_script('wpfm-term-autocomplete', WPFM_PLUGIN_URL . '/assets/js/term-autocomplete.js', array('jquery', 'jquery-ui-autocomplete'), WPFM_VERSION, true);
         wp_localize_script(
             'wpfm-term-autocomplete',
             'wpfm_term_autocomplete',
