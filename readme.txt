@@ -182,6 +182,154 @@ You can also find us on GitHub: see the [WP Food Manager GitHub Repository](http
 
 == Changelog ==
 
+= 1.0.2 [ 21th April 2023 ] =
+
+Fixed : Price value is accepted in minus.
+Fixed : Enable and disable for Ingredients&Nutrition is not working.
+Fixed : Warning at edit food time from the frontend side.
+Fixed : Removed Topping required and other fields.
+Fixed : The topping count is not displaying.
+Fixed : Tab group is not working in the toppings extra field.
+Fixed : Multiple banner sync is not working.
+Fixed : Edit time Ingredients&Nutrition is not displaying the previously added value.
+Fixed : Removed Term autocomplete and term multi-select appearance type from the field editor.
+Fixed : If we delete the plugin with all data clear then still topping data remains in the database.
+Fixed : If the topping price is not provided then it gives a console error.
+Fixed : Frontside Foods page display a console error as file 404.
+Fixed : Front side adding toppings displaying a warning in the admin side on the edit food page.
+Fixed : Editing toppings from admin side price change and update gives error.
+Fixed : Admin side makes topping label and required design proper.
+Fixed : Food menu icon UI listing height issue.
+Fixed : Class Name and need applied instance everywhere.
+Fixed : Action & Filter Hooks Define Rules.
+Fixed : Make the Class name perfect for all JS files.
+Fixed : Edit time tag is not displaying.
+Fixed : Food listing type and category selection issue in the food menu.
+Fixed : Search count shows hidden food which is out of stock.
+Fixed : Preview label visibility issue on add food page.
+Fixed : Warning when a required field is admin only and creating food from the front end.
+Fixed : Make the Topping option label proper.
+Fixed : Remove food units from the food detail page.
+Fixed : The food banner is not displaying on the admin side.
+Fixed : Nutrition is not displaying on add food page.
+Fixed : Delete Food gives an error.
+Fixed : Topping Description Editor is changed.
+Fixed : Postmeta table having an unused field.
+Fixed : Usermeta table has an unused field.
+Fixed : The preview button is not displaying with the default theme.
+Fixed : Food submission account creation is missing.
+Fixed : Multiple banner upload setting is not working.
+Fixed : Multiple Banner images not able to remove.
+Fixed : Food Listing Structure getting changed from setting options when hiding out-of-stock food.
+Fixed : The food Category, Type, and tag page Image does not look proper.
+Fixed : If food type is not given then the list UI is not proper.
+Fixed : Food Type not displayed as selected on edit food time.
+Fixed : Adding food displays an error.
+Fixed : Wrong redirection link in Page Setup page.
+Fixed : Makes wording proper in General settings.
+Fixed : Make topping title and design proper at edit time on the admin side.
+Fixed : Nutrition and Ingredient not able to add in twenty twenty-three theme.
+Fixed : The tag is not displayed properly on the food detail page.
+Fixed : The food detail page sidebar and content design do not look proper.
+Fixed : User can add topping sub-options without adding Topping.
+Fixed : Food tag disabled displaying a warning on the front side.
+Fixed : Food detail page remove author details.
+Fixed : Tag is missing from field editor and add food.
+Fixed : Change default user roles for Food Manager.
+Fixed : Field editor displaying extra field when we edit or add.
+Fixed : Field editor delete fields not working properly.
+Fixed : Add food page fields placeholder text make proper.
+Fixed : Field editor only for admin is missing.
+Fixed : The field editor removes the button that is missing.
+Fixed : Field editor validation is missing.
+Fixed : Food loading displaying duplicate foods.
+Fixed : Notice change on food listing page when no foods.
+Fixed : Fronted edit action option missing in the dashboard for food.
+Fixed : Make Category, Type, and Tag page UI similar.
+Fixed : View any draft food displaying an error.
+Fixed : If we add a menu without an icon then in debug it displays a warning.
+Fixed : Spacing issue in the food menu created in the food category and food type.
+Fixed : Color issue in advanced settings.
+Fixed : Add food page responsive mode dropdown fields are not able to access.
+Fixed : Menu detail page icon tooltip UI is not displaying properly.
+Fixed : Food description link brake the UI on the menu page.
+Fixed : Make food listing fields keyword proper.
+Fixed : Admin side updates any post message text is not proper.
+Fixed : Publish any food should display a success message.
+Fixed : The food dashboard filter message UI is not proper.
+Fixed : Menu image title keyword is not proper.
+Fixed : Menu front page pagination is not working.
+Fixed : Change placeholder image.
+Fixed : Food dashboard In mobile view design should be proper.
+Fixed : Delete food message design should be proper.
+Fixed : Edit food type displays the wrong text in the admin bar.
+Fixed : In mobile view food dashboard food type sign is not displaying properly.
+Fixed : The food type tooltip is not displayed properly on the food listing.
+Fixed : Responsive mode makes space between the social icon title and the food category.
+Fixed : Improve the notice text after adding the food.
+Fixed : Removed Category from food dashboard.
+Fixed : Foods admin side sorting is missing.
+Fixed : Food dashboard guest user message change.
+Fixed : Front side adds nutrition and the Ingredients design is not proper.
+Fixed : Remove Category dependency from the food menu.
+Fixed : The field editor changes the priority of Ingredient and Nutrition so that the dropdown on the front side is not displayed.
+Fixed : Add/Edit time sale price should not be compulsory.
+Fixed : The currency setting position is not working on the front side.
+Fixed : If use twenty twenty-three themes then the file upload section design is not proper.
+Fixed : Food detail page - In the PDF file download button is not displayed.
+Fixed : Food category image is not displaying.
+Fixed : If there is no food item then on frontside it is displaying the loader.
+Fixed : In admin side food listing it should display food status.
+Fixed : Food unit should not display on frontside if we disable from setting.
+Fixed : woo-commerce setting tab is not able to access.
+Fixed : Food tag text displaying extra on the food detail page.
+Fixed : Extra Toppings form - Change Textarea field type to file.
+Fixed : Display Warning: Undefined property error message.
+Fixed : Edit food - The food banner image is not saved.
+Fixed : Backend - Both fields same image is displayed in the file type field.
+Fixed : Extra form field - WP editor - Formatting setting is not saved.
+Fixed : Extra form field - WP editor - WP editor is not working.
+Fixed : Backend -Multiple File- PDF file,text file display issue.
+Fixed : Food Dashboard - Pagination option is not working.
+Fixed : Formatting is not applied in the WPeditor type.
+Fixed : Extra form field - File type - Multiple File types not working.
+Fixed : The checkbox field type is not saved.
+Fixed : Extra form field -Text type is not working.
+Fixed : Backend - All food- Need to add tooltip delet,edit ,view icon.
+Fixed : Selected menu icon not visible on the food details page.
+Fixed : Food type - Description is not displayed.
+Fixed : Permalink setting is not working.
+Fixed : Food type information is not displayed on the food detail page.
+Fixed : Food Forms does not save the submitted value.
+Fixed : Pending approval text looks simple.
+Fixed : Backend - Add Approve icon for creating new food posts.
+Fixed : Food Dashboard - Add tooltip for user information.
+Fixed : Food listing - List/box view button does not look proper.
+Fixed : Food Dashboard - Add new food and filter option required.
+Fixed : Price should allow in decimal.
+Fixed : Reset button add on the dashboard page.
+Fixed : Field editor - Warning message.
+Fixed : Order by is not working.
+Fixed : Remove label is not display proper position.
+Added : Add more default values for the Units.
+Added : Add more default values for Nutrition.
+Added : Add more default values for the Ingredients.
+Added : Add more default values for Toppings.
+Added : Notice text in the food menu.
+Added : Notice the text after adding food from the front side.
+Added : Invalid file type notice text.
+Added : Field Editor and meta key storing process.
+Added : Database value and maintain all as Underscore
+Added : Food listing and detail page layout.
+Added : Use the Time picker of WordPress
+Added : Change the nonveg food icon.
+Added : Use of custom tooltip.
+Added : Show the menu shortcode inside add food menu.
+Added : Food manager setup steps.
+Added : Dash icons for the menu icons from WordPress
+Added : Display Food Ingredients & Food Nutrition in the description on the food detail page.
+Added : Users can add ingredients & Nutrition from the Add Food at the fronted side.
+
 = 1.0.1 [ Oct 6th, 2022 ] =
 
 New - Food manager install process steps added.
