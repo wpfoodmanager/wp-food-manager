@@ -146,22 +146,24 @@ $food = $post;
                                             echo '<ul class="wpfm-topping-options">';
                                             if (isset($ext_option['_topping_options']) && !empty($ext_option['_topping_options'])) {
                                                 foreach ($ext_option['_topping_options'] as $key2 => $value2) {
-                                                    echo '<li class="wpfm-topping-items">' . esc_attr($value2['option_name']) .  (isset($value2['option_price']) && !empty($value2['option_price']) ? ' - ' . get_food_manager_currency_symbol() . $value2['option_price']: ''). '</li>';
+                                                    echo '<li class="wpfm-topping-items">' . esc_attr($value2['option_name']) .  (isset($value2['option_price']) && !empty($value2['option_price']) ? ' - ' . get_food_manager_currency_symbol() . $value2['option_price'] : '') . '</li>';
                                                 }
                                             }
                                             echo '</ul>';
                                             do_action('wpfm_singular_option_input_after');
                                             if (!empty($additional_fields_extra_topping)) {
                                                 echo "<div class='wpfm-additional-main-row wpfm-row'>";
+                                                $val_flag = 0;
                                                 foreach ($additional_fields_extra_topping as $name => $field) {
                                                     $field_key = '_' . $name;
                                                     $field_value = !empty($ext_option[$field_key]) ? $ext_option[$field_key] : '';
-                                                    if (isset($field_value)) {
+                                                    if (isset($field_value) && !empty($field_value)) {
+                                                        $val_flag = 1;
                                                         wpfm_extra_topping_form_fields($post, $field, $field_value);
                                                     }
                                                 }
                                                 echo "</div>";
-                                                echo '<span class="wpfm-view-more">View more +</span>';
+                                                echo ($val_flag) ? '<span class="wpfm-view-more">View more +</span>' : '';
                                             }
                                             echo "</div>";
                                         }
