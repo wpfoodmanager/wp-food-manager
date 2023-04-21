@@ -90,7 +90,7 @@ $taxonomies = get_object_taxonomies((object) array('post_type' => 'food_manager'
 		" placeholder="<?php esc_attr_e('N/A', 'wp-food-manager'); ?>" disabled />
 	</td>
 	<td class="field-rules">
-		<?php if (!in_array($child_field_key, $disbled_fields)) : ?>
+		<?php if (!in_array($child_field_key, $disbled_fields) && $field['type'] != 'switch') : ?>
 			<div class="rules">
 				<select name="<?php echo esc_attr($group_key); ?>[<?php echo esc_attr($field_key); ?>][fields][<?php echo esc_attr($child_field_key); ?>][required]">
 					<?php $child_field['required'] = (isset($child_field['required']) ? $child_field['required'] : false); ?>

@@ -97,7 +97,7 @@ $disable_field_types = array('term-autocomplete', 'term-select-multi-appearance'
 						printf('<option value="' . esc_attr($key) . '" ' . selected($field['type'], $key, false) . ' class="wpfm-opt-val ' . esc_attr($key) . '">' . esc_html($type) . '</option>');
 					}
 				} else {
-					if( !in_array($key, $disable_field_types) ){
+					if (!in_array($key, $disable_field_types)) {
 						printf('<option value="' . esc_attr($key) . '" ' . selected($field['type'], $key, false) . ' class="wpfm-opt-val ' . esc_attr($key) . '">' . esc_html($type) . '</option>');
 					}
 				}
@@ -163,24 +163,24 @@ $disable_field_types = array('term-autocomplete', 'term-select-multi-appearance'
 																																							}
 																																							?>" placeholder="<?php esc_attr_e('N/A', 'wp-food-manager'); ?>" disabled />
 	</td>
-	<?php if( $group_key != 'toppings' ){ ?>
-	<td>
-		<select <?php if (in_array($field_key, $disbled_fields)) echo 'disabled'; ?> name="<?php echo esc_attr($group_key); ?>[<?php echo esc_attr($field_key); ?>][tabgroup]" class="field_type">
-			<?php
-			$field['tabgroup'] = isset($field['tabgroup']) ? $field['tabgroup'] : 1;
-			$Writepanels = WPFM_Writepanels::instance();
-			$cnt = 1;
-			foreach ($Writepanels->get_food_data_tabs() as $key => $tab) {
-				$selected = ($field['tabgroup'] == $cnt) ? 'selected': '';
-				echo '<option value="' . $cnt . '"'.$selected.'>' . $tab['label'] . '</option>';
-				$cnt++;
-			}
-			?>
-		</select>
-	</td>
+	<?php if ($group_key != 'toppings') { ?>
+		<td>
+			<select <?php if (in_array($field_key, $disbled_fields)) echo 'disabled'; ?> name="<?php echo esc_attr($group_key); ?>[<?php echo esc_attr($field_key); ?>][tabgroup]" class="field_type">
+				<?php
+				$field['tabgroup'] = isset($field['tabgroup']) ? $field['tabgroup'] : 1;
+				$Writepanels = WPFM_Writepanels::instance();
+				$cnt = 1;
+				foreach ($Writepanels->get_food_data_tabs() as $key => $tab) {
+					$selected = ($field['tabgroup'] == $cnt) ? 'selected' : '';
+					echo '<option value="' . $cnt . '"' . $selected . '>' . $tab['label'] . '</option>';
+					$cnt++;
+				}
+				?>
+			</select>
+		</td>
 	<?php } ?>
 	<td class="field-rules">
-		<?php if (!in_array($field_key, $disbled_fields)) : ?>
+		<?php if (!in_array($field_key, $disbled_fields) && $field['type'] != 'switch') : ?>
 			<div class="rules">
 				<select name="<?php echo esc_attr($group_key); ?>[<?php echo esc_attr($field_key); ?>][required]">
 					<?php $field['required'] = (isset($field['required']) ? $field['required'] : false); ?>
