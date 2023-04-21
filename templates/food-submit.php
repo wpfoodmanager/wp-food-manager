@@ -146,7 +146,7 @@ if (!empty($extra_fields_options)) {
 																			<input type="checkbox" name="<?php echo $key; ?>_option_default_<?php echo $sub_value_count; ?>" class="opt_default" <?php echo $option_default; ?>>
 																		</td>
 																		<td>
-																			<input type="number" name="<?php echo $key; ?>_option_price_<?php echo $sub_value_count; ?>" value="<?php echo $values['option_price']; ?>" class="opt_price" step="any" required>
+																			<input type="number" name="<?php echo $key; ?>_option_price_<?php echo $sub_value_count; ?>" value="<?php echo $values['option_price']; ?>" class="opt_price" step="any" min="0" required>
 																		</td>
 																		<td>
 																			<select name="<?php echo $key; ?>_option_price_type_<?php echo $sub_value_count; ?>" class="opt_select">
@@ -166,7 +166,7 @@ if (!empty($extra_fields_options)) {
 								                    <td>%%repeated-option-index3%%</td>
 								                    <td><input type='text' name='%%repeated-option-index2%%_option_name_%%repeated-option-index3%%' value='' class='opt_name' pattern='.*\S+.*' required></td>
 								                    <td><input type='checkbox' name='%%repeated-option-index2%%_option_default_%%repeated-option-index3%%' class='opt_default'></td>
-								                    <td><input type='number' name='%%repeated-option-index2%%_option_price_%%repeated-option-index3%%' value='' class='opt_price' required></td>
+								                    <td><input type='number' name='%%repeated-option-index2%%_option_price_%%repeated-option-index3%%' value='' class='opt_price' min='0' required></td>
 								                    <td>
 								                        <select name='%%repeated-option-index2%%_option_price_type_%%repeated-option-index3%%' class='opt_select'>
 								                        <option value='quantity_based'>Quantity Based</option>
