@@ -43,7 +43,7 @@
                     <td><input type=&apos;text&apos; name=&apos;%%repeated-option-index2%%_option_name_%%repeated-option-index3%%&apos; value=&apos;&apos; class=&apos;opt_name&apos; pattern=&apos;.*\S+.*&apos; <?php echo (is_admin()) ? '' : 'required'; ?>></td>
                     <td><input type=&apos;number&apos; name=&apos;%%repeated-option-index2%%_option_price_%%repeated-option-index3%%&apos; value=&apos;&apos; class=&apos;opt_price&apos; min=&apos;0&apos;  step=&apos;any&apos; <?php echo (is_admin()) ? '' : 'required'; ?>></td>
                     <td><a href=&apos;javascript: void(0);&apos; data-id=&apos;%%repeated-option-index3%%&apos; class=&apos;option-delete-btn dashicons dashicons-dismiss&apos;></a></td>
-                    <input type=&apos;hidden&apos; class=&apos;option-value-class&apos; name=&apos;option_value_count[%%repeated-option-index2%%][]&apos; value=&apos;%%repeated-option-index3%%&apos;>
+                    <input type=&apos;hidden&apos; class=&apos;option-value-class&apos; name=&apos;option_value_count[]&apos; value=&apos;%%repeated-option-index3%%&apos;>
                 </tr>">Add Row</a>
             </td>
         </tr>
