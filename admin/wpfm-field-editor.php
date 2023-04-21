@@ -243,6 +243,9 @@ class WPFM_Field_Editor {
 					$index = 0;
 					foreach ($group_fields as $field_key => $field_value) {
 						$index++;
+						if (isset($new_fields[$group_key][$field_key]['type']) && $new_fields[$group_key][$field_key]['type'] === 'switch'){
+							$new_fields[$group_key][$field_key]['required'] = 0;
+						}
 						if (isset($new_fields[$group_key][$field_key]['type']) && $new_fields[$group_key][$field_key]['type'] === 'group') {
 							if (isset($field_value['fields']) && !empty($field_value['fields'])) {
 								$child_fields                                     = $this->child_form_editor_save($field_value);
