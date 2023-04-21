@@ -554,7 +554,7 @@ class WPFM_Add_Food_Form extends WPFM_Form {
 	 * @param  string $attachment_url
 	 * @return int attachment id
 	 */
-	protected function create_attachment($attachment_url) {
+	public function create_attachment($attachment_url) {
 		include_once(ABSPATH . 'wp-admin/includes/image.php');
 		include_once(ABSPATH . 'wp-admin/includes/media.php');
 		$upload_dir     = wp_upload_dir();

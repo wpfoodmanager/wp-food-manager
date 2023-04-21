@@ -880,22 +880,48 @@ class WPFM_ActionHooks {
                         }
                     }
                     // Create Attachments ( If not exist ).
-                    $image = get_the_post_thumbnail_url($post_id);
-                    if (empty($image)) {
-                        if (isset($thumbnail_image) && !empty($thumbnail_image)) {
-                            $wp_upload_dir = wp_get_upload_dir();
-                            $baseurl = $wp_upload_dir['baseurl'] . '/';
-                            $wp_attached_file = str_replace($baseurl, '', $thumbnail_image);
-                            $args = array(
-                                'meta_key'       => '_wp_attached_file',
-                                'meta_value'     => $wp_attached_file,
-                                'post_type'      => 'attachment',
-                                'posts_per_page' => 1,
-                            );
-                            $attachments = get_posts($args);
-                            if (!empty($attachments)) {
-                                foreach ($attachments as $attachment) {
-                                    set_post_thumbnail($post_id, $attachment->ID);
+                    if (!is_admin()) {
+                        $maybe_attach = array_filter((array)$thumbnail_image);
+                        // Handle attachments
+                        if (sizeof($maybe_attach) && apply_filters('wpfm_attach_uploaded_files', true)) {
+                            // Get attachments
+                            $attachments     = get_posts('post_parent=' . $post_id . '&post_type=attachment&fields=ids&numberposts=-1');
+                            $attachment_urls = array();
+                            // Loop attachments already attached to the food
+                            foreach ($attachments as $attachment_key => $attachment) {
+                                $attachment_urls[] = wp_get_attachment_url($attachment);
+                            }
+                            foreach ($maybe_attach as $key => $attachment_url) {
+                                if (!in_array($attachment_url, $attachment_urls) && !is_numeric($attachment_url)) {
+                                    $WPFM_Add_Food_Form = WPFM_Add_Food_Form::instance();
+                                    $attachment_id = $WPFM_Add_Food_Form->create_attachment($attachment_url);
+                                    /*
+                                    * set first image of banner as a thumbnail
+                                    */
+                                    if ($key == 0) {
+                                        set_post_thumbnail($post_id, $attachment_id);
+                                    }
+                                }
+                            }
+                        }
+                    } else {
+                        $image = get_the_post_thumbnail_url($post_id);
+                        if (empty($image)) {
+                            if (isset($thumbnail_image) && !empty($thumbnail_image)) {
+                                $wp_upload_dir = wp_get_upload_dir();
+                                $baseurl = $wp_upload_dir['baseurl'] . '/';
+                                $wp_attached_file = str_replace($baseurl, '', $thumbnail_image);
+                                $args = array(
+                                    'meta_key'       => '_wp_attached_file',
+                                    'meta_value'     => $wp_attached_file,
+                                    'post_type'      => 'attachment',
+                                    'posts_per_page' => 1,
+                                );
+                                $attachments = get_posts($args);
+                                if (!empty($attachments)) {
+                                    foreach ($attachments as $attachment) {
+                                        set_post_thumbnail($post_id, $attachment->ID);
+                                    }
                                 }
                             }
                         }
