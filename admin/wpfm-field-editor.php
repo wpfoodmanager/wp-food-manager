@@ -36,6 +36,8 @@ class WPFM_Field_Editor {
 	/**
 	 * Output the screen
 	 * 
+	 * @access public
+	 * @return void
 	 * @since 1.0.0
 	 */
 	public function output() {
@@ -58,6 +60,8 @@ class WPFM_Field_Editor {
 	/**
 	 * Output the fronted form editor
 	 * 
+	 * @access public
+	 * @return void
 	 * @since 1.0.0
 	 */
 	private function form_editor() {
@@ -182,6 +186,8 @@ class WPFM_Field_Editor {
 	/**
 	 * Save the form fields
 	 * 
+	 * @access private
+	 * @return void
 	 * @since 1.0.0
 	 */
 	private function child_form_editor_save($field) {
@@ -226,6 +232,8 @@ class WPFM_Field_Editor {
 	/**
 	 * Save the form fields
 	 * 
+	 * @access private
+	 * @return void
 	 * @since 1.0.0
 	 */
 	private function form_editor_save() {
@@ -315,6 +323,7 @@ class WPFM_Field_Editor {
 	/**
 	 * Sanitize a 2d array
 	 *
+	 * @access private
 	 * @param  array $array
 	 * @return array
 	 * @since 1.0.0

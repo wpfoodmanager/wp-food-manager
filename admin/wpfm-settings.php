@@ -63,6 +63,7 @@ class WPFM_Settings {
 	 *
 	 * @access protected
 	 * @return void
+	 * @since 1.0.0
 	 */
 	public function init_settings() {
 		// Prepare roles option
@@ -326,6 +327,7 @@ class WPFM_Settings {
 	 *
 	 * @access public
 	 * @return void
+	 * @since 1.0.0
 	 */
 	public function output() {
 		$this->init_settings();
@@ -500,8 +502,11 @@ class WPFM_Settings {
 	/**
 	 * Creates Multiselect checkbox.
 	 * This function generate multiselect 
+	 * 
+	 * @access public
 	 * @param $value
 	 * @return void
+	 * @since 1.0.0
 	 */
 	public function create_multi_select_checkbox($value) {
 		echo '<ul class="mnt-checklist" id="' . $value['name'] . '" >' . "\n";

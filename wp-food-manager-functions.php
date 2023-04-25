@@ -5,6 +5,7 @@ if (!function_exists('get_food_listings')) :
 	 * Queries food listings with certain criteria and returns them
 	 * 
 	 * @access public
+	 * @param array $args (default: array())
 	 * @return WP_Query
 	 * @since 1.0.0
 	 */
@@ -322,6 +323,7 @@ endif;
  * True if an the user can edit a food.
  *
  * @return bool
+ * @param int $food_id
  * @since 1.0.0
  */
 function food_manager_user_can_edit_food($food_id) {
@@ -398,6 +400,7 @@ function wpfm_user_can_upload_file_via_ajax() {
  * Based on wp_dropdown_categories, with the exception of supporting multiple selected categories, food types.
  * 
  * @see  wp_dropdown_categories
+ * @param int $args (default: '')
  * @since 1.0.0
  */
 function food_manager_dropdown_selection($args = '') {
@@ -546,7 +549,7 @@ if (!function_exists('wpfm_get_filtered_links')) :
 	/**
 	 * Shows links after filtering foods
 	 * 
-	 * @param array $args
+	 * @param array $args (default: array())
 	 * @since 1.0.0
 	 */
 	function wpfm_get_filtered_links($args = array()) {
@@ -603,9 +606,9 @@ if (!function_exists('get_food_manager_rss_link')) :
 	/**
 	 * Get the Food Listing RSS link
 	 * 
-	 * @since 1.0.0
 	 * @return string
-	 * @param array $args
+	 * @param array $args (default: array())
+	 * @since 1.0.0
 	 */
 	function get_food_manager_rss_link($args = array()) {
 		$rss_link = add_query_arg(urlencode_deep(array_merge(array('feed' => 'food_feed'), $args)), home_url());
@@ -760,6 +763,7 @@ function wpfm_get_allowed_mime_types($field = '') {
  * Get the page ID of a page if set, with PolyLang compat.
  * @param  string $page e.g. food_dashboard, add_food, foods
  * @return int
+ * @since 1.0.0
  */
 function food_manager_get_page_id($page) {
 	$page_id = get_option('food_manager_' . $page . '_page_id', false);
@@ -774,6 +778,7 @@ function food_manager_get_page_id($page) {
  * Get the permalink of a page if set
  * @param  string $page e.g. food_dashboard, add_food, foods
  * @return string|bool
+ * @since 1.0.0
  */
 function food_manager_get_permalink($page) {
 	if ($page_id = food_manager_get_page_id($page)) {
@@ -787,6 +792,7 @@ function food_manager_get_permalink($page) {
  * Duplicate a listing.
  * @param  int $post_id
  * @return int 0 on fail or the post ID.
+ * @since 1.0.0
  */
 function food_manager_duplicate_listing($post_id) {
 	if (empty($post_id) || !($post = get_post($post_id))) {
@@ -841,6 +847,7 @@ function food_manager_duplicate_listing($post_id) {
  * True if only one type allowed per food
  *
  * @return bool
+ * @since 1.0.0
  */
 function food_manager_multiselect_food_type() {
 	if (!class_exists('WPFM_Add_Food_Form')) {
@@ -860,6 +867,7 @@ function food_manager_multiselect_food_type() {
  * True if only one category allowed per food
  *
  * @return bool
+ * @since 1.0.0
  */
 function food_manager_multiselect_food_category() {
 	if (!class_exists('WPFM_Add_Food_Form')) {
@@ -938,6 +946,7 @@ if (!function_exists('get_food_listing_post_statuses')) :
 	 *
 	 * @access public
 	 * @return array
+	 * @since 1.0.0
 	 */
 	function get_food_listing_post_statuses() {
 		return apply_filters('food_listing_post_statuses', array(
@@ -956,7 +965,9 @@ if (!function_exists('get_food_listing_types')) :
 	 * Get food listing types
 	 *
 	 * @access public
+	 * @param string $fields (default: 'all')
 	 * @return array
+	 * @since 1.0.0
 	 */
 	function get_food_listing_types($fields = 'all') {
 		if (!get_option('food_manager_enable_food_types')) {
@@ -982,6 +993,7 @@ if (!function_exists('get_food_listing_categories')) :
 	 *
 	 * @access public
 	 * @return array
+	 * @since 1.0.0
 	 */
 	function get_food_listing_categories() {
 		if (!get_option('food_manager_enable_categories')) {
@@ -1009,6 +1021,7 @@ endif;
  * Get Base Currency Code.
  *
  * @return string
+ * @since 1.0.0
  */
 function get_food_manager_currency() {
 	return apply_filters('wpfm_currency', get_option('wpfm_currency'));
@@ -1019,6 +1032,7 @@ function get_food_manager_currency() {
  * Currency symbols and names should follow the Unicode CLDR recommendation (https://cldr.unicode.org/translation/currency-names-and-symbols)
  *
  * @return array
+ * @since 1.0.0
  */
 function get_food_manager_currencies() {
 	static $currencies;
@@ -1383,6 +1397,7 @@ function get_food_manager_currency_symbols() {
  *
  * @param string $currency Currency. (default: '').
  * @return string
+ * @since 1.0.0
  */
 function get_food_manager_currency_symbol($currency = '') {
 	if (!$currency) {
@@ -1397,6 +1412,7 @@ function get_food_manager_currency_symbol($currency = '') {
  * Get the price format depending on the currency position.
  *
  * @return string
+ * @since 1.0.0
  */
 function get_food_manager_price_format() {
 	$currency_pos = get_option('wpfm_currency_pos');
@@ -1452,6 +1468,7 @@ function wpfm_get_price_decimals() {
 /**
  * wpfm_get_dashicons function
  * 
+ * @return array
  * @since  1.0.0
  */
 function wpfm_get_dashicons() {
@@ -1670,7 +1687,9 @@ function wpfm_get_font_food_icons() {
 /**
  * wpfm_begnWith function
  *
- * @since  1.0.1
+ * @param string $str
+ * @param string $begnString
+ * @since 1.0.1
  */
 function wpfm_begnWith($str, $begnString) {
 	$len = strlen($begnString);
@@ -1747,7 +1766,15 @@ function food_manager_user_can_upload_file_via_ajax() {
 	return apply_filters('food_manager_user_can_upload_file_via_ajax', $can_upload);
 }
 
-// Display fields according to field type
+/**
+ * Checks if the user can upload a file via the Ajax endpoint.
+ *
+ * @param mixed $post
+ * @param mixed $field
+ * @param mixed $field_value
+ * @return void
+ * @since 1.0.0
+ */
 function wpfm_extra_topping_form_fields($post, $field, $field_value) {
 	$date_format = !empty(get_option('date_format')) ? get_option('date_format') : 'F j, Y';
 	$time_format = !empty(get_option('time_format')) ? get_option('time_format') : 'g:i a';
@@ -1991,7 +2018,8 @@ function wpfm_term_radio_checklist_for_food_type($args) {
  * wpfm_isMultiArray function
  *
  * @return bool
- * @since  1.0.1
+ * @param mixed $a
+ * @since 1.0.1
  */
 function wpfm_isMultiArray($a) {
 	if (is_array($a)) {
@@ -2004,6 +2032,9 @@ function wpfm_isMultiArray($a) {
  * wpfm_category_checklist function
  *
  * @return $popular_ids
+ * @param string $taxonomy
+ * @param string $key_name
+ * @param array $checked_term
  * @since  1.0.1
  */
 function wpfm_category_checklist($taxonomy, $key_name, $checked_term) {
@@ -2036,6 +2067,9 @@ function wpfm_category_checklist($taxonomy, $key_name, $checked_term) {
  * wpfm_dropdown_categories function
  *
  * @return $popular_ids
+ * @param string $taxonomy
+ * @param string $key_name
+ * @param array $checked_term
  * @since  1.0.1
  */
 function wpfm_dropdown_categories($taxonomy, $key_name, $selected_term) {
@@ -2065,6 +2099,8 @@ function wpfm_dropdown_categories($taxonomy, $key_name, $selected_term) {
  * is_wpfm_terms_exist function
  *
  * @return $displayTerms
+ * @param array $terms
+ * @param string $taxonomy
  * @since  1.0.1
  */
 function is_wpfm_terms_exist($terms, $taxonomy) {

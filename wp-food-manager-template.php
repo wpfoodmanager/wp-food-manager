@@ -147,40 +147,6 @@ function get_food_manager_template_part($slug, $name = '', $template_path = 'wp-
 }
 
 /**
- * get_food_location function.
- *
- * @access public
- * @param mixed $post (default: null)
- * @return void
- * @since 1.0.0
- */
-function get_food_location($post = null) {
-	$post = get_post($post);
-	if ($post->post_type !== 'food_manager')
-		return;
-	return apply_filters('display_food_location', $post->_food_location, $post);
-}
-
-/**
- * display_food_location function.
- * 
- * @param  boolean $map_link whether or not to link to the map on google maps
- * @return [type]
- * @since 1.0.0
- */
-function display_food_location($map_link = true, $post = null) {
-	$location = get_food_location($post);
-	if ($location) {
-		if ($map_link)
-			echo apply_filters('display_food_location_map_link', '<a  href="http://maps.google.com/maps?q=' . urlencode($location) . '&zoom=14&size=512x512&maptype=roadmap&sensor=false" target="_blank">' . $location . '</a>', $location, $post);
-		else
-			echo  $location;
-	} else {
-		echo  apply_filters('display_food_location_anywhere_text', __('Online food', 'wp-food-manager'));
-	}
-}
-
-/**
  * get_food_banner function.
  *
  * @access public
@@ -204,6 +170,7 @@ function get_food_banner($post = null) {
  *
  * @access public
  * @param mixed $post (default: null)
+ * @param string $size (default: 'full')
  * @return string
  * @since 1.0.0
  */
@@ -260,15 +227,13 @@ function display_food_price_tag($post = null) {
  * @access public
  * @param string $size (default: 'full')
  * @param mixed $default (default: null)
+ * @param mixed $post (default: null)
  * @return void
  * @since 1.0.0
  */
 function display_food_banner($size = 'full', $default = null, $post = null) {
 	$banner = get_food_banner($post);
 	if (!empty($banner) && !is_array($banner)  && (strstr($banner, 'http') || file_exists($banner))) {
-		if ($size !== 'full') {
-			$banner = wpfm_get_resized_image($banner, $size);
-		}
 		echo '<img itemprop="image" content="' . esc_attr($banner) . '" src="' . esc_attr($banner) . '" alt="" />';
 	} else if ($default) {
 		echo '<img itemprop="image" content="' . esc_attr($default) . '" src="' . esc_attr($default) . '" alt="" />';
@@ -286,7 +251,7 @@ function display_food_banner($size = 'full', $default = null, $post = null) {
  *  This function also used at food.
  * 
  *  @return number counted view.
- *  @param $post
+ *  @param mixed $post
  *  @since 1.0.0
  **/
 function get_food_views_count($post) {
@@ -301,19 +266,11 @@ function get_food_views_count($post) {
 }
 
 /**
- * Count food view on the single food page
- * 
- * @param $post
- * @since 1.0.0
- */
-function get_single_food_listing_view_count($post) {
-	get_food_views_count($post);
-}
-
-/**
  * display_food_veg_nonveg_icon_tag function.
  *
  * @access public
+ * @param mixed $post (default: null)
+ * @param string $after (default: '')
  * @return void
  * @since 1.0.0
  */
@@ -400,7 +357,7 @@ function display_food_type($post = null, $after = '') {
  *
  * @access public
  * @param mixed $post (default: null)
- * @return void
+ * @return mixed
  * @since 1.0.0
  */
 function get_food_type($post = null) {
@@ -449,7 +406,7 @@ function display_food_tag($post = null, $after = '') {
  *
  * @access public
  * @param mixed $post (default: null)
- * @return void
+ * @return mixed
  * @since 1.0.0
  */
 function get_food_tag($post = null) {
@@ -467,6 +424,8 @@ function get_food_tag($post = null) {
  * display_food_category function.
  *
  * @access public
+ * @param mixed $post (default: null)
+ * @param string $after (default: '')
  * @return void
  * @since 1.0.0
  */
@@ -501,7 +460,7 @@ function display_food_category($post = null, $after = '') {
  *
  * @access public
  * @param mixed $post (default: null)
- * @return void
+ * @return mixed
  * @since 1.0.0
  */
 function get_food_category($post = null) {
@@ -517,8 +476,8 @@ function get_food_category($post = null) {
  * display_food_ingredients function.
  *
  * @access public
- * @param $post
- * @param $after
+ * @param $post (default: null)
+ * @param $after (default: '')
  * @return void
  * @since 1.0.0
  */
@@ -549,7 +508,7 @@ function display_food_ingredients($post = null, $after = '') {
  *
  * @access public
  * @param mixed $post (default: null)
- * @return void
+ * @return mixed
  * @since 1.0.0
  */
 function get_food_ingredients($post = null) {
@@ -565,6 +524,8 @@ function get_food_ingredients($post = null) {
  * display_food_nutritions function.
  * 
  * @access public
+ * @param $post (default: null)
+ * @param $after (default: '')
  * @return void
  * @since 1.0.0
  */
@@ -595,7 +556,7 @@ function display_food_nutritions($post = null, $after = '') {
  *
  * @access public
  * @param mixed $post (default: null)
- * @return void
+ * @return mixed
  * @since 1.0.0
  */
 function get_food_nutritions($post = null) {
@@ -611,8 +572,8 @@ function get_food_nutritions($post = null) {
  * display_food_units function.
  *
  * @access public
- * @param mixed $post
- * @param mixed $after
+ * @param mixed $post (default: null)
+ * @param mixed $after (default: '')
  * @return void
  * @since 1.0.0
  */
@@ -636,7 +597,7 @@ function display_food_units($post = null, $after = '') {
  *
  * @access public
  * @param mixed $post (default: null)
- * @return void
+ * @return mixed
  * @since 1.0.0
  */
 function get_food_units($post = null) {
@@ -794,7 +755,7 @@ function get_stock_status($post = null) {
 /**
  * Display the food description.
  *
- * @param int|WP_Post $post
+ * @param int|WP_Post $post (default: null)
  * @return string
  * @since 1.0.0
  */
@@ -820,7 +781,7 @@ function get_food_description($post = null) {
 	/**
 	 * Filter for the food description.
 	 *
-	 * @param string      $title Title to be filtered.
+	 * @param string $description Description to be filtered.
 	 * @param int|WP_Post $post
 	 * @since 1.0.0
 	 */
@@ -856,7 +817,7 @@ function get_food_title($post = null) {
 	/**
 	 * Filter for the food title.
 	 *
-	 * @param string      $title Title to be filtered.
+	 * @param string $title Title to be filtered.
 	 * @param int|WP_Post $post
 	 * @since 1.0.0
 	 */
@@ -866,7 +827,7 @@ function get_food_title($post = null) {
 /**
  * Returns if we allow indexing of a food listing.
  *
- * @param WP_Post|int|null $post
+ * @param WP_Post|int|null $post (default: null)
  * @return bool
  * @since 1.0.0
  */
@@ -889,7 +850,7 @@ function wpfm_allow_indexing_food_listing($post = null) {
 /**
  * Returns if we output food listing structured data for a post.
  *
- * @param WP_Post|int|null $post
+ * @param WP_Post|int|null $post (default: null)
  * @return bool
  * @since 1.0.0
  */
@@ -914,7 +875,7 @@ function wpfm_output_food_listing_structured_data($post = null) {
  *
  * @see https://developers.google.com/search/docs/data-types/foods
  *
- * @param WP_Post|int|null $post
+ * @param WP_Post|int|null $post (default: null)
  * @return bool|array False if functionality is disabled; otherwise array of structured data.
  * @since 1.0.0
  */

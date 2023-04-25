@@ -44,6 +44,7 @@ class WPFM_Writepanels {
 	 * @access public
 	 * @param mixed $post
 	 * @return void
+	 * @since 1.0.0
 	 */
 	public function food_manager_data($post) {
 		global $post, $thepostid;
@@ -59,6 +60,7 @@ class WPFM_Writepanels {
 	 * @access public
 	 * @param mixed $post
 	 * @return void
+	 * @since 1.0.0
 	 */
 	public function food_manager_menu_data_icons($post) {
 		global $post, $thepostid;
@@ -127,6 +129,7 @@ class WPFM_Writepanels {
 	 * @access public
 	 * @param mixed $post
 	 * @return void
+	 * @since 1.0.0
 	 */
 	public function food_manager_menu_data($post) {
 		global $post, $thepostid;
@@ -161,7 +164,9 @@ class WPFM_Writepanels {
 	/**
 	 * Return array of tabs to show.
 	 *
+	 * @access public
 	 * @return array
+	 * @since 1.0.0
 	 */
 	public function get_food_data_tabs() {
 		$tabs = apply_filters(
@@ -209,6 +214,7 @@ class WPFM_Writepanels {
 	 *
 	 * @access public
 	 * @return void
+	 * @since 1.0.0
 	 */
 	public function food_manager_data_fields() {
 		global $post;
@@ -225,6 +231,12 @@ class WPFM_Writepanels {
 
 	/**
 	 * Sort array by priority value
+	 * 
+	 * @access public
+	 * @param array $a
+	 * @param array $b
+	 * @return void
+	 * @since 1.0.0
 	 */
 	protected function sort_by_priority($a, $b) {
 		if (!isset($a['priority']) || !isset($b['priority']) || $a['priority'] === $b['priority']) {

@@ -47,6 +47,7 @@ class WPFM_Shortcodes {
 	/**
 	 * Show the food submission form
 	 * 
+	 * @access public
 	 * @param array $atts
 	 * @since 1.0.1
 	 */
@@ -57,6 +58,8 @@ class WPFM_Shortcodes {
 	/**
 	 * Handles actions on food dashboard
 	 * 
+	 * @access public
+	 * @return void
 	 * @since 1.0.1
 	 */
 	public function food_dashboard_handler() {
@@ -108,6 +111,7 @@ class WPFM_Shortcodes {
 	/**
 	 * Handle actions which need to be run before the shortcode e.g. post actions
 	 * 
+	 * @access public
 	 * @since 1.0.1
 	 */
 	public function shortcode_action_handler() {
@@ -120,6 +124,7 @@ class WPFM_Shortcodes {
 	/**
 	 * Shortcode which lists the logged in user's foods
 	 * 
+	 * @access public
 	 * @param $atts
 	 * @since 1.0.1
 	 */
@@ -366,6 +371,8 @@ class WPFM_Shortcodes {
 	/**
 	 * Output content of food categories
 	 * 
+	 * @access public
+	 * @return void
 	 * @since 1.0.1
 	 */
 	public function output_foods_categories() { ?>
@@ -380,6 +387,8 @@ class WPFM_Shortcodes {
 	/**
 	 * Output content of food types
 	 * 
+	 * @access public
+	 * @return void
 	 * @since 1.0.1
 	 */
 	public function output_foods_types() { ?>
@@ -395,6 +404,7 @@ class WPFM_Shortcodes {
 	/**
 	 * Get string as a bool
 	 * 
+	 * @access public
 	 * @param  string $value
 	 * @return bool
 	 * @since 1.0.1
@@ -407,7 +417,7 @@ class WPFM_Shortcodes {
 	 * output_food function.
 	 *
 	 * @access public
-	 * @param array $args
+	 * @param array $atts
 	 * @return string
 	 * @since 1.0.0
 	 */
@@ -438,7 +448,7 @@ class WPFM_Shortcodes {
 	 * food Summary shortcode
 	 *
 	 * @access public
-	 * @param array $args
+	 * @param array $atts
 	 * @return string
 	 * @since 1.0.0
 	 */
@@ -476,7 +486,7 @@ class WPFM_Shortcodes {
 	 * output food menu
 	 *
 	 * @access public
-	 * @param array $args
+	 * @param array $atts
 	 * @return string
 	 * @since 1.0.0
 	 */

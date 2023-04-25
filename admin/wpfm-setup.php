@@ -47,9 +47,12 @@ class WPFM_Setup {
 	/**
 	 * Create a page.
 	 *
+	 * @access public
 	 * @param  string $title
 	 * @param  string $content
 	 * @param  string $option
+	 * @return void
+	 * @since 1.0.0
 	 */
 	public function create_page($title, $content, $option) {
 		$page_data = array(
@@ -70,6 +73,10 @@ class WPFM_Setup {
 
 	/**
 	 * Output addons page
+	 * 
+	 * @access public
+	 * @return void
+	 * @since 1.0.0
 	 */
 	public function output() {
 		$step = !empty($_GET['step']) ? absint($_GET['step']) : 1;
@@ -250,8 +257,10 @@ class WPFM_Setup {
 	/**
 	 * Sanitize a 2d array
 	 *
+	 * @access private
 	 * @param  array $array
 	 * @return array
+	 * @since 1.0.0
 	 */
 	private function sanitize_array($input) {
 		if (is_array($input)) {

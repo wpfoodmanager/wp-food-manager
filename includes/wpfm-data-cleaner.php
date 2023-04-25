@@ -117,6 +117,8 @@ class WPFM_Data_Cleaner {
 	 * Cleanup all data.
 	 *
 	 * @access public
+	 * @return void
+	 * @since 1.0.0
 	 */
 	public static function cleanup_all() {
 		self::cleanup_custom_post_types();
@@ -133,6 +135,8 @@ class WPFM_Data_Cleaner {
 	 * Cleanup data for custom post types.
 	 *
 	 * @access private
+	 * @return void
+	 * @since 1.0.0
 	 */
 	private static function cleanup_custom_post_types() {
 		foreach (self::$custom_post_types as $post_type) {
@@ -154,8 +158,10 @@ class WPFM_Data_Cleaner {
 	/**
 	 * wpfm_delete_food_with_attachment function.
 	 *
+	 * @access private
 	 * @param $post_id
 	 * @return void
+	 * @since 1.0.0
 	 */
 	private static function delete_food_with_attachment($post_id) {
 		if (!in_array(get_post_type($post_id), ['food_manager']))
@@ -206,6 +212,8 @@ class WPFM_Data_Cleaner {
 	 * Cleanup data for taxonomies.
 	 *
 	 * @access private
+	 * @return void
+	 * @since 1.0.0
 	 */
 	private static function cleanup_taxonomies() {
 		global $wpdb;
@@ -233,6 +241,8 @@ class WPFM_Data_Cleaner {
 	 * Cleanup data for pages.
 	 *
 	 * @access private
+	 * @return void
+	 * @since 1.0.0
 	 */
 	private static function cleanup_pages() {
 		// Trash the Add Food page.
@@ -266,6 +276,8 @@ class WPFM_Data_Cleaner {
 	 * Cleanup data for options.
 	 *
 	 * @access private
+	 * @return void
+	 * @since 1.0.0
 	 */
 	private static function cleanup_options() {
 		foreach (self::$options as $option) {
@@ -277,6 +289,8 @@ class WPFM_Data_Cleaner {
 	 * Cleanup data for site options.
 	 *
 	 * @access private
+	 * @return void
+	 * @since 1.0.0
 	 */
 	private static function cleanup_site_options() {
 		foreach (self::$site_options as $option) {
@@ -288,6 +302,8 @@ class WPFM_Data_Cleaner {
 	 * Cleanup transients from the database.
 	 *
 	 * @access private
+	 * @return void
+	 * @since 1.0.0
 	 */
 	private static function cleanup_transients() {
 		global $wpdb;
@@ -307,6 +323,8 @@ class WPFM_Data_Cleaner {
 	 * Cleanup data for roles and caps.
 	 *
 	 * @access private
+	 * @return void
+	 * @since 1.0.0
 	 */
 	private static function cleanup_roles_and_caps() {
 		global $wp_roles;
@@ -329,7 +347,9 @@ class WPFM_Data_Cleaner {
 	/**
 	 * Helper method to remove WPFM caps from a user or role object.
 	 *
-	 * @param (WP_User|WP_Role) $object the user or role object.
+	 * @param WP_User|WP_Role $object the user or role object.
+	 * @return void
+	 * @since 1.0.0
 	 */
 	private static function remove_all_food_manager_caps($object) {
 		foreach (self::$caps as $cap) {
@@ -342,6 +362,8 @@ class WPFM_Data_Cleaner {
 	 * doing it here as well for safety.
 	 *
 	 * @access private
+	 * @return void
+	 * @since 1.0.0
 	 */
 	private static function cleanup_cron_jobs() {
 		foreach (self::$cron_jobs as $job) {

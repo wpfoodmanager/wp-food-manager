@@ -83,7 +83,10 @@ class WPFM_Add_Food_Form extends WPFM_Form {
 
 	/**
 	 * Get the submitted food ID
+	 * 
+	 * @access public
 	 * @return int
+	 * @since 1.0.0
 	 */
 	public function get_food_id() {
 		return absint($this->food_id);
@@ -91,6 +94,10 @@ class WPFM_Add_Food_Form extends WPFM_Form {
 
 	/**
 	 * init_fields function.
+	 * 
+	 * @access public
+	 * @return $this->fields
+	 * @since 1.0.0
 	 */
 	public function init_fields() {
 		if ($this->fields) {
@@ -118,6 +125,13 @@ class WPFM_Add_Food_Form extends WPFM_Form {
 		return $this->fields;
 	}
 
+	/**
+	 * get_default_food_fields function.
+	 * 
+	 * @access public
+	 * @return array
+	 * @since 1.0.0
+	 */
 	public function get_default_food_fields() {
 		$current_user_id = get_current_user_id();
 		return apply_filters('add_food_fields', array(
@@ -276,7 +290,10 @@ class WPFM_Add_Food_Form extends WPFM_Form {
 	/**
 	 * Validate the posted fields
 	 *
+	 * @access protected
+	 * @param array $values
 	 * @return bool on success, WP_ERROR on failure
+	 * @since 1.0.0
 	 */
 	protected function validate_fields($values) {
 		$this->fields =  apply_filters('before_add_food_validate_fields', $this->fields, $values);
@@ -330,6 +347,10 @@ class WPFM_Add_Food_Form extends WPFM_Form {
 
 	/**
 	 * food_types function.
+	 * 
+	 * @access private
+	 * @return array $options
+	 * @since 1.0.0
 	 */
 	private function food_types() {
 		$options = array();
@@ -342,6 +363,10 @@ class WPFM_Add_Food_Form extends WPFM_Form {
 
 	/**
 	 * Submit Step
+	 * 
+	 * @access public
+	 * @return void
+	 * @since 1.0.0
 	 */
 	public function submit() {
 		// get date and time setting defined in admin panel food listing -> Settings -> Date & Time formatting
@@ -414,6 +439,10 @@ class WPFM_Add_Food_Form extends WPFM_Form {
 
 	/**
 	 * Submit Step is posted
+	 * 
+	 * @access public
+	 * @return mixed
+	 * @since 1.0.0
 	 */
 	public function submit_handler() {
 		try {
@@ -492,11 +521,14 @@ class WPFM_Add_Food_Form extends WPFM_Form {
 	/**
 	 * Update or create a food listing from posted data
 	 *
+	 * @access protected
 	 * @param  string $post_title
 	 * @param  string $post_content
 	 * @param  string $status
 	 * @param  array $values
 	 * @param  bool $update_slug
+	 * @return mixed
+	 * @since 1.0.0
 	 */
 	protected function save_food($post_title, $post_content, $status = 'preview', $values = array(), $update_slug = true) {
 		global $wpdb;
@@ -551,8 +583,11 @@ class WPFM_Add_Food_Form extends WPFM_Form {
 
 	/**
 	 * Create an attachment
-	 * @param  string $attachment_url
+	 * 
+	 * @access protected
+	 * @param string $attachment_url
 	 * @return int attachment id
+	 * @since 1.0.0
 	 */
 	public function create_attachment($attachment_url) {
 		include_once(ABSPATH . 'wp-admin/includes/image.php');
@@ -591,6 +626,10 @@ class WPFM_Add_Food_Form extends WPFM_Form {
 
 	/**
 	 * Preview Step
+	 * 
+	 * @access public
+	 * @return void
+	 * @since 1.0.0
 	 */
 	public function preview() {
 		global $post, $food_preview;
@@ -607,6 +646,10 @@ class WPFM_Add_Food_Form extends WPFM_Form {
 
 	/**
 	 * Preview Step Form handler
+	 * 
+	 * @access public
+	 * @return void
+	 * @since 1.0.0
 	 */
 	public function preview_handler() {
 		if (!$_POST) {
@@ -636,6 +679,10 @@ class WPFM_Add_Food_Form extends WPFM_Form {
 
 	/**
 	 * Done Step
+	 * 
+	 * @access public
+	 * @return void
+	 * @since 1.0.0
 	 */
 	public function done() {
 		do_action('food_manager_food_submitted', $this->food_id);
@@ -645,7 +692,9 @@ class WPFM_Add_Food_Form extends WPFM_Form {
 	/**
 	 * get selected fields from the field editor
 	 *
+	 * @access public
 	 * @return fields Array
+	 * @since 1.0.0
 	 */
 	public function get_food_manager_fieldeditor_fields() {
 		return apply_filters('food_manager_add_food_form_fields', get_option('food_manager_add_food_form_fields', false));
@@ -654,7 +703,9 @@ class WPFM_Add_Food_Form extends WPFM_Form {
 	/**
 	 * get extra options fields from the field editor
 	 * 
+	 * @access public
 	 * @return fields Array
+	 * @since 1.0.0
 	 */
 	public function get_food_manager_fieldeditor_toppings_fields() {
 		return apply_filters('food_manager_submit_toppings_form_fields', get_option('food_manager_submit_toppings_form_fields', false));
@@ -662,7 +713,10 @@ class WPFM_Add_Food_Form extends WPFM_Form {
 
 	/**
 	 * This function will initilize default fields and return as array
+	 * 
+	 * @access public
 	 * @return fields Array
+	 * @since 1.0.0
 	 **/
 	public  function get_default_fields() {
 		if (empty($this->fields)) {
@@ -674,7 +728,10 @@ class WPFM_Add_Food_Form extends WPFM_Form {
 
 	/**
 	 * This function will set food id for invoking food object
+	 * 
+	 * @access public
 	 * @return $id
+	 * @since 1.0.0
 	 **/
 	public  function set_id($id) {
 		$this->food_id = $id;
@@ -683,7 +740,10 @@ class WPFM_Add_Food_Form extends WPFM_Form {
 
 	/**
 	 * This function will get food id for invoking food object
+	 * 
+	 * @access public
 	 * @return $id
+	 * @since 1.0.0
 	 **/
 	public function get_id() {
 		if (empty($this->food_id))

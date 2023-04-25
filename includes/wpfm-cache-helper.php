@@ -46,9 +46,11 @@ class WPFM_Cache_Helper {
 	 * to append a unique string (based on time()) to each transient. When transients
 	 * are invalidated, the transient version will increment and data will be regenerated.
 	 *
+	 * @static
 	 * @param  string  $group   Name for the group of transients we need to invalidate
 	 * @param  boolean $refresh true to force a new version
 	 * @return string transient version based on time(), 10 digits
+	 * @since 1.0.0
 	 */
 	public static function get_transient_version($group, $refresh = false) {
 		$transient_name  = $group . '-transient-version';
@@ -64,6 +66,11 @@ class WPFM_Cache_Helper {
 	 * When the transient version increases, this is used to remove all past transients to avoid filling the DB.
 	 *
 	 * Note; this only works on transients appended with the transient version, and when object caching is not being used.
+	 * 
+	 * @static
+	 * @param string $version
+	 * @return string void
+	 * @since 1.0.0
 	 */
 	private static function delete_version_transients($version) {
 		if (!wp_using_ext_object_cache() && !empty($version)) {
@@ -75,10 +82,10 @@ class WPFM_Cache_Helper {
 	/**
 	 * Get Listings Count from Cache
 	 *
+	 * @static
 	 * @param string $post_type
 	 * @param string $status
 	 * @param bool   $force Force update cache
-	 *
 	 * @return int
 	 */
 	public static function get_listings_count($post_type = 'food_manager', $status = 'pending', $force = false) {

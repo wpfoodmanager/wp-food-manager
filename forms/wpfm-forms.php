@@ -34,16 +34,18 @@ class WPFM_Forms {
 
 	/**
 	 * Load a form's class
-	 *
+	 * 
+	 * @access public
 	 * @param  string $form_name
 	 * @return string class name on success, false on failure
+	 * @since 1.0.0
 	 */
 	public function load_form_class($form_name) {
 		if (!class_exists('WPFM_Form')) {
 			include 'wpfm-abstract-form.php';
 		}
 		// Now try to load the form_name
-		$form_class  = 'WPFM_' . str_replace('-', '_', $form_name).'_Form';
+		$form_class  = 'WPFM_' . str_replace('-', '_', $form_name) . '_Form';
 		$form_file   = WPFM_PLUGIN_DIR . '/forms/wpfm-' . $form_name . '-form.php';
 		if (class_exists($form_class)) {
 			return call_user_func(array($form_class, 'instance'));
@@ -61,9 +63,11 @@ class WPFM_Forms {
 	/**
 	 * get_form function.
 	 *
+	 * @access public
 	 * @param string $form_name
 	 * @param  array $atts Optional passed attributes
 	 * @return string
+	 * @since 1.0.0
 	 */
 	public function get_form($form_name, $atts = array()) {
 		if ($form = $this->load_form_class($form_name)) {
@@ -76,9 +80,11 @@ class WPFM_Forms {
 	/**
 	 * get_form function.
 	 *
+	 * @access public
 	 * @param string $form_name
-	 * @param  array $atts Optional passed attributes
+	 * @param array $atts Optional passed attributes
 	 * @return string
+	 * @since 1.0.0
 	 */
 	public function get_form_fields($form_name, $field_types = 'frontend') {
 		if ($form = $this->load_form_class($form_name)) {

@@ -50,6 +50,7 @@ class WPFM_Date_Time {
 	 * function get_default_date_formats will return all the date formats
 	 * This function has both type of format jquery-ui-datepicker as well as for php date format
 	 *
+	 * @access public
 	 * @return array
 	 * @since 1.0.0
 	 **/
@@ -71,7 +72,11 @@ class WPFM_Date_Time {
 	 * php date format parsing has error so we need to parse via our custom parsing method
 	 * Ref. https://stackoverflow.com/questions/6668223/php-date-parse-from-format-alternative-in-php-5-2
 	 *
-	 *  @since 1.0.0
+	 * @access public
+	 * @param string $format
+	 * @param string $date
+	 * @return array
+	 * @since 1.0.0
 	 */
 	public static function date_parse_from_format($format, $date) {
 		// reverse engineer date formats
@@ -151,6 +156,9 @@ class WPFM_Date_Time {
 	 * For eg. in date picker date format is yy-mm-dd where this format in php will be Y-m-d
 	 * So, We need one central function will allow to convert datepicker format in to php formatted format.
 	 *
+	 * @access public
+	 * @param string $datepicker_format
+	 * @return array
 	 * @since 1.0.0
 	 **/
 	public static function get_view_date_format_from_datepicker_date_format($datepicker_format = 'yy-mm-dd') {
@@ -162,6 +170,7 @@ class WPFM_Date_Time {
 	/**
 	 * Returns the time only.
 	 *
+	 * @access public
 	 * @param string $time time in 24 hour or 12 hour.
 	 * @return string it will return time in DB formatted 24 hours time
 	 * @since 1.0.0
@@ -174,6 +183,7 @@ class WPFM_Date_Time {
 	/**
 	 * Returns the date time DB formatted.
 	 *
+	 * @access public
 	 * @param string  $date and $time
 	 * @return string it will return time in DB formatted date and time
 	 * @since 1.0.0
@@ -194,6 +204,7 @@ class WPFM_Date_Time {
 	 * Get wp food manager view date format
 	 * This format is set by user from food listing -> settings -> date and time
 	 *
+	 * @access public
 	 * @return string
 	 * @since 1.0.0
 	 *
@@ -209,6 +220,7 @@ class WPFM_Date_Time {
 	 * Currentrly it is used at food listing -> settings -> date and time - datepicker format
 	 * In wp food manager settings we don't have way to generate html so we have generated array for select option
 	 *
+	 * @access public
 	 * @return array
 	 * @since 1.0.0
 	 */
@@ -225,6 +237,7 @@ class WPFM_Date_Time {
 	/**
 	 * Get food manager timezone setting defined in food listing -> settings
 	 *
+	 * @access public
 	 * @return string $selected_timezone
 	 * @since 1.0.0
 	 */
@@ -236,6 +249,7 @@ class WPFM_Date_Time {
 	/**
 	 * get_current_site_timezone function
 	 * 
+	 * @access public
 	 * @return string
 	 * @since 1.0.0
 	 */
@@ -261,6 +275,8 @@ class WPFM_Date_Time {
 
 	/**
 	 * timezone_choice function
+	 * 
+	 * @access public
 	 * @param string $tzstring
 	 * @since 1.0.0
 	 */
@@ -272,6 +288,8 @@ class WPFM_Date_Time {
 
 	/**
 	 * convert_food_timezone_into_abbr function
+	 * 
+	 * @access public
 	 * @param string $food_timezone
 	 * @since 1.0.0
 	 */
@@ -287,6 +305,7 @@ class WPFM_Date_Time {
 	 * current_timestamp_from_food_timezone will return the current timestamp according to the
 	 * timezone selected in food or passed in argument
 	 *
+	 * @access public
 	 * @param $food_timezone
 	 * @return  timestamp
 	 * @since 1.0.0
@@ -304,6 +323,7 @@ class WPFM_Date_Time {
 	/**
 	 * Tests to see if the timezone string is a UTC offset, ie "UTC+2".
 	 *
+	 * @access public
 	 * @param string $timezone
 	 * @return bool
 	 * @since 1.0.0
@@ -317,6 +337,7 @@ class WPFM_Date_Time {
 	 * Helper function to retrieve the timezone string for a given UTC offset
 	 * This is a close copy of WooCommerce's wc_timezone_string() method
 	 *
+	 * @access public
 	 * @param string $offset UTC offset
 	 * @return string
 	 * @since 1.0.0
@@ -352,6 +373,7 @@ class WPFM_Date_Time {
 	/**
 	 * Localizes a date or timestamp using WordPress timezone and returns it in the specified format.
 	 *
+	 * @access public
 	 * @param string     $format   The format the date shouuld be formatted to.
 	 * @param string|int $date     The date UNIX timestamp or `strtotime` parseable string.
 	 * @param string     $timezone An optional timezone string identifying the timezone the date shoudl be localized

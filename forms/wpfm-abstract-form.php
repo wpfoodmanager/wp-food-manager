@@ -30,6 +30,10 @@ abstract class WPFM_Form {
 
 	/**
 	 * Process function. all processing code if needed - can also change view if step is complete
+	 * 
+	 * @access public
+	 * @return string
+	 * @since 1.0.0
 	 */
 	public function process() {
 		// reset cookie
@@ -53,7 +57,8 @@ abstract class WPFM_Form {
 	/**
 	 * Get formn name.
 	 * 
-	 * @return string
+	 * @access public
+	 * @return mixed
 	 * @since 1.0.0
 	 */
 	public function get_form_name() {
@@ -62,6 +67,11 @@ abstract class WPFM_Form {
 
 	/**
 	 * output function. Call the view handler.
+	 * 
+	 * @access public
+	 * @param array $atts
+	 * @return void
+	 * @since 1.0.0
 	 */
 	public function output($atts = array()) {
 		$step_key = $this->get_step_key($this->step);
@@ -73,7 +83,11 @@ abstract class WPFM_Form {
 
 	/**
 	 * Add an error
+	 * 
+	 * @access public
 	 * @param string $error
+	 * @return void
+	 * @since 1.0.0
 	 */
 	public function add_error($error) {
 		$this->errors[] = $error;
@@ -81,6 +95,10 @@ abstract class WPFM_Form {
 
 	/**
 	 * Show errors
+	 * 
+	 * @access public
+	 * @return void
+	 * @since 1.0.0
 	 */
 	public function show_errors() {
 		foreach ($this->errors as $error) {
@@ -92,7 +110,9 @@ abstract class WPFM_Form {
 	 * Get action (URL for forms to post to).
 	 * As of 1.0.0 this defaults to the current page permalink.
 	 *
+	 * @access public
 	 * @return string
+	 * @since 1.0.0
 	 */
 	public function get_action() {
 		return esc_url_raw($this->action ? $this->action : wp_unslash($_SERVER['REQUEST_URI']));
@@ -100,6 +120,10 @@ abstract class WPFM_Form {
 
 	/**
 	 * Get step from outside of the class
+	 * 
+	 * @access public
+	 * @return $this->step
+	 * @since 1.0.0
 	 */
 	public function get_step() {
 		return $this->step;
@@ -107,6 +131,9 @@ abstract class WPFM_Form {
 
 	/**
 	 * Get steps from outside of the class
+	 * 
+	 * @access public
+	 * @return $this->step
 	 * @since 1.0.0
 	 */
 	public function get_steps() {
@@ -115,6 +142,9 @@ abstract class WPFM_Form {
 
 	/**
 	 * Get step key from outside of the class
+	 * 
+	 * @access public
+	 * @return mixed
 	 * @since 1.0.0
 	 */
 	public function get_step_key($step = '') {
@@ -127,6 +157,9 @@ abstract class WPFM_Form {
 
 	/**
 	 * Get step from outside of the class
+	 * 
+	 * @access public
+	 * @return void
 	 * @since 1.0.0
 	 */
 	public function set_step($step) {
@@ -135,6 +168,10 @@ abstract class WPFM_Form {
 
 	/**
 	 * Increase step from outside of the class
+	 * 
+	 * @access public
+	 * @return void
+	 * @since 1.0.0
 	 */
 	public function next_step() {
 		$this->step++;
@@ -142,6 +179,10 @@ abstract class WPFM_Form {
 
 	/**
 	 * Decrease step from outside of the class
+	 * 
+	 * @access public
+	 * @return void
+	 * @since 1.0.0
 	 */
 	public function previous_step() {
 		$this->step--;
@@ -150,8 +191,10 @@ abstract class WPFM_Form {
 	/**
 	 * get_fields function.
 	 *
+	 * @access public
 	 * @param string $key
 	 * @return array
+	 * @since 1.0.0
 	 */
 	public function get_fields($key) {
 		if (empty($this->fields[$key])) {
@@ -164,9 +207,12 @@ abstract class WPFM_Form {
 
 	/**
 	 * Sort array by priority value
+	 * 
+	 * @access public
 	 * @param array $a
 	 * @param array $b
 	 * @return int
+	 * @since 1.0.0
 	 */
 	protected function sort_by_priority($a, $b) {
 		if ($a['priority'] == $b['priority']) {
@@ -177,6 +223,10 @@ abstract class WPFM_Form {
 
 	/**
 	 * Init form fields
+	 * 
+	 * @access public
+	 * @return void
+	 * @since 1.0.0
 	 */
 	protected function init_fields() {
 		$this->fields = array();
@@ -184,6 +234,10 @@ abstract class WPFM_Form {
 
 	/**
 	 * Enqueue the scripts for the form.
+	 * 
+	 * @access public
+	 * @return void
+	 * @since 1.0.0
 	 */
 	public function enqueue_scripts() {
 		if ($this->use_recaptcha_field()) {
@@ -194,7 +248,9 @@ abstract class WPFM_Form {
 	/**
 	 * Get post data for fields
 	 *
+	 * @access protected
 	 * @return array of data
+	 * @since 1.0.0
 	 */
 	protected function get_posted_fields() {
 		global $post;
@@ -297,8 +353,12 @@ abstract class WPFM_Form {
 
 	/** 
 	 * Get the value of a repeated fields (e.g. repeated)
-	 * @param  array $fields
-	 * @return array
+	 * 
+	 * @access protected
+	 * @param string $field_prefix
+	 * @param mixed $fields
+	 * @return array of data
+	 * @since 1.0.0
 	 */
 	protected function get_repeated_field($field_prefix, $fields) {
 		$items       = array();
@@ -348,10 +408,11 @@ abstract class WPFM_Form {
 	/**
 	 * Get the value of a posted repeated field
 	 * 
-	 * @param  string $key
-	 * @param  array $field
+	 * @access protected
+	 * @param string $key
+	 * @param array $field
 	 * @return string
-	 * @since  1.0.0
+	 * @since 1.0.0
 	 */
 	protected function get_posted_repeated_field($key, $field) {
 		return  $this->get_repeated_field($key, $field['fields']);
@@ -360,8 +421,10 @@ abstract class WPFM_Form {
 	/**
 	 * Navigates through an array and sanitizes the field.
 	 *
+	 * @access protected
 	 * @param array|string $value The array or string to be sanitized.
 	 * @return array|string $value The sanitized array (or string from the callback).
+	 * @since 1.0.0
 	 */
 	protected function sanitize_posted_field($value) {
 		// Decode URLs
@@ -375,9 +438,12 @@ abstract class WPFM_Form {
 
 	/**
 	 * Get the value of a posted field
+	 * 
+	 * @access protected
 	 * @param  string $key
 	 * @param  array $field
 	 * @return string|array
+	 * @since 1.0.0
 	 */
 	protected function get_posted_field($key, $field) {
 		return isset($_POST[$key]) ? $_POST[$key] : '';
@@ -385,9 +451,12 @@ abstract class WPFM_Form {
 
 	/**
 	 * Get the value of a posted multiselect field
+	 * 
+	 * @access protected
 	 * @param  string $key
 	 * @param  array $field
 	 * @return array
+	 * @since 1.0.0
 	 */
 	protected function get_posted_multiselect_field($key, $field) {
 		return isset($_POST[$key]) ? array_map('sanitize_text_field', $_POST[$key]) : array();
@@ -395,9 +464,12 @@ abstract class WPFM_Form {
 
 	/**
 	 * Get the value of a posted file field
+	 * 
+	 * @access protected
 	 * @param  string $key
 	 * @param  array $field
 	 * @return string|array
+	 * @since 1.0.0
 	 */
 	protected function get_posted_file_field($key, $field) {
 		$file = $this->upload_file($key, $field);
@@ -411,9 +483,12 @@ abstract class WPFM_Form {
 
 	/**
 	 * Get the value of a posted textarea field
+	 * 
+	 * @access protected
 	 * @param  string $key
 	 * @param  array $field
 	 * @return string
+	 * @since 1.0.0
 	 */
 	protected function get_posted_textarea_field($key, $field) {
 		return isset($_POST[$key]) ? wp_kses_post(trim(stripslashes($_POST[$key]))) : '';
@@ -421,9 +496,12 @@ abstract class WPFM_Form {
 
 	/**
 	 * Get the value of a posted textarea field
+	 * 
+	 * @access protected
 	 * @param  string $key
 	 * @param  array $field
 	 * @return string
+	 * @since 1.0.0
 	 */
 	protected function get_posted_wp_editor_field($key, $field) {
 		return $this->get_posted_textarea_field($key, $field);
@@ -431,9 +509,12 @@ abstract class WPFM_Form {
 
 	/**
 	 * Get posted terms for the taxonomy
+	 * 
+	 * @access protected
 	 * @param  string $key
 	 * @param  array $field
 	 * @return array
+	 * @since 1.0.0
 	 */
 	protected function get_posted_term_checklist_field($key, $field) {
 		if (isset($_POST['tax_input']) && isset($_POST['tax_input'][$field['taxonomy']])) {
@@ -445,9 +526,12 @@ abstract class WPFM_Form {
 
 	/**
 	 * Get posted terms for the taxonomy
+	 * 
+	 * @access protected
 	 * @param  string $key
 	 * @param  array $field
 	 * @return int
+	 * @since 1.0.0
 	 */
 	protected function get_posted_term_multiselect_field($key, $field) {
 		return isset($_POST[$key]) ? array_map('absint', $_POST[$key]) : array();
@@ -455,9 +539,12 @@ abstract class WPFM_Form {
 
 	/**
 	 * Get posted terms for the taxonomy
+	 * 
+	 * @access protected
 	 * @param  string $key
 	 * @param  array $field
 	 * @return int
+	 * @since 1.0.0
 	 */
 	protected function get_posted_term_select_field($key, $field) {
 		return !empty($_POST[$key]) && $_POST[$key] > 0 ? absint($_POST[$key]) : '';
@@ -465,7 +552,12 @@ abstract class WPFM_Form {
 
 	/**
 	 * Upload a file
-	 * @return  string or array
+	 * 
+	 * @access protected
+	 * @param  string $field_key
+	 * @param  mixed $field
+	 * @return string or array
+	 * @since 1.0.0
 	 */
 	protected function upload_file($field_key, $field) {
 		if (isset($_FILES[$field_key]) && !empty($_FILES[$field_key]) && !empty($_FILES[$field_key]['name'])) {
@@ -495,7 +587,10 @@ abstract class WPFM_Form {
 	/**
 	 * Merge and replace $default_fields with custom fields
 	 *
+	 * @access public
+	 * @param string $field_view
 	 * @return array Returns merged and replaced fields
+	 * @since 1.0.0
 	 */
 	public function merge_with_custom_fields($field_view = 'frontend') {
 		$custom_food_fields  = !empty($this->get_food_manager_fieldeditor_fields()) ? $this->get_food_manager_fieldeditor_fields() : array();

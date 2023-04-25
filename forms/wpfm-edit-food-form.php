@@ -32,6 +32,11 @@ class WPFM_Edit_Food_Form extends WPFM_Add_Food_Form {
 
 	/**
 	 * output function.
+	 * 
+	 * @access public
+	 * @param array $atts
+	 * @return void
+	 * @since 1.0.0
 	 */
 	public function output($atts = array()) {
 		$this->submit_handler();
@@ -40,6 +45,10 @@ class WPFM_Edit_Food_Form extends WPFM_Add_Food_Form {
 
 	/**
 	 * Submit Step
+	 * 
+	 * @access public
+	 * @return void
+	 * @since 1.0.0
 	 */
 	public function submit() {
 		global $wpdb;
@@ -131,6 +140,10 @@ class WPFM_Edit_Food_Form extends WPFM_Add_Food_Form {
 
 	/**
 	 * Submit Step is posted
+	 * 
+	 * @access public
+	 * @return void
+	 * @since 1.0.0
 	 */
 	public function submit_handler() {
 		if (empty($_POST['add_food'])) {

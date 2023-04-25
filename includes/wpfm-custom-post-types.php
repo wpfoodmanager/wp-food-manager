@@ -181,6 +181,10 @@ class WPFM_Post_Types {
 
 	/**
 	 * Food listing feeds
+	 * 
+	 * @access public
+	 * @return void
+	 * @since 1.0.0
 	 */
 	public function food_feed() {
 		$query_args = array(
@@ -235,7 +239,10 @@ class WPFM_Post_Types {
 	/**
 	 * In order to make sure that the feed properly queries the 'food_listing' type
 	 *
+	 * @access public
 	 * @param WP_Query $wp
+	 * @return void
+	 * @since 1.0.0
 	 */
 	public function add_feed_query_args($wp) {
 		// Let's leave if not the food feed
@@ -255,6 +262,10 @@ class WPFM_Post_Types {
 
 	/**
 	 * Add a custom namespace to the food feed
+	 * 
+	 * @access public
+	 * @return void
+	 * @since 1.0.0
 	 */
 	public function food_feed_namespace() {
 		echo 'xmlns:food_manager="' .  site_url() . '"' . "\n";
@@ -262,6 +273,10 @@ class WPFM_Post_Types {
 
 	/**
 	 * Add custom data to the food feed
+	 * 
+	 * @access public
+	 * @return void
+	 * @since 1.0.0
 	 */
 	public function food_feed_item() {
 		$post_id  = get_the_ID();
@@ -271,7 +286,11 @@ class WPFM_Post_Types {
 	/**
 	 * This function is use to set the counts the food views.
 	 * This function also used at Foods dashboard file.
-	 * @param  int $post_id
+	 * 
+	 * @access public
+	 * @param int $post_id
+	 * @return void
+	 * @since 1.0.0
 	 */
 	public function set_post_views($post_id) {
 		$count_key = '_view_count';
@@ -288,6 +307,14 @@ class WPFM_Post_Types {
 
 	/**
 	 * Generate location data if a post is updated
+	 * 
+	 * @access public
+	 * @param int $meta_id
+	 * @param int $object_id
+	 * @param string $meta_key
+	 * @param mixed $_meta_value
+	 * @return void
+	 * @since 1.0.0
 	 */
 	public function maybe_update_geolocation_data($meta_id, $object_id, $meta_key, $_meta_value) {
 		if ('_food_location' !== $meta_key || 'food_manager' !== get_post_type($object_id)) {
@@ -298,6 +325,14 @@ class WPFM_Post_Types {
 
 	/**
 	 * Maybe set menu_order if the featured status of a food is changed
+	 * 
+	 * @access public
+	 * @param int $meta_id
+	 * @param int $object_id
+	 * @param string $meta_key
+	 * @param mixed $_meta_value
+	 * @return void
+	 * @since 1.0.0
 	 */
 	public function maybe_update_menu_order($meta_id, $object_id, $meta_key, $_meta_value) {
 		if ('food_manager' !== get_post_type($object_id)) {
@@ -314,6 +349,14 @@ class WPFM_Post_Types {
 
 	/**
 	 * maybe_generate_geolocation_data function
+	 * 
+	 * @access public
+	 * @param int $meta_id
+	 * @param int $object_id
+	 * @param string $meta_key
+	 * @param mixed $_meta_value
+	 * @return void
+	 * @since 1.0.0
 	 */
 	public function maybe_generate_geolocation_data($meta_id, $object_id, $meta_key, $_meta_value) {
 		$this->maybe_update_geolocation_data($meta_id, $object_id, $meta_key, $_meta_value);
@@ -321,7 +364,11 @@ class WPFM_Post_Types {
 
 	/**
 	 * After importing via WP ALL Import, add default meta data
+	 * 
+	 * @access public
 	 * @param  int $post_id
+	 * @return void
+	 * @since 1.0.0
 	 */
 	public function pmxi_saved_post($post_id) {
 		if ('food_manager' === get_post_type($post_id)) {
@@ -332,7 +379,11 @@ class WPFM_Post_Types {
 
 	/**
 	 * When deleting a food, delete its attachments
-	 * @param  int $post_id
+	 * 
+	 * @access public
+	 * @param int $post_id
+	 * @return void
+	 * @since 1.0.0
 	 */
 	public function before_delete_food($post_id) {
 		if ('food_manager' === get_post_type($post_id)) {
@@ -352,8 +403,9 @@ class WPFM_Post_Types {
 	/**
 	 * Retrieves permalink settings.
 	 *
+	 * @access public
 	 * @see https://github.com/woocommerce/woocommerce/blob/3.0.8/includes/wc-core-functions.php#L1573
-	 * @return array
+	 * @return array $permalinks
 	 * @since 1.0.0
 	 */
 	public static function get_permalink_structure() {
@@ -385,9 +437,10 @@ class WPFM_Post_Types {
 	/**
 	 * Specify custom bulk actions messages for different post types.
 	 *
+	 * @access public
 	 * @param  array $bulk_messages Array of messages.
 	 * @param  array $bulk_counts Array of how many objects were updated.
-	 * @return array
+	 * @return array $bulk_messages
 	 * @since 1.0.0
 	 */
 	public function bulk_post_updated_messages($bulk_messages, $bulk_counts) {

@@ -10,6 +10,10 @@ class WPFM_Install {
 
 	/**
 	 * Install WP Food Manager
+	 * 
+	 * @access public
+	 * @return void
+     * @since 1.0.0
 	 */
 	public static function install() {
 		global $wpdb;
@@ -38,6 +42,10 @@ class WPFM_Install {
 
 	/**
 	 * Update WP Food Manager
+	 * 
+	 * @access public
+	 * @return void
+     * @since 1.0.0
 	 */
 	public static function update() {
 		global $wpdb;
@@ -59,6 +67,10 @@ class WPFM_Install {
 
 	/**
 	 * Init user roles
+	 * 
+	 * @access private
+	 * @return void
+     * @since 1.0.0
 	 */
 	private static function init_user_roles() {
 		global $wp_roles;
@@ -82,7 +94,10 @@ class WPFM_Install {
 
 	/**
 	 * Get capabilities
+	 * 
+	 * @access private
 	 * @return array
+     * @since 1.0.0
 	 */
 	private static function get_core_capabilities() {
 		return array(
@@ -114,7 +129,9 @@ class WPFM_Install {
 	/**
 	 * Default taxonomy terms to set up in WP Food Manager.
 	 *
+	 * @access private
 	 * @return array Default taxonomy terms.
+     * @since 1.0.0
 	 */
 	private static function get_default_taxonomy_terms() {
 		return array(
@@ -230,6 +247,10 @@ class WPFM_Install {
 
 	/**
 	 * default_terms function.
+	 * 
+	 * @access private
+	 * @return void
+     * @since 1.0.0
 	 */
 	private static function default_terms() {
 		if (get_option('food_manager_installed_terms') == 1) {
@@ -248,6 +269,10 @@ class WPFM_Install {
 
 	/**
 	 * Adds the employment type to default food types when updating from a previous WP Food Manager version.
+	 * 
+	 * @access private
+	 * @return void
+     * @since 1.0.0
 	 */
 	private static function add_food_types() {
 		$taxonomies = self::get_default_taxonomy_terms();

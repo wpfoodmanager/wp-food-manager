@@ -40,9 +40,12 @@ class WPFM_Ajax {
 
 	/**
 	 * Get food Manager Ajax Endpoint
+	 * 
+	 * @access public
 	 * @param  string $request Optional
 	 * @param  string $ssl     Optional
 	 * @return string
+	 * @since 1.0.1
 	 */
 	public static function get_endpoint($request = '%%endpoint%%', $ssl = null) {
 		if (strstr(get_option('permalink_structure'), '/index.php/')) {

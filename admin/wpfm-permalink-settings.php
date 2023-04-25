@@ -51,6 +51,8 @@ class WPFM_Permalink_Settings {
 	/**
 	 * Add setting fields related to permalinks.
 	 * 
+	 * @access public
+	 * @return void
 	 * @since 1.0.0
 	 */
 	public function setup_fields() {
@@ -80,6 +82,8 @@ class WPFM_Permalink_Settings {
 	/**
 	 * Show a slug input box for food post type slug.
 	 * 
+	 * @access public
+	 * @return void
 	 * @since 1.0.0
 	 */
 	public function food_base_slug_input() {
@@ -91,6 +95,8 @@ class WPFM_Permalink_Settings {
 	/**
 	 * Show a slug input box for food category slug.
 	 * 
+	 * @access public
+	 * @return void
 	 * @since 1.0.0
 	 */
 	public function food_category_slug_input() {
@@ -102,6 +108,8 @@ class WPFM_Permalink_Settings {
 	/**
 	 * Show a slug input box for food type slug.
 	 * 
+	 * @access public
+	 * @return void
 	 * @since 1.0.0
 	 */
 	public function food_type_slug_input() {
@@ -113,6 +121,8 @@ class WPFM_Permalink_Settings {
 	/**
 	 * Save the settings.
 	 * 
+	 * @access public
+	 * @return void
 	 * @since 1.0.0
 	 */
 	public function settings_save() {

@@ -153,6 +153,8 @@ class WPFM_ActionHooks {
     /**
      * Output some content when no results were found
      * 
+     * @access public
+     * @return void
      * @since 1.0.1
      */
     public function output_no_results() {
@@ -162,6 +164,8 @@ class WPFM_ActionHooks {
     /**
      * Show results div
      * 
+     * @access public
+     * @return void
      * @since 1.0.1
      */
     public function food_filter_results() {
@@ -171,6 +175,8 @@ class WPFM_ActionHooks {
     /**
      * Edit food form
      * 
+     * @access public
+     * @return void
      * @since 1.0.1
      */
     public function edit_food() {
@@ -181,6 +187,8 @@ class WPFM_ActionHooks {
     /**
      * Show Food type dropdown
      * 
+     * @access public
+     * @return void
      * @since 1.0.0
      */
     public function foods_by_food_type() {
@@ -210,6 +218,8 @@ class WPFM_ActionHooks {
     /**
      * Show category dropdown
      * 
+     * @access public
+     * @return void
      * @since 1.0.0
      */
     public function foods_by_category() {
@@ -240,6 +250,8 @@ class WPFM_ActionHooks {
     /**
      * Set post view on the single listing page
      * 
+     * @access public
+     * @return void
      * @param object $post	 
      * @since 1.0.0
      */
@@ -261,6 +273,8 @@ class WPFM_ActionHooks {
     /**
      * output_structured_data
      * 
+     * @access public
+     * @return void
      * @since 1.0.0
      */
     public function output_structured_data() {
@@ -279,6 +293,8 @@ class WPFM_ActionHooks {
     /**
      * Change label
      * 
+     * @access public
+     * @return void
      * @since 1.0.0
      */
     public function admin_head() {
@@ -311,9 +327,11 @@ class WPFM_ActionHooks {
      * When a supported post type status is updated, check if any cached count transients
      * need to be removed, and remove the
      *
+     * @access public
      * @param string  $new_status New post status.
      * @param string  $old_status Old post status.
      * @param WP_Post $post       Post object.
+     * @return void
      * @since 1.0.0
      */
     public static function maybe_clear_count_transients($new_status, $old_status, $post) {
@@ -366,6 +384,8 @@ class WPFM_ActionHooks {
     /**
      * Clear expired transients
      * 
+     * @access public
+     * @return void
      * @since 1.0.0
      */
     public static function clear_expired_transients() {
@@ -384,6 +404,8 @@ class WPFM_ActionHooks {
     /**
      * When any post has a term set
      * 
+     * @access public
+     * @return void
      * @since 1.0.0
      */
     public static function set_term($object_id = '', $terms = '', $tt_ids = '', $taxonomy = '') {
@@ -393,6 +415,8 @@ class WPFM_ActionHooks {
     /**
      * When any term is edited
      * 
+     * @access public
+     * @return void
      * @since 1.0.0
      */
     public static function edited_term($term_id = '', $tt_id = '', $taxonomy = '') {
@@ -402,6 +426,8 @@ class WPFM_ActionHooks {
     /**
      * Flush the cache
      * 
+     * @access public
+     * @return void
      * @since 1.0.0
      */
     public static function flush_get_food_managers_cache($post_id) {
@@ -413,6 +439,7 @@ class WPFM_ActionHooks {
     /**
      * Category order update.
      *
+     * @access public
      * @return void|bool
      * @since 1.0.0
      */
@@ -446,6 +473,8 @@ class WPFM_ActionHooks {
      * Upload file via ajax
      * No nonce field since the form may be statically cached.
      * 
+     * @access public
+     * @return void
      * @since 1.0.0
      */
     public function upload_file() {
@@ -473,6 +502,8 @@ class WPFM_ActionHooks {
     /**
      * Get listings via ajax
      * 
+     * @access public
+     * @return void
      * @since 1.0.0
      */
     public function get_listings() {
@@ -603,6 +634,8 @@ class WPFM_ActionHooks {
     /**
      * Check for WC Ajax request and fire action
      * 
+     * @access public
+     * @return void
      * @since 1.0.0
      */
     public static function do_fm_ajax() {
@@ -624,6 +657,8 @@ class WPFM_ActionHooks {
     /**
      * Add our endpoint for frontend ajax requests
      * 
+     * @access public
+     * @return void
      * @since 1.0.0
      */
     public static function add_endpoint() {
@@ -635,6 +670,8 @@ class WPFM_ActionHooks {
     /**
      * If a form was posted, load its class so that it can be processed before display.
      * 
+     * @access public
+     * @return void
      * @since 1.0.0
      */
     public function load_posted_form() {
@@ -647,6 +684,8 @@ class WPFM_ActionHooks {
     /**
      * Display notice
      * 
+     * @access public
+     * @return void
      * @since 1.0.0
      */
     public function display_notice() {
@@ -661,6 +700,10 @@ class WPFM_ActionHooks {
     /**
      * column content
      *
+     * @access public
+     * @param string $column
+     * @param int $post_id
+     * @return void
      * @since 1.0.0
      */
     public function custom_food_content_column($column, $post_id) {
@@ -743,6 +786,10 @@ class WPFM_ActionHooks {
     /**
      * content for Copy Shortcode
      *
+     * @access public
+     * @param string $column
+     * @param int $post_id
+     * @return void
      * @since 1.0.1
      */
     public function shortcode_copy_content_column($column, $post_id) {
@@ -755,8 +802,8 @@ class WPFM_ActionHooks {
      * food_manager_save_food_manager_menu_data function.
      *
      * @access public
-     * @param post_id numeric
-     * @param post Object
+     * @param int $post_id 
+     * @param object $post 
      * @return void
      * @since 1.0.0
      */
@@ -781,7 +828,6 @@ class WPFM_ActionHooks {
      * get_food_listings_by_category_id function.
      *
      * @access public
-     * @param NULL
      * @return void
      * @since 1.0.0
      */
@@ -1207,6 +1253,8 @@ class WPFM_ActionHooks {
     /**
      * Do custom bulk actions
      * 
+     * @access public
+     * @return void
      * @since 1.0.0
      */
     public function do_bulk_actions() {
@@ -1238,6 +1286,8 @@ class WPFM_ActionHooks {
     /**
      * Approve a single food
      * 
+     * @access public
+     * @return void
      * @since 1.0.0
      */
     public function approve_food() {
@@ -1257,11 +1307,11 @@ class WPFM_ActionHooks {
     /**
      * save_post function.
      *
-     * @since 1.0.0
      * @access public
      * @param mixed $post_id
      * @param mixed $post
      * @return void
+     * @since 1.0.0
      */
     public function save_post($post_id, $post) {
         global $wpdb;
@@ -1326,7 +1376,9 @@ class WPFM_ActionHooks {
     /**
      * Add image field in 'food_manager_type' taxonomy page
      * 
-     * @param $taxonomy
+     * @access public
+     * @param string $taxonomy
+     * @return void
      * @since 1.0.0
      */
     function add_custom_taxonomy_image_for_food_type($taxonomy) { ?>
@@ -1345,8 +1397,10 @@ class WPFM_ActionHooks {
     /**
      * Save the 'food_manager_type' taxonomy image field
      * 
-     * @param $tt_id
-     * @param $term_id
+     * @access public
+     * @param int $term_id
+     * @param int $tt_id
+     * @return void
      * @since 1.0.0
      */
     function save_custom_taxonomy_image_for_food_type($term_id, $tt_id) {
@@ -1359,8 +1413,10 @@ class WPFM_ActionHooks {
     /**
      * Add the image field in edit form page
      * 
-     * @param $term
-     * @param $taxonomy
+     * @access public
+     * @param mixed $term
+     * @param string $taxonomy
+     * @return void
      * @since 1.0.0
      */
     function update_custom_taxonomy_image_for_food_type($term, $taxonomy) { ?>
@@ -1389,8 +1445,9 @@ class WPFM_ActionHooks {
     /**
      * Update the 'food_manager_type' taxonomy image field
      * 
-     * @param $term_id
-     * @param $tt_id
+     * @access public
+     * @param int $term_id
+     * @param int $tt_id
      * @since 1.0.0
      */
     function updated_custom_taxonomy_image_for_food_type($term_id, $tt_id) {
@@ -1405,6 +1462,8 @@ class WPFM_ActionHooks {
     /**
      * Enqueue the wp_media library
      * 
+     * @access public
+     * @return void
      * @since 1.0.0
      */
     function custom_taxonomy_load_media_for_food_type() {
@@ -1417,6 +1476,8 @@ class WPFM_ActionHooks {
     /**
      * Custom script
      * 
+     * @access public
+     * @return void
      * @since 1.0.0
      */
     function add_custom_taxonomy_script_for_food_type() {
@@ -1469,9 +1530,11 @@ class WPFM_ActionHooks {
     /**
      * Display new columns values
      * 
+     * @access public
      * @param string $columns
      * @param string $column
      * @param int $id
+     * @return void
      * @since 1.0.0
      */
     function display_custom_taxonomy_image_column_value_for_food_type($columns, $column, $id) {
@@ -1485,7 +1548,9 @@ class WPFM_ActionHooks {
     /**
      * Add image field in 'food_manager_category' taxonomy page
      * 
+     * @access public
      * @param string $taxonomy
+     * @return void
      * @since 1.0.0
      */
     function add_custom_taxonomy_image_for_food_category($taxonomy) {
@@ -1505,8 +1570,10 @@ class WPFM_ActionHooks {
     /**
      * Save the 'food_manager_category' taxonomy image field
      * 
-     * @param string $term_id
-     * @param string $tt_id
+     * @access public
+     * @param int $term_id
+     * @param int $tt_id
+     * @return void
      * @since 1.0.0
      */
     function save_custom_taxonomy_image_for_food_category($term_id, $tt_id) {
@@ -1519,8 +1586,10 @@ class WPFM_ActionHooks {
     /**
      * Add the image field in edit form page
      * 
+     * @access public
      * @param object $term
      * @param string $taxonomy
+     * @return void
      * @since 1.0.0
      */
     function update_custom_taxonomy_image_for_food_category($term, $taxonomy) { ?>
@@ -1549,8 +1618,10 @@ class WPFM_ActionHooks {
     /**
      * Update the 'food_manager_category' taxonomy image field
      * 
-     * @param string $term_id
-     * @param string $tt_id
+     * @access public
+     * @param int $term_id
+     * @param int $tt_id
+     * @return void
      * @since 1.0.0
      */
     function updated_custom_taxonomy_image_for_food_category($term_id, $tt_id) {
@@ -1565,6 +1636,8 @@ class WPFM_ActionHooks {
     /**
      * Enqueue the wp_media library
      * 
+     * @access public
+     * @return void
      * @since 1.0.0
      */
     function custom_taxonomy_load_media_for_food_category() {
@@ -1577,6 +1650,8 @@ class WPFM_ActionHooks {
     /**
      * Custom script
      * 
+     * @access public
+     * @return void
      * @since 1.0.0
      */
     function add_custom_taxonomy_script_for_food_category() {
@@ -1630,9 +1705,11 @@ class WPFM_ActionHooks {
     /**
      * Display new columns values
      * 
+     * @access public
      * @param string $columns
      * @param string $column
      * @param int $id
+     * @return $columns
      * @since 1.0.0
      */
     function display_custom_taxonomy_image_column_value_for_food_category($columns, $column, $id) {
@@ -1646,6 +1723,8 @@ class WPFM_ActionHooks {
     /**
      * Localisation
      * 
+     * @access public
+     * @return void
      * @since 1.0.0
      */
     public function load_plugin_textdomain() {
@@ -1658,6 +1737,8 @@ class WPFM_ActionHooks {
     /**
      * Load functions
      * 
+     * @access public
+     * @return void
      * @since 1.0.0
      */
     public function include_template_functions() {
@@ -1668,6 +1749,8 @@ class WPFM_ActionHooks {
     /**
      * Register and enqueue scripts and css
      * 
+     * @access public
+     * @return void
      * @since 1.0.0
      */
     public function frontend_scripts() {
@@ -1907,6 +1990,8 @@ class WPFM_ActionHooks {
     /**
      * Include admin files conditionally.
      * 
+     * @access public
+     * @return void
      * @since 1.0.0
      */
     public function conditional_includes() {
@@ -1925,6 +2010,7 @@ class WPFM_ActionHooks {
      * get_group_field_html function.
      *
      * @access public
+     * @return void
      * @since 1.0.0
      */
     public function get_group_field_html() {
@@ -1981,6 +2067,8 @@ class WPFM_ActionHooks {
     /**
      * Sends user to the setup page on first activation
      * 
+     * @access public
+     * @return void
      * @since 1.0.0
      */
     public function redirect() {
@@ -2014,6 +2102,8 @@ class WPFM_ActionHooks {
     /**
      * autocomplete term search feature.
      *
+     * @access public
+     * @return void
      * @since 1.0.1
      */
     function term_ajax_search() {
@@ -2040,9 +2130,11 @@ class WPFM_ActionHooks {
     /**
      * Callback to set up the metabox
      * Mimicks the traditional hierarchical term metabox, but modified with our nonces 
-     * 	 
-     * @param  object $post
-     * @param  array $args
+     * 
+     * @access public
+     * @param object $post
+     * @param array $box
+     * @return void
      * @since 1.0.1
      */
     public function replace_food_manager_type_metabox($post, $box) {
@@ -2132,6 +2224,8 @@ class WPFM_ActionHooks {
     /**
      * Show menu shortcode in single edit menu.
      * 
+     * @access public
+     * @return void
      * @since 1.0.2
      */
     function food_menu_shortcode() {

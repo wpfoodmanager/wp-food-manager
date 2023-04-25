@@ -64,6 +64,7 @@ class WPFM_FilterHooks {
     /**
      * Create link on plugin page for food manager plugin settings
      * 
+     * @access public
      * @param array $links
      * @return array
      * @since 1.0.0
@@ -78,6 +79,7 @@ class WPFM_FilterHooks {
     /**
      * Add new column heading
      *
+     * @access public
      * @param array $columns
      * @return array
      * @since 1.0.0
@@ -90,6 +92,7 @@ class WPFM_FilterHooks {
     /**
      * Add new column heading
      *
+     * @access public
      * @param array $columns
      * @return array
      * @since 1.0.0
@@ -102,6 +105,7 @@ class WPFM_FilterHooks {
     /**
      * Filters the upload dir when $food_manager_upload is true
      * 
+     * @access public
      * @param  array $pathdata
      * @return array
      * @since 1.0.0
@@ -127,6 +131,7 @@ class WPFM_FilterHooks {
     /**
      * Fix post name when wp_update_post changes it
      * 
+     * @access public
      * @param  array $data
      * @return array $postarr
      * @since 1.0.0
@@ -141,8 +146,10 @@ class WPFM_FilterHooks {
     /**
      * disable_gutenberg functions
      * 
+     * @access public
      * @param boolean $is_enabled
      * @param string $post_type
+     * @return bool $is_enabled
      * @since 1.0.0
      */
     public function disable_gutenberg($is_enabled, $post_type) {
@@ -153,8 +160,8 @@ class WPFM_FilterHooks {
     /**
      * food_archive function.
      *
-     * @param string $template
      * @access public
+     * @param string $template
      * @return void
      * @since 1.0.0
      */
@@ -172,7 +179,9 @@ class WPFM_FilterHooks {
     /**
      * Add Food menu content
      * 
+     * @access public
      * @param string $content
+     * @return mixed
      * @since 1.0.0
      */
     public function food_menu_content($content) {
@@ -195,7 +204,9 @@ class WPFM_FilterHooks {
     /**
      * Add extra content when showing food content
      * 
+     * @access public
      * @param string $content
+     * @return mixed
      * @since 1.0.0
      */
     public function food_content($content) {
@@ -235,6 +246,9 @@ class WPFM_FilterHooks {
     /**
      * column Sortable
      *
+     * @access public
+     * @param array $columns
+     * @return array
      * @since 1.0.1
      */
     public function set_custom_food_sortable_columns($columns) {
@@ -246,6 +260,9 @@ class WPFM_FilterHooks {
     /**
      * Custom columns
      *
+     * @access public
+     * @param array $columns
+     * @return array
      * @since 1.0.0
      */
     public function set_custom_food_columns($columns) {
@@ -267,6 +284,9 @@ class WPFM_FilterHooks {
     /**
      * Set Copy Shortcode
      *
+     * @access public
+     * @param array $columns
+     * @return array
      * @since 1.0.1
      */
     public function set_shortcode_copy_columns($columns) {
@@ -277,6 +297,7 @@ class WPFM_FilterHooks {
     /**
      * columns function.
      *
+     * @access public
      * @param array $columns
      * @return array
      * @since 1.0.0

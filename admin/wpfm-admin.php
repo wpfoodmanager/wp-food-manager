@@ -56,6 +56,8 @@ class WPFM_Admin {
 	/**
 	 * Ran on WP admin_init hook
 	 * 
+	 * @access public
+	 * @return void
 	 * @since 1.0.0
 	 */
 	public function admin_init() {
