@@ -212,7 +212,7 @@ class WPFM_ActionHooks {
         $output .= '<option value="" ' . selected(isset($_GET['food_manager_type']) ? $_GET['food_manager_type'] : '', '', false) . '>' . __('Select Food Type', 'wp-food-manager') . '</option>';
         $output .= $walker->walk($terms, 0, $r);
         $output .= '</select>';
-        printf($output);
+        printf('%s', $output);
     }
 
     /**
@@ -244,7 +244,7 @@ class WPFM_ActionHooks {
         $output .= '<option value="" ' . selected(isset($_GET['food_manager_category']) ? $_GET['food_manager_category'] : '', '', false) . '>' . __('Select Food Category', 'wp-food-manager') . '</option>';
         $output .= $walker->walk($terms, 0, $r);
         $output .= '</select>';
-        printf($output);
+        printf('%s', $output);
     }
 
     /**
