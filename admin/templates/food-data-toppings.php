@@ -62,14 +62,14 @@ $food_toppings = get_post_meta($thepostid, '_food_toppings', true); ?>
 			}
 			?>
 			<div class="wpfm-actions">
-				<button type="button" class="wpfm-add-button button button-primary" id="wpfm-add-new-option" data-row='<div class="wpfm-options-wrap wpfm-metabox postbox wpfm-options-box-%%repeated-option-index%%">
-					<input type="hidden" name="repeated_options[]" value="%%repeated-option-index%%" class="repeated-options">
+				<button type="button" class="wpfm-add-button button button-primary" id="wpfm-add-new-option" data-row='<div class="wpfm-options-wrap wpfm-metabox postbox wpfm-options-box-__repeated-option-index__">
+					<input type="hidden" name="repeated_options[]" value="__repeated-option-index__" class="repeated-options">
 					<h3 class="">
-						<a href="javascript: void(0);" data-id="%%repeated-option-index%%" class="wpfm-delete-btn">Remove</a>
-						<div class="wpfm-togglediv" title="Click to toggle" aria-expanded="false" data-row-count="%%repeated-option-index%%"></div>
+						<a href="javascript: void(0);" data-id="__repeated-option-index__" class="wpfm-delete-btn">Remove</a>
+						<div class="wpfm-togglediv" title="Click to toggle" aria-expanded="false" data-row-count="__repeated-option-index__"></div>
 						<div class="wpfm-sort"></div>
-						<strong class="attribute_name"><?php _e("Option %%repeated-option-index%%", "wp-food-manager"); ?></strong>
-						<span class="attribute_key"><input type="hidden" name="topping_key_%%repeated-option-index%%" value="option_%%repeated-option-index%%" readonly>
+						<strong class="attribute_name"><?php _e("Option __repeated-option-index__", "wp-food-manager"); ?></strong>
+						<span class="attribute_key"><input type="hidden" name="topping_key___repeated-option-index__" value="option___repeated-option-index__" readonly>
 							</span>
 					</h3>
 					<div class="wpfm-metabox-content wpfm-options-box">
@@ -82,11 +82,11 @@ $food_toppings = get_post_meta($thepostid, '_food_toppings', true); ?>
 									$field['required'] = false;
 									if ($key == "_topping_name") {
 										if (strpos($key, '_') !== 0) {
-											$key  = $key . '_%%repeated-option-index%%';
+											$key  = $key . '___repeated-option-index__';
 										}
 									} else {
 										if (strpos($key, '_') !== 0) {
-											$key  = $key . "_%%repeated-option-index%%";
+											$key  = $key . "___repeated-option-index__";
 										}
 									}
 									$type = !empty($field["type"]) ? $field["type"] : "text";

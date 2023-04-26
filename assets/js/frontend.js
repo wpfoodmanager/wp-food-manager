@@ -192,7 +192,7 @@ var WPFM_Frontend = function () {
                     });
                 }
                 max_index = max_index + 1;
-                var html = jQuery(this).data('row').replace(/%%repeated-option-index%%/g, max_index);
+                var html = jQuery(this).data('row').replace(/__repeated-option-index__/g, max_index);
                 var html_data = html.replace(/%repeated-option-index%/g, max_index);
                 jQuery('.wpfm-form-wrapper .wpfm-actions').before(html_data);
                 jQuery(".container .wpfm-form-wrapper table.widefat tbody").sortable({
@@ -239,9 +239,9 @@ var WPFM_Frontend = function () {
                 jQuery(".food-manager-multiselect").chosen({ search_contains: !0 })
                 // initialize WP editor on click for new WP editor's field.
                 var repeater_row_counts = jQuery(this).parents(".wpfm-options-wrapper").children(".wpfm-options-wrap").length;
-                fieldLabel = jQuery(this).parents(".wpfm-options-wrapper").find("fieldset.wpfm-form-group.wp-editor-field").attr("data-field-name");
-                var fieldChangedLabel = fieldLabel.replace(fieldLabel.match(/(\d+)/g)[0], '');
-                var editorId = fieldChangedLabel + repeater_row_counts;
+                fieldLabel = jQuery(this).parents(".wpfm-options-wrapper").children(".wpfm-options-wrap").find("fieldset.wpfm-form-group.wp-editor-field").last().attr("data-field-name");
+                var fieldChangedLabel = fieldLabel;
+                var editorId = fieldChangedLabel;
                 wp.editor.initialize(editorId, {
                     tinymce: {
                         wpautop: false,

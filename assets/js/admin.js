@@ -371,7 +371,7 @@ var WPFM_Admin = function () {
                     });
                 }
                 max_index = max_index + 1;
-                var html = jQuery(this).data('row').replace(/%%repeated-option-index%%/g, max_index);
+                var html = jQuery(this).data('row').replace(/__repeated-option-index__/g, max_index);
                 jQuery('#toppings_food_data_content .wpfm-options-wrapper .wpfm-actions').before(html);
                 jQuery(".post-type-food_manager .wpfm-admin-options-table table.widefat tbody").sortable({
                     connectWith: ".post-type-food_manager .wpfm-admin-options-table table.widefat tbody",
@@ -400,9 +400,9 @@ var WPFM_Admin = function () {
                 }).disableSelection();
                 // Initialize WP editor on click for new WP editor's field.
                 var repeater_row_counts = jQuery(this).parents(".wpfm-options-wrapper").children(".wpfm-options-wrap").length;
-                fieldLabel = jQuery(this).parents(".wpfm-options-wrapper").find("p.wpfm-admin-postbox-form-field.wp-editor-field").attr("data-field-name");
-                var fieldChangedLabel = fieldLabel.replace(fieldLabel.match(/(\d+)/g)[0], '');
-                var editorId = fieldChangedLabel + repeater_row_counts;
+                fieldLabel = jQuery(this).parents(".wpfm-options-wrapper").children(".wpfm-options-wrap").find("p.wpfm-admin-postbox-form-field.wp-editor-field").last().attr("data-field-name");
+                var fieldChangedLabel = fieldLabel;
+                var editorId = fieldChangedLabel;
                 wp.editor.initialize(editorId, {
                     tinymce: {
                         wpautop: false,

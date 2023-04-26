@@ -1146,7 +1146,7 @@ class WPFM_ActionHooks {
                     foreach ($_POST['repeated_options'] as $count) {
                         $option_values = array();
                         if (isset($_POST['option_value_count'])) {
-                            $find_option = array_search('%%repeated-option-index%%', $_POST['option_value_count']);
+                            $find_option = array_search('__repeated-option-index__', $_POST['option_value_count']);
                             if ($find_option !== false) {
                                 // Remove from array
                                 unset($_POST['option_value_count'][$find_option]);
