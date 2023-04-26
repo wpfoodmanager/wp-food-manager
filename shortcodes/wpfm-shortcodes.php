@@ -278,9 +278,6 @@ class WPFM_Shortcodes {
 		if (!empty($_GET['search_keywords'])) {
 			$keywords = sanitize_text_field($_GET['search_keywords']);
 		}
-		if (!empty($_GET['search_location'])) {
-			$location = sanitize_text_field($_GET['search_location']);
-		}
 		if (!empty($_GET['search_datetime'])) {
 			$selected_datetime = sanitize_text_field($_GET['search_datetime']);
 		}
@@ -305,7 +302,6 @@ class WPFM_Shortcodes {
 				'food_types' => $food_types,
 				'selected_food_type' => $selected_food_type,
 				'atts' => $atts,
-				'location' => $location,
 				'keywords' => $keywords,
 			));
 			get_food_manager_template('food-listings-start.php', array('layout_type' => $layout_type));
@@ -315,7 +311,6 @@ class WPFM_Shortcodes {
 			}
 		} else {
 			$foods = get_food_managers(apply_filters('food_manager_output_foods_args', array(
-				'search_location'   => $location,
 				'search_keywords'   => $keywords,
 				'search_categories' => $categories,
 				'search_food_types' => $food_types,

@@ -509,7 +509,6 @@ class WPFM_ActionHooks {
     public function get_listings() {
         global $wp_post_types;
         $result            = array();
-        $search_location   = sanitize_text_field(stripslashes($_REQUEST['search_location']));
         $search_keywords   = sanitize_text_field(stripslashes($_REQUEST['search_keywords']));
         $search_categories = isset($_REQUEST['search_categories']) ? $_REQUEST['search_categories'] : '';
         $search_food_types = isset($_REQUEST['search_food_types']) ? $_REQUEST['search_food_types'] : '';
@@ -526,7 +525,6 @@ class WPFM_ActionHooks {
             $search_food_types = array_filter(array(sanitize_text_field(stripslashes($search_food_types))));
         }
         $args = array(
-            'search_location'    => $search_location,
             'search_keywords'    => $search_keywords,
             'search_categories'  => $search_categories,
             'search_food_types'  => $search_food_types,
@@ -603,9 +601,6 @@ class WPFM_ActionHooks {
                 $result['filter_value'] = explode(" ",  $result_implode);
         }
         $result['filter_value'][] =  $last_filter_value . " " . $post_type_label;
-        if ($search_location) {
-            $result['filter_value'][] = sprintf(__('located in &ldquo;%s&rdquo;', 'wp-food-manager'), $search_location);
-        }
         if (sizeof($result['filter_value']) > 1) {
             $message = sprintf(_n('Search completed. Found %d matching record.', 'Search completed. Found %d matching records.', $food_cnt, 'wp-food-manager'), $food_cnt);
             $result['showing_applied_filters'] = true;
@@ -614,7 +609,6 @@ class WPFM_ActionHooks {
             $result['showing_applied_filters'] = false;
         }
         $search_values = array(
-            'location'   => $search_location,
             'keywords'   => $search_keywords,
             'types'         => $search_food_types,
             'categories' => $search_categories
@@ -623,7 +617,6 @@ class WPFM_ActionHooks {
         // Generate RSS link
         $result['showing_links'] = wpfm_get_filtered_links(array(
             'search_keywords'   => $search_keywords,
-            'search_location'   => $search_location,
             'search_categories' => $search_categories,
             'search_food_types' => $search_food_types,
         ));

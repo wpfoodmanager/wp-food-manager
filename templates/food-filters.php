@@ -15,14 +15,6 @@
 				<!-- shows default keywords text field end -->
 			</div>
 			<!-- Search by keywords section end-->
-			<!-- Search by location section start -->
-			<div class="wpfm-col">
-				<div class="wpfm-form-group">
-					<label for="search_location" class="wpfm-form-label"><?php _e('Location', 'wp-food-manager'); ?></label>
-					<input type="text" name="search_location" id="search_location" placeholder="<?php esc_attr_e('Location', 'wp-food-manager'); ?>" value="<?php echo esc_attr($location); ?>" />
-				</div>
-			</div>
-			<!-- Search by location section end -->
 		</div><!-- /row -->
 		<div class="wpfm-row">
 			<!-- Search by food categories section start -->

@@ -12,7 +12,6 @@ if (!function_exists('get_food_listings')) :
 	function get_food_listings($args = array()) {
 		global $food_manager_keyword;
 		$args = wp_parse_args($args, array(
-			'search_location'   => '',
 			'search_keywords'   => '',
 			'search_categories' => array(),
 			'search_food_types' => array(),
@@ -49,18 +48,6 @@ if (!function_exists('get_food_listings')) :
 		);
 		if ($args['posts_per_page'] < 0) {
 			$query_args['no_found_rows'] = true;
-		}
-		if (!empty($args['search_location'])) {
-			$location_meta_keys = array('geolocation_formatted_address', '_food_location', 'geolocation_state_long');
-			$location_search    = array('relation' => 'OR');
-			foreach ($location_meta_keys as $meta_key) {
-				$location_search[] = array(
-					'key'     => $meta_key,
-					'value'   => $args['search_location'],
-					'compare' => 'like'
-				);
-			}
-			$query_args['meta_query'][] = $location_search;
 		}
 		if (!empty($args['search_categories'][0])) {
 			$field    = is_numeric($args['search_categories'][0]) ? 'term_id' : 'slug';
@@ -587,7 +574,7 @@ if (!function_exists('wpfm_get_filtered_links')) :
 				'url'  => '#'
 			),
 		), $args);
-		if (!$args['search_keywords'] && !$args['search_location'] && !$args['search_categories'] && !$args['search_food_types']  && !apply_filters('wpfm_get_listings_custom_filter', false)) {
+		if (!$args['search_keywords'] && !$args['search_categories'] && !$args['search_food_types']  && !apply_filters('wpfm_get_listings_custom_filter', false)) {
 			unset($links['reset']);
 		}
 		$return = '';
