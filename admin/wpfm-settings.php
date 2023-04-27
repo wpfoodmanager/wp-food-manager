@@ -176,6 +176,15 @@ class WPFM_Settings {
 							'type'       => 'checkbox',
 							'attributes' => array(),
 						),
+						array(
+							'name'       => 'food_manager_enable_default_food_menu_multiselect',
+							'std'        => '0',
+							'label'      => __('Multi-select Food Menu', 'wp-food-manager'),
+							'cb_label'   => __('Enable Food Menu multiselect by default.', 'wp-food-manager'),
+							'desc'       => __('If enabled, the Food Menu select box will default to a multi select on the [foods] shortcode.', 'wp-food-manager'),
+							'type'       => 'checkbox',
+							'attributes' => array(),
+						),
 					),
 				),
 				'food_submission'     => array(

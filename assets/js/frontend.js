@@ -1,7 +1,7 @@
 var WPFM_Frontend = function () {
     return {
         init: function () {
-
+            jQuery(".food-manager-post_type-dropdown").chosen({ search_contains: !0 });
             // For Extra Toppings view Toggle
             if (jQuery('.wpfm-additional-main-row').length > 0) {
                 jQuery('.wpfm-additional-main-row').hide();

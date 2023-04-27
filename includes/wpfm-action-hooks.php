@@ -512,6 +512,7 @@ class WPFM_ActionHooks {
         $search_keywords   = sanitize_text_field(stripslashes($_REQUEST['search_keywords']));
         $search_categories = isset($_REQUEST['search_categories']) ? $_REQUEST['search_categories'] : '';
         $search_food_types = isset($_REQUEST['search_food_types']) ? $_REQUEST['search_food_types'] : '';
+        $search_food_menu = isset($_REQUEST['search_food_menu']) ? $_REQUEST['search_food_menu'] : '';
         $post_type_label   = $wp_post_types['food_manager']->labels->name;
         $orderby           = sanitize_text_field($_REQUEST['orderby']);
         if (is_array($search_categories)) {
@@ -528,6 +529,7 @@ class WPFM_ActionHooks {
             'search_keywords'    => $search_keywords,
             'search_categories'  => $search_categories,
             'search_food_types'  => $search_food_types,
+            'search_food_menu'   => $search_food_menu,
             'orderby'            => $orderby,
             'order'              => sanitize_text_field($_REQUEST['order']),
             'offset'             => (absint($_REQUEST['page']) - 1) * absint($_REQUEST['per_page']),
@@ -588,6 +590,17 @@ class WPFM_ActionHooks {
             }
             $result['filter_value'][] = implode(', ', $showing_food_types);
         }
+        // Food types
+        if ($search_food_menu) {
+            $showing_food_menus = array();
+            foreach ($search_food_menu as $food_menu) {
+                $food_menu_object = get_post($food_menu);
+                if (!is_wp_error($food_menu_object)) {
+                    $showing_food_menus[] = $food_menu_object->post_title;
+                }
+            }
+            $result['filter_value'][] = implode(', ', $showing_food_menus);
+        }
         if ($search_keywords) {
             $result['filter_value'][] = '&ldquo;' . $search_keywords . '&rdquo;';
         }
@@ -619,6 +632,7 @@ class WPFM_ActionHooks {
             'search_keywords'   => $search_keywords,
             'search_categories' => $search_categories,
             'search_food_types' => $search_food_types,
+            'search_food_menu' => $search_food_menu,
         ));
         $result['max_num_pages'] = $foods->max_num_pages;
         wp_send_json(apply_filters('food_manager_get_listings_result', $result, $foods));

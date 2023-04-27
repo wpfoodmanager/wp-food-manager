@@ -15,6 +15,7 @@ if (!function_exists('get_food_listings')) :
 			'search_keywords'   => '',
 			'search_categories' => array(),
 			'search_food_types' => array(),
+			'search_food_menu' => array(),
 			'offset'            => 0,
 			'posts_per_page'    => 15,
 			'orderby'           => 'date',
@@ -75,6 +76,18 @@ if (!function_exists('get_food_listings')) :
 				);
 			}
 			$query_args['tax_query'][] = $tax_food_type_args;
+		}
+		if (!empty($args['search_food_menu'])) {
+			$food_ids = [];
+			foreach( $args['search_food_menu'] as $menu_id ){
+				$food_item_ids = get_post_meta($menu_id, '_food_item_ids', true);
+				if( $food_item_ids ){
+					foreach( $food_item_ids as $food_item_id ){
+						$food_ids[] = $food_item_id;
+					}
+				}
+			}
+			$query_args['post__in'] = $food_ids;
 		}
 		if (!empty($args['search_tags'][0])) {
 			$field    = is_numeric($args['search_tags'][0]) ? 'term_id' : 'slug';

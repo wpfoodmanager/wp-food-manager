@@ -226,6 +226,7 @@ class WPFM_Shortcodes {
 			'show_food_tags'          => true,
 			'show_category_multiselect' => get_option('food_manager_enable_default_category_multiselect', false),
 			'show_food_type_multiselect' => get_option('food_manager_enable_default_food_type_multiselect', false),
+			'show_food_menu_multiselect' => get_option('food_manager_enable_default_food_menu_multiselect', false),
 			'show_pagination'           => false,
 			'show_more'                 => true,
 			// Limit what foods are shown based on category and type
@@ -299,6 +300,7 @@ class WPFM_Shortcodes {
 				'show_food_types' => $show_food_types,
 				'show_food_tags' => $show_food_tags,
 				'show_food_type_multiselect' => $show_food_type_multiselect,
+				'show_food_menu_multiselect' => $show_food_menu_multiselect,
 				'food_types' => $food_types,
 				'selected_food_type' => $selected_food_type,
 				'atts' => $atts,

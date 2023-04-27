@@ -26,7 +26,7 @@ var WPFM_FoodAjaxFilters = function () {
             jQuery('.food_filters').on('click', '.reset', WPFM_FoodAjaxFilters.actions.WPFM_FoodAjaxFiltersReset);
             jQuery('div.food_listings').on('click', '.food-manager-pagination a', WPFM_FoodAjaxFilters.actions.foodPagination);
             jQuery('.food_listings').on('update_food_listings', WPFM_FoodAjaxFilters.actions.getfoodListings);
-            jQuery('#search_keywords, #search_categories, #search_food_types, .food-manager-filter').change(function () {
+            jQuery('#search_keywords, #search_categories, #search_food_menu, #search_food_types, .food-manager-filter').change(function () {
                 var target = jQuery(this).closest('div.food_listings');
                 target.triggerHandler('update_food_listings', [1, false]);
                 WPFM_FoodAjaxFilters.food_manager_store_state(target, 1)
@@ -79,6 +79,7 @@ var WPFM_FoodAjaxFilters = function () {
                 var form = jQuery(this).closest('form');
                 form.find(':input[name="search_keywords"], .food-manager-filter').not(':input[type="hidden"]').val('').trigger('chosen:updated');
                 form.find(':input[name^="search_categories"]').not(':input[type="hidden"]').val('').trigger('chosen:updated');
+                form.find('#search_food_menu').not(':input[type="hidden"]').val('').trigger('chosen:updated');
                 form.find(':input[name^="search_food_types"]').not(':input[type="hidden"]').val('').trigger('chosen:updated');
                 target.triggerHandler('reset');
                 target.triggerHandler('update_food_listings', [1, false]);
@@ -141,6 +142,9 @@ var WPFM_FoodAjaxFilters = function () {
                     var food_types = form.find(':input[name^="search_food_types"]').map(function () {
                         return jQuery(this).val()
                     }).get();
+                    var food_menu = form.find('#search_food_menu').map(function () {
+                        return jQuery(this).val()
+                    }).get();
                     var keywords = '';
                     var $keywords = form.find(':input[name="search_keywords"]');
                     if ($keywords.val() !== $keywords.attr('placeholder')) {
@@ -151,6 +155,7 @@ var WPFM_FoodAjaxFilters = function () {
                         search_keywords: keywords,
                         search_categories: categories,
                         search_food_types: food_types,
+                        search_food_menu: food_menu,
                         per_page: per_page,
                         orderby: orderby,
                         order: order,
@@ -165,6 +170,7 @@ var WPFM_FoodAjaxFilters = function () {
                     var datetimes = target.data('datetimes');
                     var categories = target.data('categories');
                     var food_types = target.data('food_types');
+                    var food_menu = target.data('search_food_menu');
                     if (categories) {
                         categories = categories.split(',')
                     }
@@ -173,6 +179,7 @@ var WPFM_FoodAjaxFilters = function () {
                         search_keywords: keywords,
                         search_categories: categories,
                         search_food_types: food_types,
+                        search_food_menu: food_menu,
                         per_page: per_page,
                         orderby: orderby,
                         order: order,

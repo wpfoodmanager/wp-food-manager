@@ -55,6 +55,7 @@ $options = array(
 	'food_manager_food_item_show_hide',
 	'food_manager_enable_default_category_multiselect',
 	'food_manager_enable_default_food_type_multiselect',
+	'food_manager_enable_default_food_menu_multiselect',
 	'food_manager_nutritions_dashboard_page_id',
 	'food_manager_ingredients_dashboard_page_id',
 	'food_manager_enable_field_editor',
