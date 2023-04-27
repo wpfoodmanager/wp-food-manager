@@ -66,7 +66,7 @@ if (!function_exists('get_food_listings')) :
 			$operator = 'all' === get_option('food_manager_food_type_filter_type', 'all') && sizeof($args['search_food_types']) > 1 ? 'AND' : 'IN';
 			$tax_food_type_args['relation'] = 'OR';
 			$search_food_types = array_values($args['search_food_types']);
-			foreach( $search_food_types as $search_food_type ){
+			foreach ($search_food_types as $search_food_type) {
 				$tax_food_type_args[] = array(
 					'taxonomy'         => 'food_manager_type',
 					'field'            => $field,
@@ -79,10 +79,10 @@ if (!function_exists('get_food_listings')) :
 		}
 		if (!empty($args['search_food_menu'])) {
 			$food_ids = [];
-			foreach( $args['search_food_menu'] as $menu_id ){
+			foreach ($args['search_food_menu'] as $menu_id) {
 				$food_item_ids = get_post_meta($menu_id, '_food_item_ids', true);
-				if( $food_item_ids ){
-					foreach( $food_item_ids as $food_item_id ){
+				if ($food_item_ids) {
+					foreach ($food_item_ids as $food_item_id) {
 						$food_ids[] = $food_item_id;
 					}
 				}
@@ -464,7 +464,7 @@ function food_manager_dropdown_selection($args = '') {
 	endif;
 	$item_cat_ids = get_post_meta(get_the_ID(), '_food_item_cat_ids', true);
 	$name_attr = ($args['name_attr'] == true) ? 'name="' . esc_attr($name) . '[]"' : '';
-	$output = '<select ' . $data_taxonomy . ' '.$name_attr.'  id="' . esc_attr($id) . '" class="' . esc_attr($class) . '" ' . ($multiple ? 'multiple="multiple"' : "") . ' data-placeholder="' . esc_attr($placeholder) . '" data-no_results_text="' . esc_attr($no_results_text) . '" data-multiple_text="' . esc_attr($multiple_text) . '">\n';
+	$output = '<select ' . $data_taxonomy . ' ' . $name_attr . '  id="' . esc_attr($id) . '" class="' . esc_attr($class) . '" ' . ($multiple ? 'multiple="multiple"' : "") . ' data-placeholder="' . esc_attr($placeholder) . '" data-no_results_text="' . esc_attr($no_results_text) . '" data-multiple_text="' . esc_attr($multiple_text) . '">\n';
 	if (is_admin()) {
 		if (empty($item_cat_ids) && isset($item_cat_ids)) {
 			$output .= '<option value="" disabled selected>' . $placeholder . '</option>';
@@ -555,6 +555,7 @@ if (!function_exists('wpfm_get_filtered_links')) :
 	function wpfm_get_filtered_links($args = array()) {
 		$search_categories = array();
 		$search_food_types = array();
+		$search_food_menu = '';
 		// Convert to slugs
 		if ($args['search_categories']) {
 			foreach ($args['search_categories'] as $category) {
@@ -581,11 +582,28 @@ if (!function_exists('wpfm_get_filtered_links')) :
 				}
 			}
 		}
+		if (isset($args['search_food_menu']) && !empty($args['search_food_menu'])) {
+			$search_food_menu = implode(',', $args['search_food_menu']);
+		}
 		$links = apply_filters('wpfm_food_filters_showing_foods_links', array(
 			'reset' => array(
 				'name' => __('Reset', 'wp-food-manager'),
 				'url'  => '#'
 			),
+			'rss_link' => array(
+				'name' => __('RSS', 'wp-food-manager'),
+				'url'  => get_food_manager_rss_link(
+					apply_filters(
+						'wpfm_get_listings_custom_filter_rss_args',
+						array(
+							'search_keywords' => $args['search_keywords'],
+							'search_categories'  => implode(',', $search_categories),
+							'search_food_types'  => implode(',', $search_food_types),
+							'search_food_menu'  => $search_food_menu,
+						)
+					)
+				)
+			)
 		), $args);
 		if (!$args['search_keywords'] && !$args['search_categories'] && !$args['search_food_menu'] && !$args['search_food_types']  && !apply_filters('wpfm_get_listings_custom_filter', false)) {
 			unset($links['reset']);

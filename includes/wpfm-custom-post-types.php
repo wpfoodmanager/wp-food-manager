@@ -219,6 +219,18 @@ class WPFM_Post_Types {
 				'operator'         => $operator
 			);
 		}
+		if (!empty($_GET['search_food_menu'])) {
+			$food_ids = [];
+			foreach ($_GET['search_food_menu'] as $menu_id) {
+				$food_item_ids = get_post_meta($menu_id, '_food_item_ids', true);
+				if ($food_item_ids) {
+					foreach ($food_item_ids as $food_item_id) {
+						$food_ids[] = $food_item_id;
+					}
+				}
+			}
+			$query_args['post__in'] = $food_ids;
+		}
 		if ($food_manager_keyword = sanitize_text_field($_GET['search_keywords'])) {
 			$query_args['s'] = $food_manager_keyword;
 			add_filter('posts_search', 'get_food_listings_keyword_search');
