@@ -76,7 +76,7 @@ $food = $post;
                             </div>
                             <div class="wpfm-single-food-body-content">
                                 <?php do_action('single_food_overview_start'); ?>
-                                <?php echo apply_filters('display_food_description', get_the_content()); ?>
+                                <?php echo apply_filters('wpfm_the_content', $post->post_content); ?>
                                 <?php do_action('single_food_overview_end'); ?>
                                 <?php
                                 $ingredients = get_food_ingredients();

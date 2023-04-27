@@ -102,6 +102,16 @@ class WP_Food_Manager {
 		// Activation - works with symlinks
 		register_activation_hook(basename(dirname(__FILE__)) . '/' . basename(__FILE__), array($this, 'activate'));
 
+		// Overwritting the content of custom post types of WP food manager.
+		global $wp_embed;
+		add_filter('wpfm_the_content', array($wp_embed, 'run_shortcode'), 8);
+		add_filter('wpfm_the_content', array($wp_embed, 'autoembed'), 8);
+		add_filter('wpfm_the_content', 'wptexturize');
+		add_filter('wpfm_the_content', 'convert_chars');
+		add_filter('wpfm_the_content', 'wpautop');
+		add_filter('wpfm_the_content', 'shortcode_unautop');
+		add_filter('wpfm_the_content', 'do_shortcode');
+
 		// Schedule cron foods
 		self::check_schedule_crons();
 	}
