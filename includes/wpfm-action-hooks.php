@@ -637,15 +637,20 @@ class WPFM_ActionHooks {
             $result['filter_value'][] = implode(', ', $showing_food_types);
         }
 
-        // Food types
+        // Food Menu
+        $hide_flag = 0;
         if (implode(',', $search_food_menu)) {
             $showing_food_menus = array();
             foreach ($search_food_menu as $food_menu) {
-                $food_menu_object = get_post($food_menu);
-                if (!is_wp_error($food_menu_object)) {
-                    $showing_food_menus[] = $food_menu_object->post_title;
+                $food_item_ids = get_post_meta($food_menu, '_food_item_ids', true);
+                if ($food_item_ids) {
+                    foreach ($food_item_ids as $food_item_id) {
+                        $showing_food_menus[] = $food_item_id;
+                    }
                 }
             }
+            if (count($showing_food_menus) <= 0) $hide_flag = 1;
+            else $hide_flag = 0;
             $result['filter_value'][] = implode(', ', $showing_food_menus);
         }
 
@@ -689,6 +694,11 @@ class WPFM_ActionHooks {
             'search_food_menu' => $search_food_menu,
         ));
         $result['max_num_pages'] = $foods->max_num_pages;
+
+        if ($hide_flag) {
+            $result['html'] = '<div class="no_food_listings_found wpfm-alert wpfm-alert-danger">There are no foods matching your search.</div>';
+            $result['found_foods'] = '';
+        }
 
         wp_send_json(apply_filters('food_manager_get_listings_result', $result, $foods));
     }
