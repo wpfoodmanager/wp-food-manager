@@ -663,8 +663,8 @@ if (!function_exists('wpfm_get_filtered_links')) :
 				)
 			)
 		), $args);
-
-		if (!$args['search_keywords'] && !$args['search_categories'] && !$args['search_food_menu'] && !$args['search_food_types']  && !apply_filters('wpfm_get_listings_custom_filter', false)) {
+		
+		if (!$args['search_keywords'] && !$args['search_categories'] && !$search_food_menu && !$args['search_food_types']  && !apply_filters('wpfm_get_listings_custom_filter', false)) {
 			unset($links['reset']);
 		}
 

@@ -638,7 +638,7 @@ class WPFM_ActionHooks {
         }
 
         // Food types
-        if ($search_food_menu) {
+        if (implode(',', $search_food_menu)) {
             $showing_food_menus = array();
             foreach ($search_food_menu as $food_menu) {
                 $food_menu_object = get_post($food_menu);
