@@ -1,9 +1,12 @@
 <?php wp_enqueue_script('wpfm-ajax-filters'); ?>
 <?php do_action('food_manager_food_filters_before', $atts); ?>
+
 <form class="wpfm-main wpfm-form-wrapper wpfm-food-filter-wrapper food_filters" id="food_filters">
 	<?php do_action('food_manager_food_filters_start', $atts); ?>
+
 	<div class="search_foods search-form-container">
 		<?php do_action('food_manager_food_filters_search_foods_start', $atts); ?>
+
 		<div class="wpfm-row">
 			<!-- Search by keywords section start -->
 			<div class="wpfm-col">
@@ -21,6 +24,7 @@
 				'post_status' => 'publish',
 				'posts_per_page' => -1,
 			);
+			
 			$the_query = new WP_Query($args);
 			if ($the_query->have_posts()) { ?>
 				<!-- Search by food menu section start -->

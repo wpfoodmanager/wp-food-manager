@@ -1,9 +1,9 @@
 <?php
 if (!defined('ABSPATH')) exit; // Exit if accessed directly
+
 /**
  * WPFM_FilterHooks class.
  */
-
 class WPFM_FilterHooks {
 
     /**
@@ -62,7 +62,7 @@ class WPFM_FilterHooks {
     }
 
     /**
-     * Create link on plugin page for food manager plugin settings
+     * Create link on plugin page for food manager plugin settings.
      * 
      * @access public
      * @param array $links
@@ -77,7 +77,7 @@ class WPFM_FilterHooks {
     }
 
     /**
-     * Add new column heading
+     * Add new column heading.
      *
      * @access public
      * @param array $columns
@@ -90,7 +90,7 @@ class WPFM_FilterHooks {
     }
 
     /**
-     * Add new column heading
+     * Add new column heading.
      *
      * @access public
      * @param array $columns
@@ -103,7 +103,7 @@ class WPFM_FilterHooks {
     }
 
     /**
-     * Filters the upload dir when $food_manager_upload is true
+     * Filters the upload dir when $food_manager_upload is true.
      * 
      * @access public
      * @param  array $pathdata
@@ -114,6 +114,7 @@ class WPFM_FilterHooks {
         global $food_manager_upload, $food_manager_uploading_file;
         if (!empty($food_manager_upload)) {
             $dir = untrailingslashit(apply_filters('wpfm_upload_dir', 'wpfm-uploads/' . sanitize_key($food_manager_uploading_file), sanitize_key($food_manager_uploading_file)));
+
             if (empty($pathdata['subdir'])) {
                 $pathdata['path']   = $pathdata['path'] . '/' . $dir;
                 $pathdata['url']    = $pathdata['url'] . '/' . $dir;
@@ -125,6 +126,7 @@ class WPFM_FilterHooks {
                 $pathdata['subdir'] = str_replace($pathdata['subdir'], $new_subdir, $pathdata['subdir']);
             }
         }
+
         return $pathdata;
     }
 
@@ -144,7 +146,7 @@ class WPFM_FilterHooks {
     }
 
     /**
-     * disable_gutenberg functions
+     * This function disabled the gutenberg editor.
      * 
      * @access public
      * @param boolean $is_enabled
@@ -158,7 +160,7 @@ class WPFM_FilterHooks {
     }
 
     /**
-     * food_archive function.
+     * return the Food archive template.
      *
      * @access public
      * @param string $template
@@ -173,6 +175,7 @@ class WPFM_FilterHooks {
         } elseif (is_tax('food_manager_tag')) {
             $template = WPFM_PLUGIN_DIR . '/templates/content-food_listing_tag.php';
         }
+
         return $template;
     }
 
@@ -186,9 +189,11 @@ class WPFM_FilterHooks {
      */
     public function food_menu_content($content) {
         global $post;
+
         if (!is_singular('food_manager_menu') || !in_the_loop()) {
             return $content;
         }
+
         remove_filter('the_content', array($this, 'food_menu_content'));
         if ('food_manager_menu' === $post->post_type) {
             ob_start();
@@ -198,6 +203,7 @@ class WPFM_FilterHooks {
             $content = ob_get_clean();
         }
         add_filter('the_content', array($this, 'food_menu_content'));
+
         return apply_filters('food_manager_single_food_menu_content', $content, $post);
     }
 
@@ -211,9 +217,11 @@ class WPFM_FilterHooks {
      */
     public function food_content($content) {
         global $post;
+
         if (!is_singular('food_manager') || !in_the_loop()) {
             return $content;
         }
+
         remove_filter('the_content', array($this, 'food_content'));
         if ('food_manager' === $post->post_type) {
             ob_start();
@@ -223,6 +231,7 @@ class WPFM_FilterHooks {
             $content = ob_get_clean();
         }
         add_filter('the_content', array($this, 'food_content'));
+
         return apply_filters('food_manager_single_food_content', $content, $post);
     }
 
@@ -278,6 +287,7 @@ class WPFM_FilterHooks {
             'date' => $columns['date'],
             'food_actions' => __('Actions', 'wp-food-manager')
         );
+
         return $custom_col_order;
     }
 
@@ -306,6 +316,7 @@ class WPFM_FilterHooks {
         if (!is_array($columns)) {
             $columns = array();
         }
+
         unset($columns['title'], $columns['date'], $columns['author']);
         $columns['food_title'] = __('Title', 'wp-food-manager');
         $columns['food_banner'] = '<span class="dashicons dashicons-format-image">' . __('Banner', 'wp-food-manager') . '</span>';
@@ -317,6 +328,7 @@ class WPFM_FilterHooks {
         if (!get_option('food_manager_enable_food_types')) {
             unset($columns['food_manager_type']);
         }
+
         return $columns;
     }
 }

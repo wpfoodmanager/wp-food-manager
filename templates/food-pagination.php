@@ -4,9 +4,11 @@
  * Pagination - Show numbered pagination for the [foods] shortcode
  */
 if (!defined('ABSPATH')) exit; // Exit if accessed directly
+
 if ($max_num_pages <= 1) {
 	return;
 }
+
 // Calculate pages to output 
 $end_size    = 3;
 $mid_size    = 3;

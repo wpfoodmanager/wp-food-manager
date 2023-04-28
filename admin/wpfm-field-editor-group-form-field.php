@@ -1,8 +1,8 @@
 <?php if (empty($child_field_key)) {
 	$child_field_key = $child_index;
 }
-$taxonomies = get_object_taxonomies((object) array('post_type' => 'food_manager'));
-?>
+$taxonomies = get_object_taxonomies((object) array('post_type' => 'food_manager')); ?>
+
 <tr>
 	<td class="sort-column">&nbsp;</td>
 	<td>
@@ -10,6 +10,7 @@ $taxonomies = get_object_taxonomies((object) array('post_type' => 'food_manager'
 	</td>
 	<td class="field-type">
 		<select name="<?php echo esc_attr($group_key); ?>[<?php echo esc_attr($field_key); ?>][fields][<?php echo esc_attr($child_field_key); ?>][type]" class="field_type">
+
 			<?php
 			foreach ($field_types as $key => $type) {
 				if (!in_array($key, array('group'))) {
@@ -23,12 +24,14 @@ $taxonomies = get_object_taxonomies((object) array('post_type' => 'food_manager'
 				}
 			}
 			?>
+
 		</select>
 	</td>
 	<td>
 		<input type="text" class="input-text" name="<?php echo esc_attr($group_key); ?>[<?php echo esc_attr($field_key); ?>][fields][<?php echo esc_attr($child_field_key); ?>][description]" value="<?php echo esc_attr(isset($child_field['description']) ? stripslashes($child_field['description']) : ''); ?>" placeholder="<?php esc_attr_e('N/A', 'wp-food-manager'); ?>" />
 	</td>
 	<td class="field-options">
+
 		<?php
 		if (isset($child_field['options']) && !empty($child_field['options'])) {
 			$child_options = implode(
@@ -45,6 +48,7 @@ $taxonomies = get_object_taxonomies((object) array('post_type' => 'food_manager'
 			$child_options = '';
 		}
 		?>
+
 		<input type="text" class="input-text placeholder" name="<?php echo esc_attr($group_key); ?>[<?php echo esc_attr($field_key); ?>][fields][<?php echo esc_attr($child_field_key); ?>][placeholder]" value="
 																		   <?php
 																			if (isset($child_field['placeholder'])) {
@@ -58,6 +62,7 @@ $taxonomies = get_object_taxonomies((object) array('post_type' => 'food_manager'
 		</div>
 		<div class="taxonomy-options">
 			<label class="taxonomy-option">
+
 				<?php if ($taxonomies) : ?>
 					<select class="input-text taxonomy-select" name="<?php echo esc_attr($group_key); ?>[<?php echo esc_attr($field_key); ?>][fields][<?php echo esc_attr($child_field_key); ?>][taxonomy]">
 						<?php foreach ($taxonomies  as $taxonomy) : ?>
@@ -70,6 +75,7 @@ $taxonomies = get_object_taxonomies((object) array('post_type' => 'food_manager'
 						<?php endforeach; ?>
 					</select>
 				<?php endif; ?>
+
 			</label>
 		</div>
 		<span class="na">&ndash;</span>

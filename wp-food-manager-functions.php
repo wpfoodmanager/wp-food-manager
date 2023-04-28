@@ -2,7 +2,7 @@
 
 if (!function_exists('get_food_listings')) :
 	/**
-	 * Queries food listings with certain criteria and returns them
+	 * Queries food listings with certain criteria and returns them.
 	 * 
 	 * @access public
 	 * @param array $args (default: array())
@@ -11,6 +11,7 @@ if (!function_exists('get_food_listings')) :
 	 */
 	function get_food_listings($args = array()) {
 		global $food_manager_keyword;
+
 		$args = wp_parse_args($args, array(
 			'search_keywords'   => '',
 			'search_categories' => array(),
@@ -25,6 +26,7 @@ if (!function_exists('get_food_listings')) :
 			'fields'            => 'all',
 			'post_status'       => array(),
 		));
+
 		/**
 		 * Perform actions that need to be done prior to the start of the food listings query.
 		 *
@@ -32,6 +34,7 @@ if (!function_exists('get_food_listings')) :
 		 * @since 1.0.0
 		 */
 		do_action('get_food_listings_init', $args);
+
 		$query_args = array(
 			'post_type'              => 'food_manager',
 			'post_status'            => 'publish',
@@ -47,9 +50,11 @@ if (!function_exists('get_food_listings')) :
 			'cache_results'          => false,
 			'fields'                 => $args['fields']
 		);
+
 		if ($args['posts_per_page'] < 0) {
 			$query_args['no_found_rows'] = true;
 		}
+
 		if (!empty($args['search_categories'][0])) {
 			$field    = is_numeric($args['search_categories'][0]) ? 'term_id' : 'slug';
 			$operator = 'all' === get_option('food_manager_category_filter_type', 'all') && sizeof($args['search_categories']) > 1 ? 'AND' : 'IN';
@@ -61,6 +66,7 @@ if (!function_exists('get_food_listings')) :
 				'operator'         => $operator
 			);
 		}
+
 		if (!empty($args['search_food_types'][0])) {
 			$field    = is_numeric($args['search_food_types'][0]) ? 'term_id' : 'slug';
 			$operator = 'all' === get_option('food_manager_food_type_filter_type', 'all') && sizeof($args['search_food_types']) > 1 ? 'AND' : 'IN';
@@ -77,6 +83,7 @@ if (!function_exists('get_food_listings')) :
 			}
 			$query_args['tax_query'][] = $tax_food_type_args;
 		}
+
 		if (!empty($args['search_food_menu'])) {
 			$food_ids = [];
 			foreach ($args['search_food_menu'] as $menu_id) {
@@ -89,6 +96,7 @@ if (!function_exists('get_food_listings')) :
 			}
 			$query_args['post__in'] = $food_ids;
 		}
+
 		if (!empty($args['search_tags'][0])) {
 			$field    = is_numeric($args['search_tags'][0]) ? 'term_id' : 'slug';
 			$operator = 'all' === get_option('food_manager_food_type_filter_type', 'all') && sizeof($args['search_tags']) > 1 ? 'AND' : 'IN';
@@ -100,6 +108,7 @@ if (!function_exists('get_food_listings')) :
 				'operator'         => $operator
 			);
 		}
+
 		if ('featured' === $args['orderby']) {
 			$query_args['orderby'] = array(
 				'menu_order' => 'ASC',
@@ -107,38 +116,47 @@ if (!function_exists('get_food_listings')) :
 				'ID'         => 'DESC',
 			);
 		}
+
 		if ('rand_featured' === $args['orderby']) {
 			$query_args['orderby'] = array(
 				'menu_order' => 'ASC',
 				'rand'       => 'ASC',
 			);
 		}
+
 		if ('food_start_date' === $args['orderby']) {
 			$query_args['orderby'] = 'meta_value';
 			$query_args['meta_key'] = '_food_start_date';
 			$query_args['meta_type'] = 'DATE';
 		}
+
 		$food_manager_keyword = sanitize_text_field($args['search_keywords']);
 		if (!empty($food_manager_keyword) && strlen($food_manager_keyword) >= apply_filters('food_manager_get_listings_keyword_length_threshold', 2)) {
 			$query_args['s'] = $food_manager_keyword;
 			add_filter('posts_search', 'get_food_listings_keyword_search');
 		}
+
 		$query_args = apply_filters('food_manager_get_listings', $query_args, $args);
 		if (empty($query_args['meta_query'])) {
 			unset($query_args['meta_query']);
 		}
+
 		if (empty($query_args['tax_query'])) {
 			unset($query_args['tax_query']);
 		}
+
 		// Polylang LANG arg
 		if (function_exists('pll_current_language')) {
 			$query_args['lang'] = pll_current_language();
 		}
+
 		/* This filter is documented in wp-food-manager.php */
 		$query_args['lang'] = apply_filters('wpfm_lang', null);
+
 		// Filter args
 		$query_args = apply_filters('get_food_listings_query_args', $query_args, $args);
 		do_action('before_get_food_listings', $query_args, $args);
+
 		// Cache results.
 		if (apply_filters('get_food_listings_cache_results', false)) {
 			$to_hash              = wp_json_encode($query_args);
@@ -146,6 +164,7 @@ if (!function_exists('get_food_listings')) :
 			$result               = false;
 			$cached_query_results = true;
 			$cached_query_posts   = get_transient($query_args_hash);
+
 			if (is_string($cached_query_posts)) {
 				$cached_query_posts = json_decode($cached_query_posts, false);
 				if ($cached_query_posts && is_object($cached_query_posts) && isset($cached_query_posts->max_num_pages) && isset($cached_query_posts->found_posts) && isset($cached_query_posts->posts) && is_array($cached_query_posts->posts)) {
@@ -158,6 +177,7 @@ if (!function_exists('get_food_listings')) :
 					$result->post_count    = count($posts);
 				}
 			}
+
 			if (false === $result) {
 				$result               			   = new WP_Query($query_args);
 				$cached_query_results 			   = false;
@@ -166,6 +186,7 @@ if (!function_exists('get_food_listings')) :
 				$cacheable_result['found_posts']   = $result->found_posts;
 				$cacheable_result['max_num_pages'] = $result->max_num_pages;
 			}
+
 			if ($cached_query_results) {
 				if ('rand_featured' === $args['orderby']) {
 					usort($result->posts, '_wpfm_shuffle_featured_post_results_helper');
@@ -176,11 +197,13 @@ if (!function_exists('get_food_listings')) :
 		} else {
 			$result = new WP_Query($query_args);
 		}
+
 		// Generate hash
 		$to_hash  = json_encode($query_args) . apply_filters('wpml_current_language', '');
 		$result = apply_filters('get_food_listings_result_args', $result, $query_args);
 		do_action('after_get_food_listings', $query_args, $args);
 		remove_filter('posts_search', 'get_food_listings_keyword_search');
+
 		return $result;
 	}
 endif;
@@ -203,10 +226,10 @@ function wpfm_user_can_post_food() {
 
 if (!function_exists('wpfm_notify_new_user')) :
 	/**
-	 * Handle account creation.
+	 * Send notification to the new users.
 	 *
-	 * @param  int $user_id
-	 * @param  string $password
+	 * @param int $user_id
+	 * @param string $password
 	 * @since 1.0.0
 	 */
 	function wpfm_notify_new_user($user_id, $password) {
@@ -225,7 +248,7 @@ endif;
 
 if (!function_exists('wpfm_create_account')) :
 	/**
-	 * Handle account creation.
+	 * Create the account.
 	 *
 	 * @param  array $args containing username, email, role
 	 * @param  string $deprecated role string
@@ -234,6 +257,7 @@ if (!function_exists('wpfm_create_account')) :
 	 */
 	function wpfm_create_account($args, $deprecated = '') {
 		global $current_user;
+
 		// Soft Deprecated in 1.0
 		if (!is_array($args)) {
 			$args = array(
@@ -252,20 +276,26 @@ if (!function_exists('wpfm_create_account')) :
 			$args = wp_parse_args($args, $defaults);
 			extract($args);
 		}
+
 		$username = sanitize_user($args['username'], true);
 		$email    = apply_filters('user_registration_email', sanitize_email($args['email']));
+
 		if (empty($email)) {
 			return new WP_Error('validation-error', __('Invalid email address.', 'wp-food-manager'));
 		}
+
 		if (empty($username)) {
 			$username = sanitize_user(current(explode('@', $email)));
 		}
+
 		if (!is_email($email)) {
 			return new WP_Error('validation-error', __('Your email address isn&#8217;t correct.', 'wp-food-manager'));
 		}
+
 		if (email_exists($email)) {
 			return new WP_Error('validation-error', __('This email is already registered, please choose another one.', 'wp-food-manager'));
 		}
+
 		// Ensure username is unique
 		$append     = 1;
 		$o_username = $username;
@@ -273,6 +303,7 @@ if (!function_exists('wpfm_create_account')) :
 			$username = $o_username . $append;
 			$append++;
 		}
+
 		// Final error checking
 		$reg_errors = new WP_Error();
 		$reg_errors = apply_filters('food_manager_registration_errors', $reg_errors, $username, $email);
@@ -280,6 +311,7 @@ if (!function_exists('wpfm_create_account')) :
 		if ($reg_errors->get_error_code()) {
 			return $reg_errors;
 		}
+
 		// Create account
 		$new_user = array(
 			'user_login' => $username,
@@ -287,14 +319,17 @@ if (!function_exists('wpfm_create_account')) :
 			'user_email' => $email,
 			'role'       => $role
 		);
+
 		// User is forced to set up account with email sent to them. This password will remain a secret.
 		if (empty($new_user['user_pass'])) {
 			$new_user['user_pass'] = wp_generate_password();
 		}
+
 		$user_id = wp_insert_user(apply_filters('food_manager_create_account_data', $new_user));
 		if (is_wp_error($user_id)) {
 			return $user_id;
 		}
+
 		/**
 		 * Send notification to new users.
 		 *
@@ -315,6 +350,7 @@ if (!function_exists('wpfm_create_account')) :
 			wp_set_auth_cookie($user_id, true, is_ssl());
 			$current_user = get_user_by('id', $user_id);
 		}
+
 		return true;
 	}
 endif;
@@ -387,6 +423,7 @@ function food_manager_user_can_edit_pending_submissions() {
  */
 function wpfm_user_can_upload_file_via_ajax() {
 	$can_upload = is_user_logged_in() && wpfm_user_can_post_food();
+
 	/**
 	 * Override ability of a user to upload a file via Ajax.
 	 *
@@ -399,7 +436,7 @@ function wpfm_user_can_upload_file_via_ajax() {
 /**
  * Based on wp_dropdown_categories, with the exception of supporting multiple selected categories, food types.
  * 
- * @see  wp_dropdown_categories
+ * @see wp_dropdown_categories
  * @param int $args (default: '')
  * @since 1.0.0
  */
@@ -426,11 +463,13 @@ function food_manager_dropdown_selection($args = '') {
 		'no_results_text' => __('No results match', 'wp-food-manager'),
 		'multiple_text'   => __('Select Some Options', 'wp-food-manager')
 	);
+
 	$r = wp_parse_args($args, $defaults);
 	if (!isset($r['pad_counts']) && $r['show_count'] && $r['hierarchical']) {
 		$r['pad_counts'] = true;
 	}
 	extract($r);
+
 	// Store in a transient to help sites with many cats
 	if (empty($categories)) {
 		$categories = get_terms($taxonomy, array(
@@ -442,14 +481,17 @@ function food_manager_dropdown_selection($args = '') {
 			'hierarchical'    => $r['hierarchical']
 		));
 	}
+
 	$name       = esc_attr($name);
 	$class      = esc_attr($class);
 	$id = $r['id'] ? $r['id'] : $r['name'];
 	$args['name_attr'] = isset($args['name_attr']) ? $args['name_attr'] : true;
 	$data_taxonomy = '';
+
 	if ($taxonomy) {
 		$data_taxonomy = 'data-taxonomy="' . $taxonomy . '"';
 	}
+
 	if ($taxonomy == 'food_manager_category') {
 		$multiple_text = __('Choose a food Category&hellip;', 'wp-food-manager');
 	} else if ($taxonomy == 'food_manager_type') {
@@ -459,20 +501,25 @@ function food_manager_dropdown_selection($args = '') {
 	} else if ($taxonomy == 'food_manager_nutrition') {
 		$multiple_text = __('Choose a food Nutritions&hellip;', 'wp-food-manager');
 	}
+
 	if ($taxonomy == 'food_manager_type') :
 		$placeholder = __('Choose a Food type&hellip;', 'wp-food-manager');
 	endif;
+
 	$item_cat_ids = get_post_meta(get_the_ID(), '_food_item_cat_ids', true);
 	$name_attr = ($args['name_attr'] == true) ? 'name="' . esc_attr($name) . '[]"' : '';
 	$output = '<select ' . $data_taxonomy . ' ' . $name_attr . '  id="' . esc_attr($id) . '" class="' . esc_attr($class) . '" ' . ($multiple ? 'multiple="multiple"' : "") . ' data-placeholder="' . esc_attr($placeholder) . '" data-no_results_text="' . esc_attr($no_results_text) . '" data-multiple_text="' . esc_attr($multiple_text) . '">\n';
+
 	if (is_admin()) {
 		if (empty($item_cat_ids) && isset($item_cat_ids)) {
 			$output .= '<option value="" disabled selected>' . $placeholder . '</option>';
 		}
 	}
+
 	if ($show_option_all) {
 		$output .= '<option value="">' . esc_html($show_option_all) . '</option>';
 	}
+
 	if (!empty($categories)) {
 		include_once(WPFM_PLUGIN_DIR . '/includes/wpfm-category-walker.php');
 		$walker = WPFM_Category_Walker::instance();
@@ -483,10 +530,12 @@ function food_manager_dropdown_selection($args = '') {
 		}
 		$output .= $walker->walk($categories, $depth, $r);
 	}
+
 	$output .= "</select>\n";
 	if ($echo) {
 		echo $output;
 	}
+
 	return $output;
 }
 
@@ -500,12 +549,15 @@ function food_manager_dropdown_selection($args = '') {
  */
 function has_wpfm_shortcode($content = null, $tag = null) {
 	global $post;
+
 	$has_wpfm_shortcode = false;
 	if (null === $content && is_singular() && is_a($post, 'WP_Post')) {
 		$content = $post->post_content;
 	}
+
 	if (!empty($content)) {
 		$has_wpfm_shortcode = array('add_food', 'food_dashboard', 'foods', 'food_categories', 'food_type', 'food', 'food_summary', 'food_apply');
+
 		/**
 		 * Filters a list of all shortcodes associated with WPFM.
 		 *
@@ -519,6 +571,7 @@ function has_wpfm_shortcode($content = null, $tag = null) {
 			}
 			$has_wpfm_shortcode = array_intersect($has_wpfm_shortcode, $tag);
 		}
+
 		foreach ($has_wpfm_shortcode as $shortcode) {
 			if (has_shortcode($content, $shortcode)) {
 				$has_wpfm_shortcode = true;
@@ -526,6 +579,7 @@ function has_wpfm_shortcode($content = null, $tag = null) {
 			}
 		}
 	}
+
 	/**
 	 * Filter the result of has_wpfm_shortcode()
 	 *
@@ -556,6 +610,7 @@ if (!function_exists('wpfm_get_filtered_links')) :
 		$search_categories = array();
 		$search_food_types = array();
 		$search_food_menu = '';
+
 		// Convert to slugs
 		if ($args['search_categories']) {
 			foreach ($args['search_categories'] as $category) {
@@ -569,6 +624,7 @@ if (!function_exists('wpfm_get_filtered_links')) :
 				}
 			}
 		}
+
 		// Convert to slugs
 		if ($args['search_food_types']) {
 			foreach ($args['search_food_types'] as $type) {
@@ -582,9 +638,11 @@ if (!function_exists('wpfm_get_filtered_links')) :
 				}
 			}
 		}
+
 		if (isset($args['search_food_menu']) && !empty($args['search_food_menu'])) {
 			$search_food_menu = implode(',', $args['search_food_menu']);
 		}
+
 		$links = apply_filters('wpfm_food_filters_showing_foods_links', array(
 			'reset' => array(
 				'name' => __('Reset', 'wp-food-manager'),
@@ -605,9 +663,11 @@ if (!function_exists('wpfm_get_filtered_links')) :
 				)
 			)
 		), $args);
+
 		if (!$args['search_keywords'] && !$args['search_categories'] && !$args['search_food_menu'] && !$args['search_food_types']  && !apply_filters('wpfm_get_listings_custom_filter', false)) {
 			unset($links['reset']);
 		}
+
 		$return = '';
 		$i = 1;
 		foreach ($links as $key => $link) {
@@ -616,6 +676,7 @@ if (!function_exists('wpfm_get_filtered_links')) :
 			$return .= '<a href="' . esc_url($link['url']) . '" class="' . esc_attr($key) . '">' . $link['name'] . '</a>';
 			$i++;
 		}
+
 		return $return;
 	}
 endif;
@@ -661,6 +722,7 @@ function wpfm_prepare_uploaded_files($file_data) {
 		$file_data['type'] = $type['type'];
 		$files_to_upload[] = $file_data;
 	}
+
 	return apply_filters('wpfm_prepare_uploaded_files', $files_to_upload);
 }
 
@@ -674,21 +736,26 @@ function wpfm_prepare_uploaded_files($file_data) {
  */
 function wpfm_upload_file($file, $args = array()) {
 	global $food_manager_upload, $food_manager_uploading_file;
+
 	include_once(ABSPATH . 'wp-admin/includes/file.php');
 	include_once(ABSPATH . 'wp-admin/includes/media.php');
+
 	$args = wp_parse_args($args, array(
 		'file_key'           => '',
 		'file_label'         => '',
 		'allowed_mime_types' => ''
 	));
+
 	$food_manager_upload         = true;
 	$food_manager_uploading_file = $args['file_key'];
 	$uploaded_file              = new stdClass();
+
 	if ('' === $args['allowed_mime_types']) {
 		$allowed_mime_types = wpfm_get_allowed_mime_types($food_manager_uploading_file);
 	} else {
 		$allowed_mime_types = $args['allowed_mime_types'];
 	}
+
 	/**
 	 * Filter file configuration before upload
 	 *
@@ -704,6 +771,7 @@ function wpfm_upload_file($file, $args = array()) {
 	if (is_wp_error($file)) {
 		return $file;
 	}
+
 	if (!in_array($file['type'], $allowed_mime_types)) {
 		if ($args['file_label']) {
 			return new WP_Error('upload', sprintf(__('"%s" (filetype %s) needs to be one of the following file types: %s.', 'wp-food-manager'), $args['file_label'], $file['type'], implode(', ', array_keys($args['allowed_mime_types']))));
@@ -723,13 +791,15 @@ function wpfm_upload_file($file, $args = array()) {
 			$uploaded_file->extension = substr(strrchr($uploaded_file->name, '.'), 1);
 		}
 	}
+
 	$food_manager_upload         = false;
 	$food_manager_uploading_file = '';
+
 	return $uploaded_file;
 }
 
 /**
- * get_food_order_by function
+ * Get the food order which is arrange by the backend.
  * 
  * @return array
  * @since 1.0.0
@@ -744,6 +814,7 @@ function get_food_order_by() {
 			]
 		]
 	];
+
 	return apply_filters('get_food_order_by_args', $args);
 }
 
@@ -763,6 +834,7 @@ function wpfm_get_allowed_mime_types($field = '') {
 		'doc'          => 'application/msword',
 		'docx'         => 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
 	);
+
 	/**
 	 * Mime types to accept in uploaded files.
 	 * Default is image, pdf, and doc(x) files.
@@ -807,7 +879,7 @@ function food_manager_get_permalink($page) {
 }
 
 /**
- * Duplicate a listing.
+ * Duplicate the food by food id.
  * @param  int $post_id
  * @return int 0 on fail or the post ID.
  * @since 1.0.0
@@ -817,6 +889,7 @@ function food_manager_duplicate_listing($post_id) {
 		return 0;
 	}
 	global $wpdb;
+
 	/**
 	 * Duplicate the post.
 	 */
@@ -835,6 +908,7 @@ function food_manager_duplicate_listing($post_id) {
 		'to_ping'        => $post->to_ping,
 		'menu_order'     => $post->menu_order
 	));
+
 	/**
 	 * Copy taxonomies.
 	 */
@@ -843,6 +917,7 @@ function food_manager_duplicate_listing($post_id) {
 		$post_terms = wp_get_object_terms($post_id, $taxonomy, array('fields' => 'slugs'));
 		wp_set_object_terms($new_post_id, $post_terms, $taxonomy, false);
 	}
+
 	/*
 	 * Duplicate post meta, aside from some reserved fields.
 	 */
@@ -857,6 +932,7 @@ function food_manager_duplicate_listing($post_id) {
 			update_post_meta($new_post_id, $meta_key, maybe_unserialize($meta_value));
 		}
 	}
+
 	do_action('food_manager_duplicate_listing_meta_end', $post_meta, $post, $new_post_id);
 	return $new_post_id;
 }
@@ -910,9 +986,11 @@ function food_manager_multiselect_food_category() {
 function food_manager_use_standard_password_setup_email() {
 	$use_standard_password_setup_email = false;
 	// If username is being automatically generated, force them to send password setup email.
+
 	if (food_manager_generate_username_from_email()) {
 		$use_standard_password_setup_email = get_option('food_manager_use_standard_password_setup_email', 1) == 1 ? true : false;
 	}
+
 	/**
 	 * Allows an override of the setting for if a password should be auto-generated for new users.
 	 *
@@ -932,6 +1010,7 @@ function food_manager_use_standard_password_setup_email() {
 function food_manager_validate_new_password($password) {
 	// Password must be at least 8 characters long. Trimming here because `wp_hash_password()` will later on.
 	$is_valid_password = strlen(trim($password)) >= 8;
+
 	/**
 	 * Allows overriding default food Manager password validation rules.
 	 *
@@ -949,6 +1028,7 @@ function food_manager_validate_new_password($password) {
  * @since 1.0.0
  */
 function food_manager_get_password_rules_hint() {
+
 	/**
 	 * Allows overriding the hint shown below the new password input field. Describes rules set in `food_manager_validate_new_password`.
 	 *
@@ -960,7 +1040,7 @@ function food_manager_get_password_rules_hint() {
 
 if (!function_exists('get_food_listing_post_statuses')) :
 	/**
-	 * Get post statuses used for foods
+	 * Get post statuses used for foods.
 	 *
 	 * @access public
 	 * @return array
@@ -980,7 +1060,7 @@ endif;
 
 if (!function_exists('get_food_listing_types')) :
 	/**
-	 * Get food listing types
+	 * Get food listing types.
 	 *
 	 * @access public
 	 * @param string $fields (default: 'all')
@@ -1007,7 +1087,7 @@ endif;
 
 if (!function_exists('get_food_listing_categories')) :
 	/**
-	 * Get food categories
+	 * Get food categories.
 	 *
 	 * @access public
 	 * @return array
@@ -1054,6 +1134,7 @@ function get_food_manager_currency() {
  */
 function get_food_manager_currencies() {
 	static $currencies;
+
 	if (!isset($currencies)) {
 		$currencies = array_unique(
 			apply_filters(
@@ -1226,6 +1307,7 @@ function get_food_manager_currencies() {
 			)
 		);
 	}
+
 	return $currencies;
 }
 
@@ -1406,6 +1488,7 @@ function get_food_manager_currency_symbols() {
 			'ZMW' => 'ZK',
 		)
 	);
+
 	return $symbols;
 }
 
@@ -1435,6 +1518,7 @@ function get_food_manager_currency_symbol($currency = '') {
 function get_food_manager_price_format() {
 	$currency_pos = get_option('wpfm_currency_pos');
 	$format       = '%1$s%2$s';
+
 	switch ($currency_pos) {
 		case 'left':
 			$format = '%1$s%2$s';
@@ -1449,6 +1533,7 @@ function get_food_manager_price_format() {
 			$format = '%2$s&nbsp;%1$s';
 			break;
 	}
+
 	return apply_filters('food_manager_price_format', $format, $currency_pos);
 }
 
@@ -1484,7 +1569,7 @@ function wpfm_get_price_decimals() {
 }
 
 /**
- * wpfm_get_dashicons function
+ * Returns the wordpress dashicons's content with classes.
  * 
  * @return array
  * @since  1.0.0
@@ -1658,7 +1743,7 @@ function wpfm_get_dashicons() {
 }
 
 /**
- * wpfm_get_font_food_icons function
+ * Return the food font icons.
  *
  * @return array
  * @since  1.0.1
@@ -1703,10 +1788,11 @@ function wpfm_get_font_food_icons() {
 }
 
 /**
- * wpfm_begnWith function
+ * Check if given string ($str) is begin with the second parameter ($begnString) of function.
  *
  * @param string $str
  * @param string $begnString
+ * @return bool
  * @since 1.0.1
  */
 function wpfm_begnWith($str, $begnString) {
@@ -1726,13 +1812,16 @@ if (!function_exists('get_food_listings_keyword_search')) :
 	 */
 	function get_food_listings_keyword_search($search) {
 		global $wpdb, $food_manager_keyword;
+
 		// Searchable Meta Keys: set to empty to search all meta keys
 		$searchable_meta_keys = array(
 			'_food_location',
 			'_food_tags',
 		);
+
 		$searchable_meta_keys = apply_filters('food_listing_searchable_meta_keys', $searchable_meta_keys);
 		$conditions   = array();
+
 		// Search Post Meta
 		if (apply_filters('food_listing_search_post_meta', true)) {
 			// Only selected meta keys
@@ -1743,8 +1832,10 @@ if (!function_exists('get_food_listings_keyword_search')) :
 				$conditions[] = "{$wpdb->posts}.ID IN ( SELECT post_id FROM {$wpdb->postmeta} WHERE meta_value LIKE '%" . esc_sql($food_manager_keyword) . "%' )";
 			}
 		}
+
 		// Search taxonomy
 		$conditions[] = "{$wpdb->posts}.ID IN ( SELECT object_id FROM {$wpdb->term_relationships} AS tr LEFT JOIN {$wpdb->term_taxonomy} AS tt ON tr.term_taxonomy_id = tt.term_taxonomy_id LEFT JOIN {$wpdb->terms} AS t ON tt.term_id = t.term_id WHERE t.name LIKE '%" . esc_sql($food_manager_keyword) . "%' )";
+
 		/**
 		 * Filters the conditions to use when querying food listings. Resulting array is joined with OR statements.
 		 *
@@ -1756,6 +1847,7 @@ if (!function_exists('get_food_listings_keyword_search')) :
 		if (empty($conditions)) {
 			return $search;
 		}
+
 		$conditions_str = implode(' OR ', $conditions);
 		if (!empty($search)) {
 			$search = preg_replace('/^ AND /', '', $search);
@@ -1763,6 +1855,7 @@ if (!function_exists('get_food_listings_keyword_search')) :
 		} else {
 			$search = " AND ( {$conditions_str} )";
 		}
+
 		return $search;
 	}
 endif;
@@ -1775,6 +1868,7 @@ endif;
  */
 function food_manager_user_can_upload_file_via_ajax() {
 	$can_upload = is_user_logged_in() && wpfm_user_can_post_food();
+
 	/**
 	 * Override ability of a user to upload a file via Ajax.
 	 *
@@ -1796,6 +1890,7 @@ function food_manager_user_can_upload_file_via_ajax() {
 function wpfm_extra_topping_form_fields($post, $field, $field_value) {
 	$date_format = !empty(get_option('date_format')) ? get_option('date_format') : 'F j, Y';
 	$time_format = !empty(get_option('time_format')) ? get_option('time_format') : 'g:i a';
+
 	if ($field['type'] == 'url') {
 		echo '<div class="wpfm-col-12 wpfm-additional-info-block-textarea">';
 		echo '<div class="wpfm-additional-info-block-details-content-items">';
@@ -2006,9 +2101,11 @@ function wpfm_extra_topping_form_fields($post, $field, $field_value) {
 function wpfm_term_radio_checklist_for_food_type($args) {
 	/* Change to your required taxonomy */
 	if (!empty($args['taxonomy']) && $args['taxonomy'] === 'food_manager_type') {
+
 		// Don't override 3rd party walkers.
 		if (empty($args['walker']) || is_a($args['walker'], 'Walker')) {
 			if (!class_exists('WPFM_Walker_Category_Radio_Checklist_For_Food_Type')) {
+
 				/**
 				 * Custom walker for switching checkbox inputs to radio.
 				 *
@@ -2029,11 +2126,12 @@ function wpfm_term_radio_checklist_for_food_type($args) {
 			$args['walker'] = new WPFM_Walker_Category_Radio_Checklist_For_Food_Type;
 		}
 	}
+
 	return $args;
 }
 
 /**
- * wpfm_isMultiArray function
+ * Check if given array is multi-array or not.
  *
  * @return bool
  * @param mixed $a
@@ -2047,7 +2145,7 @@ function wpfm_isMultiArray($a) {
 }
 
 /**
- * wpfm_category_checklist function
+ * Return the given taxnomy list array and display the category checklist html.
  *
  * @return $popular_ids
  * @param string $taxonomy
@@ -2056,6 +2154,7 @@ function wpfm_isMultiArray($a) {
  * @since  1.0.1
  */
 function wpfm_category_checklist($taxonomy, $key_name, $checked_term) {
+	// Get terms
 	$terms = get_terms(
 		array(
 			'taxonomy'     => $taxonomy,
@@ -2063,13 +2162,14 @@ function wpfm_category_checklist($taxonomy, $key_name, $checked_term) {
 			'hide_empty'       => false
 		)
 	);
+
+	// Get taxonomy
 	$tax = get_taxonomy($taxonomy);
 	$popular_ids = array();
 	foreach ((array) $terms as $term) {
 		$popular_ids[] = $term->term_id;
 		$id      = "$taxonomy-$term->term_id";
-		$checked = in_array($term->term_id, $checked_term) ? 'checked="checked"' : '';
-?>
+		$checked = in_array($term->term_id, $checked_term) ? 'checked="checked"' : ''; ?>
 		<li id="<?php echo $tax->name; ?>-<?php echo $id; ?>" class="<?php echo $tax->name; ?>">
 			<label class="selectit">
 				<input id="in-<?php echo $tax->name; ?>-<?php echo $id; ?>" type="checkbox" <?php echo $checked; ?> name="<?php echo $key_name; ?>[<?php echo $tax->name; ?>][]" value="<?php echo (int) $term->term_id; ?>" <?php disabled(!current_user_can($tax->cap->assign_terms)); ?> />
@@ -2078,11 +2178,12 @@ function wpfm_category_checklist($taxonomy, $key_name, $checked_term) {
 		</li>
 	<?php
 	}
+
 	return $popular_ids;
 }
 
 /**
- * wpfm_dropdown_categories function
+ * Return the given taxnomy list array and display the category dropdown html.
  *
  * @return $popular_ids
  * @param string $taxonomy
@@ -2091,6 +2192,7 @@ function wpfm_category_checklist($taxonomy, $key_name, $checked_term) {
  * @since  1.0.1
  */
 function wpfm_dropdown_categories($taxonomy, $key_name, $selected_term) {
+	// Get terms
 	$terms = get_terms(
 		array(
 			'taxonomy'     => $taxonomy,
@@ -2098,23 +2200,23 @@ function wpfm_dropdown_categories($taxonomy, $key_name, $selected_term) {
 			'hide_empty'       => false
 		)
 	);
+
 	$popular_ids = array();
 	echo '<select name="' . $key_name . '" id="' . $key_name . '" class="postform">';
 	foreach ((array) $terms as $term) {
 		$popular_ids[] = $term->term_id;
-		$selected = ($term->term_id == $selected_term) ? 'selected="selected"' : '';
-	?>
+		$selected = ($term->term_id == $selected_term) ? 'selected="selected"' : ''; ?>
 		<option class="level-0" value="<?php echo (int) $term->term_id; ?>" <?php echo $selected; ?>>
 			<?php echo esc_html(apply_filters('the_category', $term->name, '', '')); ?>
 		</option>
-<?php
-	}
+<?php }
 	echo "</select>";
+
 	return $popular_ids;
 }
 
 /**
- * is_wpfm_terms_exist function
+ * Check if term id given as a terms array is exist or not.
  *
  * @return $displayTerms
  * @param array $terms

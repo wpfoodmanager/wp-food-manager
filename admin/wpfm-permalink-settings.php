@@ -9,6 +9,7 @@ if (!defined('ABSPATH')) {
  * @since 1.0.0
  */
 class WPFM_Permalink_Settings {
+
 	/**
 	 * The single instance of the class.
 	 *
@@ -63,6 +64,7 @@ class WPFM_Permalink_Settings {
 			'permalink',
 			'optional'
 		);
+
 		add_settings_field(
 			'wpfm_food_category_slug',
 			__('Food category base', 'wp-food-manager'),
@@ -70,6 +72,7 @@ class WPFM_Permalink_Settings {
 			'permalink',
 			'optional'
 		);
+
 		add_settings_field(
 			'wpfm_food_type_slug',
 			__('Food type base', 'wp-food-manager'),
@@ -86,11 +89,9 @@ class WPFM_Permalink_Settings {
 	 * @return void
 	 * @since 1.0.0
 	 */
-	public function food_base_slug_input() {
-?>
+	public function food_base_slug_input() { ?>
 		<input name="wpfm_food_base_slug" type="text" class="regular-text code" value="<?php echo esc_attr($this->permalinks['food_base']); ?>" placeholder="<?php echo esc_attr_x('food', 'food permalink - resave permalinks after changing this', 'wp-food-manager'); ?>" />
-	<?php
-	}
+	<?php }
 
 	/**
 	 * Show a slug input box for food category slug.
@@ -99,11 +100,9 @@ class WPFM_Permalink_Settings {
 	 * @return void
 	 * @since 1.0.0
 	 */
-	public function food_category_slug_input() {
-	?>
+	public function food_category_slug_input() { ?>
 		<input name="wpfm_food_category_slug" type="text" class="regular-text code" value="<?php echo esc_attr($this->permalinks['category_base']); ?>" placeholder="<?php echo esc_attr_x('food-category', 'food category slug - resave permalinks after changing this', 'wp-food-manager'); ?>" />
-	<?php
-	}
+	<?php }
 
 	/**
 	 * Show a slug input box for food type slug.
@@ -112,11 +111,9 @@ class WPFM_Permalink_Settings {
 	 * @return void
 	 * @since 1.0.0
 	 */
-	public function food_type_slug_input() {
-	?>
+	public function food_type_slug_input() { ?>
 		<input name="wpfm_food_type_slug" type="text" class="regular-text code" value="<?php echo esc_attr($this->permalinks['type_base']); ?>" placeholder="<?php echo esc_attr_x('food-type', 'food type slug - resave permalinks after changing this', 'wp-food-manager'); ?>" />
-<?php
-	}
+<?php }
 
 	/**
 	 * Save the settings.
@@ -129,6 +126,7 @@ class WPFM_Permalink_Settings {
 		if (!is_admin()) {
 			return;
 		}
+
 		if (isset($_POST['permalink_structure'])) {
 			if (function_exists('switch_to_locale')) {
 				switch_to_locale(get_locale());

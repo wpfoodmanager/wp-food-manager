@@ -34,7 +34,7 @@ class WPFM_Post_Types {
 	}
 
 	/**
-	 * register_post_types function.
+	 * Register the custom post_types which is used in entire plugin.
 	 *
 	 * @access public
 	 * @return void
@@ -43,14 +43,17 @@ class WPFM_Post_Types {
 	public function register_post_types() {
 		if (post_type_exists("food_manager"))
 			return;
+
 		$admin_capability = 'manage_food_managers';
 		$permalink_structure = WPFM_Post_Types::get_permalink_structure();
 		include_once(WPFM_PLUGIN_DIR . '/includes/wpfm-custom-taxonomies.php');
+
 		/**
 		 * Post types
 		 */
 		$singular  = __('Food', 'wp-food-manager');
 		$plural    = __('Foods', 'wp-food-manager');
+
 		/**
 		 * Set whether to add archive page support when registering the food manager post type.
 		 *
@@ -62,12 +65,14 @@ class WPFM_Post_Types {
 		} else {
 			$has_archive = false;
 		}
+
 		$rewrite     = array(
 			'slug'       => $permalink_structure['food_rewrite_slug'],
 			'with_front' => false,
 			'feeds'      => true,
 			'pages'      => false
 		);
+
 		register_post_type(
 			"food_manager",
 			apply_filters("register_post_type_food_manager", array(
@@ -120,12 +125,14 @@ class WPFM_Post_Types {
 		 */
 		$singular_menu  = __('Menu', 'wp-food-manager');
 		$plural_menu    = __('Menus', 'wp-food-manager');
+
 		$rewrite_menu     = array(
 			'slug'       => 'food-menu',
 			'with_front' => false,
 			'feeds'      => true,
 			'pages'      => true
 		);
+
 		register_post_type(
 			"food_manager_menu",
 			apply_filters("register_post_type_food_manager_menu", array(
@@ -180,7 +187,7 @@ class WPFM_Post_Types {
 	}
 
 	/**
-	 * Food listing feeds
+	 * Display the food's feed.
 	 * 
 	 * @access public
 	 * @return void
@@ -195,10 +202,12 @@ class WPFM_Post_Types {
 			'tax_query'           => array(),
 			'meta_query'          => array()
 		);
+
 		if (!empty($_GET['search_food_types'])) {
 			$cats     = explode(',', sanitize_text_field($_GET['search_food_types'])) + array(0);
 			$field    = is_numeric($cats) ? 'term_id' : 'slug';
 			$operator = 'all' === get_option('food_manager_food_type_filter_type', 'all') && sizeof($args['search_food_types']) > 1 ? 'AND' : 'IN';
+
 			$query_args['tax_query'][] = array(
 				'taxonomy'         => 'food_manager_type',
 				'field'            => $field,
@@ -207,10 +216,12 @@ class WPFM_Post_Types {
 				'operator'         => $operator
 			);
 		}
+
 		if (!empty($_GET['search_categories'])) {
 			$cats     = explode(',', sanitize_text_field($_GET['search_categories'])) + array(0);
 			$field    = is_numeric($cats) ? 'term_id' : 'slug';
 			$operator = 'all' === get_option('food_manager_category_filter_type', 'all') && sizeof($args['search_categories']) > 1 ? 'AND' : 'IN';
+
 			$query_args['tax_query'][] = array(
 				'taxonomy'         => 'food_manager_category',
 				'field'            => $field,
@@ -219,6 +230,7 @@ class WPFM_Post_Types {
 				'operator'         => $operator
 			);
 		}
+
 		if (!empty($_GET['search_food_menu'])) {
 			$food_ids = [];
 			foreach ($_GET['search_food_menu'] as $menu_id) {
@@ -231,16 +243,20 @@ class WPFM_Post_Types {
 			}
 			$query_args['post__in'] = $food_ids;
 		}
+
 		if ($food_manager_keyword = sanitize_text_field($_GET['search_keywords'])) {
 			$query_args['s'] = $food_manager_keyword;
 			add_filter('posts_search', 'get_food_listings_keyword_search');
 		}
+
 		if (empty($query_args['meta_query'])) {
 			unset($query_args['meta_query']);
 		}
+
 		if (empty($query_args['tax_query'])) {
 			unset($query_args['tax_query']);
 		}
+
 		query_posts(apply_filters('food_feed_args', $query_args));
 		add_action('rss2_ns', array($this, 'food_feed_namespace'));
 		add_action('rss2_item', array($this, 'food_feed_item'));
@@ -261,10 +277,12 @@ class WPFM_Post_Types {
 		if (!isset($wp->query_vars['feed']) || 'food_feed' !== $wp->query_vars['feed']) {
 			return;
 		}
+
 		// Leave if not a feed.
 		if (false === $wp->is_feed) {
 			return;
 		}
+
 		// If the post_type was already set, let's get out of here.
 		if (isset($wp->query_vars['post_type']) && !empty($wp->query_vars['post_type'])) {
 			return;
@@ -307,6 +325,7 @@ class WPFM_Post_Types {
 	public function set_post_views($post_id) {
 		$count_key = '_view_count';
 		$count = get_post_meta($post_id, $count_key, true);
+
 		if ($count == '' || $count == null) {
 			$count = 0;
 			delete_post_meta($post_id, $count_key);
@@ -332,6 +351,7 @@ class WPFM_Post_Types {
 		if ('_food_location' !== $meta_key || 'food_manager' !== get_post_type($object_id)) {
 			return;
 		}
+
 		do_action('food_manager_food_location_edited', $object_id, $_meta_value);
 	}
 
@@ -350,28 +370,15 @@ class WPFM_Post_Types {
 		if ('food_manager' !== get_post_type($object_id)) {
 			return;
 		}
+
 		global $wpdb;
 		if ('1' == $_meta_value) {
 			$wpdb->update($wpdb->posts, array('menu_order' => -1), array('ID' => $object_id));
 		} else {
 			$wpdb->update($wpdb->posts, array('menu_order' => 0), array('ID' => $object_id, 'menu_order' => -1));
 		}
-		clean_post_cache($object_id);
-	}
 
-	/**
-	 * maybe_generate_geolocation_data function
-	 * 
-	 * @access public
-	 * @param int $meta_id
-	 * @param int $object_id
-	 * @param string $meta_key
-	 * @param mixed $_meta_value
-	 * @return void
-	 * @since 1.0.0
-	 */
-	public function maybe_generate_geolocation_data($meta_id, $object_id, $meta_key, $_meta_value) {
-		$this->maybe_update_geolocation_data($meta_id, $object_id, $meta_key, $_meta_value);
+		clean_post_cache($object_id);
 	}
 
 	/**
@@ -403,6 +410,7 @@ class WPFM_Post_Types {
 				'post_parent' => $post_id,
 				'post_type'   => 'attachment'
 			));
+
 			if ($attachments) {
 				foreach ($attachments as $attachment) {
 					wp_delete_attachment($attachment->ID);
@@ -425,6 +433,7 @@ class WPFM_Post_Types {
 		if (function_exists('switch_to_locale') && did_action('admin_init')) {
 			switch_to_locale(get_locale());
 		}
+
 		$permalinks = wp_parse_args(
 			(array) get_option('food_manager_permalinks', array()),
 			array(
@@ -434,15 +443,18 @@ class WPFM_Post_Types {
 				'topping_base'     => '',
 			)
 		);
+
 		// Ensure rewrite slugs are set.
 		$permalinks['food_rewrite_slug']      = untrailingslashit(empty($permalinks['food_base']) ? _x('food', 'Food permalink - resave permalinks after changing this', 'wp-food-manager') : $permalinks['food_base']);
 		$permalinks['category_rewrite_slug'] = untrailingslashit(empty($permalinks['category_base']) ? _x('food-category', 'Food category slug - resave permalinks after changing this', 'wp-food-manager') : $permalinks['category_base']);
 		$permalinks['type_rewrite_slug']     = untrailingslashit(empty($permalinks['type_base']) ? _x('food-type', 'Food type slug - resave permalinks after changing this', 'wp-food-manager') : $permalinks['type_base']);
 		$permalinks['topping_rewrite_slug']     = untrailingslashit(empty($permalinks['topping_base']) ? _x('food-topping', 'Food topping slug - resave permalinks after changing this', 'wp-food-manager') : $permalinks['topping_base']);
+
 		// Restore the original locale.
 		if (function_exists('restore_current_locale') && did_action('admin_init')) {
 			restore_current_locale();
 		}
+
 		return $permalinks;
 	}
 
@@ -468,6 +480,7 @@ class WPFM_Post_Types {
 			/* translators: %s: product count */
 			'untrashed' => _n('%s food restored from the Trash.', '%s foods restored from the Trash.', $bulk_counts['untrashed'], 'wp-food-manager'),
 		);
+
 		return $bulk_messages;
 	}
 }

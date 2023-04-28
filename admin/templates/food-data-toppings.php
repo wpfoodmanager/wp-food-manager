@@ -4,12 +4,15 @@
  *  Template Extra Option panel
  */
 $food_toppings = get_post_meta($thepostid, '_food_toppings', true); ?>
+
 <div id="toppings_food_data_content" class="panel wpfm_panel wpfm-metaboxes-wrapper">
 	<div class="wp_food_manager_meta_data">
 		<div class="wpfm-options-wrapper wpfm-metaboxes">
 			<?php if (!empty($food_toppings)) {
 				$count = 1;
+
 				foreach ($food_toppings as $topping_key => $topping) { ?>
+
 					<div class="wpfm-options-wrap wpfm-metabox postbox wpfm-options-box-<?php echo esc_attr($count); ?>">
 						<input type="hidden" name="repeated_options[]" value="<?php echo esc_attr($count); ?>" class="repeated-options">
 						<h3 class="">
@@ -23,14 +26,17 @@ $food_toppings = get_post_meta($thepostid, '_food_toppings', true); ?>
 						<div class="wpfm-metabox-content wpfm-options-box-<?php echo esc_attr($count); ?>">
 							<div class="wpfm-content">
 								<?php
+
 								do_action('food_manager_food_data_start', $thepostid);
 								$topping_fields = $this->food_manager_data_fields();
 								if (isset($topping_fields['toppings'])) {
 									foreach ($topping_fields['toppings'] as $key => $field) {
+
 										$field['required'] = false;
 										if (!isset($field['value']) || empty($field['value'])) {
 											$field['value'] = isset($topping['_' . $key]) ? $topping['_' . $key] : '';
 										}
+
 										if ($key == "_topping_name") {
 											if (strpos($key, '_') !== 0) {
 												$key  = $key . '_' . $count;
@@ -40,9 +46,11 @@ $food_toppings = get_post_meta($thepostid, '_food_toppings', true); ?>
 												$key  = $key . '_' . $count;
 											}
 										}
+
 										$type = !empty($field['type']) ? $field['type'] : 'text';
 										if ($type == 'wp-editor') $type = 'wp_editor';
 										if ($type == "term-autocomplete") $type = "term_autocomplete"; ?>
+
 										<p class="wpfm-admin-postbox-form-field <?php echo $key;
 																				echo ($type == "wp_editor") ? ' wp-editor-field' : ''; ?>" <?php echo ($type == "wp_editor") ? 'data-field-name="' . $key . '"' : ''; ?>>
 											<label for="<?php echo $key; ?>"><?php echo $field['label']; ?> : </label>
@@ -79,6 +87,7 @@ $food_toppings = get_post_meta($thepostid, '_food_toppings', true); ?>
 							$topping_fields = $this->food_manager_data_fields();
 							if (isset($topping_fields["toppings"]))
 								foreach ($topping_fields["toppings"] as $key => $field) {
+
 									$field['required'] = false;
 									if ($key == "_topping_name") {
 										if (strpos($key, '_') !== 0) {
@@ -89,6 +98,7 @@ $food_toppings = get_post_meta($thepostid, '_food_toppings', true); ?>
 											$key  = $key . "___repeated-option-index__";
 										}
 									}
+									
 									$type = !empty($field["type"]) ? $field["type"] : "text";
 									if ($type == "wp-editor") $type = "wp_editor";
 									if ($type == "term-autocomplete") $type = "term_autocomplete";
@@ -108,6 +118,7 @@ $food_toppings = get_post_meta($thepostid, '_food_toppings', true); ?>
 				</div>'>+ Add Topping
 				</button>
 			</div>
+
 			<?php
 			if (isset($food_fields['food']))
 				foreach ($food_fields['food'] as $key => $field) {
@@ -127,6 +138,7 @@ $food_toppings = get_post_meta($thepostid, '_food_toppings', true); ?>
 					</p>
 			<?php }
 				} ?>
+				
 		</div>
 	</div>
 </div>

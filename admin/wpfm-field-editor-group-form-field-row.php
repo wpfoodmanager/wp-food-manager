@@ -24,6 +24,7 @@
 			</tfoot>
 			<tbody class="child-form-fields" data-field="
 			<?php
+
 			ob_start();
 			$child_index     = -1;
 			$child_field_key = '';
@@ -35,6 +36,7 @@
 			require 'wp-food-manager-form-field-editor-group-field.php';
 			echo wp_kses_post(ob_get_clean());
 			?>">
+			
 			</tbody>
 		</table>
 	</td>

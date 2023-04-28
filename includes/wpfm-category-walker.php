@@ -15,6 +15,7 @@ class WPFM_Category_Walker extends Walker {
 	 * @since 1.0.0
 	 */
 	private static $_instance = null;
+
 	/**
 	 * Allows for accessing single instance of class. Class should only be constructed once per call.
 	 *
@@ -28,6 +29,7 @@ class WPFM_Category_Walker extends Walker {
 		}
 		return self::$_instance;
 	}
+
 	var $tree_type = 'category';
 	var $db_fields = array('parent' => 'parent', 'id' => 'term_id', 'slug' => 'slug');
 
@@ -44,24 +46,30 @@ class WPFM_Category_Walker extends Walker {
 		$cat_arr_ids = array($object->term_id);
 		$item_cat_ids = isset($_GET['post']) && !empty(get_post_meta($_GET['post'], '_food_item_cat_ids', true)) ? get_post_meta($_GET['post'], '_food_item_cat_ids', true) : '';
 		$field_val = '';
+
 		if (!empty($item_cat_ids)) {
 			$field_val = ($item_cat_ids[0] == $object->term_id) ? "selected" : "";
 		}
+
 		if (!empty($args['hierarchical']))
 			$pad = str_repeat('&nbsp;', $depth * 3);
 		else
 			$pad = '';
+			
 		$cat_name = apply_filters('list_food_cats', $object->name, $object);
 		$value = isset($args['value']) && $args['value'] == 'id' ? $object->term_id : $object->slug;
 		$output .= "\t<option class=\"level-" . intval($depth) . '" value="' . esc_attr($value) . '" ' . $field_val . ' ';
 		$output .= (!empty($args['show_count'])) ? 'data-count="' . $object->count . '"' : '';
+
 		if ($value == $args['selected'] || (is_array($args['selected']) && in_array($value, $args['selected'])))
 			$output .= ' selected="selected"';
+
 		$output .= '>';
 		$output .= $pad . esc_html($cat_name);
 		if (!empty($args['show_count'])) {
 			$output .= '&nbsp;(' . $object->count . ')';
 		}
+
 		$output .= "</option>\n";
 	}
 }

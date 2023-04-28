@@ -3,7 +3,9 @@
 /**
  * This file use to cretae fields of wp food manager at admin side.
  */
-if (!defined('ABSPATH')) exit; // Exit if accessed directly
+
+// Exit if accessed directly
+if (!defined('ABSPATH')) exit;
 
 class WPFM_Writepanels {
 
@@ -39,7 +41,7 @@ class WPFM_Writepanels {
 	}
 
 	/**
-	 * food_manager_data function.
+	 * Display the tabs which is used in edit or add food in backend.
 	 *
 	 * @access public
 	 * @param mixed $post
@@ -55,7 +57,7 @@ class WPFM_Writepanels {
 	}
 
 	/**
-	 * food_manager_data_icons function.
+	 * Display the food menu content.
 	 *
 	 * @access public
 	 * @param mixed $post
@@ -65,11 +67,14 @@ class WPFM_Writepanels {
 	public function food_manager_menu_data_icons($post) {
 		global $post, $thepostid;
 		$thepostid = $post->ID;
+
 		wp_enqueue_script('wpfm-admin');
 		wp_nonce_field('save_meta_data', 'food_manager_nonce'); ?>
+
 		<div class="wpfm-admin-food-menu-container wpfm-flex-col wpfm-admin-postbox-meta-data">
 			<div class="wpfm-admin-postbox-meta-data">
 				<div class="wpfm-admin-menu-selection wpfm-admin-postbox-form-field">
+
 					<?php food_manager_dropdown_selection(array(
 						'multiple' => false, 'show_option_all' => __('All category', 'wp-food-manager'),
 						'id' => 'wpfm-admin-food-selection',
@@ -79,8 +84,10 @@ class WPFM_Writepanels {
 						'show_count' => true,
 						'hierarchical' => false,
 					)); ?>
+
 				</div>
 				<div class="wpfm-admin-menu-selection wpfm-admin-postbox-form-field">
+
 					<?php food_manager_dropdown_selection(array(
 						'multiple' => false, 'show_option_all' => __('All food types', 'wp-food-manager'),
 						'id' => 'wpfm-admin-food-types-selection',
@@ -91,11 +98,13 @@ class WPFM_Writepanels {
 						'hierarchical' => false,
 						'name' => 'food_type',
 					)); ?>
+
 				</div>
 			</div>
 			<div class="wpfm-admin-food-menu-items">
 				<?php $item_ids = get_post_meta($thepostid, '_food_item_ids', true); ?>
 				<ul class="wpfm-food-menu menu menu-item-bar ">
+
 					<?php if ($item_ids && is_array($item_ids)) { ?>
 						<?php foreach ($item_ids as $key => $id) { ?>
 							<li class="menu-item-handle" data-food-id="<?= $id; ?>">
@@ -112,6 +121,7 @@ class WPFM_Writepanels {
 							</li>
 					<?php }
 					} ?>
+
 				</ul>
 				<?php if ($item_ids && is_array($item_ids)) { ?>
 					<span class="no-menu-item-handle" style="display: none;">There is no food available in the selected category.</span>
@@ -124,7 +134,7 @@ class WPFM_Writepanels {
 	}
 
 	/**
-	 * food_manager_data function.
+	 * Display the food menu data.
 	 *
 	 * @access public
 	 * @param mixed $post
@@ -134,21 +144,27 @@ class WPFM_Writepanels {
 	public function food_manager_menu_data($post) {
 		global $post, $thepostid;
 		$thepostid = $post->ID;
+
 		wp_enqueue_script('wpfm-admin');
 		wp_nonce_field('save_meta_data', 'food_manager_nonce');
+
 		$icon_arrs = wpfm_get_dashicons();
 		$food_icon_arrs = wpfm_get_font_food_icons();
+
 		echo '<div class="wpfm-parent-icons"><input type="text" id="wpfm_icon_search" name="wpfm_icon_search" placeholder="Icon Search"><span class="wpfm-searh-clear"><i class="fa fa-times"></i></span></div>';
 		echo '<div class="no-radio-icons"><strong>No icons found!</strong></div>';
 		echo "<div class='wpfm-food-icon-class'>";
+
 		foreach ($icon_arrs as $key => $icon_arr) {
 			$radio_checked = (get_post_meta($thepostid, 'wpfm_radio_icons', true) === $key) ? "checked" : "";
 			echo '<div class="sub-font-icon"><input type="radio" id="' . $key . '" name="radio_icons" value="' . $key . '" ' . $radio_checked . '><label for="' . $key . '"><span class="wpfm-key-name">' . $key . '</span><i class="dashicons ' . $key . '"></i></label></div>';
 		}
+
 		foreach ($food_icon_arrs as $key => $icon_arr) {
 			$radio_checked = (get_post_meta($thepostid, 'wpfm_radio_icons', true) === $key) ? "checked" : "";
 			$key_name = str_replace("wpfm-menu-", "", $key);
 			echo '<div class="sub-font-icon"><input type="radio" id="' . $key . '" name="radio_icons" value="' . $key . '" ' . $radio_checked . '><label for="' . $key . '"><span class="wpfm-key-name">' . $key_name . '</span>';
+
 			if ($key_name == 'fast-cart') {
 				echo '<span class="wpfm-menu wpfm-menu-fast-cart"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span></span>';
 			} elseif ($key_name == 'rice-bowl') {
@@ -158,6 +174,7 @@ class WPFM_Writepanels {
 			}
 			echo "</span></label></div>";
 		}
+
 		echo "</div>";
 	}
 
@@ -204,13 +221,14 @@ class WPFM_Writepanels {
 				),
 			)
 		);
+
 		// Sort tabs based on priority.
 		uasort($tabs, array($this, 'sort_by_priority'));
 		return $tabs;
 	}
 
 	/**
-	 * food_manager_data_fields function.
+	 * Returns the fields with filtered fields.
 	 *
 	 * @access public
 	 * @return void
@@ -230,7 +248,7 @@ class WPFM_Writepanels {
 	}
 
 	/**
-	 * Sort array by priority value
+	 * Sort array by priority value.
 	 * 
 	 * @access public
 	 * @param array $a

@@ -22,7 +22,7 @@ if (!defined('ABSPATH')) {
 }
 
 /**
- * WP_Food_Manager class.
+ * WP_Food_Manager Main Class.
  */
 class WP_Food_Manager {
 
@@ -102,7 +102,7 @@ class WP_Food_Manager {
 		// Activation - works with symlinks
 		register_activation_hook(basename(dirname(__FILE__)) . '/' . basename(__FILE__), array($this, 'activate'));
 
-		// Overwritting the content of custom post types of WP food manager.
+		// Overwriting the content of custom post types of WP food manager.
 		global $wp_embed;
 		add_filter('wpfm_the_content', array($wp_embed, 'run_shortcode'), 8);
 		add_filter('wpfm_the_content', array($wp_embed, 'autoembed'), 8);

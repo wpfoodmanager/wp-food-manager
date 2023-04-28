@@ -1,4 +1,5 @@
 <?php wp_enqueue_script('wpfm-content-food-listing'); ?>
+
 <?php if ($layout_type == 'all') : ?>
     <div class="wpfm-main wpfm-food-listings-header">
         <div class="wpfm-row">
@@ -20,6 +21,7 @@
         </div>
     </div>
 <?php endif; ?>
+
 <!-- food listing view -->
 <?php
 if ($layout_type == 'box')

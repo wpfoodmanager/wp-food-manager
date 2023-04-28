@@ -6,10 +6,10 @@
  *
  * @package Core
  */
-if (!defined('ABSPATH')) {
-	// Exit if accessed directly.
-	exit;
-}
+
+// Exit if accessed directly.
+if (!defined('ABSPATH')) exit;
+
 /**
  * Methods for cleaning up all plugin data.
  *
@@ -42,7 +42,8 @@ class WPFM_Data_Cleaner {
 		'food_manager_tag'
 	);
 
-	/** Cron jobs to be unscheduled.
+	/**
+	 * Cron jobs to be unscheduled.
 	 *
 	 * @var $cron_jobs
 	 */
@@ -140,6 +141,7 @@ class WPFM_Data_Cleaner {
 	 */
 	private static function cleanup_custom_post_types() {
 		foreach (self::$custom_post_types as $post_type) {
+
 			$items = get_posts(
 				array(
 					'post_type'   => $post_type,
@@ -148,6 +150,7 @@ class WPFM_Data_Cleaner {
 					'fields'      => 'ids',
 				)
 			);
+
 			foreach ($items as $item) {
 				self::delete_food_with_attachment($item);
 				wp_delete_post($item);
@@ -166,11 +169,14 @@ class WPFM_Data_Cleaner {
 	private static function delete_food_with_attachment($post_id) {
 		if (!in_array(get_post_type($post_id), ['food_manager']))
 			return;
+
 		$food_banner = get_post_meta($post_id, '_food_banner', true);
 		if (!empty($food_banner)) {
+
 			$wp_upload_dir = wp_get_upload_dir();
 			$baseurl = $wp_upload_dir['baseurl'] . '/';
 			if (is_array($food_banner)) {
+
 				foreach ($food_banner as $banner) {
 					$wp_attached_file = str_replace($baseurl, '', $banner);
 					$args = array(
@@ -202,6 +208,7 @@ class WPFM_Data_Cleaner {
 				}
 			}
 		}
+
 		$thumbnail_id = get_post_thumbnail_id($post_id);
 		if (!empty($thumbnail_id)) {
 			wp_delete_attachment($thumbnail_id, true);
@@ -217,6 +224,7 @@ class WPFM_Data_Cleaner {
 	 */
 	private static function cleanup_taxonomies() {
 		global $wpdb;
+
 		foreach (self::$taxonomies as $taxonomy) {
 			$terms = $wpdb->get_results(
 				$wpdb->prepare(
@@ -224,6 +232,7 @@ class WPFM_Data_Cleaner {
 					$taxonomy
 				)
 			);
+
 			// Delete all data for each term.
 			foreach ($terms as $term) {
 				$wpdb->delete($wpdb->term_relationships, array('term_taxonomy_id' => $term->term_taxonomy_id));
@@ -231,6 +240,7 @@ class WPFM_Data_Cleaner {
 				$wpdb->delete($wpdb->terms, array('term_id' => $term->term_id));
 				$wpdb->delete($wpdb->termmeta, array('term_id' => $term->term_id));
 			}
+
 			if (function_exists('clean_taxonomy_cache')) {
 				clean_taxonomy_cache($taxonomy);
 			}
@@ -250,21 +260,25 @@ class WPFM_Data_Cleaner {
 		if ($add_food_page_id) {
 			wp_delete_post($add_food_page_id, true);
 		}
+
 		// Trash the Food Dashboard page.
 		$food_dashboard_page_id = get_option('food_manager_food_dashboard_page_id');
 		if ($food_dashboard_page_id) {
 			wp_delete_post($food_dashboard_page_id, true);
 		}
+
 		// Trash the foods page.
 		$foods_page_id = get_option('food_manager_foods_page_id');
 		if ($foods_page_id) {
 			wp_delete_post($foods_page_id, true);
 		}
+
 		// Trash the Food Categories page.
 		$submit_categories_form_page_id = get_option('food_manager_food_categories_page_id');
 		if ($submit_categories_form_page_id) {
 			wp_delete_post($submit_categories_form_page_id, true);
 		}
+
 		// Trash the Food Type page.
 		$food_type_dashboard_page_id = get_option('food_manager_food_type_page_id');
 		if ($food_type_dashboard_page_id) {
@@ -307,6 +321,7 @@ class WPFM_Data_Cleaner {
 	 */
 	private static function cleanup_transients() {
 		global $wpdb;
+
 		foreach (array('_transient_', '_transient_timeout_') as $prefix) {
 			foreach (self::$transients as $transient) {
 				$wpdb->query(
@@ -328,18 +343,21 @@ class WPFM_Data_Cleaner {
 	 */
 	private static function cleanup_roles_and_caps() {
 		global $wp_roles;
+
 		// Remove caps from roles.
 		$role_names = array_keys($wp_roles->roles);
 		foreach ($role_names as $role_name) {
 			$role = get_role($role_name);
 			self::remove_all_food_manager_caps($role);
 		}
+
 		// Remove caps and role from users.
 		$users = get_users(array());
 		foreach ($users as $user) {
 			self::remove_all_food_manager_caps($user);
 			$user->remove_role(self::$role);
 		}
+
 		// Remove role.
 		remove_role(self::$role);
 	}

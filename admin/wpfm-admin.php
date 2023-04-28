@@ -7,6 +7,7 @@ if (!defined('ABSPATH')) exit; // Exit if accessed directly
 
 /**
  * WPFM_Admin class.
+ * Class for the admin handler.
  */
 class WPFM_Admin {
 
@@ -66,4 +67,5 @@ class WPFM_Admin {
 		}
 	}
 }
+
 WPFM_Admin::instance();

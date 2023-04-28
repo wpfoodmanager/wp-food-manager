@@ -16,6 +16,7 @@ class WPFM_Cache_Helper {
 	 * @since 1.0.0
 	 */
 	private static $_instance = null;
+
 	/**
 	 * Allows for accessing single instance of class. Class should only be constructed once per call.
 	 *
@@ -30,6 +31,9 @@ class WPFM_Cache_Helper {
 		return self::$_instance;
 	}
 
+	/**
+	 * Constructor
+	 */
 	public function __construct() {
 	}
 
@@ -55,10 +59,12 @@ class WPFM_Cache_Helper {
 	public static function get_transient_version($group, $refresh = false) {
 		$transient_name  = $group . '-transient-version';
 		$transient_value = get_transient($transient_name);
+
 		if (false === $transient_value || true === $refresh) {
 			self::delete_version_transients($transient_value);
 			set_transient($transient_name, $transient_value = time());
 		}
+
 		return $transient_value;
 	}
 
@@ -92,15 +98,19 @@ class WPFM_Cache_Helper {
 		// Get user based cache transient
 		$user_id   = get_current_user_id();
 		$transient = "em_{$status}_{$post_type}_count_user_{$user_id}";
+
 		// Set listings_count value from cache if exists, otherwise set to 0 as default
 		$status_count = ($cached_count = get_transient($transient)) ? $cached_count : 0;
+
 		// $cached_count will be false if transient does not exist
 		if ($cached_count === false || $force) {
 			$count_posts = wp_count_posts($post_type, 'readable');
+
 			// Default to 0 $status if object does not have a value
 			$status_count = isset($count_posts->$status) ? $count_posts->$status : 0;
 			set_transient($transient, $status_count, DAY_IN_SECONDS * 7);
 		}
+
 		return $status_count;
 	}
 }

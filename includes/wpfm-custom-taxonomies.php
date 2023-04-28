@@ -6,6 +6,7 @@
 if (get_option('food_manager_enable_categories', true)) {
 	$singular  = __('Food Category', 'wp-food-manager');
 	$plural    = __('Categories', 'wp-food-manager');
+
 	if (current_theme_supports('food-manager-templates')) {
 		$rewrite   = array(
 			'slug'         => $permalink_structure['category_rewrite_slug'],
@@ -17,6 +18,7 @@ if (get_option('food_manager_enable_categories', true)) {
 		$rewrite   = true;
 		$public    = true;
 	}
+
 	register_taxonomy(
 		"food_manager_category",
 		apply_filters('register_taxonomy_food_manager_category_object_type', array('food_manager')), //'food_manager_menu'
@@ -52,9 +54,11 @@ if (get_option('food_manager_enable_categories', true)) {
 		))
 	);
 }
+
 if (get_option('food_manager_enable_food_types', true)) {
 	$singular  = __('Food Type', 'wp-food-manager');
 	$plural    = __('Types', 'wp-food-manager');
+
 	if (current_theme_supports('food-manager-templates')) {
 		$rewrite   = array(
 			'slug'         => $permalink_structure['type_rewrite_slug'],
@@ -66,6 +70,7 @@ if (get_option('food_manager_enable_food_types', true)) {
 		$rewrite   = true;
 		$public    = true;
 	}
+
 	register_taxonomy(
 		"food_manager_type",
 		apply_filters('register_taxonomy_food_manager_types_object_type', array('food_manager')),
@@ -102,9 +107,11 @@ if (get_option('food_manager_enable_food_types', true)) {
 		))
 	);
 }
+
 if (get_option('food_manager_enable_food_tags', true)) {
 	$singular  = __('Food Tags', 'wp-food-manager');
 	$plural    = __('Tags', 'wp-food-manager');
+
 	if (current_theme_supports('food-manager-templates')) {
 		$rewrite   = array(
 			'slug'         => $permalink_structure['tag_rewrite_slug'],
@@ -116,6 +123,7 @@ if (get_option('food_manager_enable_food_tags', true)) {
 		$rewrite   = true;
 		$public    = true;
 	}
+
 	register_taxonomy(
 		"food_manager_tag",
 		apply_filters('register_taxonomy_food_manager_tags_object_tag', array('food_manager')),
@@ -151,8 +159,10 @@ if (get_option('food_manager_enable_food_tags', true)) {
 		))
 	);
 }
+
 $singular  = __('Food Ingredient', 'wp-food-manager');
 $plural    = __('Ingredients', 'wp-food-manager');
+
 if (current_theme_supports('food-manager-templates')) {
 	$rewrite   = array(
 		'slug'         => $permalink_structure['ingredients_rewrite_slug'],
@@ -164,6 +174,7 @@ if (current_theme_supports('food-manager-templates')) {
 	$rewrite   = false;
 	$public    = false;
 }
+
 register_taxonomy(
 	"food_manager_ingredient",
 	apply_filters('register_taxonomy_food_manager_ingredients_object_type', array('food_manager')),
@@ -198,8 +209,10 @@ register_taxonomy(
 		'rewrite' 				=> $rewrite,
 	))
 );
+
 $singular  = __('Food Topping', 'wp-food-manager');
 $plural    = __('Toppings', 'wp-food-manager');
+
 if (current_theme_supports('food-manager-templates')) {
 	$rewrite   = array(
 		'slug'         => $permalink_structure['topping_rewrite_slug'],
@@ -211,6 +224,7 @@ if (current_theme_supports('food-manager-templates')) {
 	$rewrite   = false;
 	$public    = false;
 }
+
 register_taxonomy(
 	"food_manager_topping",
 	apply_filters('register_taxonomy_food_manager_toppings_object_type', array('food_manager')),
@@ -245,8 +259,10 @@ register_taxonomy(
 		'rewrite' 				=> $rewrite,
 	))
 );
+
 $singular  = __('Food Nutritions', 'wp-food-manager');
 $plural    = __('Nutritions', 'wp-food-manager');
+
 if (current_theme_supports('food-manager-templates')) {
 	$rewrite   = array(
 		'slug'         => $permalink_structure['nutritions_rewrite_slug'],
@@ -258,6 +274,7 @@ if (current_theme_supports('food-manager-templates')) {
 	$rewrite   = false;
 	$public    = false;
 }
+
 register_taxonomy(
 	"food_manager_nutrition",
 	apply_filters('register_taxonomy_food_manager_nutritions_object_type', array('food_manager')),
@@ -292,8 +309,10 @@ register_taxonomy(
 		'rewrite' 				=> $rewrite,
 	))
 );
+
 $singular  = __('Unit', 'wp-food-manager');
 $plural    = __('Units', 'wp-food-manager');
+
 if (current_theme_supports('food-manager-templates')) {
 	$rewrite   = array(
 		'slug'         => $permalink_structure['units_rewrite_slug'],
@@ -305,6 +324,7 @@ if (current_theme_supports('food-manager-templates')) {
 	$rewrite   = false;
 	$public    = false;
 }
+
 register_taxonomy(
 	"food_manager_unit",
 	apply_filters('register_taxonomy_food_manager_units_object_type', array('food_manager')),

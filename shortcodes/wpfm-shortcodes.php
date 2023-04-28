@@ -8,6 +8,7 @@ if (!defined('ABSPATH')) exit; // Exit if accessed directly
 
 /**
  * WPFM_Shortcodes class.
+ * Add all of the shortcodes which is used in entire plugin.
  */
 class WPFM_Shortcodes {
 	/**
@@ -131,15 +132,19 @@ class WPFM_Shortcodes {
 	 */
 	public function food_dashboard($atts) {
 		global $wpdb, $food_manager_keyword;
+
 		if (!is_user_logged_in()) {
 			ob_start();
 			get_food_manager_template('food-dashboard-login.php');
 			return ob_get_clean();
 		}
+
 		extract(shortcode_atts(array(
 			'posts_per_page' => '10',
 		), $atts));
+
 		wp_enqueue_script('wp-food-manager-food-dashboard');
+
 		ob_start();
 		// If doing an action, show conditional content if needed....
 		if (!empty($_REQUEST['action'])) {
@@ -150,6 +155,7 @@ class WPFM_Shortcodes {
 				return ob_get_clean();
 			}
 		}
+
 		$search_order_by = 	isset($_GET['search_order_by']) ? sanitize_text_field($_GET['search_order_by']) : '';
 		if (isset($search_order_by) && !empty($search_order_by)) {
 			$search_order_by = explode('|', $search_order_by);
@@ -159,6 +165,7 @@ class WPFM_Shortcodes {
 			$orderby = 'date';
 			$order = 'desc';
 		}
+
 		// If not show the food dashboard
 		$args = apply_filters('food_manager_get_dashboard_foods_args', array(
 			'post_type'           => 'food_manager',
@@ -170,11 +177,13 @@ class WPFM_Shortcodes {
 			'order'               => $order,
 			'author'              => get_current_user_id()
 		));
+
 		$food_manager_keyword = isset($_GET['search_keywords']) ? sanitize_text_field($_GET['search_keywords']) : '';
 		if (!empty($food_manager_keyword) && strlen($food_manager_keyword) >= apply_filters('food_manager_get_listings_keyword_length_threshold', 2)) {
 			$args['s'] = $food_manager_keyword;
 			add_filter('posts_search', 'get_food_listings_keyword_search');
 		}
+
 		if (isset($args['orderby']) && !empty($args['orderby'])) {
 			if ($args['orderby'] == 'food_manager') {
 				$args['meta_query'] = array(
@@ -194,6 +203,7 @@ class WPFM_Shortcodes {
 				);
 			}
 		}
+
 		$foods = new WP_Query($args);
 		echo $this->food_dashboard_message;
 		$food_dashboard_columns = apply_filters('food_manager_food_dashboard_columns', array(
@@ -202,14 +212,15 @@ class WPFM_Shortcodes {
 			'food_action' => __('Action', 'wp-food-manager'),
 		));
 		get_food_manager_template('food-dashboard.php', array('foods' => $foods->query($args), 'max_num_pages' => $foods->max_num_pages, 'food_dashboard_columns' => $food_dashboard_columns));
+
 		return ob_get_clean();
 	}
 
 	/**
-	 * output_foods function.
+	 * Output the filtered or default foods on food listing page.
 	 *
 	 * @access public
-	 * @param mixed $args
+	 * @param mixed $atts
 	 * @return void
 	 * @since 1.0.1
 	 */
@@ -241,18 +252,22 @@ class WPFM_Shortcodes {
 			'selected_food_type'       => '',
 			'layout_type'      => 'all',
 		)), $atts));
+
 		//Categories
 		if (!get_option('food_manager_enable_categories')) {
 			$show_categories = false;
 		}
+
 		//food types
 		if (!get_option('food_manager_enable_food_types')) {
 			$show_food_types = false;
 		}
+
 		//food tags
 		if (!get_option('food_manager_enable_food_tags')) {
 			$show_food_tags = false;
 		}
+
 		// String and bool handling
 		$show_filters              = $this->string_to_bool($show_filters);
 		$show_categories           = $this->string_to_bool($show_categories);
@@ -262,19 +277,24 @@ class WPFM_Shortcodes {
 		$show_food_type_multiselect = $this->string_to_bool($show_food_type_multiselect);
 		$show_more                 = $this->string_to_bool($show_more);
 		$show_pagination           = $this->string_to_bool($show_pagination);
+
 		// Order by meta value and it will take default sort order by start date of food
 		if (is_null($orderby) ||  empty($orderby)) {
 			$orderby  = 'menu_order'; //meta_value
 		}
+
 		if (!is_null($featured)) {
 			$featured = (is_bool($featured) && $featured) || in_array($featured, array('1', 'true', 'yes')) ? true : false;
 		}
+
 		if (!is_null($cancelled)) {
 			$cancelled = (is_bool($cancelled) && $cancelled) || in_array($cancelled, array('1', 'true', 'yes')) ? true : false;
 		}
+
 		// Array handling
 		$categories           = is_array($categories) ? $categories : array_filter(array_map('trim', explode(',', $categories)));
 		$food_types          = is_array($food_types) ? $food_types : array_filter(array_map('trim', explode(',', $food_types)));
+
 		// Get keywords, location, category and food type from query string if set
 		if (!empty($_GET['search_keywords'])) {
 			$keywords = sanitize_text_field($_GET['search_keywords']);
@@ -288,6 +308,7 @@ class WPFM_Shortcodes {
 		if (!empty($_GET['search_food_type'])) {
 			$selected_food_type = sanitize_text_field($_GET['search_food_type']);
 		}
+
 		if ($show_filters) {
 			get_food_manager_template('food-filters.php', array(
 				'per_page' => $per_page,
@@ -341,6 +362,7 @@ class WPFM_Shortcodes {
 			endif;
 			wp_reset_postdata();
 		}
+
 		$data_attributes_string = '';
 		$data_attributes        = array(
 			'location'        => $location,
@@ -353,16 +375,19 @@ class WPFM_Shortcodes {
 			'categories'      => !empty($selected_category) ? implode(',', $selected_category) : '',
 			'food_types'     => !empty($selected_food_type) ? implode(',', $selected_food_type) : '',
 		);
+
 		if (!is_null($featured)) {
 			$data_attributes['featured'] = $featured ? 'true' : 'false';
 		}
 		if (!is_null($cancelled)) {
 			$data_attributes['cancelled']   = $cancelled ? 'true' : 'false';
 		}
+
 		foreach ($data_attributes as $key => $value) {
 			$data_attributes_string .= 'data-' . esc_attr($key) . '="' . esc_attr($value) . '" ';
 		}
 		$food_managers_output = apply_filters('wpfm_food_managers_output', ob_get_clean());
+
 		return '<div class="food_listings" ' . $data_attributes_string . '>' . $food_managers_output . '</div>';
 	}
 
@@ -412,7 +437,7 @@ class WPFM_Shortcodes {
 	}
 
 	/**
-	 * output_food function.
+	 * Output the single food by food id.
 	 *
 	 * @access public
 	 * @param array $atts
@@ -423,14 +448,17 @@ class WPFM_Shortcodes {
 		extract(shortcode_atts(array(
 			'id' => '',
 		), $atts));
+
 		if (!$id)
 			return;
+
 		ob_start();
 		$args = array(
 			'post_type'   => 'food_manager',
 			'post_status' => 'publish',
 			'p'           => $id
 		);
+
 		$foods = new WP_Query($args);
 		if ($foods->have_posts()) : ?>
 			<?php while ($foods->have_posts()) : $foods->the_post(); ?>
@@ -439,6 +467,7 @@ class WPFM_Shortcodes {
 				<?php endwhile; ?>
 			<?php endif;
 		wp_reset_postdata();
+
 		return '<div class="food_shortcode single_food_manager">' . ob_get_clean() . '</div>';
 	}
 
@@ -457,17 +486,20 @@ class WPFM_Shortcodes {
 			'align'    => 'left',
 			'limit'    => 1
 		), $atts));
+
 		ob_start();
 		$args = array(
 			'post_type'   => 'food_manager',
 			'post_status' => 'publish'
 		);
+
 		if (!$id) {
 			$args['posts_per_page'] = $limit;
 			$args['orderby']        = 'rand';
 		} else {
 			$args['p'] = absint($id);
 		}
+
 		$foods = new WP_Query($args);
 		if ($foods->have_posts()) : ?>
 				<?php while ($foods->have_posts()) : $foods->the_post();
@@ -477,11 +509,12 @@ class WPFM_Shortcodes {
 				endwhile; ?>
 			<?php endif;
 		wp_reset_postdata();
+
 		return ob_get_clean();
 	}
 
 	/**
-	 * output food menu
+	 * output food menu by menu id
 	 *
 	 * @access public
 	 * @param array $atts
@@ -493,11 +526,13 @@ class WPFM_Shortcodes {
 		extract(shortcode_atts(array(
 			'id' => '',
 		), $atts));
+
 		$args = array(
 			'post_type'   => 'food_manager_menu',
 			'post_status' => 'publish',
 			'p'           => $id
 		);
+
 		$food_menus = new WP_Query($args);
 		if ($food_menus->have_posts()) : ?>
 				<?php while ($food_menus->have_posts()) : $food_menus->the_post(); ?>
@@ -506,6 +541,7 @@ class WPFM_Shortcodes {
 					<?php endwhile; ?>
 		<?php endif;
 		wp_reset_postdata();
+		
 		return ob_get_clean();
 	}
 }

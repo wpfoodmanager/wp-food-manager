@@ -1,18 +1,23 @@
 <?php do_action('food_manager_food_dashboard_before'); ?>
+
 <div id="food-manager-food-dashboard">
 	<div class="wpfm-dashboard-main-header">
 		<div class="wpfm-dashboard-main-title wpfm-dashboard-main-filter">
 			<h3 class="wpfm-theme-text"><?php _e('Food Dashboard', 'wp-food-manager'); ?></h3>
 			<div class="wpfm-d-inline-block wpfm-dashboard-i-block-btn">
+
 				<?php do_action('food_manager_food_dashboard_button_action_start'); ?>
 				<?php if (isset($_GET['search_keywords']) || !empty($_GET['search_keywords'])) { ?>
 					<a href="<?php echo esc_url(get_permalink()); ?>" class="reset" title="Reset Filter" style="margin-right: 5px;">Reset</a>
 				<?php }
+
 				$add_food = get_option('food_manager_add_food_page_id');
 				if (!empty($add_food)) : ?>
 					<a class="wpfm-dashboard-header-btn wpfm-dashboard-header-add-btn" title="<?php _e('Add Food', 'wp-food-manager'); ?>" href="<?php echo get_permalink($add_food); ?>"><i class="wpfm-icon-plus"></i></a>
 				<?php endif; ?>
+
 				<?php do_action('food_manager_food_dashboard_button_action_end'); ?>
+
 				<a href="javascript:void(0)" title="<?php _e('Filter', 'wp-food-manager'); ?>" class="wpfm-dashboard-food-filter wpfm-dashboard-header-btn"><i class="wpfm-icon-filter"></i></a>
 			</div>
 		</div>
@@ -21,6 +26,7 @@
 		$search_keywords  = isset($_GET['search_keywords']) ? sanitize_text_field($_GET['search_keywords']) : '';
 		$search_order_by  = isset($_GET['search_order_by']) ? sanitize_text_field($_GET['search_order_by']) : '';
 		$display_block = '';
+
 		if (!empty($search_keywords) || !empty($search_order_by)) {
 			$display_block = 'wpfm-d-block';
 		}
@@ -28,6 +34,7 @@
 		<form action="<?php echo esc_url(get_permalink(get_the_ID())); ?>" method="get" class="wpfm-form-wrapper wpfm-food-dashboard-filter-toggle wpfm-dashboard-main-filter-block <?php printf($display_block); ?>">
 			<div class="wpfm-foods-filter">
 				<?php do_action('food_manager_food_dashboard_food_filter_start'); ?>
+
 				<div class="wpfm-foods-filter-block">
 					<?php $search_keywords = isset($_GET['search_keywords']) ? $_GET['search_keywords'] : ''; ?>
 					<div class="wpfm-form-group"><input name="search_keywords" id="search_keywords" type="text" value="<?php echo esc_attr($search_keywords); ?>" placeholder="<?php _e('Keywords', 'wp-food-manager'); ?>"></div>
@@ -49,6 +56,7 @@
 						</select>
 					</div>
 				</div>
+				
 				<?php do_action('food_manager_food_dashboard_food_filter_end'); ?>
 				<div class="wpfm-foods-filter-block wpfm-foods-filter-submit">
 					<div class="wpfm-form-group">

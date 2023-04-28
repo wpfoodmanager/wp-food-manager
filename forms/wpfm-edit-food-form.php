@@ -7,6 +7,7 @@ include_once('wpfm-add-food-form.php');
 class WPFM_Edit_Food_Form extends WPFM_Add_Food_Form {
 
 	public $form_name           = 'edit-food';
+
 	/** @var WPFM_Edit_Food_Form The single instance of the class */
 	protected static $_instance = null;
 
@@ -31,7 +32,7 @@ class WPFM_Edit_Food_Form extends WPFM_Add_Food_Form {
 	}
 
 	/**
-	 * output function.
+	 * output of submit form.
 	 * 
 	 * @access public
 	 * @param array $atts
@@ -44,7 +45,7 @@ class WPFM_Edit_Food_Form extends WPFM_Add_Food_Form {
 	}
 
 	/**
-	 * Submit Step
+	 * submit step and proceed further to the next step.
 	 * 
 	 * @access public
 	 * @return void
@@ -53,10 +54,12 @@ class WPFM_Edit_Food_Form extends WPFM_Add_Food_Form {
 	public function submit() {
 		global $wpdb;
 		$food = get_post($this->food_id);
+
 		if (empty($this->food_id) || ($food->post_status !== 'publish' && $food->post_status !== 'pending' && !food_manager_user_can_edit_pending_submissions())) {
 			echo wpautop(__('Invalid listing', 'wp-food-manager'));
 			return;
 		}
+
 		// Init fields
 		//$this->init_fields(); We dont need to initialize with this function because of field edior
 		// Now field editor function will return all the fields 
@@ -64,16 +67,19 @@ class WPFM_Edit_Food_Form extends WPFM_Add_Food_Form {
 		$this->merge_with_custom_fields('frontend');
 		$parent_row_fields_count = !empty(get_post_meta($food->ID, '_food_repeated_options', true)) ? get_post_meta($food->ID, '_food_repeated_options', true) : array();
 		$extra_fields_options = get_post_meta($food->ID, '_food_toppings', true) ? get_post_meta($food->ID, '_food_toppings', true) : '';
+
 		foreach ($this->fields as $group_key => $group_fields) {
 			foreach ($group_fields as $key => $field) {
 				if ($group_key == 'toppings') {
 					foreach ($parent_row_fields_count as $row_key => $row_value) {
 						$key_row_val = '';
+
 						if ($key !== 'topping_name') {
 							$key_row_val = '_' . $key . '_' . $row_value;
 						} else {
 							$key_row_val = $key . '_' . $row_value;
 						}
+
 						if (count($parent_row_fields_count) == "1") {
 							$this->fields[$group_key][$key]['value'] = get_post_meta($food->ID, $key_row_val, true);
 							if ($key == 'topping_options') {
@@ -91,6 +97,7 @@ class WPFM_Edit_Food_Form extends WPFM_Add_Food_Form {
 									unset($this->fields[$group_key][$key]['value'][0]);
 								}
 							}
+
 							if ($key == 'topping_options') {
 								if (!empty($extra_fields_options)) {
 									foreach ($extra_fields_options as $ext_key => $extra_fields_option) {
@@ -110,13 +117,14 @@ class WPFM_Edit_Food_Form extends WPFM_Add_Food_Form {
 							$this->fields[$group_key][$key]['value'] = $food->post_content;
 						} elseif (!empty($field['taxonomy'])) {
 							$this->fields[$group_key][$key]['value'] = wp_get_object_terms($food->ID, $field['taxonomy'], array('fields' => 'ids'));
-						}elseif ('food_tag' === $key) {
+						} elseif ('food_tag' === $key) {
 							$this->fields[$group_key][$key]['value'] = wp_get_object_terms($food->ID, 'food_manager_tag', array('fields' => 'ids'));
 						} else {
 							$this->fields[$group_key][$key]['value'] = get_post_meta($food->ID, '_' . $key, true);
 						}
 					}
 				}
+
 				if (!empty($field['type']) &&  $field['type'] == 'button') {
 					if (isset($this->fields[$group_key][$key]['value']) && empty($this->fields[$group_key][$key]['value'])) {
 						$this->fields[$group_key][$key]['value'] = $field['placeholder'];
@@ -126,6 +134,7 @@ class WPFM_Edit_Food_Form extends WPFM_Add_Food_Form {
 		}
 		$this->fields = apply_filters('add_food_fields_get_user_data', $this->fields, $food);
 		wp_enqueue_script('wp-food-manager-food-submission');
+
 		get_food_manager_template('food-submit.php', array(
 			'form'               => $this->form_name,
 			'food_id'             => $this->get_food_id(),
@@ -139,7 +148,7 @@ class WPFM_Edit_Food_Form extends WPFM_Add_Food_Form {
 	}
 
 	/**
-	 * Submit Step is posted
+	 * Handle after the form submit.
 	 * 
 	 * @access public
 	 * @return void
@@ -149,17 +158,21 @@ class WPFM_Edit_Food_Form extends WPFM_Add_Food_Form {
 		if (empty($_POST['add_food'])) {
 			return;
 		}
+
 		try {
 			// Get posted values
 			$values = $this->get_posted_fields();
+
 			// Validate required
 			if (is_wp_error(($return = $this->validate_fields($values)))) {
 				throw new Exception($return->get_error_message());
 			}
+
 			// Update the food
 			$food_title = isset($values['food']['food_title']) && !empty($values['food']['food_title']) ? $values['food']['food_title'] : '';
 			$food_description = isset($values['food']['food_description']) && !empty($values['food']['food_description']) ? $values['food']['food_description'] : '';
 			$this->save_food($food_title, $food_description, '', $values, false);
+
 			// Successful
 			switch (get_post_status($this->food_id)) {
 				case 'publish':

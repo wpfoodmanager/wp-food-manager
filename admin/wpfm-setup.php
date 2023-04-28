@@ -2,8 +2,8 @@
 
 /**
  * From admin panel, setuping post food page, food dashboard page and food listings page.
- *
  */
+
 if (!defined('ABSPATH')) {
 	exit;
 }
@@ -45,7 +45,7 @@ class WPFM_Setup {
 	}
 
 	/**
-	 * Create a page.
+	 * Create a default page for the plugin uses.
 	 *
 	 * @access public
 	 * @param  string $title
@@ -65,6 +65,7 @@ class WPFM_Setup {
 			'post_parent'    => 0,
 			'comment_status' => 'closed',
 		);
+
 		$page_id = wp_insert_post($page_data);
 		if ($option) {
 			update_option($option, $page_id);
@@ -72,7 +73,7 @@ class WPFM_Setup {
 	}
 
 	/**
-	 * Output addons page
+	 * Output Setup page.
 	 * 
 	 * @access public
 	 * @return void
@@ -80,16 +81,19 @@ class WPFM_Setup {
 	 */
 	public function output() {
 		$step = !empty($_GET['step']) ? absint($_GET['step']) : 1;
+
 		if (isset($_GET['skip-food-manager-setup']) === 1) {
 			update_option('food_manager_installation', 0);
 			update_option('food_manager_installation_skip', 1);
 			wp_redirect(admin_url('index.php'));
 			exit;
 		}
+
 		if (3 === $step && !empty($_POST)) {
 			if (false == wp_verify_nonce($_REQUEST['setup_wizard'], 'step_3')) {
 				wp_die(esc_attr__('Error in nonce. Try again.', 'wp-food-manager'));
 			}
+
 			$create_pages = isset($_POST['wp-food-manager-create-page']) ? $this->sanitize_array($_POST['wp-food-manager-create-page']) : array();
 			$page_titles = $this->sanitize_array($_POST['wp-food-manager-page-title']);
 			$pages_to_create = array(
@@ -97,34 +101,42 @@ class WPFM_Setup {
 				'food_dashboard'       => '[food_dashboard]',
 				'foods'                => '[foods]',
 			);
+
 			foreach ($pages_to_create as $page => $content) {
 				if (!isset($create_pages[$page]) || empty($page_titles[$page])) {
 					continue;
 				}
 				$this->create_page(sanitize_text_field($page_titles[$page]), $content, 'food_manager_' . $page . '_page_id');
 			}
+
 			update_option('food_manager_installation', 1);
 			update_option('food_manager_installation_skip', 0);
 		} ?>
+
 		<div class="wrap wp_food_manager wp_food_manager_addons_wrap">
 			<h2><?php esc_attr_e('WP Food Manager Setup', 'wp-food-manager'); ?></h2>
 			<div class="wpfm-setup-wrapper">
 				<ul class="wp-food-manager-setup-steps">
+
 					<?php if ($step === 1) : ?>
 						<li class="wp-food-manager-setup-active-step"><?php esc_attr_e('1. Introduction', 'wp-food-manager'); ?></li>
 						<li><?php esc_attr_e('2. Page Setup', 'wp-food-manager'); ?></li>
 						<li><?php esc_attr_e('3. Done', 'wp-food-manager'); ?></li>
 					<?php elseif ($step === 2) : ?>
+
 						<li class="wp-food-manager-setup-active-step"><?php esc_attr_e('1. Introduction', 'wp-food-manager'); ?></li>
 						<li class="wp-food-manager-setup-active-step"><?php esc_attr_e('2. Page Setup', 'wp-food-manager'); ?></li>
 						<li><?php esc_attr_e('3. Done', 'wp-food-manager'); ?></li>
 					<?php elseif ($step === 3) : ?>
+
 						<li class="wp-food-manager-setup-active-step"><?php esc_attr_e('1. Introduction', 'wp-food-manager'); ?></li>
 						<li class="wp-food-manager-setup-active-step"><?php esc_attr_e('2. Page Setup', 'wp-food-manager'); ?></li>
 						<li class="wp-food-manager-setup-active-step"><?php esc_attr_e('3. Done', 'wp-food-manager'); ?></li>
 					<?php endif; ?>
+
 				</ul>
 				<?php if (1 === $step) : ?>
+
 					<div class="wpfm-step-window">
 						<h3><?php esc_attr_e('Setup Wizard Introduction', 'wp-food-manager'); ?></h3>
 						<p><?php printf(esc_attr_e('Thanks for installing WP Food Manager!', 'wp-food-manager')); ?></p>
@@ -136,6 +148,7 @@ class WPFM_Setup {
 						<a href="<?php echo esc_url(add_query_arg('skip-food-manager-setup', 1, admin_url('index.php?page=food_manager_setup&step=3'))); ?>" class="button"><?php esc_attr_e('Skip for now', 'wp-food-manager'); ?></a>
 					</p>
 				<?php endif; ?>
+
 				<?php if (2 === $step) : ?>
 					<h3><?php esc_attr_e('Page Setup', 'wp-food-manager'); ?></h3>
 					<p><?php printf(__('The <em>WP Food Manager</em> includes %1$sshortcodes%2$s which can be used to output content within your %3$spages%2$s. These can be generated directly as mentioned below. Check the shortcode documentation for more information on food %4$sshortcodes%2$s.', 'wp-food-manager'), '<a href="https://wpfoodmanager.com/knowledge-base/" title="What is a shortcode?" target="_blank" class="help-page-link">', '</a>', '<a href="https://wordpress.org/support/article/pages/" target="_blank" class="help-page-link">', '<a href="https://wpfoodmanager.com/knowledge-base/" target="_blank" class="help-page-link">'); ?></p>
@@ -187,6 +200,7 @@ class WPFM_Setup {
 						</table>
 					</form>
 				<?php endif; ?>
+
 				<?php if (3 === $step) : ?>
 					<div class="wpfm-setup-next-block-wrap">
 						<div class="wpfm-setup-intro-block">
@@ -255,7 +269,7 @@ class WPFM_Setup {
 <?php }
 
 	/**
-	 * Sanitize a 2d array
+	 * Sanitize a 2 dimension array
 	 *
 	 * @access private
 	 * @param  array $array

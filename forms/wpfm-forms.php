@@ -4,6 +4,7 @@
  * WPFM_Forms class.
  */
 class WPFM_Forms {
+
 	/**
 	 * The single instance of the class.
 	 *
@@ -44,24 +45,29 @@ class WPFM_Forms {
 		if (!class_exists('WPFM_Form')) {
 			include 'wpfm-abstract-form.php';
 		}
+
 		// Now try to load the form_name
 		$form_class  = 'WPFM_' . str_replace('-', '_', $form_name) . '_Form';
 		$form_file   = WPFM_PLUGIN_DIR . '/forms/wpfm-' . $form_name . '-form.php';
+
 		if (class_exists($form_class)) {
 			return call_user_func(array($form_class, 'instance'));
 		}
+
 		if (!file_exists($form_file)) {
 			return false;
 		}
+
 		if (!class_exists($form_class)) {
 			include $form_file;
 		}
+
 		// Init the form
 		return call_user_func(array($form_class, 'instance'));
 	}
 
 	/**
-	 * get_form function.
+	 * Get the form output given by form name and atts.
 	 *
 	 * @access public
 	 * @param string $form_name
@@ -78,7 +84,7 @@ class WPFM_Forms {
 	}
 
 	/**
-	 * get_form function.
+	 * Get the given form's fields.
 	 *
 	 * @access public
 	 * @param string $form_name

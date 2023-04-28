@@ -55,6 +55,7 @@ class WPFM_Ajax {
 		} else {
 			$endpoint = add_query_arg('fm-ajax', $request, trailingslashit(home_url('', 'relative')));
 		}
+		
 		return esc_url_raw($endpoint);
 	}
 }
