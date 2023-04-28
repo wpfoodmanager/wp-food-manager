@@ -206,7 +206,7 @@ class WPFM_Post_Types {
 		if (!empty($_GET['search_food_types'])) {
 			$cats     = explode(',', sanitize_text_field($_GET['search_food_types'])) + array(0);
 			$field    = is_numeric($cats) ? 'term_id' : 'slug';
-			$operator = 'all' === get_option('food_manager_food_type_filter_type', 'all') && sizeof($args['search_food_types']) > 1 ? 'AND' : 'IN';
+			$operator = 'all' === get_option('food_manager_food_type_filter_type', 'all') && sizeof($cats) > 1 ? 'AND' : 'IN';
 
 			$query_args['tax_query'][] = array(
 				'taxonomy'         => 'food_manager_type',
@@ -220,7 +220,7 @@ class WPFM_Post_Types {
 		if (!empty($_GET['search_categories'])) {
 			$cats     = explode(',', sanitize_text_field($_GET['search_categories'])) + array(0);
 			$field    = is_numeric($cats) ? 'term_id' : 'slug';
-			$operator = 'all' === get_option('food_manager_category_filter_type', 'all') && sizeof($args['search_categories']) > 1 ? 'AND' : 'IN';
+			$operator = 'all' === get_option('food_manager_category_filter_type', 'all') && sizeof($cats) > 1 ? 'AND' : 'IN';
 
 			$query_args['tax_query'][] = array(
 				'taxonomy'         => 'food_manager_category',
@@ -231,9 +231,10 @@ class WPFM_Post_Types {
 			);
 		}
 
-		if (!empty($_GET['search_food_menu'])) {
+		if (isset($_GET['search_food_menu']) && !empty($_GET['search_food_menu'])) {
+			$search_food_menu = explode(',', $_GET['search_food_menu']);
 			$food_ids = [];
-			foreach ($_GET['search_food_menu'] as $menu_id) {
+			foreach ($search_food_menu as $menu_id) {
 				$food_item_ids = get_post_meta($menu_id, '_food_item_ids', true);
 				if ($food_item_ids) {
 					foreach ($food_item_ids as $food_item_id) {
