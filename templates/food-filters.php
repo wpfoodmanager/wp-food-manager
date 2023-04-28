@@ -33,7 +33,9 @@
 					<div class="wpfm-form-group">
 						<label for="search_food_menu" class="wpfm-form-label"><?php _e('Food Menu', 'wp-food-manager'); ?></label>
 						<select name="search_food_menu[]" id="search_food_menu" class="food-manager-post_type-dropdown " <?php echo ( $show_food_menu_multiselect ) ? 'multiple': ''; ?> data-placeholder="Choose a Food Menu…" data-no_results_text="No results match" data-multiple_text="Choose a Food Menu…">
-							<?php while ($the_query->have_posts()) { $the_query->the_post();
+							<?php
+							if( !$show_food_menu_multiselect ) echo '<option value="">Choose a Food Menu</option>';							
+							while ($the_query->have_posts()) { $the_query->the_post();
 								echo '<option value="' . get_the_ID() . '">' . get_the_title() . '</option>';
 							} ?>
 						</select>
