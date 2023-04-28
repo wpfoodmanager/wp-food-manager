@@ -639,7 +639,7 @@ class WPFM_ActionHooks {
 
         // Food Menu
         $hide_flag = 0;
-        if (implode(',', $search_food_menu)) {
+        if (is_array($search_food_menu) && implode(',', $search_food_menu)) {
             $showing_food_menus = array();
             foreach ($search_food_menu as $food_menu) {
                 $food_item_ids = get_post_meta($food_menu, '_food_item_ids', true);
