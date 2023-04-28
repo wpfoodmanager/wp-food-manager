@@ -334,13 +334,15 @@ abstract class WPFM_Form {
 							$output2 = array();
 
 							if ($key == "topping_options") {
-								foreach ($option_value as $option_value_count) {
-									$output2[$option_value_count] =
-										array(
-											'option_name' => isset($_POST[$option_count . '_option_name_' . $option_value_count]) ? $_POST[$option_count . '_option_name_' . $option_value_count] : '',
-											'option_price' => isset($_POST[$option_count . '_option_price_' . $option_value_count]) ? $_POST[$option_count . '_option_price_' . $option_value_count] : '',
-										);
-									$values[$group_key][$first_out][$key] = $output2;
+								if ($option_value) {
+									foreach ($option_value as $option_value_count) {
+										$output2[$option_value_count] =
+											array(
+												'option_name' => isset($_POST[$option_count . '_option_name_' . $option_value_count]) ? $_POST[$option_count . '_option_name_' . $option_value_count] : '',
+												'option_price' => isset($_POST[$option_count . '_option_price_' . $option_value_count]) ? $_POST[$option_count . '_option_price_' . $option_value_count] : '',
+											);
+										$values[$group_key][$first_out][$key] = $output2;
+									}
 								}
 							}
 						} elseif (method_exists($this, "get_posted_{$field_type}_field")) {

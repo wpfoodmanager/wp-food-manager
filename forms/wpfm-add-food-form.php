@@ -9,6 +9,7 @@ class WPFM_Add_Food_Form extends WPFM_Form {
 	public    $form_name = 'add-food';
 	protected $food_id;
 	protected $preview_food;
+	public    $resume_edit;
 
 	/** @var WPFM_Add_Food_Form The single instance of the class */
 	protected static $_instance = null;
