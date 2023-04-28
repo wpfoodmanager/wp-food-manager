@@ -8,7 +8,7 @@
  * Author URI: https://www.wpfoodmanager.com
  * Text Domain: wp-food-manager
  * Domain Path: /languages
- * Version: 1.0.2
+ * Version: 1.0.3
  * Since: 1.0.0
  * Requires WordPress Version at least: 4.1
  * Copyright: 2020 WP Food Manager
@@ -72,7 +72,7 @@ class WP_Food_Manager {
 	public function __construct() {
 
 		// Define constants
-		define('WPFM_VERSION', '1.0.2');
+		define('WPFM_VERSION', '1.0.3');
 		define('WPFM_PLUGIN_DIR', untrailingslashit(plugin_dir_path(__FILE__)));
 		define('WPFM_PLUGIN_URL', untrailingslashit(plugins_url(basename(plugin_dir_path(__FILE__)), basename(__FILE__))));
 
