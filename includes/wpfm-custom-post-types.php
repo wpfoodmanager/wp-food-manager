@@ -247,7 +247,6 @@ class WPFM_Post_Types {
 
 		if ($food_manager_keyword = sanitize_text_field($_GET['search_keywords'])) {
 			$query_args['s'] = $food_manager_keyword;
-			add_filter('posts_search', 'get_food_listings_keyword_search');
 		}
 
 		if (empty($query_args['meta_query'])) {
