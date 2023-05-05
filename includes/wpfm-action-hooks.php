@@ -1287,18 +1287,18 @@ class WPFM_ActionHooks {
                                 if ($option_key_count && is_array($option_key_count)) {
                                     foreach ($option_key_count as $option_value_count) {
                                         if (!empty($_POST[$count . '_option_name_' . $option_value_count]) || !empty($_POST[$count . '_option_price_' . $option_value_count])) {
-                                            $option_values[$option_value_count] = array(
+                                            $option_values[$option_value_count] = apply_filters('wpfm_topping_options_values_array', array(
                                                 'option_name' => isset($_POST[$count . '_option_name_' . $option_value_count]) ? $_POST[$count . '_option_name_' . $option_value_count] : '',
                                                 'option_price' => isset($_POST[$count . '_option_price_' . $option_value_count]) ? $_POST[$count . '_option_price_' . $option_value_count] : '',
-                                            );
+                                            ), array('option_count' => $count, 'option_value_count' => $option_value_count));
                                         }
                                     }
                                 } else {
                                     if (!empty($_POST[$count . '_option_name_' . $option_key_count]) || !empty($_POST[$count . '_option_price_' . $option_key_count])) {
-                                        $option_values[$option_key_count] = array(
+                                        $option_values[$option_key_count] = apply_filters('wpfm_topping_options_values_array', array(
                                             'option_name' => isset($_POST[$count . '_option_name_' . $option_key_count]) ? $_POST[$count . '_option_name_' . $option_key_count] : '',
                                             'option_price' => isset($_POST[$count . '_option_price_' . $option_key_count]) ? $_POST[$count . '_option_price_' . $option_key_count] : '',
-                                        );
+                                        ), array('option_count' => $count, 'option_value_count' => $option_key_count));
                                     }
                                 }
                             }
@@ -1332,6 +1332,7 @@ class WPFM_ActionHooks {
                         $t_key++;
                         $description = (isset($_POST['topping_description_' . $t_key]) && !empty($_POST['topping_description_' . $t_key])) ? $_POST['topping_description_' . $t_key] : '';
                         wp_update_term($term_id, $taxonomy, array('description' => $description));
+                        do_action('wpfm_save_topping_meta_field', array('term_id' => $term_id, 'taxonomy' => $taxonomy, 'count' => $t_key));
                     }
                 }
             }
@@ -2015,7 +2016,7 @@ class WPFM_ActionHooks {
         wp_enqueue_style('wp-food-manager-font-style');
         wp_enqueue_style('wp-food-manager-food-icons-style');
         wp_enqueue_editor();
-        wp_register_script('wpfm-term-autocomplete', WPFM_PLUGIN_URL . '/assets/js/term-autocomplete.js', array('jquery'), WPFM_VERSION, true);
+        wp_register_script('wpfm-term-autocomplete', WPFM_PLUGIN_URL . '/assets/js/term-autocomplete.min.js', array('jquery'), WPFM_VERSION, true);
         wp_localize_script(
             'wpfm-term-autocomplete',
             'wpfm_term_autocomplete',
@@ -2152,7 +2153,7 @@ class WPFM_ActionHooks {
             wp_enqueue_style('food_manager_setup_css', WPFM_PLUGIN_URL . '/assets/css/setup.min.css', array('dashicons'));
         }
 
-        wp_register_script('wpfm-term-autocomplete', WPFM_PLUGIN_URL . '/assets/js/term-autocomplete.js', array('jquery', 'jquery-ui-autocomplete'), WPFM_VERSION, true);
+        wp_register_script('wpfm-term-autocomplete', WPFM_PLUGIN_URL . '/assets/js/term-autocomplete.min.js', array('jquery', 'jquery-ui-autocomplete'), WPFM_VERSION, true);
         wp_localize_script(
             'wpfm-term-autocomplete',
             'wpfm_term_autocomplete',
@@ -2300,11 +2301,11 @@ class WPFM_ActionHooks {
         $items = array();
         if ($results->terms) {
             foreach ($results->terms as $term) {
-                $items[] = [
+                $items[] = apply_filters('wpfm_term_ajax_search_return_args', array(
                     'id' => $term->term_id,
                     'label' => $term->name,
                     'description' => term_description($term->term_id, $_REQUEST['taxonomy']),
-                ];
+                ), array('term_id' => $term->term_id));
             }
         }
 

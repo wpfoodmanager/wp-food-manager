@@ -34,6 +34,16 @@ var WPFM_TermAutoComplete = function () {
                         $this.val(ui.item.label);
                         var wrapper = jQuery($this).parents('.wpfm-options-wrap');
                         var count = wrapper.find('.repeated-options').val();
+                        if (ui.item.topping_type != '') {
+                            wrapper.find('[name="topping_type_' + count + '"]').val(ui.item.topping_type);
+                        } else {
+                            wrapper.find('[name="topping_type_' + count + '"]').val('');
+                        }
+                        if (ui.item.topping_required != '') {
+                            wrapper.find('[name="topping_required_' + count + '"][value="' + ui.item.topping_required + '"]').prop('checked', true);
+                        } else {
+                            wrapper.find('[name="topping_required_' + count + '"]').prop('checked', false);
+                        }
                         if (ui.item.description != '') {
                             tinyMCE.get('topping_description_' + count).setContent(ui.item.description);
                         } else {

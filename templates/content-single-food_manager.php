@@ -140,13 +140,14 @@ $food = $post;
                                                 echo '<div class="wpfm-input-description">' . $ext_option['_topping_description'] . '</div>';
                                             }
                                             do_action('wpfm_singular_option_input_before');
-                                            echo '<ul class="wpfm-topping-options">';
+                                            $topping_htm = '<ul class="wpfm-topping-options">';
                                             if (isset($ext_option['_topping_options']) && !empty($ext_option['_topping_options'])) {
                                                 foreach ($ext_option['_topping_options'] as $key2 => $value2) {
-                                                    echo '<li class="wpfm-topping-items">' . esc_attr($value2['option_name']) .  (isset($value2['option_price']) && !empty($value2['option_price']) ? ' - ' . get_food_manager_currency_symbol() . $value2['option_price'] : '') . '</li>';
+                                                    $topping_htm .= '<li class="wpfm-topping-items">' . esc_attr($value2['option_name']) .  (isset($value2['option_price']) && !empty($value2['option_price']) ? ' - ' . get_food_manager_currency_symbol() . $value2['option_price'] : '') . '</li>';
                                                 }
                                             }
-                                            echo '</ul>';
+                                            $topping_htm .= '</ul>';
+                                            echo apply_filters('wpfm_toppings_list_htm', $topping_htm, array('ext_option' => $ext_option, 'more_class' => $more_class, 'key' => $key));
                                             do_action('wpfm_singular_option_input_after');
                                             if (!empty($additional_fields_extra_topping)) {
                                                 echo "<div class='wpfm-additional-main-row wpfm-row'>";

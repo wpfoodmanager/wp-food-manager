@@ -286,14 +286,14 @@ class WPFM_Add_Food_Form extends WPFM_Form {
 					'required'    => true,
 					'placeholder' => 'Enter the field Topping Description',
 					'default' => 1,
-					'priority'    => 3
+					'priority'    => 2
 				),
 				'topping_options' => array(
 					'label'       => __('Options', 'wp-food-manager'),
 					'type'        => 'options',
 					'required'    => false,
 					'placeholder' => __('Enter option name', 'wp-food-manager'),
-					'priority'    => 4
+					'priority'    => 3
 				),
 			)
 		));

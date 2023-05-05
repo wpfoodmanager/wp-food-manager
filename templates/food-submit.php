@@ -42,7 +42,7 @@ if (!empty($extra_fields_options)) {
 	foreach ($option_value_counts2 as $option_value2_count) {
 		$option_value_counts3[] = $option_value2_count;
 	}
-	
+
 	array_unshift($option_value_counts3, "");
 	unset($option_value_counts3[0]);
 }
@@ -129,13 +129,26 @@ if (!empty($extra_fields_options)) {
 																	<th> </th>
 																	<th>#</th>
 																	<th>Label</th>
+																	<?php do_action('wpfm_repeated_option_name_label_after'); ?>
 																	<th>Price</th>
+																	<?php do_action('wpfm_repeated_option_price_label_after'); ?>
 																	<th></th>
 																</tr>
 															</thead>
 															<tbody class="ui-sortable">
 																<?php
 																foreach ($extra_fields_option['_topping_options'] as $sub_value_count => $values) {
+																	$option_default = (isset($values['option_default']) && $values['option_default'] === 'on') ? 'checked' : '';
+																	$option_fixed_amount = (isset($values['option_price_type']) && $values['option_price_type'] === 'fixed_amount') ? 'selected' : '';
+																	$option_quantity_based = (isset($values['option_price_type']) && $values['option_price_type'] === 'quantity_based') ? 'selected' : '';
+																	$args = array(
+																		'key' => $key,
+																		'sub_value_count' => $sub_value_count,
+																		'values' => $values,
+																		'option_default' => $option_default,
+																		'option_fixed_amount' => $option_fixed_amount,
+																		'option_quantity_based' => $option_quantity_based,
+																	);
 																?>
 																	<tr class="option-tr-<?php echo $sub_value_count; ?>">
 																		<td><span class="wpfm-option-sort">☰</span></td>
@@ -143,9 +156,11 @@ if (!empty($extra_fields_options)) {
 																		<td>
 																			<input type="text" name="<?php echo $key; ?>_option_name_<?php echo $sub_value_count; ?>" value="<?php echo $values['option_name']; ?>" class="opt_name" pattern=".*\S+.*" required>
 																		</td>
+																		<?php do_action('wpfm_repeated_option_name_after', $args); ?>
 																		<td>
 																			<input type="number" name="<?php echo $key; ?>_option_price_<?php echo $sub_value_count; ?>" value="<?php echo $values['option_price']; ?>" class="opt_price" step="any" min="0" required>
 																		</td>
+																		<?php do_action('wpfm_repeated_option_price_after', $args); ?>
 																		<td><a href="javascript: void(0);" data-id="<?php echo $sub_value_count; ?>" class="option-delete-btn dashicons dashicons-dismiss"></a></td>
 																		<input type="hidden" class="option-value-class" name="option_value_count[<?php echo $key; ?>][]" value="<?php echo $sub_value_count; ?>">
 																	</tr>
@@ -157,7 +172,9 @@ if (!empty($extra_fields_options)) {
 								                    <td><span class='wpfm-option-sort'>☰</span></td>
 								                    <td>%%repeated-option-index3%%</td>
 								                    <td><input type='text' name='%%repeated-option-index2%%_option_name_%%repeated-option-index3%%' value='' class='opt_name' pattern='.*\S+.*' required></td>
+													<?php do_action('wpfm_repeated_option_name_after', array()); ?>
 								                    <td><input type='number' name='%%repeated-option-index2%%_option_price_%%repeated-option-index3%%' value='' class='opt_price' min='0' required></td>
+													<?php do_action('wpfm_repeated_option_price_after', array()); ?>
 								                    <td><a href='javascript: void(0);' data-id='%%repeated-option-index3%%' class='option-delete-btn dashicons dashicons-dismiss'></a></td>
 								                    <input type='hidden' class='option-value-class' name='option_value_count[%%repeated-option-index2%%][]' value='%%repeated-option-index3%%'>
 								                </tr>">Add Row</a>

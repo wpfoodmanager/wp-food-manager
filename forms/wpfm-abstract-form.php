@@ -336,11 +336,10 @@ abstract class WPFM_Form {
 							if ($key == "topping_options") {
 								if ($option_value && is_array($option_value)) {
 									foreach ($option_value as $option_value_count) {
-										$output2[$option_value_count] =
-											array(
-												'option_name' => isset($_POST[$option_count . '_option_name_' . $option_value_count]) ? $_POST[$option_count . '_option_name_' . $option_value_count] : '',
-												'option_price' => isset($_POST[$option_count . '_option_price_' . $option_value_count]) ? $_POST[$option_count . '_option_price_' . $option_value_count] : '',
-											);
+										$output2[$option_value_count] = apply_filters('wpfm_topping_options_values_array', array(
+											'option_name' => isset($_POST[$option_count . '_option_name_' . $option_value_count]) ? $_POST[$option_count . '_option_name_' . $option_value_count] : '',
+											'option_price' => isset($_POST[$option_count . '_option_price_' . $option_value_count]) ? $_POST[$option_count . '_option_price_' . $option_value_count] : '',
+										), array('option_count' => $option_count, 'option_value_count' => $option_value_count));
 										$values[$group_key][$first_out][$key] = $output2;
 									}
 								}
