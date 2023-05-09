@@ -63,6 +63,9 @@ if (!empty($extra_fields_options)) {
 		<?php
 		$count = 1;
 		foreach ($food_fields as $key => $field) :
+			if (isset($field['value']) && !empty($field['value'])) {
+				$field['value'] = get_post_meta($food_id, '_' . $key, true);
+			}
 		?>
 			<fieldset class="wpfm-form-group fieldset-<?php echo esc_attr($key); ?>">
 				<label for="<?php esc_attr_e($key); ?>" class="wpfm-form-label-text"><?php echo $field['label'] . apply_filters('add_food_required_label', $field['required'] ? '<span class="require-field">*</span>' : ' <small>' . __('(optional)', 'wp-food-manager') . '</small>', $field); ?></label>
