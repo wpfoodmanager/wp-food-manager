@@ -51,7 +51,7 @@ $units = get_terms(
 							'food_manager_nutrition'
 						);
 						$unit_id     = !empty($nutrition['unit_id']) ? absint($nutrition['unit_id']) : 0;
-						$nutriValue    = !empty($nutrition['value']) ? absint($nutrition['value']) : null;
+						$nutriValue    = !empty($nutrition['value']) ? $nutrition['value'] : null;
 						$nutriTermID   = !empty($nutriTerm->term_id) ? $nutriTerm->term_id : null;
 						$nutriTermName = !empty($nutriTerm->name) ? $nutriTerm->name : null;
 
@@ -59,7 +59,7 @@ $units = get_terms(
 							echo "<li class='wpfm-sortable-item active-item' data-id='{$nutriTermID}'>" .
 								"<label>{$nutriTermName}</label>" .
 								"<div class='wpfm-sortable-item-values'>" .
-								"<input type='number' class='item-value' name='food_nutritions[{$nutriTermID}][value]' value='{$nutriValue}'>" .
+								"<input type='number' step='0.1' class='item-value' name='food_nutritions[{$nutriTermID}][value]' value='{$nutriValue}'>" .
 								"<select name='food_nutritions[{$nutriTermID}][unit_id]' class='item-unit'>" .
 								"<option value=''>Unit</option>";
 

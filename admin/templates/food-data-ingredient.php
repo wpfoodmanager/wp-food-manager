@@ -52,7 +52,7 @@ $units = get_terms(
 						);
 
 						$unit_id     = !empty($ingredient['unit_id']) ? absint($ingredient['unit_id']) : 0;
-						$ingValue    = !empty($ingredient['value']) ? absint($ingredient['value']) : null;
+						$ingValue    = !empty($ingredient['value']) ? $ingredient['value'] : null;
 						$ingTermID   = !empty($ingTerm->term_id) ? $ingTerm->term_id : null;
 						$ingTermName = !empty($ingTerm->name) ? $ingTerm->name : null;
 
@@ -61,7 +61,7 @@ $units = get_terms(
 							echo "<li class='wpfm-sortable-item active-item' data-id='{$ingTermID}'>" .
 								"<label>{$ingTermName}</label>" .
 								"<div class='wpfm-sortable-item-values'>" .
-								"<input type='number' class='item-value' name='food_ingredients[{$ingTermID}][value]' value='{$ingValue}'>" .
+								"<input type='number' step='0.1' class='item-value' name='food_ingredients[{$ingTermID}][value]' value='{$ingValue}'>" .
 								"<select name='food_ingredients[{$ingTermID}][unit_id]' class='item-unit'>" .
 								"<option value=''>Unit</option>";
 
