@@ -87,12 +87,6 @@ var WPFM_Frontend = function () {
                 connectWith: ".container .wpfm-form-wrapper table.widefat tbody",
                 items: "tr",
                 axis: "y",
-                helper: function (t, i) {
-                    return i.children().children().each((function () {
-                        jQuery(this).width(jQuery(this).width())
-                    }
-                    )), i
-                },
                 placeholder: "placeholder",
                 opacity: .65,
                 update: function (event, ui) {
