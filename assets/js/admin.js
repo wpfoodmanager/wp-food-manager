@@ -37,7 +37,7 @@ var WPFM_Admin = function () {
             }
             if (jQuery('.wpfm-options-wrapper div.wpfm-options-wrap p.wpfm-admin-postbox-form-field.wp-editor-field').length) {
                 jQuery('.wpfm-options-wrapper div.wpfm-options-wrap p.wpfm-admin-postbox-form-field.wp-editor-field').each(function () {
-                    var editorId = jQuery(this).parents(".wpfm-options-wrapper").find("p.wpfm-admin-postbox-form-field.wp-editor-field").attr("data-field-name");
+                    var editorId = jQuery(this).attr("data-field-name");
                     wp.editor.initialize(editorId, {
                         tinymce: {
                             wpautop: false,
