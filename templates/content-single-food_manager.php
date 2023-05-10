@@ -140,10 +140,28 @@ $food = $post;
                                                 echo '<div class="wpfm-input-description">' . $ext_option['_topping_description'] . '</div>';
                                             }
                                             do_action('wpfm_singular_option_input_before');
+
                                             $topping_htm = '<ul class="wpfm-topping-options">';
                                             if (isset($ext_option['_topping_options']) && !empty($ext_option['_topping_options'])) {
                                                 foreach ($ext_option['_topping_options'] as $key2 => $value2) {
-                                                    $topping_htm .= '<li class="wpfm-topping-items">' . esc_attr($value2['option_name']) .  (isset($value2['option_price']) && !empty($value2['option_price']) ? ' - ' . get_food_manager_currency_symbol() . $value2['option_price'] : '') . '</li>';
+                                                    $price_decimals = wpfm_get_price_decimals();
+                                                    $price_format = get_food_manager_price_format();
+                                                    $price_thousand_separator = wpfm_get_price_thousand_separator();
+                                                    $price_decimal_separator = wpfm_get_price_decimal_separator();
+                                                    $option_price = $value2['option_price'];
+                                                    $f_formatted_option_price = '';
+
+                                                    if (!empty($option_price)) {
+                                                        $formatted_option_price = number_format($option_price, $price_decimals, $price_decimal_separator, $price_thousand_separator);
+                                                        $f_formatted_option_price = sprintf($price_format, '<span class="food-manager-Price-currencySymbol">' . get_food_manager_currency_symbol() . '</span>', $formatted_option_price);
+                                                    }
+
+                                                    $option_price_sep = '';
+                                                    if ($f_formatted_option_price != '') {
+                                                        $option_price_sep = ' - ';
+                                                    }
+
+                                                    $topping_htm .= '<li class="wpfm-topping-items">' . esc_attr($value2['option_name']) . $option_price_sep . $f_formatted_option_price . '</li>';
                                                 }
                                             }
                                             $topping_htm .= '</ul>';
