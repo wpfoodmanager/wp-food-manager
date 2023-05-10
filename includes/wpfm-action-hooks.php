@@ -1009,7 +1009,7 @@ class WPFM_ActionHooks {
      */
     public function food_manager_save_food_manager_data($post_id, $post, $form_fields) {
         global $wpdb;
-
+        $thumbnail_image = array();
         // Save Food Form fields values
         if (isset($form_fields['food'])) {
             foreach ($form_fields['food'] as $key => $field) {

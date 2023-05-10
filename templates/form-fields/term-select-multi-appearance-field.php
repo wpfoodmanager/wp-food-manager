@@ -46,8 +46,14 @@ $args = array(
 // For Edit screen of food
 $preview_htm = '';
 $style = 'display:none;';
-if (isset($_GET['food_id']) && !empty($_GET['food_id'])) {
-    $food_id = $_GET['food_id'];
+if (isset($_GET['food_id']) && !empty($_GET['food_id']) || $food_id) {
+    if (isset($_GET['food_id']) && !empty($_GET['food_id'])) {
+        $food_id = $_GET['food_id'];
+    } else if ($food_id) {
+        $food_id = $food_id;
+    } else {
+        $food_id = '';
+    }
     $meta_key = ($field['taxonomy'] == 'food_manager_nutrition') ? 'food_nutritions' : ($field['taxonomy'] == 'food_manager_ingredient' ? 'food_ingredients' : '');
     $term_name = ($meta_key == 'food_nutritions') ? 'nutrition_term_name' : ($meta_key == 'food_ingredients' ? 'ingredient_term_name' : '');
     if ($meta_key) {

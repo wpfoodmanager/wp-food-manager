@@ -58,19 +58,18 @@ if (!empty($extra_fields_options)) {
 		if (isset($resume_edit) && $resume_edit) {
 			printf('<p class="wpfm-alert wpfm-alert-info"><strong>' . __("You are editing an existing food. %s", "wp-food-manager") . '</strong></p>', '<a href="?new=1&key=' . $resume_edit . '">' . __('Create A New Food', 'wp-food-manager') . '</a>');
 		}
-		?>
-		<?php do_action('add_food_fields_start'); ?>
-		<?php
+
+		do_action('add_food_fields_start');
+
 		$count = 1;
 		foreach ($food_fields as $key => $field) :
-			if (isset($field['value']) && !empty($field['value'])) {
+			if (!isset($field['value'])) {
 				$field['value'] = get_post_meta($food_id, '_' . $key, true);
-			}
-		?>
+			} ?>
 			<fieldset class="wpfm-form-group fieldset-<?php echo esc_attr($key); ?>">
 				<label for="<?php esc_attr_e($key); ?>" class="wpfm-form-label-text"><?php echo $field['label'] . apply_filters('add_food_required_label', $field['required'] ? '<span class="require-field">*</span>' : ' <small>' . __('(optional)', 'wp-food-manager') . '</small>', $field); ?></label>
 				<div class="field <?php echo $field['required'] ? 'required-field' : ''; ?>">
-					<?php get_food_manager_template('form-fields/' . $field['type'] . '-field.php', array('key' => $key, 'field' => $field)); ?>
+					<?php get_food_manager_template('form-fields/' . $field['type'] . '-field.php', array('key' => $key, 'field' => $field, 'food_id' => $food_id)); ?>
 				</div>
 			</fieldset>
 		<?php
