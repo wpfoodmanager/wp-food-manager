@@ -161,6 +161,7 @@ var WPFM_Admin = function () {
             }));
             jQuery("#wpfm-ingredient-container .wpfm-sortable-list").sortable({
                 connectWith: ".wpfm-sortable-list",
+                 items: "li.wpfm-sortable-item",
                 update: function (t, i) {
                     var a = jQuery(this),
                         n = jQuery(i.item);
@@ -231,6 +232,7 @@ var WPFM_Admin = function () {
             }).disableSelection();
             jQuery("#wpfm-nutrition-container .wpfm-sortable-list").sortable({
                 connectWith: ".wpfm-sortable-list",
+                items: "li.wpfm-sortable-item",
                 update: function (t, i) {
                     var a = jQuery(this),
                         n = jQuery(i.item);
