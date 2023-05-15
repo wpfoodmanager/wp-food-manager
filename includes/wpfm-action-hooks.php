@@ -1517,7 +1517,7 @@ class WPFM_ActionHooks {
 
         // Replace the food_manager_type taxonomy metabox for changing checkbox to radio button in backend.
         remove_meta_box('food_manager_typediv', 'food_manager', 'side');
-        add_meta_box('radio-food_manager_typediv', $taxonomy->labels->name, array($this, 'replace_food_manager_type_metabox'), 'food_manager', 'side', 'core', array('taxonomy' => $taxonomy_slug));
+        add_meta_box('radio-food_manager_typediv', (isset($taxonomy->labels->name) ? $taxonomy->labels->name : ''), array($this, 'replace_food_manager_type_metabox'), 'food_manager', 'side', 'core', array('taxonomy' => $taxonomy_slug));
         if ('add' != $screen->action) {
 
             // Show food menu Shortcode on edit menu page - admin.
