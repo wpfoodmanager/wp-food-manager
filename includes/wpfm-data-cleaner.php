@@ -60,7 +60,11 @@ class WPFM_Data_Cleaner {
 	 *
 	 * @var $options
 	 */
-	private static $options = array();
+	private static $options = array(
+		'food_manager_add_food_form_fields',
+		'food_manager_submit_toppings_form_fields',
+		'food_manager_form_fields',
+	);
 
 	/**
 	 * Site options to be deleted.
