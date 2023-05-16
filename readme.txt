@@ -12,83 +12,106 @@ License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
 == Description ==
 
-43% of potential customers visit a restaurant’s website first to decide if they want to order takeout or delivery — and will turn to a competitor if your menu is not easy to find or navigate. But our free restaurant plugin to create a customizable menu can turn your diner, café or bar into the go-to business for online food ordering.
+WP Food Manager is a complete solution for all types of food businesses including restaurants. It is a light-weight, scalable and feature-rich WordPress food manager plugin that helps you transform your ordinary food business or restaurant website to a place where you can display various food items as your restaurant menu and start taking orders without any hassle. The plugin is absolutely free and designed especially for food business or restaurant owners to showcase their restaurant menu and sell food through a centralized location.
 
-WP Food Manager’s WordPress restaurant menu plugin makes it a breeze for hungry customers to check out your menu items, place orders and pay for their food right from your website. Plus, it allows you to seamlessly manage all orders, as well as choose from beautiful food menu layout options with shortcodes or widgets that best suit your online restaurant.
+Whether you want to take your food business online or you want to utilize your existing WordPress website for your restaurant to display your restaurant menu and manage online food orders directly from there, WP Food Manager is the ultimate solution for you.
 
-Our WordPress food menu plugin lets you provide the best possible customer experience for busy diners to quickly choose delicious meals from your easy-to-navigate food ordering system — which is the perfect way to make sure that they become your loyal customers.
+With WP Food Manager, foodies can browse through the food items listed in your restaurant menu easily, place orders for their desired food item and pay for it instantly through your food business website. In addition to managing these food orders online, you can also flaunt your restaurant menu with your preferred food listing layout as WP Food Manage offers a huge array of layout options with shortcodes and lets you choose the one that suits your restaurant the most.
 
-With our WordPress restaurant plugin, you can also create your own online food marketplace like Uber Eats, Lieferando, Zomato, etc. And you can use the Elementor restaurant menu tools to ensure that your responsive design looks great on all desktop and mobile devices.
+The online food ordering WordPress plugin is designed to provide the best possible customer experience for all types of diners who can quickly select and place food orders from the restaurant menu with ease.
 
-== 👉🏻 Key features include ==
-
-* Fully responsive design for seamless UX on mobile or desktop
-* SEO-friendly to help customers find you online
-* Familiar UI for many WordPress themes to make managing food listings easy
-* Simple menu layouts and custom food fields to personalize your restaurant menu
-* Ingredients and nutritional value included for health-conscious customers
-* Elementor food menu tools to make sure your menus always look tantalizing with beautiful food images
+With our WordPress restaurant plugin, you can also create your own online food marketplace like Uber Eats, Lieferando, Zomato, etc. You can use the Elementor restaurant menu tools to ensure that the responsive design of your restaurant menu looks great on all desktop and mobile devices.
 
 
-== 👉🏻 WP FOOD MANAGER: A FREE WORDPRESS RESTAURANT PLUGIN TO EASILY MANAGE YOUR FOOD ORDERING SITE ==
+== 👉🏻 Who Can Use WP Food Manager? ==
 
-If you want to set up enticing food menu items in a hurry, WP Food Manager’s free plugin has all the core features and functionalities (as well as several add-on options) you need to create a robust five-star restaurant menu in just a few minutes. You can:
-
-* Add, remove, edit and view your food listings using the WordPress interface – all without leaving the familiar dashboard.
-* Display an attractive menu with name, description, excerpt, food image and price on your WordPress pages and sidebars.
-* Create custom food fields to help you personalize your food items and make them look delicious and unique.
+The WP Food Manager is a WordPress restaurant menu plugin that can be used by anyone who is somehow associated with a food or restaurant business.
 
 
-== 👉🏻 MAKE IT EASY FOR PEOPLE TO FIND YOUR FOOD MENU ITEMS THROUGH SEARCH ==
+== 👉🏻 Consider the following examples: ==
 
-Once you add food items to your site, make it easy for your customers to find them. The WP Food Manager restaurant menu plugin includes lots of ways to quickly direct users to your food items:
+* Hotel or restaurant owners.
+* People who are into the business of online food ordering.
+* People or businesses who provide food delivery.
+* Cloud kitchen service providers.
+* Cafe, bars or other restaurant owners.
 
-* You can search for and filter foods on the front-end using shortcodes. Each listing is AJAX-powered for a super slick presentation.
 
-== 👉🏻 WORDPRESS FOOD MENU PLUGIN FULL FEATURES LIST: ==
+== 👉🏻 Key features of the WP Food Manager plugin include the following: ==
 
-* Fully responsive design and mobile-device friendly
-* Cross-browser support (Firefox, Chrome, Safari, Opera, etc.)
-* SEO-friendly and compatible with SEO plugins
-* Multilingual translation and internationalization with RTL support
-* Add, manage and categorize food listings using WordPress’ familiar UI 
-* Front-end forms for guests and registered users to submit and manage food listings
-* AJAX-powered for searchable and filterable food listings added to your pages via shortcodes
-* RSS feeds allow customers to receive alerts for new food items matching their search (for example: they’re notified about your new pizza when they search for "pizza").
-* Easily create the best restaurant menu with:
- * Simple and clean menu layouts
- * Food and drink menu categories
- * Menu/category filter 
- * Custom food fields
- * Ingredients and nutritional values
+* Offers fully responsive designs to help your restaurant menu look great on any device.
+* It is an SEO-friendly food manager plugin that makes it easy for your customers to find your restaurant online whenever they search for relevant food items.
+* Familiar UI for many WordPress themes to make food listings management for your restaurant menu easy.
+* Simple restaurant menu layouts and custom food fields to personalize your restaurant menu for your online food ordering service.
+* Ingredients and nutritional value of food items listed on your restaurant menu can be included for the health-conscious customers of your restaurant.
+* Elementor food menu tools to make sure your Restaurant menus always look tantalizing with beautiful food images.
+
+
+== 👉🏻 Set Up Your Own Online Food Ordering WorsPress Site With WP Food Manager ==
+
+If you want to set up your own online food ordering business in a hurry, turn to the WP Food Manager plugin that has all the core features and functionalities (as well as several add-on options) you need to create it along with an attractive restaurant menu.
+
+
+== 👉🏻 WP Food Manager lets you do the following: ==
+
+* You can add, remove, edit and view your food listings for your restaurant menu using the WordPress interface.
+* Display an attractive Restaurant menu along with food name, food description, excerpt, food image and food price on your WordPress pages and sidebars.
+* Create custom food fields to personalize food items in your restaurant menu and make them look delicious and unique.
+
+
+== 👉🏻 Let Your Users Easily Find Food Items On Your WordPress Food Business Site ==
+
+Once you add food items to your site, it is important for you as a restaurant owner to ensure that your customers can easily find the food items they are searching for on your restaurant menu. WP Food Manager offers an advanced search facility that quickly directs your restaurant clients to the food items that you have listed on your website.
+
+* You can search for and filter food items on the front-end using shortcodes. Each listing is AJAX-powered for a super slick food presentation in your restaurant menu.
+
+
+== 👉🏻 Check Out All The Outstanding Features That WP Food Manager Offers You ==
+
+* Fully responsive restaurant menu designs.
+* Cross browser support for your food listing WordPress Site. (Firefox, Chrome, Safari, Opera, etc.)
+* The free food manager plugin is SEO friendly and highly compatible with SEO plugins.
+* Add, manage and categorize food listings on your online restaurant menu website with WordPress’ familiar UI.
+* Front-end forms for guests and registered users to submit and manage food listings.
+* Ajax-powered filtering facility to help website visitors search for food items in your restaurant menu with ease.
+* RSS feeds allow customers to receive alerts for new food items matching their search (for example: they’re notified about your new pizza when they search for “pizza”).
+* Easily create the best restaurant menu for your online food ordering business with:
+ * Simple and clean food menu layouts
+ * Categorize your restaurant menu including food and drink with ease
+ * Food menu/category filter
+ * Get customizable food fields for your food listing form.
+ * Facility to add food Ingredients and nutritional values for your restaurant’s health conscious customers.
  * Elementor restaurant menu tools
- * Widgets for recent, upcoming and featured food items
-* Plenty of template tags and shortcodes for use in your posts and pages
-* Lots of documentation and tutorials
+ * Widgets to showcase recent, upcoming and featured food items on your restaurant menu website.
+* Plenty of template tags and shortcodes to use in your food posts and food pages
+* Lots of documentation and tutorials to guide on creating your first restaurant menu website.
 
-== 👉🏻 UPCOMING FEATURES FOR OUR WORDPRESS RESTAURANT PLUGIN: ==
 
-* Ordering system for food delivery:
- * Driver app 
- * Order tracking app
- * WhatsApp and SMS notifications
- * Tips and rewards
+== 👉🏻 Our Restaurant Menu Plugin Will Be Equipped With The Following Online Food Ordering Features In The Future ==
+
+* Online Food Ordering system for your food delivery business:
+ * Driver app
+ * Food order tracking app
+ * WhatsApp and SMS notifications for online food order confirmation and more.
+ * Tips and rewards for the food delivery person
 * MailChimp and SendinBlue integrations
 * Restaurant reservations
-* Menu layout options:
+* Restaurant menu layout options:
  * Colors for food category
- * Food menu styles
- * Staff (chefs)
+ * Restaurant menu styles
+ * Restaurant Staff (chefs)
 
-== 👉🏻 A DEVELOPER-FRIENDLY RESTAURANT MENU PLUGIN FOR WORDPRESS BUSINESSES ==
 
-Developers consider this one of the best WordPress restaurant menu plugins because it’s a seamless, well-coded solution that comes with a number of helpful features, including:
+== 👉🏻 WP Food Manager: A Developer-Friendly Plugin For Your Online Food Business ==
+
+According to developers WP Food Manager is one of the best WordPress restaurant menu plugins because it’s a seamless, well-coded solution that comes with a number of helpful features to manage the entire online food ordering system, restaurant menu and more.
 
 * Search engine optimization (SEO) built into the code
-* Caching support to keep things running fast and friction-free
-* Plenty of endpoints and template files to provide deep customization to the core WP Food Manager code for your food and drink menu
+* Caching support to help you run your online food ordering business fast and friction-free
+* Plenty of endpoints and template files to provide deep customization to the core WP Food Manager code for your restaurant menu.
 * A debug mode to ensure that your WP Food Manager installation runs smoothly at all times
-* Singleton Javascript, AJAX and save memory on client side
+* Singleton Javascript, AJAX and save memory on the client side.
+
 
 == 👉🏻 Be a contributor ==
 
@@ -146,38 +169,31 @@ The manual installation method involves downloading the plugin and uploading it 
 
 == Frequently Asked Questions ==
 
-= Can I list my foods? =
+= Can I list my food with the WP Food Manager? =
 
-Yes, You can list your food.
+Yes, you can list your restaurant’s food items with WP Food Manager.
 
-= How can I add my foods? =
+= How can I add my food items? =
 
-You can add your foods from the front-end. And also you can add, update and delete your food from the front-end.
+With WP Food Manager, you can add your food items easily from the Front-end. In addition to that, you can update and delete your food items from the list.
 
-= Which WordPress themes does WP Food Manager’s restaurant menu plugin support? =
+= Which WordPress themes does WP Food Manager Support? =
 
-Our restaurant menu plugin works with all WordPress themes, and page builders including Elementor.
+The WP Food Manager plugin works well with every WordPress theme and page builder including Elementor.
 
-= Who should use this WordPress restaurant menu plugin? =
+= Who should use the WP Food Manager plugin? =
 
-Our food menu plugin is ideal for all bar, cafe and restaurant website owners who use WordPress.
+The online food ordering plugin, WP Food Manager can be used by any food business owner, including people who own cafes, bars, restaurants etc and use WordPres websites.
 
-= Will this WordPress food menu plugin slow down my website? =
+= Will this WordPress food menu plugin slow down my WordPress site? =
 
-No, our WordPress restaurant menu plugin will not slow down your website. We understand that fast page loading and real-time page updates is important for hungry customers ordering food items online.
+No, our WordPress restaurant menu plugin will not slow down your website. We understand the importance of having a fast food business management website and that is why we have designed it in such a way that it will never affect the speed of your online food ordering website.
 
 = Can WP Food Manager be translated into other languages? =
 
-Yes!
+Yes. It can be translated into various languages.
 
 You can also find us on GitHub: see the [WP Food Manager GitHub Repository](https://github.com/wpfoodmanager/wp-food-manager). Regardless of whether you are a site owner, end user or developer, WP Food Manager is the go-to WordPress restaurant menu plugin.
-
-
-== Screenshots ==
-
-1. The submit Food Form.
-
-2. Submit Food Preview.
 
 
 == Changelog ==
