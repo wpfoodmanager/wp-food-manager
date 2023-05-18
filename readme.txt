@@ -198,6 +198,27 @@ You can also find us on GitHub: see the [WP Food Manager GitHub Repository](http
 
 == Changelog ==
 
+= 1.0.3 [ 18th May 2023 ] =
+
+Fixed : Issue related to applying food filter and action hooks in the online food ordering addon.
+Fixed : Issue related to food Nutrition and Ingredients values in food menu addon.
+Fixed : Issue related to enabling/disabling food Ingredients/Nutrition on the preview page of the food menu addon.
+Fixed : Issue related to the food topping position in the edit food option in the food menu addon.
+Fixed : Issue related to the food ingredient and nutrition quantity on the food menu preview page of the online food ordering addon.
+Fixed : Issue related to the food topping price in the currency setting section of the online food ordering plugin.
+Fixed : Issue related to the visual and text button after adding multiple food toppings at the admin panel of the online food menu plugin.
+Fixed : Issue related to the Food Ingredient & Nutrition Drag and Drop option.
+Fixed : Issue related to the fields of the food Field Editor at the backend of the restaurant menu plugin.
+Fixed : Issue related to the add food option that is showing a warning when disabling food type at the admin panel.
+Fixed : Issue related to the content of food description at the admin panel of the food menu plugin.
+Fixed : Issue related to the Single Food listing shortcode of WP Food Manager.
+Fixed : Issue related to the Edit Food option at the Frontend of the restaurant menu plugin.
+Fixed : Issue related to using the Chinese character in a food category.
+Fixed : Issue related to adding food from the front end with the food topping options.
+Fixed : Issue related to the Food menu when it does not have any food items. Fixed : Issue related to the food filter on the food listing page of the restaurant menu plugin.
+Added : Food menu filter on food listing page.
+Added : RSS on the food listing page at filter time.
+
 = 1.0.2 [ 21th April 2023 ] =
 
 Fixed : The negative food ordering price value is resolved 
