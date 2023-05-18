@@ -201,21 +201,22 @@ You can also find us on GitHub: see the [WP Food Manager GitHub Repository](http
 = 1.0.3 [ 18th May 2023 ] =
 
 Fixed : Issue related to applying food filter and action hooks in the online food ordering addon.
-Fixed : Issue related to food Nutrition and Ingredients values in food menu addon.
-Fixed : Issue related to enabling/disabling food Ingredients/Nutrition on the preview page of the food menu addon.
-Fixed : Issue related to the food topping position in the edit food option in the food menu addon.
-Fixed : Issue related to the food ingredient and nutrition quantity on the food menu preview page of the online food ordering addon.
-Fixed : Issue related to the food topping price in the currency setting section of the online food ordering plugin.
-Fixed : Issue related to the visual and text button after adding multiple food toppings at the admin panel of the online food menu plugin.
-Fixed : Issue related to the Food Ingredient & Nutrition Drag and Drop option.
+Fixed : Nutrition and Ingredients values in food menu addon are perfectly accessible.
+Fixed : Enabling/disabling food Ingredients/Nutrition feature on the preview page of the food menu addon is effectively functional.
+Fixed : Error occurring in the food topping position in the edit food option in the food menu addon.
+Fixed : Problem concerned to the food ingredient and nutrition quantity on the food menu preview page of the online food ordering addon.
+Fixed : Food Manager will be able to use food topping price option in the currency setting section of the online food ordering plugin.
+Fixed : Functioning of the visual and text button after adding multiple food toppings at the admin panel of the online food menu plugin.
+Fixed : Drag and Drop option of the Food Ingredient & Nutrition is active.
 Fixed : Issue related to the fields of the food Field Editor at the backend of the restaurant menu plugin.
-Fixed : Issue related to the add food option that is showing a warning when disabling food type at the admin panel.
-Fixed : Issue related to the content of food description at the admin panel of the food menu plugin.
-Fixed : Issue related to the Single Food listing shortcode of WP Food Manager.
-Fixed : Issue related to the Edit Food option at the Frontend of the restaurant menu plugin.
-Fixed : Issue related to using the Chinese character in a food category.
-Fixed : Issue related to adding food from the front end with the food topping options.
-Fixed : Issue related to the Food menu when it does not have any food items. Fixed : Issue related to the food filter on the food listing page of the restaurant menu plugin.
+Fixed : The warning shown in the add food option when disabling food type at the admin panel is resolved.
+Fixed : The content related problem in food description at the admin panel of the food menu plugin.
+Fixed : The usage of the Single Food listing shortcode of WP Food Manager.
+Fixed : Problem faced by the food manager using the Edit Food option at the Frontend of the restaurant menu plugin.
+Fixed : The support of the usage of  the Chinese character in the Food category.
+Fixed : Addition of food from the Front end with the food topping options.
+Fixed : Running of the Food menu when it does not have any food items.
+Fixed : The failure of accessing the food filter on the food listing page of the restaurant menu plugin.
 Added : Food menu filter on food listing page.
 Added : RSS on the food listing page at filter time.
 
