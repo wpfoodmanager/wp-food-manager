@@ -57,7 +57,7 @@ class WPFM_Cache_Helper {
 	 * @since 1.0.0
 	 */
 	public static function get_transient_version($group, $refresh = false) {
-		$transient_name  = $group . '-transient-version';
+		$transient_name  = sanitize_key($group) . '-transient-version';
 		$transient_value = get_transient($transient_name);
 
 		if (false === $transient_value || true === $refresh) {
@@ -81,7 +81,7 @@ class WPFM_Cache_Helper {
 	private static function delete_version_transients($version) {
 		if (!wp_using_ext_object_cache() && !empty($version)) {
 			global $wpdb;
-			$wpdb->query($wpdb->prepare("DELETE FROM {$wpdb->options} WHERE option_name LIKE %s;", "\_transient\_%" . $version));
+			$wpdb->query($wpdb->prepare("DELETE FROM {$wpdb->options} WHERE option_name LIKE %s;", '\_transient\_%' . sanitize_text_field($version)));
 		}
 	}
 
@@ -97,17 +97,16 @@ class WPFM_Cache_Helper {
 	public static function get_listings_count($post_type = 'food_manager', $status = 'pending', $force = false) {
 		// Get user based cache transient
 		$user_id   = get_current_user_id();
-		$transient = "em_{$status}_{$post_type}_count_user_{$user_id}";
-
+		$transient = "em_" . sanitize_key($status) . "_" . sanitize_key($post_type) . "_count_user_" . absint($user_id);
 		// Set listings_count value from cache if exists, otherwise set to 0 as default
-		$status_count = ($cached_count = get_transient($transient)) ? $cached_count : 0;
+		$status_count = ($cached_count = get_transient($transient)) ? absint($cached_count) : 0;
 
 		// $cached_count will be false if transient does not exist
 		if ($cached_count === false || $force) {
-			$count_posts = wp_count_posts($post_type, 'readable');
+			$count_posts = wp_count_posts(sanitize_key($post_type), 'readable');
 
 			// Default to 0 $status if object does not have a value
-			$status_count = isset($count_posts->$status) ? $count_posts->$status : 0;
+			$status_count = isset($count_posts->$status) ? absint($count_posts->$status) : 0;
 			set_transient($transient, $status_count, DAY_IN_SECONDS * 7);
 		}
 

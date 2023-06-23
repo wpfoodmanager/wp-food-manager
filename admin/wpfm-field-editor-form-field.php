@@ -22,49 +22,49 @@ if ($field_key !== 'topping_options') {
 	$field_types    = apply_filters(
 		'food_manager_form_field_types',
 		array(
-			'text'             => __('Text', 'wp-food-manager'),
-			'checkbox'         => __('Checkbox', 'wp-food-manager'),
-			'date'             => __('Date', 'wp-food-manager'),
-			'file'             => __('File', 'wp-food-manager'),
-			'hidden'           => __('Hidden', 'wp-food-manager'),
-			'multiselect'      => __('Multiselect', 'wp-food-manager'),
-			'number'           => __('Number', 'wp-food-manager'),
-			'radio'            => __('Radio', 'wp-food-manager'),
-			'select'           => __('Select', 'wp-food-manager'),
-			'term-checklist'   => __('Term Checklist', 'wp-food-manager'),
-			'term-multiselect' => __('Term Multiselect', 'wp-food-manager'),
-			'term-select'      => __('Term Select', 'wp-food-manager'),
-			'term-select-multi-appearance'      => __('Term Multi Select Appearance', 'wp-food-manager'),
-			'textarea'         => __('Textarea', 'wp-food-manager'),
-			'wp-editor'        => __('WP Editor', 'wp-food-manager'),
-			'url'              => __('URL', 'wp-food-manager'),
-			'term-autocomplete'     => __('Term Autocomplete', 'wp-food-manager'),
-			'switch'    => __('Switch', 'wp-food-manager'),
+			'text'             => esc_html__('Text', 'wp-food-manager'),
+			'checkbox'         => esc_html__('Checkbox', 'wp-food-manager'),
+			'date'             => esc_html__('Date', 'wp-food-manager'),
+			'file'             => esc_html__('File', 'wp-food-manager'),
+			'hidden'           => esc_html__('Hidden', 'wp-food-manager'),
+			'multiselect'      => esc_html__('Multiselect', 'wp-food-manager'),
+			'number'           => esc_html__('Number', 'wp-food-manager'),
+			'radio'            => esc_html__('Radio', 'wp-food-manager'),
+			'select'           => esc_html__('Select', 'wp-food-manager'),
+			'term-checklist'   => esc_html__('Term Checklist', 'wp-food-manager'),
+			'term-multiselect' => esc_html__('Term Multiselect', 'wp-food-manager'),
+			'term-select'      => esc_html__('Term Select', 'wp-food-manager'),
+			'term-select-multi-appearance'      => esc_html__('Term Multi Select Appearance', 'wp-food-manager'),
+			'textarea'         => esc_html__('Textarea', 'wp-food-manager'),
+			'wp-editor'        => esc_html__('WP Editor', 'wp-food-manager'),
+			'url'              => esc_html__('URL', 'wp-food-manager'),
+			'term-autocomplete' => esc_html__('Term Autocomplete', 'wp-food-manager'),
+			'switch'    => esc_html__('Switch', 'wp-food-manager'),
 		)
 	);
 } else {
 	$field_types    = apply_filters(
 		'food_manager_form_field_types',
 		array(
-			'text'             => __('Text', 'wp-food-manager'),
-			'checkbox'         => __('Checkbox', 'wp-food-manager'),
-			'date'             => __('Date', 'wp-food-manager'),
-			'file'             => __('File', 'wp-food-manager'),
-			'hidden'           => __('Hidden', 'wp-food-manager'),
-			'multiselect'      => __('Multiselect', 'wp-food-manager'),
-			'number'           => __('Number', 'wp-food-manager'),
-			'radio'            => __('Radio', 'wp-food-manager'),
-			'select'           => __('Select', 'wp-food-manager'),
-			'term-checklist'   => __('Term Checklist', 'wp-food-manager'),
-			'term-multiselect' => __('Term Multiselect', 'wp-food-manager'),
-			'term-select'      => __('Term Select', 'wp-food-manager'),
-			'term-select-multi-appearance'      => __('Term Multi Select Appearance', 'wp-food-manager'),
-			'textarea'         => __('Textarea', 'wp-food-manager'),
-			'wp-editor'        => __('WP Editor', 'wp-food-manager'),
-			'url'              => __('URL', 'wp-food-manager'),
-			'options'    => __('Options', 'wp-food-manager'),
-			'term-autocomplete' => __('Term Autocomplete', 'wp-food-manager'),
-			'switch'    => __('Switch', 'wp-food-manager'),
+			'text'             => esc_html__('Text', 'wp-food-manager'),
+			'checkbox'         => esc_html__('Checkbox', 'wp-food-manager'),
+			'date'             => esc_html__('Date', 'wp-food-manager'),
+			'file'             => esc_html__('File', 'wp-food-manager'),
+			'hidden'           => esc_html__('Hidden', 'wp-food-manager'),
+			'multiselect'      => esc_html__('Multiselect', 'wp-food-manager'),
+			'number'           => esc_html__('Number', 'wp-food-manager'),
+			'radio'            => esc_html__('Radio', 'wp-food-manager'),
+			'select'           => esc_html__('Select', 'wp-food-manager'),
+			'term-checklist'   => esc_html__('Term Checklist', 'wp-food-manager'),
+			'term-multiselect' => esc_html__('Term Multiselect', 'wp-food-manager'),
+			'term-select'      => esc_html__('Term Select', 'wp-food-manager'),
+			'term-select-multi-appearance'      => esc_html__('Term Multi Select Appearance', 'wp-food-manager'),
+			'textarea'         => esc_html__('Textarea', 'wp-food-manager'),
+			'wp-editor'        => esc_html__('WP Editor', 'wp-food-manager'),
+			'url'              => esc_html__('URL', 'wp-food-manager'),
+			'options'    => esc_html__('Options', 'wp-food-manager'),
+			'term-autocomplete' => esc_html__('Term Autocomplete', 'wp-food-manager'),
+			'switch'    => esc_html__('Switch', 'wp-food-manager'),
 		)
 	);
 }
@@ -108,7 +108,7 @@ $disable_field_types = array('term-autocomplete', 'term-select-multi-appearance'
 				}
 			}
 			?>
-			
+
 		</select>
 	</td>
 	<td>

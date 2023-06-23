@@ -21,7 +21,7 @@ $prev_page   = 0;
 <nav class="food-manager-pagination">
 	<ul class="page-numbers">
 		<?php if ($current_page && $current_page > 1) : ?>
-			<li><a href="#" data-page="<?php echo $current_page - 1; ?>" class="page-numbers">&larr;</a></li>
+			<li><a href="#" data-page="<?php echo esc_attr($current_page - 1); ?>" class="page-numbers">&larr;</a></li>
 		<?php endif; ?>
 		<?php
 		foreach ($pages as $page) {
@@ -29,15 +29,15 @@ $prev_page   = 0;
 				echo '<li><span class="gap">...</span></li>';
 			}
 			if ($current_page == $page) {
-				echo '<li><span  data-page="' . $page . '" class="page-numbers current">' . $page . '</span></li>';
+				echo '<li><span data-page="' . esc_attr($page) . '" class="page-numbers current">' . esc_html($page) . '</span></li>';
 			} else {
-				echo '<li><a href="#" data-page="' . $page . '" class="page-numbers">' . $page . '</a></li>';
+				echo '<li><a href="#" data-page="' . esc_attr($page) . '" class="page-numbers">' . esc_html($page) . '</a></li>';
 			}
 			$prev_page = $page;
 		}
 		?>
 		<?php if ($current_page && $current_page < $max_num_pages) : ?>
-			<li><a href="#" data-page="<?php echo $current_page + 1; ?>">&rarr;</a></li>
+			<li><a href="#" data-page="<?php echo esc_attr($current_page + 1); ?>">&rarr;</a></li>
 		<?php endif; ?>
 	</ul>
 </nav>

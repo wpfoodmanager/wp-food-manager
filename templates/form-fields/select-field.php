@@ -9,10 +9,10 @@ if (!empty($field['value']) && is_array($field['value'])) {
 }
 ?>
 <select name="<?php echo esc_attr(isset($field['name']) ? $field['name'] : $key); ?>" id="<?php echo esc_attr($key); ?>" <?php if (!empty($field['required'])) echo 'required'; ?> attribute="<?php echo esc_attr(isset($field['attribute']) ? $field['attribute'] : ''); ?>">
-	<?php foreach ($field['options'] as $key => $value) :
-		$field_val = (!empty($field_val_num) && $field_val_num === $key) ? 'selected' : '';
+	<?php foreach ($field['options'] as $option_key => $option_value) :
+		$field_val = (!empty($field_val_num) && $field_val_num === $option_key) ? 'selected' : '';
 	?>
-		<option value="<?php echo esc_attr($key); ?>" <?php echo $field_val; ?>><?php echo esc_html($value); ?></option>
+		<option value="<?php echo esc_attr($option_key); ?>" <?php echo esc_attr($field_val); ?>><?php echo esc_html($option_value); ?></option>
 	<?php endforeach; ?>
 </select>
-<?php if (!empty($field['description'])) : ?><small class="description"><?php echo $field['description']; ?></small><?php endif; ?>
+<?php if (!empty($field['description'])) : ?><small class="description"><?php echo esc_html($field['description']); ?></small><?php endif; ?>

@@ -53,10 +53,10 @@ if (!empty($extra_fields_options)) {
 	<?php endif; ?>
 	<?php if (wpfm_user_can_post_food() || food_manager_user_can_edit_food($food_id)) : ?>
 		<!-- Food Information Fields -->
-		<h2 class="wpfm-form-title wpfm-heading-text"><?php _e('Food Details', 'wp-food-manager'); ?></h2>
+		<h2 class="wpfm-form-title wpfm-heading-text"><?php esc_html_e('Food Details', 'wp-food-manager'); ?></h2>
 		<?php
 		if (isset($resume_edit) && $resume_edit) {
-			printf('<p class="wpfm-alert wpfm-alert-info"><strong>' . __("You are editing an existing food. %s", "wp-food-manager") . '</strong></p>', '<a href="?new=1&key=' . $resume_edit . '">' . __('Create A New Food', 'wp-food-manager') . '</a>');
+			printf('<p class="wpfm-alert wpfm-alert-info"><strong>' . esc_html(__("You are editing an existing food. %s", "wp-food-manager")) . '</strong></p>', '<a href="?new=1&key=' . esc_attr($resume_edit) . '">' . esc_html__('Create A New Food', 'wp-food-manager') . '</a>');
 		}
 
 		do_action('add_food_fields_start');
@@ -67,7 +67,7 @@ if (!empty($extra_fields_options)) {
 				$field['value'] = get_post_meta($food_id, '_' . $key, true);
 			} ?>
 			<fieldset class="wpfm-form-group fieldset-<?php echo esc_attr($key); ?>">
-				<label for="<?php esc_attr_e($key); ?>" class="wpfm-form-label-text"><?php echo $field['label'] . apply_filters('add_food_required_label', $field['required'] ? '<span class="require-field">*</span>' : ' <small>' . __('(optional)', 'wp-food-manager') . '</small>', $field); ?></label>
+				<label for="<?php echo esc_attr($key); ?>" class="wpfm-form-label-text"><?php echo esc_html($field['label']) . apply_filters('add_food_required_label', $field['required'] ? '<span class="require-field">*</span>' : ' <small>' . __('(optional)', 'wp-food-manager') . '</small>', $field); ?></label>
 				<div class="field <?php echo $field['required'] ? 'required-field' : ''; ?>">
 					<?php get_food_manager_template('form-fields/' . $field['type'] . '-field.php', array('key' => $key, 'field' => $field, 'food_id' => $food_id)); ?>
 				</div>
@@ -78,6 +78,7 @@ if (!empty($extra_fields_options)) {
 		<?php do_action('add_food_fields_end'); ?>
 		<!-- Extra options Fields -->
 		<?php
+
 		if ((isset($_POST['food_id']) && !empty($_POST['food_id'])) || (isset($_GET['action']) == 'edit')) {
 			if ($topping_fields) : ?>
 				<?php do_action('add_topping_fields_start'); ?>

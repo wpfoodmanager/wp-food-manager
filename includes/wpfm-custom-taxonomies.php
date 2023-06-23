@@ -4,12 +4,12 @@
  * Taxonomies
  */
 if (get_option('food_manager_enable_categories', true)) {
-	$singular  = __('Food Category', 'wp-food-manager');
-	$plural    = __('Categories', 'wp-food-manager');
+	$singular  = esc_html__('Food Category', 'wp-food-manager');
+	$plural    = esc_html__('Categories', 'wp-food-manager');
 
 	if (current_theme_supports('food-manager-templates')) {
 		$rewrite   = array(
-			'slug'         => $permalink_structure['category_rewrite_slug'],
+			'slug'         => esc_attr($permalink_structure['category_rewrite_slug']),
 			'with_front'   => false,
 			'hierarchical' => false
 		);
@@ -20,7 +20,7 @@ if (get_option('food_manager_enable_categories', true)) {
 	}
 
 	register_taxonomy(
-		"food_manager_category",
+		esc_attr("food_manager_category"),
 		apply_filters('register_taxonomy_food_manager_category_object_type', array('food_manager')), //'food_manager_menu'
 		apply_filters('register_taxonomy_food_manager_category_args', array(
 			'hierarchical' 			=> true,
@@ -30,16 +30,16 @@ if (get_option('food_manager_enable_categories', true)) {
 				'name'              => $plural,
 				'singular_name'     => $singular,
 				'menu_name'         => ucwords($plural),
-				'search_items'      => sprintf(__('Search %s', 'wp-food-manager'), $plural),
-				'all_items'         => sprintf(__('All %s', 'wp-food-manager'), $plural),
-				'parent_item'       => sprintf(__('Parent %s', 'wp-food-manager'), $singular),
-				'parent_item_colon' => sprintf(__('Parent %s:', 'wp-food-manager'), $singular),
-				'edit_item'         => sprintf(__('Edit %s', 'wp-food-manager'), $singular),
-				'update_item'       => sprintf(__('Update %s', 'wp-food-manager'), $singular),
-				'add_new_item'      => sprintf(__('Add New %s', 'wp-food-manager'), $singular),
-				'new_item_name'     => sprintf(__('New %s Name', 'wp-food-manager'),  $singular),
-				'not_found' 	=> sprintf(__('No Food %s Found.', 'wp-food-manager'),  $plural),
-				'back_to_items'     => sprintf(__('← Go to Food %s', 'wp-food-manager'),  $plural)
+				'search_items'      => sprintf(esc_html__('Search %s', 'wp-food-manager'), $plural),
+				'all_items'         => sprintf(esc_html__('All %s', 'wp-food-manager'), $plural),
+				'parent_item'       => sprintf(esc_html__('Parent %s', 'wp-food-manager'), $singular),
+				'parent_item_colon' => sprintf(esc_html__('Parent %s:', 'wp-food-manager'), $singular),
+				'edit_item'         => sprintf(esc_html__('Edit %s', 'wp-food-manager'), $singular),
+				'update_item'       => sprintf(esc_html__('Update %s', 'wp-food-manager'), $singular),
+				'add_new_item'      => sprintf(esc_html__('Add New %s', 'wp-food-manager'), $singular),
+				'new_item_name'     => sprintf(esc_html__('New %s Name', 'wp-food-manager'),  $singular),
+				'not_found' 	=> sprintf(esc_html__('No Food %s Found.', 'wp-food-manager'),  $plural),
+				'back_to_items'     => sprintf(esc_html__('← Go to Food %s', 'wp-food-manager'),  $plural)
 			),
 			'show_ui' 				=> true,
 			'show_in_rest'          => true,
@@ -56,12 +56,12 @@ if (get_option('food_manager_enable_categories', true)) {
 }
 
 if (get_option('food_manager_enable_food_types', true)) {
-	$singular  = __('Food Type', 'wp-food-manager');
-	$plural    = __('Types', 'wp-food-manager');
+	$singular  = esc_html__('Food Type', 'wp-food-manager');
+	$plural    = esc_html__('Types', 'wp-food-manager');
 
 	if (current_theme_supports('food-manager-templates')) {
 		$rewrite   = array(
-			'slug'         => $permalink_structure['type_rewrite_slug'],
+			'slug'         => esc_attr($permalink_structure['type_rewrite_slug']),
 			'with_front'   => false,
 			'hierarchical' => false
 		);
@@ -72,7 +72,7 @@ if (get_option('food_manager_enable_food_types', true)) {
 	}
 
 	register_taxonomy(
-		"food_manager_type",
+		esc_attr("food_manager_type"),
 		apply_filters('register_taxonomy_food_manager_types_object_type', array('food_manager')),
 		apply_filters('register_taxonomy_food_manager_types_args', array(
 			'hierarchical' 			=> true,
@@ -81,18 +81,18 @@ if (get_option('food_manager_enable_food_types', true)) {
 				'name' 				=> $plural,
 				'singular_name' 	=> $singular,
 				'menu_name'         => ucwords($plural),
-				'search_items' 		=> sprintf(__('Search %s', 'wp-food-manager'), $plural),
-				'all_items' 		=> sprintf(__('All %s', 'wp-food-manager'), $plural),
-				'parent_item' 		=> sprintf(__('Parent %s', 'wp-food-manager'), $singular),
-				'parent_item_colon' => sprintf(__('Parent %s:', 'wp-food-manager'), $singular),
-				'not_found'         => sprintf(__('No %s found', 'wp-food-manager'), strtolower($plural)),
-				'edit_item' 		=> sprintf(__('Edit %s', 'wp-food-manager'), $singular),
-				'view_item' 		=> sprintf(__('View %s', 'wp-food-manager'), $singular),
-				'update_item' 		=> sprintf(__('Update %s', 'wp-food-manager'), $singular),
-				'add_new_item' 		=> sprintf(__('Add New %s', 'wp-food-manager'), $singular),
-				'new_item_name' 	=> sprintf(__('New %s Name', 'wp-food-manager'),  $singular),
-				'not_found' 	=> sprintf(__('No Food %s Found.', 'wp-food-manager'),  $plural),
-				'back_to_items'     => sprintf(__('← Go to Food %s', 'wp-food-manager'),  $plural)
+				'search_items' 		=> sprintf(esc_html__('Search %s', 'wp-food-manager'), $plural),
+				'all_items' 		=> sprintf(esc_html__('All %s', 'wp-food-manager'), $plural),
+				'parent_item' 		=> sprintf(esc_html__('Parent %s', 'wp-food-manager'), $singular),
+				'parent_item_colon' => sprintf(esc_html__('Parent %s:', 'wp-food-manager'), $singular),
+				'not_found'         => sprintf(esc_html__('No %s found', 'wp-food-manager'), strtolower($plural)),
+				'edit_item' 		=> sprintf(esc_html__('Edit %s', 'wp-food-manager'), $singular),
+				'view_item' 		=> sprintf(esc_html__('View %s', 'wp-food-manager'), $singular),
+				'update_item' 		=> sprintf(esc_html__('Update %s', 'wp-food-manager'), $singular),
+				'add_new_item' 		=> sprintf(esc_html__('Add New %s', 'wp-food-manager'), $singular),
+				'new_item_name' 	=> sprintf(esc_html__('New %s Name', 'wp-food-manager'),  $singular),
+				'not_found' 	=> sprintf(esc_html__('No Food %s Found.', 'wp-food-manager'),  $plural),
+				'back_to_items'     => sprintf(esc_html__('← Go to Food %s', 'wp-food-manager'),  $plural)
 			),
 			'show_ui' 				=> true,
 			'show_in_rest'          => true,
@@ -109,12 +109,12 @@ if (get_option('food_manager_enable_food_types', true)) {
 }
 
 if (get_option('food_manager_enable_food_tags', true)) {
-	$singular  = __('Food Tags', 'wp-food-manager');
-	$plural    = __('Tags', 'wp-food-manager');
+	$singular  = esc_html__('Food Tags', 'wp-food-manager');
+	$plural    = esc_html__('Tags', 'wp-food-manager');
 
 	if (current_theme_supports('food-manager-templates')) {
 		$rewrite   = array(
-			'slug'         => $permalink_structure['tag_rewrite_slug'],
+			'slug'         => esc_attr($permalink_structure['tag_rewrite_slug']),
 			'with_front'   => false,
 			'hierarchical' => false
 		);
@@ -134,16 +134,16 @@ if (get_option('food_manager_enable_food_tags', true)) {
 				'name' 				=> $plural,
 				'singular_name' 	=> $singular,
 				'menu_name'         => ucwords($plural),
-				'search_items' 		=> sprintf(__('Search %s', 'wp-food-manager'), $plural),
-				'all_items' 		=> sprintf(__('All %s', 'wp-food-manager'), $plural),
-				'parent_item' 		=> sprintf(__('Parent %s', 'wp-food-manager'), $singular),
-				'parent_item_colon' => sprintf(__('Parent %s:', 'wp-food-manager'), $singular),
-				'edit_item' 		=> sprintf(__('Edit %s', 'wp-food-manager'), $singular),
-				'update_item' 		=> sprintf(__('Update %s', 'wp-food-manager'), $singular),
-				'add_new_item' 		=> sprintf(__('Add New %s', 'wp-food-manager'), $singular),
-				'new_item_name' 	=> sprintf(__('New %s Name', 'wp-food-manager'),  $singular),
-				'not_found' 	=> sprintf(__('No Food %s Found.', 'wp-food-manager'),  $plural),
-				'back_to_items'     => sprintf(__('← Go to Food %s', 'wp-food-manager'),  $plural)
+				'search_items' 		=> sprintf(esc_html__('Search %s', 'wp-food-manager'), $plural),
+				'all_items' 		=> sprintf(esc_html__('All %s', 'wp-food-manager'), $plural),
+				'parent_item' 		=> sprintf(esc_html__('Parent %s', 'wp-food-manager'), $singular),
+				'parent_item_colon' => sprintf(esc_html__('Parent %s:', 'wp-food-manager'), $singular),
+				'edit_item' 		=> sprintf(esc_html__('Edit %s', 'wp-food-manager'), $singular),
+				'update_item' 		=> sprintf(esc_html__('Update %s', 'wp-food-manager'), $singular),
+				'add_new_item' 		=> sprintf(esc_html__('Add New %s', 'wp-food-manager'), $singular),
+				'new_item_name' 	=> sprintf(esc_html__('New %s Name', 'wp-food-manager'),  $singular),
+				'not_found' 	=> sprintf(esc_html__('No Food %s Found.', 'wp-food-manager'),  $plural),
+				'back_to_items'     => sprintf(esc_html__('← Go to Food %s', 'wp-food-manager'),  $plural)
 			),
 			'show_ui' 				=> true,
 			'show_in_rest'          => true,
@@ -160,12 +160,12 @@ if (get_option('food_manager_enable_food_tags', true)) {
 	);
 }
 
-$singular  = __('Food Ingredient', 'wp-food-manager');
-$plural    = __('Ingredients', 'wp-food-manager');
+$singular  = esc_html__('Food Ingredient', 'wp-food-manager');
+$plural    = esc_html__('Ingredients', 'wp-food-manager');
 
 if (current_theme_supports('food-manager-templates')) {
 	$rewrite   = array(
-		'slug'         => $permalink_structure['ingredients_rewrite_slug'],
+		'slug'         => esc_attr($permalink_structure['ingredients_rewrite_slug']),
 		'with_front'   => false,
 		'hierarchical' => false
 	);
@@ -185,16 +185,16 @@ register_taxonomy(
 			'name' 				=> $plural,
 			'singular_name' 	=> $singular,
 			'menu_name'         => ucwords($plural),
-			'search_items' 		=> sprintf(__('Search %s', 'wp-food-manager'), $plural),
-			'all_items' 		=> sprintf(__('All %s', 'wp-food-manager'), $plural),
-			'parent_item' 		=> sprintf(__('Parent %s', 'wp-food-manager'), $singular),
-			'parent_item_colon' => sprintf(__('Parent %s:', 'wp-food-manager'), $singular),
-			'edit_item' 		=> sprintf(__('Edit %s', 'wp-food-manager'), $singular),
-			'update_item' 		=> sprintf(__('Update %s', 'wp-food-manager'), $singular),
-			'add_new_item' 		=> sprintf(__('Add New %s', 'wp-food-manager'), $singular),
-			'new_item_name' 	=> sprintf(__('New %s Name', 'wp-food-manager'),  $singular),
-			'not_found' 	=> sprintf(__('No %s Found.', 'wp-food-manager'),  $plural),
-			'back_to_items'     => sprintf(__('← Go to %s', 'wp-food-manager'),  $plural)
+			'search_items' 		=> sprintf(esc_html__('Search %s', 'wp-food-manager'), $plural),
+			'all_items' 		=> sprintf(esc_html__('All %s', 'wp-food-manager'), $plural),
+			'parent_item' 		=> sprintf(esc_html__('Parent %s', 'wp-food-manager'), $singular),
+			'parent_item_colon' => sprintf(esc_html__('Parent %s:', 'wp-food-manager'), $singular),
+			'edit_item' 		=> sprintf(esc_html__('Edit %s', 'wp-food-manager'), $singular),
+			'update_item' 		=> sprintf(esc_html__('Update %s', 'wp-food-manager'), $singular),
+			'add_new_item' 		=> sprintf(esc_html__('Add New %s', 'wp-food-manager'), $singular),
+			'new_item_name' 	=> sprintf(esc_html__('New %s Name', 'wp-food-manager'),  $singular),
+			'not_found' 	=> sprintf(esc_html__('No %s Found.', 'wp-food-manager'),  $plural),
+			'back_to_items'     => sprintf(esc_html__('← Go to %s', 'wp-food-manager'),  $plural)
 		),
 		'show_ui' 				=> true,
 		'show_in_rest'          => true,
@@ -210,12 +210,12 @@ register_taxonomy(
 	))
 );
 
-$singular  = __('Food Topping', 'wp-food-manager');
-$plural    = __('Toppings', 'wp-food-manager');
+$singular  = esc_html__('Food Topping', 'wp-food-manager');
+$plural    = esc_html__('Toppings', 'wp-food-manager');
 
 if (current_theme_supports('food-manager-templates')) {
 	$rewrite   = array(
-		'slug'         => $permalink_structure['topping_rewrite_slug'],
+		'slug'         => esc_attr($permalink_structure['topping_rewrite_slug']),
 		'with_front'   => false,
 		'hierarchical' => false
 	);
@@ -235,16 +235,16 @@ register_taxonomy(
 			'name' 				=> $plural,
 			'singular_name' 	=> $singular,
 			'menu_name'         => ucwords($plural),
-			'search_items' 		=> sprintf(__('Search %s', 'wp-food-manager'), $plural),
-			'all_items' 		=> sprintf(__('All %s', 'wp-food-manager'), $plural),
-			'parent_item' 		=> sprintf(__('Parent %s', 'wp-food-manager'), $singular),
-			'parent_item_colon' => sprintf(__('Parent %s:', 'wp-food-manager'), $singular),
-			'edit_item' 		=> sprintf(__('Edit %s', 'wp-food-manager'), $singular),
-			'update_item' 		=> sprintf(__('Update %s', 'wp-food-manager'), $singular),
-			'add_new_item' 		=> sprintf(__('Add New %s', 'wp-food-manager'), $singular),
-			'new_item_name' 	=> sprintf(__('New %s Name', 'wp-food-manager'),  $singular),
-			'not_found' 	=> sprintf(__('No %s Found.', 'wp-food-manager'),  $plural),
-			'back_to_items'     => sprintf(__('← Go to %s', 'wp-food-manager'),  $plural)
+			'search_items' 		=> sprintf(esc_html__('Search %s', 'wp-food-manager'), $plural),
+			'all_items' 		=> sprintf(esc_html__('All %s', 'wp-food-manager'), $plural),
+			'parent_item' 		=> sprintf(esc_html__('Parent %s', 'wp-food-manager'), $singular),
+			'parent_item_colon' => sprintf(esc_html__('Parent %s:', 'wp-food-manager'), $singular),
+			'edit_item' 		=> sprintf(esc_html__('Edit %s', 'wp-food-manager'), $singular),
+			'update_item' 		=> sprintf(esc_html__('Update %s', 'wp-food-manager'), $singular),
+			'add_new_item' 		=> sprintf(esc_html__('Add New %s', 'wp-food-manager'), $singular),
+			'new_item_name' 	=> sprintf(esc_html__('New %s Name', 'wp-food-manager'),  $singular),
+			'not_found' 	=> sprintf(esc_html__('No %s Found.', 'wp-food-manager'),  $plural),
+			'back_to_items'     => sprintf(esc_html__('← Go to %s', 'wp-food-manager'),  $plural)
 		),
 		'show_ui' 				=> true,
 		'show_in_rest'          => true,
@@ -260,12 +260,12 @@ register_taxonomy(
 	))
 );
 
-$singular  = __('Food Nutritions', 'wp-food-manager');
-$plural    = __('Nutritions', 'wp-food-manager');
+$singular  = esc_html__('Food Nutritions', 'wp-food-manager');
+$plural    = esc_html__('Nutritions', 'wp-food-manager');
 
 if (current_theme_supports('food-manager-templates')) {
 	$rewrite   = array(
-		'slug'         => $permalink_structure['nutritions_rewrite_slug'],
+		'slug'         => sanitize_title($permalink_structure['nutritions_rewrite_slug']),
 		'with_front'   => false,
 		'hierarchical' => false
 	);
@@ -310,12 +310,12 @@ register_taxonomy(
 	))
 );
 
-$singular  = __('Unit', 'wp-food-manager');
-$plural    = __('Units', 'wp-food-manager');
+$singular  = esc_html__('Unit', 'wp-food-manager');
+$plural    = esc_html__('Units', 'wp-food-manager');
 
 if (current_theme_supports('food-manager-templates')) {
 	$rewrite   = array(
-		'slug'         => $permalink_structure['units_rewrite_slug'],
+		'slug'         => sanitize_title($permalink_structure['units_rewrite_slug']),
 		'with_front'   => false,
 		'hierarchical' => false
 	);

@@ -161,7 +161,7 @@ function get_food_banner($post = null) {
 	if (isset($post->_food_banner) && empty($post->_food_banner))
 		$food_banner = apply_filters('wpfm_default_food_banner', WPFM_PLUGIN_URL . '/assets/images/wpfm-placeholder.jpg');
 	else
-		$food_banner = $post->_food_banner;
+		$food_banner = esc_url($post->_food_banner);
 	return apply_filters('display_food_banner', $food_banner, $post);
 }
 
@@ -181,7 +181,7 @@ function get_food_thumbnail($post = null, $size = 'full') {
 	$food_thumbnail = get_the_post_thumbnail_url($post->ID, $size);
 	if (isset($food_thumbnail) && empty($food_thumbnail))
 		$food_thumbnail = apply_filters('wpfm_default_food_banner', WPFM_PLUGIN_URL . '/assets/images/wpfm-placeholder.jpg');
-	return apply_filters('display_food_thumbnail', $food_thumbnail, $post);
+	return apply_filters('display_food_thumbnail', esc_url($food_thumbnail), $post);
 }
 
 /**
@@ -234,13 +234,13 @@ function display_food_price_tag($post = null) {
 function display_food_banner($size = 'full', $default = null, $post = null) {
 	$banner = get_food_banner($post);
 	if (!empty($banner) && !is_array($banner)  && (strstr($banner, 'http') || file_exists($banner))) {
-		echo '<img itemprop="image" content="' . esc_attr($banner) . '" src="' . esc_attr($banner) . '" alt="" />';
+		echo '<img itemprop="image" content="' . esc_attr($banner) . '" src="' . esc_url(esc_attr($banner)) . '" alt="" />';
 	} else if ($default) {
-		echo '<img itemprop="image" content="' . esc_attr($default) . '" src="' . esc_attr($default) . '" alt="" />';
+		echo '<img itemprop="image" content="' . esc_attr($default) . '" src="' . esc_url(esc_attr($default)) . '" alt="" />';
 	} else if (is_array($banner)) {
 		$banner = array_values(array_filter($banner));
 		if (isset($banner[0])) {
-			echo '<img itemprop="image" content="' . esc_attr($banner[0]) . '" src="' . esc_attr($banner[0]) . '" alt="' .  '" />';
+			echo '<img itemprop="image" content="' . esc_attr($banner[0]) . '" src="' . esc_url(esc_attr($banner[0])) . '" alt="' .  '" />';
 		}
 	} else {
 		echo '<img itemprop="image" content="' . esc_attr(apply_filters('food_manager_default_food_banner', WPFM_PLUGIN_URL . '/assets/images/wpfm-placeholder.jpg')) . '" src="' . esc_attr(apply_filters('food_manager_default_food_banner', WPFM_PLUGIN_URL . '/assets/images/wpfm-placeholder.jpg')) . '" alt="' . esc_attr(get_the_title()) . '" />';
@@ -298,8 +298,8 @@ function display_food_veg_nonveg_icon_tag($post = null, $after = '') {
 				$imagePath = $image_src[0];
 			}
 			if (!empty($imagePath)) {
-				$data_icon_label = ucwords(str_replace("-", " ", $wpfm_veg_nonveg_tag->slug));
-				echo '<div class="parent-organic-tag ' . $wpfm_veg_nonveg_tag->slug . '" data-icon-type="' . $data_icon_label . '"><img alt="' . $wpfm_veg_nonveg_tag->slug . '" src="' . $imagePath . '" class="wpfm-organic-tag-icon ' . $wpfm_veg_nonveg_tag->slug . '"></div>';
+				$data_icon_label = ucwords(str_replace("-", " ", sanitize_title($wpfm_veg_nonveg_tag->slug)));
+				echo '<div class="parent-organic-tag ' . sanitize_title($wpfm_veg_nonveg_tag->slug) . '" data-icon-type="' . $data_icon_label . '"><img alt="' . $wpfm_veg_nonveg_tag->slug . '" src="' . $imagePath . '" class="wpfm-organic-tag-icon ' . sanitize_title($wpfm_veg_nonveg_tag->slug) . '"></div>';
 			}
 		}
 	}
@@ -337,7 +337,7 @@ function display_food_type($post = null, $after = '') {
 			$numType = count($food_type);
 			$i = 0;
 			foreach ($food_type as $type) {
-				echo wp_kses(('<a href="' . get_term_link($type->term_id) . '"><span class="wpfm-food-type-text food-type ' . esc_attr(sanitize_title($type->slug)) . ' ">' . $type->name . '</span></a>'), array(
+				echo wp_kses(('<a href="' . get_term_link($type->term_id) . '"><span class="wpfm-food-type-text food-type ' . esc_attr(sanitize_title($type->slug)) . ' ">' . esc_attr(sanitize_title($type->name)) . '</span></a>'), array(
 					'a' => array(
 						'href' => array(),
 						'title' => array()
@@ -347,7 +347,7 @@ function display_food_type($post = null, $after = '') {
 					),
 				));
 				if ($numType > ++$i) {
-					echo $after;
+					echo esc_attr($after);
 				}
 			}
 		}
@@ -388,7 +388,7 @@ function display_food_tag($post = null, $after = '') {
 			$numTag = count($food_tag);
 			$i = 0;
 			foreach ($food_tag as $tag) {
-				echo wp_kses(('<a href="' . get_term_link($tag->term_id) . '"><span class="wpfm-food-tag-text food-tag ' . esc_attr(sanitize_title($tag->slug)) . ' ">' . $tag->name . '</span></a>'), array(
+				echo wp_kses(('<a href="' . get_term_link($tag->term_id) . '"><span class="wpfm-food-tag-text food-tag ' . esc_attr(sanitize_title($tag->slug)) . ' ">' . esc_attr(sanitize_title($tag->name)) . '</span></a>'), array(
 					'a' => array(
 						'href' => array(),
 						'title' => array()
@@ -398,7 +398,7 @@ function display_food_tag($post = null, $after = '') {
 					),
 				));
 				if ($numTag > ++$i) {
-					echo $after;
+					echo esc_attr($after);
 				}
 			}
 		}
@@ -439,7 +439,7 @@ function display_food_category($post = null, $after = '') {
 			$numCategory = count($food_category);
 			$i = 0;
 			foreach ($food_category as $cat) {
-				echo wp_kses(('<a href="' . get_term_link($cat->term_id) . '"><span class="wpfm-food-cat-text food-category ' . esc_attr(sanitize_title($cat->slug)) . ' ">' . $cat->name . '</span></a>'), array(
+				echo wp_kses(('<a href="' . get_term_link($cat->term_id) . '"><span class="wpfm-food-cat-text food-category ' . esc_attr(sanitize_title($cat->slug)) . ' ">' . esc_attr(sanitize_title($cat->name)) . '</span></a>'), array(
 					'a' => array(
 						'href' => array(),
 						'title' => array()
@@ -450,7 +450,7 @@ function display_food_category($post = null, $after = '') {
 
 				));
 				if ($numCategory > ++$i) {
-					echo $after;
+					echo esc_attr($after);
 				}
 			}
 		}
@@ -496,10 +496,10 @@ function display_food_ingredients($post = null, $after = '') {
 					'food_manager_ingredient'
 				);
 				if (!empty($ingTerm->term_id)) {
-					$ingredient_slug = strtolower(str_replace(" ", "_", $ingredient['ingredient_term_name']));
-					echo '<span class="food-ingredients ' . esc_attr(sanitize_title($ingredient_slug)) . ' ">' . $ingredient['ingredient_term_name'] . ' - ' . $ingredient['value'] . ' ' . $ingredient['unit_term_name'] . '</span>';
+					$ingredient_slug = strtolower(str_replace(" ", "_", sanitize_text_field($ingredient['ingredient_term_name'])));
+					echo '<span class="food-ingredients ' . esc_attr(sanitize_title($ingredient_slug)) . ' ">' . sanitize_text_field($ingredient['ingredient_term_name']) . ' - ' . sanitize_text_field($ingredient['value']) . ' ' . sanitize_text_field($ingredient['unit_term_name']) . '</span>';
 					if ($numIngredient > ++$i) {
-						echo $after;
+						echo esc_attr($after);
 					}
 				}
 			}
@@ -544,10 +544,10 @@ function display_food_nutritions($post = null, $after = '') {
 					'food_manager_nutrition'
 				);
 				if (!empty($nutriTerm->term_id)) {
-					$nutrition_slug = strtolower(str_replace(" ", "_", $nutrition['nutrition_term_name']));
-					echo '<span class="food-nutritions ' . esc_attr(sanitize_title($nutrition_slug)) . ' ">' . $nutrition['nutrition_term_name'] . ' - ' . $nutrition['value'] . ' ' . $nutrition['unit_term_name'] . '</span>';
+					$nutrition_slug = strtolower(str_replace(" ", "_", sanitize_text_field($nutrition['nutrition_term_name'])));
+					echo '<span class="food-nutritions ' . esc_attr(sanitize_title($nutrition_slug)) . ' ">' . sanitize_text_field($nutrition['nutrition_term_name']) . ' - ' . sanitize_text_field($nutrition['value']) . ' ' . sanitize_text_field($nutrition['unit_term_name']) . '</span>';
 					if ($numNutrition > ++$i) {
-						echo $after;
+						echo esc_attr($after);
 					}
 				}
 			}
@@ -587,9 +587,9 @@ function display_food_units($post = null, $after = '') {
 			$numUnit = count($food_units);
 			$i = 0;
 			foreach ($food_units as $unit) {
-				echo '<span class="food-units ' . esc_attr(sanitize_title($unit->slug)) . ' ">' . $unit->name . '</span>';
+				echo '<span class="food-units ' . esc_attr(sanitize_title($unit->slug)) . ' ">' . esc_attr(sanitize_title($unit->name)) . '</span>';
 				if ($numUnit > ++$i) {
-					echo $after;
+					echo esc_attr($after);
 				}
 			}
 		}
@@ -636,7 +636,7 @@ function display_food_permalink($post = null) {
 function get_food_permalink($post = null) {
 	$post = get_post($post);
 	$link = get_permalink($post);
-	return apply_filters('display_food_permalink', $link, $post);
+	return apply_filters('display_food_permalink', esc_url($link), $post);
 }
 
 /**
@@ -765,7 +765,7 @@ function get_stock_status($post = null) {
  */
 function display_food_description($post = null) {
 	if ($food_description = get_food_description($post)) {
-		echo esc_attr($food_description);
+		echo sanitize_textarea_field($food_description);
 	}
 }
 
@@ -789,7 +789,7 @@ function get_food_description($post = null) {
 	 * @param int|WP_Post $post
 	 * @since 1.0.0
 	 */
-	return apply_filters('food_manager_get_food_description', $description, $post);
+	return apply_filters('food_manager_get_food_description', sanitize_textarea_field($description), $post);
 }
 
 /**
@@ -825,7 +825,7 @@ function get_food_title($post = null) {
 	 * @param int|WP_Post $post
 	 * @since 1.0.0
 	 */
-	return apply_filters('display_food_title', $title, $post);
+	return apply_filters('display_food_title', sanitize_text_field($title), $post);
 }
 
 /**
@@ -895,9 +895,9 @@ function wpfm_get_food_listing_structured_data($post = null) {
 	if (!empty($food_expires)) {
 		$data['validThrough'] = date('c', strtotime($food_expires));
 	}
-	$data['description'] = get_food_description($post);
-	$data['name'] = strip_tags(get_food_title($post));
-	$data['image'] = get_food_banner($post);
+	$data['description'] = sanitize_textarea_field(get_food_description($post));
+	$data['name'] = sanitize_text_field(strip_tags(get_food_title($post)));
+	$data['image'] = esc_url(get_food_banner($post));
 	$data['foodStatus'] = 'foodScheduled';
 	/**
 	 * Filter the structured data for a food listing.

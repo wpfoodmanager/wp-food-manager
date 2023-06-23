@@ -46,7 +46,7 @@ class WPFM_Edit_Food_Form extends WPFM_Add_Food_Form {
 
 	/**
 	 * submit step and proceed further to the next step.
-	 * 
+	 *
 	 * @access public
 	 * @return void
 	 * @since 1.0.0
@@ -61,7 +61,7 @@ class WPFM_Edit_Food_Form extends WPFM_Add_Food_Form {
 		}
 
 		// Init fields
-		//$this->init_fields(); We dont need to initialize with this function because of field edior
+		//$this->init_fields(); We dont need to initialize with this function because of field editor
 		// Now field editor function will return all the fields 
 		//Get merged fields from db and default fields.
 		$this->merge_with_custom_fields('frontend');
@@ -116,16 +116,16 @@ class WPFM_Edit_Food_Form extends WPFM_Add_Food_Form {
 						} elseif ('food_description' === $key) {
 							$this->fields[$group_key][$key]['value'] = $food->post_content;
 						} elseif (!empty($field['taxonomy'])) {
-							$this->fields[$group_key][$key]['value'] = wp_get_object_terms($food->ID, $field['taxonomy'], array('fields' => 'ids'));
+							$this->fields[$group_key][$key]['value'] = wp_get_object_terms($food->ID, esc_attr($field['taxonomy']), array('fields' => 'ids'));
 						} elseif ('food_tag' === $key) {
 							$this->fields[$group_key][$key]['value'] = wp_get_object_terms($food->ID, 'food_manager_tag', array('fields' => 'ids'));
 						} else {
-							$this->fields[$group_key][$key]['value'] = get_post_meta($food->ID, '_' . $key, true);
+							$this->fields[$group_key][$key]['value'] = get_post_meta($food->ID, '_' . esc_attr($key), true);
 						}
 					}
 				}
 
-				if (!empty($field['type']) &&  $field['type'] == 'button') {
+				if (!empty($field['type']) && $field['type'] == 'button') {
 					if (isset($this->fields[$group_key][$key]['value']) && empty($this->fields[$group_key][$key]['value'])) {
 						$this->fields[$group_key][$key]['value'] = $field['placeholder'];
 					}
@@ -149,7 +149,7 @@ class WPFM_Edit_Food_Form extends WPFM_Add_Food_Form {
 
 	/**
 	 * Handle after the form submit.
-	 * 
+	 *
 	 * @access public
 	 * @return void
 	 * @since 1.0.0
@@ -171,19 +171,19 @@ class WPFM_Edit_Food_Form extends WPFM_Add_Food_Form {
 			// Update the food
 			$food_title = isset($values['food']['food_title']) && !empty($values['food']['food_title']) ? $values['food']['food_title'] : '';
 			$food_description = isset($values['food']['food_description']) && !empty($values['food']['food_description']) ? $values['food']['food_description'] : '';
-			$this->save_food($food_title, $food_description, '', $values, false);
+			$this->save_food(esc_html($food_title), esc_html($food_description), '', $values, false);
 
 			// Successful
 			switch (get_post_status($this->food_id)) {
 				case 'publish':
-					echo wp_kses_post('<div class="food-manager-message wpfm-alert wpfm-alert-success">' . __('Your changes have been saved.', 'wp-food-manager') . ' <a href="' . get_permalink($this->food_id) . '">' . __('View &rarr;', 'wp-food-manager') . '</a>' . '</div>');
+					echo wp_kses_post('<div class="food-manager-message wpfm-alert wpfm-alert-success">' . __('Your changes have been saved.', 'wp-food-manager') . ' <a href="' . esc_url(get_permalink($this->food_id)) . '">' . __('View &rarr;', 'wp-food-manager') . '</a>' . '</div>');
 					break;
 				default:
 					echo wp_kses_post('<div class="food-manager-message wpfm-alert wpfm-alert-success">' . __('Your changes have been saved.', 'wp-food-manager') . '</div>');
 					break;
 			}
 		} catch (Exception $e) {
-			echo wp_kses_post('<div class="food-manager-error wpfm-alert wpfm-alert-danger">' .  esc_html($e->getMessage()) . '</div>');
+			echo wp_kses_post('<div class="food-manager-error wpfm-alert wpfm-alert-danger">' . esc_html($e->getMessage()) . '</div>');
 			return;
 		}
 	}

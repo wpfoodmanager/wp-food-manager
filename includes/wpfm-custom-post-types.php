@@ -46,13 +46,13 @@ class WPFM_Post_Types {
 
 		$admin_capability = 'manage_food_managers';
 		$permalink_structure = WPFM_Post_Types::get_permalink_structure();
-		include_once(WPFM_PLUGIN_DIR . '/includes/wpfm-custom-taxonomies.php');
+		include_once(esc_attr(WPFM_PLUGIN_DIR) . '/includes/wpfm-custom-taxonomies.php');
 
 		/**
 		 * Post types
 		 */
-		$singular  = __('Food', 'wp-food-manager');
-		$plural    = __('Foods', 'wp-food-manager');
+		$singular  = esc_html__('Food', 'wp-food-manager');
+		$plural    = esc_html__('Foods', 'wp-food-manager');
 
 		/**
 		 * Set whether to add archive page support when registering the food manager post type.
@@ -61,13 +61,13 @@ class WPFM_Post_Types {
 		 * @since 1.0.0
 		 */
 		if (apply_filters('food_manager_enable_food_archive_page', current_theme_supports('food-manager-templates'))) {
-			$has_archive = _x('foods', 'Post type archive slug - resave permalinks after changing this', 'wp-food-manager');
+			$has_archive = esc_html_x('foods', 'Post type archive slug - resave permalinks after changing this', 'wp-food-manager');
 		} else {
 			$has_archive = false;
 		}
 
 		$rewrite     = array(
-			'slug'       => $permalink_structure['food_rewrite_slug'],
+			'slug'       => esc_attr($permalink_structure['food_rewrite_slug']),
 			'with_front' => false,
 			'feeds'      => true,
 			'pages'      => false
@@ -79,11 +79,11 @@ class WPFM_Post_Types {
 				'labels' => array(
 					'name'                     => $plural,
 					'singular_name'         => $singular,
-					'menu_name'             => __('Food Manager', 'wp-food-manager'),
+					'menu_name'             => esc_html__('Food Manager', 'wp-food-manager'),
 					'all_items'             => sprintf(wp_kses('All %s', 'wp-food-manager'), $plural),
-					'add_new'                 => __('Add Food', 'wp-food-manager'),
+					'add_new'                 => esc_html__('Add Food', 'wp-food-manager'),
 					'add_new_item'             => sprintf(wp_kses('Add %s', 'wp-food-manager'), $singular),
-					'edit'                     => __('Edit', 'wp-food-manager'),
+					'edit'                     => esc_html__('Edit', 'wp-food-manager'),
 					'edit_item'             => sprintf(wp_kses('Edit %s', 'wp-food-manager'), $singular),
 					'new_item'                 => sprintf(wp_kses('New %s', 'wp-food-manager'), $singular),
 					'view'                     => sprintf(wp_kses('View %s', 'wp-food-manager'), $singular),
@@ -92,10 +92,10 @@ class WPFM_Post_Types {
 					'not_found'             => sprintf(wp_kses('No %s found', 'wp-food-manager'), $plural),
 					'not_found_in_trash'     => sprintf(wp_kses('No %s found in trash', 'wp-food-manager'), $plural),
 					'parent'                 => sprintf(wp_kses('Parent %s', 'wp-food-manager'), $singular),
-					'featured_image'        => __('Food Thumbnail', 'wp-food-manager'),
-					'set_featured_image'    => __('Set food thumbnail', 'wp-food-manager'),
-					'remove_featured_image' => __('Remove food thumbnail', 'wp-food-manager'),
-					'use_featured_image'    => __('Use as food thumbnail', 'wp-food-manager'),
+					'featured_image'        => esc_html__('Food Thumbnail', 'wp-food-manager'),
+					'set_featured_image'    => esc_html__('Set food thumbnail', 'wp-food-manager'),
+					'remove_featured_image' => esc_html__('Remove food thumbnail', 'wp-food-manager'),
+					'use_featured_image'    => esc_html__('Use as food thumbnail', 'wp-food-manager'),
 				),
 				'description' => sprintf(wp_kses('This is where you can create and manage %s.', 'wp-food-manager'), $plural),
 				'public'                 => true,
@@ -111,7 +111,7 @@ class WPFM_Post_Types {
 				'supports'                 => array('title', 'editor', 'custom-fields', 'publicize', 'thumbnail'),
 				'has_archive'             => $has_archive,
 				'show_in_nav_menus'     => true,
-				'menu_icon' => WPFM_PLUGIN_URL . '/assets/images/wpfm-icon.png' // It's use to display food manager icon at admin site. 
+				'menu_icon' => esc_attr(WPFM_PLUGIN_URL) . '/assets/images/wpfm-icon.png' // It's use to display food manager icon at admin site. 
 			))
 		);
 
@@ -123,8 +123,8 @@ class WPFM_Post_Types {
 		/**
 		 * Post types
 		 */
-		$singular_menu  = __('Menu', 'wp-food-manager');
-		$plural_menu    = __('Menus', 'wp-food-manager');
+		$singular_menu  = esc_html__('Menu', 'wp-food-manager');
+		$plural_menu    = esc_html__('Menus', 'wp-food-manager');
 
 		$rewrite_menu     = array(
 			'slug'       => 'food-menu',
@@ -139,26 +139,26 @@ class WPFM_Post_Types {
 				'labels' => array(
 					'name'                     => $plural_menu,
 					'singular_name'         => $singular_menu,
-					'menu_name'             => __('Food Menu', 'wp-food-manager'),
-					'all_items'             => sprintf(__('%s', 'wp-food-manager'), $plural_menu),
-					'add_new'                 => __('Add New', 'wp-food-manager'),
-					'add_new_item'             => sprintf(__('Add %s', 'wp-food-manager'), $singular_menu),
-					'edit'                     => __('Edit', 'wp-food-manager'),
-					'edit_item'             => sprintf(__('Edit %s', 'wp-food-manager'), $singular_menu),
-					'new_item'                 => sprintf(__('New %s', 'wp-food-manager'), $singular_menu),
-					'view'                     => sprintf(__('View %s', 'wp-food-manager'), $singular_menu),
-					'view_item'             => sprintf(__('View %s', 'wp-food-manager'), $singular_menu),
-					'search_items'             => sprintf(__('Search %s', 'wp-food-manager'), $plural_menu),
-					'not_found'             => sprintf(__('No %s found', 'wp-food-manager'), $plural_menu),
-					'not_found_in_trash'     => sprintf(__('No %s found in trash', 'wp-food-manager'), $plural_menu),
-					'parent'                 => sprintf(__('Parent %s', 'wp-food-manager'), $singular_menu),
-					'featured_image'        => __('Food Menu Image', 'wp-food-manager'),
-					'set_featured_image'    => __('Add Image', 'wp-food-manager'),
-					'remove_featured_image' => __('Remove Image', 'wp-food-manager'),
-					'use_featured_image'    => __('Use as food thumbnail', 'wp-food-manager'),
-					'view_items'    => sprintf(__('View %s', 'wp-food-manager'), $plural_menu),
+					'menu_name'             => esc_html__('Food Menu', 'wp-food-manager'),
+					'all_items'             => sprintf(esc_html__('%s', 'wp-food-manager'), $plural_menu),
+					'add_new'                 => esc_html__('Add New', 'wp-food-manager'),
+					'add_new_item'             => sprintf(esc_html__('Add %s', 'wp-food-manager'), $singular_menu),
+					'edit'                     => esc_html__('Edit', 'wp-food-manager'),
+					'edit_item'             => sprintf(esc_html__('Edit %s', 'wp-food-manager'), $singular_menu),
+					'new_item'                 => sprintf(esc_html__('New %s', 'wp-food-manager'), $singular_menu),
+					'view'                     => sprintf(esc_html__('View %s', 'wp-food-manager'), $singular_menu),
+					'view_item'             => sprintf(esc_html__('View %s', 'wp-food-manager'), $singular_menu),
+					'search_items'             => sprintf(esc_html__('Search %s', 'wp-food-manager'), $plural_menu),
+					'not_found'             => sprintf(esc_html__('No %s found', 'wp-food-manager'), $plural_menu),
+					'not_found_in_trash'     => sprintf(esc_html__('No %s found in trash', 'wp-food-manager'), $plural_menu),
+					'parent'                 => sprintf(esc_html__('Parent %s', 'wp-food-manager'), $singular_menu),
+					'featured_image'        => esc_html__('Food Menu Image', 'wp-food-manager'),
+					'set_featured_image'    => esc_html__('Add Image', 'wp-food-manager'),
+					'remove_featured_image' => esc_html__('Remove Image', 'wp-food-manager'),
+					'use_featured_image'    => esc_html__('Use as food thumbnail', 'wp-food-manager'),
+					'view_items'    => sprintf(esc_html__('View %s', 'wp-food-manager'), $plural_menu),
 				),
-				'description' => sprintf(__('This is where you can create and manage %s.', 'wp-food-manager'), $plural_menu),
+				'description' => sprintf(esc_html__('This is where you can create and manage %s.', 'wp-food-manager'), $plural_menu),
 				'public'                 => true,
 				'show_ui'                 => true,
 				'map_meta_cap'          => true,
@@ -188,7 +188,7 @@ class WPFM_Post_Types {
 
 	/**
 	 * Display the food's feed.
-	 * 
+	 *
 	 * @access public
 	 * @return void
 	 * @since 1.0.0
@@ -232,7 +232,7 @@ class WPFM_Post_Types {
 		}
 
 		if (isset($_GET['search_food_menu']) && !empty($_GET['search_food_menu'])) {
-			$search_food_menu = explode(',', $_GET['search_food_menu']);
+			$search_food_menu = explode(',', sanitize_text_field($_GET['search_food_menu']));
 			$food_ids = [];
 			foreach ($search_food_menu as $menu_id) {
 				$food_item_ids = get_post_meta($menu_id, '_food_item_ids', true);
@@ -292,31 +292,31 @@ class WPFM_Post_Types {
 
 	/**
 	 * Add a custom namespace to the food feed
-	 * 
+	 *
 	 * @access public
 	 * @return void
 	 * @since 1.0.0
 	 */
 	public function food_feed_namespace() {
-		echo 'xmlns:food_manager="' .  site_url() . '"' . "\n";
+		echo 'xmlns:food_manager="' . esc_url(site_url()) . '"' . "\n";
 	}
 
 	/**
 	 * Add custom data to the food feed
-	 * 
+	 *
 	 * @access public
 	 * @return void
 	 * @since 1.0.0
 	 */
 	public function food_feed_item() {
-		$post_id  = get_the_ID();
+		$post_id  = absint(get_the_ID());
 		get_food_manager_template('rss-food-feed.php', array('post_id' => $post_id));
 	}
 
 	/**
-	 * This function is use to set the counts the food views.
-	 * This function also used at Foods dashboard file.
-	 * 
+	 * This function is used to set the count of food views.
+	 * This function is also used in the Foods dashboard file.
+	 *
 	 * @access public
 	 * @param int $post_id
 	 * @return void
@@ -338,7 +338,7 @@ class WPFM_Post_Types {
 
 	/**
 	 * Generate location data if a post is updated
-	 * 
+	 *
 	 * @access public
 	 * @param int $meta_id
 	 * @param int $object_id
@@ -357,7 +357,7 @@ class WPFM_Post_Types {
 
 	/**
 	 * Maybe set menu_order if the featured status of a food is changed
-	 * 
+	 *
 	 * @access public
 	 * @param int $meta_id
 	 * @param int $object_id
@@ -383,7 +383,7 @@ class WPFM_Post_Types {
 
 	/**
 	 * After importing via WP ALL Import, add default meta data
-	 * 
+	 *
 	 * @access public
 	 * @param  int $post_id
 	 * @return void
@@ -392,13 +392,13 @@ class WPFM_Post_Types {
 	public function pmxi_saved_post($post_id) {
 		if ('food_manager' === get_post_type($post_id)) {
 			$actionhooks = WPFM_ActionHooks::instance();
-			$actionhooks->maybe_add_default_meta_data($post_id);
+			$actionhooks->maybe_add_default_meta_data(absint($post_id));
 		}
 	}
 
 	/**
 	 * When deleting a food, delete its attachments
-	 * 
+	 *
 	 * @access public
 	 * @param int $post_id
 	 * @return void
@@ -438,9 +438,9 @@ class WPFM_Post_Types {
 			(array) get_option('food_manager_permalinks', array()),
 			array(
 				'food_base'      => '',
-				'category_base' => '',
-				'type_base'     => '',
-				'topping_base'     => '',
+				'category_base'  => '',
+				'type_base'      => '',
+				'topping_base'   => '',
 			)
 		);
 
@@ -448,7 +448,7 @@ class WPFM_Post_Types {
 		$permalinks['food_rewrite_slug']      = untrailingslashit(empty($permalinks['food_base']) ? _x('food', 'Food permalink - resave permalinks after changing this', 'wp-food-manager') : $permalinks['food_base']);
 		$permalinks['category_rewrite_slug'] = untrailingslashit(empty($permalinks['category_base']) ? _x('food-category', 'Food category slug - resave permalinks after changing this', 'wp-food-manager') : $permalinks['category_base']);
 		$permalinks['type_rewrite_slug']     = untrailingslashit(empty($permalinks['type_base']) ? _x('food-type', 'Food type slug - resave permalinks after changing this', 'wp-food-manager') : $permalinks['type_base']);
-		$permalinks['topping_rewrite_slug']     = untrailingslashit(empty($permalinks['topping_base']) ? _x('food-topping', 'Food topping slug - resave permalinks after changing this', 'wp-food-manager') : $permalinks['topping_base']);
+		$permalinks['topping_rewrite_slug']  = untrailingslashit(empty($permalinks['topping_base']) ? _x('food-topping', 'Food topping slug - resave permalinks after changing this', 'wp-food-manager') : $permalinks['topping_base']);
 
 		// Restore the original locale.
 		if (function_exists('restore_current_locale') && did_action('admin_init')) {

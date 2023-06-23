@@ -1,9 +1,11 @@
 <?php
 
 /**
- * Main Admin functions class which responsible for the entire amdin functionality and scripts loaded and files.
+ * Main Admin functions class which responsible for the entire admin functionality and scripts loaded and files.
  */
-if (!defined('ABSPATH')) exit; // Exit if accessed directly
+if (!defined('ABSPATH')) {
+	exit; // Exit if accessed directly
+}
 
 /**
  * WPFM_Admin class.

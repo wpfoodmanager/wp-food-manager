@@ -49,13 +49,13 @@ class WPFM_Ajax {
 	 */
 	public static function get_endpoint($request = '%%endpoint%%', $ssl = null) {
 		if (strstr(get_option('permalink_structure'), '/index.php/')) {
-			$endpoint = trailingslashit(home_url('/index.php/fm-ajax/' . $request . '/', 'relative'));
+			$endpoint = trailingslashit(home_url('/index.php/fm-ajax/' . wp_slash($request) . '/', 'relative'));
 		} elseif (get_option('permalink_structure')) {
-			$endpoint = trailingslashit(home_url('/fm-ajax/' . $request . '/', 'relative'));
+			$endpoint = trailingslashit(home_url('/fm-ajax/' . wp_slash($request) . '/', 'relative'));
 		} else {
-			$endpoint = add_query_arg('fm-ajax', $request, trailingslashit(home_url('', 'relative')));
+			$endpoint = add_query_arg('fm-ajax', wp_slash($request), trailingslashit(home_url('', 'relative')));
 		}
-		
+
 		return esc_url_raw($endpoint);
 	}
 }

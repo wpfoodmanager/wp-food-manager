@@ -32,19 +32,19 @@ class WPFM_Add_Food_Form extends WPFM_Form {
 
 		$this->steps  = (array) apply_filters('add_food_steps', array(
 			'submit' => array(
-				'name'     => __('Submit Details', 'wp-food-manager'),
+				'name'     => esc_html__('Submit Details', 'wp-food-manager'),
 				'view'     => array($this, 'submit'),
 				'handler'  => array($this, 'submit_handler'),
 				'priority' => 10
 			),
 			'preview' => array(
-				'name'     => __('Preview', 'wp-food-manager'),
+				'name'     => esc_html__('Preview', 'wp-food-manager'),
 				'view'     => array($this, 'preview'),
 				'handler'  => array($this, 'preview_handler'),
 				'priority' => 20
 			),
 			'done' => array(
-				'name'     => __('Done', 'wp-food-manager'),
+				'name'     => esc_html__('Done', 'wp-food-manager'),
 				'view'     => array($this, 'done'),
 				'priority' => 30
 			)
@@ -91,7 +91,7 @@ class WPFM_Add_Food_Form extends WPFM_Form {
 
 	/**
 	 * Get the submitted food ID
-	 * 
+	 *
 	 * @access public
 	 * @return int
 	 * @since 1.0.0
@@ -102,7 +102,7 @@ class WPFM_Add_Food_Form extends WPFM_Form {
 
 	/**
 	 * Return the fields array with the merge of new field array.
-	 * 
+	 *
 	 * @access public
 	 * @return $this->fields
 	 * @since 1.0.0
@@ -121,7 +121,7 @@ class WPFM_Add_Food_Form extends WPFM_Form {
 		if (is_array($food_manager_tag_terms) && !empty($food_manager_tag_terms)) {
 			$new_arr = array(
 				'food_tag' => array(
-					'label'       => __('Food Tag', 'wp-food-manager'),
+					'label'       => esc_html__('Food Tag', 'wp-food-manager'),
 					'type'        => 'term-multiselect',
 					'required'    => true,
 					'placeholder' => '',
@@ -380,25 +380,25 @@ class WPFM_Add_Food_Form extends WPFM_Form {
 
 	/**
 	 * Submit the form according to the steps.
-	 * 
+	 *
 	 * @access public
 	 * @return void
 	 * @since 1.0.0
 	 */
 	public function submit() {
 		// get date and time setting defined in admin panel food listing -> Settings -> Date & Time formatting
-		$datepicker_date_format 	= WPFM_Date_Time::get_datepicker_format();
+		$datepicker_date_format = esc_attr(WPFM_Date_Time::get_datepicker_format());
 
-		// covert datepicker format  into php date() function date format
-		$php_date_format 		= WPFM_Date_Time::get_view_date_format_from_datepicker_date_format($datepicker_date_format);
+		// covert datepicker format into php date() function date format
+		$php_date_format = esc_attr(WPFM_Date_Time::get_view_date_format_from_datepicker_date_format($datepicker_date_format));
 
 		// Init fields
-		// $this->init_fields(); We dont need to initialize with this function because of field edior
-		// Now field editor function will return all the fields 
+		// $this->init_fields(); We don't need to initialize with this function because of the field editor
+		// Now field editor function will return all the fields
 		// Get merged fields from db and default fields.
 		$this->merge_with_custom_fields('frontend');
 
-		// Load data if neccessary
+		// Load data if necessary
 		if ($this->food_id) {
 			$food = get_post($this->food_id);
 			foreach ($this->fields as $group_key => $group_fields) {
@@ -406,11 +406,11 @@ class WPFM_Add_Food_Form extends WPFM_Form {
 
 					switch ($key) {
 						case 'food_title':
-							$this->fields[$group_key][$key]['value'] = $food->post_title;
+							$this->fields[$group_key][$key]['value'] = sanitize_text_field($food->post_title);
 							break;
 
 						case 'food_description':
-							$this->fields[$group_key][$key]['value'] = $food->post_content;
+							$this->fields[$group_key][$key]['value'] = wp_kses_post($food->post_content);
 							break;
 
 						case 'food_type':
@@ -425,7 +425,7 @@ class WPFM_Add_Food_Form extends WPFM_Form {
 							break;
 
 						default:
-							$this->fields[$group_key][$key]['value'] = get_post_meta($food->ID, '_' . $key, true);
+							$this->fields[$group_key][$key]['value'] = sanitize_text_field(get_post_meta($food->ID, '_' . $key, true));
 							break;
 					}
 
@@ -433,7 +433,7 @@ class WPFM_Add_Food_Form extends WPFM_Form {
 						$this->fields[$group_key][$key]['value'] = wp_get_object_terms($food->ID, $field['taxonomy'], array('fields' => 'ids'));
 					}
 
-					if (!empty($field['type']) &&  $field['type'] == 'date') {
+					if (!empty($field['type']) && $field['type'] == 'date') {
 						$food_date = get_post_meta($food->ID, '_' . $key, true);
 						$this->fields[$group_key][$key]['value'] = date($php_date_format, strtotime($food_date));
 					}
@@ -447,7 +447,7 @@ class WPFM_Add_Food_Form extends WPFM_Form {
 				$allowed_registration_method = get_option('food_manager_allowed_registration_method', '');
 				if ($allowed_registration_method !== 'url') {
 					$current_user = wp_get_current_user();
-					$this->fields['food']['registration']['value'] = $current_user->user_email;
+					$this->fields['food']['registration']['value'] = sanitize_email($current_user->user_email);
 				}
 			}
 
@@ -455,13 +455,13 @@ class WPFM_Add_Food_Form extends WPFM_Form {
 		}
 		wp_enqueue_script('wp-food-manager-food-submission');
 		get_food_manager_template('food-submit.php', array(
-			'form'               => $this->form_name,
-			'food_id'             => $this->get_food_id(),
-			'resume_edit'        => $this->resume_edit,
-			'action'             => $this->get_action(),
-			'food_fields'         => $this->get_fields('food'),
-			'topping_fields'     => $this->get_fields('toppings'),
-			'step'               => $this->get_step(),
+			'form' => esc_attr($this->form_name),
+			'food_id' => esc_attr($this->get_food_id()),
+			'resume_edit' => $this->resume_edit,
+			'action' => esc_url($this->get_action()),
+			'food_fields' => $this->get_fields('food'),
+			'topping_fields' => $this->get_fields('toppings'),
+			'step' => esc_attr($this->get_step()),
 			'submit_button_text' => apply_filters('add_food_submit_button_text', __('Preview', 'wp-food-manager'))
 		));
 	}
@@ -547,12 +547,12 @@ class WPFM_Add_Food_Form extends WPFM_Form {
 			// Update the food
 			$food_description = isset($values['food']['food_description']) && !empty($values['food']['food_description']) ? $values['food']['food_description'] : '';
 			$food_title = isset($values['food']['food_title']) && !empty($values['food']['food_title']) ? $values['food']['food_title'] : '';
-			$this->save_food($food_title, $food_description, $this->food_id ? '' : 'preview', $values);
+			$this->save_food(sanitize_text_field($food_title), sanitize_textarea_field($food_description), $this->food_id ? '' : 'preview', $values);
 
 			// Successful, show next step
 			$this->step++;
 		} catch (Exception $e) {
-			$this->add_error($e->getMessage());
+			$this->add_error(esc_html($e->getMessage()));
 			return;
 		}
 	}
@@ -600,7 +600,7 @@ class WPFM_Add_Food_Form extends WPFM_Form {
 			}
 
 			$food_slug[]            = $post_title;
-			$food_slugs				= implode('-', $food_slug);
+			$food_slugs             = implode('-', $food_slug);
 			$food_data['post_name'] = apply_filters('add_food_save_slug_data', $food_slugs);
 		}
 
@@ -629,7 +629,7 @@ class WPFM_Add_Food_Form extends WPFM_Form {
 
 	/**
 	 * Create an attachment.
-	 * 
+	 *
 	 * @access protected
 	 * @param string $attachment_url
 	 * @return int attachment id
@@ -680,7 +680,7 @@ class WPFM_Add_Food_Form extends WPFM_Form {
 
 	/**
 	 * Preview the submitted form.
-	 * 
+	 *
 	 * @access public
 	 * @return void
 	 * @since 1.0.0
@@ -693,14 +693,14 @@ class WPFM_Add_Food_Form extends WPFM_Form {
 			$post              = get_post($this->food_id);
 			setup_postdata($post);
 			$post->post_status = 'preview';
-			get_food_manager_template('food-preview.php',  array('form' => $this));
+			get_food_manager_template('food-preview.php', array('form' => $this));
 			wp_reset_postdata();
 		}
 	}
 
 	/**
 	 * Preview Step Form handler.
-	 * 
+	 *
 	 * @access public
 	 * @return void
 	 * @since 1.0.0
@@ -737,7 +737,7 @@ class WPFM_Add_Food_Form extends WPFM_Form {
 
 	/**
 	 * Done the step and do action after the step submitted.
-	 * 
+	 *
 	 * @access public
 	 * @return void
 	 * @since 1.0.0
@@ -760,7 +760,7 @@ class WPFM_Add_Food_Form extends WPFM_Form {
 
 	/**
 	 * get extra options fields from the field editor
-	 * 
+	 *
 	 * @access public
 	 * @return fields Array
 	 * @since 1.0.0
@@ -770,13 +770,13 @@ class WPFM_Add_Food_Form extends WPFM_Form {
 	}
 
 	/**
-	 * This function will initilize default fields and return as array
-	 * 
+	 * This function will initialize default fields and return as an array
+	 *
 	 * @access public
 	 * @return fields Array
 	 * @since 1.0.0
 	 **/
-	public  function get_default_fields() {
+	public function get_default_fields() {
 		if (empty($this->fields)) {
 			// Make sure fields are initialized and set
 			$this->init_fields();
@@ -785,27 +785,29 @@ class WPFM_Add_Food_Form extends WPFM_Form {
 	}
 
 	/**
-	 * This function will set food id for invoking food object
-	 * 
+	 * This function will set the food id for invoking the food object
+	 *
 	 * @access public
-	 * @return $id
+	 * @param int $id
+	 * @return int $id
 	 * @since 1.0.0
 	 **/
-	public  function set_id($id) {
-		$this->food_id = $id;
+	public function set_id($id) {
+		$this->food_id = absint($id);
 		return $this->food_id;
 	}
 
 	/**
-	 * This function will get food id for invoking food object
-	 * 
+	 * This function will get the food id for invoking the food object
+	 *
 	 * @access public
-	 * @return $id
+	 * @return int $id
 	 * @since 1.0.0
 	 **/
 	public function get_id() {
-		if (empty($this->food_id))
+		if (empty($this->food_id)) {
 			$this->food_id = 0;
-		return $this->food_id;
+		}
+		return absint($this->food_id);
 	}
 }

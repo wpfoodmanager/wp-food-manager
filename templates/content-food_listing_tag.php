@@ -21,7 +21,7 @@ global $wp_query;
                             <?php get_food_manager_template_part('content', 'food_manager'); ?>
                         <?php endwhile; ?>
                         <?php get_food_manager_template('food-listings-end.php'); ?>
-                        <?php get_food_manager_template('pagination.php', array('max_num_pages' => $wp_query->max_num_pages)); ?>
+                        <?php get_food_manager_template('pagination.php', array('max_num_pages' => esc_attr($wp_query->max_num_pages))); ?>
                     <?php else :
                         do_action('food_manager_output_foods_no_results');
                     endif;

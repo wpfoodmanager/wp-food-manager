@@ -14,4 +14,4 @@ if (!empty($field['value']) && is_array($field['value']) && isset($field['value'
 		<option value="<?php echo esc_attr($key); ?>" <?php if (!empty($field['value']) && is_array($field['value'])) if (in_array($key, $field['value'])) echo "selected"; ?>><?php echo esc_html($value); ?></option>
 	<?php endforeach; ?>
 </select>
-<?php if (!empty($field['description'])) : ?><small class="description"><?php echo $field['description']; ?></small><?php endif; ?>
+<?php if (!empty($field['description'])) : ?><small class="description"><?php echo esc_html(sanitize_textarea_field($field['description'])); ?></small><?php endif; ?>

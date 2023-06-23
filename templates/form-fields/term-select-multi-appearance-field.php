@@ -35,9 +35,9 @@ if (empty($data)) {
     );
 }
 $args = array(
-    'taxonomy'     => $field['taxonomy'],
+    'taxonomy'     => esc_attr($field['taxonomy']),
     'hierarchical' => 1,
-    'name'         => isset($field['name']) ? $field['name'] : $key,
+    'name'         => isset($field['name']) ? esc_attr($field['name']) : $key,
     'orderby'      => 'name',
     'selected'     => $selected,
     'hide_empty'   => false,
@@ -67,14 +67,14 @@ if (isset($_GET['food_id']) && !empty($_GET['food_id']) || $food_id) {
                 $unit_option = '<option value="">Unit</option>';
                 if ($unit_terms) {
                     foreach ($unit_terms as $unit) {
-                        $unit_option .= '<option value="' . $unit->term_id . '" ' . ($unit->term_id == $tax_value['unit_id'] ? 'selected' : '') . '>' . $unit->name . '</option>';
+                        $unit_option .= '<option value="' . $unit->term_id . '" ' . ($unit->term_id == $tax_value['unit_id'] ? 'selected' : '') . '>' . esc_html($unit->name) . '</option>';
                     }
                 }
                 $preview_htm .= '<li class="term-item" data-id="' . $tax_value['id'] . '">';
-                $preview_htm .= '<label>' . $tax_value[$term_name] . '</label>';
+                $preview_htm .= '<label>' . esc_html($tax_value[$term_name]) . '</label>';
                 $preview_htm .= '<div class="term-item-flex">';
-                $preview_htm .= '<input type="number" min="0" step="0.1" value="' . $tax_value['value'] . '" name="' . $meta_key . '[' . $tax_value['id'] . '][value]">';
-                $preview_htm .= '<select name="' . $meta_key . '[' . $tax_value['id'] . '][unit_id]">' . $unit_option . '</select>';
+                $preview_htm .= '<input type="number" min="0" step="0.1" value="' . esc_attr($tax_value['value']) . '" name="' . esc_attr($meta_key) . '[' . esc_attr($tax_value['id']) . '][value]">';
+                $preview_htm .= '<select name="' . esc_attr($meta_key) . '[' . esc_attr($tax_value['id']) . '][unit_id]">' . $unit_option . '</select>';
                 $preview_htm .= '</div>';
                 $preview_htm .= '</li>';
                 $style = '';
@@ -82,12 +82,12 @@ if (isset($_GET['food_id']) && !empty($_GET['food_id']) || $food_id) {
         }
     }
 }
-if (isset($field['placeholder']) && !empty($field['placeholder'])) $args['placeholder'] = $field['placeholder'];
+if (isset($field['placeholder']) && !empty($field['placeholder'])) $args['placeholder'] = esc_attr($field['placeholder']);
 echo '<div class="multiselect_appearance">';
 food_manager_dropdown_selection(apply_filters('food_manager_term_select_multi_appearance_field_args', $args));
 echo '</div>';
-if (!empty($field['description'])) : ?><small class="description"><?php echo $field['description']; ?></small><?php endif; ?>
-<div class="<?php echo isset($field['name']) ? $field['name'] : $key; ?>-preview selection-preview" style="<?php echo $style; ?>" data-name="<?php echo ($field['taxonomy'] == 'food_manager_ingredient') ? 'food_ingredients' : 'food_nutritions'; ?>">
+if (!empty($field['description'])) : ?><small class="description"><?php echo esc_html($field['description']); ?></small><?php endif; ?>
+<div class="<?php echo isset($field['name']) ? esc_attr($field['name']) : $key; ?>-preview selection-preview" style="<?php echo esc_attr($style); ?>" data-name="<?php echo ($field['taxonomy'] == 'food_manager_ingredient') ? 'food_ingredients' : 'food_nutritions'; ?>">
     <legend>Preview:</legend>
-    <ul class="preview-items"><?php echo $preview_htm; ?></ul>
+    <ul class="preview-items"><?php echo wp_kses_post($preview_htm); ?></ul>
 </div>

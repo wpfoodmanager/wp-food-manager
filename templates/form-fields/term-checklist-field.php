@@ -1,4 +1,4 @@
-<ul class="food-manager-term-checklist food-manager-term-checklist-<?php echo $key ?>">
+<ul class="food-manager-term-checklist food-manager-term-checklist-<?php echo esc_attr($key); ?>">
 	<?php
 	$field_val_num = '';
 	if (!empty($field['value']) && is_array($field['value']) && isset($field['value'])) {
@@ -17,9 +17,9 @@
 		}
 	}
 	ob_start();
-	wpfm_category_checklist($field['taxonomy'], $key, $my_check_value_arr);
+	wpfm_category_checklist(esc_attr($field['taxonomy']), $key, $my_check_value_arr);
 	$checklist = ob_get_clean();
 	echo str_replace("disabled='disabled'", '', $checklist);
 	?>
 </ul>
-<?php if (!empty($field['description'])) : ?><small class="description"><?php echo $field['description']; ?></small><?php endif; ?>
+<?php if (!empty($field['description'])) : ?><small class="description"><?php echo esc_html($field['description']); ?></small><?php endif; ?>

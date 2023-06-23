@@ -43,12 +43,12 @@ class WPFM_Forms {
 	 */
 	public function load_form_class($form_name) {
 		if (!class_exists('WPFM_Form')) {
-			include 'wpfm-abstract-form.php';
+			include esc_html('wpfm-abstract-form.php');
 		}
 
 		// Now try to load the form_name
-		$form_class  = 'WPFM_' . str_replace('-', '_', $form_name) . '_Form';
-		$form_file   = WPFM_PLUGIN_DIR . '/forms/wpfm-' . $form_name . '-form.php';
+		$form_class  = 'WPFM_' . str_replace('-', '_', sanitize_key($form_name)) . '_Form';
+		$form_file   = WPFM_PLUGIN_DIR . '/forms/wpfm-' . sanitize_file_name($form_name) . '-form.php';
 
 		if (class_exists($form_class)) {
 			return call_user_func(array($form_class, 'instance'));
@@ -59,7 +59,7 @@ class WPFM_Forms {
 		}
 
 		if (!class_exists($form_class)) {
-			include $form_file;
+			include esc_html($form_file);
 		}
 
 		// Init the form
@@ -95,7 +95,7 @@ class WPFM_Forms {
 	public function get_form_fields($form_name, $field_types = 'frontend') {
 		if ($form = $this->load_form_class($form_name)) {
 			$form->init_fields();
-			$fields = $form->merge_with_custom_fields($field_types);
+			$fields = $form->merge_with_custom_fields(sanitize_text_field($field_types));
 			return $fields;
 		}
 	}

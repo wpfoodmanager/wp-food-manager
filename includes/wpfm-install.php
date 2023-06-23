@@ -11,7 +11,7 @@ class WPFM_Install {
 	 * 
 	 * @access public
 	 * @return void
-     * @since 1.0.0
+	 * @since 1.0.0
 	 */
 	public static function install() {
 		global $wpdb;
@@ -30,12 +30,12 @@ class WPFM_Install {
 
 		// Update legacy options
 		if (false === get_option('food_manager_add_food_page_id', false) && get_option('food_manager_submit_page_slug')) {
-			$page_id = get_page_by_path(get_option('food_manager_submit_page_slug'))->ID;
+			$page_id = get_page_by_path(esc_sql(get_option('food_manager_submit_page_slug')))->ID;
 			update_option('food_manager_add_food_page_id', $page_id);
 		}
 
 		if (false === get_option('food_manager_food_dashboard_page_id', false) && get_option('food_manager_food_dashboard_page_slug')) {
-			$page_id = get_page_by_path(get_option('food_manager_food_dashboard_page_slug'))->ID;
+			$page_id = get_page_by_path(esc_sql(get_option('food_manager_food_dashboard_page_slug')))->ID;
 			update_option('food_manager_food_dashboard_page_id', $page_id);
 		}
 
@@ -48,7 +48,7 @@ class WPFM_Install {
 	 * 
 	 * @access public
 	 * @return void
-     * @since 1.0.0
+	 * @since 1.0.0
 	 */
 	public static function update() {
 		global $wpdb;
@@ -75,7 +75,7 @@ class WPFM_Install {
 	 * 
 	 * @access private
 	 * @return void
-     * @since 1.0.0
+	 * @since 1.0.0
 	 */
 	private static function init_user_roles() {
 		global $wp_roles;
@@ -102,7 +102,7 @@ class WPFM_Install {
 	 * 
 	 * @access private
 	 * @return array
-     * @since 1.0.0
+	 * @since 1.0.0
 	 */
 	private static function get_core_capabilities() {
 		return array(
@@ -136,7 +136,7 @@ class WPFM_Install {
 	 *
 	 * @access private
 	 * @return array Default taxonomy terms.
-     * @since 1.0.0
+	 * @since 1.0.0
 	 */
 	private static function get_default_taxonomy_terms() {
 		return array(
@@ -252,10 +252,10 @@ class WPFM_Install {
 
 	/**
 	 * Insert the default terms.
-	 * 
+	 *
 	 * @access private
 	 * @return void
-     * @since 1.0.0
+	 * @since 1.0.0
 	 */
 	private static function default_terms() {
 		if (get_option('food_manager_installed_terms') == 1) {
@@ -266,7 +266,7 @@ class WPFM_Install {
 		foreach ($taxonomies as $taxonomy => $terms) {
 			foreach ($terms as $term) {
 				if (!get_term_by('slug', sanitize_title($term), $taxonomy)) {
-					wp_insert_term($term, $taxonomy);
+					wp_insert_term(wp_kses_post($term), esc_attr($taxonomy));
 				}
 			}
 		}
@@ -276,10 +276,10 @@ class WPFM_Install {
 
 	/**
 	 * Adds the employment type to default food types when updating from a previous WP Food Manager version.
-	 * 
+	 *
 	 * @access private
 	 * @return void
-     * @since 1.0.0
+	 * @since 1.0.0
 	 */
 	private static function add_food_types() {
 		$taxonomies = self::get_default_taxonomy_terms();
@@ -287,11 +287,11 @@ class WPFM_Install {
 
 		foreach ($terms as $term => $meta) {
 			$term = get_term_by('slug', sanitize_title($term), 'food_manager_type');
-			
+
 			if ($term) {
 				foreach ($meta as $meta_key => $meta_value) {
-					if (!get_term_meta((int) $term->term_id, $meta_key, true)) {
-						add_term_meta((int) $term->term_id, $meta_key, $meta_value);
+					if (!get_term_meta((int) $term->term_id, sanitize_key($meta_key), true)) {
+						add_term_meta((int) $term->term_id, sanitize_key($meta_key), wp_kses_post($meta_value));
 					}
 				}
 			}

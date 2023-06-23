@@ -9,7 +9,7 @@ $food = $post;
 <div class="single_food_listing">
     <div class="wpfm-main wpfm-single-food-page">
         <?php if (get_option('food_manager_hide_expired_content', 1) && 'expired' === $post->post_status) : ?>
-            <div class="food-manager-info wpfm-alert wpfm-alert-danger"><?php _e('This listing has been expired.', 'wp-food-manager'); ?></div>
+            <div class="food-manager-info wpfm-alert wpfm-alert-danger"><?php esc_html_e('This listing has been expired.', 'wp-food-manager'); ?></div>
         <?php else :
             /**
              * single_food_listing_start hook
@@ -28,7 +28,7 @@ $food = $post;
                                     <div class="wpfm-single-food-slider">
                                         <?php foreach ($food_banners as $banner_key => $banner_value) : ?>
                                             <div class="wpfm-slider-items">
-                                                <img src="<?php echo $banner_value; ?>" alt="<?php the_title(); ?>" />
+                                                <img src="<?php echo esc_url($banner_value); ?>" alt="<?php echo esc_attr(get_the_title()); ?>" />
                                             </div>
                                         <?php endforeach; ?>
                                     </div>
@@ -56,8 +56,8 @@ $food = $post;
                                         <?php
                                         $view_count = get_food_views_count($post);
                                         if ($view_count) : ?>
-                                            <div class="wpfm-viewed-food wpfm-tooltip wpfm-tooltip-bottom"><i class="wpfm-icon-eye"></i> <?php printf(__(' %d', 'wp-food-manager'), $view_count); ?>
-                                                <span class="wpfm-tooltiptext"><?php printf(__('%d people viewed this food.', 'wp-food-manager'), $view_count); ?></span>
+                                            <div class="wpfm-viewed-food wpfm-tooltip wpfm-tooltip-bottom"><i class="wpfm-icon-eye"></i> <?php printf(esc_html__(' %d', 'wp-food-manager'), $view_count); ?>
+                                                <span class="wpfm-tooltiptext"><?php printf(esc_html__('%d people viewed this food.', 'wp-food-manager'), $view_count); ?></span>
                                             </div>
                                         <?php endif; ?>
                                     </div>
@@ -84,7 +84,7 @@ $food = $post;
                                 if ($displaying && get_food_ingredients() && get_post_meta($post->ID, '_enable_food_ingre', true)) : ?>
                                     <div class="clearfix">&nbsp;</div>
                                     <div class="wpfm-food-ingredients">
-                                        <h3 class="wpfm-heading-text"><?php _e('Food Ingredients', 'wp-food-manager'); ?></h3> <?php display_food_ingredients(); ?>
+                                        <h3 class="wpfm-heading-text"><?php esc_html_e('Food Ingredients', 'wp-food-manager'); ?></h3> <?php display_food_ingredients(); ?>
                                     </div>
                                 <?php endif; ?>
                                 <?php
@@ -93,7 +93,7 @@ $food = $post;
                                 if ($displaynutri && get_food_nutritions() && get_post_meta($post->ID, '_enable_food_nutri', true)) : ?>
                                     <div class="clearfix">&nbsp;</div>
                                     <div class="wpfm-food-nutritions">
-                                        <h3 class="wpfm-heading-text"><?php _e('Food Nutritions', 'wp-food-manager'); ?></h3> <?php display_food_nutritions(); ?>
+                                        <h3 class="wpfm-heading-text"><?php esc_html_e('Food Nutritions', 'wp-food-manager'); ?></h3> <?php display_food_nutritions(); ?>
                                     </div>
                                 <?php endif; ?>
                             </div>
@@ -134,10 +134,10 @@ $food = $post;
                                         echo "<h3 class='wpfm-heading-text'>Extra Toppings</h3>";
                                         foreach ($ext_options as $key => $ext_option) {
                                             $field_required = '';
-                                            echo "<div class='wpfm-input-field-common " . $more_class . "'>";
-                                            echo '<label for="' . str_replace(" ", "-", strtolower($ext_option['_topping_name'])) . '"><strong>' . $ext_option['_topping_name'] . '</strong></label>';
+                                            echo "<div class='wpfm-input-field-common " . esc_attr($more_class) . "'>";
+                                            echo '<label for="' . esc_attr(str_replace(" ", "-", strtolower($ext_option['_topping_name']))) . '"><strong>' . esc_html($ext_option['_topping_name']) . '</strong></label>';
                                             if (!empty($ext_option['_topping_description'])) {
-                                                echo '<div class="wpfm-input-description">' . $ext_option['_topping_description'] . '</div>';
+                                                echo '<div class="wpfm-input-description">' . esc_html($ext_option['_topping_description']) . '</div>';
                                             }
                                             do_action('wpfm_singular_option_input_before');
 
@@ -193,12 +193,12 @@ $food = $post;
                             $show_additional_details = apply_filters('food_manager_show_additional_details', true);
                             if ($show_additional_details) :
                                 if (!class_exists('WPFM_Add_Food_Form')) {
-                                    include_once(WPFM_PLUGIN_DIR . '/forms/wpfm-abstract-form.php');
-                                    include_once(WPFM_PLUGIN_DIR . '/forms/wpfm-add-food-form.php');
+                                    include_once(esc_attr(WPFM_PLUGIN_DIR) . '/forms/wpfm-abstract-form.php');
+                                    include_once(esc_attr(WPFM_PLUGIN_DIR) . '/forms/wpfm-add-food-form.php');
                                 }
                                 $form_add_food_instance = call_user_func(array('WPFM_Add_Food_Form', 'instance'));
-                                $custom_food_fields  = !empty($form_add_food_instance->get_food_manager_fieldeditor_fields()) ? $form_add_food_instance->get_food_manager_fieldeditor_fields() : array();
-                                $custom_toppings_fields  = !empty($form_add_food_instance->get_food_manager_fieldeditor_toppings_fields()) ? $form_add_food_instance->get_food_manager_fieldeditor_toppings_fields() : array();
+                                $custom_food_fields = !empty($form_add_food_instance->get_food_manager_fieldeditor_fields()) ? $form_add_food_instance->get_food_manager_fieldeditor_fields() : array();
+                                $custom_toppings_fields = !empty($form_add_food_instance->get_food_manager_fieldeditor_toppings_fields()) ? $form_add_food_instance->get_food_manager_fieldeditor_toppings_fields() : array();
                                 $custom_fields = '';
                                 if (!empty($custom_toppings_fields)) {
                                     $custom_fields = array_merge($custom_food_fields, $custom_toppings_fields);

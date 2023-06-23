@@ -31,4 +31,4 @@ foreach ($field['options'] as $option_key => $value) : ?>
         <?php echo esc_html($value); ?>
     </label>
 <?php endforeach; ?>
-<?php if (!empty($field['description'])) : ?><small class="description"><?php echo $field['description']; ?></small><?php endif; ?>
+<?php if (!empty($field['description'])) : ?><small class="description"><?php echo esc_html(sanitize_textarea_field($field['description'])); ?></small><?php endif; ?>

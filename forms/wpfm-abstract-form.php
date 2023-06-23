@@ -38,10 +38,10 @@ abstract class WPFM_Form {
 	public function process() {
 		// reset cookie
 		if (isset($_GET['new']) && isset($_COOKIE['wpfm-adding-food-id']) && isset($_COOKIE['wpfm-adding-food-key']) && get_post_meta(sanitize_text_field($_COOKIE['wpfm-adding-food-id']), '_adding_key', true) == $_COOKIE['wpfm-adding-food-key']) {
-			delete_post_meta($_COOKIE['wpfm-adding-food-id'], '_adding_key');
+			delete_post_meta(sanitize_text_field($_COOKIE['wpfm-adding-food-id']), '_adding_key');
 			setcookie('wpfm-adding-food-id', '', 0, COOKIEPATH, COOKIE_DOMAIN, false);
 			setcookie('wpfm-adding-food-key', '', 0, COOKIEPATH, COOKIE_DOMAIN, false);
-			wp_redirect(remove_query_arg(array('new', 'key'), $_SERVER['REQUEST_URI']));
+			wp_redirect(remove_query_arg(array('new', 'key'), esc_url($_SERVER['REQUEST_URI'])));
 		}
 
 		$step_key = $this->get_step_key($this->step);
@@ -93,19 +93,19 @@ abstract class WPFM_Form {
 	 * @since 1.0.0
 	 */
 	public function add_error($error) {
-		$this->errors[] = $error;
+		$this->errors[] = sanitize_text_field($error);
 	}
 
 	/**
 	 * Display the error which is set by the plugin.
-	 * 
+	 *
 	 * @access public
 	 * @return void
 	 * @since 1.0.0
 	 */
 	public function show_errors() {
 		foreach ($this->errors as $error) {
-			echo '<div class="food-manager-error wpfm-alert wpfm-alert-danger">' . $error . '</div>';
+			echo '<div class="food-manager-error wpfm-alert wpfm-alert-danger">' . esc_html($error) . '</div>';
 		}
 	}
 
@@ -123,7 +123,7 @@ abstract class WPFM_Form {
 
 	/**
 	 * Get step from outside of the class
-	 * 
+	 *
 	 * @access public
 	 * @return $this->step
 	 * @since 1.0.0
@@ -134,7 +134,7 @@ abstract class WPFM_Form {
 
 	/**
 	 * Get steps from outside of the class
-	 * 
+	 *
 	 * @access public
 	 * @return $this->step
 	 * @since 1.0.0
@@ -145,8 +145,9 @@ abstract class WPFM_Form {
 
 	/**
 	 * Get step key from outside of the class
-	 * 
+	 *
 	 * @access public
+	 * @param string $step
 	 * @return mixed
 	 * @since 1.0.0
 	 */
@@ -161,7 +162,7 @@ abstract class WPFM_Form {
 
 	/**
 	 * Get step from outside of the class
-	 * 
+	 *
 	 * @access public
 	 * @return void
 	 * @since 1.0.0
@@ -172,7 +173,7 @@ abstract class WPFM_Form {
 
 	/**
 	 * Increase step from outside of the class
-	 * 
+	 *
 	 * @access public
 	 * @return void
 	 * @since 1.0.0
@@ -183,7 +184,7 @@ abstract class WPFM_Form {
 
 	/**
 	 * Decrease step from outside of the class
-	 * 
+	 *
 	 * @access public
 	 * @return void
 	 * @since 1.0.0
@@ -212,7 +213,7 @@ abstract class WPFM_Form {
 
 	/**
 	 * Sort array by priority value
-	 * 
+	 *
 	 * @access public
 	 * @param array $a
 	 * @param array $b
@@ -228,7 +229,7 @@ abstract class WPFM_Form {
 
 	/**
 	 * Init form fields
-	 * 
+	 *
 	 * @access public
 	 * @return void
 	 * @since 1.0.0
@@ -239,7 +240,7 @@ abstract class WPFM_Form {
 
 	/**
 	 * Enqueue the scripts for the form.
-	 * 
+	 *
 	 * @access public
 	 * @return void
 	 * @since 1.0.0
@@ -261,8 +262,8 @@ abstract class WPFM_Form {
 		global $post;
 
 		// Init fields
-		// $this->init_fields(); We dont need to initialize with this function because of field edior
-		// Now field editor function will return all the fields 
+		// $this->init_fields(); We dont need to initialize with this function because of field editor
+		// Now field editor function will return all the fields
 		// Get merged fields from db and default fields.
 		$this->merge_with_custom_fields('frontend');
 		$values = array();
@@ -295,11 +296,11 @@ abstract class WPFM_Form {
 		}
 
 		if (isset($_POST['food_nutritions']) && !empty($_POST['food_nutritions'])) {
-			$values['food_nutritions'] = $_POST['food_nutritions'];
+			$values['food_nutritions'] = wp_unslash($_POST['food_nutritions']);
 		}
 
 		if (isset($_POST['food_ingredients']) && !empty($_POST['food_ingredients'])) {
-			$values['food_ingredients'] = $_POST['food_ingredients'];
+			$values['food_ingredients'] = wp_unslash($_POST['food_ingredients']);
 		}
 
 		if (($option_value_count && is_array($option_value_count)) && ($repeated_options && is_array($repeated_options))) {
@@ -310,8 +311,10 @@ abstract class WPFM_Form {
 						// Get the value
 						$field_type = str_replace('-', '_', $field['type']);
 						if ($handler = apply_filters("food_manager_get_posted_{$field_type}_field", false)) {
-
 							$values[$group_key][$key] = call_user_func($handler, $key, $field);
+							if (is_string($values[$group_key][$key])) {
+								$values[$group_key][$key] = wp_unslash($values[$group_key][$key]);
+							}
 						} elseif ($group_key == "toppings") {
 							$key2 = "";
 							$first_key = '';
@@ -346,8 +349,14 @@ abstract class WPFM_Form {
 							}
 						} elseif (method_exists($this, "get_posted_{$field_type}_field")) {
 							$values[$group_key][$key] = call_user_func(array($this, "get_posted_{$field_type}_field"), $key, $field);
+							if (is_string($values[$group_key][$key])) {
+								$values[$group_key][$key] = wp_unslash($values[$group_key][$key]);
+							}
 						} else {
 							$values[$group_key][$key] = $this->get_posted_field($key, $field);
+							if (is_string($values[$group_key][$key])) {
+								$values[$group_key][$key] = wp_unslash($values[$group_key][$key]);
+							}
 						}
 					}
 				}
@@ -360,10 +369,19 @@ abstract class WPFM_Form {
 					$field_type = str_replace('-', '_', $field['type']);
 					if ($handler = apply_filters("food_manager_get_posted_{$field_type}_field", false)) {
 						$values[$group_key][$key] = call_user_func($handler, $key, $field);
+						if (is_string($values[$group_key][$key])) {
+							$values[$group_key][$key] = wp_unslash($values[$group_key][$key]);
+						}
 					} elseif (method_exists($this, "get_posted_{$field_type}_field")) {
 						$values[$group_key][$key] = call_user_func(array($this, "get_posted_{$field_type}_field"), $key, $field);
+						if (is_string($values[$group_key][$key])) {
+							$values[$group_key][$key] = wp_unslash($values[$group_key][$key]);
+						}
 					} else {
 						$values[$group_key][$key] = $this->get_posted_field($key, $field);
+						if (is_string($values[$group_key][$key])) {
+							$values[$group_key][$key] = wp_unslash($values[$group_key][$key]);
+						}
 					}
 
 					// Set fields value
@@ -374,9 +392,9 @@ abstract class WPFM_Form {
 		return $values;
 	}
 
-	/** 
+	/**
 	 * Get the value of a repeated fields (e.g. repeated)
-	 * 
+	 *
 	 * @access protected
 	 * @param string $field_prefix
 	 * @param mixed $fields
@@ -418,9 +436,9 @@ abstract class WPFM_Form {
 
 						default:
 							if (is_array($_POST[$field_name])) {
-								$item[$key] = array_filter(array_map('sanitize_text_field', array_map('stripslashes', $_POST[$field_name])));
+								$item[$key] = array_filter(array_map(array($this, 'sanitize_posted_field'), array_map('stripslashes', $_POST[$field_name])));
 							} else {
-								$item[$key] = sanitize_text_field(stripslashes($_POST[$field_name]));
+								$item[$key] = $this->sanitize_posted_field($_POST[$field_name]);
 							}
 							break;
 					}
@@ -437,7 +455,7 @@ abstract class WPFM_Form {
 
 	/**
 	 * Get the value of a posted repeated field
-	 * 
+	 *
 	 * @access protected
 	 * @param string $key
 	 * @param array $field
@@ -462,7 +480,7 @@ abstract class WPFM_Form {
 			$value = urldecode($value);
 		}
 
-		// Santize value
+		// Sanitize value
 		$value = is_array($value) ? array_map(array($this, 'sanitize_posted_field'), $value) : sanitize_text_field(stripslashes(trim($value)));
 
 		return $value;
@@ -470,7 +488,7 @@ abstract class WPFM_Form {
 
 	/**
 	 * Get the value of a posted field
-	 * 
+	 *
 	 * @access protected
 	 * @param  string $key
 	 * @param  array $field
@@ -478,12 +496,12 @@ abstract class WPFM_Form {
 	 * @since 1.0.0
 	 */
 	protected function get_posted_field($key, $field) {
-		return isset($_POST[$key]) ? $_POST[$key] : '';
+		return isset($_POST[$key]) ? $this->sanitize_posted_field($_POST[$key]) : '';
 	}
 
 	/**
 	 * Get the value of a posted multiselect field
-	 * 
+	 *
 	 * @access protected
 	 * @param  string $key
 	 * @param  array $field
@@ -496,7 +514,7 @@ abstract class WPFM_Form {
 
 	/**
 	 * Get the value of a posted file field
-	 * 
+	 *
 	 * @access protected
 	 * @param  string $key
 	 * @param  array $field
@@ -517,10 +535,10 @@ abstract class WPFM_Form {
 
 	/**
 	 * Get the value of a posted textarea field
-	 * 
+	 *
 	 * @access protected
-	 * @param  string $key
-	 * @param  array $field
+	 * @param string $key
+	 * @param array $field
 	 * @return string
 	 * @since 1.0.0
 	 */
@@ -530,10 +548,10 @@ abstract class WPFM_Form {
 
 	/**
 	 * Get the value of a posted textarea field
-	 * 
+	 *
 	 * @access protected
-	 * @param  string $key
-	 * @param  array $field
+	 * @param string $key
+	 * @param array $field
 	 * @return string
 	 * @since 1.0.0
 	 */
@@ -543,10 +561,10 @@ abstract class WPFM_Form {
 
 	/**
 	 * Get posted terms for the taxonomy
-	 * 
+	 *
 	 * @access protected
-	 * @param  string $key
-	 * @param  array $field
+	 * @param string $key
+	 * @param array $field
 	 * @return array
 	 * @since 1.0.0
 	 */
@@ -560,10 +578,10 @@ abstract class WPFM_Form {
 
 	/**
 	 * Get posted terms for the taxonomy
-	 * 
+	 *
 	 * @access protected
-	 * @param  string $key
-	 * @param  array $field
+	 * @param string $key
+	 * @param array $field
 	 * @return int
 	 * @since 1.0.0
 	 */
@@ -573,10 +591,10 @@ abstract class WPFM_Form {
 
 	/**
 	 * Get posted terms for the taxonomy
-	 * 
+	 *
 	 * @access protected
-	 * @param  string $key
-	 * @param  array $field
+	 * @param string $key
+	 * @param array $field
 	 * @return int
 	 * @since 1.0.0
 	 */
@@ -586,10 +604,10 @@ abstract class WPFM_Form {
 
 	/**
 	 * Upload a file which is set in from editor.
-	 * 
+	 *
 	 * @access protected
-	 * @param  string $field_key
-	 * @param  mixed $field
+	 * @param string $field_key
+	 * @param mixed $field
 	 * @return string or array
 	 * @since 1.0.0
 	 */
@@ -629,8 +647,8 @@ abstract class WPFM_Form {
 	 * @since 1.0.0
 	 */
 	public function merge_with_custom_fields($field_view = 'frontend') {
-		$custom_food_fields  = !empty($this->get_food_manager_fieldeditor_fields()) ? $this->get_food_manager_fieldeditor_fields() : array();
-		$custom_toppings_fields  = !empty($this->get_food_manager_fieldeditor_toppings_fields()) ? $this->get_food_manager_fieldeditor_toppings_fields() : array();
+		$custom_food_fields = !empty($this->get_food_manager_fieldeditor_fields()) ? $this->get_food_manager_fieldeditor_fields() : array();
+		$custom_toppings_fields = !empty($this->get_food_manager_fieldeditor_toppings_fields()) ? $this->get_food_manager_fieldeditor_toppings_fields() : array();
 		$custom_fields = '';
 
 		if (!empty($custom_toppings_fields)) {
@@ -672,43 +690,47 @@ abstract class WPFM_Form {
 
 		/**
 		 * Above array_replace_recursive function will replace the default fields by custom fields.
-		 * If array key is not same then it will merge array. This is only case for the Radio and Select Field(In case of array if key is not same).
-		 * For eg. options key it has any value or option as per user requested or overrided but array_replace_recursive will merge both 		options of default field and custom fields.
-		 * User change the default value of the food_online (radio button) from Yes --> Y and No--> N then array_replace_recursive will merge both valus of the options array for food_online like options('yes'=>'yes', 'no'=>'no','y'=>'y','n'=>'n') but  we need to keep only updated options value of the food_online so we have to remove old default options values and for that we have to do the following procedure.
-		 * In short: To remove default options need to replace the options array with custom options which is added by user.
+		 * If array key is not the same then it will merge the array. This is only the case for the Radio and Select Field (In case of array if the key is not the same).
+		 * For example, options key, if it has any value or option as per user requested or overridden, but array_replace_recursive will merge both options of the default field and custom fields.
+		 * If the user changes the default value of the food_online (radio button) from Yes --> Y and No --> N, then array_replace_recursive will merge both values of the options array for food_online like options('yes' => 'yes', 'no' => 'no', 'y' => 'y', 'n' => 'n'), but we need to keep only the updated options value of the food_online so we have to remove the old default options values and for that, we have to do the following procedure.
+		 * In short: To remove default options, we need to replace the options array with custom options that are added by the user.
 		 **/
 		foreach ($default_fields as $default_group_key => $default_group) {
 			foreach ($default_group as $field_key => $field_value) {
 				foreach ($field_value as $key => $value) {
-					if (isset($custom_fields[$default_group_key][$field_key][$key]) && ($key == 'options' || is_array($value)))
+					if (isset($custom_fields[$default_group_key][$field_key][$key]) && ($key == 'options' || is_array($value))) {
 						$updated_fields[$default_group_key][$field_key][$key] = $custom_fields[$default_group_key][$field_key][$key];
+					}
 				}
 			}
 		}
 
 		/**
-		 * If default field is removed via field editor then we can not removed this field from the code because it is hardcode in the file so we need to set flag to identify to keep the record which perticular field is removed by the user.
-		 * Using visibility flag we can identify those fields need to remove or keep in the Field Editor based on visibility flag value. if visibility true then we will keep the field and if visibility flag false then we will not show this default field in the field editor. (As action of user removed this field from the field editor but not removed from the code so we have to set this flag)
-		 * We are getting several default fields from the addons and using theme side customization via 'add_food_fields' filter.
-		 * Now, Not easy to manage filter fields and default fields of plugin in this case so we need to set this flag for identify wheather field show  or not in the field editor.
+		 * If the default field is removed via the field editor, then we cannot remove this field from the code because it is hardcoded in the file, so we need to set a flag to identify which particular field is removed by the user.
+		 * Using the visibility flag, we can identify those fields that need to be removed or kept in the Field Editor based on the visibility flag value. If the visibility is true, then we will keep the field, and if the visibility flag is false, then we will not show this default field in the field editor. (As an action of the user removed this field from the field editor but not removed from the code, so we have to set this flag)
+		 * We are getting several default fields from the addons and using theme-side customization via the 'add_food_fields' filter.
+		 * Now, it's not easy to manage filter fields and default fields of the plugin in this case, so we need to set this flag to identify whether the field should be shown or not in the field editor.
 		 *
-		 * If user selected admin only fields then we need to unset that fields from the frontend user.
+		 * If the user selected admin-only fields, then we need to unset those fields from the frontend user.
 		 **/
-		if (!empty($updated_fields))
+		if (!empty($updated_fields)) {
 			foreach ($updated_fields as $group_key => $group_fields) {
 				foreach ($group_fields as $key => $field) {
 					$updated_fields[$group_key][$key] = array_map('stripslashes_deep', $updated_fields[$group_key][$key]);
 
-					// remove if visiblity is false
-					if (isset($field['visibility']) && $field['visibility'] == false)
+					// remove if visibility is false
+					if (isset($field['visibility']) && $field['visibility'] == false) {
 						unset($updated_fields[$group_key][$key]);
+					}
 
 					// remove admin fields if view type is frontend
-					if (isset($field['admin_only']) &&  $field_view == 'frontend' &&  $field['admin_only'] == true)
+					if (isset($field['admin_only']) && $field_view == 'frontend' && $field['admin_only'] == true) {
 						unset($updated_fields[$group_key][$key]);
+					}
 				}
 				uasort($updated_fields[$group_key], array($this, 'sort_by_priority'));
 			}
+		}
 		$this->fields = apply_filters('merge_with_custom_fields', $updated_fields, $default_fields);
 		return $this->fields;
 	}

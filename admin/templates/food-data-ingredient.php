@@ -58,17 +58,17 @@ $units = get_terms(
 
 						if ($ingTermID) {
 
-							echo "<li class='wpfm-sortable-item active-item' data-id='{$ingTermID}'>" .
-								"<label>{$ingTermName}</label>" .
+							echo "<li class='wpfm-sortable-item active-item' data-id='" . esc_attr($ingTermID) . "'>" .
+								"<label>" . esc_html($ingTermName) . "</label>" .
 								"<div class='wpfm-sortable-item-values'>" .
-								"<input type='number' step='0.1' class='item-value' name='food_ingredients[{$ingTermID}][value]' value='{$ingValue}'>" .
-								"<select name='food_ingredients[{$ingTermID}][unit_id]' class='item-unit'>" .
+								"<input type='number' step='0.1' class='item-value' name='food_ingredients[" . esc_attr($ingTermID) . "][value]' value='" . esc_attr($ingValue) . "'>" .
+								"<select name='food_ingredients[" . esc_attr($ingTermID) . "][unit_id]' class='item-unit'>" .
 								"<option value=''>Unit</option>";
 
 							if (!empty($units)) {
 								foreach ($units as $unit) {
 									$sel = ($unit_id == $unit->term_id ? ' selected' : null);
-									echo "<option value='{$unit->term_id}'{$sel}>{$unit->name}</option>";
+									echo "<option value='" . esc_attr($unit->term_id) . "'{$sel}>" . esc_html($unit->name) . "</option>";
 								}
 							}
 
@@ -92,8 +92,8 @@ $units = get_terms(
 			<?php
 			if (!empty($ingredient_terms)) {
 				foreach ($ingredient_terms as $ing) {
-					echo "<li class='wpfm-sortable-item available-item' data-id='{$ing->term_id}'>" .
-						"<label>{$ing->name}</label><div class='wpfm-sortable-item-values'></div>" .
+					echo "<li class='wpfm-sortable-item available-item' data-id='" . esc_attr($ing->term_id) . "'>" .
+						"<label>" . esc_html($ing->name) . "</label><div class='wpfm-sortable-item-values'></div>" .
 						'</li>';
 				}
 			}
@@ -114,10 +114,10 @@ $units = get_terms(
 				$type = !empty($field['type']) ? $field['type'] : 'text';
 				if ($type == 'wp-editor') $type = 'wp_editor'; ?>
 
-			<p class="wpfm-admin-postbox-form-field <?php echo $key; ?>">
-				<label for="<?php echo $key; ?>"><?php echo $field['label']; ?> : </label>
+			<p class="wpfm-admin-postbox-form-field <?php echo esc_attr($key); ?>">
+				<label for="<?php echo esc_attr($key); ?>"><?php echo esc_html($field['label']); ?> : </label>
 				<span class="wpfm-input-field">
-					<?php get_food_manager_template('form-fields/' . $field['type'] . '-field.php', array('key' => $key, 'field' => $field)); ?>
+					<?php get_food_manager_template('form-fields/' . $field['type'] . '-field.php', array('key' => esc_attr($key), 'field' => $field)); ?>
 				</span>
 			</p>
 	<?php }

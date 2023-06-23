@@ -52,4 +52,4 @@ if (is_admin()) {
 	}
 	wp_editor(isset($field_val_num) ? apply_filters('wpfm_the_content', $field_val_num) : '', $key, $editor);
 }
-if (!empty($field['description'])) : ?><small class="description"><?php echo $field['description']; ?></small><?php endif; ?>
+if (!empty($field['description'])) : ?><small class="description"><?php echo esc_html($field['description']); ?></small><?php endif; ?>

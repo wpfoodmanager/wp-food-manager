@@ -55,11 +55,11 @@ class WPFM_Category_Walker extends Walker {
 			$pad = str_repeat('&nbsp;', $depth * 3);
 		else
 			$pad = '';
-			
+
 		$cat_name = apply_filters('list_food_cats', $object->name, $object);
 		$value = isset($args['value']) && $args['value'] == 'id' ? $object->term_id : $object->slug;
-		$output .= "\t<option class=\"level-" . intval($depth) . '" value="' . esc_attr($value) . '" ' . $field_val . ' ';
-		$output .= (!empty($args['show_count'])) ? 'data-count="' . $object->count . '"' : '';
+		$output .= "\t<option class=\"level-" . intval($depth) . '" value="' . esc_attr($value) . '" ' . esc_attr($field_val) . ' ';
+		$output .= (!empty($args['show_count'])) ? 'data-count="' . esc_attr($object->count) . '"' : '';
 
 		if ($value == $args['selected'] || (is_array($args['selected']) && in_array($value, $args['selected'])))
 			$output .= ' selected="selected"';
@@ -67,7 +67,7 @@ class WPFM_Category_Walker extends Walker {
 		$output .= '>';
 		$output .= $pad . esc_html($cat_name);
 		if (!empty($args['show_count'])) {
-			$output .= '&nbsp;(' . $object->count . ')';
+			$output .= '&nbsp;(' . esc_html($object->count) . ')';
 		}
 
 		$output .= "</option>\n";

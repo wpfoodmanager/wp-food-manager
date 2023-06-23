@@ -160,7 +160,7 @@ class WPFM_ActionHooks {
      * @since 1.0.1
      */
     public function output_no_results() {
-        get_food_manager_template('content-no-foods-found.php');
+        get_food_manager_template(esc_html('content-no-foods-found.php'));
     }
 
     /**
@@ -183,7 +183,7 @@ class WPFM_ActionHooks {
      */
     public function edit_food() {
         global $food_manager;
-        echo $food_manager->forms->get_form('edit-food');
+        echo esc_html($food_manager->forms->get_form('edit-food'));
     }
 
     /**
@@ -214,7 +214,7 @@ class WPFM_ActionHooks {
         }
 
         $output  = "<select name='food_manager_type' id='dropdown_food_manager_type'>";
-        $output .= '<option value="" ' . selected(isset($_GET['food_manager_type']) ? $_GET['food_manager_type'] : '', '', false) . '>' . __('Select Food Type', 'wp-food-manager') . '</option>';
+        $output .= '<option value="" ' . selected(isset($_GET['food_manager_type']) ? $_GET['food_manager_type'] : '', '', false) . '>' . esc_html(__('Select Food Type', 'wp-food-manager')) . '</option>';
         $output .= $walker->walk($terms, 0, $r);
         $output .= '</select>';
         printf('%s', $output);
@@ -250,7 +250,7 @@ class WPFM_ActionHooks {
         }
 
         $output = "<select name='food_manager_category' id='dropdown_food_manager_category'>";
-        $output .= '<option value="" ' . selected(isset($_GET['food_manager_category']) ? $_GET['food_manager_category'] : '', '', false) . '>' . __('Select Food Category', 'wp-food-manager') . '</option>';
+        $output .= '<option value="" ' . selected(isset($_GET['food_manager_category']) ? $_GET['food_manager_category'] : '', '', false) . '>' . esc_html(__('Select Food Category', 'wp-food-manager')) . '</option>';
         $output .= $walker->walk($terms, 0, $r);
         $output .= '</select>';
         printf('%s', $output);
@@ -283,7 +283,7 @@ class WPFM_ActionHooks {
 
     /**
      * output_structured_data
-     * 
+     *
      * @access public
      * @return void
      * @since 1.0.0
@@ -302,8 +302,8 @@ class WPFM_ActionHooks {
     }
 
     /**
-     * Add the pending count which food submited from frontend and admin get's pending food count.
-     * 
+     * Add the pending count which food submitted from frontend and admin gets pending food count.
+     *
      * @access public
      * @return void
      * @since 1.0.0
@@ -311,14 +311,14 @@ class WPFM_ActionHooks {
     public function admin_head() {
 
         /**
-         * Add styles just for this page, and remove dashboard page links.
+         * Add styles just for this page and remove dashboard page links.
          *
          * @since 1.0.0
          */
         remove_submenu_page('index.php', 'food_manager_setup');
 
         global $menu;
-        $plural     = __('Food Manager', 'wp-food-manager');
+        $plural      = __('Food Manager', 'wp-food-manager');
         $count_foods = wp_count_posts('food_manager', 'readable');
         if (!empty($menu) && is_array($menu)) {
             foreach ($menu as $key => $menu_item) {
@@ -369,7 +369,7 @@ class WPFM_ActionHooks {
          * @param WP_Post $post          Post object.
          */
         $valid_statuses = apply_filters('wp_foodmanager_count_cache_supported_statuses', array('pending'), $new_status, $old_status, $post);
-        $rlike = array();
+        $rlike          = array();
 
         // New status transient option name
         if (in_array($new_status, $valid_statuses)) {
@@ -392,7 +392,7 @@ class WPFM_ActionHooks {
         foreach ($transients as $transient) {
             // Strip away the WordPress prefix in order to arrive at the transient key.
             $key = str_replace('_transient_', '', $transient);
-            // Now that we have the key, use WordPress core to the delete the transient.
+            // Now that we have the key, use WordPress core to delete the transient.
             delete_transient($key);
         }
 
@@ -411,11 +411,11 @@ class WPFM_ActionHooks {
         global $wpdb;
         if (!wp_using_ext_object_cache() && !defined('WP_SETUP_CONFIG') && !defined('WP_INSTALLING')) {
             $sql = "
-			    DELETE a, b FROM $wpdb->options a, $wpdb->options b	
- 				WHERE a.option_name LIKE %s	
- 				AND a.option_name NOT LIKE %s
- 				AND b.option_name = CONCAT( '_transient_timeout_', SUBSTRING( a.option_name, 12 ) )
-				AND b.option_value < %s;";
+			DELETE a, b FROM $wpdb->options a, $wpdb->options b	
+			WHERE a.option_name LIKE %s	
+			AND a.option_name NOT LIKE %s
+			AND b.option_name = CONCAT( '_transient_timeout_', SUBSTRING( a.option_name, 12 ) )
+			AND b.option_value < %s;";
             $wpdb->query($wpdb->prepare($sql, $wpdb->esc_like('_transient_fm_') . '%', $wpdb->esc_like('_transient_timeout_fm_') . '%', time()));
         }
     }
@@ -548,7 +548,7 @@ class WPFM_ActionHooks {
         $search_keywords   = sanitize_text_field(stripslashes($_REQUEST['search_keywords']));
         $search_categories = isset($_REQUEST['search_categories']) ? $_REQUEST['search_categories'] : '';
         $search_food_types = isset($_REQUEST['search_food_types']) ? $_REQUEST['search_food_types'] : '';
-        $search_food_menu = isset($_REQUEST['search_food_menu']) ? $_REQUEST['search_food_menu'] : '';
+        $search_food_menu  = isset($_REQUEST['search_food_menu']) ? $_REQUEST['search_food_menu'] : '';
         $post_type_label   = $wp_post_types['food_manager']->labels->name;
         $orderby           = sanitize_text_field($_REQUEST['orderby']);
 
@@ -600,7 +600,7 @@ class WPFM_ActionHooks {
             $default_foods = get_posts(array(
                 'numberposts' => -1,
                 'post_type'   => 'food_manager',
-                'post_status'   => 'publish'
+                'post_status' => 'publish'
             ));
 
             if (count($default_foods) == 0) { ?>
@@ -662,14 +662,14 @@ class WPFM_ActionHooks {
         $result_implode = implode(', ', $result['filter_value']);
 
         if (count($result['filter_value']) >= 1) {
-            $result['filter_value'] = explode(" ",  $result_implode);
-            $result['filter_value'][] =  " &amp; ";
+            $result['filter_value'] = explode(" ", $result_implode);
+            $result['filter_value'][] = " &amp; ";
         } else {
             if (!empty($last_filter_value))
-                $result['filter_value'] = explode(" ",  $result_implode);
+                $result['filter_value'] = explode(" ", $result_implode);
         }
 
-        $result['filter_value'][] =  $last_filter_value . " " . $post_type_label;
+        $result['filter_value'][] = $last_filter_value . " " . $post_type_label;
 
         if (sizeof($result['filter_value']) > 1) {
             $message = sprintf(_n('Search completed. Found %d matching record.', 'Search completed. Found %d matching records.', $food_cnt, 'wp-food-manager'), $food_cnt);
@@ -681,7 +681,7 @@ class WPFM_ActionHooks {
 
         $search_values = array(
             'keywords'   => $search_keywords,
-            'types'         => $search_food_types,
+            'types'      => $search_food_types,
             'categories' => $search_categories
         );
         $result['filter_value'] = apply_filters('food_manager_get_listings_custom_filter_text', $message, $search_values);
@@ -691,7 +691,7 @@ class WPFM_ActionHooks {
             'search_keywords'   => $search_keywords,
             'search_categories' => $search_categories,
             'search_food_types' => $search_food_types,
-            'search_food_menu' => $search_food_menu,
+            'search_food_menu'  => $search_food_menu,
         ));
         $result['max_num_pages'] = $foods->max_num_pages;
 
@@ -756,7 +756,7 @@ class WPFM_ActionHooks {
     }
 
     /**
-     * Display notice in formated html.
+     * Display notice in formatted HTML.
      * 
      * @access public
      * @return void
@@ -766,7 +766,7 @@ class WPFM_ActionHooks {
         $notice = get_transient('WPFM_Food_Notice');
         if (!empty($notice)) {
             echo '<div class="notice notice-success is-dismissible">';
-            echo '<p>' . $notice . '</p>';
+            echo '<p>' . esc_html($notice) . '</p>';
             echo '</div>';
         }
     }
@@ -786,16 +786,16 @@ class WPFM_ActionHooks {
 
         switch ($column) {
             case 'food_title':
-                echo wp_kses_post('<div class="food_title">');
+                echo '<div class="food_title">';
                 echo '<a href="' . esc_url(admin_url('post.php?post=' . $post->ID . '&action=edit')) . '" class="wpfm-tooltip food_title" wpfm-data-tip="' . sprintf(wp_kses('ID: %d', 'wp-food-manager'), $post->ID) . '">' . esc_html($post->post_title) . '</a>';
-                echo wp_kses_post('</div>');
-                echo wp_kses_post('<button type="button" class="toggle-row"><span class="screen-reader-text">' . esc_html__('Show more details', 'wp-food-manager') . '</span></button>');
+                echo '</div>';
+                echo '<button type="button" class="toggle-row"><span class="screen-reader-text">' . esc_html__('Show more details', 'wp-food-manager') . '</span></button>';
                 break;
 
             case 'food_banner':
-                echo wp_kses_post('<div class="food_banner">');
+                echo '<div class="food_banner">';
                 display_food_banner();
-                echo wp_kses_post('</div>');
+                echo '</div>';
                 display_food_veg_nonveg_icon_tag();
                 break;
 
@@ -812,7 +812,7 @@ class WPFM_ActionHooks {
                 break;
 
             case 'food_menu_order':
-                echo $thispost->menu_order;
+                echo esc_html($thispost->menu_order);
                 break;
 
             case 'food_status':
@@ -820,7 +820,7 @@ class WPFM_ActionHooks {
                 break;
 
             case 'food_actions':
-                echo wp_kses_post('<div class="actions">');
+                echo '<div class="actions">';
                 $admin_actions = apply_filters('post_row_actions', array(), $post);
 
                 if (in_array($post->post_status, array('pending', 'pending_payment')) && current_user_can('publish_post', $post->ID)) {
@@ -860,13 +860,13 @@ class WPFM_ActionHooks {
                 $admin_actions = apply_filters('food_manager_admin_actions', $admin_actions, $post);
                 foreach ($admin_actions as $action) {
                     if (is_array($action)) {
-                        printf('<a class="button button-icon wpfm-tooltip" href="%2$s" wpfm-data-tip="%3$s"><span class="dashicons dashicons-%1$s"></span></a>', $action['action'], esc_url($action['url']), esc_attr($action['name']), esc_html($action['name']));
+                        printf('<a class="button button-icon wpfm-tooltip" href="%2$s" wpfm-data-tip="%3$s"><span class="dashicons dashicons-%1$s"></span></a>', esc_attr($action['action']), esc_url($action['url']), esc_attr($action['name']), esc_html($action['name']));
                     } else {
                         echo esc_attr(str_replace('class="', 'class="button ', $action));
                     }
                 }
 
-                echo wp_kses_post('</div>');
+                echo '</div>';
                 break;
         }
     }
@@ -882,7 +882,7 @@ class WPFM_ActionHooks {
      */
     public function shortcode_copy_content_column($column, $post_id) {
         echo '<code>';
-        printf(__('[food_menu id=%d]', 'wp-food-manager'), $post_id);
+        printf(esc_html__('[food_menu id=%d]', 'wp-food-manager'), esc_attr($post_id));
         echo '</code>';
     }
 
@@ -897,7 +897,7 @@ class WPFM_ActionHooks {
      */
     public function food_manager_save_food_manager_menu_data($post_id, $post) {
         if (isset($_POST['radio_icons']) && !empty($_POST['radio_icons'])) {
-            $wpfm_radio_icon = $_POST['radio_icons'];
+            $wpfm_radio_icon = esc_attr($_POST['radio_icons']);
 
             if (isset($wpfm_radio_icon)) {
                 if (!add_post_meta($post_id, 'wpfm_radio_icons', $wpfm_radio_icon, true)) {
@@ -925,13 +925,13 @@ class WPFM_ActionHooks {
         if (isset($_POST['category_id']) && !empty($_POST['category_id'])) {
             $args = [
                 'post_type' => 'food_manager',
-                'post_per_page' => -1,
+                'posts_per_page' => -1,
                 'post_status' => 'publish',
-                'post__not_in' => isset($_POST['exclude']) && !empty($_POST['exclude']) ? $_POST['exclude'] : array(),
+                'post__not_in' => isset($_POST['exclude']) && !empty($_POST['exclude']) ? array_map('esc_attr', $_POST['exclude']) : array(),
                 'tax_query' => [
                     [
-                        'taxonomy' => $_POST['taxonomy'],
-                        'terms' => $_POST['category_id'],
+                        'taxonomy' => esc_attr($_POST['taxonomy']),
+                        'terms' => esc_attr($_POST['category_id']),
                     ],
                 ],
                 // Rest of your arguments
@@ -944,18 +944,18 @@ class WPFM_ActionHooks {
                 while ($food_listing->have_posts()) : $food_listing->the_post();
                     $id = get_the_ID();
                     $html[] =
-                        '<li class="menu-item-handle" data-food-id="' . $id . '">
-							<div class="wpfm-admin-left-col">
-								<span class="dashicons dashicons-menu"></span>
-								<span class="item-title">' . get_the_title($id) . '</span>
-							</div>
-							<div class="wpfm-admin-right-col">
-								<a href="javascript:void(0);" class="wpfm-food-item-remove">
-									<span class="dashicons dashicons-dismiss"></span>
-								</a>
-							</div>
-							<input type="hidden" name="wpfm_food_listing_ids[]" value="' . $id . '" />
-						</li>';
+                        '<li class="menu-item-handle" data-food-id="' . esc_attr($id) . '">
+                        <div class="wpfm-admin-left-col">
+                            <span class="dashicons dashicons-menu"></span>
+                            <span class="item-title">' . esc_html(get_the_title($id)) . '</span>
+                        </div>
+                        <div class="wpfm-admin-right-col">
+                            <a href="javascript:void(0);" class="wpfm-food-item-remove">
+                                <span class="dashicons dashicons-dismiss"></span>
+                            </a>
+                        </div>
+                        <input type="hidden" name="wpfm_food_listing_ids[]" value="' . esc_attr($id) . '" />
+                    </li>';
                 endwhile;
             endif;
             wp_reset_postdata();
@@ -964,8 +964,8 @@ class WPFM_ActionHooks {
 
             $args = [
                 'post_type' => 'food_manager',
-                'post_per_page' => -1,
-                'post__not_in' => isset($_POST['exclude']) && !empty($_POST['exclude']) ? $_POST['exclude'] : array(),
+                'posts_per_page' => -1,
+                'post__not_in' => isset($_POST['exclude']) && !empty($_POST['exclude']) ? array_map('esc_attr', $_POST['exclude']) : array(),
             ];
 
             $food_listing = new WP_Query($args);
@@ -976,18 +976,18 @@ class WPFM_ActionHooks {
                     $id = get_the_ID();
 
                     $html[] =
-                        '<li class="menu-item-handle" data-food-id="' . $id . '">
-							<div class="wpfm-admin-left-col">
-								<span class="dashicons dashicons-menu"></span>
-								<span class="item-title">' . get_the_title($id) . '</span>
-							</div>
-							<div class="wpfm-admin-right-col">
-								<a href="javascript:void(0);" class="wpfm-food-item-remove">
-									<span class="dashicons dashicons-dismiss"></span>
-								</a>
-							</div>
-							<input type="hidden" name="wpfm_food_listing_ids[]" value="' . $id . '" />
-						</li>';
+                        '<li class="menu-item-handle" data-food-id="' . esc_attr($id) . '">
+                        <div class="wpfm-admin-left-col">
+                            <span class="dashicons dashicons-menu"></span>
+                            <span class="item-title">' . esc_html(get_the_title($id)) . '</span>
+                        </div>
+                        <div class="wpfm-admin-right-col">
+                            <a href="javascript:void(0);" class="wpfm-food-item-remove">
+                                <span class="dashicons dashicons-dismiss"></span>
+                            </a>
+                        </div>
+                        <input type="hidden" name="wpfm_food_listing_ids[]" value="' . esc_attr($id) . '" />
+                    </li>';
                 endwhile;
             endif;
             wp_reset_postdata();
@@ -1021,7 +1021,7 @@ class WPFM_ActionHooks {
                         $thumbnail_image = is_array($_POST[$key]) ? array_values(array_filter($_POST[$key])) : $_POST[$key];
 
                         // Update Food Banner Meta Data
-                        update_post_meta($post_id, '_' . $key, $thumbnail_image);
+                        update_post_meta($post_id, '_' . esc_attr($key), $thumbnail_image);
                         if (is_array($_POST[$key])) {
                             $_POST[$key] = array_values(array_filter($_POST[$key]));
                         }
@@ -1049,8 +1049,8 @@ class WPFM_ActionHooks {
                                     $attachment_id = $WPFM_Add_Food_Form->create_attachment($attachment_url);
 
                                     /*
-                                    * set first image of banner as a thumbnail
-                                    */
+                    * set first image of banner as a thumbnail
+                    */
                                     if ($key == 0) {
                                         set_post_thumbnail($post_id, $attachment_id);
                                     }
@@ -1088,7 +1088,7 @@ class WPFM_ActionHooks {
                 switch ($type) {
                     case 'textarea':
                         if (isset($_POST[$key])) {
-                            update_post_meta($post_id, '_' . $key, wp_kses_post(stripslashes($_POST[$key])));
+                            update_post_meta($post_id, '_' . esc_attr($key), wp_kses_post(stripslashes($_POST[$key])));
                         }
                         break;
 
@@ -1100,18 +1100,18 @@ class WPFM_ActionHooks {
                             // Convert date and time value into DB formatted format and save eg. 1970-01-01
                             $date_dbformatted = WPFM_Date_Time::date_parse_from_format($php_date_format, $date);
                             $date_dbformatted = !empty($date_dbformatted) ? $date_dbformatted : $date;
-                            update_post_meta($post_id, '_' . $key, $date_dbformatted);
+                            update_post_meta($post_id, '_' . esc_attr($key), $date_dbformatted);
                         }
                         break;
 
                     default:
                         if (!isset($_POST[$key])) {
-                            update_post_meta($post_id, '_' . $key, '');
+                            update_post_meta($post_id, '_' . esc_attr($key), '');
                             continue 2;
                         } elseif (is_array($_POST[$key])) {
-                            update_post_meta($post_id, '_' . $key, array_filter(array_map('sanitize_text_field', $_POST[$key])));
+                            update_post_meta($post_id, '_' . esc_attr($key), array_filter(array_map('sanitize_text_field', $_POST[$key])));
                         } else {
-                            update_post_meta($post_id, '_' . $key, sanitize_text_field($_POST[$key]));
+                            update_post_meta($post_id, '_' . esc_attr($key), sanitize_text_field($_POST[$key]));
                         }
                         break;
                 }
@@ -1126,19 +1126,19 @@ class WPFM_ActionHooks {
 
                     if (isset($_POST[$key]) && !empty($_POST[$key])) {
                         foreach ($_POST[$key] as $id => $ingredient) {
-                            $term_name = get_term($id)->name;
+                            $term_name = esc_attr(get_term($id)->name);
                             $unit_name = "Unit";
 
                             if ($ingredient['unit_id'] == '' && empty($ingredient['unit_id'])) {
                                 $unit_name = "Unit";
                             } else {
-                                $unit_name = get_term($ingredient['unit_id'])->name;
+                                $unit_name = esc_attr(get_term($ingredient['unit_id'])->name);
                             }
 
                             $item = [
-                                'id'      => $id,
+                                'id' => $id,
                                 'unit_id' => !empty($ingredient['unit_id']) ? $ingredient['unit_id'] : null,
-                                'value'   => !empty($ingredient['value']) ? $ingredient['value'] : null,
+                                'value' => !empty($ingredient['value']) ? $ingredient['value'] : null,
                                 'ingredient_term_name' => $term_name,
                                 'unit_term_name' => $unit_name
                             ];
@@ -1149,9 +1149,9 @@ class WPFM_ActionHooks {
                                 $unit_ids[] = (int)$ingredient['unit_id'];
                             }
                         }
-                        update_post_meta($post_id, '_' . $key, $multiArrayIng);
+                        update_post_meta($post_id, '_' . esc_attr($key), $multiArrayIng);
                     } else {
-                        update_post_meta($post_id, '_' . $key, array());
+                        update_post_meta($post_id, '_' . esc_attr($key), array());
                     }
 
                     $exist_ingredients = get_the_terms($post_id, $taxonomy);
@@ -1169,6 +1169,7 @@ class WPFM_ActionHooks {
                         wp_set_object_terms($post_id, $ingredient_ids, $taxonomy);
                     }
                 }
+
                 // Set Nutrition
                 if ($key = 'food_nutritions') {
                     $taxonomy = 'food_manager_nutrition';
@@ -1176,18 +1177,18 @@ class WPFM_ActionHooks {
 
                     if (isset($_POST[$key]) && !empty($_POST[$key])) {
                         foreach ($_POST[$key] as $id => $nutrition) {
-                            $term_name = get_term($id)->name;
+                            $term_name = esc_attr(get_term($id)->name);
                             $unit_name = "Unit";
                             if ($nutrition['unit_id'] == '' && empty($nutrition['unit_id'])) {
                                 $unit_name = "Unit";
                             } else {
-                                $unit_name = get_term($nutrition['unit_id'])->name;
+                                $unit_name = esc_attr(get_term($nutrition['unit_id'])->name);
                             }
 
                             $item = [
-                                'id'      => $id,
+                                'id' => $id,
                                 'unit_id' => !empty($nutrition['unit_id']) ? $nutrition['unit_id'] : null,
-                                'value'   => !empty($nutrition['value']) ? $nutrition['value'] : null,
+                                'value' => !empty($nutrition['value']) ? $nutrition['value'] : null,
                                 'nutrition_term_name' => $term_name,
                                 'unit_term_name' => $unit_name
                             ];
@@ -1198,9 +1199,9 @@ class WPFM_ActionHooks {
                                 $unit_ids[] = (int)$nutrition['unit_id'];
                             }
                         }
-                        update_post_meta($post_id, '_' . $key, $multiArrayNutri);
+                        update_post_meta($post_id, '_' . esc_attr($key), $multiArrayNutri);
                     } else {
-                        update_post_meta($post_id, '_' . $key, array());
+                        update_post_meta($post_id, '_' . esc_attr($key), array());
                     }
 
                     $exist_nutritions = get_the_terms($post_id, 'food_manager_nutrition');
@@ -1305,11 +1306,11 @@ class WPFM_ActionHooks {
                         }
 
                         if ($key == 'topping_name') {
-                            $toppings_arr[] = $_POST[$key . '_' . $count];
+                            $toppings_arr[] = isset($_POST[$key . '_' . $count]) ? esc_attr($_POST[$key . '_' . $count]) : '';
                         }
 
                         // Toppings Array
-                        $toppings_meta[$count]['_' . $key] = isset($_POST[$key . '_' . $count]) && !empty($_POST[$key . '_' . $count]) ? $_POST[$key . '_' . $count] : '';
+                        $toppings_meta[$count]['_' . $key] = isset($_POST[$key . '_' . $count]) && !empty($_POST[$key . '_' . $count]) ? esc_attr($_POST[$key . '_' . $count]) : '';
                         if ($key == 'topping_options') {
                             $toppings_meta[$count]['_' . $key] = $option_values;
                         }
@@ -1330,7 +1331,7 @@ class WPFM_ActionHooks {
                 if ($term_ids) {
                     foreach ($term_ids as $t_key => $term_id) {
                         $t_key++;
-                        $description = (isset($_POST['topping_description_' . $t_key]) && !empty($_POST['topping_description_' . $t_key])) ? $_POST['topping_description_' . $t_key] : '';
+                        $description = (isset($_POST['topping_description_' . $t_key]) && !empty($_POST['topping_description_' . $t_key])) ? esc_attr($_POST['topping_description_' . $t_key]) : '';
                         wp_update_term($term_id, $taxonomy, array('description' => $description));
                         do_action('wpfm_save_topping_meta_field', array('term_id' => $term_id, 'taxonomy' => $taxonomy, 'count' => $t_key));
                     }
@@ -1341,7 +1342,7 @@ class WPFM_ActionHooks {
 
         // Update repeated_options meta for the count of toppings
         $repeated_options = isset($_POST['repeated_options']) ? $_POST['repeated_options'] : '';
-        update_post_meta($post_id, '_food_repeated_options', $repeated_options);
+        update_post_meta($post_id, '_food_repeated_options', esc_attr($repeated_options));
 
         // Set orders according to previous inserted post.
         $order_menu = $wpdb->get_results("SELECT menu_order FROM $wpdb->posts WHERE ID = " . intval($post_id));
@@ -1365,7 +1366,7 @@ class WPFM_ActionHooks {
         }
         remove_action('wpfm_save_food_data', array($this, 'food_manager_save_food_manager_data'), 20, 3);
         $food_data = array(
-            'ID'          => $post_id,
+            'ID'          => intval($post_id),
         );
         wp_update_post($food_data);
         add_action('wpfm_save_food_data', array($this, 'food_manager_save_food_manager_data'), 20, 3);
@@ -1517,7 +1518,7 @@ class WPFM_ActionHooks {
 
         // Replace the food_manager_type taxonomy metabox for changing checkbox to radio button in backend.
         remove_meta_box('food_manager_typediv', 'food_manager', 'side');
-        add_meta_box('radio-food_manager_typediv', (isset($taxonomy->labels->name) ? $taxonomy->labels->name : ''), array($this, 'replace_food_manager_type_metabox'), 'food_manager', 'side', 'core', array('taxonomy' => $taxonomy_slug));
+        add_meta_box('radio-food_manager_typediv', (isset($taxonomy->labels->name) ? esc_html($taxonomy->labels->name) : ''), array($this, 'replace_food_manager_type_metabox'), 'food_manager', 'side', 'core', array('taxonomy' => $taxonomy_slug));
         if ('add' != $screen->action) {
 
             // Show food menu Shortcode on edit menu page - admin.
@@ -1578,7 +1579,7 @@ class WPFM_ActionHooks {
             </th>
             <td>
                 <?php $image_id = get_term_meta($term->term_id, 'image_id', true); ?>
-                <input type="hidden" id="image_id" name="image_id" value="<?php echo $image_id; ?>">
+                <input type="hidden" id="image_id" name="image_id" value="<?php echo esc_attr($image_id); ?>">
                 <div id="image_wrapper">
                     <?php if ($image_id) { ?>
                         <?php echo wp_get_attachment_image($image_id, 'thumbnail'); ?>
@@ -1635,7 +1636,8 @@ class WPFM_ActionHooks {
     function add_custom_taxonomy_script_for_food_type() {
         if (!isset($_GET['taxonomy']) || $_GET['taxonomy'] != 'food_manager_type') {
             return;
-        } ?>
+        }
+    ?>
 
         <script>
             jQuery(document).ready(function($) {
@@ -1712,12 +1714,12 @@ class WPFM_ActionHooks {
     function add_custom_taxonomy_image_for_food_category($taxonomy) {
     ?>
         <div class="form-field term-group">
-            <label for="food_cat_image_id" class="wpfm-food-category-tax-image"><?php _e('Image/Icon', 'taxt-domain'); ?></label>
+            <label for="food_cat_image_id" class="wpfm-food-category-tax-image"><?php esc_html_e('Image/Icon', 'taxt-domain'); ?></label>
             <input type="hidden" id="food_cat_image_id" name="food_cat_image_id" class="custom_media_url" value="">
             <div id="image_wrapper"></div>
             <p>
-                <input type="button" class="button button-secondary taxonomy_media_button" id="taxonomy_media_button" name="taxonomy_media_button" value="<?php _e('Add Image', 'taxt-domain'); ?>">
-                <input type="button" class="button button-secondary taxonomy_media_remove" id="taxonomy_media_remove" name="taxonomy_media_remove" value="<?php _e('Remove Image', 'taxt-domain'); ?>">
+                <input type="button" class="button button-secondary taxonomy_media_button" id="taxonomy_media_button" name="taxonomy_media_button" value="<?php esc_attr_e('Add Image', 'taxt-domain'); ?>">
+                <input type="button" class="button button-secondary taxonomy_media_remove" id="taxonomy_media_remove" name="taxonomy_media_remove" value="<?php esc_attr_e('Remove Image', 'taxt-domain'); ?>">
             </p>
         </div>
     <?php
@@ -1751,19 +1753,19 @@ class WPFM_ActionHooks {
     function update_custom_taxonomy_image_for_food_category($term, $taxonomy) { ?>
         <tr class="form-field term-group-wrap">
             <th scope="row">
-                <label for="food_cat_image_id"><?php _e('Image', 'taxt-domain'); ?></label>
+                <label for="food_cat_image_id"><?php esc_html_e('Image', 'taxt-domain'); ?></label>
             </th>
             <td>
                 <?php $food_cat_image_id = get_term_meta($term->term_id, 'food_cat_image_id', true); ?>
-                <input type="hidden" id="food_cat_image_id" name="food_cat_image_id" value="<?php echo $food_cat_image_id; ?>">
+                <input type="hidden" id="food_cat_image_id" name="food_cat_image_id" value="<?php echo esc_attr($food_cat_image_id); ?>">
                 <div id="image_wrapper">
                     <?php if ($food_cat_image_id) { ?>
                         <?php echo wp_get_attachment_image($food_cat_image_id, 'thumbnail'); ?>
                     <?php } ?>
                 </div>
                 <p>
-                    <input type="button" class="button button-secondary taxonomy_media_button" id="taxonomy_media_button" name="taxonomy_media_button" value="<?php _e('Add Image', 'taxt-domain'); ?>">
-                    <input type="button" class="button button-secondary taxonomy_media_remove" id="taxonomy_media_remove" name="taxonomy_media_remove" value="<?php _e('Remove Image', 'taxt-domain'); ?>">
+                    <input type="button" class="button button-secondary taxonomy_media_button" id="taxonomy_media_button" name="taxonomy_media_button" value="<?php esc_attr_e('Add Image', 'taxt-domain'); ?>">
+                    <input type="button" class="button button-secondary taxonomy_media_remove" id="taxonomy_media_remove" name="taxonomy_media_remove" value="<?php esc_attr_e('Remove Image', 'taxt-domain'); ?>">
                 </p>
                 </div>
             </td>
@@ -1773,7 +1775,7 @@ class WPFM_ActionHooks {
 
     /**
      * Update the 'food_manager_category' taxonomy image field
-     * 
+     *
      * @access public
      * @param int $term_id
      * @param int $tt_id
@@ -1782,7 +1784,7 @@ class WPFM_ActionHooks {
      */
     function updated_custom_taxonomy_image_for_food_category($term_id, $tt_id) {
         if (isset($_POST['food_cat_image_id']) && '' !== $_POST['food_cat_image_id']) {
-            $image = $_POST['food_cat_image_id'];
+            $image = sanitize_text_field($_POST['food_cat_image_id']);
             update_term_meta($term_id, 'food_cat_image_id', $image);
         } else {
             update_term_meta($term_id, 'food_cat_image_id', '');
@@ -1791,7 +1793,7 @@ class WPFM_ActionHooks {
 
     /**
      * Enqueue the wp_media library
-     * 
+     *
      * @access public
      * @return void
      * @since 1.0.0
@@ -1805,7 +1807,7 @@ class WPFM_ActionHooks {
 
     /**
      * Custom script
-     * 
+     *
      * @access public
      * @return void
      * @since 1.0.0
@@ -1813,7 +1815,8 @@ class WPFM_ActionHooks {
     function add_custom_taxonomy_script_for_food_category() {
         if (!isset($_GET['taxonomy']) || $_GET['taxonomy'] != 'food_manager_category') {
             return;
-        } ?>
+        }
+    ?>
 
         <script>
             jQuery(document).ready(function($) {
@@ -1863,7 +1866,7 @@ class WPFM_ActionHooks {
 
     /**
      * Display new columns values
-     * 
+     *
      * @access public
      * @param string $columns
      * @param string $column
@@ -1881,7 +1884,7 @@ class WPFM_ActionHooks {
 
     /**
      * Localise the plugin text domain ('wp-food-manager').
-     * 
+     *
      * @access public
      * @return void
      * @since 1.0.0
@@ -1895,7 +1898,7 @@ class WPFM_ActionHooks {
 
     /**
      * Load function and template files.
-     * 
+     *
      * @access public
      * @return void
      * @since 1.0.0
@@ -1913,26 +1916,26 @@ class WPFM_ActionHooks {
      * @since 1.0.0
      */
     public function frontend_scripts() {
-        $ajax_url         = WPFM_Ajax::get_endpoint();
+        $ajax_url = esc_url(WPFM_Ajax::get_endpoint());
         $ajax_filter_deps = array('jquery');
-        $chosen_shortcodes   = array('add_food', 'food_dashboard', 'foods', 'food_categories', 'food_type');
+        $chosen_shortcodes = array('add_food', 'food_dashboard', 'foods', 'food_categories', 'food_type');
         $chosen_used_on_page = has_wpfm_shortcode(null, $chosen_shortcodes);
 
         // jQuery Chosen - vendor
         if (apply_filters('food_manager_chosen_enabled', $chosen_used_on_page)) {
-            wp_register_script('chosen', WPFM_PLUGIN_URL . '/assets/js/jquery-chosen/chosen.jquery.min.js', array('jquery'), '1.1.0', true);
-            wp_register_script('wp-food-manager-term-multiselect', WPFM_PLUGIN_URL . '/assets/js/term-multiselect.min.js', array('jquery', 'chosen'), WPFM_VERSION, true);
-            wp_register_script('wp-food-manager-term-select-multi-appearance', WPFM_PLUGIN_URL . '/assets/js/term-select-multi-appearance.min.js', array('jquery', 'chosen'), WPFM_VERSION, true);
-            wp_register_script('wp-food-manager-multiselect', WPFM_PLUGIN_URL . '/assets/js/multiselect.min.js', array('jquery', 'chosen'), WPFM_VERSION, true);
-            wp_enqueue_style('chosen', WPFM_PLUGIN_URL . '/assets/css/chosen.min.css');
+            wp_register_script('chosen', esc_url(WPFM_PLUGIN_URL . '/assets/js/jquery-chosen/chosen.jquery.min.js'), array('jquery'), '1.1.0', true);
+            wp_register_script('wp-food-manager-term-multiselect', esc_url(WPFM_PLUGIN_URL . '/assets/js/term-multiselect.min.js'), array('jquery', 'chosen'), WPFM_VERSION, true);
+            wp_register_script('wp-food-manager-term-select-multi-appearance', esc_url(WPFM_PLUGIN_URL . '/assets/js/term-select-multi-appearance.min.js'), array('jquery', 'chosen'), WPFM_VERSION, true);
+            wp_register_script('wp-food-manager-multiselect', esc_url(WPFM_PLUGIN_URL . '/assets/js/multiselect.min.js'), array('jquery', 'chosen'), WPFM_VERSION, true);
+            wp_enqueue_style('chosen', esc_url(WPFM_PLUGIN_URL . '/assets/css/chosen.min.css'));
             $ajax_filter_deps[] = 'chosen';
         }
 
         // File upload - vendor
         if (apply_filters('wpfm_ajax_file_upload_enabled', true)) {
-            wp_register_script('jquery-iframe-transport', WPFM_PLUGIN_URL . '/assets/js/jquery-fileupload/jquery.iframe-transport.min.js', array('jquery'), '1.8.3', true);
-            wp_register_script('jquery-fileupload', WPFM_PLUGIN_URL . '/assets/js/jquery-fileupload/jquery.fileupload.min.js', array('jquery', 'jquery-iframe-transport', 'jquery-ui-widget'), '5.42.3', true);
-            wp_register_script('wpfm-ajax-file-upload', WPFM_PLUGIN_URL . '/assets/js/ajax-file-upload.min.js', array('jquery', 'jquery-fileupload'), WPFM_VERSION, true);
+            wp_register_script('jquery-iframe-transport', esc_url(WPFM_PLUGIN_URL . '/assets/js/jquery-fileupload/jquery.iframe-transport.min.js'), array('jquery'), '1.8.3', true);
+            wp_register_script('jquery-fileupload', esc_url(WPFM_PLUGIN_URL . '/assets/js/jquery-fileupload/jquery.fileupload.min.js'), array('jquery', 'jquery-iframe-transport', 'jquery-ui-widget'), '5.42.3', true);
+            wp_register_script('wpfm-ajax-file-upload', esc_url(WPFM_PLUGIN_URL . '/assets/js/ajax-file-upload.min.js'), array('jquery', 'jquery-fileupload'), WPFM_VERSION, true);
             ob_start();
             get_food_manager_template('form-fields/uploaded-file-html.php', array('name' => '', 'value' => '', 'extension' => 'jpg'));
             $js_field_html_img = ob_get_clean();
@@ -1940,10 +1943,10 @@ class WPFM_ActionHooks {
             get_food_manager_template('form-fields/uploaded-file-html.php', array('name' => '', 'value' => '', 'extension' => 'zip'));
             $js_field_html = ob_get_clean();
             wp_localize_script('wpfm-ajax-file-upload', 'wpfm_ajax_file_upload', array(
-                'ajax_url'               => $ajax_url,
-                'js_field_html_img'      => esc_js(str_replace("\n", "", $js_field_html_img)),
-                'js_field_html'          => esc_js(str_replace("\n", "", $js_field_html)),
-                'i18n_invalid_file_type' => __('The file type you have mentioned is invalid.', 'wp-food-manager')
+                'ajax_url' => $ajax_url,
+                'js_field_html_img' => wp_json_encode(str_replace(array("\n", "\r"), '', $js_field_html_img)),
+                'js_field_html' => wp_json_encode(str_replace(array("\n", "\r"), '', $js_field_html)),
+                'i18n_invalid_file_type' => esc_html__('The file type you have mentioned is invalid.', 'wp-food-manager')
             ));
         }
         wp_enqueue_script('jquery');
@@ -1951,77 +1954,77 @@ class WPFM_ActionHooks {
         wp_enqueue_script('jquery-ui-sortable');
 
         // Frontend Css
-        wp_enqueue_style('wpfm-frontend', WPFM_PLUGIN_URL . '/assets/css/frontend.min.css');
+        wp_enqueue_style('wpfm-frontend', esc_url(WPFM_PLUGIN_URL . '/assets/css/frontend.min.css'));
 
         // Frontend js
-        wp_register_script('wp-food-manager-frontend', WPFM_PLUGIN_URL . '/assets/js/frontend.min.js', array('jquery'), WPFM_VERSION, true);
+        wp_register_script('wp-food-manager-frontend', esc_url(WPFM_PLUGIN_URL . '/assets/js/frontend.min.js'), array('jquery'), WPFM_VERSION, true);
         wp_enqueue_script('wp-food-manager-frontend');
 
         // Common js
-        wp_register_script('wp-food-manager-common', WPFM_PLUGIN_URL . '/assets/js/common.min.js', array('jquery'), WPFM_VERSION, true);
+        wp_register_script('wp-food-manager-common', esc_url(WPFM_PLUGIN_URL . '/assets/js/common.min.js'), array('jquery'), WPFM_VERSION, true);
         wp_enqueue_script('wp-food-manager-common');
 
         // Food submission forms and validation js
-        wp_register_script('wp-food-manager-food-submission', WPFM_PLUGIN_URL . '/assets/js/food-submission.min.js', array('jquery', 'jquery-ui-core', 'jquery-ui-datepicker'), WPFM_VERSION, true);
+        wp_register_script('wp-food-manager-food-submission', esc_url(WPFM_PLUGIN_URL . '/assets/js/food-submission.min.js'), array('jquery', 'jquery-ui-core', 'jquery-ui-datepicker'), WPFM_VERSION, true);
         wp_enqueue_script('wp-food-manager-food-submission');
         wp_localize_script('wp-food-manager-food-submission', 'wpfm_food_submission', array(
             'i18n_datepicker_format' => WPFM_Date_Time::get_datepicker_format(),
-            'ajax_url'      => admin_url('admin-ajax.php'),
+            'ajax_url' => esc_url(admin_url('admin-ajax.php')),
         ));
         wp_enqueue_script('wpfm-accounting');
         wp_enqueue_style('dashicons');
-        wp_register_script('wpfm-accounting', WPFM_PLUGIN_URL . '/assets/js/accounting/accounting.min.js', array('jquery'), WPFM_VERSION, true);
+        wp_register_script('wpfm-accounting', esc_url(WPFM_PLUGIN_URL . '/assets/js/accounting/accounting.min.js'), array('jquery'), WPFM_VERSION, true);
         wp_localize_script(
             'wpfm-accounting',
             'wpfm_accounting_params',
             array(
-                'wpfm_sale_less_than_regular_error' => __('Please enter in a value less than the regular price.', 'woocommerce'),
+                'wpfm_sale_less_than_regular_error' => esc_html__('Please enter in a value less than the regular price.', 'woocommerce'),
             )
         );
-        wp_register_script('wpfm-content-food-listing', WPFM_PLUGIN_URL . '/assets/js/content-food-listing.min.js', array('jquery', 'wp-food-manager-common'), WPFM_VERSION, true);
+        wp_register_script('wpfm-content-food-listing', esc_url(WPFM_PLUGIN_URL . '/assets/js/content-food-listing.min.js'), array('jquery', 'wp-food-manager-common'), WPFM_VERSION, true);
         wp_localize_script('wpfm-content-food-listing', 'wpfm_content_food_listing', array(
-            'i18n_dateLabel' => __('Select Date', 'wp-food-manager'),
-            'i18n_today' => __('Today', 'wp-food-manager'),
-            'i18n_tomorrow' => __('Tomorrow', 'wp-food-manager'),
-            'i18n_thisWeek' => __('This Week', 'wp-food-manager'),
-            'i18n_nextWeek' => __('Next Week', 'wp-food-manager'),
-            'i18n_thisMonth' => __('This Month', 'wp-food-manager'),
-            'i18n_nextMonth' => __('Next Month', 'wp-food-manager'),
-            'i18n_thisYear' => __('This Year', 'wp-food-manager'),
-            'i18n_nextYear' => __('Next Month', 'wp-food-manager')
+            'i18n_dateLabel' => esc_html__('Select Date', 'wp-food-manager'),
+            'i18n_today' => esc_html__('Today', 'wp-food-manager'),
+            'i18n_tomorrow' => esc_html__('Tomorrow', 'wp-food-manager'),
+            'i18n_thisWeek' => esc_html__('This Week', 'wp-food-manager'),
+            'i18n_nextWeek' => esc_html__('Next Week', 'wp-food-manager'),
+            'i18n_thisMonth' => esc_html__('This Month', 'wp-food-manager'),
+            'i18n_nextMonth' => esc_html__('Next Month', 'wp-food-manager'),
+            'i18n_thisYear' => esc_html__('This Year', 'wp-food-manager'),
+            'i18n_nextYear' => esc_html__('Next Month', 'wp-food-manager')
         ));
 
         // Ajax filters js
-        wp_register_script('wpfm-ajax-filters', WPFM_PLUGIN_URL . '/assets/js/food-ajax-filters.min.js', $ajax_filter_deps, WPFM_VERSION, true);
+        wp_register_script('wpfm-ajax-filters', esc_url(WPFM_PLUGIN_URL . '/assets/js/food-ajax-filters.min.js'), $ajax_filter_deps, WPFM_VERSION, true);
         wp_localize_script('wpfm-ajax-filters', 'wpfm_ajax_filters', array(
-            'ajax_url'                => $ajax_url,
-            'is_rtl'                  => is_rtl() ? 1 : 0,
-            'lang'                    => apply_filters('wpfm_lang', null)
+            'ajax_url' => $ajax_url,
+            'is_rtl' => is_rtl() ? 1 : 0,
+            'lang' => apply_filters('wpfm_lang', null)
         ));
 
         // Dashboard
-        wp_register_script('wp-food-manager-food-dashboard', WPFM_PLUGIN_URL . '/assets/js/food-dashboard.min.js', array('jquery'), WPFM_VERSION, true);
+        wp_register_script('wp-food-manager-food-dashboard', esc_url(WPFM_PLUGIN_URL . '/assets/js/food-dashboard.min.js'), array('jquery'), WPFM_VERSION, true);
         wp_localize_script('wp-food-manager-food-dashboard', 'food_manager_food_dashboard', array(
-            'i18n_btnOkLabel' => __('Delete', 'wp-food-manager'),
-            'i18n_btnCancelLabel' => __('Cancel', 'wp-food-manager'),
-            'i18n_confirm_delete' => __('Are you sure you want to delete this food?', 'wp-food-manager')
+            'i18n_btnOkLabel' => esc_html__('Delete', 'wp-food-manager'),
+            'i18n_btnCancelLabel' => esc_html__('Cancel', 'wp-food-manager'),
+            'i18n_confirm_delete' => esc_html__('Are you sure you want to delete this food?', 'wp-food-manager')
         ));
-        wp_enqueue_style('wpfm-jquery-ui-css', WPFM_PLUGIN_URL . '/assets/css/jquery-ui/jquery-ui.min.css');
-        wp_register_script('wpfm-slick-script', WPFM_PLUGIN_URL . '/assets/js/slick/slick.min.js', array('jquery'));
-        wp_register_style('wpfm-slick-style', WPFM_PLUGIN_URL . '/assets/js/slick/slick.min.css', array());
-        wp_register_style('wpfm-slick-theme-style', WPFM_PLUGIN_URL . '/assets/js/slick/slick-theme.min.css', array());
-        wp_register_style('wpfm-grid-style', WPFM_PLUGIN_URL . '/assets/css/wpfm-grid.min.css');
-        wp_register_style('wp-food-manager-font-style', WPFM_PLUGIN_URL . '/assets/fonts/style.min.css');
+        wp_enqueue_style('wpfm-jquery-ui-css', esc_url(WPFM_PLUGIN_URL . '/assets/css/jquery-ui/jquery-ui.min.css'));
+        wp_register_script('wpfm-slick-script', esc_url(WPFM_PLUGIN_URL . '/assets/js/slick/slick.min.js'), array('jquery'));
+        wp_register_style('wpfm-slick-style', esc_url(WPFM_PLUGIN_URL . '/assets/js/slick/slick.min.css'), array());
+        wp_register_style('wpfm-slick-theme-style', esc_url(WPFM_PLUGIN_URL . '/assets/js/slick/slick-theme.min.css'), array());
+        wp_register_style('wpfm-grid-style', esc_url(WPFM_PLUGIN_URL . '/assets/css/wpfm-grid.min.css'));
+        wp_register_style('wp-food-manager-font-style', esc_url(WPFM_PLUGIN_URL . '/assets/fonts/style.min.css'));
         wp_enqueue_style('wpfm-grid-style');
         wp_enqueue_style('wp-food-manager-font-style');
         wp_enqueue_style('wp-food-manager-food-icons-style');
         wp_enqueue_editor();
-        wp_register_script('wpfm-term-autocomplete', WPFM_PLUGIN_URL . '/assets/js/term-autocomplete.min.js', array('jquery'), WPFM_VERSION, true);
+        wp_register_script('wpfm-term-autocomplete', esc_url(WPFM_PLUGIN_URL . '/assets/js/term-autocomplete.min.js'), array('jquery'), WPFM_VERSION, true);
         wp_localize_script(
             'wpfm-term-autocomplete',
             'wpfm_term_autocomplete',
             array(
-                'ajax_url' => admin_url('admin-ajax.php')
+                'ajax_url' => esc_url(admin_url('admin-ajax.php'))
             )
         );
     }
@@ -2036,10 +2039,10 @@ class WPFM_ActionHooks {
     public function admin_menu() {
         $this->settings_page = WPFM_Settings::instance();
         if (get_option('food_manager_enable_field_editor', true)) {
-            add_submenu_page('edit.php?post_type=food_manager', __('Field Editor', 'wp-food-manager'), __('Field Editor', 'wp-food-manager'), 'manage_options', 'food-manager-form-editor', array(WPFM_Field_Editor::instance(), 'output'));
+            add_submenu_page('edit.php?post_type=food_manager', esc_html__('Field Editor', 'wp-food-manager'), esc_html__('Field Editor', 'wp-food-manager'), 'manage_options', 'food-manager-form-editor', array(WPFM_Field_Editor::instance(), 'output'));
         }
-        add_submenu_page('edit.php?post_type=food_manager', __('Settings', 'wp-food-manager'), __('Settings', 'wp-food-manager'), 'manage_options', 'food-manager-settings', array($this->settings_page, 'output'));
-        add_dashboard_page(__('Setup', 'wp-food-manager'), __('Setup', 'wp-food-manager'), 'manage_options', 'food_manager_setup', array(WPFM_Setup::instance(), 'output'));
+        add_submenu_page('edit.php?post_type=food_manager', esc_html__('Settings', 'wp-food-manager'), esc_html__('Settings', 'wp-food-manager'), 'manage_options', 'food-manager-settings', array($this->settings_page, 'output'));
+        add_dashboard_page(esc_html__('Setup', 'wp-food-manager'), esc_html__('Setup', 'wp-food-manager'), 'manage_options', 'food_manager_setup', array(WPFM_Setup::instance(), 'output'));
     }
 
     /**
@@ -2054,8 +2057,8 @@ class WPFM_ActionHooks {
         $screen = get_current_screen();
         $jquery_version = isset($wp_scripts->registered['jquery-ui-core']->ver) ? $wp_scripts->registered['jquery-ui-core']->ver : '1.9.2';
 
-        wp_enqueue_style('wpfm-backend-css', WPFM_PLUGIN_URL . '/assets/css/backend.min.css');
-        wp_enqueue_style('jquery-ui-style', WPFM_PLUGIN_URL . '/assets/css/jquery-ui/jquery-ui.min.css', array(), $jquery_version);
+        wp_enqueue_style('wpfm-backend-css', esc_url(WPFM_PLUGIN_URL) . '/assets/css/backend.min.css');
+        wp_enqueue_style('jquery-ui-style', esc_url(WPFM_PLUGIN_URL) . '/assets/css/jquery-ui/jquery-ui.min.css', array(), $jquery_version);
 
         $units = get_terms([
             'taxonomy'   => 'food_manager_unit',
@@ -2071,12 +2074,12 @@ class WPFM_ActionHooks {
             }
         }
 
-        wp_register_script('wpfm-admin', WPFM_PLUGIN_URL . '/assets/js/admin.min.js', array('jquery', 'jquery-ui-core', 'jquery-ui-datepicker'), WPFM_VERSION, true);
+        wp_register_script('wpfm-admin', esc_url(WPFM_PLUGIN_URL) . '/assets/js/admin.min.js', array('jquery', 'jquery-ui-core', 'jquery-ui-datepicker'), WPFM_VERSION, true);
         wp_localize_script(
             'wpfm-admin',
             'wpfm_admin',
             array(
-                'ajax_url' => admin_url('admin-ajax.php'),
+                'ajax_url' => esc_url(admin_url('admin-ajax.php')),
                 'security' => wp_create_nonce('wpfm-admin-security'),
                 'start_of_week'                      => get_option('start_of_week'),
                 'i18n_datepicker_format'             => WPFM_Date_Time::get_datepicker_format(),
@@ -2092,24 +2095,24 @@ class WPFM_ActionHooks {
         );
 
         wp_enqueue_script('wpfm-admin');
-        wp_register_script('wp-food-manager-admin-settings', WPFM_PLUGIN_URL . '/assets/js/admin-settings.min.js', array('jquery'), WPFM_VERSION, true);
+        wp_register_script('wp-food-manager-admin-settings', esc_url(WPFM_PLUGIN_URL) . '/assets/js/admin-settings.min.js', array('jquery'), WPFM_VERSION, true);
         if (is_admin() && !isset($_GET['page']) == 'wc-settings') {
             wp_enqueue_script('wp-food-manager-admin-settings');
         }
 
-        wp_register_script('chosen', WPFM_PLUGIN_URL . '/assets/js/jquery-chosen/chosen.jquery.min.js', array('jquery'), '1.1.0', true);
+        wp_register_script('chosen', esc_url(WPFM_PLUGIN_URL) . '/assets/js/jquery-chosen/chosen.jquery.min.js', array('jquery'), '1.1.0', true);
         wp_enqueue_script('chosen');
-        wp_enqueue_style('chosen', WPFM_PLUGIN_URL . '/assets/css/chosen.min.css');
-        wp_enqueue_style('wpfm-font-style', WPFM_PLUGIN_URL . '/assets/fonts/style.min.css');
+        wp_enqueue_style('chosen', esc_url(WPFM_PLUGIN_URL) . '/assets/css/chosen.min.css');
+        wp_enqueue_style('wpfm-font-style', esc_url(WPFM_PLUGIN_URL) . '/assets/fonts/style.min.css');
         wp_enqueue_script('jquery');
         wp_enqueue_script('jquery-ui-core');
         wp_enqueue_script('jquery-ui-sortable');
-        wp_register_script('wpfm-accounting', WPFM_PLUGIN_URL . '/assets/js/accounting/accounting.min.js', array('jquery'), WPFM_VERSION, true);
+        wp_register_script('wpfm-accounting', esc_url(WPFM_PLUGIN_URL) . '/assets/js/accounting/accounting.min.js', array('jquery'), WPFM_VERSION, true);
         wp_localize_script(
             'wpfm-accounting',
             'wpfm_accounting_params',
             array(
-                'wpfm_sale_less_than_regular_error' => __('Please enter in a value less than the regular price.', 'woocommerce'),
+                'wpfm_sale_less_than_regular_error' => esc_html__('Please enter in a value less than the regular price.', 'woocommerce'),
             )
         );
         wp_enqueue_script('wpfm-accounting');
@@ -2117,9 +2120,9 @@ class WPFM_ActionHooks {
 
         // File upload - vendor
         if (apply_filters('wpfm_ajax_file_upload_enabled', true)) {
-            wp_register_script('jquery-iframe-transport', WPFM_PLUGIN_URL . '/assets/js/jquery-fileupload/jquery.iframe-transport.min.js', array('jquery'), '1.8.3', true);
-            wp_register_script('jquery-fileupload', WPFM_PLUGIN_URL . '/assets/js/jquery-fileupload/jquery.fileupload.min.js', array('jquery', 'jquery-iframe-transport', 'jquery-ui-widget'), '5.42.3', true);
-            wp_register_script('wpfm-ajax-file-upload', WPFM_PLUGIN_URL . '/assets/js/ajax-file-upload.min.js', array('jquery', 'jquery-fileupload'), WPFM_VERSION, true);
+            wp_register_script('jquery-iframe-transport', esc_url(WPFM_PLUGIN_URL) . '/assets/js/jquery-fileupload/jquery.iframe-transport.min.js', array('jquery'), '1.8.3', true);
+            wp_register_script('jquery-fileupload', esc_url(WPFM_PLUGIN_URL) . '/assets/js/jquery-fileupload/jquery.fileupload.min.js', array('jquery', 'jquery-iframe-transport', 'jquery-ui-widget'), '5.42.3', true);
+            wp_register_script('wpfm-ajax-file-upload', esc_url(WPFM_PLUGIN_URL) . '/assets/js/ajax-file-upload.min.js', array('jquery', 'jquery-fileupload'), WPFM_VERSION, true);
 
             ob_start();
             get_food_manager_template('form-fields/uploaded-file-html.php', array('name' => '', 'value' => '', 'extension' => 'jpg'));
@@ -2129,36 +2132,36 @@ class WPFM_ActionHooks {
             get_food_manager_template('form-fields/uploaded-file-html.php', array('name' => '', 'value' => '', 'extension' => 'zip'));
             $js_field_html = ob_get_clean();
             wp_localize_script('wpfm-ajax-file-upload', 'wpfm_ajax_file_upload', array(
-                'ajax_url'               => admin_url('admin-ajax.php'),
+                'ajax_url'               => esc_url(admin_url('admin-ajax.php')),
                 'js_field_html_img'      => esc_js(str_replace("\n", "", $js_field_html_img)),
                 'js_field_html'          => esc_js(str_replace("\n", "", $js_field_html)),
-                'i18n_invalid_file_type' => __('The file type you have mentioned is invalid.', 'wp-food-manager')
+                'i18n_invalid_file_type' => esc_html__('The file type you have mentioned is invalid.', 'wp-food-manager')
             ));
         }
         wp_enqueue_editor();
-        wp_register_script('chosen', WPFM_PLUGIN_URL . '/assets/js/jquery-chosen/chosen.jquery.min.js', array('jquery'), '1.1.0', true);
-        wp_register_script('wp-food-manager-form-field-editor', WPFM_PLUGIN_URL . '/assets/js/field-editor.min.js', array('jquery', 'jquery-ui-sortable', 'chosen'), WPFM_VERSION, true);
+        wp_register_script('chosen', esc_url(WPFM_PLUGIN_URL) . '/assets/js/jquery-chosen/chosen.jquery.min.js', array('jquery'), '1.1.0', true);
+        wp_register_script('wp-food-manager-form-field-editor', esc_url(WPFM_PLUGIN_URL) . '/assets/js/field-editor.min.js', array('jquery', 'jquery-ui-sortable', 'chosen'), WPFM_VERSION, true);
         wp_localize_script(
             'wp-food-manager-form-field-editor',
             'wpfm_form_editor',
             array(
-                'cofirm_delete_i18n'                    => __('Are you sure you want to delete this row?', 'wp-food-manager'),
-                'cofirm_reset_i18n'                     => __('Are you sure you want to reset your changes? This cannot be undone.', 'wp-food-manager'),
-                'ajax_url'                              => admin_url('admin-ajax.php'),
+                'cofirm_delete_i18n'                    => esc_html__('Are you sure you want to delete this row?', 'wp-food-manager'),
+                'cofirm_reset_i18n'                     => esc_html__('Are you sure you want to reset your changes? This cannot be undone.', 'wp-food-manager'),
+                'ajax_url'                              => esc_url(admin_url('admin-ajax.php')),
                 'wpfm_form_editor_security' => wp_create_nonce('_nonce_wpfm_form_editor_security'),
             )
         );
 
         if (isset($_GET['page']) && 'food_manager_setup' === $_GET['page']) {
-            wp_enqueue_style('food_manager_setup_css', WPFM_PLUGIN_URL . '/assets/css/setup.min.css', array('dashicons'));
+            wp_enqueue_style('food_manager_setup_css', esc_url(WPFM_PLUGIN_URL) . '/assets/css/setup.min.css', array('dashicons'));
         }
 
-        wp_register_script('wpfm-term-autocomplete', WPFM_PLUGIN_URL . '/assets/js/term-autocomplete.min.js', array('jquery', 'jquery-ui-autocomplete'), WPFM_VERSION, true);
+        wp_register_script('wpfm-term-autocomplete', esc_url(WPFM_PLUGIN_URL) . '/assets/js/term-autocomplete.min.js', array('jquery', 'jquery-ui-autocomplete'), WPFM_VERSION, true);
         wp_localize_script(
             'wpfm-term-autocomplete',
             'wpfm_term_autocomplete',
             array(
-                'ajax_url' => admin_url('admin-ajax.php'),
+                'ajax_url' => esc_url(admin_url('admin-ajax.php')),
                 'security' => wp_create_nonce('wpfm-autocomplete-security'),
             )
         );
@@ -2178,7 +2181,7 @@ class WPFM_ActionHooks {
         }
         switch ($screen->id) {
             case 'options-permalink':
-                include WPFM_PLUGIN_DIR . '/admin/wpfm-permalink-settings.php';
+                include esc_url(WPFM_PLUGIN_DIR) . '/admin/wpfm-permalink-settings.php';
                 break;
         }
     }
@@ -2195,18 +2198,18 @@ class WPFM_ActionHooks {
         $field_types = apply_filters(
             'food_manager_form_group_field_types',
             array(
-                'text'        => __('Text', 'wp-food-manager'),
-                'checkbox'    => __('Checkbox', 'wp-food-manager'),
-                'date'        => __('Date', 'wp-food-manager'),
-                'file'        => __('File', 'wp-food-manager'),
-                'hidden'      => __('Hidden', 'wp-food-manager'),
-                'multiselect' => __('Multiselect', 'wp-food-manager'),
-                'number'      => __('Number', 'wp-food-manager'),
-                'password'    => __('Password', 'wp-food-manager'),
-                'radio'       => __('Radio', 'wp-food-manager'),
-                'select'      => __('Select', 'wp-food-manager'),
-                'textarea'    => __('Textarea', 'wp-food-manager'),
-                'options'    => __('Options', 'wp-food-manager'),
+                'text'        => esc_html__('Text', 'wp-food-manager'),
+                'checkbox'    => esc_html__('Checkbox', 'wp-food-manager'),
+                'date'        => esc_html__('Date', 'wp-food-manager'),
+                'file'        => esc_html__('File', 'wp-food-manager'),
+                'hidden'      => esc_html__('Hidden', 'wp-food-manager'),
+                'multiselect' => esc_html__('Multiselect', 'wp-food-manager'),
+                'number'      => esc_html__('Number', 'wp-food-manager'),
+                'password'    => esc_html__('Password', 'wp-food-manager'),
+                'radio'       => esc_html__('Radio', 'wp-food-manager'),
+                'select'      => esc_html__('Select', 'wp-food-manager'),
+                'textarea'    => esc_html__('Textarea', 'wp-food-manager'),
+                'options'    => esc_html__('Options', 'wp-food-manager'),
             )
         );
         ob_start();
@@ -2217,7 +2220,7 @@ class WPFM_ActionHooks {
             'label'       => '',
             'placeholder' => '',
         );
-        include WPFM_PLUGIN_DIR . '/admin/wpfm-field-editor-group-form-field-row.php';
+        include esc_url(WPFM_PLUGIN_DIR) . '/admin/wpfm-field-editor-group-form-field-row.php';
         echo esc_attr(ob_get_clean());
         wp_die();
     }
@@ -2236,8 +2239,8 @@ class WPFM_ActionHooks {
         foreach ($wpfm_Settings->settings as $section) {
             foreach ($section[1] as $option) {
                 if (isset($option['std']))
-                    add_option($option['name'], $option['std']);
-                register_setting($this->settings_group, $option['name']);
+                    add_option(esc_attr($option['name']), $option['std']);
+                register_setting($this->settings_group, esc_attr($option['name']));
             }
         }
     }
@@ -2338,13 +2341,13 @@ class WPFM_ActionHooks {
         $single_term = !empty($checked_terms) && !is_wp_error($checked_terms) ? array_pop($checked_terms) : false;
         $single_term_id = $single_term ? (int) $single_term->term_id : 0; ?>
 
-        <div id="taxonomy-<?php echo $tax_name; ?>" class="radio-buttons-for-taxonomies categorydiv">
-            <ul id="<?php echo $tax_name; ?>-tabs" class="category-tabs">
-                <li class="tabs"><a href="#<?php echo $tax_name; ?>-all"><?php echo $taxonomy->labels->all_items; ?></a></li>
-                <li class="hide-if-no-js"><a href="#<?php echo $tax_name; ?>-pop"><?php echo esc_html($taxonomy->labels->most_used); ?></a></li>
+        <div id="taxonomy-<?php echo esc_attr($tax_name); ?>" class="radio-buttons-for-taxonomies categorydiv">
+            <ul id="<?php echo esc_attr($tax_name); ?>-tabs" class="category-tabs">
+                <li class="tabs"><a href="#<?php echo esc_attr($tax_name); ?>-all"><?php echo esc_html($taxonomy->labels->all_items); ?></a></li>
+                <li class="hide-if-no-js"><a href="#<?php echo esc_attr($tax_name); ?>-pop"><?php echo esc_html($taxonomy->labels->most_used); ?></a></li>
             </ul>
-            <div id="<?php echo $tax_name; ?>-pop" class="tabs-panel" style="display: none;">
-                <ul id="<?php echo $tax_name; ?>checklist-pop" class="categorychecklist form-no-clear">
+            <div id="<?php echo esc_attr($tax_name); ?>-pop" class="tabs-panel" style="display: none;">
+                <ul id="<?php echo esc_attr($tax_name); ?>checklist-pop" class="categorychecklist form-no-clear">
                     <?php
                     $popular_terms = get_terms($tax_name, array('orderby' => 'count', 'order' => 'DESC', 'number' => 10, 'hierarchical' => false));
                     $popular_ids = array();
@@ -2355,9 +2358,9 @@ class WPFM_ActionHooks {
                         $id = 'popular-' . $tax_name . '-' . $term->term_id;
                         $checked = checked($single_term_id, $term->term_id, false); ?>
 
-                        <li id="<?php echo $id; ?>" class="popular-category">
+                        <li id="<?php echo esc_attr($id); ?>" class="popular-category">
                             <label class="selectit">
-                                <input id="in-<?php echo $id; ?>" type="radio" <?php echo $checked; ?> name="tax_input[<?php echo $tax_name ?>][]" value="<?php echo (int) $term->term_id; ?>" <?php disabled(!current_user_can($taxonomy->cap->assign_terms)); ?> />
+                                <input id="in-<?php echo esc_attr($id); ?>" type="radio" <?php echo $checked; ?> name="tax_input[<?php echo esc_attr($tax_name) ?>][]" value="<?php echo (int) $term->term_id; ?>" <?php disabled(!current_user_can($taxonomy->cap->assign_terms)); ?> />
                                 <?php
                                 /** This filter is documented in wp-includes/category-template.php */
                                 echo esc_html(apply_filters('the_category', $term->name, '', ''));
@@ -2367,24 +2370,24 @@ class WPFM_ActionHooks {
                     <?php } ?>
                 </ul>
             </div>
-            <div id="<?php echo $tax_name; ?>-all" class="tabs-panel">
-                <ul id="<?php echo $tax_name; ?>checklist" data-wp-lists="list:<?php echo $tax_name; ?>" class="categorychecklist form-no-clear">
+            <div id="<?php echo esc_attr($tax_name); ?>-all" class="tabs-panel">
+                <ul id="<?php echo esc_attr($tax_name); ?>checklist" data-wp-lists="list:<?php echo esc_attr($tax_name); ?>" class="categorychecklist form-no-clear">
                     <?php wp_terms_checklist($post->ID, array('taxonomy' => $tax_name, 'popular_cats' => $popular_ids, 'selected_cats' => array($single_term_id))); ?>
                 </ul>
             </div>
             <?php if (current_user_can($taxonomy->cap->edit_terms)) : ?>
-                <div id="<?php echo $tax_name; ?>-adder" class="wp-hidden-children">
-                    <a id="<?php echo $tax_name; ?>-add-toggle" href="#<?php echo $tax_name; ?>-add" class="hide-if-no-js taxonomy-add-new">
+                <div id="<?php echo esc_attr($tax_name); ?>-adder" class="wp-hidden-children">
+                    <a id="<?php echo esc_attr($tax_name); ?>-add-toggle" href="#<?php echo esc_attr($tax_name); ?>-add" class="hide-if-no-js taxonomy-add-new">
 
                         <?php
                         /* translators: %s: add new taxonomy label */
                         printf(__('+ %s'), $taxonomy->labels->add_new_item);
                         ?>
                     </a>
-                    <p id="<?php echo $tax_name; ?>-add" class="category-add wp-hidden-child">
-                        <label class="screen-reader-text" for="new<?php echo $tax_name; ?>"><?php echo $taxonomy->labels->add_new_item; ?></label>
-                        <input type="text" name="new<?php echo $tax_name; ?>" id="new<?php echo $tax_name; ?>" class="form-required form-input-tip" value="<?php echo esc_attr($taxonomy->labels->new_item_name); ?>" aria-required="true" />
-                        <label class="screen-reader-text" for="new<?php echo $tax_name; ?>_parent">
+                    <p id="<?php echo esc_attr($tax_name); ?>-add" class="category-add wp-hidden-child">
+                        <label class="screen-reader-text" for="new<?php echo esc_attr($tax_name); ?>"><?php echo esc_html($taxonomy->labels->add_new_item); ?></label>
+                        <input type="text" name="new<?php echo esc_attr($tax_name); ?>" id="new<?php echo esc_attr($tax_name); ?>" class="form-required form-input-tip" value="<?php echo esc_attr($taxonomy->labels->new_item_name); ?>" aria-required="true" />
+                        <label class="screen-reader-text" for="new<?php echo esc_attr($tax_name); ?>_parent">
                             <?php echo $taxonomy->labels->parent_item_colon; ?>
                         </label>
 
@@ -2403,9 +2406,9 @@ class WPFM_ActionHooks {
                             wp_dropdown_categories($parent_dropdown_args);
                         }
                         ?>
-                        <input type="button" id="<?php echo $tax_name; ?>-add-submit" data-wp-lists="add:<?php echo $tax_name; ?>checklist:<?php echo $tax_name; ?>-add" class="button category-add-submit" value="<?php echo esc_attr($taxonomy->labels->add_new_item); ?>" />
+                        <input type="button" id="<?php echo esc_attr($tax_name); ?>-add-submit" data-wp-lists="add:<?php echo esc_attr($tax_name); ?>checklist:<?php echo esc_attr($tax_name); ?>-add" class="button category-add-submit" value="<?php echo esc_attr($taxonomy->labels->add_new_item); ?>" />
                         <?php wp_nonce_field('add-' . $tax_name, '_ajax_nonce-add-' . $tax_name, false); ?>
-                        <span id="<?php echo $tax_name; ?>-ajax-response"></span>
+                        <span id="<?php echo esc_attr($tax_name); ?>-ajax-response"></span>
                     </p>
                 </div>
             <?php endif; ?>
@@ -2423,7 +2426,7 @@ class WPFM_ActionHooks {
     function food_menu_shortcode() {
         global $post;
         $menu_id = $post->ID;
-        echo '<input type="text" value="[food_menu id=' . $menu_id . ']" readonly>';
+        echo '<input type="text" value="[food_menu id=' . esc_attr($menu_id) . ']" readonly>';
     }
 }
 WPFM_ActionHooks::instance();

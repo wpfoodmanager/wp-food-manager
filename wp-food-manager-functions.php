@@ -90,7 +90,7 @@ if (!function_exists('get_food_listings')) :
 				$food_item_ids = get_post_meta($menu_id, '_food_item_ids', true);
 				if ($food_item_ids) {
 					foreach ($food_item_ids as $food_item_id) {
-						$food_ids[] = $food_item_id;
+						$food_ids[] = absint($food_item_id);
 					}
 				}
 			}
@@ -508,7 +508,7 @@ function food_manager_dropdown_selection($args = '') {
 
 	$item_cat_ids = get_post_meta(get_the_ID(), '_food_item_cat_ids', true);
 	$name_attr = ($args['name_attr'] == true) ? 'name="' . esc_attr($name) . '[]"' : '';
-	$output = '<select ' . $data_taxonomy . ' ' . $name_attr . '  id="' . esc_attr($id) . '" class="' . esc_attr($class) . '" ' . ($multiple ? 'multiple="multiple"' : "") . ' data-placeholder="' . esc_attr($placeholder) . '" data-no_results_text="' . esc_attr($no_results_text) . '" data-multiple_text="' . esc_attr($multiple_text) . '">\n';
+	$output = '<select ' . $data_taxonomy . ' ' . $name_attr . '  id="' . absint($id) . '" class="' . esc_attr($class) . '" ' . ($multiple ? 'multiple="multiple"' : "") . ' data-placeholder="' . esc_attr($placeholder) . '" data-no_results_text="' . esc_attr($no_results_text) . '" data-multiple_text="' . esc_attr($multiple_text) . '">\n';
 
 	if (is_admin()) {
 		if (empty($item_cat_ids) && isset($item_cat_ids)) {
@@ -617,7 +617,7 @@ if (!function_exists('wpfm_get_filtered_links')) :
 				if (is_numeric($category)) {
 					$category_object = get_term_by('id', $category, 'food_manager_category');
 					if (!is_wp_error($category_object)) {
-						$search_categories[] = $category_object->slug;
+						$search_categories[] = sanitize_title($category_object->slug);
 					}
 				} else {
 					$search_categories[] = $category;
@@ -631,7 +631,7 @@ if (!function_exists('wpfm_get_filtered_links')) :
 				if (is_numeric($type)) {
 					$type_object = get_term_by('id', $type, 'food_manager_type');
 					if (!is_wp_error($type_object)) {
-						$search_food_types[] = $type_object->slug;
+						$search_food_types[] = sanitize_title($type_object->slug);
 					}
 				} else {
 					$search_food_types[] = $type;
@@ -663,7 +663,7 @@ if (!function_exists('wpfm_get_filtered_links')) :
 				)
 			)
 		), $args);
-		
+
 		if (!$args['search_keywords'] && !$args['search_categories'] && !$search_food_menu && !$args['search_food_types']  && !apply_filters('wpfm_get_listings_custom_filter', false)) {
 			unset($links['reset']);
 		}
@@ -673,7 +673,7 @@ if (!function_exists('wpfm_get_filtered_links')) :
 		foreach ($links as $key => $link) {
 			if ($i > 1)
 				$return .= ' <a href="#">|</a> ';
-			$return .= '<a href="' . esc_url($link['url']) . '" class="' . esc_attr($key) . '">' . $link['name'] . '</a>';
+			$return .= '<a href="' . esc_url($link['url']) . '" class="' . esc_attr($key) . '">' . sanitize_text_field($link['name']) . '</a>';
 			$i++;
 		}
 
@@ -691,7 +691,7 @@ if (!function_exists('get_food_manager_rss_link')) :
 	 */
 	function get_food_manager_rss_link($args = array()) {
 		$rss_link = add_query_arg(urlencode_deep(array_merge(array('feed' => 'food_feed'), $args)), home_url());
-		return $rss_link;
+		return esc_url($rss_link);
 	}
 endif;
 
@@ -709,17 +709,17 @@ function wpfm_prepare_uploaded_files($file_data) {
 			if ($file_data['name'][$file_data_key]) {
 				$type              = wp_check_filetype($file_data['name'][$file_data_key]); // Map mime types to those that WordPress knows.
 				$files_to_upload[] = array(
-					'name'     => $file_data['name'][$file_data_key],
-					'type'     => $type['type'],
-					'tmp_name' => $file_data['tmp_name'][$file_data_key],
-					'error'    => $file_data['error'][$file_data_key],
-					'size'     => $file_data['size'][$file_data_key]
+					'name'     => sanitize_title($file_data['name'][$file_data_key]),
+					'type'     => esc_attr($type['type']),
+					'tmp_name' => sanitize_title($file_data['tmp_name'][$file_data_key]),
+					'error'    => esc_attr($file_data['error'][$file_data_key]),
+					'size'     => absint($file_data['size'][$file_data_key])
 				);
 			}
 		}
 	} else {
 		$type              = wp_check_filetype($file_data['name']); // Map mime types to those that WordPress knows.
-		$file_data['type'] = $type['type'];
+		$file_data['type'] = esc_attr($type['type']);
 		$files_to_upload[] = $file_data;
 	}
 
@@ -747,7 +747,7 @@ function wpfm_upload_file($file, $args = array()) {
 	));
 
 	$food_manager_upload         = true;
-	$food_manager_uploading_file = $args['file_key'];
+	$food_manager_uploading_file = sanitize_title($args['file_key']);
 	$uploaded_file              = new stdClass();
 
 	if ('' === $args['allowed_mime_types']) {
@@ -783,11 +783,11 @@ function wpfm_upload_file($file, $args = array()) {
 		if (!empty($upload['error'])) {
 			return new WP_Error('upload', $upload['error']);
 		} else {
-			$uploaded_file->url       = $upload['url'];
-			$uploaded_file->file      = $upload['file'];
-			$uploaded_file->name      = basename($upload['file']);
-			$uploaded_file->type      = $upload['type'];
-			$uploaded_file->size      = $file['size'];
+			$uploaded_file->url       = esc_url($upload['url']);
+			$uploaded_file->file      = esc_attr($upload['file']);
+			$uploaded_file->name      = sanitize_title(basename($upload['file']));
+			$uploaded_file->type      = esc_attr($upload['type']);
+			$uploaded_file->size      = absint($file['size']);
 			$uploaded_file->extension = substr(strrchr($uploaded_file->name, '.'), 1);
 		}
 	}
@@ -872,7 +872,7 @@ function food_manager_get_page_id($page) {
  */
 function food_manager_get_permalink($page) {
 	if ($page_id = food_manager_get_page_id($page)) {
-		return get_permalink($page_id);
+		return esc_url(get_permalink($page_id));
 	} else {
 		return false;
 	}
@@ -894,19 +894,19 @@ function food_manager_duplicate_listing($post_id) {
 	 * Duplicate the post.
 	 */
 	$new_post_id = wp_insert_post(array(
-		'comment_status' => $post->comment_status,
-		'ping_status'    => $post->ping_status,
-		'post_author'    => $post->post_author,
-		'post_content'   => $post->post_content,
-		'post_excerpt'   => $post->post_excerpt,
-		'post_name'      => $post->post_name,
-		'post_parent'    => $post->post_parent,
+		'comment_status' => esc_attr($post->comment_status),
+		'ping_status'    => esc_attr($post->ping_status),
+		'post_author'    => esc_attr($post->post_author),
+		'post_content'   => sanitize_textarea_field($post->post_content),
+		'post_excerpt'   => sanitize_textarea_field($post->post_excerpt),
+		'post_name'      => sanitize_title($post->post_name),
+		'post_parent'    => absint($post->post_parent),
 		'post_password'  => $post->post_password,
 		'post_status'    => 'preview',
-		'post_title'     => $post->post_title,
-		'post_type'      => $post->post_type,
+		'post_title'     => sanitize_text_field($post->post_title),
+		'post_type'      => sanitize_title($post->post_type),
 		'to_ping'        => $post->to_ping,
-		'menu_order'     => $post->menu_order
+		'menu_order'     => absint($post->menu_order)
 	));
 
 	/**
@@ -1506,7 +1506,7 @@ function get_food_manager_currency_symbol($currency = '') {
 	}
 	$symbols = get_food_manager_currency_symbols();
 	$currency_symbol = isset($symbols[$currency]) ? $symbols[$currency] : '';
-	return apply_filters('food_manager_currency_symbol', $currency_symbol, $currency);
+	return apply_filters('food_manager_currency_symbol', esc_attr($currency_symbol), esc_attr($currency));
 }
 
 /**
@@ -1534,7 +1534,7 @@ function get_food_manager_price_format() {
 			break;
 	}
 
-	return apply_filters('food_manager_price_format', $format, $currency_pos);
+	return apply_filters('food_manager_price_format', esc_attr($format), esc_attr($currency_pos));
 }
 
 /**
@@ -1875,7 +1875,7 @@ function food_manager_user_can_upload_file_via_ajax() {
 	 * @param bool $can_upload True if they can upload files from Ajax endpoint.
 	 * @since 1.0.0
 	 */
-	return apply_filters('food_manager_user_can_upload_file_via_ajax', $can_upload);
+	return apply_filters('food_manager_user_can_upload_file_via_ajax', esc_attr($can_upload));
 }
 
 /**
@@ -1896,9 +1896,9 @@ function wpfm_extra_topping_form_fields($post, $field, $field_value) {
 		echo '<div class="wpfm-additional-info-block-details-content-items">';
 		echo '<p class="wpfm-additional-info-block-textarea-text">';
 		if (isset($field_value) && !empty($field_value) && wpfm_begnWith($field_value, "http")) {
-			echo '<a target="_blank" href="' . esc_url($field_value) . '">' . $field['label'] . '</a>';
+			echo '<a target="_blank" href="' . esc_url($field_value) . '">' . sanitize_title($field['label']) . '</a>';
 		} else {
-			printf(__('%s', 'wp-food-manager'),  $field['label']);
+			printf(__('%s', 'wp-food-manager'), sanitize_title($field['label']));
 		}
 		echo '</p>';
 		echo '</div>';
@@ -1918,8 +1918,8 @@ function wpfm_extra_topping_form_fields($post, $field, $field_value) {
 		}
 		echo '<div class="wpfm-col-12 wpfm-additional-info-block-textarea">';
 		echo '<div class="wpfm-additional-info-block-details-content-items">';
-		echo '<p class="wpfm-additional-info-block-title"><strong>' . $field['label'] . '</strong></p>';
-		echo '<p class="wpfm-additional-info-block-textarea-text">' . $field_value . '</p>';
+		echo '<p class="wpfm-additional-info-block-title"><strong>' . esc_html(sanitize_title($field['label'])) . '</strong></p>';
+		echo '<p class="wpfm-additional-info-block-textarea-text">' . esc_html(sanitize_title($field_value)) . '</p>';
 		echo '</div>';
 		echo '</div>';
 	} elseif ($field['type'] == 'multiselect') {
@@ -1929,34 +1929,34 @@ function wpfm_extra_topping_form_fields($post, $field, $field_value) {
 		if (is_array($field_value)) {
 			foreach ($field_value as $key => $my_value) {
 				if (in_array(ucfirst($my_value), $field['options'])) {
-					$my_value_arr[] = $field['options'][$my_value];
+					$my_value_arr[] = esc_attr($field['options'][$my_value]);
 				} else {
 					$my_value_arr[] = '';
 				}
 			}
 		}
-		echo '<p class="wpfm-additional-info-block-title"><strong>' . $field['label'] . ' -</strong> ' . implode(', ', $my_value_arr) . '</p>';
+		echo '<p class="wpfm-additional-info-block-title"><strong>' . esc_html(sanitize_title($field['label'])) . ' -</strong> ' . implode(', ', $my_value_arr) . '</p>';
 		echo '</div>';
 		echo '</div>';
 	} elseif (isset($field['type']) && $field['type'] == 'date') {
 		if (is_array($field_value)) {
-			$field_value = $field_value['0'];
+			$field_value = esc_attr($field_value['0']);
 		}
 		echo '<div class="wpfm-col-md-6 wpfm-col-sm-12 wpfm-additional-info-block-details-content-left">';
 		echo '<div class="wpfm-additional-info-block-details-content-items">';
-		echo '<p class="wpfm-additional-info-block-title"><strong>' . $field['label'] . ' - </strong> ' . date_i18n($date_format, strtotime($field_value)) . '</p>';
+		echo '<p class="wpfm-additional-info-block-title"><strong>' . esc_attr(sanitize_title($field['label'])) . ' - </strong> ' . date_i18n(esc_attr($date_format), absint(strtotime($field_value))) . '</p>';
 		echo '</div>';
 		echo '</div>';
 	} elseif (isset($field['type']) && $field['type'] == 'time') {
 		echo '<div class="wpfm-col-md-6 wpfm-col-sm-12 wpfm-additional-info-block-details-content-left">';
 		echo '<div class="wpfm-additional-info-block-details-content-items">';
-		echo '<p class="wpfm-additional-info-block-title"><strong>' . printf(__('%s', 'wp-food-manager'),  $field['label']) . ' - </strong> ' . date($time_format, strtotime($field_value)) . '</p>';
+		echo '<p class="wpfm-additional-info-block-title"><strong>' . printf(__('%s', 'wp-food-manager'), esc_attr(sanitize_title($field['label']))) . ' - </strong> ' . date(esc_attr($time_format), absint(strtotime($field_value))) . '</p>';
 		echo '</div>';
 		echo '</div>';
 	} elseif ($field['type'] == 'file') {
 		echo '<div class="wpfm-col-md-12 wpfm-col-sm-12 wpfm-additional-info-block-details-content-left" style="margin-bottom: 20px;">';
 		echo '<div class="wpfm-additional-info-block-details-content-items wpfm-additional-file-slider">';
-		echo '<p class="wpfm-additional-info-block-title"><strong>' . $field['label'] . ' - </strong></p>';
+		echo '<p class="wpfm-additional-info-block-title"><strong>' . esc_attr(sanitize_title($field['label'])) . ' - </strong></p>';
 		if (is_array($field_value)) :
 			echo '<div class="wpfm-img-multi-container">';
 			foreach ($field_value as $file) :
@@ -1988,25 +1988,25 @@ function wpfm_extra_topping_form_fields($post, $field, $field_value) {
 		$fields_val = isset($field['options'][$field_value]) ? esc_attr($field['options'][$field_value]) : '';
 		echo '<div class="wpfm-col-md-6 wpfm-col-sm-12 wpfm-additional-info-block-details-content-left">';
 		echo '<div class="wpfm-additional-info-block-details-content-items">';
-		echo '<p class="wpfm-additional-info-block-title"><strong>' . esc_attr($field['label']) . ' -</strong> ' . $fields_val . '</p>';
+		echo '<p class="wpfm-additional-info-block-title"><strong>' . esc_attr($field['label']) . ' -</strong> ' . esc_attr($fields_val) . '</p>';
 		echo '</div>';
 		echo '</div>';
 	} elseif ($field['type'] == 'term-checklist' && array_key_exists('taxonomy', $field)) {
 		echo '<div class="wpfm-col-md-6 wpfm-col-sm-12 wpfm-additional-info-block-details-content-left">';
 		echo '<div class="wpfm-additional-info-block-details-content-items">';
-		echo '<p class="wpfm-additional-info-block-title"><strong>' . $field['label'] . ' - </strong>';
+		echo '<p class="wpfm-additional-info-block-title"><strong>' . esc_attr(sanitize_title($field['label'])) . ' - </strong>';
 		if (!empty($field_value)) {
 			if (is_array($field_value)) {
 				$my_checks_value_arr = [];
 				if (isset($field_value[$field['taxonomy']])) {
 					foreach ($field_value[$field['taxonomy']] as $key => $my_value) {
-						$term_name = get_term($my_value)->name;
-						$my_checks_value_arr[] = $term_name;
+						$term_name = esc_attr(sanitize_title(get_term($my_value)->name));
+						$my_checks_value_arr[] = esc_attr(sanitize_title($term_name));
 					}
 				}
 				printf(__('%s', 'wp-food-manager'),  implode(', ', $my_checks_value_arr));
 			} else {
-				echo !empty(get_term(ucfirst($field_value))) ? get_term(ucfirst($field_value))->name : '';
+				echo !empty(get_term(ucfirst($field_value))) ? esc_attr(sanitize_title(get_term(ucfirst($field_value))->name)) : '';
 			}
 		}
 		echo '</p>';
@@ -2034,7 +2034,7 @@ function wpfm_extra_topping_form_fields($post, $field, $field_value) {
 		echo '</div>';
 		echo '</div>';
 	} elseif ($field['type'] == 'term-select') {
-		$term_name = get_term($field_value)->name;
+		$term_name = esc_html(sanitize_title(get_term($field_value)->name));
 		echo '<div class="wpfm-col-md-6 wpfm-col-sm-12 wpfm-additional-info-block-details-content-left">';
 		echo '<div class="wpfm-additional-info-block-details-content-items">';
 		echo '<p class="wpfm-additional-info-block-title"><strong> ' . esc_attr($field['label']) . ' -</strong> ' . esc_attr($term_name) . '</p>';
@@ -2068,7 +2068,7 @@ function wpfm_extra_topping_form_fields($post, $field, $field_value) {
 				}
 				printf(__('%s', 'wp-food-manager'),  implode(', ', $my_select_value_arr));
 			} else {
-				echo get_term(ucfirst($field_value))->name;
+				echo esc_attr(sanitize_title(get_term(ucfirst($field_value))->name));
 			}
 		}
 		echo '</p>';
@@ -2157,7 +2157,7 @@ function wpfm_category_checklist($taxonomy, $key_name, $checked_term) {
 	// Get terms
 	$terms = get_terms(
 		array(
-			'taxonomy'     => $taxonomy,
+			'taxonomy'     => esc_attr($taxonomy),
 			'orderby'          => 'name',
 			'hide_empty'       => false
 		)
@@ -2172,7 +2172,7 @@ function wpfm_category_checklist($taxonomy, $key_name, $checked_term) {
 		$checked = in_array($term->term_id, $checked_term) ? 'checked="checked"' : ''; ?>
 		<li id="<?php echo $tax->name; ?>-<?php echo $id; ?>" class="<?php echo $tax->name; ?>">
 			<label class="selectit">
-				<input id="in-<?php echo $tax->name; ?>-<?php echo $id; ?>" type="checkbox" <?php echo $checked; ?> name="<?php echo $key_name; ?>[<?php echo $tax->name; ?>][]" value="<?php echo (int) $term->term_id; ?>" <?php disabled(!current_user_can($tax->cap->assign_terms)); ?> />
+				<input id="in-<?php echo esc_attr(sanitize_title($tax->name)); ?>-<?php echo absint($id); ?>" type="checkbox" <?php echo wp_kses_post($checked); ?> name="<?php echo esc_attr($key_name); ?>[<?php echo esc_attr($tax->name); ?>][]" value="<?php echo (int) $term->term_id; ?>" <?php disabled(!current_user_can($tax->cap->assign_terms)); ?> />
 				<?php echo esc_html(apply_filters('the_category', $term->name, '', '')); ?>
 			</label>
 		</li>
@@ -2195,18 +2195,18 @@ function wpfm_dropdown_categories($taxonomy, $key_name, $selected_term) {
 	// Get terms
 	$terms = get_terms(
 		array(
-			'taxonomy'     => $taxonomy,
+			'taxonomy'     => esc_attr($taxonomy),
 			'orderby'          => 'name',
 			'hide_empty'       => false
 		)
 	);
 
 	$popular_ids = array();
-	echo '<select name="' . $key_name . '" id="' . $key_name . '" class="postform">';
+	echo '<select name="' . esc_attr(sanitize_title($key_name)) . '" id="' . esc_attr(sanitize_title($key_name)) . '" class="postform">';
 	foreach ((array) $terms as $term) {
-		$popular_ids[] = $term->term_id;
+		$popular_ids[] = absint($term->term_id);
 		$selected = ($term->term_id == $selected_term) ? 'selected="selected"' : ''; ?>
-		<option class="level-0" value="<?php echo (int) $term->term_id; ?>" <?php echo $selected; ?>>
+		<option class="level-0" value="<?php echo (int) $term->term_id; ?>" <?php echo wp_kses($selected); ?>>
 			<?php echo esc_html(apply_filters('the_category', $term->name, '', '')); ?>
 		</option>
 <?php }
@@ -2234,5 +2234,5 @@ function is_wpfm_terms_exist($terms, $taxonomy) {
 			$displayTerms = (!empty($isTerm->term_id)) ? 1 : 0;
 		}
 	}
-	return $displayTerms;
+	return esc_attr($displayTerms);
 }

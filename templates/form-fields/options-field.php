@@ -31,9 +31,9 @@
                     'key' => $wpfm_key_num,
                     'sub_value_count' => esc_attr($count),
                     'values' => $op_value,
-                    'option_default' => $option_default,
-                    'option_fixed_amount' => $option_fixed_amount,
-                    'option_quantity_based' => $option_quantity_based,
+                    'option_default' => esc_attr($option_default),
+                    'option_fixed_amount' => esc_attr($option_fixed_amount),
+                    'option_quantity_based' => esc_attr($option_quantity_based),
                 );
         ?>
                 <tr class="option-tr-<?php echo esc_attr($count); ?>">

@@ -56,17 +56,17 @@ $units = get_terms(
 						$nutriTermName = !empty($nutriTerm->name) ? $nutriTerm->name : null;
 
 						if ($nutriTermID) {
-							echo "<li class='wpfm-sortable-item active-item' data-id='{$nutriTermID}'>" .
-								"<label>{$nutriTermName}</label>" .
+							echo "<li class='wpfm-sortable-item active-item' data-id='" . esc_attr($nutriTermID) . "'>" .
+								"<label>" . esc_html($nutriTermName) . "</label>" .
 								"<div class='wpfm-sortable-item-values'>" .
-								"<input type='number' step='0.1' class='item-value' name='food_nutritions[{$nutriTermID}][value]' value='{$nutriValue}'>" .
-								"<select name='food_nutritions[{$nutriTermID}][unit_id]' class='item-unit'>" .
+								"<input type='number' step='0.1' class='item-value' name='food_nutritions[" . esc_attr($nutriTermID) . "][value]' value='" . esc_attr($nutriValue) . "'>" .
+								"<select name='food_nutritions[" . esc_attr($nutriTermID) . "][unit_id]' class='item-unit'>" .
 								"<option value=''>Unit</option>";
 
 							if (!empty($units)) {
 								foreach ($units as $unit) {
 									$sel = ($unit_id == $unit->term_id ? ' selected' : null);
-									echo "<option value='{$unit->term_id}'{$sel}>{$unit->name}</option>";
+									echo "<option value='" . esc_attr($unit->term_id) . "'{$sel}>" . esc_html($unit->name) . "</option>";
 								}
 							}
 
@@ -89,8 +89,8 @@ $units = get_terms(
 			<?php
 			if (!empty($nutrition_terms)) {
 				foreach ($nutrition_terms as $nutri) {
-					echo "<li class='wpfm-sortable-item available-item' data-id='{$nutri->term_id}'>" .
-						"<label>{$nutri->name}</label><div class='wpfm-sortable-item-values'></div>" .
+					echo "<li class='wpfm-sortable-item available-item' data-id='" . esc_attr($nutri->term_id) . "'>" .
+						"<label>" . esc_html($nutri->name) . "</label><div class='wpfm-sortable-item-values'></div>" .
 						'</li>';
 				}
 			}
@@ -109,10 +109,10 @@ $units = get_terms(
 			if (!in_array($key, $disbled_fields_for_admin) && $field['tabgroup'] == $tab['priority']) {
 				$type = !empty($field['type']) ? $field['type'] : 'text';
 				if ($type == 'wp-editor') $type = 'wp_editor'; ?>
-			<p class="wpfm-admin-postbox-form-field <?php echo $key; ?>">
-				<label for="<?php echo $key; ?>"><?php echo $field['label']; ?> : </label>
+			<p class="wpfm-admin-postbox-form-field <?php echo esc_attr($key); ?>">
+				<label for="<?php echo esc_attr($key); ?>"><?php echo esc_html($field['label']); ?> : </label>
 				<span class="wpfm-input-field">
-					<?php get_food_manager_template('form-fields/' . $field['type'] . '-field.php', array('key' => $key, 'field' => $field)); ?>
+					<?php get_food_manager_template('form-fields/' . esc_html($field['type']) . '-field.php', array('key' => $key, 'field' => $field)); ?>
 				</span>
 			</p>
 	<?php }

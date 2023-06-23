@@ -29,42 +29,47 @@ class WPFM_Date_Time {
 		return self::$_instance;
 	}
 
-	const DATABASE_DATE_TIME_FORMAT      = 'Y-m-d H:i:s';
-	const DBTIMEFORMAT          = 'H:i:s';
+	const DATABASE_DATE_TIME_FORMAT = 'Y-m-d H:i:s';
+	const DBTIMEFORMAT = 'H:i:s';
 
 	/**
 	 * Get datepicker format function will return all the date formats for datepicker
 	 *
 	 * @param null
-	 * @return format of datepicker
+	 * @return string Format of datepicker
 	 * @since 1.0.0
 	 **/
 	public static function get_datepicker_format() {
 		$selected_format = get_option('food_manager_datepicker_format', 0);
 		$formats = self::get_default_date_formats();
 
-		if ($selected_format && isset($formats['datepicker_date_formats'][$selected_format]))
-			return $formats['datepicker_date_formats'][$selected_format];
-		else
-			return  $formats['datepicker_date_formats'][0];
+		if ($selected_format && isset($formats['datepicker_date_formats'][$selected_format])) {
+			return esc_html($formats['datepicker_date_formats'][$selected_format]);
+		} else {
+			return esc_html($formats['datepicker_date_formats'][0]);
+		}
 	}
 
 	/**
-	 * function get_default_date_formats will return all the date formats
+	 * Function get_default_date_formats will return all the date formats
 	 * This function has both type of format jquery-ui-datepicker as well as for php date format
 	 *
 	 * @access public
-	 * @return array
+	 * @return array Date formats
 	 * @since 1.0.0
 	 **/
 	public static function get_default_date_formats() {
-		$date_formats['datepicker_date_formats']  = apply_filters(
+		$date_formats['datepicker_date_formats'] = apply_filters(
 			'wpfm_datepicker_date_formats',
-			array('yy-mm-dd', 'm-d-yy', 'mm-dd-yy', 'd-m-yy', 'dd-mm-yy', 'm/d/yy', 'mm/dd/yy', 'd/m/yy', 'dd/mm/yy', 'yy.mm.dd', 'mm.dd.yy', 'dd.mm.yy')
+			array(
+				'yy-mm-dd', 'm-d-yy', 'mm-dd-yy', 'd-m-yy', 'dd-mm-yy', 'm/d/yy', 'mm/dd/yy', 'd/m/yy', 'dd/mm/yy', 'yy.mm.dd', 'mm.dd.yy', 'dd.mm.yy'
+			)
 		);
 		$date_formats['view_date_formats'] = apply_filters(
 			'wpfm_view_date_formats',
-			array('Y-m-d', 'n-j-Y', 'm-d-Y', 'j-n-Y', 'd-m-Y', 'n/j/Y', 'm/d/Y', 'j/n/Y', 'd/m/Y', 'Y.m.d', 'm.d.Y', 'd.m.Y')
+			array(
+				'Y-m-d', 'n-j-Y', 'm-d-Y', 'j-n-Y', 'd-m-Y', 'n/j/Y', 'm/d/Y', 'j/n/Y', 'd/m/Y', 'Y.m.d', 'm.d.Y', 'd.m.Y'
+			)
 		);
 		return $date_formats;
 	}
@@ -78,7 +83,7 @@ class WPFM_Date_Time {
 	 * @access public
 	 * @param string $format
 	 * @param string $date
-	 * @return array
+	 * @return array|false|string
 	 * @since 1.0.0
 	 */
 	public static function date_parse_from_format($format, $date) {
@@ -173,7 +178,7 @@ class WPFM_Date_Time {
 	 **/
 	public static function get_view_date_format_from_datepicker_date_format($datepicker_format = 'yy-mm-dd') {
 		$all_formats = self::get_default_date_formats();
-		$indexof_view_date_format = array_search($datepicker_format, $all_formats['datepicker_date_formats']);
+		$indexof_view_date_format = array_search(esc_attr($datepicker_format), $all_formats['datepicker_date_formats']);
 		return $all_formats['view_date_formats'][$indexof_view_date_format];
 	}
 
@@ -186,7 +191,7 @@ class WPFM_Date_Time {
 	 * @since 1.0.0
 	 */
 	public static function get_db_formatted_time($time) {
-		$time = is_numeric($time) ? $time : strtotime($time);
+		$time = is_numeric($time) ? $time : strtotime(esc_attr($time));
 		return date(self::DBTIMEFORMAT, $time);
 	}
 
@@ -202,14 +207,14 @@ class WPFM_Date_Time {
 		if (empty($date)) return;
 
 		// Get date and time setting defined in admin panel Food listing -> Settings -> Date & Time formatting
-		$datepicker_date_format 	= self::get_datepicker_format();
+		$datepicker_date_format = self::get_datepicker_format();
 
-		// Covert datepicker format  into php date() function date format
-		$php_date_format 		= self::get_view_date_format_from_datepicker_date_format($datepicker_date_format);
+		// Covert datepicker format into php date() function date format
+		$php_date_format = self::get_view_date_format_from_datepicker_date_format($datepicker_date_format);
 		$time = self::get_db_formatted_time($time);
 
 		// Convert date and time value into DB formatted format and save eg. 1970-01-01 00:00:00
-		$db_date_time = self::date_parse_from_format($php_date_format . ' H:i:s', $date . ' ' . $time);
+		$db_date_time = self::date_parse_from_format(esc_attr($php_date_format) . ' H:i:s', esc_attr($date) . ' ' . $time);
 		return $db_date_time;
 	}
 
@@ -239,11 +244,11 @@ class WPFM_Date_Time {
 	 */
 	public static function get_food_manager_date_admin_settings() {
 		$dummy_date = strtotime('January 15 ' . date('Y'));
-		$default_foramts = self::get_default_date_formats();
+		$default_formats = self::get_default_date_formats();
 		$setting_values = array();
 
-		foreach ($default_foramts['view_date_formats'] as $key => $value) {
-			$setting_values[$key] = date($value, $dummy_date);
+		foreach ($default_formats['view_date_formats'] as $key => $value) {
+			$setting_values[$key] = date(esc_attr($value), $dummy_date);
 		}
 
 		return $setting_values;
@@ -274,7 +279,7 @@ class WPFM_Date_Time {
 		$check_zone_info = true;
 
 		// Remove old Etc mappings. Fallback to gmt_offset.
-		if (false !== strpos($tzstring, 'Etc/GMT'))
+		if (false !== strpos(esc_attr($tzstring), 'Etc/GMT'))
 			$tzstring = '';
 		if (empty($tzstring)) {
 
@@ -293,28 +298,27 @@ class WPFM_Date_Time {
 
 	/**
 	 * Return the timezone choice by the given timezone string.
-	 * 
+	 *
 	 * @access public
-	 * @param string $tzstring
+	 * @param string|null $tzstring
 	 * @since 1.0.0
 	 */
 	public static function timezone_choice($tzstring = null) {
 		if (empty($tzstring))
 			$tzstring = self::get_current_site_timezone();
-		return apply_filters('wpfm_timezone_choice', wp_timezone_choice($tzstring, get_user_locale()));
+		return apply_filters('wpfm_timezone_choice', wp_timezone_choice(esc_attr($tzstring), get_user_locale()));
 	}
 
 	/**
 	 * Convert timezone into the abbr with the formatted timezone.
-	 * 
+	 *
 	 * @access public
 	 * @param string $food_timezone
 	 * @since 1.0.0
 	 */
 	public static function convert_food_timezone_into_abbr($food_timezone) {
-		// Get string of food timezone if it is UTC offset
-		$tzstring 	= self::generate_timezone_string_from_utc_offset($food_timezone);
-		$date_time 	= new DateTime('NOW');
+		$tzstring = self::generate_timezone_string_from_utc_offset(esc_attr($food_timezone));
+		$date_time = new DateTime('NOW');
 		$date_time->setTimeZone(new DateTimeZone($tzstring));
 
 		return $date_time->format('T');
@@ -322,19 +326,18 @@ class WPFM_Date_Time {
 
 	/**
 	 * current_timestamp_from_food_timezone will return the current timestamp according to the
-	 * timezone selected in food or passed in argument
+	 * timezone selected in food or passed in argument.
 	 *
 	 * @access public
-	 * @param $food_timezone
-	 * @return  timestamp
+	 * @param string $food_timezone
+	 * @return int|null Timestamp or null if food_timezone is empty
 	 * @since 1.0.0
-	 **/
+	 */
 	public static function current_timestamp_from_food_timezone($food_timezone) {
 		if (empty($food_timezone))
-			return;
+			return null;
 
-		// Get string of food timezone if it is UTC offset
-		$tzstring 	= self::generate_timezone_string_from_utc_offset($food_timezone);
+		$tzstring = self::generate_timezone_string_from_utc_offset(esc_attr($food_timezone));
 		$date_time = new DateTime("now");
 		$date_time->setTimezone(new DateTimeZone($tzstring));
 
@@ -342,7 +345,7 @@ class WPFM_Date_Time {
 	}
 
 	/**
-	 * Tests to see if the timezone string is a UTC offset, ie "UTC+2".
+	 * Tests to see if the timezone string is a UTC offset, i.e., "UTC+2".
 	 *
 	 * @access public
 	 * @param string $timezone
@@ -355,8 +358,7 @@ class WPFM_Date_Time {
 	}
 
 	/**
-	 * Helper function to retrieve the timezone string for a given UTC offset
-	 * This is a close copy of WooCommerce's wc_timezone_string() method
+	 * Helper function to retrieve the timezone string for a given UTC offset.
 	 *
 	 * @access public
 	 * @param string $offset UTC offset
@@ -368,7 +370,6 @@ class WPFM_Date_Time {
 			return $offset;
 		}
 
-		// Ensure we have the minutes on the offset
 		if (!strpos($offset, ':')) {
 			$offset .= ':00';
 		}
@@ -376,7 +377,6 @@ class WPFM_Date_Time {
 		list($hours, $minutes) = explode(':', $offset);
 		$seconds = $hours * 60 * 60 + $minutes * 60;
 
-		// Attempt to guess the timezone string from the UTC offset
 		$timezone = timezone_name_from_abbr('', $seconds, 0);
 		if (false === $timezone) {
 			$is_dst = date('I');
@@ -387,10 +387,9 @@ class WPFM_Date_Time {
 					}
 				}
 			}
-
-			// Fallback to UTC
 			return 'UTC';
 		}
+
 		return $timezone;
 	}
 
@@ -398,24 +397,19 @@ class WPFM_Date_Time {
 	 * Localizes a date or timestamp using WordPress timezone and returns it in the specified format.
 	 *
 	 * @access public
-	 * @param string     $format   The format the date shouuld be formatted to.
-	 * @param string|int $date     The date UNIX timestamp or `strtotime` parseable string.
-	 * @param string     $timezone An optional timezone string identifying the timezone the date shoudl be localized
-	 *                             to; defaults to the WordPress installation timezone (if available) or to the system
-	 *                             timezone.
-	 *
+	 * @param string|null $date
+	 * @param string|null $format
+	 * @param string|null $timezone
 	 * @return string|bool The parsed date in the specified format and localized to the system or specified
 	 *                     timezone, or `false` if the specified date is not a valid date string or timestamp
 	 *                     or the specified timezone is not a valid timezone string.
-	 * 
-	 * 
 	 * @since 1.0.0
 	 */
-	public static function localize_date($date = null, $format = null,  $timezone = null) {
+	public static function localize_date($date = null, $format = null, $timezone = null) {
 		if (empty($timezone))
 			$timezone = self::get_current_site_timezone();
 
-		$timezone = self::generate_timezone_string_from_utc_offset($timezone);
+		$timezone = self::generate_timezone_string_from_utc_offset(esc_attr($timezone));
 
 		try {
 			$date = new DateTime(strtotime($date));

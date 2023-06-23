@@ -35,7 +35,7 @@ if (!is_multisite()) {
 		}
 	}
 
-	switch_to_blog($original_blog_id);
+	switch_to_blog(absint($original_blog_id));
 }
 
 // In the entire plugin's option name's array which is used in plugin for the deletion.
@@ -76,5 +76,5 @@ $options = array(
 
 // Delete the options
 foreach ($options as $option) {
-	delete_option($option);
+	delete_option(esc_attr($option));
 }

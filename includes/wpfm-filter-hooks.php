@@ -71,8 +71,8 @@ class WPFM_FilterHooks {
      */
     function add_plugin_page_food_manager_settings_link($links) {
         $links[] = '<a href="' .
-            admin_url('edit.php?post_type=food_manager&page=food-manager-settings') .
-            '">' . __('Settings', 'wp-food-manager') . '</a>';
+            esc_url(admin_url('edit.php?post_type=food_manager&page=food-manager-settings')) .
+            '">' . esc_html__('Settings', 'wp-food-manager') . '</a>';
         return $links;
     }
 
@@ -85,7 +85,7 @@ class WPFM_FilterHooks {
      * @since 1.0.0
      */
     function display_custom_taxonomy_image_column_heading_for_food_category($columns) {
-        $columns['category_image'] = __('Image', 'taxt-domain');
+        $columns['category_image'] = esc_html__('Image', 'taxt-domain');
         return $columns;
     }
 
@@ -98,7 +98,7 @@ class WPFM_FilterHooks {
      * @since 1.0.0
      */
     function display_custom_taxonomy_image_column_heading_for_food_type($columns) {
-        $columns['category_image'] = __('Image', 'taxt-domain');
+        $columns['category_image'] = esc_html__('Image', 'taxt-domain');
         return $columns;
     }
 
@@ -140,13 +140,13 @@ class WPFM_FilterHooks {
      */
     public function fix_post_name($data, $postarr) {
         if ('food_manager' === $data['post_type'] && 'pending' === $data['post_status'] && !current_user_can('publish_posts')) {
-            $data['post_name'] = $postarr['post_name'];
+            $data['post_name'] = sanitize_title($postarr['post_name']);
         }
         return $data;
     }
 
     /**
-     * This function disabled the gutenberg editor.
+     * This function disables the Gutenberg editor.
      * 
      * @access public
      * @param boolean $is_enabled
@@ -160,7 +160,7 @@ class WPFM_FilterHooks {
     }
 
     /**
-     * return the Food archive template.
+     * Return the Food archive template.
      *
      * @access public
      * @param string $template
@@ -181,7 +181,7 @@ class WPFM_FilterHooks {
 
     /**
      * Add Food menu content
-     * 
+     *
      * @access public
      * @param string $content
      * @return mixed
@@ -209,7 +209,7 @@ class WPFM_FilterHooks {
 
     /**
      * Add extra content when showing food content
-     * 
+     *
      * @access public
      * @param string $content
      * @return mixed
@@ -263,7 +263,7 @@ class WPFM_FilterHooks {
     public function set_custom_food_sortable_columns($columns) {
         $columns['food_menu_order'] = 'menu_order';
         $columns['food_title'] = 'food_title';
-        return  $columns;
+        return $columns;
     }
 
     /**
@@ -301,7 +301,7 @@ class WPFM_FilterHooks {
      */
     public function set_shortcode_copy_columns($columns) {
         $columns['shortcode'] = __('Shortcode', 'wp-food-manager');
-        return  $columns;
+        return $columns;
     }
 
     /**
