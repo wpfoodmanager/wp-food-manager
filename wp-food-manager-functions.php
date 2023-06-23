@@ -2206,7 +2206,7 @@ function wpfm_dropdown_categories($taxonomy, $key_name, $selected_term) {
 	foreach ((array) $terms as $term) {
 		$popular_ids[] = absint($term->term_id);
 		$selected = ($term->term_id == $selected_term) ? 'selected="selected"' : ''; ?>
-		<option class="level-0" value="<?php echo (int) $term->term_id; ?>" <?php echo wp_kses($selected); ?>>
+		<option class="level-0" value="<?php echo (int) $term->term_id; ?>" <?php echo wp_kses_post($selected); ?>>
 			<?php echo esc_html(apply_filters('the_category', $term->name, '', '')); ?>
 		</option>
 <?php }

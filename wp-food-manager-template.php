@@ -161,7 +161,11 @@ function get_food_banner($post = null) {
 	if (isset($post->_food_banner) && empty($post->_food_banner))
 		$food_banner = apply_filters('wpfm_default_food_banner', WPFM_PLUGIN_URL . '/assets/images/wpfm-placeholder.jpg');
 	else
-		$food_banner = esc_url($post->_food_banner);
+		$food_banner = $post->_food_banner;
+
+	if (is_array($food_banner)) {
+		$food_banner = array_map('esc_url', $food_banner);
+	}
 	return apply_filters('display_food_banner', $food_banner, $post);
 }
 
@@ -888,6 +892,12 @@ function wpfm_get_food_listing_structured_data($post = null) {
 	if ($post && $post->post_type !== 'food_manager') {
 		return false;
 	}
+	$food_banner = get_food_banner($post);
+	if( is_array($food_banner) ){
+		$food_banner = array_map('esc_url', get_food_banner($post));
+	}else{
+		$food_banner = esc_url(get_food_banner($post));
+	}
 	$data = array();
 	$data['@context'] = 'http://schema.org/';
 	$data['@type'] = 'food';
@@ -897,7 +907,7 @@ function wpfm_get_food_listing_structured_data($post = null) {
 	}
 	$data['description'] = sanitize_textarea_field(get_food_description($post));
 	$data['name'] = sanitize_text_field(strip_tags(get_food_title($post)));
-	$data['image'] = esc_url(get_food_banner($post));
+	$data['image'] = $food_banner;
 	$data['foodStatus'] = 'foodScheduled';
 	/**
 	 * Filter the structured data for a food listing.
