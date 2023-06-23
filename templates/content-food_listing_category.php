@@ -16,13 +16,13 @@ $image_url = wp_get_attachment_image_src($image_id, 'full');
                 <?php if (!empty($image_url) && is_array($image_url)) { ?>
                     <div class="wpfm-with-bg-image-row">
                         <div class="wpfm-my-5 wpfm-food-listing-type-page-title wpfm-with-bg-image" style="background-image: url('<?php echo esc_url($image_url[0]); ?>'); margin-bottom: 0 !important;">
-                            <h1 class="wpfm-heading-text"><?php echo esc_html(wp_kses_post(get_the_archive_title())); ?></h1>
+                            <h1 class="wpfm-heading-text"><?php echo wp_kses_post(get_the_archive_title()); ?></h1>
                         </div>
                         <?php echo wp_kses_post(get_the_archive_description()); ?>
                     </div>
                 <?php } else { ?>
                     <div class="wpfm-my-5 wpfm-food-listing-type-page-title">
-                        <h1 class="wpfm-heading-text"><?php echo esc_html(wp_kses_post(get_the_archive_title())); ?></h1>
+                        <h1 class="wpfm-heading-text"><?php echo wp_kses_post(get_the_archive_title()); ?></h1>
                         <?php echo wp_kses_post(get_the_archive_description()); ?>
                     </div>
                 <?php } ?>
