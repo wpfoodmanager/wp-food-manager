@@ -198,6 +198,24 @@ You can also find us on GitHub: see the [WP Food Manager GitHub Repository](http
 
 == Changelog ==
 
+= 1.0.4 [ 26th July 2023 ] =
+
+Fixed : Food Manager vulnerability issues are resolved.
+Fixed : No warning when adding/editing food in the food menu from the backend.
+Fixed : Resolved the warning appearing problem during debug for updating food from the admin of the Food Manager.
+Fixed : Issue related to title of the Food Category page appearing as span in the frontend is resolved.
+Fixed : Add food page of Food Manager is now loading properly without any error from the frontside.
+Fixed : All food items in the restaurant menu are appearing in all Food Categories and Food Types in the backend.
+Fixed : The appearance of the food detail page is the same as given, including the information of Food Category, Types and Tag Format.
+Fixed : Field Value is appearing properly when duplicating the food from the frontside Food Manager Dashboard.
+Fixed : Issue related to the delete food message from the Food Dashboard in the frontend is resolved.
+Fixed : Food Page Filter from the frontside is now working.
+Fixed : Food Topping Description will not be displayed as p-tag, it is resolved.
+Fixed : Users are able to add Food Banner in their food from the Frontend.
+Fixed : Admin Advanced Setting switch of food is now efficiently working.
+Fixed : Multiple uploads of Food Banner in the food items from the frontend is not working.
+Fixed : Food Type changes in foods is not working from frontside.
+
 = 1.0.3 [ 18th May 2023 ] =
 
 Fixed : Issue related to applying food filter and action hooks in the online food ordering addon.
