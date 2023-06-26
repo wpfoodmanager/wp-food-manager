@@ -1309,8 +1309,12 @@ class WPFM_ActionHooks {
                             $toppings_arr[] = isset($_POST[$key . '_' . $count]) ? esc_attr($_POST[$key . '_' . $count]) : '';
                         }
 
-                        // Toppings Array
-                        $toppings_meta[$count]['_' . $key] = isset($_POST[$key . '_' . $count]) && !empty($_POST[$key . '_' . $count]) ? esc_attr($_POST[$key . '_' . $count]) : '';
+                        if ($key == 'topping_description') {
+                            $toppings_meta[$count]['_' . $key] = isset($_POST[$key . '_' . $count]) && !empty($_POST[$key . '_' . $count]) ? wp_kses_post($_POST[$key . '_' . $count]) : '';
+                        } else {
+                            // Toppings Array
+                            $toppings_meta[$count]['_' . $key] = isset($_POST[$key . '_' . $count]) && !empty($_POST[$key . '_' . $count]) ? esc_attr($_POST[$key . '_' . $count]) : '';
+                        }
                         if ($key == 'topping_options') {
                             $toppings_meta[$count]['_' . $key] = $option_values;
                         }
@@ -1331,9 +1335,9 @@ class WPFM_ActionHooks {
                 if ($term_ids) {
                     foreach ($term_ids as $t_key => $term_id) {
                         $t_key++;
-                        $description = (isset($_POST['topping_description_' . $t_key]) && !empty($_POST['topping_description_' . $t_key])) ? esc_attr($_POST['topping_description_' . $t_key]) : '';
-                        wp_update_term($term_id, $taxonomy, array('description' => $description));
-                        do_action('wpfm_save_topping_meta_field', array('term_id' => $term_id, 'taxonomy' => $taxonomy, 'count' => $t_key));
+                        $description = (isset($_POST['topping_description_' . $t_key]) && !empty($_POST['topping_description_' . $t_key])) ? $_POST['topping_description_' . $t_key] : '';
+                        wp_update_term($term_id, $taxonomy, array('description' => wp_kses_post($description)));
+                        do_action('wpfm_save_topping_meta_field', array('term_id' => absint($term_id), 'taxonomy' => esc_attr($taxonomy), 'count' => absint($t_key)));
                     }
                 }
             }

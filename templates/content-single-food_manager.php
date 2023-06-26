@@ -137,7 +137,7 @@ $food = $post;
                                             echo "<div class='wpfm-input-field-common " . esc_attr($more_class) . "'>";
                                             echo '<label for="' . esc_attr(str_replace(" ", "-", strtolower($ext_option['_topping_name']))) . '"><strong>' . esc_html($ext_option['_topping_name']) . '</strong></label>';
                                             if (!empty($ext_option['_topping_description'])) {
-                                                echo '<div class="wpfm-input-description">' . esc_html($ext_option['_topping_description']) . '</div>';
+                                                echo '<div class="wpfm-input-description">' . wp_kses_post($ext_option['_topping_description']) . '</div>';
                                             }
                                             do_action('wpfm_singular_option_input_before');
 
