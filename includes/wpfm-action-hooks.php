@@ -1342,7 +1342,10 @@ class WPFM_ActionHooks {
 
         // Update repeated_options meta for the count of toppings
         $repeated_options = isset($_POST['repeated_options']) ? $_POST['repeated_options'] : '';
-        update_post_meta($post_id, '_food_repeated_options', esc_attr($repeated_options));
+        if (is_array($repeated_options)) {
+            $repeated_options = array_map('esc_attr', $repeated_options);
+        }
+        update_post_meta($post_id, '_food_repeated_options', $repeated_options);
 
         // Set orders according to previous inserted post.
         $order_menu = $wpdb->get_results("SELECT menu_order FROM $wpdb->posts WHERE ID = " . intval($post_id));
