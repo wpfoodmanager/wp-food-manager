@@ -171,7 +171,7 @@ class WPFM_Edit_Food_Form extends WPFM_Add_Food_Form {
 			// Update the food
 			$food_title = isset($values['food']['food_title']) && !empty($values['food']['food_title']) ? $values['food']['food_title'] : '';
 			$food_description = isset($values['food']['food_description']) && !empty($values['food']['food_description']) ? $values['food']['food_description'] : '';
-			$this->save_food(esc_html($food_title), esc_html($food_description), '', $values, false);
+			$this->save_food(esc_html($food_title), wp_kses_post($food_description), '', $values, false);
 
 			// Successful
 			switch (get_post_status($this->food_id)) {
