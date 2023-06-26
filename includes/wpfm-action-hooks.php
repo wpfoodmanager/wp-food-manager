@@ -1951,8 +1951,8 @@ class WPFM_ActionHooks {
             $js_field_html = ob_get_clean();
             wp_localize_script('wpfm-ajax-file-upload', 'wpfm_ajax_file_upload', array(
                 'ajax_url' => $ajax_url,
-                'js_field_html_img' => wp_json_encode(str_replace(array("\n", "\r"), '', $js_field_html_img)),
-                'js_field_html' => wp_json_encode(str_replace(array("\n", "\r"), '', $js_field_html)),
+                'js_field_html_img' => esc_js(str_replace(array("\n", "\r"), '', $js_field_html_img)),
+                'js_field_html' => esc_js(str_replace(array("\n", "\r"), '', $js_field_html)),
                 'i18n_invalid_file_type' => esc_html__('The file type you have mentioned is invalid.', 'wp-food-manager')
             ));
         }

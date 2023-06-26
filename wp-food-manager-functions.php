@@ -785,7 +785,7 @@ function wpfm_upload_file($file, $args = array()) {
 		} else {
 			$uploaded_file->url       = esc_url($upload['url']);
 			$uploaded_file->file      = esc_attr($upload['file']);
-			$uploaded_file->name      = sanitize_title(basename($upload['file']));
+			$uploaded_file->name      = esc_attr(basename($upload['file']));
 			$uploaded_file->type      = esc_attr($upload['type']);
 			$uploaded_file->size      = absint($file['size']);
 			$uploaded_file->extension = substr(strrchr($uploaded_file->name, '.'), 1);
