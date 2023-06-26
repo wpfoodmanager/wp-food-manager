@@ -341,7 +341,7 @@ function display_food_type($post = null, $after = '') {
 			$numType = count($food_type);
 			$i = 0;
 			foreach ($food_type as $type) {
-				echo wp_kses(('<a href="' . get_term_link($type->term_id) . '"><span class="wpfm-food-type-text food-type ' . esc_attr(sanitize_title($type->slug)) . ' ">' . esc_attr(sanitize_title($type->name)) . '</span></a>'), array(
+				echo wp_kses(('<a href="' . get_term_link($type->term_id) . '"><span class="wpfm-food-type-text food-type ' . esc_attr(sanitize_title($type->slug)) . ' ">' . esc_attr(sanitize_text_field($type->name)) . '</span></a>'), array(
 					'a' => array(
 						'href' => array(),
 						'title' => array()
@@ -392,7 +392,7 @@ function display_food_tag($post = null, $after = '') {
 			$numTag = count($food_tag);
 			$i = 0;
 			foreach ($food_tag as $tag) {
-				echo wp_kses(('<a href="' . get_term_link($tag->term_id) . '"><span class="wpfm-food-tag-text food-tag ' . esc_attr(sanitize_title($tag->slug)) . ' ">' . esc_attr(sanitize_title($tag->name)) . '</span></a>'), array(
+				echo wp_kses(('<a href="' . get_term_link($tag->term_id) . '"><span class="wpfm-food-tag-text food-tag ' . esc_attr(sanitize_title($tag->slug)) . ' ">' . esc_attr(sanitize_text_field($tag->name)) . '</span></a>'), array(
 					'a' => array(
 						'href' => array(),
 						'title' => array()
@@ -443,7 +443,7 @@ function display_food_category($post = null, $after = '') {
 			$numCategory = count($food_category);
 			$i = 0;
 			foreach ($food_category as $cat) {
-				echo wp_kses(('<a href="' . get_term_link($cat->term_id) . '"><span class="wpfm-food-cat-text food-category ' . esc_attr(sanitize_title($cat->slug)) . ' ">' . esc_attr(sanitize_title($cat->name)) . '</span></a>'), array(
+				echo wp_kses(('<a href="' . get_term_link($cat->term_id) . '"><span class="wpfm-food-cat-text food-category ' . esc_attr(sanitize_title($cat->slug)) . ' ">' . esc_attr(sanitize_text_field($cat->name)) . '</span></a>'), array(
 					'a' => array(
 						'href' => array(),
 						'title' => array()
