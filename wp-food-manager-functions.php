@@ -709,9 +709,9 @@ function wpfm_prepare_uploaded_files($file_data) {
 			if ($file_data['name'][$file_data_key]) {
 				$type              = wp_check_filetype($file_data['name'][$file_data_key]); // Map mime types to those that WordPress knows.
 				$files_to_upload[] = array(
-					'name'     => sanitize_title($file_data['name'][$file_data_key]),
+					'name'     => esc_attr($file_data['name'][$file_data_key]),
 					'type'     => esc_attr($type['type']),
-					'tmp_name' => sanitize_title($file_data['tmp_name'][$file_data_key]),
+					'tmp_name' => esc_attr($file_data['tmp_name'][$file_data_key]),
 					'error'    => esc_attr($file_data['error'][$file_data_key]),
 					'size'     => absint($file_data['size'][$file_data_key])
 				);
