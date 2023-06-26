@@ -183,7 +183,7 @@ class WPFM_ActionHooks {
      */
     public function edit_food() {
         global $food_manager;
-        echo esc_html($food_manager->forms->get_form('edit-food'));
+        echo $food_manager->forms->get_form('edit-food');
     }
 
     /**
