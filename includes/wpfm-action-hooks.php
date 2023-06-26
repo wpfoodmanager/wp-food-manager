@@ -1239,7 +1239,11 @@ class WPFM_ActionHooks {
                 if (isset($field['taxonomy']) && !empty($field['taxonomy'])) {
                     if ($field['taxonomy'] != 'food_manager_ingredient' || $field['taxonomy'] != 'food_manager_nutrition') {
                         $terms = isset($field['value']) && !empty($field['value']) ? $field['value'] : '';
-
+                        if ($field['taxonomy'] == 'food_manager_type') {
+                            if (empty($terms)) {
+                                $terms = isset($_POST['food_type']) && !empty($_POST['food_type']) ? $_POST['food_type'] : '';
+                            }
+                        }
                         if (is_array($terms)) {
                             $terms = array_map(function ($value) {
                                 return (int)$value;
@@ -1247,7 +1251,7 @@ class WPFM_ActionHooks {
                             wp_set_object_terms($post_id, $terms, $field['taxonomy'], false);
                         } else {
                             if (!empty($terms)) {
-                                wp_set_object_terms($post_id, array($terms), $field['taxonomy'], false);
+                                wp_set_object_terms($post_id, array((int)$terms), $field['taxonomy'], false);
                             }
                         }
                     }
