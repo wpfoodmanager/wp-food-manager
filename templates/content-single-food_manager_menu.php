@@ -80,24 +80,23 @@ $image_url = wp_get_attachment_image_src($image_id, 'full');
                 $formatted_regular_price = number_format($regular_price, $price_decimals, $price_decimal_separator, $price_thousand_separator);
             }
             if (!empty($food_listing->post_content)) {
-                $menu_food_desc = "<div class='fm-food-menu-desc'>" . esc_html($food_listing->post_content) . "</div>";
+                $menu_food_desc = "<div class='fm-food-menu-desc'>" . wp_kses_post($food_listing->post_content) . "</div>";
             }
-            echo wp_kses_post("<div class='food-list-box'><a href='" . esc_url(get_permalink($food_listing->ID)) . "'><div class='fm-food-menu-title'><strong>" . esc_html($food_listing->post_title)) . "</strong></div>";
+            echo "<div class='food-list-box'>";
+            echo "<a href='" . esc_url(get_permalink($food_listing->ID)) . "'>";
+            echo "<div class='fm-food-menu-title'><strong>" . esc_html($food_listing->post_title) . "</strong></div>";
             echo "<div class='fm-food-menu-pricing'>";
             if (!empty($regular_price) && !empty($sale_price)) {
                 $f_regular_price = sprintf($price_format, '<span class="food-manager-Price-currencySymbol">' . esc_html(get_food_manager_currency_symbol()) . '</span>', $formatted_sale_price);
                 $f_sale_price = sprintf($price_format, '<span class="food-manager-Price-currencySymbol">' . esc_html(get_food_manager_currency_symbol()) . '</span>', $formatted_regular_price);
                 echo "<del> " . $f_sale_price . "</del> <ins><span class='food-manager-Price-currencySymbol'><strong>" . $f_regular_price . "</strong></ins>";
             }
-            if (empty($regular_price) && empty($sale_price)) {
-                return false;
-            }
             if (empty($sale_price)) {
                 echo sprintf($price_format, '<span class="food-manager-Price-currencySymbol">' . esc_html(get_food_manager_currency_symbol()) . '</span>', $formatted_regular_price);
             }
             echo "</div>";
-            echo "</a>";
-            echo "$menu_food_desc";
+            echo "<a>";
+            echo $menu_food_desc;
             echo "</div>";
         }
         echo "</div>";
