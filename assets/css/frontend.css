@@ -20,6 +20,7 @@
 # 14. FOOD MENU
 # 15. ALL MIX
 # 16. MEDIA QUERY 
+# 17. WOOCOMMERCE
 
 --------------------------------------------------------------*/
 
@@ -3014,3 +3015,17 @@ img.wpfm-organic-tag-icon {
 }
 
 /* ===== 16. MEDIA QUERY END ===== */
+
+/* ===== 17. WOOCOMMERCE START ===== */
+
+
+
+/* ===== 17. WOOCOMMERCE END ===== */
+.woocommerce .woocommerce-cart-form .shop_table .cart-page td{
+    text-align: left !important;
+}
+@media screen and (max-width: 768px) {
+    .woocommerce table.shop_table_responsive tr.cart-page td::before{
+        display: none !important;
+    }
+}
