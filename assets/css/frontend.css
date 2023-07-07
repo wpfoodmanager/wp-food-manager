@@ -3018,9 +3018,6 @@ img.wpfm-organic-tag-icon {
 
 /* ===== 17. WOOCOMMERCE START ===== */
 
-
-
-/* ===== 17. WOOCOMMERCE END ===== */
 .woocommerce .woocommerce-cart-form .shop_table .cart-page td{
     text-align: left !important;
 }
@@ -3029,3 +3026,5 @@ img.wpfm-organic-tag-icon {
         display: none !important;
     }
 }
+
+/* ===== 17. WOOCOMMERCE END ===== */
