@@ -96,8 +96,8 @@ $food = $post;
                                         <h3 class="wpfm-heading-text"><?php esc_html_e('Food Nutritions', 'wp-food-manager'); ?></h3> <?php display_food_nutritions(); ?>
                                     </div>
                                 <?php endif; ?>
-                            </div>
-                            <form class="wpfm-single-food-body-content wpfm-toppings" method="post" action="">
+                            
+                            <form class="wpfm-toppings" method="post" action="">
                                 <?php
                                 $ext_options = get_post_meta(get_the_ID(), '_food_toppings', true);
                                 $repeated_count = get_post_meta(get_the_ID(), '_food_repeated_options', true);
@@ -188,6 +188,7 @@ $food = $post;
                                 do_action('single_food_toppings_after');
                                 ?>
                             </form>
+                            </div>
                             <!-- Additional Info Block Start -->
                             <?php
                             $show_additional_details = apply_filters('food_manager_show_additional_details', true);
