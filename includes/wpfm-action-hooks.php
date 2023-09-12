@@ -2192,10 +2192,19 @@ class WPFM_ActionHooks {
         }
         switch ($screen->id) {
             case 'options-permalink':
-                include esc_url(WPFM_PLUGIN_DIR) . '/admin/wpfm-permalink-settings.php';
+                $file_path = (WPFM_PLUGIN_DIR).'/admin/wpfm-permalink-settings.php';
+                if (file_exists($file_path)) {
+                require_once $file_path;
+                } else {
+                // Handle the case where the file doesn't exist
+                echo "File not found: $file_path";
+                }
                 break;
         }
+        
     }
+
+   
 
     /**
      * Display the group field html by the given array.
