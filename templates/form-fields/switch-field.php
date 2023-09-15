@@ -1,8 +1,12 @@
 <?php
 global $thepostid;
+
+if(isset($food_id) && !empty($food_id))
 $value = get_post_meta($food_id, '_' . $key, true);
-$name = (!empty($field['name'])) ? esc_attr($field['name']) : esc_attr($key);
+else
+$value = get_post_meta($thepostid, '_' . $key, true);
 $food_id = (isset($_GET['food_id']) && !empty($_GET['food_id'])) ? esc_attr($_GET['food_id']) : esc_attr($thepostid);
+$name = (!empty($field['name'])) ? esc_attr($field['name']) : esc_attr($key);
 $exp_arr = explode("_", $key);
 
 ?>
