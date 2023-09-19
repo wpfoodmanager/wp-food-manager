@@ -1,14 +1,16 @@
-=== WP Food Manager - WordPress Restaurant Menu Plugin ===
+===  WP Food Manager – Restaurant Menu & Online Food Ordering for WooCommerce - Food Delivery & Pickup - Table Reservation ===
 
 Contributors: wpfoodmanager,ashokdudhat,krinay
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=55FRYATTFLA5N
-Tags: restaurant, menu, food, food ordering
+Tags:  food menu, restaurant menu, food ordering, restaurant, table reservation, food delivery, food pickup, cafe menu, food order,food,menu
 Requires at least: 5.0
-Tested up to: 6.0
+Tested up to: 6.3.1
 Stable tag: 1.0.4
 Requires PHP: 5.6
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
+
+WP Food Manager is a complete online food ordering solution for all types of food businesses including restaurants and cafes with all your favorite WooCommerce functionalities, Restaurant Reservation, Restaurant Management & Multi Vendor marketplace that increase sales.
 
 == Description ==
 
