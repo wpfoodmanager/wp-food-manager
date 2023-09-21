@@ -196,7 +196,10 @@ if (!empty($extra_fields_options)) {
 					}
 					?>
 					<div class="wpfm-actions">
-						<button type="button" class="wpfm-add-button button button-primary" id="wpfm-add-new-option" data-row='<div class="wpfm-options-wrap wpfm-metabox postbox wpfm-options-box-__repeated-option-index__">
+						<button type="button" class="wpfm-add-button button button-primary" id="wpfm-add-new-option" data-row='<?php
+                                                                                                                            ob_start();
+                                                                                                                            ?>
+						<div class="wpfm-options-wrap wpfm-metabox postbox wpfm-options-box-__repeated-option-index__">
 						        <input type="hidden" name="repeated_options[]" value="__repeated-option-index__" class="repeated-options">
 						        <h3 class="">
 						            <a href="javascript: void(0);" data-id="__repeated-option-index__" class="wpfm-delete-btn dashicons dashicons-dismiss">Remove</a>
@@ -238,7 +241,10 @@ if (!empty($extra_fields_options)) {
 										<?php endforeach; ?>
 						            </div>
 						        </div>
-						    </div>'>+ Add Topping
+						    </div>
+							<?php echo esc_attr(ob_get_clean());
+        					?>
+							'>+ Add Topping
 						</button>
 					</div>
 				</div>
