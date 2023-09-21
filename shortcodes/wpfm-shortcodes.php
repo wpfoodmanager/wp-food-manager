@@ -287,7 +287,7 @@ class WPFM_Shortcodes {
 
 		// Order by meta value and it will take default sort order by start date of food
 		if (is_null($orderby) || empty($orderby)) {
-			$orderby  = 'menu_order'; //meta_value
+			$orderby  = 'meta_value'; //meta_value
 		}
 
 		if (!is_null($featured)) {
