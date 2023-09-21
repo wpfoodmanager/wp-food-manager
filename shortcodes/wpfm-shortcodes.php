@@ -235,7 +235,7 @@ class WPFM_Shortcodes {
 		ob_start();
 		extract($atts = shortcode_atts(apply_filters('food_manager_output_foods_defaults', array(
 			'per_page'                  => get_option('food_manager_per_page'),
-			'orderby'                   => 'menu_order', // meta_value
+			'orderby'                   => 'meta_value', // meta_value
 			'order'                     => 'ASC',
 			// Filters + cats
 			'show_filters'              => true,
