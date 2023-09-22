@@ -178,9 +178,9 @@ if (!empty($extra_fields_options)) {
 								                    <td><span class='wpfm-option-sort'>☰</span></td>
 								                    <td>%%repeated-option-index3%%</td>
 								                    <td><input type='text' name='%%repeated-option-index2%%_option_name_%%repeated-option-index3%%' value='' class='opt_name' pattern='.*\S+.*' required></td>
-													<?php do_action('wpfm_repeated_option_name_after', array()); ?>
+													<?php do_action('wpfm_repeated_option_name_after', $args); ?>
 								                    <td><input type='number' name='%%repeated-option-index2%%_option_price_%%repeated-option-index3%%' value='' class='opt_price' min='0' required></td>
-													<?php do_action('wpfm_repeated_option_price_after', array()); ?>
+													<?php do_action('wpfm_repeated_option_price_after', $args); ?>
 								                    <td><a href='javascript: void(0);' data-id='%%repeated-option-index3%%' class='option-delete-btn dashicons dashicons-dismiss'></a></td>
 								                    <input type='hidden' class='option-value-class' name='option_value_count[%%repeated-option-index2%%][]' value='%%repeated-option-index3%%'>
 								                </tr>
