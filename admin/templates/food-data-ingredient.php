@@ -61,7 +61,7 @@ $units = get_terms(
 							echo "<li class='wpfm-sortable-item active-item' data-id='" . esc_attr($ingTermID) . "'>" .
 								"<label>" . esc_html($ingTermName) . "</label>" .
 								"<div class='wpfm-sortable-item-values'>" .
-								"<input type='number' step='0.1' class='item-value' name='food_ingredients[" . esc_attr($ingTermID) . "][value]' value='" . esc_attr($ingValue) . "'>" .
+								"<input type='number' step='any' class='item-value' name='food_ingredients[" . esc_attr($ingTermID) . "][value]' value='" . esc_attr($ingValue) . "'>" .
 								"<select name='food_ingredients[" . esc_attr($ingTermID) . "][unit_id]' class='item-unit'>" .
 								"<option value=''>Unit</option>";
 

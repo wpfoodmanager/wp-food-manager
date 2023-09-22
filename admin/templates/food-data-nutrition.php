@@ -59,7 +59,7 @@ $units = get_terms(
 							echo "<li class='wpfm-sortable-item active-item' data-id='" . esc_attr($nutriTermID) . "'>" .
 								"<label>" . esc_html($nutriTermName) . "</label>" .
 								"<div class='wpfm-sortable-item-values'>" .
-								"<input type='number' step='0.1' class='item-value' name='food_nutritions[" . esc_attr($nutriTermID) . "][value]' value='" . esc_attr($nutriValue) . "'>" .
+								"<input type='number' step='any' class='item-value' name='food_nutritions[" . esc_attr($nutriTermID) . "][value]' value='" . esc_attr($nutriValue) . "'>" .
 								"<select name='food_nutritions[" . esc_attr($nutriTermID) . "][unit_id]' class='item-unit'>" .
 								"<option value=''>Unit</option>";
 
