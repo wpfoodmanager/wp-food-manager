@@ -171,7 +171,10 @@ if (!empty($extra_fields_options)) {
 															</tbody>
 															<tfoot>
 																<tr>
-																	<td colspan="7"> <a class="button wpfm-add-row" data-row="<tr class='option-tr-%%repeated-option-index3%%'>
+																	<td colspan="7"> <a class="button wpfm-add-row" data-row="<?php
+                                                                                                                            ob_start();
+                                                                                                                            ?>
+																	<tr class='option-tr-%%repeated-option-index3%%'>
 								                    <td><span class='wpfm-option-sort'>☰</span></td>
 								                    <td>%%repeated-option-index3%%</td>
 								                    <td><input type='text' name='%%repeated-option-index2%%_option_name_%%repeated-option-index3%%' value='' class='opt_name' pattern='.*\S+.*' required></td>
@@ -180,7 +183,10 @@ if (!empty($extra_fields_options)) {
 													<?php do_action('wpfm_repeated_option_price_after', array()); ?>
 								                    <td><a href='javascript: void(0);' data-id='%%repeated-option-index3%%' class='option-delete-btn dashicons dashicons-dismiss'></a></td>
 								                    <input type='hidden' class='option-value-class' name='option_value_count[%%repeated-option-index2%%][]' value='%%repeated-option-index3%%'>
-								                </tr>">Add Row</a>
+								                </tr>
+												<?php echo esc_attr(ob_get_clean());
+        										?>
+												">Add Row</a>
 																	</td>
 																</tr>
 															</tfoot>
