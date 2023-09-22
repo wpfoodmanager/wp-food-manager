@@ -116,7 +116,7 @@ if (!empty($extra_fields_options)) {
 												}
 										?>
 												<fieldset class="wpfm-form-group fieldset<?php echo $key2; ?> <?php echo $fieldClassLabel; ?>" data-field-name="<?php echo $key2; ?>">
-													<label for="<?php echo $key2; ?>" class="wpfm-form-label-text"><?php echo $field['label'] . apply_filters('add_food_required_label', $field['required'] ? '<span class="require-field">*</span>' : ' <small>' . __('(optional)', 'wp-food-manager') . '</small>', $field); ?></label>
+													<h4 class="wpfm-form-label-text"><?php echo $field['label'] . apply_filters('add_food_required_label', $field['required'] ? '<span class="require-field">*</span>' : ' <small>' . __('(optional)', 'wp-food-manager') . '</small>', $field); ?></h4>
 													<div class="field <?php echo $field['required'] ? 'required-field' : ''; ?>">
 														<?php get_food_manager_template('form-fields/' . $field['type'] . '-field.php', array('key' => $key2, 'field' => $field)); ?>
 													</div>
@@ -124,7 +124,7 @@ if (!empty($extra_fields_options)) {
 											<?php }
 											if ($key2 == 'topping_options') { ?>
 												<fieldset class="wpfm-form-group fieldset_topping_options_<?php echo $key; ?> ">
-													<label for="_topping_options_<?php echo $key; ?>">Options <small>(optional)</small></label>
+													<h4 >Options <small>(optional)</small></h4>
 													<div class="field ">
 														<table class="widefat">
 															<thead>
