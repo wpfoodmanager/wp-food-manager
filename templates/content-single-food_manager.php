@@ -135,7 +135,7 @@ $food = $post;
                                         foreach ($ext_options as $key => $ext_option) {
                                             $field_required = '';
                                             echo "<div class='wpfm-input-field-common " . esc_attr($more_class) . "'>";
-                                            echo '<label for="' . esc_attr(str_replace(" ", "-", strtolower($ext_option['_topping_name']))) . '"><strong>' . esc_html($ext_option['_topping_name']) . '</strong></label>';
+                                            echo '<h4><strong>' . esc_html($ext_option['_topping_name']) . '</strong></h4>';
                                             if (!empty($ext_option['_topping_description'])) {
                                                 echo '<div class="wpfm-input-description">' . wp_kses_post($ext_option['_topping_description']) . '</div>';
                                             }
