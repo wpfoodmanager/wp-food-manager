@@ -145,7 +145,7 @@ if (!function_exists('get_food_listings')) :
 			unset($query_args['tax_query']);
 		}
 
-		// Polylang LANG arg
+		//Sets the Polylang LANG arg to the current language.
 		if (function_exists('pll_current_language')) {
 			$query_args['lang'] = pll_current_language();
 		}
@@ -226,7 +226,7 @@ function wpfm_user_can_post_food() {
 
 if (!function_exists('wpfm_notify_new_user')) :
 	/**
-	 * Send notification to the new users.
+	 * This wpfm_notify_new_user() function used to send notification to the new users.
 	 *
 	 * @param int $user_id
 	 * @param string $password
@@ -248,7 +248,7 @@ endif;
 
 if (!function_exists('wpfm_create_account')) :
 	/**
-	 * Create the account.
+	 * This wpfm_create_account() function is used to create the account.
 	 *
 	 * @param  array $args containing username, email, role
 	 * @param  string $deprecated role string
@@ -296,7 +296,7 @@ if (!function_exists('wpfm_create_account')) :
 			return new WP_Error('validation-error', __('This email is already registered, please choose another one.', 'wp-food-manager'));
 		}
 
-		// Ensure username is unique
+		// Ensure username is unique.
 		$append     = 1;
 		$o_username = $username;
 		while (username_exists($username)) {
@@ -304,7 +304,7 @@ if (!function_exists('wpfm_create_account')) :
 			$append++;
 		}
 
-		// Final error checking
+		// Final error checking.
 		$reg_errors = new WP_Error();
 		$reg_errors = apply_filters('food_manager_registration_errors', $reg_errors, $username, $email);
 		do_action('food_manager_register_post', $username, $email, $reg_errors);
@@ -312,7 +312,7 @@ if (!function_exists('wpfm_create_account')) :
 			return $reg_errors;
 		}
 
-		// Create account
+		// Create account.
 		$new_user = array(
 			'user_login' => $username,
 			'user_pass'  => $password,
@@ -470,7 +470,7 @@ function food_manager_dropdown_selection($args = '') {
 	}
 	extract($r);
 
-	// Store in a transient to help sites with many cats
+	// Store in a transient to help sites with many cats.
 	if (empty($categories)) {
 		$categories = get_terms($taxonomy, array(
 			'orderby'         => $r['orderby'],
@@ -540,7 +540,7 @@ function food_manager_dropdown_selection($args = '') {
 }
 
 /**
- * Checks if the provided content or the current single page or post has a WPFM shortcode.
+ * This has_wpfm_shortcode() function is used to checks if the provided content or the current single page or post has a WPFM shortcode.
  *
  * @param string|null       $content   Content to check. If not provided, it uses the current post content.
  * @param string|array|null $tag Check specifically for one or more shortcodes. If not provided, checks for any WPJM shortcode.
@@ -581,7 +581,7 @@ function has_wpfm_shortcode($content = null, $tag = null) {
 	}
 
 	/**
-	 * Filter the result of has_wpfm_shortcode()
+	 * Filter the result of has_wpfm_shortcode() function.
 	 *
 	 * @param bool $has_wpfm_shortcode
 	 * @since 1.0.0
@@ -590,7 +590,7 @@ function has_wpfm_shortcode($content = null, $tag = null) {
 }
 
 /**
- * Checks if the current page is a food listing.
+ * This is_wpfm_food_listing() functio is used to Checks if the current page is a food listing.
  *
  * @return bool
  * @since 1.0.0
@@ -601,7 +601,7 @@ function is_wpfm_food_listing() {
 
 if (!function_exists('wpfm_get_filtered_links')) :
 	/**
-	 * Shows links after filtering foods
+	 * This wpfm_get_filtered_links() function Shows links after filtering foods.
 	 * 
 	 * @param array $args (default: array())
 	 * @since 1.0.0
@@ -625,7 +625,7 @@ if (!function_exists('wpfm_get_filtered_links')) :
 			}
 		}
 
-		// Convert to slugs
+		// Convert to slugs.
 		if ($args['search_food_types']) {
 			foreach ($args['search_food_types'] as $type) {
 				if (is_numeric($type)) {
@@ -683,7 +683,7 @@ endif;
 
 if (!function_exists('get_food_manager_rss_link')) :
 	/**
-	 * Get the Food Listing RSS link
+	 * This get_food_manager_rss_link() function is used to get the Food Listing RSS link.
 	 * 
 	 * @return string
 	 * @param array $args (default: array())
@@ -696,7 +696,7 @@ if (!function_exists('get_food_manager_rss_link')) :
 endif;
 
 /**
- * Prepare files for upload by standardizing them into an array. This adds support for multiple file upload fields.
+ * This wpfm_prepare_uploaded_files() function Prepare files for upload by standardizing them into an array. This adds support for multiple file upload fields.
  * 
  * @param  array $file_data
  * @return array
@@ -727,11 +727,11 @@ function wpfm_prepare_uploaded_files($file_data) {
 }
 
 /**
- * Upload a file using WordPress file API.
+ * This wpfm_upload_file() function is used to Upload a file using WordPress file API.
  * 
  * @param  array $file_data Array of $_FILE data to upload.
- * @param  array $args Optional arguments
- * @return array|WP_Error Array of objects containing either file information or an error
+ * @param  array $args Optional arguments.
+ * @return array|WP_Error Array of objects containing either file information or an error.
  * @since 1.0.0
  */
 function wpfm_upload_file($file, $args = array()) {
@@ -757,13 +757,11 @@ function wpfm_upload_file($file, $args = array()) {
 	}
 
 	/**
-	 * Filter file configuration before upload
+	 * Filter file configuration before upload.
+	 * This filter can be used to modify the file arguments before being uploaded, or return a WP_Error object to prevent the file from being uploaded, and return the error.
 	 *
-	 * This filter can be used to modify the file arguments before being uploaded, or return a WP_Error
-	 * object to prevent the file from being uploaded, and return the error.
-	 *
-	 * @param array $file               Array of $_FILE data to upload.
-	 * @param array $args               Optional file arguments
+	 * @param array $file - Array of $_FILE data to upload.
+	 * @param array $args - Optional file arguments.
 	 * @param array $allowed_mime_types Array of allowed mime types from field config or defaults
 	 * @since 1.0.0
 	 */
@@ -799,7 +797,7 @@ function wpfm_upload_file($file, $args = array()) {
 }
 
 /**
- * Get the food order which is arrange by the backend.
+ * This get_food_order_by() function is used to get the food order which is arrange by the backend.
  * 
  * @return array
  * @since 1.0.0
@@ -819,7 +817,7 @@ function get_food_order_by() {
 }
 
 /**
- * Allowed Mime types specifically for WP Food Manager.
+ * This wpfm_get_allowed_mime_types() function is Allowed Mime types specifically for WP Food Manager.
  * 
  * @param   string $field Field used.
  * @return  array  Array of allowed mime types
@@ -850,8 +848,8 @@ function wpfm_get_allowed_mime_types($field = '') {
 }
 
 /**
- * Get the page ID of a page if set, with PolyLang compat.
- * @param  string $page e.g. food_dashboard, add_food, foods
+ * This food_manager_get_page_id() function is used to get the page ID of a page if set, with PolyLang compat.
+ * @param  string $page e.g. food_dashboard, add_food, foods.
  * @return int
  * @since 1.0.0
  */
@@ -865,7 +863,7 @@ function food_manager_get_page_id($page) {
 }
 
 /**
- * Get the permalink of a page if set
+ * This food_manager_get_permalink() function is used to get the permalink of a page if set.
  * @param  string $page e.g. food_dashboard, add_food, foods
  * @return string|bool
  * @since 1.0.0
@@ -879,7 +877,7 @@ function food_manager_get_permalink($page) {
 }
 
 /**
- * Duplicate the food by food id.
+ * This food_manager_duplicate_listing() function Duplicates the food by food id.
  * @param  int $post_id
  * @return int 0 on fail or the post ID.
  * @since 1.0.0
@@ -938,7 +936,7 @@ function food_manager_duplicate_listing($post_id) {
 }
 
 /**
- * True if only one type allowed per food
+ * This food_manager_multiselect_food_type() function return True if only one type allowed per food.
  *
  * @return bool
  * @since 1.0.0
@@ -958,7 +956,7 @@ function food_manager_multiselect_food_type() {
 }
 
 /**
- * True if only one category allowed per food
+ * This food_manager_multiselect_food_category() function return True if only one category allowed per food.
  *
  * @return bool
  * @since 1.0.0
@@ -978,7 +976,7 @@ function food_manager_multiselect_food_category() {
 }
 
 /**
- * Checks to see if the standard password setup email should be used.
+ * This food_manager_use_standard_password_setup_email() function checks to see if the standard password setup email should be used.
  *
  * @return bool True if they are to use standard email, false to allow user to set password at first food creation.
  * @since 1.0.0
@@ -986,7 +984,6 @@ function food_manager_multiselect_food_category() {
 function food_manager_use_standard_password_setup_email() {
 	$use_standard_password_setup_email = false;
 	// If username is being automatically generated, force them to send password setup email.
-
 	if (food_manager_generate_username_from_email()) {
 		$use_standard_password_setup_email = get_option('food_manager_use_standard_password_setup_email', 1) == 1 ? true : false;
 	}
@@ -1001,7 +998,7 @@ function food_manager_use_standard_password_setup_email() {
 }
 
 /**
- * Checks if a password should be auto-generated for new users.
+ * This food_manager_validate_new_password() function Check if a password should be auto-generated for new users.
  *
  * @param string $password Password to validate.
  * @return bool True if password meets rules.
@@ -1015,14 +1012,14 @@ function food_manager_validate_new_password($password) {
 	 * Allows overriding default food Manager password validation rules.
 	 *
 	 * @param bool   $is_valid_password True if new password is validated.
-	 * @param string $password          Password to validate.
+	 * @param string $password - Password to validate.
 	 * @since 1.0.0
 	 */
 	return apply_filters('food_manager_validate_new_password', $is_valid_password, $password);
 }
 
 /**
- * Returns the password rules hint.
+ * This food_manager_get_password_rules_hint() function Returns the password rules hint.
  *
  * @return string
  * @since 1.0.0
@@ -1040,7 +1037,7 @@ function food_manager_get_password_rules_hint() {
 
 if (!function_exists('get_food_listing_post_statuses')) :
 	/**
-	 * Get post statuses used for foods.
+	 * This get_food_listing_post_statuses() function is used to get post statuses used for foods.
 	 *
 	 * @access public
 	 * @return array
@@ -1060,7 +1057,7 @@ endif;
 
 if (!function_exists('get_food_listing_types')) :
 	/**
-	 * Get food listing types.
+	 * This get_food_listing_types() function is used to get food listing types.
 	 *
 	 * @access public
 	 * @param string $fields (default: 'all')
@@ -1078,7 +1075,7 @@ if (!function_exists('get_food_listing_types')) :
 				'orderby'    => 'name'
 			);
 			$args = apply_filters('get_food_listing_types_args', $args);
-			// Prevent users from filtering the taxonomy
+			// Prevent users from filtering the taxonomy.
 			$args['taxonomy'] = 'food_manager_type';
 			return get_terms($args);
 		}
@@ -1087,7 +1084,7 @@ endif;
 
 if (!function_exists('get_food_listing_categories')) :
 	/**
-	 * Get food categories.
+	 * This get_food_listing_categories() function is used to get food categories.
 	 *
 	 * @access public
 	 * @return array
@@ -1116,7 +1113,7 @@ if (!function_exists('get_food_listing_categories')) :
 endif;
 
 /**
- * Get Base Currency Code.
+ * This get_food_manager_currency() function is used to get Base Currency Code.
  *
  * @return string
  * @since 1.0.0
@@ -1126,8 +1123,8 @@ function get_food_manager_currency() {
 }
 
 /**
- * Get full list of currency codes.
- * Currency symbols and names should follow the Unicode CLDR recommendation (https://cldr.unicode.org/translation/currency-names-and-symbols)
+ * This get_food_manager_currencies() function is used to get full list of currency codes.
+ * Currency symbols and names should follow the Unicode CLDR recommendation (https://cldr.unicode.org/translation/currency-names-and-symbols).
  *
  * @return array
  * @since 1.0.0
@@ -1312,8 +1309,8 @@ function get_food_manager_currencies() {
 }
 
 /**
- * Get all available Currency symbols.
- * Currency symbols and names should follow the Unicode CLDR recommendation (https://cldr.unicode.org/translation/currency-names-and-symbols)
+ * This get_food_manager_currency_symbols() function is used to Get all available Currency symbols.
+ * Currency symbols and names should follow the Unicode CLDR recommendation (https://cldr.unicode.org/translation/currency-names-and-symbols).
  *
  * @return array
  * @since 1.0.0
@@ -1493,10 +1490,10 @@ function get_food_manager_currency_symbols() {
 }
 
 /**
- * Get Currency symbol.
- * Currency symbols and names should follow the Unicode CLDR recommendation (https://cldr.unicode.org/translation/currency-names-and-symbols)
+ * This get_food_manager_currency_symbol() function is used to get Currency symbol.
+ * Currency symbols and names should follow the Unicode CLDR recommendation (https://cldr.unicode.org/translation/currency-names-and-symbols).
  *
- * @param string $currency Currency. (default: '').
+ * @param string $currency (default: '').
  * @return string
  * @since 1.0.0
  */
@@ -1510,7 +1507,7 @@ function get_food_manager_currency_symbol($currency = '') {
 }
 
 /**
- * Get the price format depending on the currency position.
+ * This get_food_manager_price_format() function is used to get the price format depending on the currency position.
  *
  * @return string
  * @since 1.0.0
@@ -1538,7 +1535,7 @@ function get_food_manager_price_format() {
 }
 
 /**
- * Return the thousand separator for prices.
+ * This wpfm_get_price_thousand_separator() function returns the thousand separator for prices.
  *
  * @return string
  * @since  1.0.0
@@ -1548,7 +1545,7 @@ function wpfm_get_price_thousand_separator() {
 }
 
 /**
- * Return the decimal separator for prices.
+ * This wpfm_get_price_decimal_separator() function returns the decimal separator for prices.
  *
  * @return string
  * @since  1.0.0
@@ -1559,7 +1556,7 @@ function wpfm_get_price_decimal_separator() {
 }
 
 /**
- * Return the number of decimals after the decimal point.
+ * This wpfm_get_price_decimals() function returns the number of decimals after the decimal point.
  *
  * @return int
  * @since  1.0.0
@@ -1569,7 +1566,7 @@ function wpfm_get_price_decimals() {
 }
 
 /**
- * Returns the wordpress dashicons's content with classes.
+ * This wpfm_get_dashicons() function returns the wordpress dashicons's content with classes.
  * 
  * @return array
  * @since  1.0.0
@@ -1743,7 +1740,7 @@ function wpfm_get_dashicons() {
 }
 
 /**
- * Return the food font icons.
+ * This wpfm_get_font_food_icons() function returns the food font icons.
  *
  * @return array
  * @since  1.0.1
@@ -1788,7 +1785,7 @@ function wpfm_get_font_food_icons() {
 }
 
 /**
- * Check if given string ($str) is begin with the second parameter ($begnString) of function.
+ * This wpfm_begnWith() Checks if given string ($str) is begin with the second parameter ($begnString) of function.
  *
  * @param string $str
  * @param string $begnString
@@ -1805,7 +1802,7 @@ function wpfm_begnWith($str, $begnString) {
 
 if (!function_exists('get_food_listings_keyword_search')) :
 	/**
-	 * Join and where query for keywords
+	 * This get_food_listings_keyword_search() function Join and where query for keywords.
 	 *
 	 * @param array $search
 	 * @return array
@@ -1813,7 +1810,7 @@ if (!function_exists('get_food_listings_keyword_search')) :
 	function get_food_listings_keyword_search($search) {
 		global $wpdb, $food_manager_keyword;
 
-		// Searchable Meta Keys: set to empty to search all meta keys
+		// Searchable Meta Keys: set to empty to search all meta keys.
 		$searchable_meta_keys = array(
 			'_food_location',
 			'_food_tags',
@@ -1822,9 +1819,9 @@ if (!function_exists('get_food_listings_keyword_search')) :
 		$searchable_meta_keys = apply_filters('food_listing_searchable_meta_keys', $searchable_meta_keys);
 		$conditions   = array();
 
-		// Search Post Meta
+		// Search Post Meta.
 		if (apply_filters('food_listing_search_post_meta', true)) {
-			// Only selected meta keys
+			// Only selected meta keys.
 			if ($searchable_meta_keys) {
 				$conditions[] = "{$wpdb->posts}.ID IN ( SELECT post_id FROM {$wpdb->postmeta} WHERE meta_key IN ( '" . implode("','", array_map('esc_sql', $searchable_meta_keys)) . "' ) AND meta_value LIKE '%" . esc_sql($food_manager_keyword) . "%' )";
 			} else {
@@ -1833,7 +1830,7 @@ if (!function_exists('get_food_listings_keyword_search')) :
 			}
 		}
 
-		// Search taxonomy
+		// Search taxonomy.
 		$conditions[] = "{$wpdb->posts}.ID IN ( SELECT object_id FROM {$wpdb->term_relationships} AS tr LEFT JOIN {$wpdb->term_taxonomy} AS tt ON tr.term_taxonomy_id = tt.term_taxonomy_id LEFT JOIN {$wpdb->terms} AS t ON tt.term_id = t.term_id WHERE t.name LIKE '%" . esc_sql($food_manager_keyword) . "%' )";
 
 		/**
@@ -1861,7 +1858,7 @@ if (!function_exists('get_food_listings_keyword_search')) :
 endif;
 
 /**
- * Checks if the user can upload a file via the Ajax endpoint.
+ * This food_manager_user_can_upload_file_via_ajax() function Checks if the user can upload a file via the Ajax endpoint.
  *
  * @return bool
  * @since 1.0.0
@@ -1879,7 +1876,7 @@ function food_manager_user_can_upload_file_via_ajax() {
 }
 
 /**
- * Checks if the user can upload a file via the Ajax endpoint.
+ * This wpfm_extra_topping_form_fields() function checks if the user can upload a file via the Ajax endpoint.
  *
  * @param mixed $post
  * @param mixed $field
@@ -2092,7 +2089,7 @@ function wpfm_extra_topping_form_fields($post, $field, $field_value) {
 }
 
 /**
- * Use radio inputs instead of checkboxes for term checklists in specified taxonomies such as 'food_manager_type'.
+ * This wpfm_term_radio_checklist_for_food_type() Use radio inputs instead of checkboxes for term checklists in specified taxonomies such as 'food_manager_type'.
  *
  * @param array $args
  * @return array
@@ -2131,7 +2128,7 @@ function wpfm_term_radio_checklist_for_food_type($args) {
 }
 
 /**
- * Check if given array is multi-array or not.
+ * This wpfm_isMultiArray() Checks if given array is multi-array or not.
  *
  * @return bool
  * @param mixed $a
@@ -2145,7 +2142,7 @@ function wpfm_isMultiArray($a) {
 }
 
 /**
- * Return the given taxnomy list array and display the category checklist html.
+ * This wpfm_category_checklist() function return the given taxnomy list array and display the category checklist html.
  *
  * @return $popular_ids
  * @param string $taxonomy
@@ -2154,7 +2151,7 @@ function wpfm_isMultiArray($a) {
  * @since  1.0.1
  */
 function wpfm_category_checklist($taxonomy, $key_name, $checked_term) {
-	// Get terms
+	// Get terms.
 	$terms = get_terms(
 		array(
 			'taxonomy'     => esc_attr($taxonomy),
@@ -2163,7 +2160,7 @@ function wpfm_category_checklist($taxonomy, $key_name, $checked_term) {
 		)
 	);
 
-	// Get taxonomy
+	// Get taxonomy.
 	$tax = get_taxonomy($taxonomy);
 	$popular_ids = array();
 	foreach ((array) $terms as $term) {
@@ -2183,7 +2180,7 @@ function wpfm_category_checklist($taxonomy, $key_name, $checked_term) {
 }
 
 /**
- * Return the given taxnomy list array and display the category dropdown html.
+ * This wpfm_dropdown_categories() returns the given taxnomy list array and display the category dropdown html.
  *
  * @return $popular_ids
  * @param string $taxonomy
@@ -2216,7 +2213,7 @@ function wpfm_dropdown_categories($taxonomy, $key_name, $selected_term) {
 }
 
 /**
- * Check if term id given as a terms array is exist or not.
+ * This is_wpfm_terms_exist() checks if term id given as a terms array is exist or not.
  *
  * @return $displayTerms
  * @param array $terms

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Template Functions
+ * This file contain all templates realted functions.
  * Template functions specifically created for food listings and other food related methods.
  *
  * @author WP Food Manager
@@ -9,8 +9,7 @@
  */
 
 /**
- * Returns the translated role of the current user. If that user has
- * no role for the current blog, it returns false.
+ * Returns the translated role of the current user. If that user has no role for the current blog, it returns false.
  *
  * @return string The name of the current role
  * @since 1.0.0
@@ -125,7 +124,7 @@ function locate_food_manager_template($template_name, $template_path = 'wp-food-
 }
 
 /**
- * Get the template part (for templates in loops).
+ * This get_food_manager_template_part() function is used to get the template part (for templates in loops).
  *
  * @param string $slug
  * @param string $name (default: '')
@@ -147,7 +146,7 @@ function get_food_manager_template_part($slug, $name = '', $template_path = 'wp-
 }
 
 /**
- * Get the food banner url if not then return placeholder image.
+ * This get_food_banner() function is used to get the food banner url if not then return placeholder image.
  *
  * @access public
  * @param mixed $post (default: null)
@@ -170,7 +169,7 @@ function get_food_banner($post = null) {
 }
 
 /**
- * Get the food Thumbnail url if not then return placeholder image.
+ * This get_food_thumbnail() function is used to get the food Thumbnail url if not then return placeholder image.
  *
  * @access public
  * @param mixed $post (default: null)
@@ -189,7 +188,7 @@ function get_food_thumbnail($post = null, $size = 'full') {
 }
 
 /**
- * Display the food price tag.
+ * This display_food_price_tag() function is used to display the food price tag.
  *
  * @access public
  * @param mixed $post (default: null)
@@ -226,7 +225,7 @@ function display_food_price_tag($post = null) {
 }
 
 /**
- * Display the food banner.
+ * This display_food_banner() function is used to display the food banner.
  *
  * @access public
  * @param string $size (default: 'full')
@@ -252,7 +251,7 @@ function display_food_banner($size = 'full', $default = null, $post = null) {
 }
 
 /**
- * This function is use to get the counts the food views and also used at food.
+ * This get_food_views_count() function is use to get the counts of the food views and also used at food.
  * 
  *  @return number counted view.
  *  @param mixed $post
@@ -270,7 +269,7 @@ function get_food_views_count($post) {
 }
 
 /**
- * Display the food veg or non-veg or vegan icon.
+ * This display_food_veg_nonveg_icon_tag() function is used to display the food veg or non-veg or vegan icon.
  *
  * @access public
  * @param mixed $post (default: null)
@@ -310,7 +309,7 @@ function display_food_veg_nonveg_icon_tag($post = null, $after = '') {
 }
 
 /**
- * Get the food veg or non-veg or vegan icon.
+ * This get_food_veg_nonveg_icon_tag() function is used to get the food veg or non-veg or vegan icon.
  *
  * @access public
  * @param mixed $post (default: null)
@@ -327,7 +326,7 @@ function get_food_veg_nonveg_icon_tag($post = null) {
 }
 
 /**
- * Display the food type.
+ * This display_food_type() function is used to display the food type.
  *
  * @access public
  * @param mixed $post (default: null)
@@ -359,7 +358,7 @@ function display_food_type($post = null, $after = '') {
 }
 
 /**
- * Get the food type.
+ * This get_food_type() function is used get the food type.
  *
  * @access public
  * @param mixed $post (default: null)
@@ -378,7 +377,7 @@ function get_food_type($post = null) {
 }
 
 /**
- * Display the food tag.
+ * This display_food_tag() function is used to display the food tag.
  *
  * @access public
  * @param mixed $post (default: null)
@@ -410,7 +409,7 @@ function display_food_tag($post = null, $after = '') {
 }
 
 /**
- * Get the food tag.
+ * This get_food_tag() function is used to get the food tag.
  *
  * @access public
  * @param mixed $post (default: null)
@@ -429,7 +428,7 @@ function get_food_tag($post = null) {
 }
 
 /**
- * Display the food Category.
+ * This display_food_category() function is used to display the food Category.
  *
  * @access public
  * @param mixed $post (default: null)
@@ -451,7 +450,6 @@ function display_food_category($post = null, $after = '') {
 					'span' => array(
 						'class'       => array()
 					),
-
 				));
 				if ($numCategory > ++$i) {
 					echo esc_attr($after);
@@ -464,7 +462,7 @@ function display_food_category($post = null, $after = '') {
 }
 
 /**
- * Get the food Category.
+ * This get_food_category() function is used to get the food Category.
  *
  * @access public
  * @param mixed $post (default: null)
@@ -481,7 +479,7 @@ function get_food_category($post = null) {
 }
 
 /**
- * Display the food ingredients.
+ * This display_food_ingredients() function is used to display the food ingredients.
  *
  * @access public
  * @param $post (default: null)
@@ -512,7 +510,7 @@ function display_food_ingredients($post = null, $after = '') {
 }
 
 /**
- * Get the food ingredients.
+ * This get_food_ingredients() function is used to get the food ingredients.
  *
  * @access public
  * @param mixed $post (default: null)
@@ -529,7 +527,7 @@ function get_food_ingredients($post = null) {
 }
 
 /**
- * Display the food nutritions.
+ * This display_food_nutritions() function is used to  display the food nutritions.
  * 
  * @access public
  * @param $post (default: null)
@@ -560,7 +558,7 @@ function display_food_nutritions($post = null, $after = '') {
 }
 
 /**
- * Get the food nutritions.
+ * This get_food_nutritions() function is used to get the food nutritions.
  *
  * @access public
  * @param mixed $post (default: null)
@@ -577,7 +575,7 @@ function get_food_nutritions($post = null) {
 }
 
 /**
- * Display the food Units.
+ * This display_food_units() function is used to display the food Units.
  *
  * @access public
  * @param mixed $post (default: null)
@@ -601,7 +599,7 @@ function display_food_units($post = null, $after = '') {
 }
 
 /**
- * Get the food Units.
+ * This get_food_units() function is used to get the food Units.
  *
  * @access public
  * @param mixed $post (default: null)
@@ -618,7 +616,7 @@ function get_food_units($post = null) {
 }
 
 /**
- * Display the food permalink.
+ * This display_food_permalink() function is used to diplay the food permalink.
  *
  * @access public
  * @param mixed $post (default: null)
@@ -630,7 +628,7 @@ function display_food_permalink($post = null) {
 }
 
 /**
- * Get the food permalink.
+ * This get_food_permalink() function is used to get the food permalink.
  *
  * @access public
  * @param mixed $post (default: null)
@@ -644,7 +642,7 @@ function get_food_permalink($post = null) {
 }
 
 /**
- * Display the Class attribute with the class formatted string.
+ * This food_manager_class() function is used to display the Class attribute with the class formatted string.
  *
  * @access public
  * @param string $class (default: '')
@@ -658,7 +656,7 @@ function food_manager_class($class = '', $post_id = null) {
 }
 
 /**
- * Get the Class with the class formatted string.
+ * This get_food_manager_class() function is used to get the Class with the class formatted string.
  *
  * @access public
  * @param $class (default: '')
@@ -693,7 +691,7 @@ function get_food_manager_class($class = '', $post_id = null) {
 }
 
 /**
- * Outputs the Food status.
+ * This display_food_status() function is used to outputs Of the Food status.
  * 
  * @param $post (default: null)
  * @return void
@@ -704,7 +702,7 @@ function display_food_status($post = null) {
 }
 
 /**
- * Gets the food status.
+ * This get_food_status() function is used to gets the food status.
  * 
  * @param $post (default: null)
  * @return string
@@ -723,7 +721,7 @@ function get_food_status($post = null) {
 }
 
 /**
- * Display the food stock status.
+ * This display_stock_status() function is used to display the food stock status.
  *
  * @access public
  * @param $post (default: null)
@@ -747,7 +745,7 @@ function display_stock_status($post = null, $after = '') {
 }
 
 /**
- * Get the food stock status.
+ * This get_stock_status() function is used to get the food stock status.
  *
  * @access public
  * @param mixed $post (default: null)
@@ -761,7 +759,7 @@ function get_stock_status($post = null) {
 }
 
 /**
- * Display the food description.
+ * This display_food_description() is used to display the food description.
  *
  * @param int|WP_Post $post (default: null)
  * @return string
@@ -774,7 +772,7 @@ function display_food_description($post = null) {
 }
 
 /**
- * Get the food description.
+ * This get_food_description() function is used to get the food description.
  *
  * @param int|WP_Post $post (default: null)
  * @return string|bool|null
@@ -787,7 +785,7 @@ function get_food_description($post = null) {
 	}
 	$description = apply_filters('display_food_description', get_the_content($post));
 	/**
-	 * Filter for the food description.
+	 * This Filter apply for the food description.
 	 *
 	 * @param string $description Description to be filtered.
 	 * @param int|WP_Post $post
@@ -797,7 +795,7 @@ function get_food_description($post = null) {
 }
 
 /**
- * Display the food title.
+ * This display_food_title() function is used to display the food title.
  *
  * @param int|WP_Post $post
  * @return string
@@ -810,7 +808,7 @@ function display_food_title($post = null) {
 }
 
 /**
- * Get the food title.
+ * This get_food_title() funnction is used to get the food title.
  *
  * @param int|WP_Post $post (default: null)
  * @return string|bool|null
@@ -823,7 +821,7 @@ function get_food_title($post = null) {
 	}
 	$title = esc_html(get_the_title($post));
 	/**
-	 * Filter for the food title.
+	 * This Filter apply for the food title.
 	 *
 	 * @param string $title Title to be filtered.
 	 * @param int|WP_Post $post
@@ -833,7 +831,7 @@ function get_food_title($post = null) {
 }
 
 /**
- * Returns if we allow indexing of a food listing.
+ * This wpfm_allow_indexing_food_listing() function Returns if we allow indexing of a food listing.
  *
  * @param WP_Post|int|null $post (default: null)
  * @return bool
@@ -847,7 +845,7 @@ function wpfm_allow_indexing_food_listing($post = null) {
 	// Only index food listings that are not expired and published.
 	$index_food_listing = 'publish' === $post->post_status;
 	/**
-	 * Filter if we should allow indexing of food listing.
+	 * This Filter apply if we should allow indexing of food listing.
 	 *
 	 * @param bool $index_food_listing True if we should allow indexing of food listing.
 	 * @since 1.0.0
@@ -856,7 +854,7 @@ function wpfm_allow_indexing_food_listing($post = null) {
 }
 
 /**
- * Returns if we output food listing structured data for a post.
+ * This wpfm_output_food_listing_structured_data() function Returns if we output food listing structured data for a post.
  *
  * @param WP_Post|int|null $post (default: null)
  * @return bool
@@ -870,7 +868,7 @@ function wpfm_output_food_listing_structured_data($post = null) {
 	// Only show structured data for un-filled and published food listings.
 	$output_structured_data = 'publish' === $post->post_status;
 	/**
-	 * Filter if we should output structured data.
+	 * This Filter apply if we should output structured data.
 	 *
 	 * @param bool $output_structured_data True if we should show structured data for post.
 	 * @since 1.0.0
@@ -879,7 +877,7 @@ function wpfm_output_food_listing_structured_data($post = null) {
 }
 
 /**
- * Gets the structured data for the food listing.
+ *This wpfm_get_food_listing_structured_data() function is used to gets the structured data for the food listing.
  *
  * @see https://developers.google.com/search/docs/data-types/foods
  *

@@ -9,7 +9,7 @@ if (!defined('WP_UNINSTALL_PLUGIN')) {
 	exit();
 }
 
-// Cleanup all data.
+// This Included file cleanup all data.
 require 'includes/wpfm-data-cleaner.php';
 
 if (!is_multisite()) {
@@ -20,7 +20,6 @@ if (!is_multisite()) {
 		WPFM_Data_Cleaner::cleanup_all();
 	}
 } else {
-
 	global $wpdb;
 	$blog_ids         = $wpdb->get_col("SELECT blog_id FROM $wpdb->blogs");
 	$original_blog_id = get_current_blog_id();
@@ -74,7 +73,7 @@ $options = array(
 	'food_manager_installation_skip',
 );
 
-// Delete the options
+//Delete the options.
 foreach ($options as $option) {
 	delete_option(esc_attr($option));
 }
