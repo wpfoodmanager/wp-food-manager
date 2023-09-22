@@ -73,7 +73,7 @@ if (isset($_GET['food_id']) && !empty($_GET['food_id']) || $food_id) {
                 $preview_htm .= '<li class="term-item" data-id="' . $tax_value['id'] . '">';
                 $preview_htm .= '<label>' . esc_html($tax_value[$term_name]) . '</label>';
                 $preview_htm .= '<div class="term-item-flex">';
-                $preview_htm .= '<input type="number" min="0" step="0.1" value="' . esc_attr($tax_value['value']) . '" name="' . esc_attr($meta_key) . '[' . esc_attr($tax_value['id']) . '][value]">';
+                $preview_htm .= '<input type="number" min="0" step="any" value="' . esc_attr($tax_value['value']) . '" name="' . esc_attr($meta_key) . '[' . esc_attr($tax_value['id']) . '][value]">';
                 $preview_htm .= '<select name="' . esc_attr($meta_key) . '[' . esc_attr($tax_value['id']) . '][unit_id]">' . $unit_option . '</select>';
                 $preview_htm .= '</div>';
                 $preview_htm .= '</li>';

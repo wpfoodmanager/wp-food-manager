@@ -38,7 +38,7 @@ var WPFM_MultiAppearanceSelect = function () {
                     preview_htm += '<li class="term-item" data-id="' + term_id + '">';
                     preview_htm += '<label>' + label + '</label>';
                     preview_htm += '<div class="term-item-flex">';
-                    preview_htm += '<input type="number" min="0" step="0.1" name="' + data_name + '[' + term_id + '][value]">';
+                    preview_htm += '<input type="number" min="0" step="any" name="' + data_name + '[' + term_id + '][value]">';
                     preview_htm += '<select name="' + data_name + '[' + term_id + '][unit_id]">' + unit_options + '</select>';
                     preview_htm += '</div>';
                     preview_htm += '</li>';
