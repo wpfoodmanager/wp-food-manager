@@ -153,7 +153,7 @@ if (!function_exists('get_food_listings')) :
 		/* This filter is documented in wp-food-manager.php */
 		$query_args['lang'] = apply_filters('wpfm_lang', null);
 
-		// Filter args
+		// Filter args.
 		$query_args = apply_filters('get_food_listings_query_args', $query_args, $args);
 		do_action('before_get_food_listings', $query_args, $args);
 
@@ -417,19 +417,15 @@ function food_manager_user_can_edit_pending_submissions() {
 
 /**
  * Checks if the user can upload a file via the Ajax endpoint.
- *
+ * @param bool $can_upload True if they can upload files from Ajax endpoint.
  * @return bool
  * @since 1.0.0
  */
 function wpfm_user_can_upload_file_via_ajax() {
 	$can_upload = is_user_logged_in() && wpfm_user_can_post_food();
 
-	/**
-	 * Override ability of a user to upload a file via Ajax.
-	 *
-	 * @param bool $can_upload True if they can upload files from Ajax endpoint.
-	 * @since 1.0.0
-	 */
+	//  Override ability of a user to upload a file via Ajax.
+	 
 	return apply_filters('wpfm_user_can_upload_file_via_ajax', $can_upload);
 }
 
@@ -544,6 +540,8 @@ function food_manager_dropdown_selection($args = '') {
  *
  * @param string|null       $content   Content to check. If not provided, it uses the current post content.
  * @param string|array|null $tag Check specifically for one or more shortcodes. If not provided, checks for any WPJM shortcode.
+ * @param string[] $has_wpfm_shortcode.
+ * @param bool $has_wpfm_shortcode
  * @return bool
  * @since 1.0.0
  */
@@ -558,12 +556,8 @@ function has_wpfm_shortcode($content = null, $tag = null) {
 	if (!empty($content)) {
 		$has_wpfm_shortcode = array('add_food', 'food_dashboard', 'foods', 'food_categories', 'food_type', 'food', 'food_summary', 'food_apply');
 
-		/**
-		 * Filters a list of all shortcodes associated with WPFM.
-		 *
-		 * @param string[] $has_wpfm_shortcode
-		 * @since 1.0.0
-		 */
+		// Filters a list of all shortcodes associated with WPFM.
+
 		$has_wpfm_shortcode = array_unique(apply_filters('food_manager_shortcodes', $has_wpfm_shortcode));
 		if (null !== $tag) {
 			if (!is_array($tag)) {
@@ -580,12 +574,7 @@ function has_wpfm_shortcode($content = null, $tag = null) {
 		}
 	}
 
-	/**
-	 * Filter the result of has_wpfm_shortcode() function.
-	 *
-	 * @param bool $has_wpfm_shortcode
-	 * @since 1.0.0
-	 */
+	// Filter the result of has_wpfm_shortcode() function.
 	return apply_filters('has_wpfm_shortcode', $has_wpfm_shortcode);
 }
 
@@ -819,8 +808,12 @@ function get_food_order_by() {
 /**
  * This wpfm_get_allowed_mime_types() function is Allowed Mime types specifically for WP Food Manager.
  * 
- * @param   string $field Field used.
+ * @param   string $field The field key for the upload..
  * @return  array  Array of allowed mime types
+ * @param array  {
+ *  Array of allowed file extensions and mime types.
+ *  Key is pipe-separated file extensions. Value is mime type.
+ * }
  * @since 1.0.0
  */
 function wpfm_get_allowed_mime_types($field = '') {
@@ -833,17 +826,7 @@ function wpfm_get_allowed_mime_types($field = '') {
 		'docx'         => 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
 	);
 
-	/**
-	 * Mime types to accept in uploaded files.
-	 * Default is image, pdf, and doc(x) files.
-	 *
-	 * @param array  {
-	 *     Array of allowed file extensions and mime types.
-	 *     Key is pipe-separated file extensions. Value is mime type.
-	 * }
-	 * @param string $field The field key for the upload.
-	 * @since 1.0.0
-	 */
+	//  Mime types to accept in uploaded files, Default is image, pdf, and doc(x) files.
 	return apply_filters('wpfm_mime_types', $allowed_mime_types, $field);
 }
 
@@ -888,9 +871,8 @@ function food_manager_duplicate_listing($post_id) {
 	}
 	global $wpdb;
 
-	/**
-	 * Duplicate the post.
-	 */
+	// Duplicate the post.
+
 	$new_post_id = wp_insert_post(array(
 		'comment_status' => esc_attr($post->comment_status),
 		'ping_status'    => esc_attr($post->ping_status),
@@ -907,18 +889,15 @@ function food_manager_duplicate_listing($post_id) {
 		'menu_order'     => absint($post->menu_order)
 	));
 
-	/**
-	 * Copy taxonomies.
-	 */
+	// Copy taxonomies.
 	$taxonomies = get_object_taxonomies($post->post_type);
 	foreach ($taxonomies as $taxonomy) {
 		$post_terms = wp_get_object_terms($post_id, $taxonomy, array('fields' => 'slugs'));
 		wp_set_object_terms($new_post_id, $post_terms, $taxonomy, false);
 	}
-
-	/*
-	 * Duplicate post meta, aside from some reserved fields.
-	 */
+	
+	//  Duplicate post meta, aside from some reserved fields.
+	
 	$post_meta = $wpdb->get_results($wpdb->prepare("SELECT meta_key, meta_value FROM {$wpdb->postmeta} WHERE post_id=%d", $post_id));
 	do_action('food_manager_duplicate_listing_meta_start', $post_meta, $post, $new_post_id);
 	if (!empty($post_meta)) {
@@ -977,8 +956,8 @@ function food_manager_multiselect_food_category() {
 
 /**
  * This food_manager_use_standard_password_setup_email() function checks to see if the standard password setup email should be used.
- *
  * @return bool True if they are to use standard email, false to allow user to set password at first food creation.
+ * @param bool $use_standard_password_setup_email True if a standard account setup email should be sent.
  * @since 1.0.0
  */
 function food_manager_use_standard_password_setup_email() {
@@ -988,12 +967,7 @@ function food_manager_use_standard_password_setup_email() {
 		$use_standard_password_setup_email = get_option('food_manager_use_standard_password_setup_email', 1) == 1 ? true : false;
 	}
 
-	/**
-	 * Allows an override of the setting for if a password should be auto-generated for new users.
-	 *
-	 * @param bool $use_standard_password_setup_email True if a standard account setup email should be sent.
-	 * @since 1.0.0
-	 */
+	// Allows an override of the setting for if a password should be auto-generated for new users.
 	return apply_filters('food_manager_use_standard_password_setup_email', $use_standard_password_setup_email);
 }
 
@@ -1002,36 +976,26 @@ function food_manager_use_standard_password_setup_email() {
  *
  * @param string $password Password to validate.
  * @return bool True if password meets rules.
+ * @param bool   $is_valid_password True if new password is validated.
+ * @param string $password - Password to validate.
  * @since 1.0.0
  */
 function food_manager_validate_new_password($password) {
 	// Password must be at least 8 characters long. Trimming here because `wp_hash_password()` will later on.
 	$is_valid_password = strlen(trim($password)) >= 8;
 
-	/**
-	 * Allows overriding default food Manager password validation rules.
-	 *
-	 * @param bool   $is_valid_password True if new password is validated.
-	 * @param string $password - Password to validate.
-	 * @since 1.0.0
-	 */
+	// Allows overriding default food Manager password validation rules.
 	return apply_filters('food_manager_validate_new_password', $is_valid_password, $password);
 }
 
 /**
  * This food_manager_get_password_rules_hint() function Returns the password rules hint.
- *
+ * @param string $password_rules Password rules description.
  * @return string
  * @since 1.0.0
  */
 function food_manager_get_password_rules_hint() {
-
-	/**
-	 * Allows overriding the hint shown below the new password input field. Describes rules set in `food_manager_validate_new_password`.
-	 *
-	 * @param string $password_rules Password rules description.
-	 * @since 1.0.0
-	 */
+	// Allows overriding the hint shown below the new password input field. Describes rules set in `food_manager_validate_new_password`.
 	return apply_filters('food_manager_password_rules_hint', __('Passwords must be at least 8 characters long.', 'wp-food-manager'));
 }
 
@@ -1087,6 +1051,7 @@ if (!function_exists('get_food_listing_categories')) :
 	 * This get_food_listing_categories() function is used to get food categories.
 	 *
 	 * @access public
+	 * @param array $args
 	 * @return array
 	 * @since 1.0.0
 	 */
@@ -1099,12 +1064,7 @@ if (!function_exists('get_food_listing_categories')) :
 			'order'      => 'ASC',
 			'hide_empty' => false,
 		);
-		/**
-		 * Change the category query arguments.
-		 *
-		 * @param array $args
-		 * @since 1.0.0
-		 */
+		// Change the category query arguments.
 		$args = apply_filters('get_food_listing_category_args', $args);
 		// Prevent users from filtering the taxonomy.
 		$args['taxonomy'] = 'food_manager_category';
@@ -1836,9 +1796,8 @@ if (!function_exists('get_food_listings_keyword_search')) :
 		/**
 		 * Filters the conditions to use when querying food listings. Resulting array is joined with OR statements.
 		 *
-		 * @param array  $conditions          Conditions to join by OR when querying food listings.
+		 * @param array  $conditions - Conditions to join by OR when querying food listings.
 		 * @param string $food_manager_keyword Search query.
-		 * @since 1.0.0
 		 */
 		$conditions = apply_filters('food_listing_search_conditions', $conditions, $food_manager_keyword);
 		if (empty($conditions)) {
@@ -1859,19 +1818,14 @@ endif;
 
 /**
  * This food_manager_user_can_upload_file_via_ajax() function Checks if the user can upload a file via the Ajax endpoint.
- *
+ * @param bool $can_upload True if they can upload files from Ajax endpoint.
  * @return bool
  * @since 1.0.0
  */
 function food_manager_user_can_upload_file_via_ajax() {
 	$can_upload = is_user_logged_in() && wpfm_user_can_post_food();
 
-	/**
-	 * Override ability of a user to upload a file via Ajax.
-	 *
-	 * @param bool $can_upload True if they can upload files from Ajax endpoint.
-	 * @since 1.0.0
-	 */
+	// Override ability of a user to upload a file via Ajax.
 	return apply_filters('food_manager_user_can_upload_file_via_ajax', esc_attr($can_upload));
 }
 

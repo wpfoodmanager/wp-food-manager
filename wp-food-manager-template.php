@@ -8,6 +8,7 @@
  * @category Core
  */
 
+
 /**
  * Returns the translated role of the current user. If that user has no role for the current blog, it returns false.
  *
@@ -776,6 +777,7 @@ function display_food_description($post = null) {
  *
  * @param int|WP_Post $post (default: null)
  * @return string|bool|null
+ * @param string $description Description to be filtered.
  * @since 1.0.0
  */
 function get_food_description($post = null) {
@@ -784,13 +786,8 @@ function get_food_description($post = null) {
 		return;
 	}
 	$description = apply_filters('display_food_description', get_the_content($post));
-	/**
-	 * This Filter apply for the food description.
-	 *
-	 * @param string $description Description to be filtered.
-	 * @param int|WP_Post $post
-	 * @since 1.0.0
-	 */
+
+	// This Filter apply for the food description.
 	return apply_filters('food_manager_get_food_description', sanitize_textarea_field($description), $post);
 }
 
@@ -812,6 +809,7 @@ function display_food_title($post = null) {
  *
  * @param int|WP_Post $post (default: null)
  * @return string|bool|null
+ * @param string $title Title to be filtered.
  * @since 1.0.0
  */
 function get_food_title($post = null) {
@@ -820,13 +818,8 @@ function get_food_title($post = null) {
 		return;
 	}
 	$title = esc_html(get_the_title($post));
-	/**
-	 * This Filter apply for the food title.
-	 *
-	 * @param string $title Title to be filtered.
-	 * @param int|WP_Post $post
-	 * @since 1.0.0
-	 */
+
+	//  This Filter apply for the food title.
 	return apply_filters('display_food_title', sanitize_text_field($title), $post);
 }
 
@@ -835,6 +828,7 @@ function get_food_title($post = null) {
  *
  * @param WP_Post|int|null $post (default: null)
  * @return bool
+ * @param bool $index_food_listing True if we should allow indexing of food listing.
  * @since 1.0.0
  */
 function wpfm_allow_indexing_food_listing($post = null) {
@@ -844,12 +838,8 @@ function wpfm_allow_indexing_food_listing($post = null) {
 	}
 	// Only index food listings that are not expired and published.
 	$index_food_listing = 'publish' === $post->post_status;
-	/**
-	 * This Filter apply if we should allow indexing of food listing.
-	 *
-	 * @param bool $index_food_listing True if we should allow indexing of food listing.
-	 * @since 1.0.0
-	 */
+	
+	// This Filter apply if we should allow indexing of food listing.
 	return apply_filters('wpfm_allow_indexing_food_listing', $index_food_listing);
 }
 
@@ -858,6 +848,7 @@ function wpfm_allow_indexing_food_listing($post = null) {
  *
  * @param WP_Post|int|null $post (default: null)
  * @return bool
+ * @param bool $output_structured_data True if we should show structured data for post.
  * @since 1.0.0
  */
 function wpfm_output_food_listing_structured_data($post = null) {
@@ -867,22 +858,19 @@ function wpfm_output_food_listing_structured_data($post = null) {
 	}
 	// Only show structured data for un-filled and published food listings.
 	$output_structured_data = 'publish' === $post->post_status;
-	/**
-	 * This Filter apply if we should output structured data.
-	 *
-	 * @param bool $output_structured_data True if we should show structured data for post.
-	 * @since 1.0.0
-	 */
+
+	// This Filter apply if we should output structured data.
 	return apply_filters('wpfm_output_food_listing_structured_data', $output_structured_data);
 }
 
 /**
- *This wpfm_get_food_listing_structured_data() function is used to gets the structured data for the food listing.
+ * This wpfm_get_food_listing_structured_data() function is used to gets the structured data for the food listing.
  *
  * @see https://developers.google.com/search/docs/data-types/foods
  *
  * @param WP_Post|int|null $post (default: null)
  * @return bool|array False if functionality is disabled; otherwise array of structured data.
+ * @param bool|array $structured_data False if functionality is disabled; otherwise array of structured data.
  * @since 1.0.0
  */
 function wpfm_get_food_listing_structured_data($post = null) {
@@ -907,12 +895,7 @@ function wpfm_get_food_listing_structured_data($post = null) {
 	$data['name'] = sanitize_text_field(strip_tags(get_food_title($post)));
 	$data['image'] = $food_banner;
 	$data['foodStatus'] = 'foodScheduled';
-	/**
-	 * Filter the structured data for a food listing.
-	 *
-	 * @param bool|array $structured_data False if functionality is disabled; otherwise array of structured data.
-	 * @param WP_Post $post
-	 * @since 1.0.0
-	 */
+	
+	// Filter the structured data for a food listing.
 	return apply_filters('wpfm_get_food_listing_structured_data', $data, $post);
 }
