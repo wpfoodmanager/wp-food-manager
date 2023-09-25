@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Food Submission Form
+ * Food Submission Form.
  */
 if (!defined('ABSPATH')) exit;
 

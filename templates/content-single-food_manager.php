@@ -12,7 +12,7 @@ $food = $post;
             <div class="food-manager-info wpfm-alert wpfm-alert-danger"><?php esc_html_e('This listing has been expired.', 'wp-food-manager'); ?></div>
         <?php else :
             /**
-             * single_food_listing_start hook
+             * single_food_listing_start hook.
              */
             do_action('single_food_listing_start');
         ?>
@@ -616,9 +616,9 @@ $food = $post;
             <?php endif; ?>
             <!-- Main if condition end -->
             </div>
-            <!-- / wpfm-wrapper end  -->
+            <!-- / wpfm-wrapper end -->
     </div>
-    <!-- / wpfm-main end  -->
+    <!-- / wpfm-main end -->
 </div>
 <!-- override the script if needed -->
 <script type="text/javascript">

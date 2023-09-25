@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Template Extra Option panel
+ * Template Extra Option panel.
  */
 $food_toppings = get_post_meta($thepostid, '_food_toppings', true);
 ?>

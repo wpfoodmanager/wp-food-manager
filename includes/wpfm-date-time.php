@@ -3,7 +3,7 @@ if (!defined('ABSPATH')) {
 	exit;
 }
 /**
- * WPFM_Date_Time
+ * WPFM_Date_Time.
  */
 class WPFM_Date_Time {
 
@@ -33,7 +33,7 @@ class WPFM_Date_Time {
 	const DBTIMEFORMAT = 'H:i:s';
 
 	/**
-	 * Get datepicker format function will return all the date formats for datepicker
+	 * Get datepicker format function will return all the date formats for datepicker.
 	 *
 	 * @param null
 	 * @return string Format of datepicker
@@ -51,11 +51,11 @@ class WPFM_Date_Time {
 	}
 
 	/**
-	 * Function get_default_date_formats will return all the date formats
-	 * This function has both type of format jquery-ui-datepicker as well as for php date format
+	 * Function get_default_date_formats will return all the date formats.
+	 * This function has both type of format jquery-ui-datepicker as well as for php date format.
 	 *
 	 * @access public
-	 * @return array Date formats
+	 * @return array Date formats.
 	 * @since 1.0.0
 	 **/
 	public static function get_default_date_formats() {
@@ -75,9 +75,9 @@ class WPFM_Date_Time {
 	}
 
 	/**
-	 * This function will parse the date to dbformatted date
-	 * Convert date and time value into DB formatted format and save eg. 1970-01-01 00:00:00
-	 * php date format parsing has error so we need to parse via our custom parsing method
+	 * This function will parse the date to dbformatted date.
+	 * Convert date and time value into DB formatted format and save eg. 1970-01-01 00:00:00.
+	 * php date format parsing has error so we need to parse via our custom parsing method.
 	 * Ref. https://stackoverflow.com/questions/6668223/php-date-parse-from-format-alternative-in-php-5-2
 	 *
 	 * @access public
@@ -87,7 +87,7 @@ class WPFM_Date_Time {
 	 * @since 1.0.0
 	 */
 	public static function date_parse_from_format($format, $date) {
-		// reverse engineer date formats
+		// reverse engineer date formats.
 		$keys = array(
 			// Year with 4 Digits
 			'Y' => array('year', '\d{4}'),
@@ -123,7 +123,7 @@ class WPFM_Date_Time {
 			's' => array('second', '\d{2}'),
 		);
 
-		// Convert format string to regex
+		// Convert format string to regex.
 		$regex = '';
 		$chars = str_split($format);
 		foreach ($chars as $n => $char) {
@@ -167,8 +167,8 @@ class WPFM_Date_Time {
 	}
 
 	/**
-	 * This function will return php formatted date format from datepicker formatted date
-	 * For eg. in date picker date format is yy-mm-dd where this format in php will be Y-m-d
+	 * This function will return php formatted date format from datepicker formatted date.
+	 * For eg. in date picker date format is yy-mm-dd where this format in php will be Y-m-d.
 	 * So, We need one central function will allow to convert datepicker format in to php formatted format.
 	 *
 	 * @access public
@@ -187,7 +187,7 @@ class WPFM_Date_Time {
 	 *
 	 * @access public
 	 * @param string $time time in 24 hour or 12 hour.
-	 * @return string it will return time in DB formatted 24 hours time
+	 * @return string it will return time in DB formatted 24 hours time.
 	 * @since 1.0.0
 	 */
 	public static function get_db_formatted_time($time) {
@@ -200,27 +200,27 @@ class WPFM_Date_Time {
 	 *
 	 * @access public
 	 * @param string  $date and $time
-	 * @return string it will return time in DB formatted date and time
+	 * @return string it will return time in DB formatted date and time.
 	 * @since 1.0.0
 	 */
 	public static function get_db_formatted_date_time($date = '', $time = '00:00:00') {
 		if (empty($date)) return;
 
-		// Get date and time setting defined in admin panel Food listing -> Settings -> Date & Time formatting
+		// Get date and time setting defined in admin panel Food listing -> Settings -> Date & Time formatting.
 		$datepicker_date_format = self::get_datepicker_format();
 
-		// Covert datepicker format into php date() function date format
+		// Covert datepicker format into php date() function date format.
 		$php_date_format = self::get_view_date_format_from_datepicker_date_format($datepicker_date_format);
 		$time = self::get_db_formatted_time($time);
 
-		// Convert date and time value into DB formatted format and save eg. 1970-01-01 00:00:00
+		// Convert date and time value into DB formatted format and save eg. 1970-01-01 00:00:00.
 		$db_date_time = self::date_parse_from_format(esc_attr($php_date_format) . ' H:i:s', esc_attr($date) . ' ' . $time);
 		return $db_date_time;
 	}
 
 	/**
-	 * Get wp food manager view date format
-	 * This format is set by user from food listing -> settings -> date and time
+	 * Get wp food manager view date format.
+	 * This format is set by user from food listing -> settings -> date and time.
 	 *
 	 * @access public
 	 * @return string
@@ -232,11 +232,11 @@ class WPFM_Date_Time {
 	}
 
 	/**
-	 * Get Wp food manager date admin setting where you can get array of dummy date
-	 * The key of each value will be a php date format which is generated from the get_default_date_formats()
+	 * Get Wp food manager date admin setting where you can get array of dummy date.
+	 * The key of each value will be a php date format which is generated from the get_default_date_formats().
 	 * It will just make array for dropdown for showing dummy date and key as php formatted so we can save it
-	 * Currentrly it is used at food listing -> settings -> date and time - datepicker format
-	 * In wp food manager settings we don't have way to generate html so we have generated array for select option
+	 * Currentrly it is used at food listing -> settings -> date and time - datepicker format.
+	 * In wp food manager settings we don't have way to generate html so we have generated array for select option.
 	 *
 	 * @access public
 	 * @return array
@@ -255,7 +255,7 @@ class WPFM_Date_Time {
 	}
 
 	/**
-	 * Get food manager timezone setting defined in food listing -> settings
+	 * Get food manager timezone setting defined in food listing -> settings.
 	 *
 	 * @access public
 	 * @return string $selected_timezone
@@ -283,7 +283,7 @@ class WPFM_Date_Time {
 			$tzstring = '';
 		if (empty($tzstring)) {
 
-			// Create a UTC+- zone if no timezone string exists
+			// Create a UTC+- zone if no timezone string exists.
 			$check_zone_info = false;
 			if (0 == $current_offset)
 				$tzstring = 'UTC+0';
@@ -325,12 +325,11 @@ class WPFM_Date_Time {
 	}
 
 	/**
-	 * current_timestamp_from_food_timezone will return the current timestamp according to the
-	 * timezone selected in food or passed in argument.
+	 * current_timestamp_from_food_timezone will return the current timestamp according to the timezone selected in food or passed in argument.
 	 *
 	 * @access public
 	 * @param string $food_timezone
-	 * @return int|null Timestamp or null if food_timezone is empty
+	 * @return int|null Timestamp or null if food_timezone is empty.
 	 * @since 1.0.0
 	 */
 	public static function current_timestamp_from_food_timezone($food_timezone) {

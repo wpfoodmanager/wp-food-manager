@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Taxonomies
+ * Taxonomies.
  */
 if (get_option('food_manager_enable_categories', true)) {
 	$singular  = esc_html__('Food Category', 'wp-food-manager');

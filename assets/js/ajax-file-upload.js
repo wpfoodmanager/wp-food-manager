@@ -23,7 +23,7 @@ var WPFM_AjaxFileUpload = function () {
 						var $form = $file_field.closest('form');
 						var $uploaded_files = $file_field.parent().find('.food-manager-uploaded-files');
 						var uploadErrors = [];
-						// Validate type
+						// Validate type.
 						var allowed_types = jQuery(this).data('file_types');
 						if (allowed_types) {
 							var acceptFileTypes = new RegExp("(\.|\/)(" + allowed_types + ")$", "i");
@@ -82,8 +82,8 @@ var WPFM_AjaxFileUpload = function () {
 				});
 			});
 		}
-	} //enf of return
-}; //end of class
+	} //enf of return.
+}; //end of class.
 
 WPFM_AjaxFileUpload = WPFM_AjaxFileUpload();
 jQuery(document).ready(function ($) {

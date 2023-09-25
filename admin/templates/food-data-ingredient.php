@@ -1,7 +1,7 @@
 <?php
 
 /**
- *  Template ingredient panel
+ * Template ingredient panel.
  */
 
 echo '<div id="ingredient_food_data_content" class="panel wpfm_panel wpfm-metaboxes-wrapper">

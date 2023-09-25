@@ -1,6 +1,6 @@
 <?php
 global $wp_scripts;
-// Get selected value
+// Get selected value.
 if (isset($field['value'])) {
     $selected = $field['value'];
 } elseif (!empty($field['default']) && is_int($field['default'])) {
@@ -43,7 +43,7 @@ $args = array(
     'hide_empty'   => false,
     'name_attr'    => false,
 );
-// For Edit screen of food
+// For Edit screen of food.
 $preview_htm = '';
 $style = 'display:none;';
 if (isset($_GET['food_id']) && !empty($_GET['food_id']) || $food_id) {

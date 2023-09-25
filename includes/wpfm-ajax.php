@@ -3,7 +3,7 @@
 /**
  * This file the functionality of ajax for food listing and file upload.
  */
-if (!defined('ABSPATH')) exit; // Exit if accessed directly
+if (!defined('ABSPATH')) exit; // Exit if accessed directly.
 
 /**
  * WPFM_Ajax class.
@@ -33,13 +33,13 @@ class WPFM_Ajax {
 	}
 
 	/**
-	 * Constructor
+	 * Constructor.
 	 */
 	public function __construct() {
 	}
 
 	/**
-	 * Get food Manager Ajax Endpoint
+	 * Get food Manager Ajax Endpoint.
 	 * 
 	 * @access public
 	 * @param  string $request Optional

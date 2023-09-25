@@ -269,7 +269,7 @@ class WPFM_Setup {
 <?php }
 
 	/**
-	 * Sanitize a 2 dimension array
+	 * Sanitize a 2 dimension array.
 	 *
 	 * @access private
 	 * @param  array $array

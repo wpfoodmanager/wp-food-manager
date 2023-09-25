@@ -1,14 +1,14 @@
 var WPFM_Admin = function () {
     /// <summary>Constructor function of the food settings class.</summary>
     /// <returns type="WPFM_Admin" />   
-    // Uploading files
+    // Uploading files.
     var file_frame;
     var file_target_input;
     var file_target_wrapper;
     return {
         ///<summary>
         ///Initializes the AdminSettings.  
-        ///</summary>     
+        ///</summary>    
         ///<returns type="initialization AdminSettings" />   
         /// <since>1.0.0</since> 
         init: function () {
@@ -20,7 +20,7 @@ var WPFM_Admin = function () {
             jQuery("body").on("click", ".food-manager-remove-uploaded-file", function () {
                 return jQuery(this).closest(".food-manager-uploaded-file").remove();
             });
-            // if field type is date then load datepicker
+            // if field type is date then load datepicker.
             if (jQuery('input[data-picker="datepicker"]').length > 0) {
                 if (wpfm_admin.show_past_date) {
                     jQuery('input[data-picker="datepicker"]').datepicker({
@@ -51,20 +51,20 @@ var WPFM_Admin = function () {
                     });
                 });
             }
-            // Bind on click food of the settings section
+            // Bind on click food of the settings section.
             jQuery(".wpfm-tabs li a").on('click', WPFM_Admin.actions.tabClick);
-            // Show by default first food Listings Settings Tab
+            // Show by default first food Listings Settings Tab.
             jQuery('.wpfm-tabs li a:first').click();
             jQuery(document).on('change', '.wpfm-admin-menu-selection select.food-manager-category-dropdown', WPFM_Admin.actions.updateFoodinMenu);
-            // Use body to call after dom update
+            // Use body to call after dom update.
             jQuery("body").on('click', 'a.wpfm-food-item-remove', WPFM_Admin.actions.removeFoodItem);
-            // Sortable 
+            // Sortable.
             jQuery('.wpfm-admin-food-menu-items ul.wpfm-food-menu').sortable();
-            // File upload
+            // File upload.
             jQuery('body').on('click', '.wp_food_manager_upload_file_button_multiple', WPFM_Admin.fileUpload.multipleFile);
             jQuery('body').on('click', '.wp_food_manager_upload_file_button', WPFM_Admin.fileUpload.addFile);
             jQuery(".wp_food_manager_add_another_file_button").on('click', WPFM_Admin.fileUpload.addAnotherFile);
-            // Food extra options
+            // Food extra options.
             jQuery('#wpfm-add-new-option').on('click', WPFM_Admin.actions.addNewOption);
             jQuery(document).on("click", ".wpfm-togglediv", function (e) {
                 var row_count = jQuery(this).data('row-count');
@@ -273,7 +273,7 @@ var WPFM_Admin = function () {
                 return false;
             },
             /// <summary>
-            /// Click on category dropdown to update food menu   
+            /// Click on category dropdown to update food menu.   
             /// </summary>
             /// <param name="parent" type="Food"></param>    
             /// <returns type="actions" />
@@ -340,7 +340,7 @@ var WPFM_Admin = function () {
                 }
             },
             /// <summary>
-            /// Remove food item from food menu
+            /// Remove food item from food menu.
             /// </summary>
             /// <param name="parent" type="food"></param> 
             /// <returns type="actions" />     
@@ -360,7 +360,7 @@ var WPFM_Admin = function () {
                 }
             },
             /// <summary>
-            /// add options
+            /// add options.
             /// </summary>
             /// <param name="parent" type="Event"></param> 
             /// <returns type="actions" />     
@@ -418,7 +418,7 @@ var WPFM_Admin = function () {
                 });
             },
             /// <summary>
-            /// updateOptionTitle
+            /// updateOptionTitle.
             /// </summary>
             /// <param name="parent" type="Event"></param> 
             /// <returns type="actions" />     
@@ -434,7 +434,7 @@ var WPFM_Admin = function () {
                 }
             },
             /// <summary>
-            /// changeFieldType
+            /// changeFieldType.
             /// </summary>
             /// <param name="parent" type="Event"></param> 
             /// <returns type="actions" />     
@@ -452,7 +452,7 @@ var WPFM_Admin = function () {
                 }
             },
             /// <summary>
-            /// addElementRow
+            /// addElementRow.
             /// </summary>
             /// <param name="parent" type="Event"></param> 
             /// <returns type="actions" />     
@@ -467,7 +467,7 @@ var WPFM_Admin = function () {
                 jQuery(this).parents('table').find('tbody').append(html);
             },
             /// <summary>
-            /// add attributes fields
+            /// add attributes fields.
             /// </summary>
             /// <param name="parent" type="Event"></param> 
             /// <returns type="actions" />     
@@ -486,7 +486,7 @@ var WPFM_Admin = function () {
 
             },
             /// <summary>
-            /// add attributes fields
+            /// add attributes fields.
             /// </summary>
             /// <param name="parent" type="Event"></param> 
             /// <returns type="actions" />     
@@ -499,7 +499,7 @@ var WPFM_Admin = function () {
                 jQuery('.wpfm-options-box-' + row_count3 + ' tr.option-tr-' + jQuery(this).data('id')).remove();
             },
             /// <summary>
-            /// add attributes fields
+            /// add attributes fields.
             /// </summary>
             /// <param name="parent" type="Event"></param> 
             /// <returns type="actions" />     
@@ -534,11 +534,11 @@ var WPFM_Admin = function () {
                     button: {
                         text: jQuery(this).data('uploader_button_text'),
                     },
-                    multiple: false  // Set to true to allow multiple files to be selected
+                    multiple: false  // Set to true to allow multiple files to be selected.
                 });
                 // When an image is selected, run a callback.
                 file_frame.on('select', function () {
-                    // We set multiple to false so only get one image from the uploader
+                    // We set multiple to false so only get one image from the uploader.
                     attachment = file_frame.state().get('selection').first().toJSON();
                     jQuery(file_target_input).val(attachment.url);
                     jQuery(file_target_wrapper_append).find(".food-manager-uploaded-file").remove();
@@ -548,7 +548,7 @@ var WPFM_Admin = function () {
                         jQuery(file_target_wrapper_append).prepend("<span class='food-manager-uploaded-file'><input type='hidden' name='" + data_field_name + "' id='" + data_field_name + "' placeholder='' value='" + attachment.url + "'><span class='food-manager-uploaded-file-preview'><span class='wpfm-icon'><strong style='display: block; padding-top: 5px;'>" + attachment.filename + "</strong><a target='_blank' href='" + attachment.url + "'><i class='wpfm-icon-download3' style='margin-right: 3px;'></i>Download</a></span><a class='food-manager-remove-uploaded-file' href='javascript:void(0);'>[remove]</a></span></span>");
                     }
                 });
-                // Finally, open the modal
+                // Finally, open the modal.
                 file_frame.open();
             },
             multipleFile: function (event) {
@@ -569,11 +569,11 @@ var WPFM_Admin = function () {
                     button: {
                         text: jQuery(this).data('uploader_button_text'),
                     },
-                    multiple: true  // Set to true to allow multiple files to be selected
+                    multiple: true  // Set to true to allow multiple files to be selected.
                 });
                 // When an image is selected, run a callback.
                 file_frame.on('select', function () {
-                    // We set multiple to false so only get one image from the uploader
+                    // We set multiple to false so only get one image from the uploader.
                     attachment = file_frame.state().get('selection').map(
                         function (attachment) {
                             attachment.toJSON();
@@ -588,7 +588,7 @@ var WPFM_Admin = function () {
                         }
                     });
                 });
-                // Finally, open the modal
+                // Finally, open the modal.
                 file_frame.open();
             },
             /// <summary>
@@ -607,8 +607,8 @@ var WPFM_Admin = function () {
                 jQuery(this).before('<span class="file_url"><input type="text" name="' + field_name + '[]" placeholder="' + field_placeholder + '" /><button class="button button-small wp_food_manager_upload_file_button" data-uploader_button_text="' + button_text + '">' + button + '</button></span>');
             }
         }
-    } //enf of return
-}; //end of class
+    } //enf of return.
+}; //end of class.
 
 WPFM_Admin = WPFM_Admin();
 jQuery(document).ready(function ($) {

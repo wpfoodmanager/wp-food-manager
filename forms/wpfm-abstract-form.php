@@ -29,14 +29,14 @@ abstract class WPFM_Form {
 	}
 
 	/**
-	 * Process function. all processing code if needed - can also change view if step is complete
+	 * Process function - all processing code if needed can also change view if step is complete.
 	 * 
 	 * @access public
 	 * @return string
 	 * @since 1.0.0
 	 */
 	public function process() {
-		// reset cookie
+		// Reset cookie.
 		if (isset($_GET['new']) && isset($_COOKIE['wpfm-adding-food-id']) && isset($_COOKIE['wpfm-adding-food-key']) && get_post_meta(sanitize_text_field($_COOKIE['wpfm-adding-food-id']), '_adding_key', true) == $_COOKIE['wpfm-adding-food-key']) {
 			delete_post_meta(sanitize_text_field($_COOKIE['wpfm-adding-food-id']), '_adding_key');
 			setcookie('wpfm-adding-food-id', '', 0, COOKIEPATH, COOKIE_DOMAIN, false);
@@ -122,7 +122,7 @@ abstract class WPFM_Form {
 	}
 
 	/**
-	 * Get step from outside of the class
+	 * Get step from outside of the class.
 	 *
 	 * @access public
 	 * @return $this->step
@@ -133,7 +133,7 @@ abstract class WPFM_Form {
 	}
 
 	/**
-	 * Get steps from outside of the class
+	 * Get steps from outside of the class.
 	 *
 	 * @access public
 	 * @return $this->step
@@ -144,7 +144,7 @@ abstract class WPFM_Form {
 	}
 
 	/**
-	 * Get step key from outside of the class
+	 * Get step key from outside of the class.
 	 *
 	 * @access public
 	 * @param string $step
@@ -161,7 +161,7 @@ abstract class WPFM_Form {
 	}
 
 	/**
-	 * Get step from outside of the class
+	 * Get step from outside of the class.
 	 *
 	 * @access public
 	 * @return void
@@ -172,7 +172,7 @@ abstract class WPFM_Form {
 	}
 
 	/**
-	 * Increase step from outside of the class
+	 * Increase step from outside of the class.
 	 *
 	 * @access public
 	 * @return void
@@ -183,7 +183,7 @@ abstract class WPFM_Form {
 	}
 
 	/**
-	 * Decrease step from outside of the class
+	 * Decrease step from outside of the class.
 	 *
 	 * @access public
 	 * @return void
@@ -212,7 +212,7 @@ abstract class WPFM_Form {
 	}
 
 	/**
-	 * Sort array by priority value
+	 * Sort array by priority value.
 	 *
 	 * @access public
 	 * @param array $a
@@ -228,7 +228,7 @@ abstract class WPFM_Form {
 	}
 
 	/**
-	 * Init form fields
+	 * Init form fields.
 	 *
 	 * @access public
 	 * @return void
@@ -252,7 +252,7 @@ abstract class WPFM_Form {
 	}
 
 	/**
-	 * Get post data for fields
+	 * Get post data for fields.
 	 *
 	 * @access protected
 	 * @return array of data
@@ -261,9 +261,9 @@ abstract class WPFM_Form {
 	protected function get_posted_fields() {
 		global $post;
 
-		// Init fields
-		// $this->init_fields(); We dont need to initialize with this function because of field editor
-		// Now field editor function will return all the fields
+		// Init fields.
+		// $this->init_fields(); We dont need to initialize with this function because of field editor.
+		// Now field editor function will return all the fields.
 		// Get merged fields from db and default fields.
 		$this->merge_with_custom_fields('frontend');
 		$values = array();
@@ -308,7 +308,7 @@ abstract class WPFM_Form {
 				foreach ($this->fields as $group_key => $group_fields) {
 					foreach ($group_fields as $key => $field) {
 
-						// Get the value
+						// Get the value.
 						$field_type = str_replace('-', '_', $field['type']);
 						if ($handler = apply_filters("food_manager_get_posted_{$field_type}_field", false)) {
 							$values[$group_key][$key] = call_user_func($handler, $key, $field);
@@ -365,7 +365,7 @@ abstract class WPFM_Form {
 			foreach ($this->fields as $group_key => $group_fields) {
 				foreach ($group_fields as $key => $field) {
 
-					// Get the value
+					// Get the value.
 					$field_type = str_replace('-', '_', $field['type']);
 					if ($handler = apply_filters("food_manager_get_posted_{$field_type}_field", false)) {
 						$values[$group_key][$key] = call_user_func($handler, $key, $field);
@@ -384,7 +384,7 @@ abstract class WPFM_Form {
 						}
 					}
 
-					// Set fields value
+					// Set fields value.
 					$this->fields[$group_key][$key]['value'] = $values[$group_key][$key];
 				}
 			}
@@ -393,7 +393,7 @@ abstract class WPFM_Form {
 	}
 
 	/**
-	 * Get the value of a repeated fields (e.g. repeated)
+	 * Get the value of a repeated fields (e.g. repeated).
 	 *
 	 * @access protected
 	 * @param string $field_prefix
@@ -454,7 +454,7 @@ abstract class WPFM_Form {
 	}
 
 	/**
-	 * Get the value of a posted repeated field
+	 * Get the value of a posted repeated field.
 	 *
 	 * @access protected
 	 * @param string $key
@@ -475,19 +475,19 @@ abstract class WPFM_Form {
 	 * @since 1.0.0
 	 */
 	protected function sanitize_posted_field($value) {
-		// Decode URLs
+		// Decode URLs.
 		if (is_string($value) && (strstr($value, 'http:') || strstr($value, 'https:'))) {
 			$value = urldecode($value);
 		}
 
-		// Sanitize value
+		// Sanitize value.
 		$value = is_array($value) ? array_map(array($this, 'sanitize_posted_field'), $value) : sanitize_text_field(stripslashes(trim($value)));
 
 		return $value;
 	}
 
 	/**
-	 * Get the value of a posted field
+	 * Get the value of a posted field.
 	 *
 	 * @access protected
 	 * @param  string $key
@@ -500,7 +500,7 @@ abstract class WPFM_Form {
 	}
 
 	/**
-	 * Get the value of a posted multiselect field
+	 * Get the value of a posted multiselect field.
 	 *
 	 * @access protected
 	 * @param  string $key
@@ -513,7 +513,7 @@ abstract class WPFM_Form {
 	}
 
 	/**
-	 * Get the value of a posted file field
+	 * Get the value of a posted file field.
 	 *
 	 * @access protected
 	 * @param  string $key
@@ -534,7 +534,7 @@ abstract class WPFM_Form {
 	}
 
 	/**
-	 * Get the value of a posted textarea field
+	 * Get the value of a posted textarea field.
 	 *
 	 * @access protected
 	 * @param string $key
@@ -547,7 +547,7 @@ abstract class WPFM_Form {
 	}
 
 	/**
-	 * Get the value of a posted textarea field
+	 * Get the value of a posted textarea field.
 	 *
 	 * @access protected
 	 * @param string $key
@@ -560,7 +560,7 @@ abstract class WPFM_Form {
 	}
 
 	/**
-	 * Get posted terms for the taxonomy
+	 * Get posted terms for the taxonomy.
 	 *
 	 * @access protected
 	 * @param string $key
@@ -577,7 +577,7 @@ abstract class WPFM_Form {
 	}
 
 	/**
-	 * Get posted terms for the taxonomy
+	 * Get posted terms for the taxonomy.
 	 *
 	 * @access protected
 	 * @param string $key
@@ -590,7 +590,7 @@ abstract class WPFM_Form {
 	}
 
 	/**
-	 * Get posted terms for the taxonomy
+	 * Get posted terms for the taxonomy.
 	 *
 	 * @access protected
 	 * @param string $key
@@ -639,11 +639,11 @@ abstract class WPFM_Form {
 	}
 
 	/**
-	 * Merge and replace $default_fields with custom fields
+	 * Merge and replace $default_fields with custom fields.
 	 *
 	 * @access public
 	 * @param string $field_view
-	 * @return array Returns merged and replaced fields
+	 * @return array Returns merged and replaced fields.
 	 * @since 1.0.0
 	 */
 	public function merge_with_custom_fields($field_view = 'frontend') {
@@ -707,7 +707,7 @@ abstract class WPFM_Form {
 
 		/**
 		 * If the default field is removed via the field editor, then we cannot remove this field from the code because it is hardcoded in the file, so we need to set a flag to identify which particular field is removed by the user.
-		 * Using the visibility flag, we can identify those fields that need to be removed or kept in the Field Editor based on the visibility flag value. If the visibility is true, then we will keep the field, and if the visibility flag is false, then we will not show this default field in the field editor. (As an action of the user removed this field from the field editor but not removed from the code, so we have to set this flag)
+		 * Using the visibility flag, we can identify those fields that need to be removed or kept in the Field Editor based on the visibility flag value. If the visibility is true, then we will keep the field, and if the visibility flag is false, then we will not show this default field in the field editor. (As an action of the user removed this field from the field editor but not removed from the code, so we have to set this flag).
 		 * We are getting several default fields from the addons and using theme-side customization via the 'add_food_fields' filter.
 		 * Now, it's not easy to manage filter fields and default fields of the plugin in this case, so we need to set this flag to identify whether the field should be shown or not in the field editor.
 		 *

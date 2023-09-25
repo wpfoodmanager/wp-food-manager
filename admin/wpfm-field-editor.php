@@ -29,7 +29,7 @@ class WPFM_Field_Editor {
 	}
 
 	/**
-	 * Constructor
+	 * Constructor.
 	 */
 	public function __construct() {
 	}
@@ -260,7 +260,7 @@ class WPFM_Field_Editor {
 					'toppings'     => $toppings,
 				);
 
-				// Find the numers keys from the fields array and replace with lable if label not exist remove that field
+				// Find the numers keys from the fields array and replace with lable if label not exist remove that field.
 				foreach ($new_fields as $group_key => $group_fields) {
 					$index = 0;
 					foreach ($group_fields as $field_key => $field_value) {
@@ -311,12 +311,12 @@ class WPFM_Field_Editor {
 						unset($new_fields[$group_key][$field_key]);
 					}
 				}
-				// merge field with default fields
+				// merge field with default fields.
 				$GLOBALS['food_manager']->forms->get_form('add-food', array());
 				$form_add_food_instance = call_user_func(array('WPFM_Add_Food_Form', 'instance'));
 				$food_fields = $form_add_food_instance->get_default_food_fields();
 
-				// if field in not exist in new fields array then make visiblity false
+				// if field in not exist in new fields array then make visiblity false.
 				if (!empty($food_fields)) {
 					foreach ($food_fields as $group_key => $group_fields) {
 						foreach ($group_fields as $key => $field) {
@@ -336,7 +336,7 @@ class WPFM_Field_Editor {
 					update_option('food_manager_submit_toppings_form_fields', array('toppings' => $new_fields['toppings']));
 				}
 
-				// This will be removed in future
+				// This will be removed in future.
 				$result = update_option('food_manager_form_fields', $new_fields);
 			}
 		}

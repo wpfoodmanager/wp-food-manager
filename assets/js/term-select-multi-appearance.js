@@ -18,21 +18,21 @@ var WPFM_MultiAppearanceSelect = function () {
                     unit_options = '<option value="">Unit</option>',
                     selected_terms = {},
                     units = JSON.parse(appearance_params.unit_terms);
-                // Push selected value array
+                // Push selected value array.
                 jQuery.each(jQuery(this).find('option'), function (key, value) {
                     if (jQuery(this).is(':selected')) {
-                        // Define term id and term name
+                        // Define term id and term name.
                         var term_id = jQuery(this).val(),
                             label = jQuery(this).text();
-                        // array
+                        // array.
                         selected_terms[term_id] = label;
                     }
                 });
-                // units html
+                // units html.
                 jQuery.each(units, function (key, unit) {
                     unit_options += '<option value="' + unit.term_id + '">' + unit.name + '</option>';
                 });
-                // preview html
+                // preview html.
                 jQuery.each(selected_terms, function (term_id, label) {
                     term_id = parseInt(term_id);
                     preview_htm += '<li class="term-item" data-id="' + term_id + '">';
@@ -49,7 +49,7 @@ var WPFM_MultiAppearanceSelect = function () {
                 }else{
                     jQuery(this).parents('.wpfm-form-group').find('.selection-preview').show();
                 }
-                // Append preview html
+                // Append preview html.
                 if (selected_val) {
                     jQuery.each(selected_val, function (term_id, value) {
                         jQuery('.selection-preview .preview-items li[data-id="' + term_id + '"]').find('input').val(value.value);

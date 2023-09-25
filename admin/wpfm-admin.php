@@ -4,7 +4,7 @@
  * Main Admin functions class which responsible for the entire admin functionality and scripts loaded and files.
  */
 if (!defined('ABSPATH')) {
-	exit; // Exit if accessed directly
+	exit; // Exit if accessed directly.
 }
 
 /**
@@ -43,7 +43,7 @@ class WPFM_Admin {
 	}
 
 	/**
-	 * __construct function
+	 * __construct function.
 	 *
 	 * @access public
 	 * @return void
@@ -57,7 +57,7 @@ class WPFM_Admin {
 	}
 
 	/**
-	 * Ran on WP admin_init hook
+	 * Ran on WP admin_init hook.
 	 * 
 	 * @access public
 	 * @return void

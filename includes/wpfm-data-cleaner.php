@@ -1,8 +1,7 @@
 <?php
 
 /**
- * Defines a class with methods for cleaning up plugin data. To be used when
- * the plugin is deleted.
+ * Defines a class with methods for cleaning up plugin data. To be used when the plugin is deleted.
  *
  * @package Core
  */
@@ -76,8 +75,7 @@ class WPFM_Data_Cleaner {
 	);
 
 	/**
-	 * Transient names (as MySQL regexes) to be deleted. The prefixes
-	 * "_transient_" and "_transient_timeout_" will be prepended.
+	 * Transient names (as MySQL regexes) to be deleted. The prefixes "_transient_" and "_transient_timeout_" will be prepended.
 	 *
 	 * @var $transients
 	 */
@@ -380,8 +378,7 @@ class WPFM_Data_Cleaner {
 	}
 
 	/**
-	 * Cleanup cron jobs. Note that this should be done on deactivation, but
-	 * doing it here as well for safety.
+	 * Cleanup cron jobs. Note that this should be done on deactivation, but doing it here as well for safety.
 	 *
 	 * @access private
 	 * @return void

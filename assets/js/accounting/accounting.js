@@ -1,9 +1,9 @@
 /*!
  * accounting.js v0.4.2
- * Copyright 2014 Open Exchange Rates
+ * Copyright 2014 Open Exchange Rates.
  *
  * Freely distributable under the MIT license.
- * Portions of accounting.js are inspired or borrowed from underscore.js
+ * Portions of accounting.js are inspired or borrowed from underscore.js.
  *
  * Full details and documentation:
  * http://openexchangerates.github.io/accounting.js/
@@ -13,29 +13,28 @@
 
 	/* --- Setup --- */
 
-	// Create the local library object, to be exported or referenced globally later
+	// Create the local library object, to be exported or referenced globally later.
 	var lib = {};
 
-	// Current version
+	// Current version.
 	lib.version = '0.4.1';
 
 
 	/* --- Exposed settings --- */
 
-	// The library's settings configuration object. Contains default parameters for
-	// currency and number formatting
+	// The library's settings configuration object. Contains default parameters for currency and number formatting.
 	lib.settings = {
 		currency: {
-			symbol : "$",		// default currency symbol is '$'
-			format : "%s%v",	// controls output: %s = symbol, %v = value (can be object, see docs)
-			decimal : ".",		// decimal point separator
-			thousand : ",",		// thousands separator
-			precision : 2,		// decimal places
-			grouping : 3		// digit grouping (not implemented yet)
+			symbol : "$",		// default currency symbol is '$'.
+			format : "%s%v",	// controls output: %s = symbol, %v = value (can be object, see docs).
+			decimal : ".",		// decimal point separator.
+			thousand : ",",		// thousands separator.
+			precision : 2,		// decimal places.
+			grouping : 3		// digit grouping (not implemented yet).
 		},
 		number: {
-			precision : 0,		// default precision on numbers is 0
-			grouping : 3,		// digit grouping (not implemented yet)
+			precision : 0,		// default precision on numbers is 0.
+			grouping : 3,		// digit grouping (not implemented yet).
 			thousand : ",",
 			decimal : "."
 		}
@@ -44,38 +43,38 @@
 
 	/* --- Internal Helper Methods --- */
 
-	// Store reference to possibly-available ECMAScript 5 methods for later
+	// Store reference to possibly-available ECMAScript 5 methods for later.
 	var nativeMap = Array.prototype.map,
 		nativeIsArray = Array.isArray,
 		toString = Object.prototype.toString;
 
 	/**
-	 * Tests whether supplied parameter is a string
-	 * from underscore.js
+	 * Tests whether supplied parameter is a string.
+	 * from underscore.js.
 	 */
 	function isString(obj) {
 		return !!(obj === '' || (obj && obj.charCodeAt && obj.substr));
 	}
 
 	/**
-	 * Tests whether supplied parameter is a string
-	 * from underscore.js, delegates to ECMA5's native Array.isArray
+	 * Tests whether supplied parameter is a string.
+	 * from underscore.js, delegates to ECMA5's native Array.isArray.
 	 */
 	function isArray(obj) {
 		return nativeIsArray ? nativeIsArray(obj) : toString.call(obj) === '[object Array]';
 	}
 
 	/**
-	 * Tests whether supplied parameter is a true object
+	 * Tests whether supplied parameter is a true object.
 	 */
 	function isObject(obj) {
 		return obj && toString.call(obj) === '[object Object]';
 	}
 
 	/**
-	 * Extends an object with a defaults object, similar to underscore's _.defaults
+	 * Extends an object with a defaults object, similar to underscore's _.defaults.
 	 *
-	 * Used for abstracting parameter handling from API methods
+	 * Used for abstracting parameter handling from API methods.
 	 */
 	function defaults(object, defs) {
 		var key;
@@ -92,10 +91,10 @@
 	}
 
 	/**
-	 * Implementation of `Array.map()` for iteration loops
+	 * Implementation of `Array.map()` for iteration loops.
 	 *
 	 * Returns a new Array as a result of calling `iterator` on each array value.
-	 * Defers to native Array.map if available
+	 * Defers to native Array.map if available.
 	 */
 	function map(obj, iterator, context) {
 		var results = [], i, j;
@@ -113,7 +112,7 @@
 	}
 
 	/**
-	 * Check and normalise the value of precision (must be positive integer)
+	 * Check and normalise the value of precision (must be positive integer).
 	 */
 	function checkPrecision(val, base) {
 		val = Math.round(Math.abs(val));
@@ -122,12 +121,7 @@
 
 
 	/**
-	 * Parses a format string or object and returns format obj for use in rendering
-	 *
-	 * `format` is either a string with the default (positive) format, or object
-	 * containing `pos` (required), `neg` and `zero` values (or a function returning
-	 * either a string or object)
-	 *
+	 * Parses a format string or object and returns format obj for use in rendering `format` is either a string with the default (positive) format, or object containing `pos` (required), `neg` and `zero` values (or a function returning either a string or object).
 	 * Either string or format.pos must contain "%v" (value) to be valid
 	 */
 	function checkCurrencyFormat(format) {
@@ -165,15 +159,9 @@
 	/* --- API Methods --- */
 
 	/**
-	 * Takes a string/array of strings, removes all formatting/cruft and returns the raw float value
-	 * Alias: `accounting.parse(string)`
-	 *
-	 * Decimal must be included in the regular expression to match floats (defaults to
-	 * accounting.settings.number.decimal), so if the number uses a non-standard decimal
-	 * separator, provide it as the second argument.
-	 *
-	 * Also matches bracketed negatives (eg. "$ (1.99)" => -1.99)
-	 *
+	 * Takes a string/array of strings, removes all formatting/cruft and returns the raw float value.
+	 * Alias: `accounting.parse(string)`.
+	 * Decimal must be included in the regular expression to match floats (defaults to accounting.settings.number.decimal), so if the number uses a non-standard decimal separator, provide it as the second argument. Also, matches bracketed negatives (eg. "$ (1.99)" => -1.99).
 	 * Doesn't throw any errors (`NaN`s become 0) but this may change in future
 	 */
 	var unformat = lib.unformat = lib.parse = function(value, decimal) {
@@ -197,9 +185,9 @@
 		var regex = new RegExp("[^0-9-" + decimal + "]", ["g"]),
 			unformatted = parseFloat(
 				("" + value)
-				.replace(/\((.*)\)/, "-$1") // replace bracketed values with negatives
-				.replace(regex, '')         // strip out any cruft
-				.replace(decimal, '.')      // make sure decimal point is standard
+				.replace(/\((.*)\)/, "-$1") // replace bracketed values with negatives.
+				.replace(regex, '')         // strip out any cruft.
+				.replace(decimal, '.')      // make sure decimal point is standard.
 			);
 
 		// This will fail silently which may cause trouble, let's wait and see:
@@ -208,10 +196,8 @@
 
 
 	/**
-	 * Implementation of toFixed() that treats floats more like decimals
-	 *
-	 * Fixes binary rounding issues (eg. (0.615).toFixed(2) === "0.61") that present
-	 * problems for accounting- and finance-related software.
+	 * Implementation of toFixed() that treats floats more like decimals.
+	 * Fixes binary rounding issues (eg. (0.615).toFixed(2) === "0.61") that present problems for accounting- and finance-related software.
 	 */
 	var toFixed = lib.toFixed = function(value, precision) {
 		precision = checkPrecision(precision, lib.settings.number.precision);
@@ -223,11 +209,11 @@
 
 
 	/**
-	 * Format a number, with comma-separated thousands and custom precision/decimal places
-	 * Alias: `accounting.format()`
+	 * Format a number, with comma-separated thousands and custom precision/decimal places.
+	 * Alias: `accounting.format()`.
 	 *
-	 * Localise by overriding the precision and thousand / decimal separators
-	 * 2nd parameter `precision` can be an object matching `settings.number`
+	 * Localise by overriding the precision and thousand / decimal separators.
+	 * 2nd parameter `precision` can be an object matching `settings.number`.
 	 */
 	var formatNumber = lib.formatNumber = lib.format = function(number, precision, thousand, decimal) {
 		// Resursively format arrays:
@@ -250,7 +236,7 @@
 				lib.settings.number
 			),
 
-			// Clean up precision
+			// Clean up precision.
 			usePrecision = checkPrecision(opts.precision),
 
 			// Do some calc:
@@ -266,13 +252,13 @@
 	/**
 	 * Format a number into currency
 	 *
-	 * Usage: accounting.formatMoney(number, symbol, precision, thousandsSep, decimalSep, format)
-	 * defaults: (0, "$", 2, ",", ".", "%s%v")
+	 * Usage: accounting.formatMoney(number, symbol, precision, thousandsSep, decimalSep, format).
+	 * defaults: (0, "$", 2, ",", ".", "%s%v").
 	 *
-	 * Localise by overriding the symbol, precision, thousand / decimal separators and format
+	 * Localise by overriding the symbol, precision, thousand / decimal separators and format.
 	 * Second param can be an object matching `settings.currency` which is the easiest way.
 	 *
-	 * To do: tidy up the parameters
+	 * To do: tidy up the parameters.
 	 */
 	var formatMoney = lib.formatMoney = function(number, symbol, precision, thousand, decimal, format) {
 		// Resursively format arrays:
@@ -309,15 +295,14 @@
 
 
 	/**
-	 * Format a list of numbers into an accounting column, padding with whitespace
-	 * to line up currency symbols, thousand separators and decimals places
+	 * Format a list of numbers into an accounting column, padding with whitespace to line up currency symbols, thousand separators and decimals places.
 	 *
-	 * List should be an array of numbers
-	 * Second parameter can be an object containing keys that match the params
+	 * List should be an array of numbers.
+	 * Second parameter can be an object containing keys that match the params.
 	 *
-	 * Returns array of accouting-formatted number strings of same length
+	 * Returns array of accouting-formatted number strings of same length.
 	 *
-	 * NB: `white-space:pre` CSS rule is required on the list container to prevent
+	 * NB: `white-space:pre` CSS rule is required on the list container to prevent.
 	 * browsers from collapsing the whitespace in the output strings.
 	 */
 	lib.formatColumn = function(list, symbol, precision, thousand, decimal, format) {
@@ -350,7 +335,7 @@
 					// Recursively format columns if list is a multi-dimensional array:
 					return lib.formatColumn(val, opts);
 				} else {
-					// Clean up the value
+					// Clean up the value.
 					val = unformat(val);
 
 					// Choose which format to use for this value (pos, neg or zero):
@@ -379,7 +364,7 @@
 	/* --- Module Definition --- */
 
 	// Export accounting for CommonJS. If being loaded as an AMD module, define it as such.
-	// Otherwise, just add `accounting` to the global object
+	// Otherwise, just add `accounting` to the global object.
 	if (typeof exports !== 'undefined') {
 		if (typeof module !== 'undefined' && module.exports) {
 			exports = module.exports = lib;

@@ -1,7 +1,7 @@
 <?php
 
 /**
- *  Template nutrition panel
+ *  Template nutrition panel.
  */
 
 echo '<div id="nutritions_food_data_content" class="panel wpfm_panel wpfm-metaboxes-wrapper">

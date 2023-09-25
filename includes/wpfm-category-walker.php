@@ -1,5 +1,5 @@
 <?php
-if (!defined('ABSPATH')) exit; // Exit if accessed directly
+if (!defined('ABSPATH')) exit; // Exit if accessed directly.
 
 /**
  * WPFM_Category_Walker class.

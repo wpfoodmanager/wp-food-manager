@@ -4,7 +4,7 @@ var WPFM_Frontend = function () {
             if( jQuery(".food-manager-post_type-dropdown").length > 0 ){
                 jQuery(".food-manager-post_type-dropdown").chosen({ search_contains: !0 });
             }
-            // For Extra Toppings view Toggle
+            // For Extra Toppings view Toggle.
             if (jQuery('.wpfm-additional-main-row').length > 0) {
                 jQuery('.wpfm-additional-main-row').hide();
                 jQuery(".wpfm-view-more").click(function(){
@@ -15,7 +15,7 @@ var WPFM_Frontend = function () {
             }
 
             jQuery(".wpfm-form-group.fieldset-topping_description").hide();
-            //use body to call after dom update
+            //use body to call after dom update.
             jQuery("body").on('click', 'a.wpfm-food-item-remove', WPFM_Frontend.actions.removeFoodItem);
             
             /* General tab - Regular and Sale price validation */

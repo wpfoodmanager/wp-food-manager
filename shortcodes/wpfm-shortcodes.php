@@ -4,7 +4,7 @@
  * This file is use to create a shortcode of wp food manager plugin.
  * This file include shortcode of food listing, food submit form, and food dashboard, etc.
  */
-if (!defined('ABSPATH')) exit; // Exit if accessed directly
+if (!defined('ABSPATH')) exit; // Exit if accessed directly.
 
 /**
  * WPFM_Shortcodes class.
@@ -47,7 +47,7 @@ class WPFM_Shortcodes {
 	}
 
 	/**
-	 * Show the food submission form
+	 * Show the food submission form.
 	 *
 	 * @access public
 	 * @param array $atts
@@ -58,7 +58,7 @@ class WPFM_Shortcodes {
 	}
 
 	/**
-	 * Handles actions on food dashboard
+	 * Handles actions on food dashboard.
 	 *
 	 * @access public
 	 * @return void
@@ -69,18 +69,18 @@ class WPFM_Shortcodes {
 			$action = sanitize_title($_REQUEST['action']);
 			$food_id = absint($_REQUEST['food_id']);
 			try {
-				// Get food
+				// Get food.
 				$food    = get_post($food_id);
-				// Check ownership
+				// Check ownership.
 				if (!food_manager_user_can_edit_food($food_id)) {
 					throw new Exception(__('Invalid ID', 'wp-food-manager'));
 				}
 				switch ($action) {
 					case 'delete':
 						$foods_status = get_post_status($food_id);
-						// Trash it
+						// Trash it.
 						wp_trash_post($food_id);
-						// Message
+						// Message.
 						if (!in_array($foods_status, ['trash'])) {
 							$this->food_dashboard_message = '<div class="food-manager-message wpfm-alert wpfm-alert-danger">' . sprintf(__('%s has been deleted.', 'wp-food-manager'), esc_html($food->post_title)) . '</div>';
 						}
@@ -96,7 +96,7 @@ class WPFM_Shortcodes {
 						}
 						break;
 					case 'relist':
-						// redirect to post page
+						// redirect to post page.
 						wp_redirect(add_query_arg(array('food_id' => absint($food_id)), food_manager_get_permalink('add_food')));
 						break;
 					default:
@@ -111,7 +111,7 @@ class WPFM_Shortcodes {
 	}
 
 	/**
-	 * Handle actions which need to be run before the shortcode e.g. post actions
+	 * Handle actions which need to be run before the shortcode e.g. post actions.
 	 *
 	 * @access public
 	 * @since 1.0.1
@@ -124,7 +124,7 @@ class WPFM_Shortcodes {
 	}
 
 	/**
-	 * Shortcode which lists the logged-in user's foods
+	 * Shortcode which lists the logged-in user's foods.
 	 *
 	 * @access public
 	 * @param $atts
@@ -149,7 +149,7 @@ class WPFM_Shortcodes {
 		// If doing an action, show conditional content if needed....
 		if (!empty($_REQUEST['action'])) {
 			$action = sanitize_title($_REQUEST['action']);
-			// Show alternative content if a plugin wants to
+			// Show alternative content if a plugin wants to.
 			if (has_action('food_manager_food_dashboard_content_' . $action)) {
 				do_action('food_manager_food_dashboard_content_' . $action, $atts);
 				return ob_get_clean();
@@ -166,7 +166,7 @@ class WPFM_Shortcodes {
 			$order = 'desc';
 		}
 
-		// If not show the food dashboard
+		// If not show the food dashboard.
 		$args = apply_filters('food_manager_get_dashboard_foods_args', array(
 			'post_type'           => 'food_manager',
 			'post_status'         => array('publish', 'expired', 'pending'),
@@ -247,12 +247,12 @@ class WPFM_Shortcodes {
 			'show_food_menu_multiselect' => get_option('food_manager_enable_default_food_menu_multiselect', false),
 			'show_pagination'           => false,
 			'show_more'                 => true,
-			// Limit what foods are shown based on category and type
+			// Limit what foods are shown based on category and type.
 			'categories'                => '',
 			'food_types'               => '',
 			'featured'                  => null, // True to show only featured, false to hide featured, leave null to show both.
 			'cancelled'                 => null, // True to show only cancelled, false to hide cancelled, leave null to show both/use the settings.
-			// Default values for filters
+			// Default values for filters.
 			'location'                  => '',
 			'keywords'                  => '',
 			'selected_category'         => '',
@@ -260,22 +260,22 @@ class WPFM_Shortcodes {
 			'layout_type'      => 'all',
 		)), $atts));
 
-		//Categories
+		//Categories.
 		if (!get_option('food_manager_enable_categories')) {
 			$show_categories = false;
 		}
 
-		//food types
+		//food types.
 		if (!get_option('food_manager_enable_food_types')) {
 			$show_food_types = false;
 		}
 
-		//food tags
+		//food tags.
 		if (!get_option('food_manager_enable_food_tags')) {
 			$show_food_tags = false;
 		}
 
-		// String and bool handling
+		// String and bool handling.
 		$show_filters              = $this->string_to_bool($show_filters);
 		$show_categories           = $this->string_to_bool($show_categories);
 		$show_food_types          = $this->string_to_bool($show_food_types);
@@ -285,7 +285,7 @@ class WPFM_Shortcodes {
 		$show_more                 = $this->string_to_bool($show_more);
 		$show_pagination           = $this->string_to_bool($show_pagination);
 
-		// Order by meta value and it will take default sort order by start date of food
+		// Order by meta value and it will take default sort order by start date of food.
 		if (is_null($orderby) || empty($orderby)) {
 			$orderby  = 'meta_value'; //meta_value
 		}
@@ -298,11 +298,11 @@ class WPFM_Shortcodes {
 			$cancelled = (is_bool($cancelled) && $cancelled) || in_array($cancelled, array('1', 'true', 'yes')) ? true : false;
 		}
 
-		// Array handling
+		// Array handling.
 		$categories           = is_array($categories) ? $categories : array_filter(array_map('trim', explode(',', $categories)));
 		$food_types          = is_array($food_types) ? $food_types : array_filter(array_map('trim', explode(',', $food_types)));
 
-		// Get keywords, location, category and food type from query string if set
+		// Get keywords, location, category and food type from query string if set.
 		if (!empty($_GET['search_keywords'])) {
 			$keywords = sanitize_text_field($_GET['search_keywords']);
 		}
@@ -399,7 +399,7 @@ class WPFM_Shortcodes {
 	}
 
 	/**
-	 * Output content of food categories
+	 * Output content of food categories.
 	 * 
 	 * @access public
 	 * @return void
@@ -415,7 +415,7 @@ class WPFM_Shortcodes {
 	<?php }
 
 	/**
-	 * Output content of food types
+	 * Output content of food types.
 	 * 
 	 * @access public
 	 * @return void
@@ -432,7 +432,7 @@ class WPFM_Shortcodes {
 	}
 
 	/**
-	 * Get string as a bool
+	 * Get string as a bool.
 	 * 
 	 * @access public
 	 * @param  string $value
@@ -480,7 +480,7 @@ class WPFM_Shortcodes {
 	}
 
 	/**
-	 * food Summary shortcode
+	 * food Summary shortcode.
 	 *
 	 * @access public
 	 * @param array $atts
@@ -522,7 +522,7 @@ class WPFM_Shortcodes {
 	}
 
 	/**
-	 * output food menu by menu id
+	 * output food menu by menu id.
 	 *
 	 * @access public
 	 * @param array $atts

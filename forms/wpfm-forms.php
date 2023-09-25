@@ -28,17 +28,17 @@ class WPFM_Forms {
 	}
 
 	/**
-	 * Constructor
+	 * Constructor.
 	 */
 	public function __construct() {
 	}
 
 	/**
-	 * Load a form's class
+	 * Load a form's class.
 	 * 
 	 * @access public
 	 * @param  string $form_name
-	 * @return string class name on success, false on failure
+	 * @return string class name on success, false on failure.
 	 * @since 1.0.0
 	 */
 	public function load_form_class($form_name) {
@@ -46,7 +46,7 @@ class WPFM_Forms {
 			include esc_html('wpfm-abstract-form.php');
 		}
 
-		// Now try to load the form_name
+		// Now try to load the form_name.
 		$form_class  = 'WPFM_' . str_replace('-', '_', sanitize_key($form_name)) . '_Form';
 		$form_file   = WPFM_PLUGIN_DIR . '/forms/wpfm-' . sanitize_file_name($form_name) . '-form.php';
 
@@ -62,7 +62,7 @@ class WPFM_Forms {
 			include esc_html($form_file);
 		}
 
-		// Init the form
+		// Init the form.
 		return call_user_func(array($form_class, 'instance'));
 	}
 
@@ -71,7 +71,7 @@ class WPFM_Forms {
 	 *
 	 * @access public
 	 * @param string $form_name
-	 * @param  array $atts Optional passed attributes
+	 * @param  array $atts Optional passed attributes.
 	 * @return string
 	 * @since 1.0.0
 	 */
@@ -88,7 +88,7 @@ class WPFM_Forms {
 	 *
 	 * @access public
 	 * @param string $form_name
-	 * @param array $atts Optional passed attributes
+	 * @param array $atts Optional passed attributes.
 	 * @return string
 	 * @since 1.0.0
 	 */

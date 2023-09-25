@@ -49,7 +49,7 @@ class WPFM_Post_Types {
 		include_once(esc_attr(WPFM_PLUGIN_DIR) . '/includes/wpfm-custom-taxonomies.php');
 
 		/**
-		 * Post types
+		 * Post types.
 		 */
 		$singular  = esc_html__('Food', 'wp-food-manager');
 		$plural    = esc_html__('Foods', 'wp-food-manager');
@@ -116,12 +116,12 @@ class WPFM_Post_Types {
 		);
 
 		/**
-		 * Feeds
+		 * Feeds.
 		 */
 		add_feed('food_feed', array($this, 'food_feed'));
 
 		/**
-		 * Post types
+		 * Post types.
 		 */
 		$singular_menu  = esc_html__('Menu', 'wp-food-manager');
 		$plural_menu    = esc_html__('Menus', 'wp-food-manager');
@@ -175,7 +175,7 @@ class WPFM_Post_Types {
 		);
 
 		/**
-		 * Post status
+		 * Post status.
 		 */
 		register_post_status('preview', array(
 			'public'                    => true,
@@ -265,7 +265,7 @@ class WPFM_Post_Types {
 	}
 
 	/**
-	 * In order to make sure that the feed properly queries the 'food_listing' type
+	 * In order to make sure that the feed properly queries the 'food_listing' type.
 	 *
 	 * @access public
 	 * @param WP_Query $wp
@@ -273,7 +273,7 @@ class WPFM_Post_Types {
 	 * @since 1.0.0
 	 */
 	public function add_feed_query_args($wp) {
-		// Let's leave if not the food feed
+		// Let's leave if not the food feed.
 		if (!isset($wp->query_vars['feed']) || 'food_feed' !== $wp->query_vars['feed']) {
 			return;
 		}
@@ -291,7 +291,7 @@ class WPFM_Post_Types {
 	}
 
 	/**
-	 * Add a custom namespace to the food feed
+	 * Add a custom namespace to the food feed.
 	 *
 	 * @access public
 	 * @return void
@@ -302,7 +302,7 @@ class WPFM_Post_Types {
 	}
 
 	/**
-	 * Add custom data to the food feed
+	 * Add custom data to the food feed.
 	 *
 	 * @access public
 	 * @return void
@@ -337,7 +337,7 @@ class WPFM_Post_Types {
 	}
 
 	/**
-	 * Generate location data if a post is updated
+	 * Generate location data if a post is updated.
 	 *
 	 * @access public
 	 * @param int $meta_id
@@ -356,7 +356,7 @@ class WPFM_Post_Types {
 	}
 
 	/**
-	 * Maybe set menu_order if the featured status of a food is changed
+	 * Maybe set menu_order if the featured status of a food is changed.
 	 *
 	 * @access public
 	 * @param int $meta_id
@@ -382,7 +382,7 @@ class WPFM_Post_Types {
 	}
 
 	/**
-	 * After importing via WP ALL Import, add default meta data
+	 * After importing via WP ALL Import, add default meta data.
 	 *
 	 * @access public
 	 * @param  int $post_id
@@ -397,7 +397,7 @@ class WPFM_Post_Types {
 	}
 
 	/**
-	 * When deleting a food, delete its attachments
+	 * When deleting a food, delete its attachments.
 	 *
 	 * @access public
 	 * @param int $post_id

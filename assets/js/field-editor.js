@@ -44,7 +44,7 @@ var WPFM_FieldEditor = function () {
 				jQuery(this).find('.field-rules select:visible').chosen();
 			},
 			/// <summary>
-			/// remove current field
+			/// remove current field.
 			/// </summary>     
 			/// <returns type="initialization settings" />   
 			/// <since>1.0</since> 
@@ -61,7 +61,7 @@ var WPFM_FieldEditor = function () {
 				return false;
 			},
 			///<summary>
-			///reset all fields
+			///reset all fields.
 			///</summary>     
 			///<returns type="initialization settings" />   
 			/// <since>1.0</since> 
@@ -72,7 +72,7 @@ var WPFM_FieldEditor = function () {
 				return false;
 			},
 			/// <summary>
-			/// reset all fields
+			/// reset all fields.
 			/// </summary>     
 			/// <returns type="initialization settings" />   
 			/// <since>1.0</since> 
@@ -82,11 +82,11 @@ var WPFM_FieldEditor = function () {
 				row = row.replace(/\[-1\]/g, "[" + $tbody.find('tr').size() + "]");
 				$tbody.append(row);
 				jQuery('.wp-food-manager-food-form-field-editor').trigger('init');
-				jQuery('.delete-field').on('click', WPFM_FieldEditor.actions.deleteField); //delete field
+				jQuery('.delete-field').on('click', WPFM_FieldEditor.actions.deleteField); //delete field.
 				return false;
 			},
 			/// <summary>
-			/// reset all fields
+			/// reset all fields.
 			/// </summary>     
 			/// <returns type="initialization settings" />   
 			/// <since>1.0</since> 
@@ -103,7 +103,7 @@ var WPFM_FieldEditor = function () {
 				return false;
 			},
 			/// <summary>
-			/// on change field type 
+			/// on change field type. 
 			/// </summary>     
 			/// <returns type="initialization settings" />   
 			/// <since>1.0</since> 

@@ -41,7 +41,7 @@ class WPFM_Permalink_Settings {
 	}
 
 	/**
-	 * Constructor
+	 * Constructor.
 	 */
 	public function __construct() {
 		$this->setup_fields();

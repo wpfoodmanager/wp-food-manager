@@ -12,7 +12,7 @@ class WPFM_Edit_Food_Form extends WPFM_Add_Food_Form {
 	protected static $_instance = null;
 
 	/**
-	 * Main Instance
+	 * Main Instance.
 	 */
 	public static function instance() {
 		if (is_null(self::$_instance)) {
@@ -22,7 +22,7 @@ class WPFM_Edit_Food_Form extends WPFM_Add_Food_Form {
 	}
 
 	/**
-	 * Constructor
+	 * Constructor.
 	 */
 	public function __construct() {
 		$this->food_id = !empty($_REQUEST['food_id']) ? absint($_REQUEST['food_id']) : 0;
@@ -60,9 +60,9 @@ class WPFM_Edit_Food_Form extends WPFM_Add_Food_Form {
 			return;
 		}
 
-		// Init fields
-		//$this->init_fields(); We dont need to initialize with this function because of field editor
-		// Now field editor function will return all the fields 
+		// Init fields.
+		//$this->init_fields(); We dont need to initialize with this function because of field editor.
+		// Now field editor function will return all the fields. 
 		//Get merged fields from db and default fields.
 		$this->merge_with_custom_fields('frontend');
 		$parent_row_fields_count = !empty(get_post_meta($food->ID, '_food_repeated_options', true)) ? get_post_meta($food->ID, '_food_repeated_options', true) : array();
@@ -160,20 +160,20 @@ class WPFM_Edit_Food_Form extends WPFM_Add_Food_Form {
 		}
 
 		try {
-			// Get posted values
+			// Get posted values.
 			$values = $this->get_posted_fields();
 
-			// Validate required
+			// Validate required.
 			if (is_wp_error(($return = $this->validate_fields($values)))) {
 				throw new Exception($return->get_error_message());
 			}
 
-			// Update the food
+			// Update the food.
 			$food_title = isset($values['food']['food_title']) && !empty($values['food']['food_title']) ? $values['food']['food_title'] : '';
 			$food_description = isset($values['food']['food_description']) && !empty($values['food']['food_description']) ? $values['food']['food_description'] : '';
 			$this->save_food(esc_html($food_title), wp_kses_post($food_description), '', $values, false);
 
-			// Successful
+			// Successful.
 			switch (get_post_status($this->food_id)) {
 				case 'publish':
 					echo wp_kses_post('<div class="food-manager-message wpfm-alert wpfm-alert-success">' . __('Your changes have been saved.', 'wp-food-manager') . ' <a href="' . esc_url(get_permalink($this->food_id)) . '">' . __('View &rarr;', 'wp-food-manager') . '</a>' . '</div>');

@@ -15,7 +15,7 @@ class WPFM_Add_Food_Form extends WPFM_Form {
 	protected static $_instance = null;
 
 	/**
-	 * Main Instance
+	 * Main Instance.
 	 */
 	public static function instance() {
 		if (is_null(self::$_instance)) {
@@ -52,7 +52,7 @@ class WPFM_Add_Food_Form extends WPFM_Form {
 
 		uasort($this->steps, array($this, 'sort_by_priority'));
 
-		// Get step/food
+		// Get step/food.
 		if (isset($_POST['step'])) {
 			$this->step = is_numeric($_POST['step']) ? max(absint($_POST['step']), 0) : array_search($_POST['step'], array_keys($this->steps));
 		} elseif (!empty($_GET['step'])) {
@@ -74,7 +74,7 @@ class WPFM_Add_Food_Form extends WPFM_Form {
 			}
 		}
 
-		// Load food details
+		// Load food details.
 		if ($this->food_id) {
 			$food_status = get_post_status($this->food_id);
 			if ('expired' === $food_status) {
@@ -304,7 +304,7 @@ class WPFM_Add_Food_Form extends WPFM_Form {
 	 *
 	 * @access protected
 	 * @param array $values
-	 * @return bool on success, WP_ERROR on failure
+	 * @return bool on success, WP_ERROR on failure.
 	 * @since 1.0.0
 	 */
 	protected function validate_fields($values) {
@@ -386,19 +386,19 @@ class WPFM_Add_Food_Form extends WPFM_Form {
 	 * @since 1.0.0
 	 */
 	public function submit() {
-		// get date and time setting defined in admin panel food listing -> Settings -> Date & Time formatting
+		// get date and time setting defined in admin panel food listing -> Settings -> Date & Time formatting.
 		$datepicker_date_format = esc_attr(WPFM_Date_Time::get_datepicker_format());
 
-		// covert datepicker format into php date() function date format
+		// covert datepicker format into php date() function date format.
 		$php_date_format = esc_attr(WPFM_Date_Time::get_view_date_format_from_datepicker_date_format($datepicker_date_format));
 
-		// Init fields
-		// $this->init_fields(); We don't need to initialize with this function because of the field editor
-		// Now field editor function will return all the fields
+		// Init fields.
+		// $this->init_fields(); We don't need to initialize with this function because of the field editor.
+		// Now field editor function will return all the fields.
 		// Get merged fields from db and default fields.
 		$this->merge_with_custom_fields('frontend');
 
-		// Load data if necessary
+		// Load data if necessary.
 		if ($this->food_id) {
 			$food = get_post($this->food_id);
 			foreach ($this->fields as $group_key => $group_fields) {
@@ -441,7 +441,7 @@ class WPFM_Add_Food_Form extends WPFM_Form {
 			}
 			$this->fields = apply_filters('add_food_fields_get_food_data', $this->fields, $food);
 
-			// Get user meta
+			// Get user meta.
 		} elseif (is_user_logged_in() && empty($_POST['add_food'])) {
 			if (!empty($this->fields['food']['registration'])) {
 				$allowed_registration_method = get_option('food_manager_allowed_registration_method', '');
@@ -467,7 +467,7 @@ class WPFM_Add_Food_Form extends WPFM_Form {
 	}
 
 	/**
-	 * Submit Step is posted
+	 * Submit Step is posted.
 	 * 
 	 * @access public
 	 * @return mixed
@@ -476,24 +476,24 @@ class WPFM_Add_Food_Form extends WPFM_Form {
 	public function submit_handler() {
 		try {
 
-			// Init fields
-			//$this->init_fields(); We dont need to initialize with this function because of field edior
-			// Now field editor function will return all the fields 
+			// Init fields.
+			//$this->init_fields(); We dont need to initialize with this function because of field edior.
+			// Now field editor function will return all the fields.
 			//Get merged fields from db and default fields.
 			$this->merge_with_custom_fields('frontend');
 
-			// Get posted values
+			// Get posted values.
 			$values = $this->get_posted_fields();
 			if (empty($_POST['add_food'])) {
 				return;
 			}
 
-			// Validate required
+			// Validate required.
 			if (is_wp_error(($return = $this->validate_fields($values)))) {
 				throw new Exception($return->get_error_message());
 			}
 
-			// Account creation
+			// Account creation.
 			if (!is_user_logged_in()) {
 				$create_account = false;
 				if (food_manager_enable_registration()) {
@@ -544,12 +544,12 @@ class WPFM_Add_Food_Form extends WPFM_Form {
 				throw new Exception(__('You must be signed in to post a new listing.', 'wp-food-manager'));
 			}
 
-			// Update the food
+			// Update the food.
 			$food_description = isset($values['food']['food_description']) && !empty($values['food']['food_description']) ? $values['food']['food_description'] : '';
 			$food_title = isset($values['food']['food_title']) && !empty($values['food']['food_title']) ? $values['food']['food_title'] : '';
 			$this->save_food(sanitize_text_field($food_title), sanitize_textarea_field($food_description), $this->food_id ? '' : 'preview', $values);
 
-			// Successful, show next step
+			// Successful, show next step.
 			$this->step++;
 		} catch (Exception $e) {
 			$this->add_error(esc_html($e->getMessage()));
@@ -558,7 +558,7 @@ class WPFM_Add_Food_Form extends WPFM_Form {
 	}
 
 	/**
-	 * Update or create a food listing from posted data
+	 * Update or create a food listing from posted data.
 	 *
 	 * @access protected
 	 * @param  string $post_title
@@ -582,7 +582,7 @@ class WPFM_Add_Food_Form extends WPFM_Form {
 		if ($update_slug) {
 			$food_slug   = array();
 
-			// Prepend with food type
+			// Prepend with food type.
 			if (apply_filters('add_food_prefix_post_name_with_food_type', true) && !empty($values['food']['food_type'])) {
 				if (food_manager_multiselect_food_type() && is_array($values['food']['food_type'])) {
 					$food_type = array_values($values['food']['food_type'])[0];
@@ -710,20 +710,20 @@ class WPFM_Add_Food_Form extends WPFM_Form {
 			return;
 		}
 
-		// Edit = show submit form again
+		// Edit = show submit form again.
 		if (!empty($_POST['edit_food'])) {
 			$this->step--;
 		}
 
-		// Continue = change food status then show next screen
+		// Continue = change food status then show next screen.
 		if (!empty($_POST['continue'])) {
 			$food = get_post($this->food_id);
 			if (in_array($food->post_status, array('preview', 'expired'))) {
 
-				// Reset expiry
+				// Reset expiry.
 				delete_post_meta($food->ID, '_food_expiry_date');
 
-				// Update food listing
+				// Update food listing.
 				$update_food                  = array();
 				$update_food['ID']            = $food->ID;
 				$update_food['post_status']   = apply_filters('add_food_post_status', get_option('food_manager_submission_requires_approval') ? 'pending' : 'publish', $food);
@@ -748,7 +748,7 @@ class WPFM_Add_Food_Form extends WPFM_Form {
 	}
 
 	/**
-	 * get selected fields from the field editor
+	 * Get selected fields from the field editor.
 	 *
 	 * @access public
 	 * @return fields Array
@@ -759,7 +759,7 @@ class WPFM_Add_Food_Form extends WPFM_Form {
 	}
 
 	/**
-	 * get extra options fields from the field editor
+	 * Get extra options fields from the field editor.
 	 *
 	 * @access public
 	 * @return fields Array
@@ -770,7 +770,7 @@ class WPFM_Add_Food_Form extends WPFM_Form {
 	}
 
 	/**
-	 * This function will initialize default fields and return as an array
+	 * This function will initialize default fields and return as an array.
 	 *
 	 * @access public
 	 * @return fields Array
@@ -778,14 +778,14 @@ class WPFM_Add_Food_Form extends WPFM_Form {
 	 **/
 	public function get_default_fields() {
 		if (empty($this->fields)) {
-			// Make sure fields are initialized and set
+			// Make sure fields are initialized and set.
 			$this->init_fields();
 		}
 		return $this->fields;
 	}
 
 	/**
-	 * This function will set the food id for invoking the food object
+	 * This function will set the food id for invoking the food object.
 	 *
 	 * @access public
 	 * @param int $id
@@ -798,7 +798,7 @@ class WPFM_Add_Food_Form extends WPFM_Form {
 	}
 
 	/**
-	 * This function will get the food id for invoking the food object
+	 * This function will get the food id for invoking the food object.
 	 *
 	 * @access public
 	 * @return int $id

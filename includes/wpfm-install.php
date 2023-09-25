@@ -7,7 +7,7 @@ if (!defined('ABSPATH')) exit;
 class WPFM_Install {
 
 	/**
-	 * Install WP Food Manager
+	 * Install WP Food Manager.
 	 * 
 	 * @access public
 	 * @return void
@@ -18,7 +18,7 @@ class WPFM_Install {
 		self::init_user_roles();
 		self::default_terms();
 
-		// Redirect to setup screen for new installs
+		// Redirect to setup screen for new installs.
 		if (!get_option('food_manager_version')) {
 			set_transient('_food_manager_activation_redirect', 1, HOUR_IN_SECONDS);
 		}
@@ -28,7 +28,7 @@ class WPFM_Install {
 			$wpdb->query("UPDATE {$wpdb->posts} p SET p.menu_order = 0 WHERE p.post_type='food_manager';");
 		}
 
-		// Update legacy options
+		// Update legacy options.
 		if (false === get_option('food_manager_add_food_page_id', false) && get_option('food_manager_submit_page_slug')) {
 			$page_id = get_page_by_path(esc_sql(get_option('food_manager_submit_page_slug')))->ID;
 			update_option('food_manager_add_food_page_id', $page_id);
@@ -44,7 +44,7 @@ class WPFM_Install {
 	}
 
 	/**
-	 * Update WP Food Manager
+	 * Update WP Food Manager.
 	 * 
 	 * @access public
 	 * @return void
@@ -53,7 +53,7 @@ class WPFM_Install {
 	public static function update() {
 		global $wpdb;
 
-		// 1.0.0 change field option name
+		// 1.0.0 change field option name.
 		if (!empty(get_option('food_manager_form_fields', true))) {
 			$all_fields = get_option('food_manager_form_fields', true);
 			if (isset($all_fields) && !empty($all_fields) && is_array($all_fields)) {
@@ -71,7 +71,7 @@ class WPFM_Install {
 	}
 
 	/**
-	 * Init user roles
+	 * Init user roles.
 	 * 
 	 * @access private
 	 * @return void
@@ -98,7 +98,7 @@ class WPFM_Install {
 	}
 
 	/**
-	 * Get the core capabilities
+	 * Get the core capabilities.
 	 * 
 	 * @access private
 	 * @return array

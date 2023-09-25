@@ -1,5 +1,5 @@
 <?php
-if (!defined('ABSPATH')) exit; // Exit if accessed directly
+if (!defined('ABSPATH')) exit; // Exit if accessed directly.
 
 /**
  * WPFM_FilterHooks class.
@@ -30,32 +30,32 @@ class WPFM_FilterHooks {
 
     /**
      * __construct function. 
-     * get the plugin hooked in and ready
+     * get the plugin hooked in and ready.
      * 
      * @since 1.0.1
      */
     public function __construct() {
-        // Writepanel's filters
+        // Writepanel's filters.
         add_filter('manage_food_manager_menu_posts_columns', array($this, 'set_shortcode_copy_columns'));
         add_filter('manage_edit-food_manager_columns', array($this, 'columns'));
         add_filter('manage_food_manager_posts_columns', array($this, 'set_custom_food_columns'));
         add_filter('manage_edit-food_manager_sortable_columns', array($this, 'set_custom_food_sortable_columns'));
         add_filter('post_row_actions', array($this, 'row_actions'));
 
-        // wpfm custom post-types
+        // wpfm custom post-types.
         add_filter('the_content', array($this, 'food_content'));
         add_filter('the_content', array($this, 'food_menu_content'));
         add_filter('archive_template', array($this, 'food_archive'), 20);
         add_filter('use_block_editor_for_post_type', array($this, 'disable_gutenberg'), 10, 2);
         add_filter('wp_insert_post_data', array($this, 'fix_post_name'), 10, 2);
 
-        // wpfm functions
+        // wpfm functions.
         add_filter('upload_dir', array($this, 'upload_dir'));
         add_filter('wp_terms_checklist_args', 'wpfm_term_radio_checklist_for_food_type');
         add_filter('manage_edit-food_manager_type_columns', array($this, 'display_custom_taxonomy_image_column_heading_for_food_type'));
         add_filter('manage_edit-food_manager_category_columns', array($this, 'display_custom_taxonomy_image_column_heading_for_food_category'));
 
-        // wpfm core file
+        // wpfm core file.
         add_filter('pre_option_wpfm_enable_categories', '__return_true');
         add_filter('pre_option_wpfm_enable_food_types', '__return_true');
         add_filter('plugin_action_links_' . plugin_basename(__FILE__), array($this, 'add_plugin_page_food_manager_settings_link'));
@@ -131,7 +131,7 @@ class WPFM_FilterHooks {
     }
 
     /**
-     * Fix post name when wp_update_post changes it
+     * Fix post name when wp_update_post changes it.
      * 
      * @access public
      * @param  array $data
@@ -180,7 +180,7 @@ class WPFM_FilterHooks {
     }
 
     /**
-     * Add Food menu content
+     * Add Food menu content.
      *
      * @access public
      * @param string $content
@@ -208,7 +208,7 @@ class WPFM_FilterHooks {
     }
 
     /**
-     * Add extra content when showing food content
+     * Add extra content when showing food content.
      *
      * @access public
      * @param string $content
@@ -253,7 +253,7 @@ class WPFM_FilterHooks {
     }
 
     /**
-     * column Sortable
+     * column Sortable.
      *
      * @access public
      * @param array $columns
@@ -267,7 +267,7 @@ class WPFM_FilterHooks {
     }
 
     /**
-     * Custom columns
+     * Custom columns.
      *
      * @access public
      * @param array $columns
@@ -292,7 +292,7 @@ class WPFM_FilterHooks {
     }
 
     /**
-     * Set Copy Shortcode
+     * Set Copy Shortcode.
      *
      * @access public
      * @param array $columns

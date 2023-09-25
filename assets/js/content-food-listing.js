@@ -14,8 +14,8 @@ var WPFM_ContentFoodListing = function () {
 			// Check if default layout is set or icon are on the page to load according to localstorage
 			if (jQuery('.wpfm-food-list-layout').length > 0 || jQuery('.wpfm-food-box-layout').length > 0) {
 				// With show_pagination attribute in shortcodes. e.g [foods per_page="10" show_pagination="true"]
-				// Check when user has changed page using pagination and then need to keep current selected layout
-				// When layout is box and user changed page using pagination then need to show line layout instead of line layout  
+				// Check when user has changed page using pagination and then need to keep current selected layout.
+				// When layout is box and user changed page using pagination then need to show line layout instead of line layout . 
 				if (localStorage.getItem("layout") == "line-layout") {
 					jQuery(".wpfm-food-box-col").show();
 					jQuery('.wpfm-food-box-layout').removeClass('wpfm-active-layout');
@@ -132,8 +132,8 @@ var WPFM_ContentFoodListing = function () {
 				food.preventDefault();
 			}
 		}
-	} //enf of return
-}; //end of class
+	} //enf of return.
+}; //end of class.
 
 WPFM_ContentFoodListing = WPFM_ContentFoodListing();
 jQuery(document).ready(function ($) {

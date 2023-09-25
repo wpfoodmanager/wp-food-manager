@@ -3,7 +3,7 @@
 * This file use for settings at admin site for wp food manager plugin.
 */
 
-// Exit if accessed directly
+// Exit if accessed directly.
 if (!defined('ABSPATH')) exit;
 
 /**
@@ -66,7 +66,7 @@ class WPFM_Settings {
 	 * @since 1.0.0
 	 */
 	public function init_settings() {
-		// Prepare roles option
+		// Prepare roles option.
 		$roles         = get_editable_roles();
 		$account_roles = array();
 
@@ -526,7 +526,7 @@ class WPFM_Settings {
 
 	/**
 	 * Creates Multiselect checkbox.
-	 * This function generate multiselect 
+	 * This function generate multiselect.
 	 * 
 	 * @access public
 	 * @param $value

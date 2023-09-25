@@ -11,8 +11,8 @@ var WPFM_TermMultiSelect = function () {
             WPFM_Common.logInfo("WPFM_TermMultiSelect.init...");
             jQuery(".food-manager-category-dropdown").chosen({ search_contains: !0 });
         }
-    } //enf of return
-}; //end of class
+    } //enf of return.
+}; //end of class.
 
 WPFM_TermMultiSelect = WPFM_TermMultiSelect();
 jQuery(document).ready(function ($) {

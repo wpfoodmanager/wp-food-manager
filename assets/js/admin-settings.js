@@ -8,9 +8,9 @@ var WPFM_AdminSettings = function () {
 		/// <returns type="initialization WPFM_AdminSettings" />   
 		/// <since>1.0.0</since> 
 		init: function () {
-			// Bind on click food of the settings section
+			// Bind on click food of the settings section.
 			jQuery(".food-manager-settings-wrap .nav-tab-wrapper a").on('click', WPFM_AdminSettings.actions.tabClick);
-			// Show by default first food Listings Settings Tab
+			// Show by default first food Listings Settings Tab.
 			jQuery('.food-manager-settings-wrap .nav-tab-wrapper a:first').click();
 		},
 		actions: {

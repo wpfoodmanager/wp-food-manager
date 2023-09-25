@@ -38,22 +38,18 @@ class WPFM_Cache_Helper {
 	}
 
 	/**
-	 * Get transient version
+	 * Get transient version.
 	 *
-	 * When using transients with unpredictable names, e.g. those containing an md5
-	 * hash in the name, we need a way to invalidate them all at once.
-	 *
-	 * When using default WP transients we're able to do this with a DB query to
-	 * delete transients manually.
-	 *
-	 * With external cache however, this isn't possible. Instead, this function is used
-	 * to append a unique string (based on time()) to each transient. When transients
-	 * are invalidated, the transient version will increment and data will be regenerated.
+	 * When using transients with unpredictable names, e.g. those containing an md5 hash in the name, we need a way to invalidate them all at once.
+	 * 
+	 * When using default WP transients we're able to do this with a DB query to delete transients manually.
+	 * 
+	 * With external cache however, this isn't possible. Instead, this function is used to append a unique string (based on time()) to each transient. When transients are invalidated, the transient version will increment and data will be regenerated.
 	 *
 	 * @static
-	 * @param  string  $group   Name for the group of transients we need to invalidate
-	 * @param  boolean $refresh true to force a new version
-	 * @return string transient version based on time(), 10 digits
+	 * @param  string  $group   Name for the group of transients we need to invalidate.
+	 * @param  boolean $refresh true to force a new version.
+	 * @return string transient version based on time(), 10 digits.
 	 * @since 1.0.0
 	 */
 	public static function get_transient_version($group, $refresh = false) {
@@ -86,26 +82,26 @@ class WPFM_Cache_Helper {
 	}
 
 	/**
-	 * Get Listings Count from Cache
+	 * Get Listings Count from Cache.
 	 *
 	 * @static
 	 * @param string $post_type
 	 * @param string $status
-	 * @param bool   $force Force update cache
+	 * @param bool   $force Force update cache.
 	 * @return int
 	 */
 	public static function get_listings_count($post_type = 'food_manager', $status = 'pending', $force = false) {
 		// Get user based cache transient
 		$user_id   = get_current_user_id();
 		$transient = "em_" . sanitize_key($status) . "_" . sanitize_key($post_type) . "_count_user_" . absint($user_id);
-		// Set listings_count value from cache if exists, otherwise set to 0 as default
+		// Set listings_count value from cache if exists, otherwise set to 0 as default.
 		$status_count = ($cached_count = get_transient($transient)) ? absint($cached_count) : 0;
 
-		// $cached_count will be false if transient does not exist
+		// $cached_count will be false if transient does not exist.
 		if ($cached_count === false || $force) {
 			$count_posts = wp_count_posts(sanitize_key($post_type), 'readable');
 
-			// Default to 0 $status if object does not have a value
+			// Default to 0 $status if object does not have a value.
 			$status_count = isset($count_posts->$status) ? absint($count_posts->$status) : 0;
 			set_transient($transient, $status_count, DAY_IN_SECONDS * 7);
 		}

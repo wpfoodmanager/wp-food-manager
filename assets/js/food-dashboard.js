@@ -11,19 +11,19 @@ var WPFM_FoodDashboard = function () {
 			WPFM_Common.logInfo("WPFM_FoodDashboard.init...");
 			if (jQuery('.food-dashboard-action-delete').length > 0 && jQuery('td .wpfm-dboard-food-action').length == 0) {
 				jQuery('.food-dashboard-action-delete').css({ 'cursor': 'pointer' });
-				//for delete food confirmation dialog / tooltip 
+				//for delete food confirmation dialog / tooltip .
 				jQuery('.food-dashboard-action-delete').on('click', WPFM_FoodDashboard.confirmation.showDialog);
 			}
-			// For Dashboard Menu Toggle
+			// For Dashboard Menu Toggle.
 			if (jQuery('.wpfm-main-vmenu-dashboard-sub-menu .wpfm-main-vmenu-dashboard-link').length > 0) {
 				jQuery('.wpfm-main-vmenu-dashboard-sub-menu .wpfm-main-vmenu-dashboard-submenu-ul').hide();
 				jQuery('.wpfm-main-vmenu-dashboard-sub-menu .wpfm-main-vmenu-dashboard-link').on('click', WPFM_FoodDashboard.actions.openSubmenu);
 			}
-			// For Active Dashboard Menu Open
+			// For Active Dashboard Menu Open.
 			if (jQuery('.wpfm-main-vmenu-dashboard-sub-menu .wpfm-main-vmenu-dashboard-link-active').length > 0) {
 				jQuery('.wpfm-main-vmenu-dashboard-sub-menu .wpfm-main-vmenu-dashboard-link-active').trigger('click');
 			}
-			// For food List Toggle
+			// For food List Toggle.
 			if (jQuery('#wpfm-dashboard-food-list-wrapper .wpfm-food-dashboard-information-toggle').length > 0) {
 				jQuery('#wpfm-dashboard-food-list-wrapper .wpfm-food-dashboard-information-toggle').hide();
 				jQuery('#wpfm-dashboard-food-list-wrapper')
@@ -37,7 +37,7 @@ var WPFM_FoodDashboard = function () {
 						return false;
 					});
 			}
-			// For Food Filter Toggle
+			// For Food Filter Toggle.
 			if (jQuery('.wpfm-dashboard-main-header .wpfm-food-dashboard-filter-toggle').length > 0) {
 				jQuery('.wpfm-dashboard-main-header .wpfm-food-dashboard-filter-toggle').hide();
 				jQuery('.wpfm-dashboard-main-header .wpfm-dashboard-main-filter')
@@ -63,7 +63,7 @@ var WPFM_FoodDashboard = function () {
 				return confirm(food_manager_food_dashboard.i18n_confirm_delete);
 				event.preventDefault();
 			},
-		},//end of comfirmation
+		},//end of comfirmation.
 		actions: {
 			openSubmenu: function (event) {
 				event.stopPropagation();
@@ -76,9 +76,9 @@ var WPFM_FoodDashboard = function () {
 				myUL.slideToggle("100");
 				myToggle.toggleClass("wpfm-main-vmenu-caret-up wpfm-main-vmenu-caret-down");
 			},
-		}, //end of actions
-	} //enf of return	
-}; //end of class
+		}, //end of actions.
+	} //enf of return.	
+}; //end of class.
 
 WPFM_FoodDashboard = WPFM_FoodDashboard();
 jQuery(document).ready(function ($) {

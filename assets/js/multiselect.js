@@ -11,8 +11,8 @@ var WPFM_MultiSelect = function () {
          WPFM_Common.logInfo("WPFM_MultiSelect.init...");
          jQuery(".food-manager-multiselect").chosen({ search_contains: !0 });
       }
-   } //enf of returnmultiselect
-}; //end of class
+   } //enf of returnmultiselect.
+}; //end of class.
 
 WPFM_MultiSelect = WPFM_MultiSelect();
 jQuery(document).ready(function ($) {

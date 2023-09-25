@@ -13,7 +13,7 @@ WPFM_FoodSubmission = function () {
                 jQuery(this).closest('.food-manager-uploaded-file').remove();
                 return false;
             });
-            //add links for paid and free Group
+            //add links for paid and free Group.
             jQuery('.add-group-row').on('click', WPFM_FoodSubmission.actions.addGroupField);
             //delete groups 
             jQuery(document).delegate('.remove-group-row', 'click', WPFM_FoodSubmission.actions.removeGroupField);
@@ -26,7 +26,7 @@ WPFM_FoodSubmission = function () {
         },
         actions: {
             /// <summary>
-            /// On click add link fields paid and free
+            /// On click add link fields paid and free.
             //It will generate dynamic name and id for fields.
             /// </summary>                 
             /// <returns type="generate name and id " />     
@@ -48,7 +48,7 @@ WPFM_FoodSubmission = function () {
                 event.preventDefault();
             },
             /// <summary>
-            /// Remove Paid and free fields 
+            /// Remove Paid and free fields. 
             /// </summary>                 
             /// <returns type="fields" />     
             /// <since>1.0.0</since>
@@ -56,9 +56,9 @@ WPFM_FoodSubmission = function () {
                 jQuery("." + this.id).remove();
                 event.preventDefault();
             },
-        } //end of action
-    } //enf of return
-}; //end of class
+        } //end of action.
+    } //enf of return.
+}; //end of class.
 
 WPFM_FoodSubmission = WPFM_FoodSubmission();
 jQuery(document).ready(function ($) {
