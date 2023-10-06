@@ -1,6 +1,6 @@
 <?php
 global $wp_scripts;
-// Get selected value.
+// Get selected value
 if (isset($field['value'])) {
     $selected = $field['value'];
 } elseif (!empty($field['default']) && is_int($field['default'])) {
@@ -43,7 +43,7 @@ $args = array(
     'hide_empty'   => false,
     'name_attr'    => false,
 );
-// For Edit screen of food.
+// For Edit screen of food
 $preview_htm = '';
 $style = 'display:none;';
 if (isset($_GET['food_id']) && !empty($_GET['food_id']) || $food_id) {
@@ -73,7 +73,7 @@ if (isset($_GET['food_id']) && !empty($_GET['food_id']) || $food_id) {
                 $preview_htm .= '<li class="term-item" data-id="' . $tax_value['id'] . '">';
                 $preview_htm .= '<label>' . esc_html($tax_value[$term_name]) . '</label>';
                 $preview_htm .= '<div class="term-item-flex">';
-                $preview_htm .= '<input type="number" min="0" step="any" value="' . esc_attr($tax_value['value']) . '" name="' . esc_attr($meta_key) . '[' . esc_attr($tax_value['id']) . '][value]">';
+                $preview_htm .= '<input type="number" min="0" step="0.1" value="' . esc_attr($tax_value['value']) . '" name="' . esc_attr($meta_key) . '[' . esc_attr($tax_value['id']) . '][value]">';
                 $preview_htm .= '<select name="' . esc_attr($meta_key) . '[' . esc_attr($tax_value['id']) . '][unit_id]">' . $unit_option . '</select>';
                 $preview_htm .= '</div>';
                 $preview_htm .= '</li>';

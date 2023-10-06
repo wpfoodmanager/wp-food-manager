@@ -601,7 +601,7 @@ if (!function_exists('wpfm_get_filtered_links')) :
 		$search_food_menu = '';
 
 		// Convert to slugs
-		if ($args['search_categories']) {
+		if (isset($args['search_categories'])) {
 			foreach ($args['search_categories'] as $category) {
 				if (is_numeric($category)) {
 					$category_object = get_term_by('id', $category, 'food_manager_category');
@@ -615,7 +615,7 @@ if (!function_exists('wpfm_get_filtered_links')) :
 		}
 
 		// Convert to slugs.
-		if ($args['search_food_types']) {
+		if (isset($args['search_food_types'])) {
 			foreach ($args['search_food_types'] as $type) {
 				if (is_numeric($type)) {
 					$type_object = get_term_by('id', $type, 'food_manager_type');
@@ -653,7 +653,7 @@ if (!function_exists('wpfm_get_filtered_links')) :
 			)
 		), $args);
 
-		if (!$args['search_keywords'] && !$args['search_categories'] && !$search_food_menu && !$args['search_food_types']  && !apply_filters('wpfm_get_listings_custom_filter', false)) {
+		if (!isset($args['search_keywords']) && !isset($args['search_categories']) && !$search_food_menu && !$args['search_food_types']  && !apply_filters('wpfm_get_listings_custom_filter', false)) {
 			unset($links['reset']);
 		}
 
