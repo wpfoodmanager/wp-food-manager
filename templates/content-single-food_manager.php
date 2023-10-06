@@ -97,7 +97,7 @@ $food = $post;
                                     </div>
                                 <?php endif; ?>
                             
-                            <form class="wpfm-single-food-body-content wpfm-toppings" id="wpfm_single_food_topping_form" method="post" action="" data-product-attribute='<?php echo apply_filters( 'wpfm_food_toppings_form_variation', '' ); ?>'>
+                            <form class="wpfm-toppings" id="wpfm_single_food_topping_form" method="post" action="" data-product-attribute='<?php echo apply_filters( 'wpfm_food_toppings_form_variation', '' ); ?>'>
                                 <?php
                                 $ext_options = get_post_meta(get_the_ID(), '_food_toppings', true);
                                 $repeated_count = get_post_meta(get_the_ID(), '_food_repeated_options', true);
