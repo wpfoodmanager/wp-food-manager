@@ -135,7 +135,7 @@ $food = $post;
                                         foreach ($ext_options as $key => $ext_option) {
                                             $field_required = '';
                                             echo "<div class='wpfm-input-field-common " . esc_attr($more_class) . "'>";
-                                            echo '<h4><strong>' . esc_html($ext_option['_topping_name']) . '</strong>';
+                                            echo '<h4 class="wpfm-heading-text">' . esc_html($ext_option['_topping_name']) . '';
                                             if ($ext_option['_topping_required'] === 'yes') {
                                                 echo '<span class="wpfm-require-mark"> *</span></h4>';
                                             } else {
