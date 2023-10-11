@@ -97,7 +97,7 @@ $food = $post;
                                     </div>
                                 <?php endif; ?>
                             
-                            <form class="wpfm-single-food-body-content wpfm-toppings" id="wpfm_single_food_topping_form" method="post" action="" data-product-attribute='<?php echo apply_filters( 'wpfm_food_toppings_form_variation', '' ); ?>'>
+                            <form class="wpfm-toppings" id="wpfm_single_food_topping_form" method="post" action="" data-product-attribute='<?php echo apply_filters( 'wpfm_food_toppings_form_variation', '' ); ?>'>
                                 <?php
                                 $ext_options = get_post_meta(get_the_ID(), '_food_toppings', true);
                                 $repeated_count = get_post_meta(get_the_ID(), '_food_repeated_options', true);
@@ -135,13 +135,13 @@ $food = $post;
                                         foreach ($ext_options as $key => $ext_option) {
                                             $field_required = '';
                                             echo "<div class='wpfm-input-field-common " . esc_attr($more_class) . "'>";
-                                            echo '<h4><strong>' . esc_html($ext_option['_topping_name']) . '</strong>';
-                                            if ($ext_option['_topping_required'] === 'yes') {
+                                            echo '<h4 class="wpfm-heading-text">' . esc_html($ext_option['_topping_name']) . '';
+                                            if( isset($ext_option['_topping_required']) && $ext_option['_topping_required'] === 'yes') {
                                                 echo '<span class="wpfm-require-mark"> *</span></h4>';
                                             } else {
                                                 echo '</h4>';
                                             }
-                                            if (!empty($ext_option['_topping_description'])) {
+                                            if( isset($ext_option['_topping_description']) && !empty($ext_option['_topping_description'])) {
                                                 echo '<div class="wpfm-input-description">' . wp_kses_post($ext_option['_topping_description']) . '</div>';
                                             }
                                             do_action('wpfm_singular_option_input_before');
