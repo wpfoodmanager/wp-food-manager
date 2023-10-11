@@ -178,9 +178,10 @@
 							<?php endforeach; ?>
 						</tr>
 					<?php endforeach; ?>
+					
 				</tbody>
 			</table>
-		<?php endif; ?>
+		<?php endif; get_food_manager_template('pagination.php', array('max_num_pages' => $max_num_pages));?>
 	</div>
 	<?php do_action('food_manager_food_dashboard_after_table'); ?>
 </div>
