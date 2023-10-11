@@ -672,7 +672,7 @@ class WPFM_ActionHooks {
         $result['filter_value'][] = $last_filter_value . " " . $post_type_label;
 
         if (sizeof($result['filter_value']) > 1) {
-            $message = sprintf(_n('Search completed. Found %d matching record.', 'Search completed. Found %d matching records.', $food_cnt, 'wp-food-manager'), $food_cnt);
+            $message = sprintf(_n('Search completed. Found %d matching record.', 'Search completed. Found %d matching records.', $foods->found_posts, 'wp-food-manager'), $foods->found_posts);
             $result['showing_applied_filters'] = true;
         } else {
             $message = "";
