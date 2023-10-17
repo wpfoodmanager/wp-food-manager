@@ -424,6 +424,11 @@ class WPFM_Add_Food_Form extends WPFM_Form {
 							$this->fields[$group_key][$key]['value'] = wp_get_object_terms($food->ID, 'food_manager_category', array('fields' => 'ids'));
 							break;
 
+						case 'food_tag':
+								$this->fields[$group_key][$key]['value'] = wp_get_object_terms($food->ID, 'food_manager_tag', array('fields' => 'ids'));
+								break;
+	
+
 						default:
 							$this->fields[$group_key][$key]['value'] = sanitize_text_field(get_post_meta($food->ID, '_' . $key, true));
 							break;
