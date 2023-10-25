@@ -19,8 +19,9 @@ $image_url = wp_get_attachment_image_src($image_id, 'full');
             <img itemprop="image" content="<?php echo esc_url($featured_img_url); ?>" src="<?php echo esc_url($featured_img_url); ?>" alt="">
         </div>
     <?php endif; ?>
-    <?php the_content(); 
-    if ( is_single() && 'food_manager_menu' == get_post_type() ) { ?>
+    <?php 
+    if ( is_single() && 'food_manager_menu' == get_post_type() ) { 
+        the_content(); ?>
     <h3>
         <?php the_title();
         $wpfm_radio_icons = get_post_meta(get_the_ID(), 'wpfm_radio_icons', true);
