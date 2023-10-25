@@ -6,6 +6,7 @@ if (isset($featured_img_url) && empty($featured_img_url)) {
 } else {
     $featured_img_url = get_the_post_thumbnail_url(get_the_ID(), 'full');
 }
+$featured_img_url = apply_filters('food_menu_thumbnail', $featured_img_url);
 $term = get_queried_object();
 $term_id = !empty($term) ? get_post_meta($term->ID, '_food_item_cat_ids', true) : '';
 $term_name = !empty($term_id[0]) ? get_term($term_id[0])->name : '';
@@ -18,7 +19,8 @@ $image_url = wp_get_attachment_image_src($image_id, 'full');
             <img itemprop="image" content="<?php echo esc_url($featured_img_url); ?>" src="<?php echo esc_url($featured_img_url); ?>" alt="">
         </div>
     <?php endif; ?>
-    <?php the_content(); ?>
+    <?php the_content(); 
+    if ( is_single() && 'food_manager_menu' == get_post_type() ) { ?>
     <h3>
         <?php the_title();
         $wpfm_radio_icons = get_post_meta(get_the_ID(), 'wpfm_radio_icons', true);
@@ -43,7 +45,7 @@ $image_url = wp_get_attachment_image_src($image_id, 'full');
         }
         ?>
     </h3>
-    <?php
+    <?php }
     if (!empty($featured_img_url)) {
         echo "<div class='wpfm-single-food-menu-category-banner' style='display: none;'>";
         echo "<div class='wpfm-single-food-menu-category-title'>" . esc_html($term_name) . "</div>";
@@ -57,7 +59,11 @@ $image_url = wp_get_attachment_image_src($image_id, 'full');
     } else {
         echo "<h2>" . esc_html($term_name) . "</h2>";
     }
-    $po_ids = get_post_meta($post->ID, '_food_item_ids', true);
+    if ( is_single() && 'food_manager_menu' == get_post_type() ) {
+        $po_ids = get_post_meta($post->ID, '_food_item_ids', true);
+    } else {
+        $po_ids = get_post_meta($menu_id, '_food_item_ids', true);
+    }
     if (!empty($po_ids)) {
         $food_listings = get_posts(array(
             'include'   => implode(",", $po_ids),
