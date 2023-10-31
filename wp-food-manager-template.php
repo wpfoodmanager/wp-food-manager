@@ -731,18 +731,40 @@ function get_food_status($post = null) {
  * @since 1.0.0
  */
 function display_stock_status($post = null, $after = '') {
-	if ($food_stock_status = get_stock_status($post)) {
-		if (!empty($food_stock_status)) {
-			$food_stock_status_label = "";
-			if ($food_stock_status == 'fm_instock') {
-				$food_stock_status_label = 'In stock';
-			}
-			if ($food_stock_status == 'fm_outofstock') {
-				$food_stock_status_label = 'Out of stock';
-			}
-			echo '<mark class="' . $food_stock_status . '">' . esc_html($food_stock_status_label) . '</mark>';
-		}
-	}
+    $food_stock_status = get_stock_status($post);
+
+    if (is_array($food_stock_status)) {
+        //display individual stock statuses.
+        foreach ($food_stock_status as $status) {
+            display_single_stock_status($status);
+        }
+    } else if (is_string($food_stock_status) && !empty($food_stock_status)) {
+        // Handling string type
+        $food_stock_status_label = "";
+        if ($food_stock_status == 'fm_instock') {
+            $food_stock_status_label = 'In stock';
+        } elseif ($food_stock_status == 'fm_outofstock') {
+            $food_stock_status_label = 'Out of stock';
+        }
+        echo '<mark class="' . esc_attr($food_stock_status) . '">' . esc_html($food_stock_status_label) . '</mark>';
+    }
+}
+
+/**
+ * This display_single_stock_status() function is used to display individual stock status.
+ *
+ * @access public
+ * @return void
+ * @since 1.0.0
+ */
+function display_single_stock_status($food_stock_status) {
+    $food_stock_status_label = "";
+    if ($food_stock_status == 'fm_instock') {
+        $food_stock_status_label = 'In stock';
+    } elseif ($food_stock_status == 'fm_outofstock') {
+        $food_stock_status_label = 'Out of stock';
+    }
+    echo '<mark class="' . esc_attr($food_stock_status) . '">' . esc_html($food_stock_status_label) . '</mark>';
 }
 
 /**
