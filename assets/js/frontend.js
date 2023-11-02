@@ -150,6 +150,15 @@ var WPFM_Frontend = function () {
                     jQuery(this).val('');
                 }
             });
+            /* accordion */
+            jQuery(".wpfm-accordion-action").click(function(e) {
+                if (jQuery(this).parent().hasClass("wpfm-accordion-item-show")) {
+                    jQuery(this).parent().removeClass("wpfm-accordion-item-show");
+                } else {
+                    jQuery(".wpfm-accordion-item").removeClass("wpfm-accordion-item-show");
+                    jQuery(this).parent().addClass("wpfm-accordion-item-show");
+                }
+            });
         },
         actions: {
             removeFoodItem: function (event) {
@@ -258,3 +267,5 @@ WPFM_Frontend = WPFM_Frontend();
 jQuery(document).ready(function ($) {
     WPFM_Frontend.init();
 });
+
+

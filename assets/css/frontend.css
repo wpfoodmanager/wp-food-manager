@@ -2540,7 +2540,7 @@ span.fm-divider {
 }
 
 .fm-food-menu-container .food-list-box:hover {
-    box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.12);
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.10);
     background-color: var(--wpfm-white-color);
     color: var(--wpfm-dark-color);
 }
@@ -2591,6 +2591,52 @@ span.fm-divider {
     max-width: 100%;
     width: 100%;
 }
+
+
+.wpfm-accordion-item {
+    border: 1px solid var(--wpfm-gray-border-color);
+    padding: 15px 15px 5px;
+    margin-top: -1px;
+    border-radius: 4px;
+    margin-bottom: 15px;
+}
+.wpfm-accordion-item .wpfm-accordion-action {
+    cursor: pointer;
+    font-weight: 500;
+    position: relative;
+    padding-right: 40px;
+    padding-bottom: 10px;
+}
+.wpfm-accordion-item .wpfm-accordion-action:after {
+    content: "\ea0a";
+    font-family: 'wpfm-restaurant-manager';
+    font-size: 10px;
+    font-weight: normal;
+    width: 24px;
+    height: 24px;
+    background-color: var(--wpfm-gray-bg-color);
+    border-radius: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    right: 0px;
+    top: 0px;
+}
+.wpfm-accordion-item .wpfm-accordion-body {
+    display: none;
+}
+.wpfm-accordion-item-show .wpfm-accordion-body {
+    display: block;
+}
+.wpfm-accordion-item-show .wpfm-accordion-action:after {
+    content: "\ea0b";
+}
+.wpfm-accordion-item.wpfm-accordion-item-show {
+    box-shadow: 0 0px 10px rgb(0 0 0 / 10%);
+ }
+ 
+
 
 /* ===== 14. FOOD MENU END ===== */
 
