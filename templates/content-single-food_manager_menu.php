@@ -13,36 +13,6 @@ $term_name = !empty($term_id[0]) ? get_term($term_id[0])->name : '';
 $image_id = !empty($term_id) ? get_term_meta($term_id[0], 'food_cat_image_id', true) : '';
 $image_url = wp_get_attachment_image_src($image_id, 'full');
 ?>
-<<<<<<< Updated upstream
-<div class="wpfm-main wpfm-single-food-menu-page wpfm-accordion-body">
-    <?php if (!empty($featured_img_url)) : ?>
-        <div class="wpfm-single-food-image">
-            <img itemprop="image" content="<?php echo esc_url($featured_img_url); ?>" src="<?php echo esc_url($featured_img_url); ?>" alt="">
-        </div>
-    <?php endif; ?>
-    <?php 
-    if ( is_single() && 'food_manager_menu' == get_post_type() ) { 
-        the_content(); ?>
-    <h3>
-        <?php the_title();
-        $wpfm_radio_icons = get_post_meta(get_the_ID(), 'wpfm_radio_icons', true);
-        $without_food_str = str_replace("wpfm-menu-", "", $wpfm_radio_icons);
-        $without_dashicons_str = str_replace("dashicons-", "", $wpfm_radio_icons);
-        $data_food_menu = ucwords(str_replace("-", " ", $without_dashicons_str));
-        $data_food_menu2 = ucwords(str_replace("-", " ", $without_food_str));
-        if (wpfm_begnWith($wpfm_radio_icons, "dashicons")) {
-            if ($wpfm_radio_icons) {
-                echo "<span class='wpfm-front-radio-icon food-icon' data-food-menu='" . esc_attr($data_food_menu2) . "'><span class='wpfm-menu dashicons " . esc_attr($wpfm_radio_icons) . "'></span></span>";
-            }
-        } else {
-            if ($wpfm_radio_icons) {
-                if ($wpfm_radio_icons == 'wpfm-menu-fast-cart') {
-                    echo '<span class="wpfm-front-radio-icon food-icon" data-food-menu="' . esc_attr($data_food_menu2) . '"><span class="wpfm-menu ' . esc_attr($wpfm_radio_icons) . '"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span></span></span>';
-                } elseif ($wpfm_radio_icons == 'wpfm-menu-rice-bowl') {
-                    echo '<span class="wpfm-front-radio-icon food-icon" data-food-menu="' . esc_attr($data_food_menu2) . '"><span class="wpfm-menu ' . esc_attr($wpfm_radio_icons) . '"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span></span></span>';
-                } else {
-                    echo "<span class='wpfm-front-radio-icon food-icon' data-food-menu='" . esc_attr($data_food_menu2) . "'><span class='wpfm-menu " . esc_attr($wpfm_radio_icons) . "'></span></span>";
-=======
 
 <div class="wpfm-main wpfm-single-food-menu-page wpfm-accordion-body">
 
@@ -68,7 +38,6 @@ $image_url = wp_get_attachment_image_src($image_id, 'full');
                     } else {
                         echo "<span class 'wpfm-front-radio-icon food-icon' data-food-menu='" . esc_attr($data_food_menu2) . "'><span class='wpfm-menu " . esc_attr($wpfm_radio_icons) . "'></span></span>";
                     }
->>>>>>> Stashed changes
                 }
             }
             ?>
@@ -131,12 +100,7 @@ $image_url = wp_get_attachment_image_src($image_id, 'full');
                 $f_regular_price = sprintf($price_format, '<span class="food-manager-Price-currencySymbol">' . esc_html(get_food_manager_currency_symbol()) . '</span>', $formatted_sale_price);
                 $f_sale_price = sprintf($price_format, '<span class="food-manager-Price-currencySymbol">' . esc_html(get_food_manager_currency_symbol()) . '</span>', $formatted_regular_price);
                 echo "<del> " . $f_sale_price . "</del> <ins><span class='food-manager-Price-currencySymbol'><strong>" . $f_regular_price . "</strong></span></ins>";
-<<<<<<< Updated upstream
-            }
-            if (empty($sale_price)) {
-=======
-            } elseif (!empty($regular_price)){ 
->>>>>>> Stashed changes
+            } elseif (!empty($regular_price)) {
                 echo sprintf($price_format, '<span class="food-manager-Price-currencySymbol">' . esc_html(get_food_manager_currency_symbol()) . '</span>', $formatted_regular_price);
             }
             echo "</div>";
