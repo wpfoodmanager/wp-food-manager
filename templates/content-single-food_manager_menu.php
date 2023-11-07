@@ -13,6 +13,7 @@ $term_name = !empty($term_id[0]) ? get_term($term_id[0])->name : '';
 $image_id = !empty($term_id) ? get_term_meta($term_id[0], 'food_cat_image_id', true) : '';
 $image_url = wp_get_attachment_image_src($image_id, 'full');
 ?>
+<<<<<<< Updated upstream
 <div class="wpfm-main wpfm-single-food-menu-page wpfm-accordion-body">
     <?php if (!empty($featured_img_url)) : ?>
         <div class="wpfm-single-food-image">
@@ -41,11 +42,37 @@ $image_url = wp_get_attachment_image_src($image_id, 'full');
                     echo '<span class="wpfm-front-radio-icon food-icon" data-food-menu="' . esc_attr($data_food_menu2) . '"><span class="wpfm-menu ' . esc_attr($wpfm_radio_icons) . '"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span></span></span>';
                 } else {
                     echo "<span class='wpfm-front-radio-icon food-icon' data-food-menu='" . esc_attr($data_food_menu2) . "'><span class='wpfm-menu " . esc_attr($wpfm_radio_icons) . "'></span></span>";
+=======
+
+<div class="wpfm-main wpfm-single-food-menu-page wpfm-accordion-body">
+
+    <?php if ( is_single() && 'food_manager_menu' == get_post_type() ) { 
+        the_content(); ?>
+        <h3>
+            <?php the_title();
+            $wpfm_radio_icons = get_post_meta(get_the_ID(), 'wpfm_radio_icons', true);
+            $without_food_str = str_replace("wpfm-menu-", "", $wpfm_radio_icons);
+            $without_dashicons_str = str_replace("dashicons-", "", $wpfm_radio_icons);
+            $data_food_menu = ucwords(str_replace("-", " ", $without_dashicons_str));
+            $data_food_menu2 = ucwords(str_replace("-", " ", $without_food_str));
+            if (wpfm_begnWith($wpfm_radio_icons, "dashicons")) {
+                if ($wpfm_radio_icons) {
+                    echo "<span class='wpfm-front-radio-icon food-icon' data-food-menu='" . esc_attr($data_food_menu2) . "'><span class='wpfm-menu dashicons " . esc_attr($wpfm_radio_icons) . "'></span></span>";
+                }
+            } else {
+                if ($wpfm_radio_icons) {
+                    if ($wpfm_radio_icons == 'wpfm-menu-fast-cart') {
+                        echo '<span class="wpfm-front-radio-icon food-icon" data-food-menu="' . esc_attr($data_food_menu2) . '"><span class="wpfm-menu ' . esc_attr($wpfm_radio_icons) . '"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span></span></span>';
+                    } elseif ($wpfm_radio_icons == 'wpfm-menu-rice-bowl') {
+                        echo '<span class="wpfm-front-radio-icon food-icon" data-food-menu="' . esc_attr($data_food_menu2) . '"><span class="wpfm-menu ' . esc_attr($wpfm_radio_icons) . '"><span class="path1"></span><span class "path2"></span><span class="path3"></span><span class="path4"></span></span></span>';
+                    } else {
+                        echo "<span class 'wpfm-front-radio-icon food-icon' data-food-menu='" . esc_attr($data_food_menu2) . "'><span class='wpfm-menu " . esc_attr($wpfm_radio_icons) . "'></span></span>";
+                    }
+>>>>>>> Stashed changes
                 }
             }
-        }
-        ?>
-    </h3>
+            ?>
+        </h3>
     <?php }
     if (!empty($featured_img_url)) {
         echo "<div class='wpfm-single-food-menu-category-banner' style='display: none;'>";
@@ -60,11 +87,13 @@ $image_url = wp_get_attachment_image_src($image_id, 'full');
     } elseif (!empty($term_name) && is_array($term_name)) {
         echo "<h2>" . esc_html($term_name) . "</h2>";
     }
+
     if ( is_single() && 'food_manager_menu' == get_post_type() ) {
         $po_ids = get_post_meta($post->ID, '_food_item_ids', true);
     } else {
         $po_ids = get_post_meta($menu_id, '_food_item_ids', true);
     }
+
     if (!empty($po_ids)) {
         $food_listings = get_posts(array(
             'include'   => implode(",", $po_ids),
@@ -80,6 +109,10 @@ $image_url = wp_get_attachment_image_src($image_id, 'full');
             $menu_food_desc = '';
             $sale_price = get_post_meta($food_listing->ID, '_food_sale_price', true);
             $regular_price = get_post_meta($food_listing->ID, '_food_price', true);
+            
+            $formatted_sale_price = ''; // Initialize the variable
+            $formatted_regular_price = ''; // Initialize the variable
+
             if (!empty($sale_price)) {
                 $formatted_sale_price = number_format($sale_price, $price_decimals, $price_decimal_separator, $price_thousand_separator);
             }
@@ -93,12 +126,17 @@ $image_url = wp_get_attachment_image_src($image_id, 'full');
             echo "<a href='" . esc_url(get_permalink($food_listing->ID)) . "'>";
             echo "<div class='fm-food-menu-title'><strong>" . esc_html($food_listing->post_title) . "</strong></div>";
             echo "<div class='fm-food-menu-pricing'>";
+
             if (!empty($regular_price) && !empty($sale_price)) {
                 $f_regular_price = sprintf($price_format, '<span class="food-manager-Price-currencySymbol">' . esc_html(get_food_manager_currency_symbol()) . '</span>', $formatted_sale_price);
                 $f_sale_price = sprintf($price_format, '<span class="food-manager-Price-currencySymbol">' . esc_html(get_food_manager_currency_symbol()) . '</span>', $formatted_regular_price);
                 echo "<del> " . $f_sale_price . "</del> <ins><span class='food-manager-Price-currencySymbol'><strong>" . $f_regular_price . "</strong></span></ins>";
+<<<<<<< Updated upstream
             }
             if (empty($sale_price)) {
+=======
+            } elseif (!empty($regular_price)){ 
+>>>>>>> Stashed changes
                 echo sprintf($price_format, '<span class="food-manager-Price-currencySymbol">' . esc_html(get_food_manager_currency_symbol()) . '</span>', $formatted_regular_price);
             }
             echo "</div>";
