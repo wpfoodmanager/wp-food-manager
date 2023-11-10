@@ -887,7 +887,11 @@ class WPFM_ActionHooks {
         echo '</code>';
                 break;
                 case 'thumbnail':
-                        echo the_post_thumbnail( 'medium' ); 
+                    if (has_post_thumbnail()) {
+                        echo the_post_thumbnail('medium');
+                    } else {
+                        echo '-';
+                    }
                     break;
         }
     }
