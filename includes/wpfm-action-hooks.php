@@ -602,7 +602,6 @@ class WPFM_ActionHooks {
                 'post_type'   => 'food_manager',
                 'post_status' => 'publish'
             ));
-
             if (count($default_foods) == 0) { ?>
                 <div class="no_food_listings_found wpfm-alert wpfm-alert-danger"><?php _e('There is no food item listed in your food manager.', 'wp-food-manager'); ?></div>
             <?php } else {
@@ -881,9 +880,16 @@ class WPFM_ActionHooks {
      * @since 1.0.1
      */
     public function shortcode_copy_content_column($column, $post_id) {
-        echo '<code>';
+        switch ($column) {
+            case 'shortcode':
+                echo '<code>';
         printf(esc_html__('[food_menu id=%d]', 'wp-food-manager'), esc_attr($post_id));
         echo '</code>';
+                break;
+                case 'thumbnail':
+                        echo the_post_thumbnail( 'medium' ); 
+                    break;
+        }
     }
 
     /**

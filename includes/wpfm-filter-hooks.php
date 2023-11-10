@@ -301,6 +301,7 @@ class WPFM_FilterHooks {
      */
     public function set_shortcode_copy_columns($columns) {
         $columns['shortcode'] = __('Shortcode', 'wp-food-manager');
+        $columns['thumbnail'] = __('Images', 'wp-food-manager');
         return $columns;
     }
 
