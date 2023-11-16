@@ -2,6 +2,71 @@
 
 <div id="food-manager-food-dashboard">
 	<div class="wpfm-dashboard-main-header">
+		<!-- Vertical Menu Start-->
+		<div class="wpem-main-vmenu-dashboard-wrapper wpem-row">
+			<div class="wpem-main-vmenu-dashboard-nav-menu wpem-col-md-3">
+				<div class="wpem-main-vmenu-dashboard-nav" id="wpem-main-vmenu-dashboard-nav">
+					<ul class="wpem-main-vmenu-dashboard-ul">
+						<?php 
+						$current_action = isset($_GET['action']) ? sanitize_title( $_GET['action'] ): 'food_dashboard';
+						$menus = array();
+						$menus = apply_filters( 'wpfm_gallery_dashboard_menu', $menus );
+						$food_dashboard = get_option('food_manager_food_dashboard_page_id');
+
+						foreach ($menus as $name => $menu) {
+							if (isset($menu['submenu']) && !empty($menu['submenu'])) {
+								$active_parent_menu = '';
+								$child_menu_html = '<ul class="wpfm-gallery-main-vmenu-dashboard-submenu-ul">';
+								foreach ($menu['submenu'] as $sub_name => $submenu) {
+									if (isset($submenu['query_arg']) && !empty($submenu['query_arg']) && is_array($submenu['query_arg'])) {
+										$action_url = add_query_arg(
+											$submenu['query_arg'],
+											get_permalink($food_dashboard)
+										);
+									} else {
+										$action_url = add_query_arg(
+											array(),
+											get_permalink($food_dashboard)
+										);
+									}
+									$active_menu = '';
+									if ($current_action === $sub_name) {
+										$active_menu = 'wpem-main-vmenu-dashboard-link-active';
+										$active_parent_menu = 'wpem-main-vmenu-dashboard-link-active';
+									}
+									$child_menu_html .= '<li class="wpem-main-vmenu-dashboard-submenu-li"><a class="wpem-main-vmenu-dashboard-link ' . $active_menu . '" href="' . $action_url . '">' . $submenu['title'] . '</a></li>';
+								}
+								$child_menu_html .= '</ul>';
+								printf('<li class="wpem-main-vmenu-dashboard-li wpem-main-vmenu-dashboard-sub-menu"><a class="wpem-main-vmenu-dashboard-link %s" href="javascript:void(0)"><i class="%s"></i>%s<i class="wpem-icon-play3 wpem-main-vmenu-caret wpem-main-vmenu-caret-up"></i></a>', $active_parent_menu, $menu['icon'], $menu['title']);
+								echo wp_kses_post($child_menu_html);
+								printf('</li>');
+							}
+							
+						}
+						?>
+					</ul>
+				</div>
+			</div>
+
+			<!-- Event Dashboard Start -->
+			<div class="wpem-main-vmenu-dashboard-content-wrap wpem-col-md-9">
+				<div class="wpem-dashboard-main-content">
+
+					<?php do_action('event_manager_event_dashboard_before'); ?>
+
+					<?php if ( !empty($current_action) ) :
+						if (has_action('gallery_manager_food_dashboard_content_' . $current_action)) :
+							do_action('gallery_manager_food_dashboard_content_' . $current_action);
+						endif;?>
+					<?php else : ?>
+						
+					<?php endif; 
+					do_action('event_manager_event_dashboard_after'); ?>
+				</div>
+			</div>
+			<!-- Event Dashboard End -->
+		</div>
+		
 		<div class="wpfm-dashboard-main-title wpfm-dashboard-main-filter">
 			<h3 class="wpfm-theme-text"><?php esc_html_e('Food Dashboard', 'wp-food-manager'); ?></h3>
 			<div class="wpfm-d-inline-block wpfm-dashboard-i-block-btn">
