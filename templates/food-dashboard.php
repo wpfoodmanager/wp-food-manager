@@ -9,7 +9,13 @@
 					<ul class="wpem-main-vmenu-dashboard-ul">
 						<?php 
 						$current_action = isset($_GET['action']) ? sanitize_title( $_GET['action'] ): 'food_dashboard';
-						$menus = array();
+						$menus = [
+							'food_dashboard' => [
+								'title' => __('Foods', 'wp-event-manager'),
+								'icon' => 'wpfm-icon-meter',
+								'query_arg' => ['action' => 'food_dashboard'],
+							],
+						];
 						$menus = apply_filters( 'wpfm_gallery_dashboard_menu', $menus );
 						$food_dashboard = get_option('food_manager_food_dashboard_page_id');
 
@@ -40,6 +46,23 @@
 								printf('<li class="wpem-main-vmenu-dashboard-li wpem-main-vmenu-dashboard-sub-menu"><a class="wpem-main-vmenu-dashboard-link %s" href="javascript:void(0)"><i class="%s"></i>%s<i class="wpem-icon-play3 wpem-main-vmenu-caret wpem-main-vmenu-caret-up"></i></a>', $active_parent_menu, $menu['icon'], $menu['title']);
 								echo wp_kses_post($child_menu_html);
 								printf('</li>');
+							} else {
+								if (isset($menu['query_arg']) && !empty($menu['query_arg']) && is_array($menu['query_arg'])) {
+									$action_url = add_query_arg(
+										$menu['query_arg'],
+										get_permalink($food_dashboard)
+									);
+								} else {
+									$action_url = add_query_arg(
+										array(),
+										get_permalink($food_dashboard)
+									);
+								}
+								$active_menu = '';
+								if ($current_action === $name) {
+									$active_menu = 'wpem-main-vmenu-dashboard-link-active';
+								}
+								printf('<li class="wpem-main-vmenu-dashboard-li"><a class="wpem-main-vmenu-dashboard-link %s" href="%s"> <i class="%s"></i>%s</a></li>', $active_menu, $action_url, $menu['icon'], $menu['title']);
 							}
 							
 						}
