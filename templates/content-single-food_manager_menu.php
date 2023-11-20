@@ -6,7 +6,6 @@ if (isset($featured_img_url) && empty($featured_img_url)) {
 } else {
     $featured_img_url = get_the_post_thumbnail_url(get_the_ID(), 'full');
 }
-$featured_img_url = apply_filters('food_menu_thumbnail', $featured_img_url);
 $term = get_queried_object();
 $term_id = !empty($term) ? get_post_meta($term->ID, '_food_item_cat_ids', true) : '';
 $term_name = !empty($term_id[0]) ? get_term($term_id[0])->name : '';
@@ -44,7 +43,7 @@ $image_url = wp_get_attachment_image_src($image_id, 'full');
         </h3>
     <?php }
     if (!empty($featured_img_url)) {
-        echo "<div class='wpfm-single-food-menu-category-banner' style='display: none;'>";
+        echo "<div class='wpfm-single-food-menu-category-banner'>";
         echo "<div class='wpfm-single-food-menu-category-title'>" . esc_html($term_name) . "</div>";
         echo "<img src='" . esc_url($featured_img_url) . "' alt='" . esc_attr($term_name) . "'>";
         echo "</div>";
