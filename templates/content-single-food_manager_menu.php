@@ -6,11 +6,19 @@ if (isset($featured_img_url) && empty($featured_img_url)) {
 } else {
     $featured_img_url = get_the_post_thumbnail_url(get_the_ID(), 'full');
 }
+
 $term = get_queried_object();
 $term_id = !empty($term) ? get_post_meta($term->ID, '_food_item_cat_ids', true) : '';
 $term_name = !empty($term_id[0]) ? get_term($term_id[0])->name : '';
 $image_id = !empty($term_id) ? get_term_meta($term_id[0], 'food_cat_image_id', true) : '';
 $image_url = wp_get_attachment_image_src($image_id, 'full');
+
+
+if ( is_single() && 'food_manager_menu' == get_post_type() ) {
+    $featured_img_url = get_the_post_thumbnail_url(get_the_ID(), 'full');
+} else {
+    $featured_img_url = get_the_post_thumbnail_url($menu_id, 'full');
+}
 ?>
 
 <div class="wpfm-main wpfm-single-food-menu-page wpfm-accordion-body">
@@ -62,6 +70,7 @@ $image_url = wp_get_attachment_image_src($image_id, 'full');
         $po_ids = get_post_meta($menu_id, '_food_item_ids', true);
     }
 
+   
     if (!empty($po_ids)) {
         $food_listings = get_posts(array(
             'include'   => implode(",", $po_ids),
