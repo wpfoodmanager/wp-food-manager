@@ -9,6 +9,7 @@
 # 5. TAB WRAPPER
 # 6. CATEGORY & TYPE
 # 7. DASHBOARD HEADER 
+  7.1 DASHBOARD
 # 8. CHOSEN
 # 9. ADD FOOD FORM
 # 10. FOOD LISTING
@@ -801,6 +802,44 @@ input.wpfm-theme-button:hover span {
 
 /* ===== 7. FOOD DASHBOARD HEADER END ===== */
 
+/* ===== 7.1 FOOD DASHBOARD START ===== */
+.wpfm-main-vmenu-dashboard-wrapper .wpfm-main-vmenu-dashboard-nav ul.wpfm-main-vmenu-dashboard-ul {
+    border-left: 1px solid var(--wpfm-gray-border-color);
+    border-right: 1px solid var(--wpfm-gray-border-color);
+    list-style: none;
+}
+.wpfm-main-vmenu-dashboard-nav .wpfm-main-vmenu-dashboard-ul .wpfm-main-vmenu-dashboard-li, .wpfm-main-vmenu-dashboard-wrapper .wpfm-main-vmenu-dashboard-nav-menu .wpfm-main-vmenu-dashboard-nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+.wpfm-main-vmenu-dashboard-nav .wpfm-main-vmenu-dashboard-ul .wpfm-main-vmenu-dashboard-li a.wpfm-main-vmenu-dashboard-link.wpfm-main-vmenu-dashboard-link-active {
+    font-weight: 600;
+    color: var(--wpfm-primary-color);
+    transition: .2s linear;
+}
+.wpfm-main-vmenu-dashboard-nav .wpfm-main-vmenu-dashboard-ul .wpfm-main-vmenu-dashboard-li:first-child .wpfm-main-vmenu-dashboard-link {
+    border-top: 1px solid var(--wpfm-gray-border-color);
+}
+.wpfm-main-vmenu-dashboard-nav .wpfm-main-vmenu-dashboard-ul .wpfm-main-vmenu-dashboard-li .wpfm-main-vmenu-dashboard-link {
+    display: flex;
+    align-items: center;
+    padding: 10px 15px;
+    color: var(--wpfm-dark-color);
+    font-size: 16px;
+    word-break: break-word;
+    text-decoration: none;
+    border-bottom: 1px solid var(--wpfm-gray-border-color);
+    transition: .2s linear;
+}
+.wpfm-main-vmenu-dashboard-nav .wpfm-main-vmenu-dashboard-ul .wpfm-main-vmenu-dashboard-li .wpfm-main-vmenu-dashboard-link i {
+    margin-right: 10px;
+    font-size: 14px;
+}
+.organizer-related-data-wrapper .show-organizer-info .wpfm-list-group .organizer-name-list .organizer-list-items a:hover, .venue-related-data-wrapper .show-venue-info .wpfm-list-group .venue-name-list .venue-list-items a:hover, .wpfm-main-vmenu-dashboard-nav .wpfm-main-vmenu-dashboard-ul .wpfm-main-vmenu-dashboard-li .wpfm-main-vmenu-dashboard-link:hover, .wpfm-main-vmenu-dashboard-nav .wpfm-main-vmenu-dashboard-ul .wpfm-main-vmenu-dashboard-li .wpfm-main-vmenu-dashboard-link:hover i, .wpfm-main-vmenu-dashboard-nav .wpfm-main-vmenu-dashboard-ul .wpfm-main-vmenu-dashboard-li a.wpfm-main-vmenu-dashboard-link.wpfm-main-vmenu-dashboard-link-active i, .wpfm-main-vmenu-dashboard-wrapper .wpfm-main-vmenu-dashboard-content-wrap .wpfm-dashboard-events-block-wrap .wpfm-dashboard-event-list-wrapper .wpfm-dashboard-event-list .wpfm-dashboard-event-name a:hover, .wpfm-single-event-page .wpfm-single-event-footer .wpfm-venue-wrapper .wpfm-venue-profile .wpfm-venue-name.wpfm-heading-text a:hover, .wpfm-theme-text-button{
+    color: var(--wpfm-primary-color);
+}
+/* ===== 7.1 FOOD DASHBOARD END ===== */
 
 
 /* ===== 8. FORM CHOSEN START ===== */
@@ -2927,7 +2966,11 @@ img.wpfm-organic-tag-icon {
     #food-manager-food-dashboard table td.food_title {
         width: inherit;
     }
+    table.wpfm-responsive-table-wrapper td.wpfm_data_td_empty {
+        padding: 10px!important;
+    }
 }
+
 
 @media screen and (max-width: 768px) {
     .wpfm-single-food-page .wpfm-single-food-wrapper .wpfm-single-food-header-top .wpfm-single-food-slider-wrapper .wpfm-single-food-slider .wpfm-slider-items img {
