@@ -19,14 +19,15 @@
 			</div>
 			<!-- Search by keywords section end-->
 			<?php
-			$args = array(
-				'post_type' => 'food_manager_menu',
-				'post_status' => 'publish',
-				'posts_per_page' => -1,
-			);
-
+              $args = array(
+              'post_type'      => 'food_manager_menu',
+              'post_status'    => 'publish',
+              'posts_per_page' => -1,
+            );
+           $food_menu_posts = get_posts($args);
 			$the_query = new WP_Query($args);
-			if ($the_query->have_posts()) { ?>
+			if ($the_query->have_posts()) {
+				?>
 				<!-- Search by food menu section start -->
 				<div class="wpfm-col">
 					<!-- shows default food menu items text field start-->
@@ -34,19 +35,28 @@
 						<label for="search_food_menu" class="wpfm-form-label"><?php _e('Food Menu', 'wp-food-manager'); ?></label>
 						<select name="search_food_menu[]" id="search_food_menu" class="food-manager-post_type-dropdown " <?php echo ($show_food_menu_multiselect) ? 'multiple' : ''; ?> data-placeholder="<?php echo esc_attr__('Choose a Food Menu…'); ?>" data-no_results_text="<?php echo esc_attr__('No results match'); ?>" data-multiple_text="<?php echo esc_attr__('Choose a Food Menu…'); ?>">
 							<?php
-							if (!$show_food_menu_multiselect) echo '<option value="">' . esc_html__('Choose a Food Menu') . '</option>';
+							if (!$show_food_menu_multiselect) {
+								echo '<option value="">' . esc_html__('Choose a Food Menu') . '</option>';
+							}
+			
 							while ($the_query->have_posts()) {
 								$the_query->the_post();
-								echo '<option value="' . esc_attr(get_the_ID()) . '">' . esc_html(get_the_title()) . '</option>';
-							} ?>
+								?>
+								<option value="<?php echo esc_attr(get_the_ID()); ?>"><?php echo esc_html(get_the_title()); ?></option>
+								<?php
+							}
+							?>
 						</select>
 					</div>
 					<!-- shows default food menu items text field end -->
 				</div>
 				<!-- Search by food menu section end-->
-			<?php }
+				<?php
+			}
 			wp_reset_postdata();
 			?>
+			
+
 		</div><!-- /row -->
 		<div class="wpfm-row">
 			<!-- Search by food categories section start -->
