@@ -3,10 +3,10 @@
 <div id="food-manager-food-dashboard">
 	<div class="wpfm-dashboard-main-header">
 		<!-- Vertical Menu Start-->
-		<div class="wpem-main-vmenu-dashboard-wrapper wpem-row">
-			<div class="wpem-main-vmenu-dashboard-nav-menu wpem-col-md-3">
-				<div class="wpem-main-vmenu-dashboard-nav" id="wpem-main-vmenu-dashboard-nav">
-					<ul class="wpem-main-vmenu-dashboard-ul">
+		<div class="wpfm-main-vmenu-dashboard-wrapper wpfm-row">
+			<div class="wpfm-main-vmenu-dashboard-nav-menu wpfm-col-md-3">
+				<div class="wpfm-main-vmenu-dashboard-nav" id="wpfm-main-vmenu-dashboard-nav">
+					<ul class="wpfm-main-vmenu-dashboard-ul">
 						<?php 
 						$current_action = isset($_GET['action']) ? sanitize_title( $_GET['action'] ): 'food_dashboard';
 						$menus = [
@@ -37,13 +37,13 @@
 									}
 									$active_menu = '';
 									if ($current_action === $sub_name) {
-										$active_menu = 'wpem-main-vmenu-dashboard-link-active';
-										$active_parent_menu = 'wpem-main-vmenu-dashboard-link-active';
+										$active_menu = 'wpfm-main-vmenu-dashboard-link-active';
+										$active_parent_menu = 'wpfm-main-vmenu-dashboard-link-active';
 									}
-									$child_menu_html .= '<li class="wpem-main-vmenu-dashboard-submenu-li"><a class="wpem-main-vmenu-dashboard-link ' . $active_menu . '" href="' . $action_url . '">' . $submenu['title'] . '</a></li>';
+									$child_menu_html .= '<li class="wpfm-main-vmenu-dashboard-submenu-li"><a class="wpfm-main-vmenu-dashboard-link ' . $active_menu . '" href="' . $action_url . '">' . $submenu['title'] . '</a></li>';
 								}
 								$child_menu_html .= '</ul>';
-								printf('<li class="wpem-main-vmenu-dashboard-li wpem-main-vmenu-dashboard-sub-menu"><a class="wpem-main-vmenu-dashboard-link %s" href="javascript:void(0)"><i class="%s"></i>%s<i class="wpem-icon-play3 wpem-main-vmenu-caret wpem-main-vmenu-caret-up"></i></a>', $active_parent_menu, $menu['icon'], $menu['title']);
+								printf('<li class="wpfm-main-vmenu-dashboard-li wpfm-main-vmenu-dashboard-sub-menu"><a class="wpfm-main-vmenu-dashboard-link %s" href="javascript:void(0)"><i class="%s"></i>%s<i class="wpfm-icon-play3 wpfm-main-vmenu-caret wpfm-main-vmenu-caret-up"></i></a>', $active_parent_menu, $menu['icon'], $menu['title']);
 								echo wp_kses_post($child_menu_html);
 								printf('</li>');
 							} else {
@@ -60,9 +60,9 @@
 								}
 								$active_menu = '';
 								if ($current_action === $name) {
-									$active_menu = 'wpem-main-vmenu-dashboard-link-active';
+									$active_menu = 'wpfm-main-vmenu-dashboard-link-active';
 								}
-								printf('<li class="wpem-main-vmenu-dashboard-li"><a class="wpem-main-vmenu-dashboard-link %s" href="%s"> <i class="%s"></i>%s</a></li>', $active_menu, $action_url, $menu['icon'], $menu['title']);
+								printf('<li class="wpfm-main-vmenu-dashboard-li"><a class="wpfm-main-vmenu-dashboard-link %s" href="%s"> <i class="%s"></i>%s</a></li>', $active_menu, $action_url, $menu['icon'], $menu['title']);
 							}
 							
 						}
@@ -72,8 +72,8 @@
 			</div>
 
 			<!-- Event Dashboard Start -->
-			<div class="wpem-main-vmenu-dashboard-content-wrap wpem-col-md-9">
-				<div class="wpem-dashboard-main-content">
+			<div class="wpfm-main-vmenu-dashboard-content-wrap wpfm-col-md-9">
+				<div class="wpfm-dashboard-main-content">
 
 					<?php do_action('event_manager_event_dashboard_before'); ?>
 
@@ -83,14 +83,12 @@
 						endif;?>
 					<?php else : ?>
 						
+						
 					<?php endif; 
 					do_action('event_manager_event_dashboard_after'); ?>
-				</div>
-			</div>
-			<!-- Event Dashboard End -->
-		</div>
-		
-		<div class="wpfm-dashboard-main-title wpfm-dashboard-main-filter">
+
+
+<div class="wpfm-dashboard-main-title wpfm-dashboard-main-filter">
 			<h3 class="wpfm-theme-text"><?php esc_html_e('Food Dashboard', 'wp-food-manager'); ?></h3>
 			<div class="wpfm-d-inline-block wpfm-dashboard-i-block-btn">
 
@@ -272,6 +270,12 @@
 		<?php endif; get_food_manager_template('pagination.php', array('max_num_pages' => $max_num_pages));?>
 	</div>
 	<?php do_action('food_manager_food_dashboard_after_table'); ?>
+				</div>
+			</div>
+			<!-- Event Dashboard End -->
+		</div>
+		
+		
 </div>
 
 <?php do_action('food_manager_food_dashboard_after'); ?>
