@@ -303,7 +303,7 @@ function display_food_veg_nonveg_icon_tag($post = null, $after = '') {
 			}
 			if (!empty($imagePath)) {
 				$data_icon_label = ucwords(str_replace("-", " ", sanitize_title($wpfm_veg_nonveg_tag->slug)));
-				echo '<div class="parent-organic-tag ' . sanitize_title($wpfm_veg_nonveg_tag->slug) . '" data-icon-type="' . $data_icon_label . '"><img alt="' . $wpfm_veg_nonveg_tag->slug . '" src="' . $imagePath . '" class="wpfm-organic-tag-icon ' . sanitize_title($wpfm_veg_nonveg_tag->slug) . '"></div>';
+				echo '<div class="wpfm-food-type-tag ' . sanitize_title($wpfm_veg_nonveg_tag->slug) . '"><img alt="' . $wpfm_veg_nonveg_tag->slug . '" src="' . $imagePath . '" class="wpfm-organic-tag-icon ' . sanitize_title($wpfm_veg_nonveg_tag->slug) . '"></div>';
 			}
 		}
 	}

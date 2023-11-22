@@ -1423,6 +1423,11 @@ a.button.wpfm-add-row:hover {
     color: var(--wpfm-primary-color);
     font-size: 18px;
 }
+.wpfm-food-listings .wpfm-food-layout-wrapper .wpfm-food-infomation .wpfm-food-details .wpfm-food-type-tag {
+    margin: 5px;
+    display: flex;
+    align-items: center;
+}
 
 .wpfm-food-listings .wpfm-food-layout-wrapper.food_featured,
 .wpfm-food-listings .wpfm-food-layout-wrapper.food_featured:hover {
