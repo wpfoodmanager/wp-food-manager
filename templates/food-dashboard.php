@@ -278,4 +278,3 @@
 
 
 
-<?php do_action('food_manager_food_dashboard_after'); ?>
