@@ -78,8 +78,8 @@
 					<?php do_action('food_manager_food_dashboard_before'); ?>
 
 					<?php if (!in_array($current_action, ['food_dashboard', 'delete', 'mark_cancelled', 'mark_not_cancelled']) && !empty($current_action) ) :
-						if (has_action('gallery_manager_food_dashboard_content_' . $current_action)) :
-							do_action('gallery_manager_food_dashboard_content_' . $current_action);
+						if (has_action('food_manager_food_dashboard_contents_' . $current_action)) :
+							do_action('food_manager_food_dashboard_contents_' . $current_action);
 						endif;?>
 					<?php else : ?>
 						
