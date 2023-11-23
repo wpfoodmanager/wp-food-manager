@@ -9,10 +9,8 @@ global $food_manager;
 $add_food_page_id = get_option('food_manager_add_food_page_id');
 $food_dashboard_page_id = get_option('food_manager_food_dashboard_page_id');
 $extra_fields_options = get_post_meta($food_id, '_food_toppings', true) ? get_post_meta($food_id, '_food_toppings', true) : '';
-
 if (!empty($extra_fields_options)) {
 	$option_value_counts1 = array();
-
 	for ($i = 1; $i <= count($extra_fields_options); $i++) {
 		foreach ($extra_fields_options as $key => $value) {
 			for ($j = 1; $j <= count($value['_topping_options']); $j++) {
@@ -20,24 +18,21 @@ if (!empty($extra_fields_options)) {
 			}
 		}
 	}
-
 	$option_value_counts = array();
 	foreach ($option_value_counts1 as $option_value_count) {
 		$option_value_counts[] = array_unique($option_value_count);
 	}
-
-	array_unshift($option_value_counts, "");
+	array_unshift($option_value_counts1, "");
 	unset($option_value_counts[0]);
 	$option_value_counts2 = array();
 
 	for ($i = 1; $i <= count($extra_fields_options); $i++) {
 		foreach ($extra_fields_options as $key => $value) {
-			for ($j = 1; $j <= count($value['_topping_options']); $j++) {
+			// for ($j = 1; $j <= count($value['_topping_options']); $j++) {
 				$option_value_counts2[$key] = $value;
-			}
+			// }
 		}
 	}
-
 	$option_value_counts3 = array();
 	foreach ($option_value_counts2 as $option_value2_count) {
 		$option_value_counts3[] = $option_value2_count;
@@ -85,6 +80,7 @@ if (!empty($extra_fields_options)) {
 				<h3 class="wpfm-form-title wpfm-heading-text"><?php _e('Extra Toppings', 'wp-food-manager'); ?></h3>
 				<div class="wpfm-options-wrapper wpfm-metaboxes">
 					<?php if (!empty($extra_fields_options)) {
+						// print_r($option_value_counts3);
 						foreach ($option_value_counts3 as $key => $extra_fields_option) {
 							$toppings = get_post_meta($food_id, '_food_toppings', true);
 							$topping_key = str_replace(" ", "_", strtolower($extra_fields_option['_topping_name']));
