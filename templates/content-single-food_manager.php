@@ -625,6 +625,10 @@ $food = $post;
     </div>
     <!-- / wpfm-main end -->
 </div>
+
+<!-- add to cart notification -->
+<?php do_action('wpfm_food_manager_food_listings_after'); ?>
+
 <!-- override the script if needed -->
 <script type="text/javascript">
     jQuery(document).ready(function() {
