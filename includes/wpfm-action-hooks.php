@@ -151,21 +151,6 @@ class WPFM_ActionHooks {
         add_action('wp_ajax_term_ajax_search',        array($this, 'term_ajax_search'));
         add_action('wp_ajax_nopriv_term_ajax_search', array($this, 'term_ajax_search'));
 
-        //Add to cart notification.
-        add_action('wpfm_food_manager_food_listings_after', array($this,'add_to_cart_food_message'));
-
-    }
-
-   
-    /**
-     * Display the notification message during add to cart.
-     * 
-     * @access public
-     * @return void
-     * @since 1.0.1
-     */
-    public function add_to_cart_food_message() {
-         echo _e('<div class="notification">The item has been added to your cart.</div>', 'wp-food-manager'); 
     }
 
     /**
