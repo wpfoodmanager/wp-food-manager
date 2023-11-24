@@ -3129,4 +3129,12 @@ img.wpfm-organic-tag-icon {
     }
 }
 
+.notification {
+    background-color: rgb(216, 234, 235);
+    color: #721c24;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid  rgb(216, 234, 235);
+}
+
 /* ===== 17. WOOCOMMERCE END ===== */
