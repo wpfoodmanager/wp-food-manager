@@ -1,6 +1,5 @@
 <?php
 global $wp_scripts;
-
 // Get selected value
 if (isset($field['value'])) {
     $selected = $field['value'];
@@ -26,6 +25,15 @@ wp_localize_script(
         'unit_terms' => json_encode($unit),
     )
 );
+
+/** This is used for multiselect selected value array */
+$select = array();
+foreach($field['value'] as $key => $value){
+    if(is_array($value))
+        array_push($select, $key);
+}
+if(!empty($select))
+    $selected = $select;
 
 /* Check if localize script is running or not to run globally localize script */
 $data = $wp_scripts->get_data('wp-food-manager-term-select-multi-appearance', 'data');
