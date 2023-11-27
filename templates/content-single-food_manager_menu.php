@@ -1,5 +1,6 @@
 <?php
 global $post;
+//echo $post->ID;
 $featured_img_url = get_the_post_thumbnail_url(get_the_ID(), 'full');
 if (isset($featured_img_url) && empty($featured_img_url)) {
     $featured_img_url = '';
@@ -14,16 +15,16 @@ $image_id = !empty($term_id) ? get_term_meta($term_id[0], 'food_cat_image_id', t
 $image_url = wp_get_attachment_image_src($image_id, 'full');
 
 
-if ( is_single() && 'food_manager_menu' == get_post_type() ) {
+if ( 'food_manager_menu' == get_post_type() ) {
     $featured_img_url = get_the_post_thumbnail_url(get_the_ID(), 'full');
-} else {
+} elseif(isset($menu_id) && !empty($menu_id) ) {
     $featured_img_url = get_the_post_thumbnail_url($menu_id, 'full');
 }
 ?>
 
 <div class="wpfm-main wpfm-single-food-menu-page wpfm-accordion-body">
 
-    <?php if ( is_single() && 'food_manager_menu' == get_post_type() ) { 
+    <?php if ( 'food_manager_menu' == get_post_type() ) { 
         the_content(); ?>
         <h3>
             <?php the_title();
@@ -64,9 +65,9 @@ if ( is_single() && 'food_manager_menu' == get_post_type() ) {
         echo "<h2>" . esc_html($term_name) . "</h2>";
     }
 
-    if ( is_single() && 'food_manager_menu' == get_post_type() ) {
+    if ( 'food_manager_menu' == get_post_type() ) {
         $po_ids = get_post_meta($post->ID, '_food_item_ids', true);
-    } else {
+    } elseif(isset($menu_id) && !empty($menu_id) ){
         $po_ids = get_post_meta($menu_id, '_food_item_ids', true);
     }
 

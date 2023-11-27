@@ -1402,6 +1402,7 @@ a.button.wpfm-add-row:hover {
     color: var(--wpfm-dark-color);
     margin: 0;
     word-break: break-word;
+    display: flex;
 }
 
 .wpfm-food-listings .wpfm-food-layout-wrapper .wpfm-food-infomation .wpfm-food-details .wpfm-food-price {
@@ -1424,9 +1425,11 @@ a.button.wpfm-add-row:hover {
     font-size: 18px;
 }
 .wpfm-food-listings .wpfm-food-layout-wrapper .wpfm-food-infomation .wpfm-food-details .wpfm-food-type-tag {
-    margin: 5px;
-    display: flex;
-    align-items: center;
+    margin-left: 10px;
+    margin-top: 2px;
+    flex: 0 0 20px;
+    height: 20px;
+    width: 20px;
 }
 
 .wpfm-food-listings .wpfm-food-layout-wrapper.food_featured,
@@ -1614,7 +1617,9 @@ a.button.wpfm-add-row:hover {
     align-items: center;
     column-gap: 15px;
 }
-
+.wpfm-single-food-page .wpfm-food-title .wpfm-food-type-tag {
+    height: 20px;
+}
 .wpfm-single-food-page .wpfm-food-price {
     margin: 10px 0;
     font-size: 22px;
@@ -3122,6 +3127,14 @@ img.wpfm-organic-tag-icon {
     .woocommerce table.shop_table_responsive tr.cart-page td::before{
         display: none !important;
     }
+}
+
+.notification {
+    background-color: rgb(216, 234, 235);
+    color: #721c24;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid  rgb(216, 234, 235);
 }
 
 /* ===== 17. WOOCOMMERCE END ===== */

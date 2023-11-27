@@ -145,11 +145,12 @@ class WPFM_ActionHooks {
         }
 
         // wpfm shortcode's action.
-        add_action('food_manager_food_dashboard_content_edit', array($this, 'edit_food'));
+        add_action('food_manager_food_dashboard_contents_edit', array($this, 'edit_food'));
         add_action('food_manager_food_filters_end', array($this, 'food_filter_results'), 30);
         add_action('food_manager_output_foods_no_results', array($this, 'output_no_results'));
         add_action('wp_ajax_term_ajax_search',        array($this, 'term_ajax_search'));
         add_action('wp_ajax_nopriv_term_ajax_search', array($this, 'term_ajax_search'));
+
     }
 
     /**
