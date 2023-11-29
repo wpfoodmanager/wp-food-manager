@@ -28,12 +28,19 @@ wp_localize_script(
 
 /** This is used for multiselect selected value array */
 $select = array();
-foreach($field['value'] as $key => $value){
-    if(is_array($value))
-        array_push($select, $key);
+
+// Check if $field['value'] is an array before attempting to iterate over it
+if (is_array($field['value'])) {
+    foreach ($field['value'] as $key => $value) {
+        if (is_array($value)) {
+            array_push($select, $key);
+        }
+    }
 }
-if(!empty($select))
+
+if (!empty($select)) {
     $selected = $select;
+}
 
 /* Check if localize script is running or not to run globally localize script */
 $data = $wp_scripts->get_data('wp-food-manager-term-select-multi-appearance', 'data');
