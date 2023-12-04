@@ -2187,3 +2187,31 @@ function is_wpfm_terms_exist($terms, $taxonomy) {
 	}
 	return esc_attr($displayTerms);
 }
+
+/** 
+* This function is used to display those food menus which is added by current user.
+*
+* @since 1.0.0
+*/
+function wpfm_term_menu_lists(){
+	global $wpdb;
+	$current_user = wp_get_current_user();
+	$authors = [ $current_user->ID ];
+
+	$query_args = [
+		'author__in'    =>  $authors, 
+		'post_type' => 'food_manager_menu',
+		'post_per_page' => '1',
+		'order'         =>  'ASC' 
+	];
+
+	$wpfm_menu_lists = get_posts( $query_args );
+	if( !empty( $wpfm_menu_lists ) ) :
+		$items = array();       
+		foreach( $wpfm_menu_lists as $wpfm_menu_list ) : 
+			$items[$wpfm_menu_list->post_name] =  $wpfm_menu_list->post_title;
+		endforeach; ?>
+	<?php else : $items['no_food'] =  'No food menu added';
+	endif;
+	return $items;
+}
