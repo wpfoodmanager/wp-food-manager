@@ -506,11 +506,6 @@ function food_manager_dropdown_selection($args = '') {
 	$name_attr = ($args['name_attr'] == true) ? 'name="' . esc_attr($name) . '[]"' : '';
 	$output = '<select ' . $data_taxonomy . ' ' . $name_attr . '  id="' . esc_attr($id) . '" class="' . esc_attr($class) . '" ' . ($multiple ? 'multiple="multiple"' : "") . ' data-placeholder="' . esc_attr($placeholder) . '" data-no_results_text="' . esc_attr($no_results_text) . '" data-multiple_text="' . esc_attr($multiple_text) . '">\n';
 
-	if (is_admin()) {
-		if (empty($item_cat_ids) && isset($item_cat_ids)) {
-			$output .= '<option value="" disabled selected>' . $placeholder . '</option>';
-		}
-	}
 
 	if ($show_option_all) {
 		$output .= '<option value="">' . esc_html($show_option_all) . '</option>';
