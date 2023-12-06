@@ -2204,9 +2204,9 @@ function wpfm_term_menu_lists(){
 	if( !empty( $wpfm_menu_lists ) ) :
 		$items = array();       
 		foreach( $wpfm_menu_lists as $wpfm_menu_list ) : 
-			$items[$wpfm_menu_list->post_name] =  $wpfm_menu_list->post_title;
+			$items[$wpfm_menu_list->ID] =  $wpfm_menu_list->post_title;
 		endforeach; ?>
-	<?php else : $items['no_food'] =  'No food menu added';
+	<?php else : $items['no_food'] =  esc_attr_e('No food menu added', 'wp-food-manager');
 	endif;
 	return $items;
 }
