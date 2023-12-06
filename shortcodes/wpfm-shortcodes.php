@@ -340,7 +340,7 @@ class WPFM_Shortcodes {
 				echo '<a class="load_more_foods" id="load_more_foods" href="javascript:void(0);" style="display:none;"><strong>' . __('Load more foods', 'wp-food-manager') . '</strong></a>';
 			}
 		} else {
-			$foods = get_food_managers(apply_filters('food_manager_output_foods_args', array(
+			$foods = get_food_listings(apply_filters('food_manager_output_foods_args', array(
 				'search_keywords'   => $keywords,
 				'search_categories' => $categories,
 				'search_food_types' => $food_types,
