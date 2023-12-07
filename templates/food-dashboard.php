@@ -16,13 +16,13 @@
 								'query_arg' => ['action' => 'food_dashboard'],
 							],
 						];
-						$menus = apply_filters( 'wpfm_gallery_dashboard_menu', $menus );
+						$menus = apply_filters( 'wp_food_manager_dashboard_menu', $menus );
 						$food_dashboard = get_option('food_manager_food_dashboard_page_id');
 
 						foreach ($menus as $name => $menu) {
 							if (isset($menu['submenu']) && !empty($menu['submenu'])) {
 								$active_parent_menu = '';
-								$child_menu_html = '<ul class="wpfm-gallery-main-vmenu-dashboard-submenu-ul">';
+								$child_menu_html = '<ul class="wpfm-food-main-vmenu-dashboard-submenu-ul">';
 								foreach ($menu['submenu'] as $sub_name => $submenu) {
 									if (isset($submenu['query_arg']) && !empty($submenu['query_arg']) && is_array($submenu['query_arg'])) {
 										$action_url = add_query_arg(

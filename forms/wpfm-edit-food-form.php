@@ -54,12 +54,13 @@ class WPFM_Edit_Food_Form extends WPFM_Add_Food_Form {
 	public function submit() {
 		global $wpdb;
 		$food = get_post($this->food_id);
-
+		if ($food->post_type !== 'food_manager'):
+			return;
+		endif;
 		if (empty($this->food_id) || ($food->post_status !== 'publish' && $food->post_status !== 'pending' && !food_manager_user_can_edit_pending_submissions())) {
 			echo wpautop(__('Invalid listing', 'wp-food-manager'));
 			return;
 		}
-
 		// Init fields.
 		//$this->init_fields(); We dont need to initialize with this function because of field editor.
 		// Now field editor function will return all the fields. 
