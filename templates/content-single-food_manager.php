@@ -193,6 +193,7 @@ $food = $post;
                                 do_action('single_food_toppings_after');
                                 ?>
                             </form>
+                            <?php echo do_action('food_manager_addons_html');?>
                             </div>
                             <!-- Additional Info Block Start -->
                             <?php
