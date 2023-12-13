@@ -777,7 +777,7 @@ function display_single_stock_status($food_stock_status) {
  */
 function get_stock_status($post = null) {
 	$post = get_post($post);
-	$stock_status = get_post_meta(get_the_ID(), '_food_stock_status', true);
+	$stock_status = get_post_meta($post->ID, '_food_stock_status', true);
 	return apply_filters('display_stock_status', $stock_status, $post);
 }
 
