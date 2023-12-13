@@ -115,9 +115,12 @@ if ( 'food_manager_menu' == get_post_type() ) {
             echo "</div>";
             echo "</a>";
             echo $menu_food_desc;
+            do_action('food_menu_list_overview_after', $food_listing->ID);
             echo "</div>";
         }
         echo "</div>";
     }
     ?>
 </div>
+<!-- add to cart notification -->
+<?php do_action('wpfm_food_manager_food_menu_listing_after'); ?>
