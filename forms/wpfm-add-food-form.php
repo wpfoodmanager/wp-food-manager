@@ -550,10 +550,15 @@ class WPFM_Add_Food_Form extends WPFM_Form {
 			}
 
 			// Update the food.
-			$food_description = isset($values['food']['food_description']) && !empty($values['food']['food_description']) ? $values['food']['food_description'] : '';
 			$food_title = isset($values['food']['food_title']) && !empty($values['food']['food_title']) ? $values['food']['food_title'] : '';
-			$this->save_food(sanitize_text_field($food_title), sanitize_textarea_field($food_description), $this->food_id ? '' : 'preview', $values);
+			$food_description = isset($values['food']['food_description']) && !empty($values['food']['food_description']) ? $values['food']['food_description'] : '';
 
+			// Determine the status based on the condition.
+			$status = $this->food_id ? '' : 'preview';
+
+			// Pass the $status variable as an argument in the save_food() method.
+			$this->save_food(sanitize_text_field($food_title), wp_kses_post($food_description), $status, $values, false);
+			
 			// Successful, show next step.
 			$this->step++;
 		} catch (Exception $e) {
