@@ -1,6 +1,7 @@
 <?php
 
 /**
+ * Contributors: wpfoodmanager,ashokdudhat,krinay
  * Plugin Name: WP Food Manager
  * Plugin URI: https://www.wpfoodmanager.com/
  * Description: Lightweight, scalable and full-featured food listings & management plugin for managing food listings from the Frontend and Backend.
@@ -8,7 +9,7 @@
  * Author URI: https://www.wpfoodmanager.com
  * Text Domain: wp-food-manager
  * Domain Path: /languages
- * Version: 1.0.4
+ * Version: 1.0.5
  * Since: 1.0.0
  * Requires WordPress Version at least: 4.1
  * Copyright: 2020 WP Food Manager

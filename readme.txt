@@ -4,8 +4,8 @@ Contributors: wpfoodmanager,ashokdudhat,krinay
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=55FRYATTFLA5N
 Tags:  food menu, restaurant menu, food ordering, restaurant, table reservation, food delivery, food pickup, cafe menu, food order,food,menu
 Requires at least: 5.0
-Tested up to: 6.3.1
-Stable tag: 1.0.4
+Tested up to: 6.4.2
+Stable tag: 1.0.5
 Requires PHP: 5.6
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
@@ -199,6 +199,48 @@ You can also find us on GitHub: see the [WP Food Manager GitHub Repository](http
 
 
 == Changelog ==
+
+= 1.0.5 [ 26th Dec 2023 ] =
+
+Fixed : Issue related to add to cart option is resolved
+Fixed : Issues related to food description editor options formatting is resolved on food detail page
+Fixed: Added dependency related to food menu on other add-ons
+Fixed : Food listing page issue is resolved when no filter is available.
+Fixed : The title of the food listing page is made dynamic.
+Fixed : Code for the gallery addon is added on the food dashboard
+Fixed : RSS can load 10 food items from the food listing page.
+Fixed : Editing of food nutrition and ingredients is now displayed after updating it from the frontside.
+Fixed : Vertical menu is added in the food dashboard on the frontside.
+Fixed : Images of the menu are visible on the frontside.
+Fixed : A hook is added in the Online Order addon.
+Fixed : Food Listing frontside page UI is changed.
+Fixed : Topping is visible on the frontside even if there is no value added in a row.
+Fixed : Tooltip is removed from everywhere on the frontside.
+Fixed : Properly aligned all the food details on the food listing page at frontside.
+Fixed : Thumbnail image field is added at the admin side of the food item in the menu list page.
+Fixed : Vertical menu on the food dashboard page is properly displayed at the frontside.
+Fixed : A warning message issue is fixed for a food item with no pricing in the menu.
+Fixed : Menu is now appearing properly on the restaurant detail page.
+Fixed : Issue related to adding nutrition and ingredients is fixed.
+Fixed : Stock status error is resolved on the admin side.
+Fixed : Different font sizes for add/edit title are added in the food field option at the frontside.
+Fixed : Frontside Tag is now working at cloning time
+Fixed : Issue related to finding a matching record at the frontside of the food page while filtering is now solved.
+Fixed : Pagination of the food dashboard is now working properly at frontside.
+Fixed : Warning message to add topping on the food detail page is now resolved.
+Fixed : File related to the time field is added.
+Fixed : Issue with the UI of the field editor’s date format is fixed at the admin side.
+Fixed : No more warnings on the food detail page when using toppings.
+Fixed : Nutrition and Ingredients are now accepting the decimal value
+Fixed : Youtube channel link is added in the setup wizard and setting tab.
+Fixed : Issue related to adding or editing the food option with various themes is fixed from the frontside.
+Fixed : Load More option is not showing duplicate images anymore on the food listing page at the frontside.
+Fixed : Enable Ingredient & Nutrition options are working on the Add Food page of the frontside.
+Fixed : Error related to Permalink time setting is fixed on the admin side.
+Fixed : No more warnings are appearing during the debug log at the frontside of the Adding Food page.
+Fixed : Extra topping design of the title is fixed on the frontend side.
+Fixed : Add to cart option is now appearing properly at the frontside Add to cart even if the food item is not selected.
+Fixed : Issue with the display of time in Food Edit on frontside is resolved
 
 = 1.0.4 [ 26th July 2023 ] =
 
