@@ -839,6 +839,22 @@ input.wpfm-theme-button:hover span {
 .organizer-related-data-wrapper .show-organizer-info .wpfm-list-group .organizer-name-list .organizer-list-items a:hover, .venue-related-data-wrapper .show-venue-info .wpfm-list-group .venue-name-list .venue-list-items a:hover, .wpfm-main-vmenu-dashboard-nav .wpfm-main-vmenu-dashboard-ul .wpfm-main-vmenu-dashboard-li .wpfm-main-vmenu-dashboard-link:hover, .wpfm-main-vmenu-dashboard-nav .wpfm-main-vmenu-dashboard-ul .wpfm-main-vmenu-dashboard-li .wpfm-main-vmenu-dashboard-link:hover i, .wpfm-main-vmenu-dashboard-nav .wpfm-main-vmenu-dashboard-ul .wpfm-main-vmenu-dashboard-li a.wpfm-main-vmenu-dashboard-link.wpfm-main-vmenu-dashboard-link-active i, .wpfm-main-vmenu-dashboard-wrapper .wpfm-main-vmenu-dashboard-content-wrap .wpfm-dashboard-events-block-wrap .wpfm-dashboard-event-list-wrapper .wpfm-dashboard-event-list .wpfm-dashboard-event-name a:hover, .wpfm-single-event-page .wpfm-single-event-footer .wpfm-venue-wrapper .wpfm-venue-profile .wpfm-venue-name.wpfm-heading-text a:hover, .wpfm-theme-text-button{
     color: var(--wpfm-primary-color);
 }
+.wpfm-main-vmenu-dashboard-nav .wpfm-main-vmenu-dashboard-ul .wpfm-main-vmenu-dashboard-li .wpfm-main-vmenu-caret {
+    margin-left: auto;
+    font-size: 11px;
+    color: var(--wpfm-gray-color) !important;
+}
+.wpfm-main-vmenu-dashboard-nav .wpfm-main-vmenu-dashboard-ul .wpfm-main-vmenu-dashboard-li .wpfm-main-vmenu-caret-down {
+    transform: rotate(270deg);
+}
+.wpfm-main-vmenu-dashboard-nav .wpfm-main-vmenu-dashboard-ul .wpfm-main-vmenu-dashboard-li.wpfm-main-vmenu-dashboard-sub-menu .wpfm-main-vmenu-dashboard-link i.wpfm-main-vmenu-caret {
+    margin-right: 0;
+    font-size: 10px;
+}
+.wpfm-main-vmenu-dashboard-nav .wpfm-main-vmenu-dashboard-ul .wpfm-main-vmenu-dashboard-li .wpfm-main-vmenu-caret-up {
+    transform: rotate(90deg);
+}
+
 /* ===== 7.1 FOOD DASHBOARD END ===== */
 
 
