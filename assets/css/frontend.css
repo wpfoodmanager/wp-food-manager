@@ -383,10 +383,11 @@
 }
 
 .wpfm-form-wrapper .wpfm-form-group .food-manager-uploaded-files .food-manager-uploaded-file {
-    margin-bottom: 20px;
     display: inline-block;
-    padding-right: 20px;
     vertical-align: top;
+    margin-bottom: 15px;
+    padding-right: 15px;
+    line-height: 0;
 }
 
 .wpfm-form-wrapper .wpfm-form-group .food-manager-uploaded-files .food-manager-uploaded-file .food-manager-uploaded-file-preview {
@@ -395,10 +396,11 @@
 }
 
 .wpfm-form-wrapper .wpfm-form-group .food-manager-uploaded-files .food-manager-uploaded-file .food-manager-uploaded-file-preview img {
-    max-height: 100px;
-    max-width: 100px;
+    width: 100px;
+    height: 80px;
     border: 2px solid var(--wpfm-gray-border-color);
     border-radius: 6px;
+    object-fit: cover;
 }
 
 .wpfm-form-wrapper .wpfm-form-group .food-manager-uploaded-files .food-manager-uploaded-file .food-manager-uploaded-file-preview .food-manager-remove-uploaded-file {

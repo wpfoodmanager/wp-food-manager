@@ -1180,10 +1180,11 @@ div#wpfm-loading {
 }
 
 .food-manager-uploaded-file-preview img {
-  max-height: 100px;
-  max-width: 100px;
+  width: 100px;
+  height: 80px;
   border: 2px solid #ccc;
   border-radius: 6px;
+  object-fit: cover;
 }
 
 .food-manager-uploaded-file-preview .food-manager-remove-uploaded-file {
