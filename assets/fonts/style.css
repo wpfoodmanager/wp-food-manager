@@ -25,7 +25,9 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-
+.wpfm-icon-food-delivery-fill:before {
+  content: "\eb18";
+}
 .wpfm-icon-broccoli:before {
   content: "\eaeb";
 }
