@@ -608,7 +608,10 @@ $food = $post;
                                             <?php do_action('single_food_listing_social_share_end'); ?>
                                         </div>
                                     </div>
-                                <?php endif; ?>
+                                <?php endif; 
+                                /* single_food_listing_right hook */
+                                    do_action('single_right_block_food_listing', get_the_ID());
+                                ?>
                             </div>
                         </div>
                     </div>

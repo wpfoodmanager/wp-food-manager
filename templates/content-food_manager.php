@@ -31,7 +31,7 @@ if (get_option('food_manager_food_item_show_hide') == 0 && get_stock_status() !=
                                     <div class="wpfm-food-type"><?php display_food_type(); ?></div>
                                 <?php } ?>
                             </div> -->
-                            <?php do_action('food_list_overview_after'); ?>
+                            <?php do_action('food_list_overview_after', get_the_ID()); ?>
                         </div>
                     </div>
                 </a>
@@ -74,7 +74,7 @@ if (get_option('food_manager_food_item_show_hide') == 0 && get_stock_status() !=
                                 <?php } ?> 
                                 
                             </div>-->
-                            <?php do_action('food_list_overview_after'); ?>
+                            <?php do_action('food_list_overview_after', get_the_ID()); ?>
                         </div>
                     </div>
                
