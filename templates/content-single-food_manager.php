@@ -559,7 +559,7 @@ $food = $post;
                                 }
                             endif; ?>
                             <!-- Additional Info Block End  -->
-                            <?php do_action('single_food_overview_after'); ?>
+                            <?php do_action('single_food_overview_after', get_the_ID()); ?>
                         </div>
                         <div class="wpfm-col-xs-12 wpfm-col-sm-5 wpfm-col-md-4 wpfm-single-food-right-content">
                             <div class="wpfm-single-food-body-sidebar">
