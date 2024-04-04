@@ -1409,6 +1409,13 @@ a.button.wpfm-add-row:hover {
     min-height: 23px;
 }
 
+.wpfm-food-pricing-box{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
 .wpfm-food-listings .wpfm-food-layout-wrapper .wpfm-food-infomation .wpfm-food-details .wpfm-food-title {
     margin-bottom: 10px;
 }
