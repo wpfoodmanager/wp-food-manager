@@ -1951,6 +1951,10 @@ class WPFM_ActionHooks {
             wp_enqueue_style('chosen', esc_url(WPFM_PLUGIN_URL . '/assets/css/chosen.min.css'));
             $ajax_filter_deps[] = 'chosen';
         }
+        
+        if(is_singular( 'food_manager_menu' )){
+            wp_enqueue_style('chosen', esc_url(WPFM_PLUGIN_URL . '/assets/css/chosen.min.css'));
+        }
 
         // File upload - vendor.
         if (apply_filters('wpfm_ajax_file_upload_enabled', true)) {
