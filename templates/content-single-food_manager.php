@@ -581,7 +581,7 @@ $food = $post;
                                         <h3 class="wpfm-heading-text"><?php _e('Food Tags', 'wp-food-manager'); ?></h3>
                                         <div class="wpfm-food-tag"><?php display_food_tag(); ?></div>
                                     <?php endif; ?>
-                                    <?php do_action('single_food_sidebar_end'); ?>
+                                    <?php do_action('single_food_sidebar_end', get_the_ID()); ?>
                                 </div>
                                 <?php
                                 $is_friend_share = apply_filters('food_manager_food_friend_share', true);
