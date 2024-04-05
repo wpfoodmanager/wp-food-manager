@@ -2660,6 +2660,9 @@ span.fm-divider {
     -webkit-box-orient: vertical;
     overflow: hidden;
 }
+.fm-food-menu-container .fm-food-menu-desc{
+    margin-bottom: 15px;
+}
 
 .wpfm-single-food-menu-page .wpfm-single-food-image img {
     max-width: 100%;
