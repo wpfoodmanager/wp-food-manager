@@ -1,5 +1,5 @@
 <?php wp_enqueue_script(esc_attr('wpfm-content-food-listing')); 
-    $title = !empty($title) ?? __('Foods', 'wp-food-manager');
+    $title = !empty($title) ? $title : '';
 ?>
 
 <?php if (esc_attr($layout_type) == 'all') : ?>
