@@ -1,11 +1,13 @@
-<?php wp_enqueue_script(esc_attr('wpfm-content-food-listing')); ?>
+<?php wp_enqueue_script(esc_attr('wpfm-content-food-listing')); 
+    $title = !empty($title) ?? __('Foods', 'wp-food-manager');
+?>
 
 <?php if (esc_attr($layout_type) == 'all') : ?>
     <div class="wpfm-main wpfm-food-listings-header">
         <div class="wpfm-row">
             <div class="wpfm-col wpfm-col-12 wpfm-col-sm-6 wpfm-col-md-6 wpfm-col-lg-8">
                 <div class="wpfm-food-listing-header-title">
-                    <h2 class="wpfm-heading-text"><?php esc_html_e($title); ?></h2>
+                    <h2 class="wpfm-heading-text"><?php esc_html_e($title, 'wp-food-manager'); ?></h2>
                 </div>
             </div>
             <div class="wpfm-col wpfm-col-12 wpfm-col-sm-6 wpfm-col-md-6 wpfm-col-lg-4">
