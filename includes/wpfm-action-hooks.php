@@ -1952,10 +1952,8 @@ class WPFM_ActionHooks {
             $ajax_filter_deps[] = 'chosen';
         }
         
-        if(is_singular( 'food_manager_menu' )){
-            wp_enqueue_style('chosen', esc_url(WPFM_PLUGIN_URL . '/assets/css/chosen.min.css'));
-        }
-
+        wp_enqueue_style('chosen', esc_url(WPFM_PLUGIN_URL . '/assets/css/chosen.min.css'));
+        
         // File upload - vendor.
         if (apply_filters('wpfm_ajax_file_upload_enabled', true)) {
             wp_register_script('jquery-iframe-transport', esc_url(WPFM_PLUGIN_URL . '/assets/js/jquery-fileupload/jquery.iframe-transport.min.js'), array('jquery'), '1.8.3', true);
