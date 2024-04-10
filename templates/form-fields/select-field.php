@@ -7,7 +7,6 @@ if (!empty($field['value']) && is_array($field['value'])) {
 } else {
 	$field_val_num = !empty($field['value']) ? $field['value'] : '';
 }
-
 if( isset( $field['post_type'] ) && !empty( $field['post_type'] ) ){
 	$food_posts_listing = get_posts (array (
 		'numberposts' => -1,   
@@ -29,10 +28,23 @@ if( isset( $field['post_type'] ) && !empty( $field['post_type'] ) ){
 	<?php
 } else { ?>
 	<select name="<?php echo esc_attr(isset($field['name']) ? $field['name'] : $key); ?>" id="<?php echo esc_attr($key); ?>" <?php if (!empty($field['required'])) echo 'required'; ?> attribute="<?php echo esc_attr(isset($field['attribute']) ? $field['attribute'] : ''); ?>">
-		<?php foreach ($field['options'] as $option_key => $option_value) :
-			$field_val = (!empty($field_val_num) && $field_val_num === $option_key) ? 'selected' : '';	?>
-			<option value="<?php echo esc_attr($option_key); ?>" <?php echo esc_attr($field_val); ?>><?php echo esc_html($option_value); ?></option>
-		<?php endforeach; ?>
+		<?php 
+		if (is_array($field['options']) || is_object($field['options'])) :
+			foreach ($field['options'] as $key => $value) : 
+				if(isset($field['value']) ){
+					if(is_array($field['value']))
+						$selected = $field['value'][0];
+					else
+						$selected = $field['value'];
+				}else{
+					if(isset($field['default']))
+						$selected = $field['default'];
+					else
+						$selected = '';
+				} ?>
+				<option value="<?php echo esc_attr($key); ?>" <?php selected($selected, $key); ?>><?php echo esc_attr($value); ?></option>
+		<?php endforeach;
+		endif; ?>
 	</select>
 <?php }
 if( !empty( $field['description'])) : ?><small class="description"><?php echo esc_html($field['description']); ?></small><?php endif; ?>
