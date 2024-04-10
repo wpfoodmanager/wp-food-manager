@@ -615,6 +615,7 @@ $food = $post;
                             </div>
                         </div>
                     </div>
+                    <?php do_action('single_food_listing_body_after'); ?>
                 </div>
                 <?php
                 /**

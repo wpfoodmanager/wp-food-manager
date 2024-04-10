@@ -2715,6 +2715,38 @@ span.fm-divider {
  
 
 
+.wpfm-single-food-page .wpfm-single-food-footer div.wpfm-listing-accordion .wpfm-icon-minus {
+    display: none;
+}
+.wpfm-single-food-page .wpfm-single-food-footer div.wpfm-listing-accordion.active .wpfm-icon-minus {
+    display: block;
+}
+.wpfm-single-food-page .wpfm-single-food-footer div.wpfm-listing-accordion.active .wpfm-icon-plus {
+    display: none;
+}
+.wpfm-single-food-page .wpfm-single-food-footer div.wpfm-listing-accordion i {
+    margin-left: auto;
+    display: block;
+    line-height: 34px;
+}
+.wpfm-single-food-page .wpfm-single-food-footer .wpfm-listing-accordion {
+    color: var(--wpfm-dark-color);
+    cursor: pointer;
+    position: relative;
+    padding: 15px 20px;
+    display: flex;
+    margin-top: -1px;
+    width: 100%;
+    border-top: 1px solid var(--wpfm-gray-border-color);
+    border-bottom: 1px solid var(--wpfm-gray-border-color);
+    text-align: left;
+    outline: 0;
+    font-size: 15px;
+    transition: 0.4s;
+}
+.wpfm-single-food-page .wpfm-single-food-footer .wpfm-listing-accordion.active{
+    background-color: var(--wpfm-gray-bg-color);
+}
 /* ===== 14. FOOD MENU END ===== */
 
 
