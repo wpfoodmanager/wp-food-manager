@@ -53,21 +53,17 @@ if (get_option('food_manager_food_item_show_hide') == 0 && get_stock_status() !=
                     <div class="wpfm-food-infomation">
                         <div class="wpfm-food-details">
                             <a href="<?php display_food_permalink(); ?>" class="wpfm-food-action-url food-style-color <?php echo esc_attr($food_type); ?>">
-                                <?php if (get_stock_status() == 'fm_outofstock') { ?>
-                                    <div class="food-stock-status">
-                                        <?php display_stock_status(); ?>
-                                    </div>
-                                <?php } ?>
                                 <div class="wpfm-food-title">
                                     <h3 class="wpfm-heading-text">
                                         <?php
                                         $out = strlen(get_the_title()) > 50 ? substr(get_the_title(), 0, 50) . "..." : get_the_title();
-                                        echo esc_html($out); ?>  <?php display_food_veg_nonveg_icon_tag(); ?></h3>
-                                        
+                                        echo esc_html($out); ?>  <?php display_food_veg_nonveg_icon_tag(); ?>
+                                    </h3>
                                 </div>
                                 <div class="wpfm-food-pricing-box">
                                 <div class="wpfm-food-price"><?php display_food_price_tag(); ?></div>
-                            </a>                                
+                            </a>     
+                                                      
                             <!--<div class="wpfm-food-type-flex-container">
                                  <?php
                                 if (get_option('food_manager_enable_food_types') && get_food_type()) {
@@ -76,8 +72,15 @@ if (get_option('food_manager_food_item_show_hide') == 0 && get_stock_status() !=
                                 <?php } ?> 
                                 
                             </div>-->
+                           
                             <?php do_action('food_list_overview_after', get_the_ID()); ?>
+                            
                         </div>
+                        <?php if (get_stock_status() == 'fm_outofstock') { ?>
+                                    <div class="food-stock-status">
+                                        <?php display_stock_status(); ?>
+                                    </div>
+                                <?php } ?> 
                         </div>
                     </div>
                
