@@ -2634,6 +2634,11 @@ span.fm-divider {
     margin-top: 5px;
     display: flex;
     align-items: center;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    color: var(--wpfm-primary-color);
+    font-size: 18px;
 }
 
 .fm-food-menu-container .food-list-box .fm-food-menu-pricing ins {
