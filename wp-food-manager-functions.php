@@ -1818,7 +1818,7 @@ endif;
  * @since 1.0.0
  */
 function food_manager_user_can_upload_file_via_ajax() {
-	$can_upload = is_user_logged_in() && wpfm_user_can_post_food();
+	$can_upload = wpfm_user_can_post_food();
 
 	// Override ability of a user to upload a file via Ajax.
 	return apply_filters('food_manager_user_can_upload_file_via_ajax', esc_attr($can_upload));
