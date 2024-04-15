@@ -2196,7 +2196,7 @@ function wpfm_term_menu_lists(){
 	$query_args = [
 		'author__in'    =>  $authors, 
 		'post_type' => 'food_manager_menu',
-		'post_per_page' => '1',
+		'posts_per_page' => '-1',
 		'order'         =>  'ASC' 
 	];
 

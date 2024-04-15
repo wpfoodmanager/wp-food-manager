@@ -106,9 +106,10 @@ class WPFM_Field_Editor {
 
 		$GLOBALS['food_manager']->forms->get_form('add-food', array());
 		$form_add_food_instance = call_user_func(array('WPFM_Add_Food_Form', 'instance'));
-		$food_fields               = $form_add_food_instance->merge_with_custom_fields('backend');
+		$food_fields = $form_add_food_instance->merge_with_custom_fields('backend');
 		$fields = array_merge($food_fields);
 		$add_food_form_fields = get_option('food_manager_add_food_form_fields');
+		$add_toppings_form_fields = get_option('food_manager_submit_toppings_form_fields');
 
 		foreach ($fields  as $group_key => $group_fields) {
 			if (empty($group_fields)) {
@@ -166,6 +167,18 @@ class WPFM_Field_Editor {
 						if ($group_key == 'food') {
 							if ($add_food_form_fields) {
 								if (trim($field['label']) != '' && isset($add_food_form_fields['food'][$field_key])) {
+									$index++;
+									include 'wpfm-field-editor-form-field.php';
+								}
+							} else {
+								if (trim($field['label']) != '') {
+									$index++;
+									include 'wpfm-field-editor-form-field.php';
+								}
+							}
+						}  elseif($group_key == 'toppings'){
+							if ($add_toppings_form_fields) {
+								if (trim($field['label']) != '' && isset($add_toppings_form_fields['toppings'][$field_key])) {
 									$index++;
 									include 'wpfm-field-editor-form-field.php';
 								}
