@@ -51,7 +51,7 @@ class WPFM_FilterHooks {
 
         // wpfm functions.
         add_filter('upload_dir', array($this, 'upload_dir'));
-        add_filter('wp_terms_checklist_args', 'wpfm_term_radio_checklist_for_food_type');
+        add_filter('wp_terms_checklist_args', 'wpfm_term_radio_checklist_for_food_type', 10, 2);
         add_filter('manage_edit-food_manager_type_columns', array($this, 'display_custom_taxonomy_image_column_heading_for_food_type'));
         add_filter('manage_edit-food_manager_category_columns', array($this, 'display_custom_taxonomy_image_column_heading_for_food_category'));
 
@@ -59,6 +59,9 @@ class WPFM_FilterHooks {
         add_filter('pre_option_wpfm_enable_categories', '__return_true');
         add_filter('pre_option_wpfm_enable_food_types', '__return_true');
         add_filter('plugin_action_links_' . plugin_basename(__FILE__), array($this, 'add_plugin_page_food_manager_settings_link'));
+        
+        add_filter('wpfm_term_radio_checklist_taxonomy', array($this, 'wpfm_food_manager_taxonomy'), 10, 2);
+        
     }
 
     /**
@@ -332,6 +335,21 @@ class WPFM_FilterHooks {
 
         return $columns;
     }
+    
+    /**
+     * Customizes the taxonomy used in wpfm_term_radio_checklist_for_taxonomy function.
+     *
+     * @param string $taxonomy The taxonomy name.
+     * @param array  $args An array of arguments for the function.
+     * @return string The modified taxonomy name.
+     */
+    public function wpfm_food_manager_taxonomy($taxonomy, $args) {
+        if(get_post_type($args) == 'food_manager'){
+            $taxonomy = 'food_manager_type';
+        }
+        return $taxonomy;
+    }
+
 }
 
 WPFM_FilterHooks::instance();

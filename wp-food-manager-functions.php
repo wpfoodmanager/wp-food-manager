@@ -2044,32 +2044,14 @@ function wpfm_extra_topping_form_fields($post, $field, $field_value) {
  * @return array
  * @since 1.0.0
  */
-function wpfm_term_radio_checklist_for_food_type($args) {
+function wpfm_term_radio_checklist_for_food_type($args, $taxonomy) {
+	$taxonomy = apply_filters('wpfm_term_radio_checklist_taxonomy', $args, $taxonomy);
 	/* Change to your required taxonomy */
-	if (!empty($args['taxonomy']) && $args['taxonomy'] === 'food_manager_type') {
-
+	if (!empty($args['taxonomy']) && $args['taxonomy'] === $taxonomy || is_array($taxonomy) && in_array($args['taxonomy'], $taxonomy)) {
 		// Don't override 3rd party walkers.
 		if (empty($args['walker']) || is_a($args['walker'], 'Walker')) {
-			if (!class_exists('WPFM_Walker_Category_Radio_Checklist_For_Food_Type')) {
-
-				/**
-				 * Custom walker for switching checkbox inputs to radio.
-				 *
-				 * @see Walker_Category_Checklist
-				 */
-				class WPFM_Walker_Category_Radio_Checklist_For_Food_Type extends Walker_Category_Checklist {
-					function walk($elements, $max_depth, ...$args) {
-						$output = parent::walk($elements, $max_depth, ...$args);
-						$output = str_replace(
-							array('type="checkbox"', "type='checkbox'"),
-							array('type="radio"', "type='radio'"),
-							$output
-						);
-						return $output;
-					}
-				}
-			}
-			$args['walker'] = new WPFM_Walker_Category_Radio_Checklist_For_Food_Type;
+			require_once 'includes/wpfm-taxonomy-radio-checklist.php';
+			$args['walker'] = new WPFM_Taxonomy_Radio_Checklist;
 		}
 	}
 
