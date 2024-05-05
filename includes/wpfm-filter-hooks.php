@@ -354,8 +354,7 @@ class WPFM_FilterHooks {
     /**
      * Customizes the post type used in wpfm_term_radio_checklist_for_posttype function.
      *
-     * @param string $taxonomy The taxonomy name.
-     * @param array  $args An array of arguments for the function.
+     * @param string $post_type The post type name.
      * @return string The modified taxonomy name.
      */
     public function wpfm_food_manager_post_type($post_type){
