@@ -2046,12 +2046,15 @@ function wpfm_extra_topping_form_fields($post, $field, $field_value) {
  */
 function wpfm_term_radio_checklist_for_food_type($args, $taxonomy) {
 	$taxonomy = apply_filters('wpfm_term_radio_checklist_taxonomy', $args, $taxonomy);
+	$post_type = apply_filters('wpfm_term_radio_checklist_post_type', '');
 	/* Change to your required taxonomy */
-	if (!empty($args['taxonomy']) && $args['taxonomy'] === $taxonomy || is_array($taxonomy) && in_array($args['taxonomy'], $taxonomy)) {
-		// Don't override 3rd party walkers.
-		if (empty($args['walker']) || is_a($args['walker'], 'Walker')) {
-			require_once 'includes/wpfm-taxonomy-radio-checklist.php';
-			$args['walker'] = new WPFM_Taxonomy_Radio_Checklist;
+	if (get_post_type() == $post_type) {
+		if (!empty($args['taxonomy']) && $args['taxonomy'] === $taxonomy || is_array($taxonomy) && in_array($args['taxonomy'], $taxonomy)) {
+			// Don't override 3rd party walkers.
+			if (empty($args['walker']) || is_a($args['walker'], 'Walker')) {
+				require_once 'includes/wpfm-taxonomy-radio-checklist.php';
+				$args['walker'] = new WPFM_Taxonomy_Radio_Checklist;
+			}
 		}
 	}
 

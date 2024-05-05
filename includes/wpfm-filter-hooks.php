@@ -61,6 +61,7 @@ class WPFM_FilterHooks {
         add_filter('plugin_action_links_' . plugin_basename(__FILE__), array($this, 'add_plugin_page_food_manager_settings_link'));
         
         add_filter('wpfm_term_radio_checklist_taxonomy', array($this, 'wpfm_food_manager_taxonomy'), 10, 2);
+        add_filter('wpfm_term_radio_checklist_post_type', array($this, 'wpfm_food_manager_post_type'));
         
     }
 
@@ -348,6 +349,21 @@ class WPFM_FilterHooks {
             $taxonomy = 'food_manager_type';
         }
         return $taxonomy;
+    }
+    
+    /**
+     * Customizes the post type used in wpfm_term_radio_checklist_for_posttype function.
+     *
+     * @param string $taxonomy The taxonomy name.
+     * @param array  $args An array of arguments for the function.
+     * @return string The modified taxonomy name.
+     */
+    public function wpfm_food_manager_post_type($post_type){
+        if(get_post_type() == 'food_manager'){
+            $post_type = 'food_manager';
+        }
+        return $post_type;
+    
     }
 
 }
