@@ -90,11 +90,14 @@ class WP_Food_Manager {
 
 		if (is_admin()) {
 			include('admin/wpfm-admin.php');
+		} else{
+			// Actions and Filters Hooks
+			include('includes/wpfm-action-hooks.php');
+			include('includes/wpfm-filter-hooks.php');
 		}
 
-		// Actions and Filters Hooks
-		include('includes/wpfm-action-hooks.php');
-		include('includes/wpfm-filter-hooks.php');
+		include('wp-food-manager-functions.php');
+        include('wp-food-manager-template.php');
 
 		// Init classes
 		$this->forms      = WPFM_Forms::instance();
@@ -112,7 +115,7 @@ class WP_Food_Manager {
 		add_filter('wpfm_the_content', 'wpautop');
 		add_filter('wpfm_the_content', 'shortcode_unautop');
 		add_filter('wpfm_the_content', 'do_shortcode');
-
+		add_action('after_setup_theme', array($this, 'load_plugin_textdomain'));
 		// Schedule cron foods
 		self::check_schedule_crons();
 	}
@@ -159,6 +162,21 @@ class WP_Food_Manager {
 			wp_schedule_event(time(), 'twicedaily', 'food_manager_clear_expired_transients');
 		}
 	}
+	
+	/**
+     * Localise the plugin text domain ('wp-food-manager').
+     *
+     * @access public
+     * @return void
+     * @since 1.0.0
+     */
+    public function load_plugin_textdomain() {
+        $domain = 'wp-food-manager';
+        $locale = apply_filters('plugin_locale', get_locale(), $domain);
+        load_textdomain($domain, WP_LANG_DIR . "/wp-food-manager/" . $domain . "-" . $locale . ".mo");
+        load_plugin_textdomain($domain, false, dirname(plugin_basename(__FILE__)) . '/languages/');
+    }
+
 }
 
 $GLOBALS['food_manager'] =  WP_Food_Manager::instance();

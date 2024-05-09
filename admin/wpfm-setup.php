@@ -80,8 +80,8 @@ class WPFM_Setup {
 	 * @since 1.0.0
 	 */
 	public function output() {
+		wp_enqueue_script('food_manager_setup_css');
 		$step = !empty($_GET['step']) ? absint($_GET['step']) : 1;
-
 		if (isset($_GET['skip-food-manager-setup']) === 1) {
 			update_option('food_manager_installation', 0);
 			update_option('food_manager_installation_skip', 1);

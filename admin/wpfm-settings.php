@@ -13,6 +13,13 @@ if (!defined('ABSPATH')) exit;
 class WPFM_Settings {
 
 	/**
+     * Init settings_page.
+     *
+     * @since 1.0.1
+     */
+    public $settings_page;
+
+	/**
 	 * The single instance of the class.
 	 *
 	 * @var self
@@ -56,8 +63,28 @@ class WPFM_Settings {
 	 */
 	public function __construct() {
 		$this->settings_group = 'food_manager';
+        add_action('admin_init', array($this, 'register_settings'));
+		
 	}
 
+	/**
+     * Register the settings by loading the Class WPFM_Settings.
+     *
+     * @access public
+     * @return void
+     * @since 1.0.0
+     */
+    public function register_settings() {
+        $this->init_settings();
+        foreach ($this->settings as $section) {
+            foreach ($section[1] as $option) {
+                if (isset($option['std']))
+                    add_option(esc_attr($option['name']), $option['std']);
+                register_setting($this->settings_group, esc_attr($option['name']));
+            }
+        }
+    }
+    
 	/**
 	 * Set the init settings for the backend.
 	 *
@@ -342,7 +369,8 @@ class WPFM_Settings {
 	 * @since 1.0.0
 	 */
 	public function output() {
-		$this->init_settings(); ?>
+		$this->init_settings(); 
+		wp_enqueue_script('wp-food-manager-admin-settings');?>
 		<div class="wrap food-manager-settings-wrap">
 			<h1 class="wp-heading-inline">
 				<?php esc_attr_e('Settings', 'wp-food-manager'); ?>
