@@ -88,7 +88,6 @@ class WPFM_Admin {
         add_action('admin_init', array($this, 'redirect'));
         add_action('admin_notices', array($this, 'display_notice'));
         add_action('wp_ajax_wpfm-logo-update-menu-order', array($this, 'menuUpdateOrder'));
-        add_action('init', array($this->post_types, 'register_post_types'), 0);
         if (get_option('food_manager_enable_categories')) {
             add_action('restrict_manage_posts', array($this, 'foods_by_category'));
         }

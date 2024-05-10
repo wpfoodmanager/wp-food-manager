@@ -76,6 +76,7 @@ class WPFM_ActionHooks {
 
         // wpfm custom post-types.
         add_action('wp_footer', array($this, 'output_structured_data'));
+        add_action('init', array($this->post_types, 'register_post_types'), 0);
 
         // View count action.
         add_action('set_single_listing_view_count', array($this, 'set_single_listing_view_count'));
