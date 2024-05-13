@@ -15,7 +15,7 @@ class WPFM_Custom_Taxonomies{
 		 * Taxonomies
 		 */
 		$permalink_structure = WPFM_Post_Types::get_permalink_structure();
-		$admin_capability = 'manage_food_manager';
+		$admin_capability = 'manage_food_managers';
 
 		if (get_option('food_manager_enable_categories', true)) {
 			$singular = esc_html__('Food Category', 'wp-food-manager');

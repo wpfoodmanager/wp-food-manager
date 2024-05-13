@@ -813,7 +813,7 @@ class WPFM_Admin {
 
         $output = "<select name='food_manager_category' id='dropdown_food_manager_category'>";
         $output .= '<option value="" ' . selected(isset($_GET['food_manager_category']) ? $_GET['food_manager_category'] : '', '', false) . '>' . esc_html(__('Select Food Category', 'wp-food-manager')) . '</option>';
-        $output .= $walker->walk($terms, 0, $r);
+        $output .= $walker->walk($terms, 0, $food_dropdown);
         $output .= '</select>';
         printf('%s', $output);
     }
