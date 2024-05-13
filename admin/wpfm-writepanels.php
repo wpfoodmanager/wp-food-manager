@@ -346,6 +346,7 @@ class WPFM_Writepanels {
         if ('add' != $screen->action) {
             // Show food menu Shortcode on edit menu page - admin.
             add_meta_box('wpfm_menu_shortcode', 'Shortcode', array($this, 'food_menu_shortcode'), 'food_manager_menu', 'side', 'low');
+            add_meta_box('wpfm_menu_disable_redirection', 'Disable Food Redirection', array($this, 'food_menu_disable_food_redirection'), 'food_manager_menu', 'side', 'low');
         }
     }
     
@@ -362,8 +363,34 @@ class WPFM_Writepanels {
         echo '<input type="text" value="[food_menu id=' . esc_attr($menu_id) . ']" readonly>';
     }
     
-        /**
-     * Save the food data from backend and frontend both side is handle by this function.
+    /**
+     * This function is responsible for disabling any redirection related to the food.
+     * 
+     * @access public
+     * @return void
+     * @since 1.0.2
+     */
+    public function food_menu_disable_food_redirection() {
+        global $post;
+        $thepostid = $post->ID;
+        $key = 'wpfm_disable_food_redirect';
+        $field = array(
+            'name' => 'wpfm_disable_food_redirect',
+            'label' => __('Food Redirection Enable/Disable', 'wp-food-manager'),
+            'type' => 'radio',
+            'desc' => '',
+            'std' => 'no',
+            'options' => array(
+                'no' => 'No',
+                'yes' => 'Yes'
+            ),
+            'value' => get_post_meta($thepostid, '_wpfm_disable_food_redirect', true),
+        );
+        get_food_manager_template('form-fields/' . $field['type'] . '-field.php', array('key' => esc_attr($key), 'field' => $field));
+    }
+    
+    /**
+     * Save the food data from backend side is handle by this function.
      *
      * @access public
      * @param mixed $post_id
@@ -842,7 +869,6 @@ class WPFM_Writepanels {
     public function wpfm_save_food_menu_data($post_id, $post){
         if (isset($_POST['radio_icons']) && !empty($_POST['radio_icons'])) {
             $wpfm_radio_icon = esc_attr($_POST['radio_icons']);
-
             if (isset($wpfm_radio_icon)) {
                 if (!add_post_meta($post_id, 'wpfm_radio_icons', $wpfm_radio_icon, true)) {
                     update_post_meta($post_id, 'wpfm_radio_icons', $wpfm_radio_icon);
@@ -855,6 +881,13 @@ class WPFM_Writepanels {
             update_post_meta($post_id, '_food_item_ids', $item_ids);
         } else {
             update_post_meta($post_id, '_food_item_ids', '');
+        }
+        
+        if (isset($_POST['wpfm_disable_food_redirect'])) {
+            $disable_option = esc_attr($_POST['wpfm_disable_food_redirect']);
+            update_post_meta($post_id, '_wpfm_disable_food_redirect', $disable_option);
+        } else {
+            update_post_meta($post_id, '_wpfm_disable_food_redirect', '');
         }
     }
     
