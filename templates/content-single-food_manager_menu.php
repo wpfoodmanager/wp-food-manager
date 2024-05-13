@@ -2,6 +2,7 @@
 global $post;
 //echo $post->ID;
 $featured_img_url = get_the_post_thumbnail_url(get_the_ID(), 'full');
+$thumbnail_option = get_option('food_manager_menu_thumbnail');
 if (isset($featured_img_url) && empty($featured_img_url)) {
     $featured_img_url = '';
 } else {
@@ -52,7 +53,7 @@ if ( 'food_manager_menu' == get_post_type() ) {
         </h3>
     <?php }
     if (!empty($featured_img_url)) {
-        echo "<div class='wpfm-single-food-menu-category-banner'>";
+        echo "<div class='wpfm-single-food-menu-category-banner ". esc_attr($thumbnail_option) .">";
         echo "<div class='wpfm-single-food-menu-category-title'>" . esc_html($term_name) . "</div>";
         echo "<img src='" . esc_url($featured_img_url) . "' alt='" . esc_attr($term_name) . "'>";
         echo "</div>";

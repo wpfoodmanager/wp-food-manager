@@ -215,6 +215,18 @@ class WPFM_Settings {
 							'type'       => 'checkbox',
 							'attributes' => array(),
 						),
+						array(
+							'name'    => 'food_manager_menu_thumbnail',
+							'std'     => 'right',
+							'label'   => __('Food Menu Thumbnail', 'wp-food-manager'),
+							'desc'    => __('If you select any option, it will reflect the thumbnail placement on food manager menu.', 'wp-food-manager'),
+							'type'    => 'radio',
+							'options' => array(
+								'left_side_thumbnail' => __('Left Side Thumbnail.', 'wp-food-manager'),
+								'right_side_thumbnail' => __('Right Side Thumbnail.', 'wp-food-manager'),
+								'thumbnail_disabled' => __('Disabled Thumbnail.', 'wp-food-manager')
+							),
+						),
 					),
 				),
 				'food_submission'     => array(
@@ -440,11 +452,12 @@ class WPFM_Settings {
 												<span><?php echo esc_html($option['label']); ?></span>
 											</legend>
 											<?php
+											foreach ($option['options'] as $key => $name){
+												echo '<label><input name="' . esc_attr($option['name']) . '" type="radio" value="' . esc_attr($key) . '" ' . checked($value, $key, false) . ' />' . esc_html($name) . '</label><br>'; 
+											}
 											if ($option['desc']) {
 												echo wp_kses_post('<p class="description">' . $option['desc'] . '</p>');
-											}
-											foreach ($option['options'] as $key => $name)
-												echo '<label><input name="' . esc_attr($option['name']) . '" type="radio" value="' . esc_attr($key) . '" ' . checked($value, $key, false) . ' />' . esc_html($name) . '</label><br>'; ?>
+											} ?>
 										</fieldset>
 									<?php
 										break;
