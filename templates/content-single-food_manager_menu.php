@@ -53,7 +53,7 @@ if ( 'food_manager_menu' == get_post_type() ) {
         </h3>
     <?php }
     if (!empty($featured_img_url)) {
-        echo "<div class='wpfm-single-food-menu-category-banner ". esc_attr($thumbnail_option) .">";
+        echo "<div class='wpfm-single-food-menu-category-banner ". esc_attr($thumbnail_option) ."'>";
         echo "<div class='wpfm-single-food-menu-category-title'>" . esc_html($term_name) . "</div>";
         echo "<img src='" . esc_url($featured_img_url) . "' alt='" . esc_attr($term_name) . "'>";
         echo "</div>";
@@ -71,7 +71,7 @@ if ( 'food_manager_menu' == get_post_type() ) {
         $food_redirect_option = get_post_meta($post->ID, '_wpfm_disable_food_redirect', true);
     } elseif(isset($menu_id) && !empty($menu_id) ){
         $food_menu_ids = get_post_meta($menu_id, '_food_item_ids', true);
-        $food_redirect_option = get_post_meta($menu_id->ID, '_wpfm_disable_food_redirect', true);
+        $food_redirect_option = get_post_meta($menu_id, '_wpfm_disable_food_redirect', true);
     }
    
     if (!empty($food_menu_ids)) {
