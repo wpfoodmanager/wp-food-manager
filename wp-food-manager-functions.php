@@ -480,7 +480,7 @@ function food_manager_dropdown_selection($args = '') {
 
 	$name       = esc_attr($name);
 	$class      = esc_attr($class);
-	$id = $r['id'] ? $r['id'] : $r['name'];
+	$id = $food_dropdown['id'] ? $food_dropdown['id'] : $food_dropdown['name'];
 	$args['name_attr'] = isset($args['name_attr']) ? $args['name_attr'] : true;
 	$data_taxonomy = '';
 
@@ -515,11 +515,11 @@ function food_manager_dropdown_selection($args = '') {
 		include_once(WPFM_PLUGIN_DIR . '/includes/wpfm-category-walker.php');
 		$walker = WPFM_Category_Walker::instance();
 		if ($hierarchical) {
-			$depth = $r['depth'];  // Walk the full depth.
+			$depth = $food_dropdown['depth'];  // Walk the full depth.
 		} else {
 			$depth = -1; // Flat.
 		}
-		$output .= $walker->walk($categories, $depth, $r);
+		$output .= $walker->walk($categories, $depth, $food_dropdown);
 	}
 
 	$output .= "</select>\n";

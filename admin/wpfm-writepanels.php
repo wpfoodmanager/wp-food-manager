@@ -537,7 +537,7 @@ class WPFM_Writepanels {
                 // Set Nutrition.
                 if ($key = 'food_nutritions') {
                     $taxonomy = 'food_manager_nutrition';
-                    $$multi_array_nutrition = array();
+                    $multi_array_nutrition = array();
 
                     if (isset($_POST[$key]) && !empty($_POST[$key])) {
                         foreach ($_POST[$key] as $id => $nutrition) {
@@ -557,13 +557,13 @@ class WPFM_Writepanels {
                                 'unit_term_name' => $unit_name
                             ];
 
-                            $$multi_array_nutrition[$id] = $item;
+                            $multi_array_nutrition[$id] = $item;
                             $nutrition_ids[] = $id;
                             if (trim($nutrition['unit_id'])) {
                                 $unit_ids[] = (int)$nutrition['unit_id'];
                             }
                         }
-                        update_post_meta($post_id, '_' . esc_attr($key), $$multi_array_nutrition);
+                        update_post_meta($post_id, '_' . esc_attr($key), $multi_array_nutrition);
                     } else {
                         update_post_meta($post_id, '_' . esc_attr($key), array());
                     }

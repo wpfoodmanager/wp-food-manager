@@ -1,4 +1,5 @@
 <?php
+wp_enqueue_script('wpfm-ajax-file-upload');
 if (is_numeric($value)) {
 	$image_src = wp_get_attachment_image_src(absint($value));
 	$image_src = $image_src ? $image_src[0] : '';

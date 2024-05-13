@@ -1,4 +1,5 @@
 <?php
+wp_enqueue_script('wpfm-ajax-file-upload');
 if (is_admin()) {
 	global $thepostid;
 	if (!isset($field['value'])) {
@@ -50,7 +51,6 @@ if (is_admin()) {
 	$field_name         = esc_attr(sanitize_title(isset($field['name']) ? $field['name'] : $key));
 	$field_name         .= !empty($field['multiple']) ? '[]' : '';
 	if (!empty($field['ajax']) && food_manager_user_can_upload_file_via_ajax()) {
-		wp_enqueue_script('wpfm-ajax-file-upload');
 		$classes[] = 'wp-food-manager-file-upload';
 	}
 	$field_val_num = '';

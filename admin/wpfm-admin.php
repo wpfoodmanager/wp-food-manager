@@ -555,7 +555,7 @@ class WPFM_Admin {
         if (apply_filters('wpfm_ajax_file_upload_enabled', true)) {
             wp_register_script('jquery-iframe-transport', esc_url(WPFM_PLUGIN_URL) . '/assets/js/jquery-fileupload/jquery.iframe-transport.min.js', array('jquery'), '1.8.3', true);
             wp_register_script('jquery-fileupload', esc_url(WPFM_PLUGIN_URL) . '/assets/js/jquery-fileupload/jquery.fileupload.min.js', array('jquery', 'jquery-iframe-transport', 'jquery-ui-widget'), '5.42.3', true);
-            wp_register_script('wpfm-ajax-file-upload', esc_url(WPFM_PLUGIN_URL) . '/assets/js/ajax-file-upload.min.js', array('jquery', 'jquery-fileupload'), WPFM_VERSION, true);
+            wp_register_script('wpfm-ajax-file-upload', esc_url(WPFM_PLUGIN_URL) . '/assets/js/ajax-file-upload.js', array('jquery', 'jquery-fileupload'), WPFM_VERSION, true);
 
             ob_start();
             get_food_manager_template('form-fields/uploaded-file-html.php', array('name' => '', 'value' => '', 'extension' => 'jpg'));
@@ -585,7 +585,6 @@ class WPFM_Admin {
             )
         );
         wp_register_style('food_manager_setup_css', esc_url(WPFM_PLUGIN_URL) . '/assets/css/setup.min.css', array('dashicons'));
-
         wp_register_script('wpfm-term-autocomplete', esc_url(WPFM_PLUGIN_URL) . '/assets/js/term-autocomplete.min.js', array('jquery', 'jquery-ui-autocomplete'), WPFM_VERSION, true);
         wp_localize_script(
             'wpfm-term-autocomplete',
