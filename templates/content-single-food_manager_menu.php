@@ -89,6 +89,7 @@ if ( 'food_manager_menu' == get_post_type() ) {
             $menu_food_desc = '';
             $sale_price = get_post_meta($food_listing->ID, '_food_sale_price', true);
             $regular_price = get_post_meta($food_listing->ID, '_food_price', true);
+            $food_label = get_post_meta($food_listing->ID, '_food_label', true);
             $formatted_sale_price = ''; // Initialize the variable
             $formatted_regular_price = ''; // Initialize the variable
             if( $food_redirect_option == 'yes'){
@@ -120,6 +121,7 @@ if ( 'food_manager_menu' == get_post_type() ) {
             echo "</div>";
             echo "</a>";
             echo $menu_food_desc;
+            echo $food_label;
             do_action('food_menu_list_overview_after', $food_listing->ID);
             echo "</div>";
         }

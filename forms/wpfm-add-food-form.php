@@ -270,6 +270,14 @@ class WPFM_Add_Food_Form extends WPFM_Form {
 					'priority'    => 13,
 					'tabgroup' => 5,
 				),
+				'food_label' => array(
+					'label'       => __('Food Label', 'wp-food-manager'),
+					'type'        => 'text',
+					'required'    => false,
+					'placeholder' => 'Food label',
+					'priority'    => 14,
+					'tabgroup'    => 1,
+				),
 			),
 			'toppings' => array(
 				'topping_name' => array(
