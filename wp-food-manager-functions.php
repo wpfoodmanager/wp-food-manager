@@ -146,8 +146,8 @@ if (!function_exists('get_food_listings')) :
 		}
 
 		//Sets the Polylang LANG arg to the current language.
-		if (function_exists('pll_current_language')) {
-			$query_args['lang'] = pll_current_language();
+		if(function_exists('pll_current_language') && !empty($args['lang'])) {
+			$query_args['lang'] = $args['lang'];
 		}
 
 		/* This filter is documented in wp-food-manager.php */
@@ -195,7 +195,7 @@ if (!function_exists('get_food_listings')) :
 				}
 			}
 		} else {
-			$result = new WP_Query($query_args);
+			$result = new WP_Query(apply_filters('get_food_listings_query_args',$query_args));
 		}
 
 		// Generate hash
@@ -460,21 +460,21 @@ function food_manager_dropdown_selection($args = '') {
 		'multiple_text'   => __('Select Some Options', 'wp-food-manager')
 	);
 
-	$r = wp_parse_args($args, $defaults);
-	if (!isset($r['pad_counts']) && $r['show_count'] && $r['hierarchical']) {
-		$r['pad_counts'] = true;
+	$food_dropdown = wp_parse_args($args, $defaults);
+	if (!isset($food_dropdown['pad_counts']) && $food_dropdown['show_count'] && $food_dropdown['hierarchical']) {
+		$food_dropdown['pad_counts'] = true;
 	}
-	extract($r);
+	extract($food_dropdown);
 
 	// Store in a transient to help sites with many cats.
 	if (empty($categories)) {
 		$categories = get_terms($taxonomy, array(
-			'orderby'         => $r['orderby'],
-			'order'           => $r['order'],
-			'hide_empty'      => $r['hide_empty'],
-			'child_of'        => $r['child_of'],
-			'exclude'         => $r['exclude'],
-			'hierarchical'    => $r['hierarchical']
+			'orderby'         => $food_dropdown['orderby'],
+			'order'           => $food_dropdown['order'],
+			'hide_empty'      => $food_dropdown['hide_empty'],
+			'child_of'        => $food_dropdown['child_of'],
+			'exclude'         => $food_dropdown['exclude'],
+			'hierarchical'    => $food_dropdown['hierarchical']
 		));
 	}
 
@@ -1740,19 +1740,19 @@ function wpfm_get_font_food_icons() {
 }
 
 /**
- * This wpfm_begnWith() Checks if given string ($str) is begin with the second parameter ($begnString) of function.
+ * This wpfm_begnWith() Checks if given string ($str) is begin with the second parameter ($begin_string) of function.
  *
  * @param string $str
- * @param string $begnString
+ * @param string $begin_string
  * @return bool
  * @since 1.0.1
  */
-function wpfm_begnWith($str, $begnString) {
-	$len = strlen($begnString);
+function wpfm_begnWith($str, $begin_string) {
+	$len = strlen($begin_string);
 	if (is_array($str)) {
 		$str = '';
 	}
-	return (substr($str, 0, $len) === $begnString);
+	return (substr($str, 0, $len) === $begin_string);
 }
 
 if (!function_exists('get_food_listings_keyword_search')) :
@@ -1836,205 +1836,7 @@ function food_manager_user_can_upload_file_via_ajax() {
 function wpfm_extra_topping_form_fields($post, $field, $field_value) {
 	$date_format = !empty(get_option('date_format')) ? get_option('date_format') : 'F j, Y';
 	$time_format = !empty(get_option('time_format')) ? get_option('time_format') : 'g:i a';
-
-	if ($field['type'] == 'url') {
-		echo '<div class="wpfm-col-12 wpfm-additional-info-block-textarea">';
-		echo '<div class="wpfm-additional-info-block-details-content-items">';
-		echo '<p class="wpfm-additional-info-block-textarea-text">';
-		if (isset($field_value) && !empty($field_value) && wpfm_begnWith($field_value, "http")) {
-			echo '<a target="_blank" href="' . esc_url($field_value) . '">' . sanitize_title($field['label']) . '</a>';
-		} else {
-			printf(__('%s', 'wp-food-manager'), sanitize_title($field['label']));
-		}
-		echo '</p>';
-		echo '</div>';
-		echo '</div>';
-	} elseif ($field['type'] == 'text') {
-		if (is_array($field_value)) {
-			$field_value = '';
-		}
-		echo '<div class="wpfm-col-12 wpfm-additional-info-block-textarea">';
-		echo '<div class="wpfm-additional-info-block-details-content-items">';
-		echo '<p class="wpfm-additional-info-block-title"><strong>' . esc_attr($field['label']) . ' -</strong> ' . esc_attr($field_value) . '</p>';
-		echo '</div>';
-		echo '</div>';
-	} elseif ($field['type'] == 'textarea' || $field['type'] == 'wp-editor') {
-		if (wpfm_begnWith($field_value, "http") || is_array($field_value)) {
-			$field_value = '';
-		}
-		echo '<div class="wpfm-col-12 wpfm-additional-info-block-textarea">';
-		echo '<div class="wpfm-additional-info-block-details-content-items">';
-		echo '<p class="wpfm-additional-info-block-title"><strong>' . esc_html(sanitize_title($field['label'])) . '</strong></p>';
-		echo '<p class="wpfm-additional-info-block-textarea-text">' . esc_html(sanitize_title($field_value)) . '</p>';
-		echo '</div>';
-		echo '</div>';
-	} elseif ($field['type'] == 'multiselect') {
-		echo '<div class="wpfm-col-md-6 wpfm-col-sm-12 wpfm-additional-info-block-details-content-left">';
-		echo '<div class="wpfm-additional-info-block-details-content-items">';
-		$my_value_arr = [];
-		if (is_array($field_value)) {
-			foreach ($field_value as $key => $my_value) {
-				if (in_array(ucfirst($my_value), $field['options'])) {
-					$my_value_arr[] = esc_attr($field['options'][$my_value]);
-				} else {
-					$my_value_arr[] = '';
-				}
-			}
-		}
-		echo '<p class="wpfm-additional-info-block-title"><strong>' . esc_html(sanitize_title($field['label'])) . ' -</strong> ' . implode(', ', $my_value_arr) . '</p>';
-		echo '</div>';
-		echo '</div>';
-	} elseif (isset($field['type']) && $field['type'] == 'date') {
-		if (is_array($field_value)) {
-			$field_value = esc_attr($field_value['0']);
-		}
-		echo '<div class="wpfm-col-md-6 wpfm-col-sm-12 wpfm-additional-info-block-details-content-left">';
-		echo '<div class="wpfm-additional-info-block-details-content-items">';
-		echo '<p class="wpfm-additional-info-block-title"><strong>' . esc_attr(sanitize_title($field['label'])) . ' - </strong> ' . date_i18n(esc_attr($date_format), absint(strtotime($field_value))) . '</p>';
-		echo '</div>';
-		echo '</div>';
-	} elseif (isset($field['type']) && $field['type'] == 'time') {
-		echo '<div class="wpfm-col-md-6 wpfm-col-sm-12 wpfm-additional-info-block-details-content-left">';
-		echo '<div class="wpfm-additional-info-block-details-content-items">';
-		echo '<p class="wpfm-additional-info-block-title"><strong>' . printf(__('%s', 'wp-food-manager'), esc_attr(sanitize_title($field['label']))) . ' - </strong> ' . date(esc_attr($time_format), absint(strtotime($field_value))) . '</p>';
-		echo '</div>';
-		echo '</div>';
-	} elseif ($field['type'] == 'file') {
-		echo '<div class="wpfm-col-md-12 wpfm-col-sm-12 wpfm-additional-info-block-details-content-left" style="margin-bottom: 20px;">';
-		echo '<div class="wpfm-additional-info-block-details-content-items wpfm-additional-file-slider">';
-		echo '<p class="wpfm-additional-info-block-title"><strong>' . esc_attr(sanitize_title($field['label'])) . ' - </strong></p>';
-		if (is_array($field_value)) :
-			echo '<div class="wpfm-img-multi-container">';
-			foreach ($field_value as $file) :
-				if (in_array(pathinfo($file, PATHINFO_EXTENSION), ['png', 'jpg', 'jpeg', 'gif', 'svg'])) :
-					echo '<div class="wpfm-img-multiple"><img src="' . esc_attr($file) . '"></div>';
-				else :
-					if (!empty($file)) {
-						echo '<div><div class="wpfm-icon">';
-						echo '<p class="wpfm-additional-info-block-title"><strong>' . esc_attr(wp_basename($file)) . '</strong></p>';
-						echo '<a target="_blank" href="' . esc_attr($file) . '"><i class="wpfm-icon-download3" style="margin-right: 3px;"></i>Download</a>';
-						echo '</div></div>';
-					}
-				endif;
-			endforeach;
-			echo '</div>';
-		else :
-			if (in_array(pathinfo($field_value, PATHINFO_EXTENSION), ['png', 'jpg', 'jpeg', 'gif', 'svg'])) :
-				echo '<div class="wpfm-img-single"><img src="' . esc_attr($field_value) . '"></div>';
-			else :
-				if (wpfm_begnWith($field_value, "http")) {
-					echo '<p class="wpfm-additional-info-block-title"><strong>' . esc_attr(wp_basename($field_value)) . '</strong></p>';
-					echo '<a target="_blank" href="' . esc_attr($field_value) . '"><i class="wpfm-icon-download3" style="margin-right: 3px;"></i>Download</a>';
-				}
-			endif;
-		endif;
-		echo '</div>';
-		echo '</div>';
-	} elseif ($field['type'] == 'radio' && array_key_exists('options', $field)) {
-		$fields_val = isset($field['options'][$field_value]) ? esc_attr($field['options'][$field_value]) : '';
-		echo '<div class="wpfm-col-md-6 wpfm-col-sm-12 wpfm-additional-info-block-details-content-left">';
-		echo '<div class="wpfm-additional-info-block-details-content-items">';
-		echo '<p class="wpfm-additional-info-block-title"><strong>' . esc_attr($field['label']) . ' -</strong> ' . esc_attr($fields_val) . '</p>';
-		echo '</div>';
-		echo '</div>';
-	} elseif ($field['type'] == 'term-checklist' && array_key_exists('taxonomy', $field)) {
-		echo '<div class="wpfm-col-md-6 wpfm-col-sm-12 wpfm-additional-info-block-details-content-left">';
-		echo '<div class="wpfm-additional-info-block-details-content-items">';
-		echo '<p class="wpfm-additional-info-block-title"><strong>' . esc_attr(sanitize_title($field['label'])) . ' - </strong>';
-		if (!empty($field_value)) {
-			if (is_array($field_value)) {
-				$my_checks_value_arr = [];
-				if (isset($field_value[$field['taxonomy']])) {
-					foreach ($field_value[$field['taxonomy']] as $key => $my_value) {
-						$term_name = esc_attr(sanitize_title(get_term($my_value)->name));
-						$my_checks_value_arr[] = esc_attr(sanitize_title($term_name));
-					}
-				}
-				printf(__('%s', 'wp-food-manager'),  implode(', ', $my_checks_value_arr));
-			} else {
-				echo !empty(get_term(ucfirst($field_value))) ? esc_attr(sanitize_title(get_term(ucfirst($field_value))->name)) : '';
-			}
-		}
-		echo '</p>';
-		echo '</div>';
-		echo '</div>';
-	} elseif ($field['type'] == 'checkbox' && array_key_exists('options', $field)) {
-		echo '<div class="wpfm-col-12 wpfm-additional-info-block-textarea">';
-		echo '<div class="wpfm-additional-info-block-details-content-items">';
-		echo '<p class="wpfm-additional-info-block-textarea-text">';
-		echo '<strong>' . esc_attr($field['label']) . '</strong> - ';
-		if (is_array($field_value)) {
-			$my_check_value_arr = [];
-			foreach ($field_value as $key => $my_value) {
-				$my_check_value_arr[] = $field['options'][$my_value];
-			}
-			printf(__('%s', 'wp-food-manager'),  implode(', ', $my_check_value_arr));
-		} else {
-			if ($field_value == 1) {
-				echo esc_attr("Yes");
-			} else {
-				echo esc_attr("No");
-			}
-		}
-		echo '</p>';
-		echo '</div>';
-		echo '</div>';
-	} elseif ($field['type'] == 'term-select') {
-		$term_name = esc_html(sanitize_title(get_term($field_value)->name));
-		echo '<div class="wpfm-col-md-6 wpfm-col-sm-12 wpfm-additional-info-block-details-content-left">';
-		echo '<div class="wpfm-additional-info-block-details-content-items">';
-		echo '<p class="wpfm-additional-info-block-title"><strong> ' . esc_attr($field['label']) . ' -</strong> ' . esc_attr($term_name) . '</p>';
-		echo '</div>';
-		echo '</div>';
-	} elseif ($field['type'] == 'number') {
-		if (!is_array($field_value)) {
-			$field_value_count = preg_match('/^[1-9][0-9]*$/', $field_value);
-			if ($field_value_count == 0) {
-				$field_value = '';
-			}
-		} else {
-			$field_value = '';
-		}
-		echo '<div class="wpfm-col-md-6 wpfm-col-sm-12 wpfm-additional-info-block-details-content-left">';
-		echo '<div class="wpfm-additional-info-block-details-content-items">';
-		echo '<p class="wpfm-additional-info-block-title"><strong> ' . esc_attr($field['label']) . ' -</strong> ' . esc_attr($field_value) . '</p>';
-		echo '</div>';
-		echo '</div>';
-	} elseif ($field['type'] == 'term-multiselect') {
-		echo '<div class="wpfm-col-md-6 wpfm-col-sm-12 wpfm-additional-info-block-details-content-left">';
-		echo '<div class="wpfm-additional-info-block-details-content-items">';
-		echo '<p class="wpfm-additional-info-block-title">';
-		echo '<strong>' . esc_attr($field['label']) . '</strong> - ';
-		if (!empty($field_value)) {
-			if (is_array($field_value)) {
-				$my_select_value_arr = [];
-				foreach ($field_value as $key => $my_value) {
-					$term_name = get_term($my_value)->name;
-					$my_select_value_arr[] = $term_name;
-				}
-				printf(__('%s', 'wp-food-manager'),  implode(', ', $my_select_value_arr));
-			} else {
-				echo esc_attr(sanitize_title(get_term(ucfirst($field_value))->name));
-			}
-		}
-		echo '</p>';
-		echo '</div>';
-		echo '</div>';
-	} else {
-		if (is_array($field_value)) :
-			echo '<div class="wpfm-col-md-6 wpfm-col-sm-12 wpfm-additional-info-block-details-content-left">';
-			echo '<div class="wpfm-additional-info-block-details-content-items">';
-			echo '<p class="wpfm-additional-info-block-title"><strong> ' . esc_attr($field['label']) . ' -</strong> ' . esc_attr(implode(', ', $field_value)) . '</p>';
-			echo '</div>';
-			echo '</div>';
-		else :
-			echo '<div class="wpfm-col-md-6 wpfm-col-sm-12 wpfm-additional-info-block-details-content-left">';
-			echo '<div class="wpfm-additional-info-block-details-content-items">';
-			echo '<p class="wpfm-additional-info-block-title"><strong> ' . esc_attr($field['label']) . ' -</strong> ' . esc_attr(ucfirst($field_value)) . '</p>';
-			echo '</div>';
-			echo '</div>';
-		endif;
-	}
+	get_food_manager_template('food-extra-topping.php', array('date_format' => $date_format, 'time_format' => $time_format, 'field' => $field, 'field_value' => $field_value));
 }
 
 /**
@@ -2062,15 +1864,15 @@ function wpfm_term_radio_checklist_for_food_type($args, $taxonomy) {
 }
 
 /**
- * This wpfm_isMultiArray() Checks if given array is multi-array or not.
+ * This wpfm_is_multi_array() Checks if given array is multi-array or not.
  *
  * @return bool
  * @param mixed $a
  * @since 1.0.1
  */
-function wpfm_isMultiArray($a) {
-	if (is_array($a)) {
-		foreach ($a as $v) if (is_array($v)) return TRUE;
+function wpfm_is_multi_array($field) {
+	if (is_array($field)) {
+		foreach ($field as $value) if (is_array($value)) return TRUE;
 	}
 	return FALSE;
 }
@@ -2078,7 +1880,7 @@ function wpfm_isMultiArray($a) {
 /**
  * This wpfm_category_checklist() function return the given taxnomy list array and display the category checklist html.
  *
- * @return $popular_ids
+ * @return $wpfm_term_ids
  * @param string $taxonomy
  * @param string $key_name
  * @param array $checked_term
@@ -2096,9 +1898,9 @@ function wpfm_category_checklist($taxonomy, $key_name, $checked_term) {
 
 	// Get taxonomy.
 	$tax = get_taxonomy($taxonomy);
-	$popular_ids = array();
+	$wpfm_term_ids = array();
 	foreach ((array) $terms as $term) {
-		$popular_ids[] = $term->term_id;
+		$wpfm_term_ids[] = $term->term_id;
 		$id      = "$taxonomy-$term->term_id";
 		$checked = in_array($term->term_id, $checked_term) ? 'checked="checked"' : ''; ?>
 		<li id="<?php echo $tax->name; ?>-<?php echo $id; ?>" class="<?php echo $tax->name; ?>">
@@ -2110,13 +1912,13 @@ function wpfm_category_checklist($taxonomy, $key_name, $checked_term) {
 	<?php
 	}
 
-	return $popular_ids;
+	return $wpfm_term_ids;
 }
 
 /**
  * This wpfm_dropdown_categories() returns the given taxnomy list array and display the category dropdown html.
  *
- * @return $popular_ids
+ * @return $wpfm_term_ids
  * @param string $taxonomy
  * @param string $key_name
  * @param array $checked_term
@@ -2132,10 +1934,10 @@ function wpfm_dropdown_categories($taxonomy, $key_name, $selected_term) {
 		)
 	);
 
-	$popular_ids = array();
+	$wpfm_term_ids = array();
 	echo '<select name="' . esc_attr(sanitize_title($key_name)) . '" id="' . esc_attr(sanitize_title($key_name)) . '" class="postform">';
 	foreach ((array) $terms as $term) {
-		$popular_ids[] = absint($term->term_id);
+		$wpfm_term_ids[] = absint($term->term_id);
 		$selected = ($term->term_id == $selected_term) ? 'selected="selected"' : ''; ?>
 		<option class="level-0" value="<?php echo (int) $term->term_id; ?>" <?php echo wp_kses_post($selected); ?>>
 			<?php echo esc_html(apply_filters('the_category', $term->name, '', '')); ?>
@@ -2143,7 +1945,7 @@ function wpfm_dropdown_categories($taxonomy, $key_name, $selected_term) {
 <?php }
 	echo "</select>";
 
-	return $popular_ids;
+	return $wpfm_term_ids;
 }
 
 /**

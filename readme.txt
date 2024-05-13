@@ -3,7 +3,7 @@
 Contributors: wpfoodmanager,ashokdudhat,krinay
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=55FRYATTFLA5N
 Tags:  food menu, restaurant menu, food ordering, restaurant, table reservation, food delivery, food pickup, cafe menu, food order,food,menu
-Requires at least: 5.0
+Requires at least: 6.2
 Tested up to: 6.4.2
 Stable tag: 1.0.5
 Requires PHP: 5.6

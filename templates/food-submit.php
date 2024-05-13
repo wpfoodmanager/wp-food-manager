@@ -10,36 +10,34 @@ $add_food_page_id = get_option('food_manager_add_food_page_id');
 $food_dashboard_page_id = get_option('food_manager_food_dashboard_page_id');
 $extra_fields_options = get_post_meta($food_id, '_food_toppings', true) ? get_post_meta($food_id, '_food_toppings', true) : '';
 if (!empty($extra_fields_options)) {
-	$option_value_counts1 = array();
+	$topping_item_count1 = array();
 	for ($i = 1; $i <= count($extra_fields_options); $i++) {
 		foreach ($extra_fields_options as $key => $value) {
 			for ($j = 1; $j <= count($value['_topping_options']); $j++) {
-				$option_value_counts1[$key][] = $j;
+				$topping_item_count1[$key][] = $j;
 			}
 		}
 	}
-	$option_value_counts = array();
-	foreach ($option_value_counts1 as $option_value_count) {
-		$option_value_counts[] = array_unique($option_value_count);
+	$topping_item_count = array();
+	foreach ($topping_item_count1 as $option_value_count) {
+		$topping_item_count[] = array_unique($option_value_count);
 	}
-	array_unshift($option_value_counts1, "");
-	unset($option_value_counts[0]);
-	$option_value_counts2 = array();
+	array_unshift($topping_item_count1, "");
+	unset($topping_item_count[0]);
+	$topping_item_count2 = array();
 
 	for ($i = 1; $i <= count($extra_fields_options); $i++) {
 		foreach ($extra_fields_options as $key => $value) {
-			// for ($j = 1; $j <= count($value['_topping_options']); $j++) {
-				$option_value_counts2[$key] = $value;
-			// }
+				$topping_item_count2[$key] = $value;
 		}
 	}
-	$option_value_counts3 = array();
-	foreach ($option_value_counts2 as $option_value2_count) {
-		$option_value_counts3[] = $option_value2_count;
+	$topping_item_count3 = array();
+	foreach ($topping_item_count2 as $option_value2_count) {
+		$topping_item_count3[] = $option_value2_count;
 	}
 
-	array_unshift($option_value_counts3, "");
-	unset($option_value_counts3[0]);
+	array_unshift($topping_item_count3, "");
+	unset($topping_item_count3[0]);
 }
 ?>
 <form action="<?php echo esc_url($action); ?>" method="post" id="add-food-form" class="wpfm-form-wrapper wpfm-main food-manager-form" enctype="multipart/form-data">
@@ -80,8 +78,7 @@ if (!empty($extra_fields_options)) {
 				<h3 class="wpfm-form-title wpfm-heading-text"><?php _e('Extra Toppings', 'wp-food-manager'); ?></h3>
 				<div class="wpfm-options-wrapper wpfm-metaboxes">
 					<?php if (!empty($extra_fields_options)) {
-						// print_r($option_value_counts3);
-						foreach ($option_value_counts3 as $key => $extra_fields_option) {
+						foreach ($topping_item_count3 as $key => $extra_fields_option) {
 							$toppings = get_post_meta($food_id, '_food_toppings', true);
 							$topping_key = str_replace(" ", "_", strtolower($extra_fields_option['_topping_name']));
 					?>
@@ -98,38 +95,38 @@ if (!empty($extra_fields_options)) {
 									<div class="wpfm-content">
 										<?php
 										$count = 0;
-										foreach ($topping_fields as $key2 => $field) :
-											if ($key2 !== 'topping_options') {
-												$field['value'] = isset($toppings[$key]['_' . $key2]) && !empty($toppings[$key]['_' . $key2]) ? $toppings[$key]['_' . $key2] : '';
-												if ($key2 !== 'topping_name') {
-													$key2 = $key2 . "_" . $key;
+										foreach ($topping_fields as $topping_field_key => $field) :
+											if ($topping_field_key !== 'topping_options') {
+												$field['value'] = isset($toppings[$key]['_' . $topping_field_key]) && !empty($toppings[$key]['_' . $topping_field_key]) ? $toppings[$key]['_' . $topping_field_key] : '';
+												if ($topping_field_key !== 'topping_name') {
+													$topping_field_key = $topping_field_key . "_" . $key;
 												} else {
-													$key2 = $key2 . "_" . $key;
+													$topping_field_key = $topping_field_key . "_" . $key;
 												}
 												$fieldClassLabel = '';
 												if (!empty($field['type']) && $field['type'] == 'wp-editor') {
 													$fieldClassLabel = 'wp-editor-field';
 												}
 										?>
-												<fieldset class="wpfm-form-group fieldset<?php echo $key2; ?> <?php echo $fieldClassLabel; ?>" data-field-name="<?php echo $key2; ?>">
+												<fieldset class="wpfm-form-group fieldset<?php echo $topping_field_key; ?> <?php echo $fieldClassLabel; ?>" data-field-name="<?php echo $topping_field_key; ?>">
 													<label class="wpfm-form-label-text"><?php echo $field['label'] . apply_filters('add_food_required_label', $field['required'] ? '<span class="require-field">*</span>' : ' <small>' . __('(optional)', 'wp-food-manager') . '</small>', $field); ?></label>
 													<div class="field <?php echo $field['required'] ? 'required-field' : ''; ?>">
-														<?php get_food_manager_template('form-fields/' . $field['type'] . '-field.php', array('key' => $key2, 'field' => $field)); ?>
+														<?php get_food_manager_template('form-fields/' . $field['type'] . '-field.php', array('key' => $topping_field_key, 'field' => $field)); ?>
 													</div>
 												</fieldset>
 											<?php }
-											if ($key2 == 'topping_options') { ?>
+											if ($topping_field_key == 'topping_options') { ?>
 												<fieldset class="wpfm-form-group fieldset_topping_options_<?php echo $key; ?> ">
-													<label >Options <small>(optional)</small></label>
+													<label><?php _e('Options', 'wp-food-manager');?> <small><?php _e('(optional)', 'wp-food-manager');?></small></label>
 													<div class="field ">
 														<table class="widefat">
 															<thead>
 																<tr>
 																	<th> </th>
 																	<th>#</th>
-																	<th>Label</th>
+																	<th><?php _e('Label', 'wp-food-manager');?></th>
 																	<?php do_action('wpfm_repeated_option_name_label_after'); ?>
-																	<th>Price</th>
+																	<th><?php _e('Price', 'wp-food-manager');?></th>
 																	<?php do_action('wpfm_repeated_option_price_label_after'); ?>
 																	<th></th>
 																</tr>

@@ -185,7 +185,7 @@ $food = $post;
                                                     }
                                                 }
                                                 echo "</div>";
-                                                echo ($val_flag) ? '<span class="wpfm-view-more">View more +</span>' : '';
+                                                echo ($val_flag) ? '<span class="wpfm-view-more">'. _e('View more +', 'wp-food-manager').'</span>' : '';
                                             }
                                             echo "</div>";
                                         }
@@ -444,9 +444,9 @@ $food = $post;
                                                                 <div class="wpfm-additional-info-block-details-content-items">
                                                                     <p class="wpfm-additional-info-block-textarea-text">
                                                                         <?php if (isset($field_value) && !empty($field_value)) { ?>
-                                                                            <a target="_blank" href="<?php echo esc_url($field_value); ?>"><?php printf(__('%s', 'wp-food-manager'),  $field['label']); ?></a>
+                                                                            <a target="_blank" href="<?php echo esc_url($field_value); ?>"><?php printf(__('%s', 'wp-food-manager'),  esc_html($field['label'])); ?></a>
                                                                         <?php } else {
-                                                                            printf(__('%s', 'wp-food-manager'),  $field['label']);
+                                                                            printf(__('%s', 'wp-food-manager'),  esc_html($field['label']));
                                                                         } ?>
                                                                     </p>
                                                                 </div>
@@ -460,7 +460,7 @@ $food = $post;
                                                         <?php elseif ($field['type'] == 'term-checklist' && array_key_exists('taxonomy', $field)) : ?>
                                                             <div class="wpfm-col-md-6 wpfm-col-sm-12 wpfm-additional-info-block-details-content-left">
                                                                 <div class="wpfm-additional-info-block-details-content-items">
-                                                                    <p class="wpfm-additional-info-block-title"><strong><?php printf(__('%s', 'wp-food-manager'),  $field['label']); ?> - </strong>
+                                                                    <p class="wpfm-additional-info-block-title"><strong><?php printf(__('%s', 'wp-food-manager'),  esc_html($field['label'])); ?> - </strong>
                                                                         <?php
                                                                         $terms = wp_get_post_terms($post->ID, $field['taxonomy']);
                                                                         $term_checklist = '';
@@ -473,7 +473,7 @@ $food = $post;
                                                                                     $term_checklist .= ', ';
                                                                             endforeach;
                                                                         endif;
-                                                                        echo esc_attr($term_checklist); ?>
+                                                                        echo esc_attr($term_checklist, 'wp-food-manager'); ?>
                                                                     </p>
                                                                 </div>
                                                             </div>
@@ -481,7 +481,7 @@ $food = $post;
                                                             <div class="wpfm-col-12 wpfm-additional-info-block-textarea">
                                                                 <div class="wpfm-additional-info-block-details-content-items">
                                                                     <p class="wpfm-additional-info-block-textarea-text">
-                                                                        <strong><?php echo esc_attr($field['label']); ?></strong> -
+                                                                        <strong><?php echo esc_attr($field['label'], 'wp-food-manager'); ?></strong> -
                                                                         <?php
                                                                         if (is_array($field_value)) {
                                                                             $my_check_value_arr = [];
@@ -491,9 +491,9 @@ $food = $post;
                                                                             printf(__('%s', 'wp-food-manager'),  implode(', ', $my_check_value_arr));
                                                                         } else {
                                                                             if ($field_value == 1) {
-                                                                                echo esc_attr("Yes");
+                                                                                echo esc_attr("Yes", 'wp-food-manager');
                                                                             } else {
-                                                                                echo esc_attr("No");
+                                                                                echo esc_attr("No", 'wp-food-manager');
                                                                             }
                                                                         }
                                                                         ?>
@@ -634,15 +634,3 @@ $food = $post;
 
 <!-- add to cart notification -->
 <?php do_action('wpfm_food_manager_single_food_listing_after'); ?>
-
-<!-- override the script if needed -->
-<script type="text/javascript">
-    jQuery(document).ready(function() {
-        jQuery('.wpfm-single-food-slider, .wpfm-img-multi-container').slick({
-            dots: true,
-            infinite: true,
-            speed: 500,
-            adaptiveHeight: true,
-        });
-    });
-</script>

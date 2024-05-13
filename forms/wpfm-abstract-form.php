@@ -220,11 +220,11 @@ abstract class WPFM_Form {
 	 * @return int
 	 * @since 1.0.0
 	 */
-	protected function sort_by_priority($a, $b) {
-		if ($a['priority'] == $b['priority']) {
+	protected function sort_by_priority($item1, $item2) {
+		if ($item1['priority'] == $item2['priority']) {
 			return 0;
 		}
-		return ($a['priority'] < $b['priority']) ? -1 : 1;
+		return ($item1['priority'] < $item2['priority']) ? -1 : 1;
 	}
 
 	/**
@@ -236,19 +236,6 @@ abstract class WPFM_Form {
 	 */
 	protected function init_fields() {
 		$this->fields = array();
-	}
-
-	/**
-	 * Enqueue the scripts for the form.
-	 *
-	 * @access public
-	 * @return void
-	 * @since 1.0.0
-	 */
-	public function enqueue_scripts() {
-		if ($this->use_recaptcha_field()) {
-			wp_enqueue_script('recaptcha', 'https://www.google.com/recaptcha/api.js');
-		}
 	}
 
 	/**

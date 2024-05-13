@@ -46,8 +46,7 @@ class WPFM_Post_Types {
 
 		$admin_capability = 'manage_food_managers';
 		$permalink_structure = WPFM_Post_Types::get_permalink_structure();
-		include_once(esc_attr(WPFM_PLUGIN_DIR) . '/includes/wpfm-custom-taxonomies.php');
-
+		WPFM_Custom_Taxonomies::register_post_taxonomies();
 		/**
 		 * Post types.
 		 */

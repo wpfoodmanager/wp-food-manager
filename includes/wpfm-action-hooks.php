@@ -204,23 +204,23 @@ class WPFM_ActionHooks {
          * @param WP_Post $post          Post object.
          */
         $valid_statuses = apply_filters('wp_foodmanager_count_cache_supported_statuses', array('pending'), $new_status, $old_status, $post);
-        $rlike          = array();
+        $wpfm_like          = array();
 
         // New status transient option name.
         if (in_array($new_status, $valid_statuses)) {
-            $rlike[] = "^_transient_fm_{$new_status}_{$post->post_type}_count_user_";
+            $wpfm_like[] = "^_transient_fm_{$new_status}_{$post->post_type}_count_user_";
         }
 
         // Old status transient option name.
         if (in_array($old_status, $valid_statuses)) {
-            $rlike[] = "^_transient_fm_{$old_status}_{$post->post_type}_count_user_";
+            $wpfm_like[] = "^_transient_fm_{$old_status}_{$post->post_type}_count_user_";
         }
 
-        if (empty($rlike)) {
+        if (empty($wpfm_like)) {
             return;
         }
 
-        $sql        = $wpdb->prepare("SELECT option_name FROM $wpdb->options WHERE option_name RLIKE '%s'", implode('|', $rlike));
+        $sql        = $wpdb->prepare("SELECT option_name FROM $wpdb->options WHERE option_name RLIKE '%s'", implode('|', $wpfm_like));
         $transients = $wpdb->get_col($sql);
 
         // For each transient...
@@ -383,7 +383,7 @@ class WPFM_ActionHooks {
         if ($foods->have_posts()) : $result['found_foods'] = true; ?>
             <?php while ($foods->have_posts()) : $foods->the_post(); ?>
                 <?php
-                if (get_option('food_manager_food_item_show_hide') == 0 && get_stock_status() !== 'fm_outofstock') {
+                if (get_option('food_manager_food_item_show_hide') == 0 && get_stock_status() !== 'food_outofstock') {
                     $food_cnt++;
                 } elseif (get_option('food_manager_food_item_show_hide') == 1 && get_stock_status()) {
                     $food_cnt++;
@@ -474,12 +474,12 @@ class WPFM_ActionHooks {
             $result['showing_applied_filters'] = false;
         }
 
-        $search_values = array(
+        $searcheckbox_values = array(
             'keywords'   => $search_keywords,
             'types'      => $search_food_types,
             'categories' => $search_categories
         );
-        $result['filter_value'] = apply_filters('food_manager_get_listings_custom_filter_text', $message, $search_values);
+        $result['filter_value'] = apply_filters('food_manager_get_listings_custom_filter_text', $message, $searcheckbox_values);
 
         // Generate RSS link.
         $result['showing_links'] = wpfm_get_filtered_links(array(
@@ -606,7 +606,7 @@ class WPFM_ActionHooks {
         wp_enqueue_script('wp-food-manager-frontend');
 
         // Common js.
-        wp_register_script('wp-food-manager-common', esc_url(WPFM_PLUGIN_URL . '/assets/js/common.min.js'), array('jquery'), WPFM_VERSION, true);
+        wp_register_script('wp-food-manager-common', esc_url(WPFM_PLUGIN_URL . '/assets/js/common.js'), array('jquery'), WPFM_VERSION, true);
         wp_enqueue_script('wp-food-manager-common');        
         // Food submission forms and validation js.
         wp_register_script('wp-food-manager-food-submission', esc_url(WPFM_PLUGIN_URL . '/assets/js/food-submission.min.js'), array('jquery', 'jquery-ui-core', 'jquery-ui-datepicker'), WPFM_VERSION, true);
@@ -639,7 +639,7 @@ class WPFM_ActionHooks {
         ));
 
         // Ajax filters js.
-        wp_register_script('wpfm-ajax-filters', esc_url(WPFM_PLUGIN_URL . '/assets/js/food-ajax-filters.min.js'), $ajax_filter_deps, WPFM_VERSION, true);
+        wp_register_script('wpfm-ajax-filters', esc_url(WPFM_PLUGIN_URL . '/assets/js/food-ajax-filters.js'), $ajax_filter_deps, WPFM_VERSION, true);
         wp_localize_script('wpfm-ajax-filters', 'wpfm_ajax_filters', array(
             'ajax_url' => $ajax_url,
             'is_rtl' => is_rtl() ? 1 : 0,

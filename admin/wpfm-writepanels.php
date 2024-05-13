@@ -43,8 +43,8 @@ class WPFM_Writepanels {
         add_action('save_post', array($this, 'save_post'), 1, 2);
         add_action('wpfm_save_food_data', array($this, 'food_manager_save_food_manager_data'), 20, 3);
         // Food menu.
-        add_action('wp_ajax_wpfm_get_food_listings_by_category_id', array($this, 'get_food_listings_by_category_id'));
-        add_action('food_manager_save_food_manager_menu', array($this, 'food_manager_save_food_manager_menu_data'), 20, 2);
+        add_action('wp_ajax_wpfm_get_food_listings_by_category_id', array($this, 'get_food_listing_by_category_id'));
+        add_action('food_manager_save_food_manager_menu', array($this, 'wpfm_save_food_menu_data'), 20, 2);
         add_filter('use_block_editor_for_post_type', array($this, 'disable_gutenberg'), 10, 2);
         add_filter('wpfm_term_radio_checklist_taxonomy', array($this, 'wpfm_food_manager_taxonomy'), 10, 2);
         add_filter('wpfm_term_radio_checklist_post_type', array($this, 'wpfm_food_manager_post_type'));
@@ -266,11 +266,11 @@ class WPFM_Writepanels {
 	 * @return void
 	 * @since 1.0.0
 	 */
-	protected function sort_by_priority($a, $b) {
-		if (!isset($a['priority']) || !isset($b['priority']) || $a['priority'] === $b['priority']) {
+	protected function sort_by_priority($item1, $item2) {
+		if (!isset($item1['priority']) || !isset($item2['priority']) || $item1['priority'] === $item2['priority']) {
 			return 0;
 		}
-		return ($a['priority'] < $b['priority']) ? -1 : 1;
+		return ($item1['priority'] < $item2['priority']) ? -1 : 1;
 	}
 	
 	/**
@@ -296,24 +296,25 @@ class WPFM_Writepanels {
             do_action('wpfm_save_food_data', $post_id, $post, $writepanels->food_manager_data_fields());
 
             // Set Order Menu.
-            $order_menu = $wpdb->get_results("SELECT menu_order FROM $wpdb->posts WHERE ID = " . intval($post_id));
-            if ($order_menu && $order_menu[0]->menu_order == 0) {
-                $last_inserted_post = get_posts(array(
+            $order_menu = get_post_field('menu_order', $post_id);             
+            if ($order_menu == '0') {
+                $last_inserted_posts = new WP_Query( apply_filters('food_manager_get_menu_order',array(
                     'post_type' => $post->post_type,
                     'posts_per_page' => 2,
                     'offset' => 0,
                     'orderby' => 'ID',
                     'order' => 'DESC',
                     'post_status' => 'any',
-                ));
-
-                if (count($last_inserted_post) > 1) {
-                    $last_menu_order = $wpdb->get_results("SELECT menu_order FROM $wpdb->posts WHERE ID = " . intval($last_inserted_post[1]->ID));
-                    $next_menu_order = $last_menu_order[0]->menu_order + 1;
+                )));
+                if ($last_inserted_posts->post_count > 1) {
+                    $last_menu_order = get_post_field('menu_order', $last_inserted_posts->posts[1]->ID);
+                    $next_menu_order = intval($last_menu_order) + 1;
                     $wpdb->update($wpdb->posts, ['menu_order' => $next_menu_order], ['ID' => intval($post_id)]);
                 } else {
                     $wpdb->update($wpdb->posts, ['menu_order' => 1], ['ID' => intval($post_id)]);
                 }
+                // Restore the original post data
+                wp_reset_postdata();
             }
         }
         if ($post->post_type == 'food_manager_menu') {
@@ -485,7 +486,7 @@ class WPFM_Writepanels {
                 // Set Ingredients.
                 if ($key = 'food_ingredients') {
                     $taxonomy = 'food_manager_ingredient';
-                    $multiArrayIng = array();
+                    $multi_array_ingredient = array();
 
                     if (isset($_POST[$key]) && !empty($_POST[$key])) {
                         foreach ($_POST[$key] as $id => $ingredient) {
@@ -506,13 +507,13 @@ class WPFM_Writepanels {
                                 'unit_term_name' => $unit_name
                             ];
 
-                            $multiArrayIng[$id] = $item;
+                            $multi_array_ingredient[$id] = $item;
                             $ingredient_ids[] = $id;
                             if (trim($ingredient['unit_id'])) {
                                 $unit_ids[] = (int)$ingredient['unit_id'];
                             }
                         }
-                        update_post_meta($post_id, '_' . esc_attr($key), $multiArrayIng);
+                        update_post_meta($post_id, '_' . esc_attr($key), $multi_array_ingredient);
                     } else {
                         update_post_meta($post_id, '_' . esc_attr($key), array());
                     }
@@ -536,7 +537,7 @@ class WPFM_Writepanels {
                 // Set Nutrition.
                 if ($key = 'food_nutritions') {
                     $taxonomy = 'food_manager_nutrition';
-                    $multiArrayNutri = array();
+                    $$multi_array_nutrition = array();
 
                     if (isset($_POST[$key]) && !empty($_POST[$key])) {
                         foreach ($_POST[$key] as $id => $nutrition) {
@@ -556,13 +557,13 @@ class WPFM_Writepanels {
                                 'unit_term_name' => $unit_name
                             ];
 
-                            $multiArrayNutri[$id] = $item;
+                            $$multi_array_nutrition[$id] = $item;
                             $nutrition_ids[] = $id;
                             if (trim($nutrition['unit_id'])) {
                                 $unit_ids[] = (int)$nutrition['unit_id'];
                             }
                         }
-                        update_post_meta($post_id, '_' . esc_attr($key), $multiArrayNutri);
+                        update_post_meta($post_id, '_' . esc_attr($key), $$multi_array_nutrition);
                     } else {
                         update_post_meta($post_id, '_' . esc_attr($key), array());
                     }
@@ -753,7 +754,7 @@ class WPFM_Writepanels {
      * @return void
      * @since 1.0.0
      */
-    public function get_food_listings_by_category_id() {
+    public function get_food_listing_by_category_id() {
         if (isset($_POST['category_id']) && !empty($_POST['category_id'])) {
             $args = [
                 'post_type' => 'food_manager',
@@ -769,7 +770,7 @@ class WPFM_Writepanels {
                 // Rest of your arguments.
             ];
 
-            $food_listing = new WP_Query($args);
+            $food_listing = new WP_Query(apply_filters('get_food_listings_by_category_args',$args));
             $html = [];
 
             if ($food_listing->have_posts()) :
@@ -800,7 +801,7 @@ class WPFM_Writepanels {
                 'post__not_in' => isset($_POST['exclude']) && !empty($_POST['exclude']) ? array_map('esc_attr', $_POST['exclude']) : array(),
             ];
 
-            $food_listing = new WP_Query($args);
+            $food_listing = new WP_Query(apply_filters('get_food_listings_category_args',$args));
             $html = [];
 
             if ($food_listing->have_posts()) :
@@ -838,7 +839,7 @@ class WPFM_Writepanels {
      * @return void
      * @since 1.0.0
      */
-    public function food_manager_save_food_manager_menu_data($post_id, $post) {
+    public function wpfm_save_food_menu_data($post_id, $post){
         if (isset($_POST['radio_icons']) && !empty($_POST['radio_icons'])) {
             $wpfm_radio_icon = esc_attr($_POST['radio_icons']);
 

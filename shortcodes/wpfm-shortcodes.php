@@ -204,7 +204,7 @@ class WPFM_Shortcodes {
 			}
 		}
 
-		$foods = new WP_Query($args);
+		$foods = new WP_Query(apply_filters('food_manager_food_dashboard_args',$args));
 		if (!empty($this->food_dashboard_message)) {
 			echo wp_kses($this->food_dashboard_message, array(
 				'div' => [
@@ -316,9 +316,16 @@ class WPFM_Shortcodes {
 		if (!empty($_GET['search_food_type'])) {
 			$selected_food_type = sanitize_text_field($_GET['search_food_type']);
 		}
+		
+		$args = array(
+			'post_type'      => 'food_manager_menu',
+			'post_status'    => 'publish',
+			'posts_per_page' => -1,
+		);
+		$food_menu_query = new WP_Query(apply_filters('food_manager_filter_foods_args',$args));
 
 		if ($show_filters) {
-			get_food_manager_template('food-filters.php', array(
+			get_food_manager_template('food-filters.php', apply_filters('food_manager_food_filter_result', array(
 				'per_page' => $per_page,
 				'orderby' => $orderby,
 				'order' => $order,
@@ -334,7 +341,8 @@ class WPFM_Shortcodes {
 				'selected_food_type' => $selected_food_type,
 				'atts' => $atts,
 				'keywords' => $keywords,
-			));
+				'food_menu_query' => $food_menu_query->query($args)
+			)));
 			get_food_manager_template('food-listings-start.php', array('layout_type' => $layout_type, 'title' => $title));
 			get_food_manager_template('food-listings-end.php');
 			if (!$show_pagination && $show_more) {
@@ -372,7 +380,7 @@ class WPFM_Shortcodes {
 		}
 
 		$data_attributes_string = '';
-		$data_attributes        = array(
+		$data_attributes        = apply_filters('food_manager_data_attributes_args', array(
 			'location'        => $location,
 			'keywords'        => $keywords,
 			'show_filters'    => $show_filters ? 'true' : 'false',
@@ -382,7 +390,7 @@ class WPFM_Shortcodes {
 			'order'           => $order,
 			'categories'      => !empty($selected_category) ? implode(',', array_map('esc_attr', $selected_category)) : '',
 			'food_types'     => !empty($selected_food_type) ? implode(',', array_map('esc_attr', $selected_food_type)) : '',
-		);
+		));
 
 		if (!is_null($featured)) {
 			$data_attributes['featured'] = $featured ? 'true' : 'false';
@@ -467,7 +475,7 @@ class WPFM_Shortcodes {
 			'p'           => $id
 		);
 
-		$foods = new WP_Query($args);
+		$foods = new WP_Query(apply_filters('food_manager_food_listing_ids_args',$args));
 		if ($foods->have_posts()) : ?>
 			<?php while ($foods->have_posts()) : $foods->the_post(); ?>
 				<div class="clearfix">
@@ -509,7 +517,7 @@ class WPFM_Shortcodes {
 			$args['p'] = absint($id);
 		}
 
-		$foods = new WP_Query($args);
+		$foods = new WP_Query(apply_filters('food_manager_food_summary_args',$args));
 		if ($foods->have_posts()) : ?>
 			<?php while ($foods->have_posts()) : $foods->the_post();
 				echo '<div class="food_summary_shortcode align' . esc_attr($align) . '" style="width: ' . esc_attr($width) . '">';
@@ -542,7 +550,7 @@ class WPFM_Shortcodes {
 			'p'           => $id
 		);
 
-		$food_menus = new WP_Query($args);
+		$food_menus = new WP_Query(apply_filters('food_manager_food_menu_args',$args));
 		if ($food_menus->have_posts()) : ?>
 			<?php while ($food_menus->have_posts()) : $food_menus->the_post(); ?>
 				<div class="clearfix">

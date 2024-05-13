@@ -83,11 +83,11 @@ class WPFM_Admin {
         add_action('admin_menu', array($this, 'admin_menu'), 12);
         add_action('admin_enqueue_scripts', array($this, 'admin_enqueue_scripts'));
         add_action('current_screen', array($this, 'conditional_includes'));
-        add_action('wp_ajax_get_group_field_html', array($this, 'get_group_field_html'));
         add_action('admin_head', array($this, 'admin_head'));
         add_action('admin_init', array($this, 'redirect'));
         add_action('admin_notices', array($this, 'display_notice'));
         add_action('wp_ajax_wpfm-logo-update-menu-order', array($this, 'menuUpdateOrder'));
+        add_action('init', array($this->post_types, 'register_post_types'), 0);
         if (get_option('food_manager_enable_categories')) {
             add_action('restrict_manage_posts', array($this, 'foods_by_category'));
         }
@@ -623,47 +623,6 @@ class WPFM_Admin {
         
     }
 
-   
-
-    /**
-     * Display the group field html by the given array.
-     *
-     * @access public
-     * @return void
-     * @since 1.0.0
-     */
-    public function get_group_field_html() {
-        check_ajax_referer('_nonce_wpfm_form_editor_security', 'security');
-        $field_types = apply_filters(
-            'food_manager_form_group_field_types',
-            array(
-                'text'        => esc_html__('Text', 'wp-food-manager'),
-                'checkbox'    => esc_html__('Checkbox', 'wp-food-manager'),
-                'date'        => esc_html__('Date', 'wp-food-manager'),
-                'file'        => esc_html__('File', 'wp-food-manager'),
-                'hidden'      => esc_html__('Hidden', 'wp-food-manager'),
-                'multiselect' => esc_html__('Multiselect', 'wp-food-manager'),
-                'number'      => esc_html__('Number', 'wp-food-manager'),
-                'password'    => esc_html__('Password', 'wp-food-manager'),
-                'radio'       => esc_html__('Radio', 'wp-food-manager'),
-                'select'      => esc_html__('Select', 'wp-food-manager'),
-                'textarea'    => esc_html__('Textarea', 'wp-food-manager'),
-                'options'    => esc_html__('Options', 'wp-food-manager'),
-            )
-        );
-        ob_start();
-        $child_index     = -1;
-        $child_field_key = '';
-        $child_field     = array(
-            'type'        => 'text',
-            'label'       => '',
-            'placeholder' => '',
-        );
-        include esc_url(WPFM_PLUGIN_DIR) . '/admin/wpfm-field-editor-group-form-field-row.php';
-        echo esc_attr(ob_get_clean());
-        wp_die();
-    }
-    
     /**
      * Add the pending count which food submitted from frontend and admin gets pending food count.
      *
@@ -802,14 +761,14 @@ class WPFM_Admin {
             return;
         }
 
-        $r = array();
-        $r['pad_counts']   = 1;
-        $r['hierarchical'] = 1;
-        $r['hide_empty']   = 0;
-        $r['show_count']   = 1;
-        $r['selected']     = (isset($wp_query->query['food_manager_type'])) ? $wp_query->query['food_manager_type'] : '';
-        $r['menu_order']   = false;
-        $terms             = get_terms('food_manager_type', $r);
+        $food_dropdown = array();
+        $food_dropdown['pad_counts']   = 1;
+        $food_dropdown['hierarchical'] = 1;
+        $food_dropdown['hide_empty']   = 0;
+        $food_dropdown['show_count']   = 1;
+        $food_dropdown['selected']     = (isset($wp_query->query['food_manager_type'])) ? $wp_query->query['food_manager_type'] : '';
+        $food_dropdown['menu_order']   = false;
+        $terms             = get_terms('food_manager_type', $food_dropdown);
         $walker            = WPFM_Category_Walker::instance();
 
         if (!$terms) {
@@ -818,7 +777,7 @@ class WPFM_Admin {
 
         $output  = "<select name='food_manager_type' id='dropdown_food_manager_type'>";
         $output .= '<option value="" ' . selected(isset($_GET['food_manager_type']) ? $_GET['food_manager_type'] : '', '', false) . '>' . esc_html(__('Select Food Type', 'wp-food-manager')) . '</option>';
-        $output .= $walker->walk($terms, 0, $r);
+        $output .= $walker->walk($terms, 0, $food_dropdown);
         $output .= '</select>';
         printf('%s', $output);
     }
@@ -838,14 +797,14 @@ class WPFM_Admin {
 
         include_once WPFM_PLUGIN_DIR . '/includes/wpfm-category-walker.php';
 
-        $r = array();
-        $r['pad_counts'] = 1;
-        $r['hierarchical'] = 1;
-        $r['hide_empty'] = 0;
-        $r['show_count'] = 1;
-        $r['selected'] = (isset($wp_query->query['food_manager_category'])) ? $wp_query->query['food_manager_category'] : '';
-        $r['menu_order'] = false;
-        $terms = get_terms('food_manager_category', $r);
+        $food_dropdown = array();
+        $food_dropdown['pad_counts'] = 1;
+        $food_dropdown['hierarchical'] = 1;
+        $food_dropdown['hide_empty'] = 0;
+        $food_dropdown['show_count'] = 1;
+        $food_dropdown['selected'] = (isset($wp_query->query['food_manager_category'])) ? $wp_query->query['food_manager_category'] : '';
+        $food_dropdown['menu_order'] = false;
+        $terms = get_terms('food_manager_category', $food_dropdown);
         $walker = WPFM_Category_Walker::instance();
 
         if (!$terms) {

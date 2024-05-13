@@ -51,8 +51,6 @@ $options = array(
 	'food_manager_add_food_page_id',
 	'food_manager_food_dashboard_page_id',
 	'food_manager_foods_page_id',
-	'food_manager_food_categories_page_id',
-	'food_manager_food_type_page_id',
 	'food_manager_submission_requires_approval',
 	'food_manager_per_page',
 	'food_manager_food_item_show_hide',

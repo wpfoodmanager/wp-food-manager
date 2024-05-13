@@ -17,8 +17,7 @@ if ($taxonomies) {
 if ($remove_tax != 0) {
 	unset($taxonomies[$remove_tax]);
 }
-
-if ($field_key !== 'topping_options') {
+	
 	$field_types    = apply_filters(
 		'food_manager_form_field_types',
 		array(
@@ -42,33 +41,11 @@ if ($field_key !== 'topping_options') {
 			'switch'    => esc_html__('Switch', 'wp-food-manager'),
 		)
 	);
-} else {
-	$field_types    = apply_filters(
-		'food_manager_form_field_types',
-		array(
-			'text'             => esc_html__('Text', 'wp-food-manager'),
-			'checkbox'         => esc_html__('Checkbox', 'wp-food-manager'),
-			'date'             => esc_html__('Date', 'wp-food-manager'),
-			'file'             => esc_html__('File', 'wp-food-manager'),
-			'hidden'           => esc_html__('Hidden', 'wp-food-manager'),
-			'multiselect'      => esc_html__('Multiselect', 'wp-food-manager'),
-			'number'           => esc_html__('Number', 'wp-food-manager'),
-			'radio'            => esc_html__('Radio', 'wp-food-manager'),
-			'select'           => esc_html__('Select', 'wp-food-manager'),
-			'term-checklist'   => esc_html__('Term Checklist', 'wp-food-manager'),
-			'term-multiselect' => esc_html__('Term Multiselect', 'wp-food-manager'),
-			'term-select'      => esc_html__('Term Select', 'wp-food-manager'),
-			'term-select-multi-appearance'      => esc_html__('Term Multi Select Appearance', 'wp-food-manager'),
-			'textarea'         => esc_html__('Textarea', 'wp-food-manager'),
-			'wp-editor'        => esc_html__('WP Editor', 'wp-food-manager'),
-			'url'              => esc_html__('URL', 'wp-food-manager'),
-			'options'    => esc_html__('Options', 'wp-food-manager'),
-			'term-autocomplete' => esc_html__('Term Autocomplete', 'wp-food-manager'),
-			'switch'    => esc_html__('Switch', 'wp-food-manager'),
-		)
-	);
-}
 
+	if ($field_key == 'topping_options') {
+		$field_types['options'] = esc_html__('Options', 'wp-food-manager');
+	}
+	
 $wpfm_admin_class = '';
 if ($field_key == 'food_category') {
 	$wpfm_admin_class = '';
@@ -213,75 +190,3 @@ $disable_field_types = array('term-autocomplete', 'term-select-multi-appearance'
 		<?php endif; ?>
 	</td>
 </tr>
-<?php
-if (isset($field['type']) && $field['type'] == 'group') {
-	$field_types = apply_filters(
-		'food_manager_form_group_field_types',
-		array(
-			'text'        => __('Text', 'wp-food-manager'),
-			'checkbox'    => __('Checkbox', 'wp-food-manager'),
-			'date'        => __('Date', 'wp-food-manager'),
-			'file'        => __('File', 'wp-food-manager'),
-			'hidden'      => __('Hidden', 'wp-food-manager'),
-			'multiselect' => __('Multiselect', 'wp-food-manager'),
-			'number'      => __('Number', 'wp-food-manager'),
-			'password'    => __('Password', 'wp-food-manager'),
-			'radio'       => __('Radio', 'wp-food-manager'),
-			'select'      => __('Select', 'wp-food-manager'),
-			'textarea'    => __('Textarea', 'wp-food-manager'),
-		)
-	);
-	$child_index = -1;
-?>
-	<tr class="group">
-		<td colspan="10">
-			<table class="widefat child_table" id="<?php echo esc_attr($field_key); ?>">
-				<thead>
-					<tr>
-						<th width="1%">&nbsp;</th>
-						<th><?php esc_attr_e('Field Label', 'wp-food-manager'); ?></th>
-						<th width="1%"><?php esc_attr_e('Type', 'wp-food-manager'); ?></th>
-						<th><?php esc_attr_e('Description', 'wp-food-manager'); ?></th>
-						<th><?php esc_attr_e('Placeholder / Options', 'wp-food-manager'); ?></th>
-						<th width="1%"><?php esc_attr_e('Meta Key', 'wp-food-manager'); ?></th>
-						<th width="1%"><?php esc_attr_e('Only For Admin', 'wp-food-manager'); ?></th>
-						<th width="1%"><?php esc_attr_e('Priority', 'wp-food-manager'); ?></th>
-						<th width="1%"><?php esc_attr_e('Validation', 'wp-food-manager'); ?></th>
-						<th width="1%" class="field-actions">&nbsp;</th>
-					</tr>
-				</thead>
-				<tfoot>
-					<tr>
-						<th colspan="4">
-							<a class="button child-add-field" href="javascript:void(0)"><?php esc_attr_e('Add Child field', 'wp-food-manager'); ?></a>
-						</th>
-					</tr>
-				</tfoot>
-				<tbody class="child-form-fields" data-name="<?php echo esc_attr($group_key); ?>[<?php echo esc_attr($field_key); ?>][fields]" data-field="
-																	   <?php
-																		ob_start();
-																		$child_field_key = '';
-																		$child_field     = array(
-																			'type'        => 'text',
-																			'label'       => '',
-																			'placeholder' => '',
-																		);
-																		include 'wpfm-field-editor-group-form-field.php';
-																		echo wp_kses_post(ob_get_clean());
-																		?>
-							">
-					<?php
-					if (isset($field['fields']) && !empty($field['fields'])) {
-						foreach ($field['fields'] as $child_field_key => $child_field) {
-							$child_index++;
-							include 'wpfm-field-editor-group-form-field.php';
-						}
-					}
-					?>
-				</tbody>
-			</table>
-		</td>
-	</tr>
-<?php
-}
-?>

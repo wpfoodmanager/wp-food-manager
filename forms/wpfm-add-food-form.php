@@ -246,8 +246,8 @@ class WPFM_Add_Food_Form extends WPFM_Form {
 					'type'        => 'select',
 					'required'    => true,
 					'options' 	  => array(
-						'fm_instock' => __('In stock', 'wp-food-manager'),
-						'fm_outofstock' => __('Out of stock', 'wp-food-manager'),
+						'food_instock' => __('In stock', 'wp-food-manager'),
+						'food_outofstock' => __('Out of stock', 'wp-food-manager'),
 					),
 					'priority'    => 11,
 					'tabgroup' => 1,

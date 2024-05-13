@@ -8,11 +8,11 @@ echo '<div id="nutritions_food_data_content" class="panel wpfm_panel wpfm-metabo
 <div class="wp_food_manager_meta_data">';
 
 do_action('food_manager_food_data_nutrition_start', $thepostid);
-$metaNutritions = get_post_meta($post->ID, '_food_nutritions');
+$meta_nutritions = get_post_meta($post->ID, '_food_nutritions');
 $excludeNutritions = [];
 
-if (!empty($metaNutritions)) {
-	foreach ($metaNutritions as $items) {
+if (!empty($meta_nutritions)) {
+	foreach ($meta_nutritions as $items) {
 		foreach ($items as $item) {
 			$excludeNutritions[] = $item['id'];
 		}
@@ -43,24 +43,24 @@ $units = get_terms(
 		<ul id="wpfm-active-nutri-list" class="wpfm-active-list wpfm-sortable-list wpfm-clear ui-sortable" data-title="Active Nutrition">
 
 			<?php
-			if (!empty($metaNutritions)) {
-				foreach ($metaNutritions as $nutritions) {
+			if (!empty($meta_nutritions)) {
+				foreach ($meta_nutritions as $nutritions) {
 					foreach ($nutritions as $nutrition) {
-						$nutriTerm = get_term(
+						$nutrition_term = get_term(
 							!empty($nutrition['id']) ? absint($nutrition['id']) : 0,
 							'food_manager_nutrition'
 						);
 						$unit_id     = !empty($nutrition['unit_id']) ? absint($nutrition['unit_id']) : 0;
-						$nutriValue    = !empty($nutrition['value']) ? $nutrition['value'] : null;
-						$nutriTermID   = !empty($nutriTerm->term_id) ? $nutriTerm->term_id : null;
-						$nutriTermName = !empty($nutriTerm->name) ? $nutriTerm->name : null;
+						$$nutrition_value    = !empty($nutrition['value']) ? $nutrition['value'] : null;
+						$$nutrition_term_id   = !empty($nutrition_term->term_id) ? $nutrition_term->term_id : null;
+						$$nutrition_term_name = !empty($nutrition_term->name) ? $nutrition_term->name : null;
 
-						if ($nutriTermID) {
-							echo "<li class='wpfm-sortable-item active-item' data-id='" . esc_attr($nutriTermID) . "'>" .
-								"<label>" . esc_html($nutriTermName) . "</label>" .
+						if ($$nutrition_term_id) {
+							echo "<li class='wpfm-sortable-item active-item' data-id='" . esc_attr($$nutrition_term_id) . "'>" .
+								"<label>" . esc_html($$nutrition_term_name) . "</label>" .
 								"<div class='wpfm-sortable-item-values'>" .
-								"<input type='number' step='any' class='item-value' name='food_nutritions[" . esc_attr($nutriTermID) . "][value]' value='" . esc_attr($nutriValue) . "'>" .
-								"<select name='food_nutritions[" . esc_attr($nutriTermID) . "][unit_id]' class='item-unit'>" .
+								"<input type='number' step='any' class='item-value' name='food_nutritions[" . esc_attr($$nutrition_term_id) . "][value]' value='" . esc_attr($$nutrition_value) . "'>" .
+								"<select name='food_nutritions[" . esc_attr($$nutrition_term_id) . "][unit_id]' class='item-unit'>" .
 								"<option value=''>Unit</option>";
 
 							if (!empty($units)) {
@@ -82,7 +82,7 @@ $units = get_terms(
 		<ul id="wpfm-available-nutri-list" class="wpfm-available-list wpfm-sortable-list wpfm-clear ui-sortable" data-title="Available Nutrition">
 			<li class="wpfm-item-search with-title">
 				<label class="wpfm-search-label">
-					<span>Search nutrition</span>
+					<span><?php _e('Search Nutrition', 'wp-food-manager')?></span>
 					<input type="text" placeholder="Search">
 				</label>
 			</li>

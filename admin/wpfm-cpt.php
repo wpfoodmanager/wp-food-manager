@@ -158,15 +158,15 @@ class WPFM_CPT {
                 display_food_veg_nonveg_icon_tag();
                 break;
 
-            case 'fm-price':
+            case 'food-price':
                 display_food_price_tag();
                 break;
 
-            case 'fm_categories':
+            case 'food_categories':
                 echo display_food_category();
                 break;
 
-            case 'fm_stock_status':
+            case 'food_stock_status':
                 echo display_stock_status();
                 break;
 
@@ -243,16 +243,18 @@ class WPFM_CPT {
         switch ($column) {
             case 'shortcode':
                 echo '<code>';
-        printf(esc_html__('[food_menu id=%d]', 'wp-food-manager'), esc_attr($post_id));
-        echo '</code>';
+                printf(esc_html__('[food_menu id=%d]', 'wp-food-manager'), esc_attr($post_id));
+                echo '</code>';
                 break;
-                case 'thumbnail':
-                    if (has_post_thumbnail()) {
-                        echo the_post_thumbnail('medium');
-                    } else {
-                        echo '-';
-                    }
-                    break;
+            case 'thumbnail':
+                if (has_post_thumbnail()) {
+                    echo the_post_thumbnail('medium');
+                } else {
+                    echo '-';
+                }
+                break;
+            default:
+                break;
         }
     }
     
@@ -286,8 +288,8 @@ class WPFM_CPT {
         unset($columns['title'], $columns['date'], $columns['author']);
         $columns['food_title'] = __('Title', 'wp-food-manager');
         $columns['food_banner'] = '<span class="dashicons dashicons-format-image">' . __('Banner', 'wp-food-manager') . '</span>';
-        $columns['fm_stock_status'] = __('Stock Status', 'wp-food-manager');
-        $columns['fm_categories'] = __('Categories', 'wp-food-manager');
+        $columns['food_stock_status'] = __('Stock Status', 'wp-food-manager');
+        $columns['food_categories'] = __('Categories', 'wp-food-manager');
         $columns['food_menu_order'] = __('Order', 'wp-food-manager');
         $columns['food_status'] = __('Status', 'wp-food-manager');
         $columns['food_actions'] = __('Actions', 'wp-food-manager');
@@ -342,9 +344,9 @@ class WPFM_CPT {
             'cb' => $columns['cb'],
             'food_title' => $columns['title'],
             'food_banner' => __('Image', 'wp-food-manager'),
-            'fm_stock_status' => __('Stock Status', 'wp-food-manager'),
-            'fm-price' => __('Price', 'wp-food-manager'),
-            'fm_categories' => __('Categories', 'wp-food-manager'),
+            'food_stock_status' => __('Stock Status', 'wp-food-manager'),
+            'food-price' => __('Price', 'wp-food-manager'),
+            'food_categories' => __('Categories', 'wp-food-manager'),
             'food_menu_order' => __('Order', 'wp-food-manager'),
             'food_status' => __('Status', 'wp-food-manager'),
             'date' => $columns['date'],

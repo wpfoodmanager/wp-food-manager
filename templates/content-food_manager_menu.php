@@ -11,10 +11,10 @@ if (isset($featured_img_url) && empty($featured_img_url)) {
         <div>
             <h3><?php esc_html_e('Food Lists'); ?></h3>
             <?php
-            $po_ids = get_post_meta($post->ID, '_food_item_ids', true);
-            if (!empty($po_ids)) {
+            $food_menu_ids = get_post_meta($post->ID, '_food_item_ids', true);
+            if (!empty($food_menu_ids)) {
                 $food_listings = get_posts(array(
-                    'include'   => implode(",", $po_ids),
+                    'include'   => implode(",", $food_menu_ids),
                     'post_type' => 'food_manager',
                     'orderby'   => 'post__in',
                 ));

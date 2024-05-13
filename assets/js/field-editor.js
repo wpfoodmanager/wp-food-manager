@@ -122,24 +122,6 @@ var WPFM_FieldEditor = function () {
 					jQuery(this).closest('tr').find('.field-rules .chosen-container').hide();
 				} else if ('term-select' === jQuery(this).val() || 'term-autocomplete' === jQuery(this).val() || 'term-checklist' === jQuery(this).val() || 'term-select-multi-appearance' === jQuery(this).val() || 'term-multiselect' === jQuery(this).val()) {
 					jQuery(this).closest('tr').find('.field-options .taxonomy-select').show();
-				} else if ('group' === jQuery(this).val()) {
-					if (jQuery(this).closest('tr').next().hasClass('group')) {
-					} else {
-						var obj = jQuery(this);
-						jQuery.ajax({
-							url: wpfm_form_editor.ajax_url,
-							type: 'POST',
-							dataType: 'HTML',
-							data: {
-								action: 'get_group_field_html',
-								security: wpfm_form_editor.wpfm_form_editor_security,
-							},
-							success: function (responce) {
-								obj.closest('tr').attr('data-field-type', 'group');
-								obj.closest('tr').after(responce);
-							}
-						});
-					}
 				} else {
 					jQuery(this).closest('tr').find('.field-options .placeholder').show();
 				}

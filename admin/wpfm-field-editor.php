@@ -211,57 +211,6 @@ class WPFM_Field_Editor {
 	 * @return void
 	 * @since 1.0.0
 	 */
-	private function child_form_editor_save($field) {
-		$index = 0;
-		$child_fields = array();
-
-		foreach ($field['fields'] as $field_key => $field_value) {
-			$index++;
-			$field['fields'][$field_key]['priority'] = $index;
-			$field['fields'][$field_key]['label'] = trim($field_value['label']);
-			if (isset($field_value['type']) && !in_array($field_value['type'], array('term-select', 'term-select-multi-appearance', 'term-multiselect', 'term-checklist'))) {
-				unset($field['fields'][$field_key]['taxonomy']);
-			}
-
-			if (isset($field_value['type']) && $field_value['type'] == 'select' || $field_value['type'] == 'radio' || $field_value['type'] == 'multiselect' || $field_value['type'] == 'button-options' || $field_value['type'] == 'checkbox') {
-				if (isset($field_value['options']) && !empty($field_value['options'])) {
-					$field_value['options'] = explode('|', $field_value['options']);
-					$temp_options = array();
-					foreach ($field_value['options'] as $val) {
-						$option_key = explode(':', $val);
-						if (isset($option_key[1])) {
-							$temp_options[strtolower(str_replace(' ', '_', trim($option_key[0])))] = trim($option_key[1]);
-						} else {
-							$temp_options[strtolower(str_replace(' ', '_', trim($option_key[0])))] = trim($option_key[0]);
-						}
-					}
-					$field['fields'][$field_key]['options'] = $temp_options;
-				}
-			} else {
-				unset($field['fields'][$field_key]['options']);
-			}
-
-			if (!is_int($field_key)) {
-				continue;
-			}
-
-			if (isset($field_value['label'])) {
-				$label_key = str_replace(' ', '_', $field_value['label']);
-				$field['fields'][strtolower($label_key)] = $field['fields'][$field_key];
-			}
-
-			unset($field['fields'][$field_key]);
-		}
-		return $field['fields'];
-	}
-
-	/**
-	 * Save the form fields.
-	 * 
-	 * @access private
-	 * @return void
-	 * @since 1.0.0
-	 */
 	private function form_editor_save() {
 		if (wp_verify_nonce($_POST['_wpnonce'], 'save-wp-food-manager-form-field-editor')) {
 			$food_field     = !empty($_POST['food']) ? $this->sanitize_array($_POST['food']) : array();
@@ -282,13 +231,6 @@ class WPFM_Field_Editor {
 						if (isset($new_fields[$group_key][$field_key]['type']) && $new_fields[$group_key][$field_key]['type'] === 'switch') {
 							$new_fields[$group_key][$field_key]['required'] = 0;
 						}
-						if (isset($new_fields[$group_key][$field_key]['type']) && $new_fields[$group_key][$field_key]['type'] === 'group') {
-							if (isset($field_value['fields']) && !empty($field_value['fields'])) {
-								$child_fields                                     = $this->child_form_editor_save($field_value);
-								$new_fields[$group_key][$field_key]['fields'] = $child_fields;
-							}
-						}
-
 						$new_fields[$group_key][$field_key]['priority'] = $index;
 						$new_fields[$group_key][$field_key]['label'] = trim($new_fields[$group_key][$field_key]['label']);
 						if (isset($new_fields[$group_key][$field_key]['type']) && !in_array($new_fields[$group_key][$field_key]['type'], array('term-select', 'term-select-multi-appearance', 'term-multiselect', 'term-checklist'))) {
@@ -367,8 +309,8 @@ class WPFM_Field_Editor {
 	 */
 	private function sanitize_array($input) {
 		if (is_array($input)) {
-			foreach ($input as $k => $v) {
-				$input[$k] = $this->sanitize_array($v);
+			foreach ($input as $key => $value) {
+				$input[$key] = $this->sanitize_array($value);
 			}
 			return $input;
 		} else {

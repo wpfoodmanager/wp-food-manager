@@ -68,7 +68,7 @@ if (is_admin()) {
 			if (is_array($field_val_num) && count($field_val_num) == 1) {
 				$field_val_num = array_shift($field_val_num);
 				get_food_manager_template('form-fields/uploaded-file-html.php', array('key' => esc_attr($key), 'name' => esc_attr($field_name), 'value' => $field_val_num, 'field' => $field));
-			} elseif (!empty($field_val_num) && $field['multiple'] == 0 && is_array($field['value']) && is_array($field_val_num) && !wpfm_isMultiArray($field['value'])) {
+			} elseif (!empty($field_val_num) && $field['multiple'] == 0 && is_array($field['value']) && is_array($field_val_num) && !wpfm_is_multi_array($field['value'])) {
 				$field['value'] = !empty($field['value'][0]) ? $field['value'][0] : '';
 				get_food_manager_template('form-fields/uploaded-file-html.php', array('key' => esc_attr($key), 'name' => esc_attr($field_name), 'value' => $field['value'], 'field' => $field));
 			} elseif (!empty($field_val_num) && is_array($field_val_num)) {
@@ -77,7 +77,7 @@ if (is_admin()) {
 						get_food_manager_template('form-fields/uploaded-file-html.php', array('key' => esc_attr($key), 'name' => esc_attr($field_name), 'value' => $value, 'field' => $field));
 					}
 				endforeach;
-			} elseif (!empty($field['value']) && is_array($field['value']) && wpfm_isMultiArray($field['value'])) {
+			} elseif (!empty($field['value']) && is_array($field['value']) && wpfm_is_multi_array($field['value'])) {
 				foreach ($field['value'] as $value) :
 					if (!empty($value)) {
 						get_food_manager_template('form-fields/uploaded-file-html.php', array('key' => esc_attr($key), 'name' => esc_attr($field_name), 'value' => $value, 'field' => $field));

@@ -19,14 +19,7 @@
 			</div>
 			<!-- Search by keywords section end-->
 			<?php
-              $args = array(
-              'post_type'      => 'food_manager_menu',
-              'post_status'    => 'publish',
-              'posts_per_page' => -1,
-            );
-           $food_menu_posts = get_posts($args);
-			$the_query = new WP_Query($args);
-			if ($the_query->have_posts()) {
+			if ($food_menu_query) {
 				?>
 				<!-- Search by food menu section start -->
 				<div class="wpfm-col">
@@ -38,10 +31,7 @@
 							if (!$show_food_menu_multiselect) {
 								echo '<option value="">' . esc_html__('Choose a Food Menu') . '</option>';
 							}
-			
-							while ($the_query->have_posts()) {
-								$the_query->the_post();
-								?>
+							foreach($food_menu_query as $food_menu) { ?>
 								<option value="<?php echo esc_attr(get_the_ID()); ?>"><?php echo esc_html(get_the_title()); ?></option>
 								<?php
 							}

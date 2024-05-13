@@ -213,9 +213,9 @@ function display_food_price_tag($post = null) {
 		$formatted_regular_price = number_format($regular_price, $price_decimals, $price_decimal_separator, $price_thousand_separator);
 	}
 	if (!empty($regular_price) && !empty($sale_price)) {
-		$f_regular_price = sprintf($price_format, '<span class="food-manager-Price-currencySymbol">' . get_food_manager_currency_symbol() . '</span>', $formatted_sale_price);
-		$f_sale_price = sprintf($price_format, '<span class="food-manager-Price-currencySymbol">' . get_food_manager_currency_symbol() . '</span>', $formatted_regular_price);
-		echo "<del> " . $f_sale_price . "</del><ins> <span class='food-manager-Price-currencySymbol'>" . $f_regular_price . "</ins>";
+		$food_regular_price = sprintf($price_format, '<span class="food-manager-Price-currencySymbol">' . get_food_manager_currency_symbol() . '</span>', $formatted_sale_price);
+		$food_sale_price = sprintf($price_format, '<span class="food-manager-Price-currencySymbol">' . get_food_manager_currency_symbol() . '</span>', $formatted_regular_price);
+		echo "<del> " . $food_sale_price . "</del><ins> <span class='food-manager-Price-currencySymbol'>" . $food_regular_price . "</ins>";
 	}
 	if (empty($regular_price) && empty($sale_price)) {
 		return false;
@@ -741,9 +741,9 @@ function display_stock_status($post = null, $after = '') {
     } else if (is_string($food_stock_status) && !empty($food_stock_status)) {
         // Handling string type
         $food_stock_status_label = "";
-        if ($food_stock_status == 'fm_instock') {
+        if ($food_stock_status == 'food_instock') {
             $food_stock_status_label = 'In stock';
-        } elseif ($food_stock_status == 'fm_outofstock') {
+        } elseif ($food_stock_status == 'food_outofstock') {
             $food_stock_status_label = 'Out of stock';
         }
         echo '<mark class="' . esc_attr($food_stock_status) . '">' . esc_html($food_stock_status_label) . '</mark>';
@@ -759,9 +759,9 @@ function display_stock_status($post = null, $after = '') {
  */
 function display_single_stock_status($food_stock_status) {
     $food_stock_status_label = "";
-    if ($food_stock_status == 'fm_instock') {
+    if ($food_stock_status == 'food_instock') {
         $food_stock_status_label = 'In stock';
-    } elseif ($food_stock_status == 'fm_outofstock') {
+    } elseif ($food_stock_status == 'food_outofstock') {
         $food_stock_status_label = 'Out of stock';
     }
     echo '<mark class="' . esc_attr($food_stock_status) . '">' . esc_html($food_stock_status_label) . '</mark>';
