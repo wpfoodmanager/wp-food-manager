@@ -1,7 +1,7 @@
 <?php
 global $post;
 $featured_img_url = get_the_post_thumbnail_url(get_the_ID(), 'full');
-$thumbnail_option = get_option('food_manager_menu_thumbnail');
+$thumbnail_option = get_option('food_manager_enable_thumbnail');
 if (isset($featured_img_url) && empty($featured_img_url)) {
     $featured_img_url = '';
 } else {
