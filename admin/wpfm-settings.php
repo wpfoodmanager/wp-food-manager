@@ -222,8 +222,8 @@ class WPFM_Settings {
 							'desc'    => __('If you select any option, it will reflect the thumbnail placement on food manager menu.', 'wp-food-manager'),
 							'type'    => 'radio',
 							'options' => array(
-								'left_side' => __('Left Side.', 'wp-food-manager'),
-								'right_side' => __('Right Side.', 'wp-food-manager'),
+								'left' => __('Left Side.', 'wp-food-manager'),
+								'right' => __('Right Side.', 'wp-food-manager'),
 								'thumbnail_disabled' => __('Disable.', 'wp-food-manager')
 							),
 						),

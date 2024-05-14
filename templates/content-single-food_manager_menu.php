@@ -110,7 +110,9 @@ if ( 'food_manager_menu' == get_post_type() ) {
                 $menu_food_desc = "<div class='fm-food-menu-desc'>" . wp_kses_post($food_listing->post_content) . "</div>";
             }
             echo "<div class='food-list-box'>";
-            echo "<div class='wpfm-food-list-box-image-col wpfm-food-image-". esc_attr($thumbnail_option) ."'><img src='" . esc_url($featured_img) . "' alt=''></div>";
+            if($thumbnail_option != 'thumbnail_disabled'){
+                echo "<div class='wpfm-food-list-box-image-col wpfm-food-image-". esc_attr($thumbnail_option) ."'><img src='" . esc_url($featured_img) . "' alt=''></div>";
+            }
             echo "<div class='wpfm-food-list-box-content-col'>";
             echo "<div class='food-menu-label'>" . $food_label . "</div>";
             echo "<a href='" . $food_menu_permalink . "'>";
