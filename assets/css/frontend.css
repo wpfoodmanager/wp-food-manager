@@ -2665,6 +2665,9 @@ span.fm-divider {
     object-fit: cover;
     border-radius: 4px;
 }
+.fm-food-menu-container .wpfm-food-list-box-content-col {
+    flex: 1;
+}
 .fm-food-menu-container .wpfm-food-image-right {
     order: 1;
 }
