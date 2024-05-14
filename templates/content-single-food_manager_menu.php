@@ -1,6 +1,5 @@
 <?php
 global $post;
-//echo $post->ID;
 $featured_img_url = get_the_post_thumbnail_url(get_the_ID(), 'full');
 $thumbnail_option = get_option('food_manager_menu_thumbnail');
 if (isset($featured_img_url) && empty($featured_img_url)) {
@@ -53,7 +52,7 @@ if ( 'food_manager_menu' == get_post_type() ) {
         </h3>
     <?php }
     if (!empty($featured_img_url)) {
-        echo "<div class='wpfm-single-food-menu-category-banner ". esc_attr($thumbnail_option) ."'>";
+        echo "<div class='wpfm-single-food-menu-category-banner'>";
         echo "<div class='wpfm-single-food-menu-category-title'>" . esc_html($term_name) . "</div>";
         echo "<img src='" . esc_url($featured_img_url) . "' alt='" . esc_attr($term_name) . "'>";
         echo "</div>";
@@ -90,6 +89,7 @@ if ( 'food_manager_menu' == get_post_type() ) {
             $sale_price = get_post_meta($food_listing->ID, '_food_sale_price', true);
             $regular_price = get_post_meta($food_listing->ID, '_food_price', true);
             $food_label = get_post_meta($food_listing->ID, '_food_label', true);
+            $featured_img = get_the_post_thumbnail_url($food_listing->ID, 'thumbnail');
             $formatted_sale_price = ''; // Initialize the variable
             $formatted_regular_price = ''; // Initialize the variable
             if( $food_redirect_option == 'yes'){
@@ -106,7 +106,8 @@ if ( 'food_manager_menu' == get_post_type() ) {
             if (!empty($food_listing->post_content)) {
                 $menu_food_desc = "<div class='fm-food-menu-desc'>" . wp_kses_post($food_listing->post_content) . "</div>";
             }
-            echo "<div class='food-list-box ".$food_redirect_option."'>";
+            echo "<div class='food-list-box'>";
+            echo "<div class='food_image ". esc_attr($thumbnail_option) ."'><img src='" . esc_url($featured_img) . "' alt=''></div>";
             echo "<a href='" . $food_menu_permalink . "'>";
             echo "<div class='fm-food-menu-title'><strong>" . esc_html($food_listing->post_title) . "</strong></div>";
             echo "<div class='fm-food-menu-pricing'>";

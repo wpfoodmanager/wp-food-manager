@@ -216,15 +216,15 @@ class WPFM_Settings {
 							'attributes' => array(),
 						),
 						array(
-							'name'    => 'food_manager_menu_thumbnail',
-							'std'     => 'right',
-							'label'   => __('Food Menu Thumbnail', 'wp-food-manager'),
+							'name'    => 'food_manager_enable_thumbnail',
+							'std'     => 'right_side',
+							'label'   => __('Food Thumbnail', 'wp-food-manager'),
 							'desc'    => __('If you select any option, it will reflect the thumbnail placement on food manager menu.', 'wp-food-manager'),
 							'type'    => 'radio',
 							'options' => array(
-								'left_side_thumbnail' => __('Left Side Thumbnail.', 'wp-food-manager'),
-								'right_side_thumbnail' => __('Right Side Thumbnail.', 'wp-food-manager'),
-								'thumbnail_disabled' => __('Disabled Thumbnail.', 'wp-food-manager')
+								'left_side' => __('Left Side.', 'wp-food-manager'),
+								'right_side' => __('Right Side.', 'wp-food-manager'),
+								'thumbnail_disabled' => __('Disable.', 'wp-food-manager')
 							),
 						),
 					),
