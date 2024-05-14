@@ -154,7 +154,7 @@ if (!function_exists('get_food_listings')) :
 		$query_args['lang'] = apply_filters('wpfm_lang', null);
 
 		// Filter args.
-		$query_args = apply_filters('get_food_listings_query_args', $query_args, $args);
+		$query_args = apply_filters('wpfm_get_food_listings_query_args', $query_args, $args);
 		do_action('before_get_food_listings', $query_args, $args);
 
 		// Cache results.
