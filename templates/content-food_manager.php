@@ -25,11 +25,6 @@ if (get_option('food_manager_food_item_show_hide') == 0 && get_stock_status() !=
                             </div>
                             
                             <div class="wpfm-food-price"><?php display_food_price_tag(); ?></div>
-                                <?php
-                                if (get_option('food_manager_enable_food_types') && get_food_type()) {
-                                ?>
-                                <div class="wpfm-food-type"><?php display_food_type(); ?></div>
-                                <?php } ?>
                             <?php do_action('food_list_overview_after', get_the_ID()); ?>
                         </div>
                     </div>
@@ -65,13 +60,6 @@ if (get_option('food_manager_food_item_show_hide') == 0 && get_stock_status() !=
                                         <?php display_food_price_tag(); ?>
                                     </div>
                             </a>
-                            <?php
-                            if (get_option('food_manager_enable_food_types') && get_food_type()) {
-                                ?>
-                                <div class="wpfm-food-type">
-                                    <?php display_food_type(); ?>
-                                </div>
-                            <?php } ?>
                             <?php do_action('food_list_overview_after', get_the_ID()); ?>
                         </div>
                         <?php if (get_stock_status() == 'food_outofstock') { ?>
