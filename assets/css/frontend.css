@@ -2607,8 +2607,9 @@ span.fm-divider {
     position: relative;
     transition: all 0.2s 0s;
     width: calc(50% - 20px);
+    display: flex;
+    gap: 15px;
 }
-
 .fm-food-menu-container .food-list-box>a {
     color: var(--wpfm-dark-color);
 }
@@ -2652,6 +2653,31 @@ span.fm-divider {
     color: var(--wpfm-gray-color);
     font-weight: 500;
     font-size: 14px;
+}
+.fm-food-menu-container .wpfm-food-list-box-image-col {
+    flex: 0 0 150px;
+    max-width: 150px;
+    height: 150px;
+}
+.fm-food-menu-container .wpfm-food-list-box-image-col img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 4px;
+}
+.fm-food-menu-container .wpfm-food-image-right {
+    order: 1;
+}
+.food-menu-label{
+    font-size: 11px;
+    line-height: 22px;
+    margin-bottom: 5px;
+    background: var(--wpfm-primary-color);
+    padding: 0px 7px;
+    font-weight: 700;
+    color: var(--wpfm-white-color);
+    text-transform: uppercase;
+    display: inline-block;
 }
 
 .wpfm-food-single-image img {

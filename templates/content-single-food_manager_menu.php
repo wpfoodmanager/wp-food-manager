@@ -107,7 +107,9 @@ if ( 'food_manager_menu' == get_post_type() ) {
                 $menu_food_desc = "<div class='fm-food-menu-desc'>" . wp_kses_post($food_listing->post_content) . "</div>";
             }
             echo "<div class='food-list-box'>";
-            echo "<div class='food_image ". esc_attr($thumbnail_option) ."'><img src='" . esc_url($featured_img) . "' alt=''></div>";
+            echo "<div class='wpfm-food-list-box-image-col wpfm-food-image-". esc_attr($thumbnail_option) ."'><img src='" . esc_url($featured_img) . "' alt=''></div>";
+            echo "<div class='wpfm-food-list-box-content-col'>";
+            echo "<div class='food-menu-label'>" . $food_label . "</div>";
             echo "<a href='" . $food_menu_permalink . "'>";
             echo "<div class='fm-food-menu-title'><strong>" . esc_html($food_listing->post_title) . "</strong></div>";
             echo "<div class='fm-food-menu-pricing'>";
@@ -121,9 +123,10 @@ if ( 'food_manager_menu' == get_post_type() ) {
             }
             echo "</div>";
             echo "</a>";
+            
             echo $menu_food_desc;
-            echo $food_label;
             do_action('food_menu_list_overview_after', $food_listing->ID);
+            echo "</div>";
             echo "</div>";
         }
         echo "</div>";

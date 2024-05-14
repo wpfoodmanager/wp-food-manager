@@ -48,7 +48,7 @@ $food = $post;
                             <div class="wpfm-single-food-short-info">
                                 <div class="wpfm-food-details">
                                     <div class="food-details-row">
-                                       
+                                        <div class="food-menu-label"><?php echo apply_filters('wpfm_food_label', get_post_meta($post->ID, '_food_label', true)); ?></div>
                                         <?php
                                         $view_count = get_food_views_count($post);
                                         if ($view_count) : ?>
@@ -57,6 +57,7 @@ $food = $post;
                                             </div>
                                         <?php endif; ?>
                                     </div>
+                                    
                                     <div class="wpfm-food-title">
                                         <h3 class="wpfm-heading-text"><?php the_title(); ?></h3>
                                         <?php display_food_veg_nonveg_icon_tag(); ?>
@@ -78,7 +79,6 @@ $food = $post;
                             <div class="wpfm-single-food-body-content">
                                 <?php do_action('single_food_overview_start'); ?>
                                 <?php echo apply_filters('wpfm_the_content', $post->post_content); ?>
-                                <?php echo apply_filters('wpfm_food_label', get_post_meta($post->ID, '_food_label', true)); ?>
                                 <?php do_action('single_food_overview_end'); ?>
                                 <?php
                                 $ingredients = get_food_ingredients();
