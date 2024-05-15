@@ -164,6 +164,10 @@ var WPFM_Frontend = function () {
                     jQuery(this).parent().addClass("wpfm-accordion-item-show");
                 }
             });
+
+            if(jQuery("#wp-link-wrap").length){
+                jQuery("#wp-link-wrap").remove();
+            }
         },
         actions: {
             removeFoodItem: function (event) {
