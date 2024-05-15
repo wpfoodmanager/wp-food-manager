@@ -51,16 +51,16 @@ $units = get_terms(
 							'food_manager_nutrition'
 						);
 						$unit_id     = !empty($nutrition['unit_id']) ? absint($nutrition['unit_id']) : 0;
-						$$nutrition_value    = !empty($nutrition['value']) ? $nutrition['value'] : null;
-						$$nutrition_term_id   = !empty($nutrition_term->term_id) ? $nutrition_term->term_id : null;
-						$$nutrition_term_name = !empty($nutrition_term->name) ? $nutrition_term->name : null;
+						$nutrition_value    = !empty($nutrition['value']) ? $nutrition['value'] : null;
+						$nutrition_term_id   = !empty($nutrition_term->term_id) ? $nutrition_term->term_id : null;
+						$nutrition_term_name = !empty($nutrition_term->name) ? $nutrition_term->name : null;
 
-						if ($$nutrition_term_id) {
-							echo "<li class='wpfm-sortable-item active-item' data-id='" . esc_attr($$nutrition_term_id) . "'>" .
-								"<label>" . esc_html($$nutrition_term_name) . "</label>" .
+						if ($nutrition_term_id) {
+							echo "<li class='wpfm-sortable-item active-item' data-id='" . esc_attr($nutrition_term_id) . "'>" .
+								"<label>" . esc_html($nutrition_term_name) . "</label>" .
 								"<div class='wpfm-sortable-item-values'>" .
-								"<input type='number' step='any' class='item-value' name='food_nutritions[" . esc_attr($$nutrition_term_id) . "][value]' value='" . esc_attr($$nutrition_value) . "'>" .
-								"<select name='food_nutritions[" . esc_attr($$nutrition_term_id) . "][unit_id]' class='item-unit'>" .
+								"<input type='number' step='any' class='item-value' name='food_nutritions[" . esc_attr($nutrition_term_id) . "][value]' value='" . esc_attr($nutrition_value) . "'>" .
+								"<select name='food_nutritions[" . esc_attr($nutrition_term_id) . "][unit_id]' class='item-unit'>" .
 								"<option value=''>Unit</option>";
 
 							if (!empty($units)) {
