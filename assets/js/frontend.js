@@ -164,9 +164,27 @@ var WPFM_Frontend = function () {
                     jQuery(this).parent().addClass("wpfm-accordion-item-show");
                 }
             });
-
-            if(jQuery("#wp-link-wrap").length){
-                jQuery("#wp-link-wrap").remove();
+            // Check if neither of the classes are present
+            if (!jQuery('.account-sign-in').length && !jQuery('.account-sign-in').length) { 
+                jQuery("#wp-link-wrap").remove();            
+            } else {
+                // Check if the element with ID "link-modal-title" exists
+                if (jQuery('#link-modal-title').length) {
+                    // Replace h1 with h2 and set CSS properties
+                    jQuery('#link-modal-title').replaceWith(function() {
+                        return jQuery('<h2>', {
+                            html: jQuery(this).html()
+                        }).css({
+                            'background': '#fff',
+                            'border-bottom': '1px solid #dcdcde',
+                            'font-size': '18px',
+                            'font-weight': '600',
+                            'line-height': '2',
+                            'margin': '0',
+                            'padding': '0 36px 0 16px'
+                        });
+                    });
+                }
             }
         },
         actions: {
