@@ -3208,6 +3208,15 @@ img.wpfm-organic-tag-icon {
     small.wpfm-food-status-pending-approval {
         margin-top: 10px;
     }
+    .fm-food-menu-container .food-list-box {
+        padding: 10px;
+        gap: 10px;
+    }
+    .fm-food-menu-container .wpfm-food-list-box-image-col {
+        flex: 0 0 80px;
+        max-width: 80px;
+        height: 80px;
+    }
 }
 
 /* ===== 16. MEDIA QUERY END ===== */
