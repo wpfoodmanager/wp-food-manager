@@ -165,7 +165,7 @@ var WPFM_Frontend = function () {
                 }
             });
             // Check if neither of the classes are present
-            if (!jQuery('.account-sign-in').length && !jQuery('.account-sign-in').length) { 
+            if (!jQuery('.account-sign-in').length) { 
                 jQuery("#wp-link-wrap").remove();            
             } else {
                 // Check if the element with ID "link-modal-title" exists
