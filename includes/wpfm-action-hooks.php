@@ -620,7 +620,15 @@ class WPFM_ActionHooks {
 
                     if (isset($_POST[$key]) && !empty($_POST[$key])) {
                         foreach ($_POST[$key] as $id => $nutrition) {
-                            $term_name = esc_attr(get_term($id)->name);
+                            $term = get_term($id);
+                            //check null value in return get_term functiona
+                            if ($term !== null) {
+                                $term_name = esc_attr($term->name);
+                            } else {
+                                // Handle case where term doesn't exist
+                                $term_name = ''; // Or any default value you prefer
+                            }
+
                             $unit_name = "Unit";
                             if ($nutrition['unit_id'] == '' && empty($nutrition['unit_id'])) {
                                 $unit_name = "Unit";
