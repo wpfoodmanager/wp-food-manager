@@ -621,6 +621,7 @@ class WPFM_ActionHooks {
                     if (isset($_POST[$key]) && !empty($_POST[$key])) {
                         foreach ($_POST[$key] as $id => $nutrition) {
                             $term = get_term($id);
+                            
                             //check null value in return get_term functiona
                             if ($term !== null) {
                                 $term_name = esc_attr($term->name);
