@@ -96,9 +96,11 @@ if ( 'food_manager_menu' == get_post_type() ) {
             $formatted_sale_price = ''; // Initialize the variable
             $formatted_regular_price = ''; // Initialize the variable
             if( $food_redirect_option == 'yes'){
-                $food_menu_permalink = 'javascript:void(0);';
+                $food_menu_permalink = '#';
+                $food_menu_return_false ='onclick="return false;"';
             } else{
                 $food_menu_permalink = esc_url(get_permalink($food_listing->ID));
+                $food_menu_return_false = '';
             }
             if (!empty($sale_price)) {
                 $formatted_sale_price = number_format($sale_price, $price_decimals, $price_decimal_separator, $price_thousand_separator);
@@ -117,7 +119,7 @@ if ( 'food_manager_menu' == get_post_type() ) {
             if (!empty($food_label)) {
                 echo "<div class='food-menu-label'>" . $food_label . "</div>";
             }
-            echo "<a href='" . $food_menu_permalink . "'>";
+            echo "<a $food_menu_return_false href='" . $food_menu_permalink . "'>";
             echo "<h3 class='fm-food-menu-title'>" . esc_html($food_listing->post_title) . "</h3>";
             echo "<div class='fm-food-menu-pricing'>";
 
