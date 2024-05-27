@@ -59,9 +59,16 @@ class WPFM_Ajax {
      * @since 1.0.0
      */
     public static function add_endpoint() {
+        
         add_rewrite_tag('%fm-ajax%', '([^/]*)');
         add_rewrite_rule('fm-ajax/([^/]*)/?', 'index.php?fm-ajax=$matches[1]', 'top');
         add_rewrite_rule('index.php/fm-ajax/([^/]*)/?', 'index.php?fm-ajax=$matches[1]', 'top');
+
+        if (get_option('wpfm_flush_rewrite_rules') != true) {
+            flush_rewrite_rules();
+            update_option('wpfm_flush_rewrite_rules', true);
+        }
+
     }
 
 	/**

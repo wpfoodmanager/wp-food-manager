@@ -72,7 +72,7 @@ if (!empty($extra_fields_options)) {
 		<!-- Extra options Fields -->
 		<?php
 
-		if ((isset($_POST['food_id']) && !empty($_POST['food_id'])) || (isset($_GET['action']) == 'edit')) {
+		// if ((isset($_POST['food_id']) && !empty($_POST['food_id'])) || (isset($_GET['action']) == 'edit')) {
 			if ($topping_fields) : ?>
 				<?php do_action('add_topping_fields_start'); ?>
 				<h3 class="wpfm-form-title wpfm-heading-text"><?php _e('Extra Toppings', 'wp-food-manager'); ?></h3>
@@ -249,7 +249,8 @@ if (!empty($extra_fields_options)) {
 				</div>
 		<?php
 			endif;
-		} ?>
+		// } 
+		?>
 		<div class="wpfm-form-footer">
 			<input type="hidden" name="food_manager_form" value="<?php echo $form; ?>" />
 			<input type="hidden" name="food_id" value="<?php echo esc_attr($food_id); ?>" />
