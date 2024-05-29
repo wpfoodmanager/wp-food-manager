@@ -16,9 +16,9 @@ $disbled_fields_for_admin = array('food_category', 'food_tag', 'food_nutritions'
 		if ($key == 'toppings') {
 			include 'food-data-toppings.php';
 		} elseif ($key == 'ingredients') {
-			include 'food-data-ingredients.php';
+			include 'food-data-ingredient.php';
 		} elseif ($key == 'nutritions') {
-			include 'food-data-nutritions.php';
+			include 'food-data-nutrition.php';
 		} else { 
 			$check_custom_tab = apply_filters('wpfm_food_custom_tab', false, $key);
 			if($check_custom_tab){
