@@ -2,7 +2,6 @@
 if (empty($field_key)) {
 	$field_key = $index;
 }
-
 $taxonomies = get_object_taxonomies((object) array('post_type' => 'food_manager'));
 if ($taxonomies) {
 	$count = $remove_tax = 0;
@@ -45,6 +44,7 @@ if ($remove_tax != 0) {
 	if ($field_key == 'topping_options') {
 		$field_types['options'] = esc_html__('Options', 'wp-food-manager');
 	}
+error_log(print_r($field, true));
 	
 $wpfm_admin_class = '';
 if ($field_key == 'food_category') {
@@ -57,8 +57,11 @@ if ($field_key == 'food_category') {
 	$wpfm_admin_class = '';
 } elseif ($field_key == 'food_nutritions') {
 	$wpfm_admin_class = '';
-} else {
-	$wpfm_admin_class = 'wpfm-admin-common';
+// } elseif($field_key == 'tax_classes_cat') {
+	// $wpfm_admin_class = '';
+
+}else {
+	$wpfm_admin_class = apply_filters('wpfm_check_field_editor_key', 'wpfm-admin-common', $field_key);
 }
 
 // Disable field_types this array's field type is only for the core functionality types it doesn't usable in the field editor.
@@ -73,9 +76,11 @@ $disable_field_types = array('term-autocomplete', 'term-select-multi-appearance'
 		<select name="<?php echo esc_attr($group_key); ?>[<?php echo esc_attr($field_key); ?>][type]" class="field_type">
 
 			<?php
+			// error_log(print_r($field, true));
 			foreach ($field_types as $key => $type) {
 				if (in_array($field_key, $disbled_fields)) {
 					if ($key == $field['type']) {
+						
 						printf('<option value="' . esc_attr($key) . '" ' . selected($field['type'], $key, false) . ' class="wpfm-opt-val ' . esc_attr($key) . '">' . esc_html($type) . '</option>');
 					}
 				} else {

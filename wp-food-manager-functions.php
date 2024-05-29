@@ -1933,7 +1933,10 @@ function wpfm_dropdown_categories($taxonomy, $key_name, $selected_term) {
 			'hide_empty'       => false
 		)
 	);
-
+	if (is_wp_error($terms)) {
+        echo 'Error: ' . $terms->get_error_message();
+        return;
+    }
 	$wpfm_term_ids = array();
 	echo '<select name="' . esc_attr(sanitize_title($key_name)) . '" id="' . esc_attr(sanitize_title($key_name)) . '" class="postform">';
 	foreach ((array) $terms as $term) {

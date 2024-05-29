@@ -16,10 +16,15 @@ $disbled_fields_for_admin = array('food_category', 'food_tag', 'food_nutritions'
 		if ($key == 'toppings') {
 			include 'food-data-toppings.php';
 		} elseif ($key == 'ingredients') {
-			include 'food-data-ingredient.php';
+			include 'food-data-ingredients.php';
 		} elseif ($key == 'nutritions') {
-			include 'food-data-nutrition.php';
-		} else { ?>
+			include 'food-data-nutritions.php';
+		} else { 
+			$check_custom_tab = apply_filters('wpfm_food_custom_tab', false, $key);
+			if($check_custom_tab){
+				do_action('wpfm_custom_tab', $thepostid, $food_fields);
+				}else{ 
+					?>
 
 			<div id="<?php echo (isset($tab['target'])) ? $tab['target'] : ''; ?>" class="panel wpfm_panel wpfm-metaboxes-wrapper">
 				<div class="wp_food_manager_meta_data">
@@ -85,7 +90,7 @@ $disbled_fields_for_admin = array('food_category', 'food_tag', 'food_nutritions'
 					</div>
 				</div>
 			</div>
-		<?php } ?>
+		<?php } }?>
 	<?php endforeach; ?>
 	<div class="clear"></div>
 </div>

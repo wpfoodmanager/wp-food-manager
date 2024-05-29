@@ -108,14 +108,13 @@ class WPFM_Field_Editor {
 		$form_add_food_instance = call_user_func(array('WPFM_Add_Food_Form', 'instance'));
 		$food_fields = $form_add_food_instance->merge_with_custom_fields('backend');
 		$fields = array_merge($food_fields);
-		$add_food_form_fields = get_option('food_manager_add_food_form_fields');
-		$add_toppings_form_fields = get_option('food_manager_submit_toppings_form_fields');
+		// $add_food_form_fields = get_option('food_manager_add_food_form_fields');
+		// $add_toppings_form_fields = get_option('food_manager_submit_toppings_form_fields');
 
 		foreach ($fields  as $group_key => $group_fields) {
 			if (empty($group_fields)) {
 				continue;
-			}
-		?>
+			} ?>
 			<div class="wp-food-manager-food-form-field-editor <?php echo esc_attr($group_key); ?>">
 				<h3><?php printf(esc_html__('%s form fields', 'wp-food-manager'), ucfirst(str_replace("options", "Toppings", str_replace("_", " ", $group_key)))); ?></h3>
 				<table class="widefat">
@@ -163,37 +162,39 @@ class WPFM_Field_Editor {
 				echo esc_attr(ob_get_clean());
 				if (isset($group_fields) && !empty($group_fields)) {
 					foreach ($group_fields as $field_key => $field) {
-
-						if ($group_key == 'food') {
-							if ($add_food_form_fields) {
-								if (trim($field['label']) != '' && isset($add_food_form_fields['food'][$field_key])) {
-									$index++;
-									include 'wpfm-field-editor-form-field.php';
-								}
-							} else {
-								if (trim($field['label']) != '') {
-									$index++;
-									include 'wpfm-field-editor-form-field.php';
-								}
-							}
-						}  elseif($group_key == 'toppings'){
-							if ($add_toppings_form_fields) {
-								if (trim($field['label']) != '' && isset($add_toppings_form_fields['toppings'][$field_key])) {
-									$index++;
-									include 'wpfm-field-editor-form-field.php';
-								}
-							} else {
-								if (trim($field['label']) != '') {
-									$index++;
-									include 'wpfm-field-editor-form-field.php';
-								}
-							}
-						} else {
+						// echo '<pre>';
+						// print_r($field);
+						
+						// if ($group_key == 'food') {
+						// 	if ($add_food_form_fields) {
+						// 		if (trim($field['label']) != '' && isset($add_food_form_fields['food'][$field_key])) {
+						// 			$index++;
+						// 			include 'wpfm-field-editor-form-field.php';
+						// 		}
+						// 	} else {
+						// 		if (trim($field['label']) != '') {
+						// 			$index++;
+						// 			include 'wpfm-field-editor-form-field.php';
+						// 		}
+						// 	}
+						// }  elseif($group_key == 'toppings'){
+						// 	if ($add_toppings_form_fields) {
+						// 		if (trim($field['label']) != '' && isset($add_toppings_form_fields['toppings'][$field_key])) {
+						// 			$index++;
+						// 			include 'wpfm-field-editor-form-field.php';
+						// 		}
+						// 	} else {
+						// 		if (trim($field['label']) != '') {
+						// 			$index++;
+						// 			include 'wpfm-field-editor-form-field.php';
+						// 		}
+						// 	}
+						// } else {
 							if (trim($field['label']) != '') {
 								$index++;
 								include 'wpfm-field-editor-form-field.php';
 							}
-						}
+						// }
 					}
 				}
 				?>					
