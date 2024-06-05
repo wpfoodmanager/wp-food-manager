@@ -89,7 +89,7 @@ if ( 'food_manager_menu' == get_post_type() ) {
             $sale_price = get_post_meta($food_listing->ID, '_food_sale_price', true);
             $regular_price = get_post_meta($food_listing->ID, '_food_price', true);
             $food_label = get_post_meta($food_listing->ID, '_food_label', true);
-            $featured_img = get_the_post_thumbnail_url($food_listing->ID, 'thumbnail');
+            $featured_img = get_the_post_thumbnail_url($food_listing->ID, 'full');
             if (isset($featured_img) && empty($featured_img)) {
                 $featured_img = apply_filters('wpfm_default_food_banner', esc_url(WPFM_PLUGIN_URL . '/assets/images/wpfm-placeholder.jpg'));
             }
