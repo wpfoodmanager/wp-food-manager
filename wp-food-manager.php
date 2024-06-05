@@ -83,6 +83,7 @@ class WP_Food_Manager {
 		include('includes/wpfm-ajax.php');
 		include('includes/wpfm-custom-post-types.php');
 		include('includes/wpfm-custom-taxonomies.php');
+		include('includes/wpfm-custom-tax-class-taxonomies.php');
 		include('includes/wpfm-cache-helper.php');
 
 		//forms
