@@ -2658,11 +2658,12 @@ span.fm-divider {
     flex: 0 0 150px;
     max-width: 150px;
     height: 150px;
+    background-color: #fff;
 }
 .fm-food-menu-container .wpfm-food-list-box-image-col img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
     border-radius: 4px;
 }
 .fm-food-menu-container .wpfm-food-list-box-content-col {
