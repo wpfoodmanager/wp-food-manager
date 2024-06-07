@@ -118,7 +118,7 @@ class WPFM_Ajax {
      */
     public function get_listings() {
         global $wp_post_types;
-
+    
         $result            = array();
         $search_keywords   = sanitize_text_field(stripslashes($_REQUEST['search_keywords']));
         $search_categories = isset($_REQUEST['search_categories']) ? $_REQUEST['search_categories'] : '';
@@ -126,7 +126,7 @@ class WPFM_Ajax {
         $search_food_menu  = isset($_REQUEST['search_food_menu']) ? $_REQUEST['search_food_menu'] : '';
         $post_type_label   = $wp_post_types['food_manager']->labels->name;
         $orderby           = sanitize_text_field($_REQUEST['orderby']);
-
+    
         if (is_array($search_categories)) {
             $search_categories = array_filter(array_map('sanitize_text_field', array_map('stripslashes', $search_categories)));
         } else {
@@ -137,7 +137,7 @@ class WPFM_Ajax {
         } else {
             $search_food_types = array_filter(array(sanitize_text_field(stripslashes($search_food_types))));
         }
-
+    
         $args = array(
             'search_keywords'    => $search_keywords,
             'search_categories'  => $search_categories,
@@ -148,17 +148,17 @@ class WPFM_Ajax {
             'offset'             => (absint($_REQUEST['page']) - 1) * absint($_REQUEST['per_page']),
             'posts_per_page'     => absint($_REQUEST['per_page'])
         );
-
+    
         if (isset($_REQUEST['featured']) && ($_REQUEST['featured'] === 'true' || $_REQUEST['featured'] === 'false')) {
             $args['featured'] = $_REQUEST['featured'] === 'true' ? true : false;
             $args['orderby']  = 'featured' === $orderby ? 'date' : $orderby;
         }
-
+    
         ob_start();
         $foods = get_food_listings(apply_filters('food_manager_get_listings_args', $args));
         $result['found_foods'] = false;
         $food_cnt = 0;
-
+    
         if ($foods->have_posts()) : $result['found_foods'] = true; ?>
             <?php while ($foods->have_posts()) : $foods->the_post(); ?>
                 <?php
@@ -169,8 +169,8 @@ class WPFM_Ajax {
                 }
                 get_food_manager_template_part('content', 'food_manager'); ?>
             <?php endwhile; ?>
-            <?php else :
-
+        <?php else :
+    
             // Check there is a publish food or not.
             $default_foods = get_posts(array(
                 'numberposts' => -1,
@@ -183,10 +183,10 @@ class WPFM_Ajax {
                 get_food_manager_template_part('content', 'no-foods-found');
             }
         endif;
-
+    
         $result['html']    = ob_get_clean();
-        $result['filter_value'] = array();
-
+        $result['filter_value'] = array(); // Initialize as an array
+    
         // Categories.
         if ($search_categories) {
             $showing_categories = array();
@@ -198,7 +198,7 @@ class WPFM_Ajax {
             }
             $result['filter_value'][] = implode(', ', $showing_categories);
         }
-
+    
         // Food types.
         if ($search_food_types) {
             $showing_food_types = array();
@@ -210,7 +210,7 @@ class WPFM_Ajax {
             }
             $result['filter_value'][] = implode(', ', $showing_food_types);
         }
-
+    
         // Food Menu.
         $hide_flag = 0;
         if (is_array($search_food_menu) && implode(',', $search_food_menu)) {
@@ -227,14 +227,14 @@ class WPFM_Ajax {
             else $hide_flag = 0;
             $result['filter_value'][] = implode(', ', $showing_food_menus);
         }
-
+    
         if ($search_keywords) {
             $result['filter_value'][] = '&ldquo;' . $search_keywords . '&rdquo;';
         }
-
+    
         $last_filter_value = array_pop($result['filter_value']);
         $result_implode = implode(', ', $result['filter_value']);
-
+    
         if (count($result['filter_value']) >= 1) {
             $result['filter_value'] = explode(" ", $result_implode);
             $result['filter_value'][] = " &amp; ";
@@ -242,9 +242,9 @@ class WPFM_Ajax {
             if (!empty($last_filter_value))
                 $result['filter_value'] = explode(" ", $result_implode);
         }
-
+    
         $result['filter_value'][] = $last_filter_value . " " . $post_type_label;
-
+    
         if (sizeof($result['filter_value']) > 1) {
             $message = sprintf(_n('Search completed. Found %d matching record.', 'Search completed. Found %d matching records.', $foods->found_posts, 'wp-food-manager'), $foods->found_posts);
             $result['showing_applied_filters'] = true;
@@ -252,14 +252,18 @@ class WPFM_Ajax {
             $message = "";
             $result['showing_applied_filters'] = false;
         }
-
+    
         $searcheckbox_values = array(
             'keywords'   => $search_keywords,
             'types'      => $search_food_types,
             'categories' => $search_categories
         );
+    
+        // Apply the searcheckbox values filter
+        $searcheckbox_values = apply_filters('food_manager_get_searcheckbox_values', $searcheckbox_values, $_REQUEST['form_data']);
+    
         $result['filter_value'] = apply_filters('food_manager_get_listings_custom_filter_text', $message, $searcheckbox_values);
-
+    
         // Generate RSS link.
         $result['showing_links'] = wpfm_get_filtered_links(array(
             'search_keywords'   => $search_keywords,
@@ -268,14 +272,18 @@ class WPFM_Ajax {
             'search_food_menu'  => $search_food_menu,
         ));
         $result['max_num_pages'] = $foods->max_num_pages;
-
+    
         if ($hide_flag) {
             $result['html'] = '<div class="no_food_listings_found wpfm-alert wpfm-alert-danger">There are no foods matching your search.</div>';
             $result['found_foods'] = '';
         }
-
+    
+        // Apply the food results filter
+        $result = apply_filters('wpfm_food_results_filter', $result, $_REQUEST['form_data']);
+    
         wp_send_json(apply_filters('food_manager_get_listings_result', $result, $foods));
     }
+    
 	
 	/**
      * Upload file via ajax.
