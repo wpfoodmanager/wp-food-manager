@@ -2753,7 +2753,11 @@ span.fm-divider {
 .wpfm-accordion-item.wpfm-accordion-item-show {
     box-shadow: 0 0px 10px rgb(0 0 0 / 10%);
  }
- 
+
+.wpfm-single-restaurant-body-content .fm-food-menu-container .food-list-box {
+    width: calc(100% - 20px);
+}
+
 
 
 .wpfm-single-food-page .wpfm-single-food-footer div.wpfm-listing-accordion .wpfm-icon-minus {
@@ -3223,6 +3227,9 @@ img.wpfm-organic-tag-icon {
         flex: 0 0 80px;
         max-width: 80px;
         height: 80px;
+    }
+    .wpfm-single-restaurant-body-content .fm-food-menu-container .food-list-box{
+        flex-direction: column;
     }
 }
 
