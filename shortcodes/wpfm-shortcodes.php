@@ -45,7 +45,6 @@ class WPFM_Shortcodes {
 		add_shortcode('food', array($this, 'output_food'));
 		add_shortcode('food_menu', array($this, 'output_food_menu'));
 	}
-
 	/**
 	 * Show the food submission form.
 	 *
@@ -531,7 +530,7 @@ class WPFM_Shortcodes {
 	}
 
 	/**
-	 * output food menu by menu id.
+	* This function is used to display all food menus.
 	 *
 	 * @access public
 	 * @param array $atts
@@ -543,25 +542,32 @@ class WPFM_Shortcodes {
 		extract(shortcode_atts(array(
 			'id' => '',
 		), $atts));
-
+	
 		$args = array(
 			'post_type'   => 'food_manager_menu',
 			'post_status' => 'publish',
 			'p'           => $id
 		);
-
-		$food_menus = new WP_Query(apply_filters('food_manager_food_menu_args',$args));
+	
+		$food_menus = new WP_Query(apply_filters('food_manager_food_menu_args', $args));
+	
 		if ($food_menus->have_posts()) : ?>
 			<?php while ($food_menus->have_posts()) : $food_menus->the_post(); ?>
 				<div class="clearfix">
 					<?php get_food_manager_template_part('content-single', 'food_manager_menu'); ?>
 				</div>
 			<?php endwhile; ?>
-<?php endif;
+		<?php else : ?>
+			<div class="no_food_menu_found wpfm-alert wpfm-alert-danger">
+				<?php _e("No menus found.", "wp-food-manager"); ?>
+			</div>
+		<?php endif;
+	
 		wp_reset_postdata();
-
+	
 		return ob_get_clean();
 	}
+	
 }
 
 WPFM_Shortcodes::instance();

@@ -311,6 +311,13 @@ class WPFM_Settings {
 							'desc'  => __('Select the page where you have placed the [foods] shortcode. This lets the plugin know where the food listings page is located.', 'wp-food-manager'),
 							'type'  => 'page',
 						),
+						array(
+							'name'  => 'food_manager_food_menu_page_id',
+							'std'   => '',
+							'label' => __('Food Menu', 'wp-food-manager'),
+							'desc'  => __('Select the page where you have placed the [food_menu] shortcode. This lets the plugin know where the food menu listings page is located.', 'wp-food-manager'),
+							'type'  => 'page',
+						),
 					),
 				),
 				'food_currency' => array(
