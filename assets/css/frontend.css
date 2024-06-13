@@ -1474,6 +1474,13 @@ a.button.wpfm-add-row:hover {
     width: 100%;
 }
 
+.no_food_menu_found {
+    text-align: center;
+    color: #721c24;
+    display: inline-block;
+    width: 100%;
+}
+
 .food_listings a.load_more_foods {
     margin: 0 auto;
     text-align: center;
