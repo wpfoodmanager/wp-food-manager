@@ -583,6 +583,33 @@ $food = $post;
                                         <h3 class="wpfm-heading-text"><?php _e('Food Tags', 'wp-food-manager'); ?></h3>
                                         <div class="wpfm-food-tag"><?php display_food_tag(); ?></div>
                                     <?php endif; ?>
+                                    <?php
+                                    function get_tax_class_terms($post_id) {
+                                        
+                                        $terms = wp_get_post_terms($post_id, 'tax_class');
+
+                                        
+                                        if (!empty($terms) && !is_wp_error($terms)) {
+                                            $term_names = wp_list_pluck($terms, 'name');
+                                            return $term_names; 
+                                        } else {
+                                            return null;
+                                        }
+                                    }
+
+                                    
+                                    $post_id = get_the_ID();
+                                    $tax_class_terms = get_tax_class_terms($post_id);
+                                    if ($tax_class_terms) {
+                                        ?>
+                                        <div class="clearfix">&nbsp;</div>
+                                        <h3 class="wpfm-heading-text"><?php _e('Tax Classes', 'wp-food-manager'); ?></h3>
+                                        <div class="wpfm-food-tag"><?php echo implode(', ', $tax_class_terms); ?></div>
+                                        <?php
+                                    } else {
+                                        
+                                    }
+                                    ?>
                                     <?php do_action('single_food_sidebar_end', get_the_ID()); ?>
                                 </div>
                                 <?php

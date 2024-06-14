@@ -48,10 +48,10 @@ class WPFM_Custom_Tax_Class_Taxonomies{
 	public function wpfm_tax_classes_add_meta_field() {
 	    ?>
 	    <div class="form-field term-group">
-	        <label for="tax_class_type"><?php _e('Tax Type', 'wp-food-manager'); ?></label>
+	        <label for="tax_class_type"><?php _e('Tax Value', 'wp-food-manager'); ?></label>
 	        <select name="tax_class_type" id="tax_class_type">
-	            <option value="fix_value"><?php _e('Fix Value', 'wp-food-manager'); ?></option>
-	            <option value="percentage_discount"><?php _e('Percentage Discount', 'wp-food-manager'); ?></option>
+	            <option value="5%"><?php _e('5%', 'wp-food-manager'); ?></option>
+	            <option value="10%"><?php _e('10%', 'wp-food-manager'); ?></option>
 	        </select>
 	    </div>
 	    <?php
@@ -60,11 +60,11 @@ class WPFM_Custom_Tax_Class_Taxonomies{
 	    $tax_class_type = get_term_meta($term->term_id, 'tax_class_type', true);
 	    ?>
 	    <tr class="form-field term-group-wrap">
-	        <th scope="row"><label for="tax_class_type"><?php _e('Tax Type', 'wp-food-manager'); ?></label></th>
+	        <th scope="row"><label for="tax_class_type"><?php _e('Tax Value', 'wp-food-manager'); ?></label></th>
 	        <td>
 	            <select name="tax_class_type" id="tax_class_type">
-	                <option value="fix_value" <?php selected($tax_class_type, 'fix_value'); ?>><?php _e('Fix Value', 'wp-food-manager'); ?></option>
-	                <option value="percentage_discount" <?php selected($tax_class_type, 'percentage_discount'); ?>><?php _e('Percentage Discount', 'wp-food-manager'); ?></option>
+	                <option value="5%" <?php selected($tax_class_type, '5%'); ?>><?php _e('5%', 'wp-food-manager'); ?></option>
+	                <option value="10%" <?php selected($tax_class_type, '10%'); ?>><?php _e('10%', 'wp-food-manager'); ?></option>
 	            </select>
 	        </td>
 	    </tr>
