@@ -538,35 +538,59 @@ class WPFM_Shortcodes {
 	 * @since 1.0.0
 	 */
 	public function output_food_menu($atts) {
-		ob_start();
-		extract(shortcode_atts(array(
-			'id' => '',
-		), $atts));
-	
-		$args = array(
-			'post_type'   => 'food_manager_menu',
-			'post_status' => 'publish',
-			'p'           => $id
-		);
-	
-		$food_menus = new WP_Query(apply_filters('food_manager_food_menu_args', $args));
-	
-		if ($food_menus->have_posts()) : ?>
-			<?php while ($food_menus->have_posts()) : $food_menus->the_post(); ?>
-				<div class="clearfix">
-					<?php get_food_manager_template_part('content-single', 'food_manager_menu'); ?>
-				</div>
-			<?php endwhile; ?>
-		<?php else : ?>
-			<div class="no_food_menu_found wpfm-alert wpfm-alert-danger">
-				<?php _e("No menus found.", "wp-food-manager"); ?>
-			</div>
-		<?php endif;
-	
-		wp_reset_postdata();
-	
-		return ob_get_clean();
-	}
+    ob_start();
+
+    // Extract shortcode attributes
+    extract(shortcode_atts(array(
+        'id' => '',
+    ), $atts));
+
+    // Query to retrieve all menu titles
+    $title_args = array(
+        'post_type'   => 'food_manager_menu',
+        'post_status' => 'publish',
+        'fields'      => 'ids', 
+    );
+
+    $title_query = new WP_Query(apply_filters('food_manager_food_menu_title_args', $title_args));
+    ?>
+    
+    <?php if ($title_query->have_posts()) : ?>
+		<?php get_food_manager_template('wpfm-food-menu.php', array(
+			'title_query'               => $title_query,
+		));?>
+    <?php endif;
+
+    // Reset post data after custom WP_Query
+    wp_reset_postdata();
+
+    // Query to retrieve specific menu by ID
+    $args = array(
+        'post_type'   => 'food_manager_menu',
+        'post_status' => 'publish',
+        'p'           => $id,
+    );
+
+    $food_menus = new WP_Query(apply_filters('food_manager_food_menu_args', $args));
+
+    // Display the specific menu
+    if ($food_menus->have_posts()) : ?>
+        <?php while ($food_menus->have_posts()) : $food_menus->the_post(); ?>
+            <div id="menu-<?php the_ID(); ?>" class="food-menu-section">
+                <?php get_food_manager_template_part('content-single', 'food_manager_menu'); ?>
+            </div>
+        <?php endwhile; ?>
+    <?php else : ?>
+        <div class="no_food_menu_found wpfm-alert wpfm-alert-danger">
+            <?php _e("No menus found.", "wp-food-manager"); ?>
+        </div>
+    <?php endif;
+
+    // Reset post data after custom WP_Query
+    wp_reset_postdata();
+
+    return ob_get_clean();
+}
 	
 }
 
