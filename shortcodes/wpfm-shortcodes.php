@@ -556,7 +556,7 @@ class WPFM_Shortcodes {
     ?>
     
     <?php if ($title_query->have_posts()) : ?>
-		<?php get_food_manager_template('wpfm-food-menu.php', array(
+		<?php get_food_manager_template('content-food-menu.php', array(
 			'title_query'               => $title_query,
 		));?>
     <?php endif;
