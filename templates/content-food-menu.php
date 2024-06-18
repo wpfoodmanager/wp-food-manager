@@ -1,3 +1,7 @@
+<!-- search box for search food menu -->
+<input type="text" id="food-menu-search" placeholder="Search for food items..." style="margin-bottom: 20px; padding: 5px; width: 100%; box-sizing: border-box;">
+<div id="food-menu-container">
+<!-- Food menu heading  -->
 <?php if ($title_query->have_posts()) : ?>
         <div class="food-menu-titles" id="food-menu-titles" style="display: flex; flex-wrap: wrap; gap: 10px;">
             <?php while ($title_query->have_posts()) : $title_query->the_post(); ?>
