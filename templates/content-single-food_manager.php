@@ -583,31 +583,45 @@ $food = $post;
                                         <h3 class="wpfm-heading-text"><?php _e('Food Tags', 'wp-food-manager'); ?></h3>
                                         <div class="wpfm-food-tag"><?php display_food_tag(); ?></div>
                                     <?php endif; ?>
-                                    <?php
-                                    function get_tax_class_terms($post_id) {
-                                        
-                                        $terms = wp_get_post_terms($post_id, 'tax_class');
-
-                                        
-                                        if (!empty($terms) && !is_wp_error($terms)) {
-                                            $term_names = wp_list_pluck($terms, 'name');
-                                            return $term_names; 
-                                        } else {
-                                            return null;
-                                        }
-                                    }
-
-                                    
-                                    $post_id = get_the_ID();
-                                    $tax_class_terms = get_tax_class_terms($post_id);
-                                    if ($tax_class_terms) {
-                                        ?>
                                         <div class="clearfix">&nbsp;</div>
                                         <h3 class="wpfm-heading-text"><?php _e('Tax Classes', 'wp-food-manager'); ?></h3>
-                                        <div class="wpfm-food-tag"><?php echo implode(', ', $tax_class_terms); ?></div>
-                                        <?php
-                                    } else {
+                                    <?php
+                                    function wpfm_get_tax_class_details_by_post_id($post_id) {
+                                        // Get the terms associated with the post in the 'tax_class' taxonomy
+                                        $terms = get_the_terms($post_id, 'tax_class');
                                         
+                                        // Initialize an array to hold the details
+                                        $tax_class_details = array();
+                                        
+                                        // Check if terms are returned
+                                        if ($terms && !is_wp_error($terms)) {
+                                            foreach ($terms as $term) {
+                                                // Get the 'tax_class_type' metadata for the term
+                                                $tax_class_type = get_term_meta($term->term_id, 'tax_class_type', true);
+                                                
+                                                // Add the term name and tax_class_type to the details array
+                                                $tax_class_details[] = array(
+                                                    'term_name' => $term->name,
+                                                    'tax_class_type' => $tax_class_type
+                                                );
+                                            }
+                                        }
+                                        
+                                        // Return the details array
+                                        return $tax_class_details;
+                                    }
+
+                                    $post_id = get_the_ID();
+                                    $tax_class_details = wpfm_get_tax_class_details_by_post_id($post_id);
+
+                                    if (!empty($tax_class_details)) {
+                                        foreach ($tax_class_details as $detail) {
+                                            ?>
+                                            <div class="wpfm-food-tag"><?php echo /*$detail['term_name']." : ". */$detail['tax_class_type']; ?></div>
+                                            <?php
+                                        }
+                                    } else {
+
                                     }
                                     ?>
                                     <?php do_action('single_food_sidebar_end', get_the_ID()); ?>
