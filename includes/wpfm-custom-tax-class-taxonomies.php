@@ -29,7 +29,7 @@ class WPFM_Custom_Tax_Class_Taxonomies{
 	        'parent_item_colon' => __('Parent Tax Class:', 'wp-food-manager'),
 	        'edit_item'         => __('Edit Tax Class', 'wp-food-manager'),
 	        'update_item'       => __('Update Tax Class', 'wp-food-manager'),
-	        'add_new_item'      => __('Add New Tax Class', 'wp-food-manager'),
+	        'add_new_item'      => __('Add New Tax Classes', 'wp-food-manager'),
 	        'new_item_name'     => __('New Tax Class Name', 'wp-food-manager'),
 	        'menu_name'         => __('Tax Classes', 'wp-food-manager'),
 	    );
@@ -48,11 +48,9 @@ class WPFM_Custom_Tax_Class_Taxonomies{
 	public function wpfm_tax_classes_add_meta_field() {
 	    ?>
 	    <div class="form-field term-group">
-	        <label for="tax_class_type"><?php _e('Tax Value', 'wp-food-manager'); ?></label>
-	        <select name="tax_class_type" id="tax_class_type">
-	            <option value="5%"><?php _e('5%', 'wp-food-manager'); ?></option>
-	            <option value="10%"><?php _e('10%', 'wp-food-manager'); ?></option>
-	        </select>
+	        <label for="tax_class_type"><?php _e('Percentage Rate', 'wp-food-manager'); ?></label>
+	        <input type="number" name="tax_class_type" id="tax_class_type" min="0" max="100" step="0.01" style="width: 100px;"/>
+	        <p class="description"><?php _e('The tax rate that will be applied to the invoice.', 'wp-food-manager'); ?></p>
 	    </div>
 	    <?php
 	}
@@ -60,12 +58,10 @@ class WPFM_Custom_Tax_Class_Taxonomies{
 	    $tax_class_type = get_term_meta($term->term_id, 'tax_class_type', true);
 	    ?>
 	    <tr class="form-field term-group-wrap">
-	        <th scope="row"><label for="tax_class_type"><?php _e('Tax Value', 'wp-food-manager'); ?></label></th>
+	        <th scope="row"><label for="tax_class_type"><?php _e('Percentage Rate', 'wp-food-manager'); ?></label></th>
 	        <td>
-	            <select name="tax_class_type" id="tax_class_type">
-	                <option value="5%" <?php selected($tax_class_type, '5%'); ?>><?php _e('5%', 'wp-food-manager'); ?></option>
-	                <option value="10%" <?php selected($tax_class_type, '10%'); ?>><?php _e('10%', 'wp-food-manager'); ?></option>
-	            </select>
+	            <input type="number" name="tax_class_type" id="tax_class_type" value="<?php echo esc_attr($tax_class_type); ?>" min="0" max="100" step="0.01" style="width: 100px;"/>
+	            <p class="description"><?php _e('The tax rate that will be applied to the invoice.', 'wp-food-manager'); ?></p>
 	        </td>
 	    </tr>
 	    <?php

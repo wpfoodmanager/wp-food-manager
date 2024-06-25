@@ -617,7 +617,7 @@ $food = $post;
                                     if (!empty($tax_class_details)) {
                                         foreach ($tax_class_details as $detail) {
                                             ?>
-                                            <div class="wpfm-food-tag"><?php echo /*$detail['term_name']." : ". */$detail['tax_class_type']; ?></div>
+                                            <div class="wpfm-food-tag"><?php echo /*$detail['term_name']." : ". */$detail['tax_class_type'].'%'; ?></div>
                                             <?php
                                         }
                                     } else {
