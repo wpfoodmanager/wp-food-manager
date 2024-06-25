@@ -5,11 +5,14 @@ if (isset($featured_img_url) && empty($featured_img_url)) {
 } else {
     $featured_img_url = get_the_post_thumbnail_url(get_the_ID(), 'full');
 }
-?>
+
+do_action('food_menu_list_before', get_the_ID()); ?>
 <div class="wpfm-col-12">
     <div class="wpfm-row">
         <div>
+            <?php do_action('food_menu_list_title_before', get_the_ID()); ?>
             <h3><?php esc_html_e('Food Lists'); ?></h3>
+            <?php do_action('food_menu_list_title_after', get_the_ID()); ?>
             <?php
             $food_menu_ids = get_post_meta($post->ID, '_food_item_ids', true);
             if (!empty($food_menu_ids)) {
@@ -21,8 +24,8 @@ if (isset($featured_img_url) && empty($featured_img_url)) {
                 foreach ($food_listings as $food_listing) {
                     echo wp_kses_post("<a href='" . esc_url(get_permalink($food_listing->ID)) . "' class='food-list-box'>" . esc_html($food_listing->post_title) . "</a>");
                 }
-            }
-            ?>
+            } ?>
         </div>
     </div>
 </div>
+<?php do_action('food_menu_list_after', get_the_ID()); ?>
