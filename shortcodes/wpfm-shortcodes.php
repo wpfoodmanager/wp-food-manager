@@ -579,7 +579,8 @@ class WPFM_Shortcodes {
 				<div id="menu-<?php the_ID(); ?>" class="food-menu-section">
 					<?php get_food_manager_template_part('content-single', 'food_manager_menu'); ?>
 				</div>
-			<?php endwhile; ?>
+			<?php endwhile; 
+			do_action('food_menu_list_end');?>
 		<?php else : ?>
 			<div class="no_food_menu_found wpfm-alert wpfm-alert-danger">
 				<?php _e("No menus found.", "wp-food-manager"); ?>

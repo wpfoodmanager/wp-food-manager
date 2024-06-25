@@ -75,3 +75,4 @@ if (get_option('food_manager_food_item_show_hide') == 0 && get_stock_status() !=
     </div>
 <?php 
 }
+do_action('food_list_overview_end');
