@@ -326,7 +326,10 @@ class WPFM_ActionHooks {
         }
         
         wp_enqueue_style('chosen', esc_url(WPFM_PLUGIN_URL . '/assets/css/chosen.min.css'));
-        
+
+        // Enqueue the script for search food menu.
+        wp_register_script('food-menu-search', esc_url(WPFM_PLUGIN_URL . '/assets/js/food-menu-search.js'), array('jquery'), WPFM_VERSION, true);
+
         // File upload - vendor.
         // if (apply_filters('wpfm_ajax_file_upload_enabled', true)) {
             wp_register_script('jquery-iframe-transport', esc_url(WPFM_PLUGIN_URL . '/assets/js/jquery-fileupload/jquery.iframe-transport.min.js'), array('jquery'), '1.8.3', true);
@@ -347,7 +350,7 @@ class WPFM_ActionHooks {
         // }
         
         // Frontend Css.
-        wp_enqueue_style('wpfm-frontend', esc_url(WPFM_PLUGIN_URL . '/assets/css/frontend.min.css'));
+        wp_enqueue_style('wpfm-frontend', esc_url(WPFM_PLUGIN_URL . '/assets/css/frontend.css'));
 
         // Frontend js.
         wp_register_script('wp-food-manager-frontend', esc_url(WPFM_PLUGIN_URL . '/assets/js/frontend.min.js'), array('jquery'), WPFM_VERSION, true);

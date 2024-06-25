@@ -100,6 +100,7 @@ class WPFM_Setup {
 				'add_food'     => '[add_food]',
 				'food_dashboard'       => '[food_dashboard]',
 				'foods'                => '[foods]',
+				'food_menu' => '[food_menu]',
 			);
 
 			foreach ($pages_to_create as $page => $content) {
@@ -187,6 +188,15 @@ class WPFM_Setup {
 										<p><?php esc_attr_e('If you plan on managing all listings from the admin dashboard you can skip creating this page.', 'wp-food-manager'); ?></p>
 									</td>
 									<td><code>[food_dashboard]</code></td>
+								</tr>
+								<tr>
+									<td><input type="checkbox" checked="checked" name="wp-food-manager-create-page[food_menu]" /></td>
+									<td><input type="text" value="<?php echo esc_attr(_x('Food Menu', 'Default page title (wizard)', 'wp-food-manager')); ?>" name="wp-food-manager-page-title[food_menu]" /></td>
+									<td>
+										<p><?php esc_attr_e('This page allows peoples to manage and edit their own food menu from the front-end.', 'wp-food-manager'); ?></p>
+										<p><?php esc_attr_e('If you plan on managing all listings from the admin dashboard you can skip creating this page.', 'wp-food-manager'); ?></p>
+									</td>
+									<td><code>[food_menu]</code></td>
 								</tr>
 							</tbody>
 							<tfoot>

@@ -45,7 +45,7 @@ class WPFM_Shortcodes {
 		add_shortcode('food', array($this, 'output_food'));
 		add_shortcode('food_menu', array($this, 'output_food_menu'));
 	}
-
+	
 	/**
 	 * Show the food submission form.
 	 *
@@ -531,7 +531,7 @@ class WPFM_Shortcodes {
 	}
 
 	/**
-	 * output food menu by menu id.
+	* This function is used to display all food menus.
 	 *
 	 * @access public
 	 * @param array $atts
@@ -539,29 +539,62 @@ class WPFM_Shortcodes {
 	 * @since 1.0.0
 	 */
 	public function output_food_menu($atts) {
+        wp_enqueue_script('food-menu-search');
 		ob_start();
+	
+		// Extract shortcode attributes
 		extract(shortcode_atts(array(
 			'id' => '',
 		), $atts));
-
+	
+		// Query to retrieve all menu titles
+		$title_args = array(
+			'post_type'   => 'food_manager_menu',
+			'post_status' => 'publish',
+			'fields'      => 'ids', 
+		);
+	
+		$title_query = new WP_Query(apply_filters('food_manager_food_menu_title_args', $title_args));
+		?>
+		
+		<?php if ($title_query->have_posts()) : ?>
+			<?php get_food_manager_template('content-food-menu.php', array(
+				'title_query'               => $title_query,
+			));?>
+		<?php endif;
+	
+		wp_reset_postdata();
+	
+		// Query to retrieve specific menu by ID
 		$args = array(
 			'post_type'   => 'food_manager_menu',
 			'post_status' => 'publish',
-			'p'           => $id
+			'p'           => $id,
 		);
-
-		$food_menus = new WP_Query(apply_filters('food_manager_food_menu_args',$args));
+	
+		$food_menus = new WP_Query(apply_filters('food_manager_food_menu_args', $args));
+	
+		// Display the specific menu
 		if ($food_menus->have_posts()) : ?>
 			<?php while ($food_menus->have_posts()) : $food_menus->the_post(); ?>
-				<div class="clearfix">
+				<div id="menu-<?php the_ID(); ?>" class="food-menu-section">
 					<?php get_food_manager_template_part('content-single', 'food_manager_menu'); ?>
 				</div>
 			<?php endwhile; ?>
-<?php endif;
+		<?php else : ?>
+			<div class="no_food_menu_found wpfm-alert wpfm-alert-danger">
+				<?php _e("No menus found.", "wp-food-manager"); ?>
+			</div>
+		<?php endif;
+	
 		wp_reset_postdata();
-
+		?>
+		</div> 
+		<?php
+	
 		return ob_get_clean();
 	}
+	
 }
 
 WPFM_Shortcodes::instance();
