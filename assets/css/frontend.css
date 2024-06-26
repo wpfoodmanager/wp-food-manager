@@ -2799,6 +2799,32 @@ span.fm-divider {
 .wpfm-single-food-page .wpfm-single-food-footer .wpfm-listing-accordion.active{
     background-color: var(--wpfm-gray-bg-color);
 }
+
+
+.food-menu-page-filter-tabs{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+.food-menu-page-filter-tab .food-menu-page-filter-tab-link {
+    padding: 3px 12px;
+    cursor: pointer;
+    border-radius: 4px;
+    background-color: #fff;
+    color: var(--wpfm-dark-color);
+    border: 1px solid var(--wpfm-gray-border-color);
+    display: block;
+    transition: all 0.3s 0s;
+}
+.food-menu-page-filter-tab .food-menu-page-filter-tab-link:hover{
+    background-color: #fff;
+    border-color: var(--wpfm-primary-color);
+    color: var(--wpfm-primary-color);
+}
+.food-menu-page-filters {
+    margin-bottom: 30px;
+}
+
 /* ===== 14. FOOD MENU END ===== */
 
 
@@ -3094,7 +3120,7 @@ img.wpfm-organic-tag-icon {
 }
 
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 767px) {
     .wpfm-single-food-page .wpfm-single-food-wrapper .wpfm-single-food-header-top .wpfm-single-food-slider-wrapper .wpfm-single-food-slider .wpfm-slider-items img {
         height: 400px;
         width: 100%;
@@ -3142,6 +3168,18 @@ img.wpfm-organic-tag-icon {
 
     .wpfm-dashboard-main-header .wpfm-foods-filter .wpfm-foods-filter-block.wpfm-foods-filter-submit {
         width: 100%;
+    }
+    .food-menu-page-filters {
+        margin-bottom: 10px;
+    }
+    .food-menu-page-filter-tabs {
+        min-width: 730px;
+        gap: 10px;
+        justify-content: start;
+        padding-bottom: 20px;
+    }
+    .food-menu-page-filter-tabs-wrapper {
+        overflow: auto;
     }
 
 }
