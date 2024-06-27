@@ -93,6 +93,8 @@ if ( 'food_manager_menu' == get_post_type() ) {
             if (isset($featured_img) && empty($featured_img)) {
                 $featured_img = apply_filters('wpfm_default_food_banner', esc_url(WPFM_PLUGIN_URL . '/assets/images/wpfm-placeholder.jpg'));
             }
+            $image_id = attachment_url_to_postid($featured_img);
+            $alt_text = get_post_meta($image_id, '_wp_attachment_image_alt', true);
             $formatted_sale_price = ''; // Initialize the variable
             $formatted_regular_price = ''; // Initialize the variable
             if( $food_redirect_option == 'yes'){
@@ -113,7 +115,7 @@ if ( 'food_manager_menu' == get_post_type() ) {
             }
             echo "<div class='food-list-box'>";
             if($thumbnail_option != 'thumbnail_disabled'){
-                echo "<div class='wpfm-food-list-box-image-col wpfm-food-image-". esc_attr($thumbnail_option) ."'><img src='" . esc_url($featured_img) . "' alt=''></div>";
+                echo "<div class='wpfm-food-list-box-image-col wpfm-food-image-". esc_attr($thumbnail_option) ."'><img src='" . esc_url($featured_img) . "' alt='".$alt_text."'></div>";
             }
             echo "<div class='wpfm-food-list-box-content-col'>";
             if (!empty($food_label)) {
