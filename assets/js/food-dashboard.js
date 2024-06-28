@@ -8,7 +8,6 @@ var WPFM_FoodDashboard = function () {
 		/// <returns type="initialization settings" />   
 		/// <since>1.0.0</since> 
 		init: function () {
-			WPFM_Common.logInfo("WPFM_FoodDashboard.init...");
 			if (jQuery('.food-dashboard-action-delete').length > 0 && jQuery('td .wpfm-dboard-food-action').length == 0) {
 				jQuery('.food-dashboard-action-delete').css({ 'cursor': 'pointer' });
 				//for delete food confirmation dialog / tooltip .
@@ -59,7 +58,6 @@ var WPFM_FoodDashboard = function () {
 			/// <returns type="actions" />     
 			/// <since>1.0.0</since>       
 			showDialog: function (event) {
-				WPFM_Common.logInfo("WPFM_FoodDashboard.confirmation.showDialog...");
 				return confirm(food_manager_food_dashboard.i18n_confirm_delete);
 				event.preventDefault();
 			},

@@ -8,7 +8,6 @@ WPFM_FoodSubmission = function () {
         /// <returns type="initialization settings" />
         /// <since>1.0.0</since>
         init: function () {
-            WPFM_Common.logInfo("WPFM_FoodSubmission.init...");
             jQuery('body').on('click', '.food-manager-remove-uploaded-file', function () {
                 jQuery(this).closest('.food-manager-uploaded-file').remove();
                 return false;

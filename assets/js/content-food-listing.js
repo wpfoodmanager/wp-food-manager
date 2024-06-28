@@ -8,7 +8,6 @@ var WPFM_ContentFoodListing = function () {
 		///<returns type="initialization settings" />   
 		/// <since>1.0.0</since> 
 		init: function () {
-			WPFM_Common.logInfo("WPFM_ContentFoodListing.init...");
 			jQuery(document).delegate('#wpfm-food-list-layout', 'click', WPFM_ContentFoodListing.actions.lineLayoutIconClick);
 			jQuery(document).delegate('#wpfm-food-box-layout', 'click', WPFM_ContentFoodListing.actions.boxLayoutIconClick);
 			// Check if default layout is set or icon are on the page to load according to localstorage
@@ -106,7 +105,6 @@ var WPFM_ContentFoodListing = function () {
 			/// <returns type="foods listing view" />    
 			/// <since>1.0.0</since>     
 			lineLayoutIconClick: function (food) {
-				WPFM_Common.logInfo("WPFM_ContentFoodListing.actions.lineLayoutIconClick...");
 				jQuery(this).addClass("wpfm-active-layout");
 				jQuery("#wpfm-food-box-layout").removeClass("wpfm-active-layout");
 				jQuery(".wpfm-food-box-col").show();
@@ -121,7 +119,6 @@ var WPFM_ContentFoodListing = function () {
 			/// <returns type="foods listing view" />    
 			/// <since>1.0.0</since>     
 			boxLayoutIconClick: function (food) {
-				WPFM_Common.logInfo("WPFM_ContentFoodListing.actions.boxLayoutIconClick...");
 				jQuery(this).addClass("wpfm-active-layout");
 				if (jQuery("#wpfm-food-list-layout").hasClass("wpfm-active-layout"))
 					jQuery("#wpfm-food-list-layout").removeClass("wpfm-active-layout");

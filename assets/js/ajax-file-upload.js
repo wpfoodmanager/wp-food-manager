@@ -8,7 +8,6 @@ var WPFM_AjaxFileUpload = function () {
 		/// <returns type="initialization settings" />   
 		/// <since>1.0.0</since>
 		init: function () {
-			WPFM_Common.logInfo("WPFM_AjaxFileUpload.init...");
 			jQuery('.wp-food-manager-file-upload').each(function () {			
 				jQuery(this).fileupload({
 					dataType: 'json',

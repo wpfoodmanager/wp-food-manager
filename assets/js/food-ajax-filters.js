@@ -3,7 +3,6 @@ var WPFM_FoodAjaxFilters = function () {
     var xmlHttpRequest = [];
     return {
         init: function () {
-            WPFM_Common.logInfo("WPFM_FoodAjaxFilters.init...");
             if (jQuery.isFunction(jQuery.fn.chosen)) {
                 if (wpfm_ajax_filters.is_rtl == 1) {
                     jQuery('select[name^="search_categories"]').addClass('chosen-rtl');
@@ -37,7 +36,6 @@ var WPFM_FoodAjaxFilters = function () {
             })
         },
         food_manager_store_state: function (target, page) {
-            WPFM_Common.logInfo("WPFM_FoodAjaxFilters.food_manager_store_state...");
             var location = document.location.href.split('#')[0];
             if (supportHtml5History) {
                 var form = target.find('.food_filters');
@@ -53,7 +51,6 @@ var WPFM_FoodAjaxFilters = function () {
         },
         actions: {
             windowLoad: function (event) {
-                WPFM_Common.logInfo("WPFM_FoodAjaxFilters.actions.windowLoad...");
                 jQuery('.food_filters').each(function () {
                     var target = jQuery(this).closest('div.food_listings');
                     console.log(jQuery(this).closest('div.food_listings').length);
@@ -74,7 +71,6 @@ var WPFM_FoodAjaxFilters = function () {
                 });
             },
             WPFM_FoodAjaxFiltersReset: function (event) {
-                WPFM_Common.logInfo("WPFM_FoodAjaxFilters.actions.WPFM_FoodAjaxFiltersReset...");
                 var target = jQuery(this).closest('div.food_listings');
                 var form = jQuery(this).closest('form');
                 form.find(':input[name="search_keywords"], .food-manager-filter').not(':input[type="hidden"]').val('').trigger('chosen:updated');
@@ -88,7 +84,6 @@ var WPFM_FoodAjaxFilters = function () {
                 event.preventDefault()
             },
             loadMorefoods: function (event) {
-                WPFM_Common.logInfo("WPFM_FoodAjaxFilters.actions.loadMorefoods...");
                 var target = jQuery(this).closest('div.food_listings');
                 var page = parseInt(jQuery(this).data('page') || 1);
                 var loading_previous = false;
@@ -100,7 +95,6 @@ var WPFM_FoodAjaxFilters = function () {
                 event.preventDefault()
             },
             foodPagination: function (event) {
-                WPFM_Common.logInfo("WPFM_FoodAjaxFilters.actions.foodPagination...");
                 var target = jQuery(this).closest('div.food_listings');
                 var page = jQuery(this).data('page');
                 WPFM_FoodAjaxFilters.food_manager_store_state(target, page);
@@ -112,7 +106,6 @@ var WPFM_FoodAjaxFilters = function () {
                 event.preventDefault()
             },
             getfoodListings: function (event, page, append, loading_previous) {
-                WPFM_Common.logInfo("WPFM_FoodAjaxFilters.actions.getfoodListings...");
                 var data = '';
                 var target = jQuery(this);
                 var form = target.find('.food_filters');
@@ -241,20 +234,17 @@ var WPFM_FoodAjaxFilters = function () {
                                 target.triggerHandler('updated_results', result)
                             } catch (err) {
                                 if (window.console) {
-                                    WPFM_Common.logError(err)
                                 }
                             }
                         }
                     },
                     error: function (jqXHR, textStatus, error) {
                         if (window.console && 'abort' !== textStatus) {
-                            WPFM_Common.logError(textStatus + ': ' + error)
                         }
                     },
                     statusCode: {
                         404: function () {
                             if (window.console) {
-                                WPFM_Common.logError("Error 404: Ajax Endpoint cannot be reached. Go to Settings > Permalinks and save to resolve.")
                             }
                         }
                     }

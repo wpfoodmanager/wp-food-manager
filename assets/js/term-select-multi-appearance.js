@@ -1,7 +1,6 @@
 var WPFM_MultiAppearanceSelect = function () {
     return {
         init: function () {
-            WPFM_Common.logInfo("WPFM_MultiAppearanceSelect.init...");
             jQuery('.multiselect_appearance .food-manager-category-dropdown').on('change', function () {
                 if (jQuery('.selection-preview .preview-items li').length) {
                     var selected_val = {};

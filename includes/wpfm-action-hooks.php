@@ -358,7 +358,7 @@ class WPFM_ActionHooks {
 
         // Common js.
         wp_register_script('wp-food-manager-common', esc_url(WPFM_PLUGIN_URL . '/assets/js/common.js'), array('jquery'), WPFM_VERSION, true);
-        wp_enqueue_script('wp-food-manager-common');        
+        // wp_enqueue_script('wp-food-manager-common');        
         // Food submission forms and validation js.
         wp_register_script('wp-food-manager-food-submission', esc_url(WPFM_PLUGIN_URL . '/assets/js/food-submission.min.js'), array('jquery', 'jquery-ui-core', 'jquery-ui-datepicker'), WPFM_VERSION, true);
         wp_enqueue_script('wp-food-manager-food-submission');
