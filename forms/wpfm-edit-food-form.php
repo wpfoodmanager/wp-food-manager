@@ -61,6 +61,7 @@ class WPFM_Edit_Food_Form extends WPFM_Add_Food_Form {
 			echo wpautop(__('Invalid listing', 'wp-food-manager'));
 			return;
 		}
+		wp_enqueue_script('wp-food-manager-food-submission');
 		// Init fields.
 		//$this->init_fields(); We dont need to initialize with this function because of field editor.
 		// Now field editor function will return all the fields. 
@@ -161,6 +162,7 @@ class WPFM_Edit_Food_Form extends WPFM_Add_Food_Form {
 		}
 
 		try {
+			wp_enqueue_script('wp-food-manager-food-submission');
 			// Get posted values.
 			$values = $this->get_posted_fields();
 

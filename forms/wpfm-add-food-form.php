@@ -394,6 +394,7 @@ class WPFM_Add_Food_Form extends WPFM_Form {
 	 * @since 1.0.0
 	 */
 	public function submit() {
+		
 		// get date and time setting defined in admin panel food listing -> Settings -> Date & Time formatting.
 		$datepicker_date_format = esc_attr(WPFM_Date_Time::get_datepicker_format());
 
@@ -408,6 +409,7 @@ class WPFM_Add_Food_Form extends WPFM_Form {
 
 		// Load data if necessary.
 		if ($this->food_id) {
+			wp_enqueue_script('wp-food-manager-food-submission');
 			$food = get_post($this->food_id);
 			foreach ($this->fields as $group_key => $group_fields) {
 				foreach ($group_fields as $key => $field) {
@@ -505,7 +507,7 @@ class WPFM_Add_Food_Form extends WPFM_Form {
 			if (is_wp_error(($return = $this->validate_fields($values)))) {
 				throw new Exception($return->get_error_message());
 			}
-
+			wp_enqueue_script('wp-food-manager-food-submission');
 			// Account creation.
 			if (!is_user_logged_in()) {
 				$create_account = false;
