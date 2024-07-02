@@ -1,11 +1,28 @@
 var WPFM_FoodMenuFilters = (function () {
     return {
         init: function () {
-            jQuery('#food-menu-search').on('keyup', function() {
-                var value = jQuery(this).val().toLowerCase();
-                jQuery('#food-menu-container .food-menu-section').filter(function() {
-                    jQuery(this).toggle(jQuery(this).text().toLowerCase().indexOf(value) > -1);
-                });
+            this.bindEvents();
+        },
+
+        bindEvents: function() {
+            jQuery('#food-menu-search').on('keyup', this.handleSearch);
+        },
+
+        handleSearch: function() {
+            var search_term = jQuery(this).val().toLowerCase();
+
+            jQuery.ajax({
+                url: foodMenuAjax.ajaxurl,
+                type: 'POST',
+                data: {
+                    action: 'food_menu_search',
+                    search_term: search_term,
+                    nonce: foodMenuAjax.nonce,
+                    is_ajax: true
+                },
+                success: function(response) {
+                    jQuery('#food-menu-results').html(response);
+                }
             });
         }
     };

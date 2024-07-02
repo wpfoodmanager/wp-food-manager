@@ -74,8 +74,27 @@ class WPFM_ActionHooks {
         add_action('wp_ajax_term_ajax_search', array($this, 'term_ajax_search'));
         add_action('wp_ajax_nopriv_term_ajax_search', array($this, 'term_ajax_search'));
         add_action('wpfm_save_food_data', array($this, 'food_manager_save_food_manager_data'), 20, 3);
+        add_action('wp_ajax_food_menu_search', array($this,'ajax_food_menu_search'));
+        add_action('wp_ajax_nopriv_food_menu_search', array($this,'ajax_food_menu_search'));
     }
 
+    /**
+     *Search food from food menu.
+     * 
+     * @access public
+     * @since 1.0.1
+     */
+    public function ajax_food_menu_search() {
+        check_ajax_referer('food_menu_search_nonce', 'nonce');
+    
+        $search_term = isset($_POST['search_term']) ? sanitize_text_field($_POST['search_term']) : '';
+        echo do_shortcode("[food_menu search_term='$search_term' is_ajax='true']");
+    
+        wp_reset_postdata();
+    
+        wp_die();
+    }
+    
     /**
      * Output some content when no results were found.
      * 
@@ -351,7 +370,10 @@ class WPFM_ActionHooks {
 
         // Enqueue the script for search food menu.
         wp_register_script('food-menu-search', esc_url(WPFM_PLUGIN_URL . '/assets/js/food-menu-search.js'), array('jquery'), WPFM_VERSION, true);
-
+        wp_localize_script('food-menu-search', 'foodMenuAjax', array(
+            'ajaxurl' => admin_url('admin-ajax.php'),
+            'nonce'   => wp_create_nonce('food_menu_search_nonce')
+        ));
         // Frontend js.
         wp_register_script('wp-food-manager-frontend', esc_url(WPFM_PLUGIN_URL . '/assets/js/frontend.min.js'), array('jquery'), WPFM_VERSION, true);
         wp_enqueue_script('wp-food-manager-frontend');
