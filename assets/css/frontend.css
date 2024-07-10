@@ -2879,15 +2879,11 @@ span.fm-divider {
     margin-bottom: 0;
 }
 
-.food-stock-status mark.fm_outofstock {
-    padding: 3px 5px 2px;
-    font-size: 12px;
-    display: inline-block;
-    vertical-align: top;
-    background: #f74747;
-    color: var(--wpfm-white-color);
-    border-radius: 2px;
+.food-stock-status mark.food_outofstock {
+    background: transparent;
+    color: #f74747;
 }
+
 
 small.wpfm-food-status-pending-approval {
     font-weight: 400;

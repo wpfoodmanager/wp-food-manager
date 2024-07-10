@@ -693,8 +693,8 @@ input[name="_food_veg_nonveg"] {
   margin: 0;
 }
 
-mark.fm_outofstock {
-  color: #aa4444;
+mark.food_outofstock {
+  color: #f74747;
   background: transparent;
   font-weight: bold;
 }
