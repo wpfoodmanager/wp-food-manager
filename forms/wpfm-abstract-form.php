@@ -220,11 +220,11 @@ abstract class WPFM_Form {
 	 * @return int
 	 * @since 1.0.0
 	 */
-	protected function sort_by_priority($item1, $item2) {
-		if ($item1['priority'] == $item2['priority']) {
+	protected function sort_by_priority($main_item, $item) {
+		if ($main_item['priority'] == $item['priority']) {
 			return 0;
 		}
-		return ($item1['priority'] < $item2['priority']) ? -1 : 1;
+		return ($main_item['priority'] < $item['priority']) ? -1 : 1;
 	}
 
 	/**
@@ -303,34 +303,34 @@ abstract class WPFM_Form {
 								$values[$group_key][$key] = wp_unslash($values[$group_key][$key]);
 							}
 						} elseif ($group_key == "toppings") {
-							$key2 = "";
+							$next_key = "";
 							$first_key = '';
 
 							if ($key == "topping_name") {
 								$first_key = $key . "_" . $option_count;
-								$key2 = $key . "_" . $option_count;
+								$next_key = $key . "_" . $option_count;
 							} else {
-								$key2 = "_" . $key . "_" . $option_count;
+								$next_key = "_" . $key . "_" . $option_count;
 							}
 
 							$first_out = str_replace(" ", "_", strtolower($this->get_posted_field($first_key, $field)));
-							$output = $this->get_posted_field($key2, $field);
+							$output = $this->get_posted_field($next_key, $field);
 
 							if ($field['type'] == 'file') {
-								$output = $this->get_posted_field($key2, $field);
+								$output = $this->get_posted_field($next_key, $field);
 							}
 
 							$values[$group_key][$first_out][$key] = $output;
-							$output2 = array();
+							$output = array();
 
 							if ($key == "topping_options") {
 								if ($option_value && is_array($option_value)) {
 									foreach ($option_value as $option_value_count) {
-										$output2[$option_value_count] = apply_filters('wpfm_topping_options_values_array', array(
+										$output[$option_value_count] = apply_filters('wpfm_topping_options_values_array', array(
 											'option_name' => isset($_POST[$option_count . '_option_name_' . $option_value_count]) ? $_POST[$option_count . '_option_name_' . $option_value_count] : '',
 											'option_price' => isset($_POST[$option_count . '_option_price_' . $option_value_count]) ? $_POST[$option_count . '_option_price_' . $option_value_count] : '',
 										), array('option_count' => $option_count, 'option_value_count' => $option_value_count));
-										$values[$group_key][$first_out][$key] = $output2;
+										$values[$group_key][$first_out][$key] = $output;
 									}
 								}
 							}

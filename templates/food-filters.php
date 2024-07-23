@@ -20,7 +20,6 @@
 			<!-- Search by keywords section end-->
 			<?php
 			if ($food_menu_query) {
-				// echo '<pre>'; print_r($food_menu_query); echo '</pre>';
 				?>
 				<!-- Search by food menu section start -->
 				<div class="wpfm-col">
@@ -33,13 +32,9 @@
 							if (!$show_food_menu_multiselect) {
 								echo '<option value="">' . esc_html__('Choose a Food Menu') . '</option>';
 							}
-							foreach($food_menu_query as $food_menu) { 
-								// echo '<pre>'; print_r($food_menu); echo '</pre>';
-								?>
+							foreach($food_menu_query as $food_menu) { ?>
 								<option value="<?php echo esc_attr($food_menu->ID); ?>"><?php echo esc_html($food_menu->post_title); ?></option>
-								<?php
-							}
-							?>
+							<?php } ?>
 						</select>
 					</div>
 					<!-- shows default food menu items text field end -->
@@ -47,18 +42,16 @@
 				<!-- Search by food menu section end-->
 				<?php
 			}
-			wp_reset_postdata();
-			?>
-			
+			wp_reset_postdata(); ?>
 
 		</div><!-- /row -->
 		<div class="wpfm-row">
 			<!-- Search by food categories section start -->
-			<?php if ($categories) : ?>
-				<?php foreach ($categories as $category) : ?>
+			<?php if ($categories) : 
+				foreach ($categories as $category) : ?>
 					<input type="hidden" name="search_categories[]" value="<?php echo esc_attr(sanitize_title($category)); ?>" />
-				<?php endforeach; ?>
-			<?php elseif ($show_categories && !is_tax('food_manager_category') && get_terms('food_manager_category', ['hide_empty' => false])) : ?>
+				<?php endforeach; 
+			elseif ($show_categories && !is_tax('food_manager_category') && get_terms('food_manager_category', ['hide_empty' => false])) : ?>
 				<div class="wpfm-col">
 					<div class="wpfm-form-group">
 						<label for="search_categories" class="wpfm-form-label"><?php _e('Category', 'wp-food-manager'); ?></label>
@@ -72,11 +65,11 @@
 			<?php endif; ?>
 			<!-- Search by food categories section end -->
 			<!-- Search by food type section start -->
-			<?php if ($food_types) : ?>
-				<?php foreach ($food_types as $food_type) : ?>
+			<?php if ($food_types) : 
+				foreach ($food_types as $food_type) : ?>
 					<input type="hidden" name="search_food_types[]" value="<?php echo esc_attr(sanitize_title($food_type)); ?>" />
-				<?php endforeach; ?>
-			<?php elseif ($show_food_types && !is_tax('food_manager_type') && get_terms('food_manager_type', ['hide_empty' => false])) : ?>
+				<?php endforeach;
+			elseif ($show_food_types && !is_tax('food_manager_type') && get_terms('food_manager_type', ['hide_empty' => false])) : ?>
 				<div class="wpfm-col">
 					<div class="wpfm-form-group">
 						<label for="search_food_types" class="wpfm-form-label"><?php _e('food Type', 'wp-food-manager'); ?></label>

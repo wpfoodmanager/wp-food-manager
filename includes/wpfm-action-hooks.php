@@ -328,23 +328,21 @@ class WPFM_ActionHooks {
         wp_enqueue_style('chosen', esc_url(WPFM_PLUGIN_URL . '/assets/css/chosen.min.css'));
         
         // File upload - vendor.
-        // if (apply_filters('wpfm_ajax_file_upload_enabled', true)) {
-            wp_register_script('jquery-iframe-transport', esc_url(WPFM_PLUGIN_URL . '/assets/js/jquery-fileupload/jquery.iframe-transport.min.js'), array('jquery'), '1.8.3', true);
-            wp_register_script('jquery-fileupload', esc_url(WPFM_PLUGIN_URL . '/assets/js/jquery-fileupload/jquery.fileupload.min.js'), array('jquery', 'jquery-iframe-transport', 'jquery-ui-widget'), '5.42.3', true);
-            wp_register_script('wpfm-ajax-file-upload', esc_url(WPFM_PLUGIN_URL . '/assets/js/ajax-file-upload.js'), array('jquery', 'jquery-fileupload'), WPFM_VERSION, true);
-            ob_start();
-            get_food_manager_template('form-fields/uploaded-file-html.php', array('name' => '', 'value' => '', 'extension' => 'jpg'));
-            $js_field_html_img = ob_get_clean();
-            ob_start();
-            get_food_manager_template('form-fields/uploaded-file-html.php', array('name' => '', 'value' => '', 'extension' => 'zip'));
-            $js_field_html = ob_get_clean();
-            wp_localize_script('wpfm-ajax-file-upload', 'wpfm_ajax_file_upload', array(
-                'ajax_url' => $ajax_url,
-                'js_field_html_img' => esc_js(str_replace(array("\n", "\r"), '', $js_field_html_img)),
-                'js_field_html' => esc_js(str_replace(array("\n", "\r"), '', $js_field_html)),
-                'i18n_invalid_file_type' => esc_html__('The file type you have mentioned is invalid.', 'wp-food-manager')
-            ));
-        // }
+        wp_register_script('jquery-iframe-transport', esc_url(WPFM_PLUGIN_URL . '/assets/js/jquery-fileupload/jquery.iframe-transport.min.js'), array('jquery'), '1.8.3', true);
+        wp_register_script('jquery-fileupload', esc_url(WPFM_PLUGIN_URL . '/assets/js/jquery-fileupload/jquery.fileupload.min.js'), array('jquery', 'jquery-iframe-transport', 'jquery-ui-widget'), '5.42.3', true);
+        wp_register_script('wpfm-ajax-file-upload', esc_url(WPFM_PLUGIN_URL . '/assets/js/ajax-file-upload.js'), array('jquery', 'jquery-fileupload'), WPFM_VERSION, true);
+        ob_start();
+        get_food_manager_template('form-fields/uploaded-file-html.php', array('name' => '', 'value' => '', 'extension' => 'jpg'));
+        $js_field_html_img = ob_get_clean();
+        ob_start();
+        get_food_manager_template('form-fields/uploaded-file-html.php', array('name' => '', 'value' => '', 'extension' => 'zip'));
+        $js_field_html = ob_get_clean();
+        wp_localize_script('wpfm-ajax-file-upload', 'wpfm_ajax_file_upload', array(
+            'ajax_url' => $ajax_url,
+            'js_field_html_img' => esc_js(str_replace(array("\n", "\r"), '', $js_field_html_img)),
+            'js_field_html' => esc_js(str_replace(array("\n", "\r"), '', $js_field_html)),
+            'i18n_invalid_file_type' => esc_html__('The file type you have mentioned is invalid.', 'wp-food-manager')
+        ));
         
         // Frontend Css.
         wp_enqueue_style('wpfm-frontend', esc_url(WPFM_PLUGIN_URL . '/assets/css/frontend.css'));

@@ -24,22 +24,21 @@ if (!empty($extra_fields_options)) {
 	}
 	array_unshift($topping_item_count1, "");
 	unset($topping_item_count[0]);
-	$topping_item_count2 = array();
+	$topping_item_list = array();
 
 	for ($i = 1; $i <= count($extra_fields_options); $i++) {
 		foreach ($extra_fields_options as $key => $value) {
-				$topping_item_count2[$key] = $value;
+				$topping_item_list[$key] = $value;
 		}
 	}
-	$topping_item_count3 = array();
-	foreach ($topping_item_count2 as $option_value2_count) {
-		$topping_item_count3[] = $option_value2_count;
+	$topping_items = array();
+	foreach ($topping_item_list as $option_value2_count) {
+		$topping_items[] = $option_value2_count;
 	}
 
-	array_unshift($topping_item_count3, "");
-	unset($topping_item_count3[0]);
-}
-?>
+	array_unshift($topping_items, "");
+	unset($topping_items[0]);
+} ?>
 <form action="<?php echo esc_url($action); ?>" method="post" id="add-food-form" class="wpfm-form-wrapper wpfm-main food-manager-form" enctype="multipart/form-data">
 	<?php if (apply_filters('add_food_show_signin', true)) : ?>
 		<?php get_food_manager_template('account-signin.php'); ?>
@@ -80,8 +79,7 @@ if (!empty($extra_fields_options)) {
 					<?php if (!empty($extra_fields_options)) {
 						foreach ($topping_item_count3 as $key => $extra_fields_option) {
 							$toppings = get_post_meta($food_id, '_food_toppings', true);
-							$topping_key = str_replace(" ", "_", strtolower($extra_fields_option['_topping_name']));
-					?>
+							$topping_key = str_replace(" ", "_", strtolower($extra_fields_option['_topping_name'])); ?>
 							<div class="wpfm-options-wrap wpfm-metabox postbox wpfm-options-box-<?php echo $key; ?>">
 								<input type="hidden" name="repeated_options[]" value="<?php echo $key; ?>" class="repeated-options">
 								<h3 class="">
@@ -106,8 +104,7 @@ if (!empty($extra_fields_options)) {
 												$fieldClassLabel = '';
 												if (!empty($field['type']) && $field['type'] == 'wp-editor') {
 													$fieldClassLabel = 'wp-editor-field';
-												}
-										?>
+												} ?>
 												<fieldset class="wpfm-form-group fieldset<?php echo $topping_field_key; ?> <?php echo $fieldClassLabel; ?>" data-field-name="<?php echo $topping_field_key; ?>">
 													<label class="wpfm-form-label-text"><?php echo $field['label'] . apply_filters('add_food_required_label', $field['required'] ? '<span class="require-field">*</span>' : ' <small>' . __('(optional)', 'wp-food-manager') . '</small>', $field); ?></label>
 													<div class="field <?php echo $field['required'] ? 'required-field' : ''; ?>">
@@ -144,8 +141,7 @@ if (!empty($extra_fields_options)) {
 																		'option_default' => $option_default,
 																		'option_fixed_amount' => $option_fixed_amount,
 																		'option_quantity_based' => $option_quantity_based,
-																	);
-																?>
+																	); ?>
 																	<tr class="option-tr-<?php echo $sub_value_count; ?>">
 																		<td><span class="wpfm-option-sort">☰</span></td>
 																		<td><?php echo $sub_value_count; ?></td>
@@ -177,9 +173,8 @@ if (!empty($extra_fields_options)) {
 								                    <td><a href='javascript: void(0);' data-id='%%repeated-option-index3%%' class='option-delete-btn dashicons dashicons-dismiss'></a></td>
 								                    <input type='hidden' class='option-value-class' name='option_value_count[%%repeated-option-index2%%][]' value='%%repeated-option-index3%%'>
 								                </tr>
-												<?php echo esc_attr(ob_get_clean());
-        										?>
-												">Add Row</a>
+												<?php echo esc_attr(ob_get_clean()); ?>
+												"><?php _e('Add Row', 'wp-food-manager'); ?></a>
 																	</td>
 																</tr>
 															</tfoot>
@@ -243,7 +238,7 @@ if (!empty($extra_fields_options)) {
 						    </div>
 							<?php echo esc_attr(ob_get_clean());
         					?>
-							'>+ Add Topping
+							'><?php _e('+ Add Topping', 'wp-food-manager'); ?>
 						</button>
 					</div>
 				</div>

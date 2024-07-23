@@ -17,34 +17,33 @@ if ($remove_tax != 0) {
 	unset($taxonomies[$remove_tax]);
 }
 	
-	$field_types    = apply_filters(
-		'food_manager_form_field_types',
-		array(
-			'text'             => esc_html__('Text', 'wp-food-manager'),
-			'checkbox'         => esc_html__('Checkbox', 'wp-food-manager'),
-			'date'             => esc_html__('Date', 'wp-food-manager'),
-			'file'             => esc_html__('File', 'wp-food-manager'),
-			'hidden'           => esc_html__('Hidden', 'wp-food-manager'),
-			'multiselect'      => esc_html__('Multiselect', 'wp-food-manager'),
-			'number'           => esc_html__('Number', 'wp-food-manager'),
-			'radio'            => esc_html__('Radio', 'wp-food-manager'),
-			'select'           => esc_html__('Select', 'wp-food-manager'),
-			'term-checklist'   => esc_html__('Term Checklist', 'wp-food-manager'),
-			'term-multiselect' => esc_html__('Term Multiselect', 'wp-food-manager'),
-			'term-select'      => esc_html__('Term Select', 'wp-food-manager'),
-			'term-select-multi-appearance'      => esc_html__('Term Multi Select Appearance', 'wp-food-manager'),
-			'textarea'         => esc_html__('Textarea', 'wp-food-manager'),
-			'wp-editor'        => esc_html__('WP Editor', 'wp-food-manager'),
-			'url'              => esc_html__('URL', 'wp-food-manager'),
-			'term-autocomplete' => esc_html__('Term Autocomplete', 'wp-food-manager'),
-			'switch'    => esc_html__('Switch', 'wp-food-manager'),
-		)
-	);
+$field_types    = apply_filters(
+	'food_manager_form_field_types',
+	array(
+		'text'             => esc_html__('Text', 'wp-food-manager'),
+		'checkbox'         => esc_html__('Checkbox', 'wp-food-manager'),
+		'date'             => esc_html__('Date', 'wp-food-manager'),
+		'file'             => esc_html__('File', 'wp-food-manager'),
+		'hidden'           => esc_html__('Hidden', 'wp-food-manager'),
+		'multiselect'      => esc_html__('Multiselect', 'wp-food-manager'),
+		'number'           => esc_html__('Number', 'wp-food-manager'),
+		'radio'            => esc_html__('Radio', 'wp-food-manager'),
+		'select'           => esc_html__('Select', 'wp-food-manager'),
+		'term-checklist'   => esc_html__('Term Checklist', 'wp-food-manager'),
+		'term-multiselect' => esc_html__('Term Multiselect', 'wp-food-manager'),
+		'term-select'      => esc_html__('Term Select', 'wp-food-manager'),
+		'term-select-multi-appearance'      => esc_html__('Term Multi Select Appearance', 'wp-food-manager'),
+		'textarea'         => esc_html__('Textarea', 'wp-food-manager'),
+		'wp-editor'        => esc_html__('WP Editor', 'wp-food-manager'),
+		'url'              => esc_html__('URL', 'wp-food-manager'),
+		'term-autocomplete' => esc_html__('Term Autocomplete', 'wp-food-manager'),
+		'switch'    => esc_html__('Switch', 'wp-food-manager'),
+	)
+);
 
-	if ($field_key == 'topping_options') {
-		$field_types['options'] = esc_html__('Options', 'wp-food-manager');
-	}
-error_log(print_r($field, true));
+if ($field_key == 'topping_options') {
+	$field_types['options'] = esc_html__('Options', 'wp-food-manager');
+}
 	
 $wpfm_admin_class = '';
 if ($field_key == 'food_category') {
@@ -57,9 +56,6 @@ if ($field_key == 'food_category') {
 	$wpfm_admin_class = '';
 } elseif ($field_key == 'food_nutritions') {
 	$wpfm_admin_class = '';
-// } elseif($field_key == 'tax_classes_cat') {
-	// $wpfm_admin_class = '';
-
 }else {
 	$wpfm_admin_class = apply_filters('wpfm_check_field_editor_key', 'wpfm-admin-common', $field_key);
 }
@@ -76,11 +72,9 @@ $disable_field_types = array('term-autocomplete', 'term-select-multi-appearance'
 		<select name="<?php echo esc_attr($group_key); ?>[<?php echo esc_attr($field_key); ?>][type]" class="field_type">
 
 			<?php
-			// error_log(print_r($field, true));
 			foreach ($field_types as $key => $type) {
 				if (in_array($field_key, $disbled_fields)) {
 					if ($key == $field['type']) {
-						
 						printf('<option value="' . esc_attr($key) . '" ' . selected($field['type'], $key, false) . ' class="wpfm-opt-val ' . esc_attr($key) . '">' . esc_html($type) . '</option>');
 					}
 				} else {
@@ -88,8 +82,7 @@ $disable_field_types = array('term-autocomplete', 'term-select-multi-appearance'
 						printf('<option value="' . esc_attr($key) . '" ' . selected($field['type'], $key, false) . ' class="wpfm-opt-val ' . esc_attr($key) . '">' . esc_html($type) . '</option>');
 					}
 				}
-			}
-			?>
+			} ?>
 
 		</select>
 	</td>
@@ -111,8 +104,7 @@ $disable_field_types = array('term-autocomplete', 'term-select-multi-appearance'
 			);
 		} else {
 			$options = '';
-		}
-		?>
+		} ?>
 		<input type="text" class="input-text placeholder" name="<?php echo esc_attr($group_key); ?>[<?php echo esc_attr($field_key); ?>][placeholder]" value="<?php if (isset($field['placeholder'])) {
 																																									printf(esc_html__('%s', 'wp-food-manager'), esc_attr(stripslashes($field['placeholder'])));
 																																								}	?>" placeholder="<?php esc_attr_e('N/A', 'wp-food-manager'); ?>" />

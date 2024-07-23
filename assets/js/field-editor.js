@@ -125,11 +125,7 @@ var WPFM_FieldEditor = function () {
 				} else {
 					jQuery(this).closest('tr').find('.field-options .placeholder').show();
 				}
-				if (field_type === 'group' && jQuery(this).val() !== 'group') {
-					if (jQuery(this).closest('tr').next().hasClass('group')) {
-						jQuery(this).closest('tr').next().remove();
-					}
-				}
+				
 				jQuery(this).closest('tr').find('.field-rules .rules').hide();
 				jQuery(this).closest('tr').find('.field-rules .na').hide();
 				jQuery(this).closest('tr').find('.field-rules .rules').show();
