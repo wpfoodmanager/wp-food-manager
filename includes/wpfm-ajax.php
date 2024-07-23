@@ -48,7 +48,8 @@ class WPFM_Ajax {
         add_action('wp_ajax_food_manager_get_listings', array($this, 'get_listings'));
         add_action('wp_ajax_nopriv_food_manager_upload_file', array($this, 'upload_file'));
         add_action('wp_ajax_food_manager_upload_file', array($this, 'upload_file'));
-		
+        add_action('wp_ajax_term_ajax_search', array($this, 'term_ajax_search'));
+        add_action('wp_ajax_nopriv_term_ajax_search', array($this, 'term_ajax_search'));
 	}
 	
 	/**
@@ -109,6 +110,37 @@ class WPFM_Ajax {
         }
     }
     
+    /**
+     * autocomplete term search feature.
+     *
+     * @access public
+     * @return void
+     * @since 1.0.1
+     */
+    function term_ajax_search() {
+        if (!isset($_REQUEST['term']) && empty($_REQUEST['term']) && !isset($_REQUEST['taxonomy']) && empty($_REQUEST['taxonomy']))
+            return;
+
+        $results = new WP_Term_Query([
+            'search'        => stripslashes($_REQUEST['term']),
+            'taxonomy'        => stripslashes($_REQUEST['taxonomy']),
+            'hide_empty'    => false
+        ]);
+
+        $items = array();
+        if ($results->terms) {
+            foreach ($results->terms as $term) {
+                $items[] = apply_filters('wpfm_term_ajax_search_return_args', array(
+                    'id' => $term->term_id,
+                    'label' => $term->name,
+                    'description' => term_description($term->term_id, $_REQUEST['taxonomy']),
+                ), array('term_id' => $term->term_id));
+            }
+        }
+
+        wp_send_json_success($items);
+    }
+
     /**
      * Get listings via ajax.
      * 

@@ -31,6 +31,11 @@ class WPFM_Post_Types {
 	 * Constructor
 	 */
 	public function __construct() {
+		 // wpfm custom post-types.
+		 add_action('wp_footer', array($this, 'output_structured_data'));
+		 add_action('init', array($this->post_types, 'register_post_types'), 0);
+		 // View count action.
+		 add_action('set_single_listing_view_count', array($this, 'set_single_listing_view_count'));
 	}
 
 	/**
@@ -184,6 +189,51 @@ class WPFM_Post_Types {
 			'label_count'               => _n_noop('Preview <span class="count">(%s)</span>', 'Preview <span class="count">(%s)</span>', 'wp-food-manager')
 		));
 	}
+
+	/**
+     * Set post view on the single listing page.
+     * 
+     * @access public
+     * @return void
+     * @param object $post	 
+     * @since 1.0.0
+     */
+    public function set_single_listing_view_count($post) {
+        global $post;
+        $post_types = WPFM_Post_Types::instance();
+
+        // Get the user role. 
+        if (is_user_logged_in()) {
+            $role = get_food_manager_current_user_role();
+            $current_user = wp_get_current_user();
+
+            if ($role != 'Administrator' && ($post->post_author != $current_user->ID)) {
+                $post_types->set_post_views($post->ID);
+            }
+        } else {
+            $post_types->set_post_views($post->ID);
+        }
+    }
+	
+	/**
+     * output_structured_data.
+     *
+     * @access public
+     * @return void
+     * @since 1.0.0
+     */
+    public function output_structured_data() {
+        if (!is_single()) {
+            return;
+        }
+        if (!wpfm_output_food_listing_structured_data()) {
+            return;
+        }
+        $structured_data = wpfm_get_food_listing_structured_data();
+        if (!empty($structured_data)) {
+            echo '<script type="application/ld+json">' . wp_json_encode($structured_data) . '</script>';
+        }
+    }
 
 	/**
 	 * Display the food's feed.

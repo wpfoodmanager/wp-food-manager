@@ -45,34 +45,12 @@ class WPFM_ActionHooks {
         $this->post_types = WPFM_Post_Types::instance();
         add_action('wp_enqueue_scripts', array($this, 'frontend_scripts'));
         add_action('food_manager_notify_new_user', 'wpfm_notify_new_user', 10, 2);
-
-        // wpfm form's action.
-        add_action('init', array($this, 'load_posted_form'));
-
-        // wpfm cache helper.
-        add_action('save_post', array($this, 'flush_get_food_managers_cache'));
-        add_action('delete_post', array($this, 'flush_get_food_managers_cache'));
-        add_action('trash_post', array($this, 'flush_get_food_managers_cache'));
-        add_action('set_object_terms', array($this, 'set_term'), 10, 4);
-        add_action('edited_term', array($this, 'edited_term'), 10, 3);
-        add_action('create_term', array($this, 'edited_term'), 10, 3);
-        add_action('delete_term', array($this, 'edited_term'), 10, 3);
-        add_action('food_manager_clear_expired_transients', array($this, 'clear_expired_transients'), 10);
-        add_action('transition_post_status', array($this, 'maybe_clear_count_transients'), 10, 3);
-
-        // wpfm custom post-types.
-        add_action('wp_footer', array($this, 'output_structured_data'));
-        add_action('init', array($this->post_types, 'register_post_types'), 0);
-
-        // View count action.
-        add_action('set_single_listing_view_count', array($this, 'set_single_listing_view_count'));
-
+       
         // wpfm shortcode's action.
         add_action('food_manager_food_dashboard_contents_edit', array($this, 'edit_food'));
         add_action('food_manager_food_filters_end', array($this, 'food_filter_results'), 30);
         add_action('food_manager_output_foods_no_results', array($this, 'output_no_results'));
-        add_action('wp_ajax_term_ajax_search', array($this, 'term_ajax_search'));
-        add_action('wp_ajax_nopriv_term_ajax_search', array($this, 'term_ajax_search'));
+       
         add_action('wpfm_save_food_data', array($this, 'food_manager_save_food_manager_data'), 20, 3);
     }
     
@@ -108,196 +86,7 @@ class WPFM_ActionHooks {
     public function edit_food() {
         global $food_manager;
         echo $food_manager->forms->get_form('edit-food');
-    }
-
-    /**
-     * Set post view on the single listing page.
-     * 
-     * @access public
-     * @return void
-     * @param object $post	 
-     * @since 1.0.0
-     */
-    public function set_single_listing_view_count($post) {
-        global $post;
-        $post_types = WPFM_Post_Types::instance();
-
-        // Get the user role. 
-        if (is_user_logged_in()) {
-            $role = get_food_manager_current_user_role();
-            $current_user = wp_get_current_user();
-
-            if ($role != 'Administrator' && ($post->post_author != $current_user->ID)) {
-                $post_types->set_post_views($post->ID);
-            }
-        } else {
-            $post_types->set_post_views($post->ID);
-        }
-    }
-
-    /**
-     * output_structured_data.
-     *
-     * @access public
-     * @return void
-     * @since 1.0.0
-     */
-    public function output_structured_data() {
-        if (!is_single()) {
-            return;
-        }
-        if (!wpfm_output_food_listing_structured_data()) {
-            return;
-        }
-        $structured_data = wpfm_get_food_listing_structured_data();
-        if (!empty($structured_data)) {
-            echo '<script type="application/ld+json">' . wp_json_encode($structured_data) . '</script>';
-        }
-    }
-    /**
-     * Maybe remove pending count transients.
-     *
-     * When a supported post type status is updated, check if any cached count transients need to be removed.
-     *
-     * @access public
-     * @param string  $new_status New post status.
-     * @param string  $old_status Old post status.
-     * @param WP_Post $post       Post object.
-     * @return void
-     * @since 1.0.0
-     */
-    public static function maybe_clear_count_transients($new_status, $old_status, $post) {
-        global $wpdb;
-
-        /**
-         * Get supported post types for count caching.
-         * @param array   $post_types Post types that should be cached.
-         * @param string  $new_status New post status.
-         * @param string  $old_status Old post status.
-         * @param WP_Post $post       Post object.
-         */
-        $post_types = apply_filters('wp_foodmanager_count_cache_supported_post_types', array('food_manager'), $new_status, $old_status, $post);
-
-        // Only proceed when statuses do not match, and post type is supported post type.
-        if ($new_status === $old_status || !in_array($post->post_type, $post_types)) {
-            return;
-        }
-
-        /**
-         * Get supported post statuses for count caching.
-         * @param array   $post_statuses Post statuses that should be cached.
-         * @param string  $new_status    New post status.
-         * @param string  $old_status    Old post status.
-         * @param WP_Post $post          Post object.
-         */
-        $valid_statuses = apply_filters('wp_foodmanager_count_cache_supported_statuses', array('pending'), $new_status, $old_status, $post);
-        $wpfm_like          = array();
-
-        // New status transient option name.
-        if (in_array($new_status, $valid_statuses)) {
-            $wpfm_like[] = "^_transient_fm_{$new_status}_{$post->post_type}_count_user_";
-        }
-
-        // Old status transient option name.
-        if (in_array($old_status, $valid_statuses)) {
-            $wpfm_like[] = "^_transient_fm_{$old_status}_{$post->post_type}_count_user_";
-        }
-
-        if (empty($wpfm_like)) {
-            return;
-        }
-
-        $sql        = $wpdb->prepare("SELECT option_name FROM $wpdb->options WHERE option_name RLIKE '%s'", implode('|', $wpfm_like));
-        $transients = $wpdb->get_col($sql);
-
-        // For each transient...
-        foreach ($transients as $transient) {
-            // Strip away the WordPress prefix in order to arrive at the transient key.
-            $key = str_replace('_transient_', '', $transient);
-            // Now that we have the key, use WordPress core to delete the transient.
-            delete_transient($key);
-        }
-
-        // Sometimes transients are not in the DB, so we have to do this too:
-        wp_cache_flush();
-    }
-
-    /**
-     * Clear expired transients.
-     * 
-     * @access public
-     * @return void
-     * @since 1.0.0
-     */
-    public static function clear_expired_transients() {
-        global $wpdb;
-        if (!wp_using_ext_object_cache() && !defined('WP_SETUP_CONFIG') && !defined('WP_INSTALLING')) {
-            $sql = "
-			DELETE a, b FROM $wpdb->options a, $wpdb->options b	
-			WHERE a.option_name LIKE %s	
-			AND a.option_name NOT LIKE %s
-			AND b.option_name = CONCAT( '_transient_timeout_', SUBSTRING( a.option_name, 12 ) )
-			AND b.option_value < %s;";
-            $wpdb->query($wpdb->prepare($sql, $wpdb->esc_like('_transient_fm_') . '%', $wpdb->esc_like('_transient_timeout_fm_') . '%', time()));
-        }
-    }
-
-    /**
-     * When any post has a term set.
-     * 
-     * @access public
-     * @param mixed $object_id
-     * @param int $terms
-     * @param int $tt_ids
-     * @param mixed $taxonomy
-     * @return void
-     * @since 1.0.0
-     */
-    public static function set_term($object_id = '', $terms = '', $tt_ids = '', $taxonomy = '') {
-        WPFM_Cache_Helper::get_transient_version('fm_get_' . sanitize_text_field($taxonomy), true);
-    }
-
-    /**
-     * When any term is edited.
-     * 
-     * @access public
-     * @param int $term_id
-     * @param int $tt_id
-     * @param string $taxonomy
-     * @return void
-     * @since 1.0.0
-     */
-    public static function edited_term($term_id = '', $tt_id = '', $taxonomy = '') {
-        WPFM_Cache_Helper::get_transient_version('fm_get_' . sanitize_text_field($taxonomy), true);
-    }
-
-    /**
-     * Flush the cache.
-     * 
-     * @access public
-     * @param mixed $post_id
-     * @return void
-     * @since 1.0.0
-     */
-    public static function flush_get_food_managers_cache($post_id) {
-        if ('food_manager' === get_post_type($post_id)) {
-            WPFM_Cache_Helper::get_transient_version('get_food_managers', true);
-        }
-    }
-
-    /**
-     * If a form was posted, load its class so that it can be processed before display.
-     * 
-     * @access public
-     * @return void
-     * @since 1.0.0
-     */
-    public function load_posted_form() {
-        $forms = WPFM_Forms::instance();
-        if (!empty($_POST['food_manager_form'])) {
-            $forms->load_form_class(sanitize_title($_POST['food_manager_form']));
-        }
-    }
+    } 
 
     /**
      * Register and enqueue scripts and css.
@@ -417,37 +206,6 @@ class WPFM_ActionHooks {
                 'ajax_url' => esc_url(admin_url('admin-ajax.php'))
             )
         );
-    }
-
-    /**
-     * autocomplete term search feature.
-     *
-     * @access public
-     * @return void
-     * @since 1.0.1
-     */
-    function term_ajax_search() {
-        if (!isset($_REQUEST['term']) && empty($_REQUEST['term']) && !isset($_REQUEST['taxonomy']) && empty($_REQUEST['taxonomy']))
-            return;
-
-        $results = new WP_Term_Query([
-            'search'        => stripslashes($_REQUEST['term']),
-            'taxonomy'        => stripslashes($_REQUEST['taxonomy']),
-            'hide_empty'    => false
-        ]);
-
-        $items = array();
-        if ($results->terms) {
-            foreach ($results->terms as $term) {
-                $items[] = apply_filters('wpfm_term_ajax_search_return_args', array(
-                    'id' => $term->term_id,
-                    'label' => $term->name,
-                    'description' => term_description($term->term_id, $_REQUEST['taxonomy']),
-                ), array('term_id' => $term->term_id));
-            }
-        }
-
-        wp_send_json_success($items);
     }
     
     /**

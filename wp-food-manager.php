@@ -91,13 +91,11 @@ class WP_Food_Manager {
 
 		if (is_admin()) {
 			include('admin/wpfm-admin.php');
-		} 
-		
-	
-		// Actions and Filters Hooks
-		include('includes/wpfm-action-hooks.php');
-		include('includes/wpfm-filter-hooks.php');
-		
+		} else{
+			// Actions and Filters Hooks
+			include('includes/wpfm-action-hooks.php');
+			include('includes/wpfm-filter-hooks.php');
+		}
 
 		include('wp-food-manager-functions.php');
         include('wp-food-manager-template.php');

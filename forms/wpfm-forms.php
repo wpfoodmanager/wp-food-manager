@@ -31,7 +31,23 @@ class WPFM_Forms {
 	 * Constructor.
 	 */
 	public function __construct() {
+		 // wpfm form's action.
+		 add_action('init', array($this, 'load_posted_form'));
 	}
+
+	/**
+     * If a form was posted, load its class so that it can be processed before display.
+     * 
+     * @access public
+     * @return void
+     * @since 1.0.0
+     */
+    public function load_posted_form() {
+        $forms = WPFM_Forms::instance();
+        if (!empty($_POST['food_manager_form'])) {
+            $forms->load_form_class(sanitize_title($_POST['food_manager_form']));
+        }
+    }
 
 	/**
 	 * Load a form's class.
