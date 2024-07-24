@@ -32,8 +32,8 @@ if (!empty($extra_fields_options)) {
 		}
 	}
 	$topping_items = array();
-	foreach ($topping_item_list as $option_value2_count) {
-		$topping_items[] = $option_value2_count;
+	foreach ($topping_item_list as $option_value_list_count) {
+		$topping_items[] = $option_value_list_count;
 	}
 
 	array_unshift($topping_items, "");
@@ -77,7 +77,7 @@ if (!empty($extra_fields_options)) {
 				<h3 class="wpfm-form-title wpfm-heading-text"><?php _e('Extra Toppings', 'wp-food-manager'); ?></h3>
 				<div class="wpfm-options-wrapper wpfm-metaboxes">
 					<?php if (!empty($extra_fields_options)) {
-						foreach ($topping_item_count3 as $key => $extra_fields_option) {
+						foreach ($topping_items as $key => $extra_fields_option) {
 							$toppings = get_post_meta($food_id, '_food_toppings', true);
 							$topping_key = str_replace(" ", "_", strtolower($extra_fields_option['_topping_name'])); ?>
 							<div class="wpfm-options-wrap wpfm-metabox postbox wpfm-options-box-<?php echo $key; ?>">
