@@ -345,22 +345,8 @@ class WPFM_Writepanels {
         add_meta_box('radio-food_manager_typediv', (isset($taxonomy->labels->name) ? esc_html($taxonomy->labels->name) : ''), 'replace_food_manager_type_metabox', 'food_manager', 'side', 'core', array('taxonomy' => $taxonomy_slug));
         if ('add' != $screen->action) {
             // Show food menu Shortcode on edit menu page - admin.
-            add_meta_box('wpfm_menu_shortcode', 'Shortcode', array($this, 'food_menu_shortcode'), 'food_manager_menu', 'side', 'low');
             add_meta_box('wpfm_menu_disable_redirection', 'Disable Food Redirection', array($this, 'food_menu_disable_food_redirection'), 'food_manager_menu', 'side', 'low');
         }
-    }
-    
-    /**
-     * Show menu shortcode in single edit menu.
-     * 
-     * @access public
-     * @return void
-     * @since 1.0.2
-     */
-    public function food_menu_shortcode() {
-        global $post;
-        $menu_id = $post->ID;
-        echo '<input type="text" value="[food_menu id=' . esc_attr($menu_id) . ']" readonly>';
     }
     
     /**

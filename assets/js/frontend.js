@@ -186,6 +186,10 @@ var WPFM_Frontend = function () {
                     });
                 }
             }
+
+            if(jQuery('.food-menu-page-filter-tab-link').length > 0 ){
+                jQuery(document).on("click", ".food-menu-page-filter-tab-link", WPFM_Frontend.actions.smoothScrolling)
+            }
         },
         actions: {
             removeFoodItem: function (event) {
@@ -286,6 +290,16 @@ var WPFM_Frontend = function () {
                     mediaButtons: false,
                 });
             },
+
+            smoothScrolling : function(event){
+                event.preventDefault();
+                var target = jQuery(this.getAttribute('href'));
+                if (target.length) {
+                    jQuery('html, body').stop().animate({
+                        scrollTop: target.offset().top - 50
+                    }, 1000); // 1000ms is the duration of the scroll
+                }
+            }
         },
     }
 };

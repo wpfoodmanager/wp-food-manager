@@ -43,7 +43,7 @@ class WPFM_Shortcodes {
 		add_shortcode('food_dashboard', array($this, 'food_dashboard'));
 		add_shortcode('foods', array($this, 'output_foods'));
 		add_shortcode('food', array($this, 'output_food'));
-		add_shortcode('food_menu', array($this, 'output_food_menu'));
+		add_shortcode('wpfm_food_menu', array($this, 'output_food_menu'));
 	}
 
 	/**
@@ -540,31 +540,224 @@ class WPFM_Shortcodes {
 	 */
 	public function output_food_menu($atts) {
 		ob_start();
-		extract(shortcode_atts(array(
-			'id' => '',
-		), $atts));
+		$atts = shortcode_atts(array(
+			'restaurant_id' => '',
+		), $atts);
+		$restaurant_id = (isset($atts['restaurant_id'])) ? $atts['restaurant_id'] : $_GET['restaurant_id'];
+		$search_term = (isset($_GET['search_term'])) ? $_GET['search_term'] : '';
 	
-		$args = array(
-			'post_type'   => 'food_manager_menu',
-			'post_status' => 'publish',
-			'p'           => $id
-		);
-
-		$food_menus = new WP_Query(apply_filters('food_manager_food_menu_args',$args));
+		?>
+		<div id="food-menu-container" class="wpfm-food-menu-page-main-container">
+			<?php 
+			// Initialize arrays
+			$restaurant_ids = [];
+			$restaurant_menus = [];
 	
-		if ($food_menus->have_posts()) : ?>
-			<?php while ($food_menus->have_posts()) : $food_menus->the_post(); ?>
-				<div class="clearfix">
-					<?php get_food_manager_template_part('content-single', 'food_manager_menu'); ?>
+			// Query to retrieve all restaurant IDs
+			$restaurant_args = array(                
+				'post_type'   => 'restaurant_manager',
+				'post_status' => 'publish',
+				'fields'      => 'ids', 
+				'posts_per_page' => -1
+			);
+	
+			if ($restaurant_id) {
+				$restaurant_args['p'] = $restaurant_id;
+				$restaurant_args['posts_per_page'] = 1;
+			}
+	
+			$restaurant_query = new WP_Query($restaurant_args);
+			if ($restaurant_query->have_posts()) {
+				while ($restaurant_query->have_posts()) { 
+					$restaurant_query->the_post();
+					$restaurant_menus = get_post_meta(get_the_ID(), '_restaurant_menus', true);    
+					if (is_array($restaurant_menus)) {
+						$restaurant_ids = array_merge($restaurant_ids, $restaurant_menus);
+					}
+				}
+				// Remove duplicate IDs
+				$restaurant_ids = array_unique($restaurant_ids);
+			} else { ?>
+				<div class="wpfm-alert wpfm-alert-danger">
+					<?php _e("No restaurants found.", "wp-food-manager"); ?>
 				</div>
-			<?php endwhile; ?>
-		<?php endif;
+				<?php
+				return ob_get_clean();
+			}
+			wp_reset_postdata();
+
+			if(!$restaurant_menus){ ?>
+				<div class="wpfm-alert wpfm-alert-danger">
+					<?php _e("No menu list found.", "wp-food-manager"); ?>
+				</div>
+				<?php
+				return ob_get_clean();
+			}
+
+			if (!isset($_GET['is_ajax'])) {
+				// Query to retrieve all menu titles
+				if (!empty($restaurant_ids)) {
+					$title_args = array(
+						'post_type'   => 'food_manager_menu',
+						'post_status' => 'publish',
+						'post__in'    => $restaurant_ids,
+						'orderby'     => 'post__in',
+					);
 	
-		wp_reset_postdata();
-	
+					$title_query = new WP_Query(apply_filters('food_manager_food_menu_args', $title_args));
+					if ($title_query->have_posts()) { ?>
+						<div class="food-menu-page-filters">
+							<div class="wpfm-form-wrapper">
+								<div class="wpfm-form-group">
+									<form method="GET" action="<?php echo esc_url(get_permalink()); ?>">
+										<?php if ($restaurant_id) { ?> 
+											<input type="hidden" name="restaurant_id" id="restaurant-id-search" value="<?php echo esc_attr($restaurant_id); ?>">
+										<?php } ?>
+										<input type="text" name="search_term" id="food-menu-search" value = "<?php echo esc_attr($search_term); ?>" placeholder="Search for food items...">
+									</form>
+								</div>
+							</div> 
+							<?php 
+							if (empty($_GET['search_term'])) { ?>         
+								<div class="food-menu-page-filter-tabs-wrapper">
+									<div class="food-menu-page-filter-tabs" id="food-menu-titles">
+										<?php 
+										if($title_query->have_posts()) {
+											while ($title_query->have_posts()) { $title_query->the_post(); ?>
+												<div class="food-menu-page-filter-tab">
+													<a href="#menu-<?php the_ID(); ?>" class="food-menu-page-filter-tab-link"><?php echo get_the_title(); ?></a>
+												</div>
+											<?php } wp_reset_postdata();
+										} ?>
+									</div>
+								</div>
+							<?php } ?>
+						</div>
+					<?php 
+					} else { ?>
+						<div class="wpfm-alert wpfm-alert-danger">
+							<?php _e("No menu titles found.", "wp-food-manager"); ?>
+						</div>
+						<?php
+					}
+					wp_reset_postdata();
+				}
+			} 
+			?>
+			<div id="food-menu-results">
+				<?php
+				$duplicate_records = [];
+				if (!empty($restaurant_ids)) {
+					$args = array(
+						'post_type'   => 'food_manager_menu',
+						'post_status' => 'publish',
+						'post__in'    => $restaurant_ids,
+						'orderby'     => 'post__in',
+					);
+
+					$food_menus = new WP_Query(apply_filters('food_manager_food_menu_args', $args));
+
+					// Display the specific menu or search results
+					if ($food_menus->have_posts()) {
+						while ($food_menus->have_posts()) { 
+							$food_menus->the_post(); 
+							$food_menu_ids = get_post_meta(get_the_ID(), '_food_item_ids', true);    
+							
+							if (!empty($food_menu_ids) && is_array($food_menu_ids)) {
+								// Check if search term is provided
+								if ($search_term) {
+									$search_food_items = array(
+										'post_type' => 'food_manager',
+										'post_status' => 'publish',
+										'fields' => 'ids', 
+										'posts_per_page' => -1,
+										's' => $search_term,
+									);
+
+									$food_menu_ids = get_posts($search_food_items);
+									if (!empty($food_menu_ids) && is_array($food_menu_ids) && count($duplicate_records) == 0) {
+										$duplicate_records[] = $food_menu_ids;
+										$food_item_id = $food_menu_ids[0];
+										$found_post_id = null;
+
+										// Query all posts of the 'food_manager_menu' post type
+										$args = array(
+											'post_type'  => 'food_manager_menu',
+											'posts_per_page' => -1,
+										);
+
+										$query = new WP_Query($args);
+
+										if ($query->have_posts()) {
+
+											while ($query->have_posts()) {
+												$query->the_post();
+												$post_id = get_the_ID();
+
+												// Get the meta value for this post
+												$meta_value = get_post_meta($post_id, '_food_item_ids', true);
+												
+												// Unserialize the meta value
+												$food_item_ids = maybe_unserialize($meta_value);
+
+												// Check if the food item ID is in the array
+												if (is_array($food_item_ids) && in_array($food_item_id, $food_item_ids)) {
+													$found_post_id = $post_id;
+													break; // Exit loop once the post is found
+												}
+											}
+											wp_reset_postdata();
+										}
+
+										if (isset($found_post_id)) {
+											set_query_var('menu_search', $food_menu_ids);
+											set_query_var('menu_id', $found_post_id);
+										}
+									} else {
+										continue;
+									}
+								}
+
+								$food_items = array(
+									'post_type' => 'food_manager',
+									'post__in'  => $food_menu_ids,
+									'orderby'   => 'post__in',
+								);
+
+								$food_listings = get_posts($food_items);
+							} else {
+								$food_listings = array();
+							}
+							?>
+							<div id="menu-<?php the_ID(); ?>" class="food-menu-section">
+								<div class="clearfix">
+									<?php get_food_manager_template_part('content-single', 'food_manager_menu'); ?>
+								</div>
+							</div>
+						<?php 
+						}
+						do_action('food_menu_list_end');
+					} 
+				}
+
+				if(!$food_menu_ids){ ?>
+					<div class="wpfm-alert wpfm-alert-danger">
+						<?php _e("No food list found.", "wp-food-manager"); ?>
+					</div>
+					<?php
+					return ob_get_clean();
+				}
+				
+				if (!empty(trim($search_term)) && !isset($found_post_id)) { ?>
+					<div class="no_food_menu_found wpfm-alert wpfm-alert-danger">
+						<?php _e("No menus found.", "wp-food-manager"); ?>
+					</div>
+				<?php } ?>
+			</div>
+		</div>
+		<?php
 		return ob_get_clean();
 	}
-	
 }
 
 WPFM_Shortcodes::instance();
