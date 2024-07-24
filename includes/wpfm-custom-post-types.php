@@ -12,7 +12,7 @@ class WPFM_Post_Types {
 	 * @since 1.0.0
 	 */
 	private static $_instance = null;
-
+	public $post_types = 'food_manager';
 	/**
 	 * Allows for accessing single instance of class. Class should only be constructed once per call.
 	 *
@@ -46,7 +46,7 @@ class WPFM_Post_Types {
 	 * @since 1.0.0
 	 */
 	public function register_post_types() {
-		if (post_type_exists("food_manager"))
+		if (post_type_exists($this->post_types))
 			return;
 
 		$admin_capability = 'manage_food_managers';
@@ -78,7 +78,7 @@ class WPFM_Post_Types {
 		);
 
 		register_post_type(
-			"food_manager",
+			$this->post_types,
 			apply_filters("register_post_type_food_manager", array(
 				'labels' => array(
 					'name'                     => $plural,
@@ -244,7 +244,7 @@ class WPFM_Post_Types {
 	 */
 	public function food_feed() {
 		$query_args = array(
-			'post_type'           => 'food_manager',
+			'post_type'           => $this->post_types,
 			'post_status'         => 'publish',
 			'ignore_sticky_posts' => 1,
 			'posts_per_page'      => isset($_GET['posts_per_page']) ? absint($_GET['posts_per_page']) : -1,
@@ -336,7 +336,7 @@ class WPFM_Post_Types {
 		if (isset($wp->query_vars['post_type']) && !empty($wp->query_vars['post_type'])) {
 			return;
 		}
-		$wp->query_vars['post_type'] = 'food_manager';
+		$wp->query_vars['post_type'] = $this->post_types;
 	}
 
 	/**
@@ -397,7 +397,7 @@ class WPFM_Post_Types {
 	 * @since 1.0.0
 	 */
 	public function maybe_update_geolocation_data($meta_id, $object_id, $meta_key, $_meta_value) {
-		if ('_food_location' !== $meta_key || 'food_manager' !== get_post_type($object_id)) {
+		if ('_food_location' !== $meta_key || $this->post_types !== get_post_type($object_id)) {
 			return;
 		}
 
@@ -416,7 +416,7 @@ class WPFM_Post_Types {
 	 * @since 1.0.0
 	 */
 	public function maybe_update_menu_order($meta_id, $object_id, $meta_key, $_meta_value) {
-		if ('food_manager' !== get_post_type($object_id)) {
+		if ($this->post_types !== get_post_type($object_id)) {
 			return;
 		}
 
@@ -439,7 +439,7 @@ class WPFM_Post_Types {
 	 * @since 1.0.0
 	 */
 	public function pmxi_saved_post($post_id) {
-		if ('food_manager' === get_post_type($post_id)) {
+		if ($this->post_types === get_post_type($post_id)) {
 			$actionhooks = WPFM_ActionHooks::instance();
 			$actionhooks->maybe_add_default_meta_data(absint($post_id));
 		}
@@ -454,7 +454,7 @@ class WPFM_Post_Types {
 	 * @since 1.0.0
 	 */
 	public function before_delete_food($post_id) {
-		if ('food_manager' === get_post_type($post_id)) {
+		if ($this->post_types === get_post_type($post_id)) {
 			$attachments = get_children(array(
 				'post_parent' => $post_id,
 				'post_type'   => 'attachment'
@@ -517,7 +517,7 @@ class WPFM_Post_Types {
 	 * @since 1.0.0
 	 */
 	public function bulk_post_updated_messages($bulk_messages, $bulk_counts) {
-		$bulk_messages['food_manager'] = array(
+		$bulk_messages[$this->post_types] = array(
 			/* translators: %s: product count */
 			'updated'   => _n('%s food updated.', '%s foods updated.', $bulk_counts['updated'], 'wp-food-manager'),
 			/* translators: %s: product count */
