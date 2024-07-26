@@ -543,10 +543,13 @@ class WPFM_Shortcodes {
 		$atts = shortcode_atts(array(
 			'restaurant_id' => '',
 		), $atts);
+		
 		$restaurant_id = (isset($atts['restaurant_id'])) ? $atts['restaurant_id'] : $_GET['restaurant_id'];
 		$search_term = (isset($_GET['search_term'])) ? $_GET['search_term'] : '';
+		
 		$food_menu_ids = [];
-		$meta_value = [];
+		$food_ids = [];
+		$duplicate_records = [];
 		?>
 		<div id="food-menu-container" class="wpfm-food-menu-page-main-container">
 			<?php 
@@ -583,8 +586,7 @@ class WPFM_Shortcodes {
 				}
 				// Remove duplicate IDs
 				$restaurant_ids = array_unique($restaurant_ids);
-			}
-			else {
+			} else {
 				// Query all posts of the 'food_manager_menu' post type
 				$args = array(
 					'post_type'  => 'food_manager_menu',
@@ -599,23 +601,23 @@ class WPFM_Shortcodes {
 						$query->the_post();
 						$post_id = get_the_ID();
 						// Get the meta value for this post
-						$meta_value = get_post_meta($post_id, '_food_item_ids', true);
+						$food_ids = get_post_meta($post_id, '_food_item_ids', true);
 					}
 				}
 
-				if($meta_value && $restaurant_query->found_posts == 0){ 
-					error_message_for_menu_page('No restaurant found.'); 
+				if($food_ids && $restaurant_query->found_posts == 0){ 
+					error_message_for_menu_page('No Restaurant found.'); 
 					return ob_get_clean();
 				}
 				else{
-					error_message_for_menu_page('No food menu are available.'); 
+					error_message_for_menu_page('No Food Menu are available'); 
 					return ob_get_clean();
 				}
 			}
 			wp_reset_postdata();
 
 			if(!$restaurant_menus){
-				error_message_for_menu_page('No food menu are available.'); 
+				error_message_for_menu_page('No Food Menu are available'); 
 				return ob_get_clean();
 			}
 
@@ -659,8 +661,6 @@ class WPFM_Shortcodes {
 			?>
 			<div id="food-menu-results">
 				<?php
-				$duplicate_records = [];
-				
 				if (!empty($restaurant_ids)) {
 					$food_menus = food_manager_menu($restaurant_ids);
 					// Display the specific menu or search results
@@ -702,10 +702,10 @@ class WPFM_Shortcodes {
 												$post_id = get_the_ID();
 
 												// Get the meta value for this post
-												$meta_value = get_post_meta($post_id, '_food_item_ids', true);
+												$food_ids = get_post_meta($post_id, '_food_item_ids', true);
 												
 												// Check if the food item ID is in the array
-												if (is_array($meta_value) && in_array($food_item_id, $meta_value)) {
+												if (is_array($food_ids) && in_array($food_item_id, $food_ids)) {
 													$found_post_id = $post_id;
 													break; // Exit loop once the post is found
 												}
@@ -744,14 +744,14 @@ class WPFM_Shortcodes {
 					} 
 				}
 
-				if(!$food_menu_ids){ 
-					error_message_for_menu_page('No food found.'); 
-					return ob_get_clean();
-				}
-				
 				if (!empty(trim($search_term)) && !isset($found_post_id)) { 
 					error_message_for_menu_page('No search result found.');  
-				} ?>
+				}
+				else if(!$food_menu_ids){ 
+					error_message_for_menu_page('No Food Menu are available'); 
+					return ob_get_clean();
+				}
+				?>
 			</div>
 		</div>
 		<?php
