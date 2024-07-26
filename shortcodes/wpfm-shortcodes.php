@@ -545,11 +545,11 @@ class WPFM_Shortcodes {
 		), $atts);
 		$restaurant_id = (isset($atts['restaurant_id'])) ? $atts['restaurant_id'] : $_GET['restaurant_id'];
 		$search_term = (isset($_GET['search_term'])) ? $_GET['search_term'] : '';
-	
+		$food_menu_ids = [];
+		$meta_value = [];
 		?>
 		<div id="food-menu-container" class="wpfm-food-menu-page-main-container">
 			<?php 
-
 			// Initialize arrays
 			$restaurant_ids = [];
 			$restaurant_menus = [];
@@ -567,7 +567,7 @@ class WPFM_Shortcodes {
 				$restaurant_args['posts_per_page'] = 1;
 				$restaurant_query = new WP_Query($restaurant_args);
 				if($restaurant_query->found_posts == 0){ 
-					error_message_for_menu_page('Invalid restaurant id.'); 
+					error_message_for_menu_page('Invalid restaurant id.');
 					return ob_get_clean(); 
 				}
 			} 
@@ -584,14 +584,38 @@ class WPFM_Shortcodes {
 				// Remove duplicate IDs
 				$restaurant_ids = array_unique($restaurant_ids);
 			}
-			else { 
-				error_message_for_menu_page('No menu found.'); 
-				return ob_get_clean();
+			else {
+				// Query all posts of the 'food_manager_menu' post type
+				$args = array(
+					'post_type'  => 'food_manager_menu',
+					'posts_per_page' => -1,
+					'post_status'	=> 'publish'
+				);
+
+				$query = new WP_Query($args);
+
+				if ($query->have_posts()) {
+					while ($query->have_posts()) {
+						$query->the_post();
+						$post_id = get_the_ID();
+						// Get the meta value for this post
+						$meta_value = get_post_meta($post_id, '_food_item_ids', true);
+					}
+				}
+
+				if($meta_value && $restaurant_query->found_posts == 0){ 
+					error_message_for_menu_page('No restaurant found.'); 
+					return ob_get_clean();
+				}
+				else{
+					error_message_for_menu_page('No food menu are available.'); 
+					return ob_get_clean();
+				}
 			}
 			wp_reset_postdata();
 
 			if(!$restaurant_menus){
-				error_message_for_menu_page('No menu found.'); 
+				error_message_for_menu_page('No food menu are available.'); 
 				return ob_get_clean();
 			}
 
@@ -628,8 +652,6 @@ class WPFM_Shortcodes {
 							<?php } ?>
 						</div>
 					<?php 
-					} else {
-						error_message_for_menu_page('No menu titles found.'); 
 					}
 					wp_reset_postdata();
 				}
@@ -638,7 +660,7 @@ class WPFM_Shortcodes {
 			<div id="food-menu-results">
 				<?php
 				$duplicate_records = [];
-				$food_menu_ids = [];
+				
 				if (!empty($restaurant_ids)) {
 					$food_menus = food_manager_menu($restaurant_ids);
 					// Display the specific menu or search results
@@ -668,6 +690,7 @@ class WPFM_Shortcodes {
 										$args = array(
 											'post_type'  => 'food_manager_menu',
 											'posts_per_page' => -1,
+											'post_status'	=> 'publish'
 										);
 
 										$query = new WP_Query($args);
@@ -681,11 +704,8 @@ class WPFM_Shortcodes {
 												// Get the meta value for this post
 												$meta_value = get_post_meta($post_id, '_food_item_ids', true);
 												
-												// Unserialize the meta value
-												$food_item_ids = maybe_unserialize($meta_value);
-
 												// Check if the food item ID is in the array
-												if (is_array($food_item_ids) && in_array($food_item_id, $food_item_ids)) {
+												if (is_array($meta_value) && in_array($food_item_id, $meta_value)) {
 													$found_post_id = $post_id;
 													break; // Exit loop once the post is found
 												}
