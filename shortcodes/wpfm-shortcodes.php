@@ -638,6 +638,7 @@ class WPFM_Shortcodes {
 			<div id="food-menu-results">
 				<?php
 				$duplicate_records = [];
+				$food_menu_ids = [];
 				if (!empty($restaurant_ids)) {
 					$food_menus = food_manager_menu($restaurant_ids);
 					// Display the specific menu or search results
