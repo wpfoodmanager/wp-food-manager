@@ -2001,3 +2001,31 @@ function wpfm_term_menu_lists(){
 		return $items;
 	}
 }
+
+/** 
+* common error message in menu page.
+*
+* @since 1.0.0
+*/
+function error_message_for_menu_page($message){ ?>
+	<div class="wpfm-alert wpfm-alert-danger">
+		<?php _e($message, "wp-food-manager"); ?>
+	</div>
+<?php }
+
+/** 
+* common query in menu page.
+*
+* @since 1.0.0
+*/
+function food_manager_menu($restaurant_ids){
+	$title_args = array(
+		'post_type'   => 'food_manager_menu',
+		'post_status' => 'publish',
+		'post__in'    => $restaurant_ids,
+		'orderby'     => 'post__in',
+	);
+
+	$food_menus = new WP_Query(apply_filters('food_manager_food_menu_args', $title_args));
+	return $food_menus;
+}
