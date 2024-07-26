@@ -549,6 +549,7 @@ class WPFM_Shortcodes {
 		?>
 		<div id="food-menu-container" class="wpfm-food-menu-page-main-container">
 			<?php 
+
 			// Initialize arrays
 			$restaurant_ids = [];
 			$restaurant_menus = [];
@@ -560,12 +561,19 @@ class WPFM_Shortcodes {
 				'fields'      => 'ids', 
 				'posts_per_page' => -1
 			);
-	
+			
 			if ($restaurant_id) {
 				$restaurant_args['p'] = $restaurant_id;
 				$restaurant_args['posts_per_page'] = 1;
-			}
-	
+				$restaurant_query = new WP_Query($restaurant_args);
+				if($restaurant_query->found_posts == 0){ ?> 
+					<div class="wpfm-alert wpfm-alert-danger">
+						<?php _e("Invalid restaurant id.", "wp-food-manager"); ?>
+					</div>
+				<?php return ob_get_clean(); 
+				}
+			} 
+			
 			$restaurant_query = new WP_Query($restaurant_args);
 			if ($restaurant_query->have_posts()) {
 				while ($restaurant_query->have_posts()) { 
@@ -577,9 +585,10 @@ class WPFM_Shortcodes {
 				}
 				// Remove duplicate IDs
 				$restaurant_ids = array_unique($restaurant_ids);
-			} else { ?>
+			}
+			else { ?>
 				<div class="wpfm-alert wpfm-alert-danger">
-					<?php _e("No restaurants found.", "wp-food-manager"); ?>
+					<?php _e("No menu found.", "wp-food-manager"); ?>
 				</div>
 				<?php
 				return ob_get_clean();
@@ -588,7 +597,7 @@ class WPFM_Shortcodes {
 
 			if(!$restaurant_menus){ ?>
 				<div class="wpfm-alert wpfm-alert-danger">
-					<?php _e("No menu list found.", "wp-food-manager"); ?>
+					<?php _e("No menu found.", "wp-food-manager"); ?>
 				</div>
 				<?php
 				return ob_get_clean();
@@ -742,7 +751,7 @@ class WPFM_Shortcodes {
 
 				if(!$food_menu_ids){ ?>
 					<div class="wpfm-alert wpfm-alert-danger">
-						<?php _e("No food list found.", "wp-food-manager"); ?>
+						<?php _e("No food found.", "wp-food-manager"); ?>
 					</div>
 					<?php
 					return ob_get_clean();
@@ -750,7 +759,7 @@ class WPFM_Shortcodes {
 				
 				if (!empty(trim($search_term)) && !isset($found_post_id)) { ?>
 					<div class="no_food_menu_found wpfm-alert wpfm-alert-danger">
-						<?php _e("No menus found.", "wp-food-manager"); ?>
+						<?php _e("No search result found.", "wp-food-manager"); ?>
 					</div>
 				<?php } ?>
 			</div>
