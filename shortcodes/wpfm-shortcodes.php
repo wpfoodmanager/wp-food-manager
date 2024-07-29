@@ -44,6 +44,7 @@ class WPFM_Shortcodes {
 		add_shortcode('foods', array($this, 'output_foods'));
 		add_shortcode('food', array($this, 'output_food'));
 		add_shortcode('wpfm_food_menu', array($this, 'output_food_menu'));
+		add_shortcode('food_menu', array($this, 'food_menu_output_callback_function'));
 	}
 
 	/**
@@ -756,6 +757,57 @@ class WPFM_Shortcodes {
 		</div>
 		<?php
 		return ob_get_clean();
+	}
+
+	/**
+	 * output food menu by menu id.
+	 *
+	 * @access public
+	 * @param array $atts
+	 * @return string
+	 * @since 1.0.0
+	 */
+	public function food_menu_output_callback_function($atts){
+		ob_start();
+		$atts = shortcode_atts(array(
+			'id' => '',
+		), $atts);
+		
+		$id = (isset($atts['id'])) ? $atts['id'] : '';
+	
+		$args = array(
+			'post_type'   => 'food_manager_menu',
+			'post_status' => 'publish',
+		);
+
+		if(isset($id)){
+			$args['p'] = $id;
+		}
+
+		$food_menus = new WP_Query(apply_filters('food_manager_food_menu_args',$args));
+		if ($food_menus->have_posts()) { ?>
+			<?php while ($food_menus->have_posts()) : $food_menus->the_post();
+				$post_id = get_the_ID();
+				// Get the meta value for this post
+				$food_ids = get_post_meta($post_id, '_food_item_ids', true);
+			?>
+				<div class="clearfix">
+					<?php get_food_manager_template_part('content-single', 'food_manager_menu'); ?>
+				</div>
+			<?php endwhile; ?>
+		<?php } else{
+			error_message_for_menu_page('Invalid Menu id.'); 
+			return ob_get_clean();
+		}
+		
+		if(!$food_ids){ 
+			error_message_for_menu_page('No Food Menu are available.'); 
+			return ob_get_clean();
+		}
+		wp_reset_postdata();
+
+		return ob_get_clean();
+	
 	}
 }
 

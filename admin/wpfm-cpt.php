@@ -241,6 +241,11 @@ class WPFM_CPT {
      */
     public function shortcode_copy_content_column($column, $post_id) {
         switch ($column) {
+            case 'shortcode':
+                echo '<code>';
+                printf(esc_html__('[food_menu id=%d]', 'wp-food-manager'), esc_attr($post_id));
+                echo '</code>';
+                break;
             case 'thumbnail':
                 if (has_post_thumbnail()) {
                     echo the_post_thumbnail('medium');
@@ -262,6 +267,7 @@ class WPFM_CPT {
      * @since 1.0.1
      */
     public function set_shortcode_copy_columns($columns) {
+        $columns['shortcode'] = __('Shortcode', 'wp-food-manager');
         $columns['thumbnail'] = __('Images', 'wp-food-manager');
         return $columns;
     }
