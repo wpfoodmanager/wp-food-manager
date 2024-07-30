@@ -816,6 +816,7 @@ function wpfm_get_allowed_mime_types($field = '') {
 		'jpg|jpeg|jpe' => 'image/jpeg',
 		'gif'          => 'image/gif',
 		'png'          => 'image/png',
+		'webp'          => 'image/webp',
 		'pdf'          => 'application/pdf',
 		'doc'          => 'application/msword',
 		'docx'         => 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
