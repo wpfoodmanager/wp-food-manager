@@ -68,7 +68,7 @@ if ($field['type'] == 'url') {
     if (is_array($field_value)) :
         echo '<div class="wpfm-img-multi-container">';
         foreach ($field_value as $file) :
-            if (in_array(pathinfo($file, PATHINFO_EXTENSION), ['png', 'jpg', 'jpeg', 'gif', 'svg'])) :
+            if (in_array(pathinfo($file, PATHINFO_EXTENSION), ['png', 'jpg', 'jpeg', 'gif', 'svg', 'webp'])) :
                 echo '<div class="wpfm-img-multiple"><img src="' . esc_attr($file) . '"></div>';
             else :
                 if (!empty($file)) {
@@ -81,7 +81,7 @@ if ($field['type'] == 'url') {
         endforeach;
         echo '</div>';
     else :
-        if (in_array(pathinfo($field_value, PATHINFO_EXTENSION), ['png', 'jpg', 'jpeg', 'gif', 'svg'])) :
+        if (in_array(pathinfo($field_value, PATHINFO_EXTENSION), ['png', 'jpg', 'jpeg', 'gif', 'svg', 'webp'])) :
             echo '<div class="wpfm-img-single"><img src="' . esc_attr($field_value) . '"></div>';
         else :
             if (wpfm_begnWith($field_value, "http")) {

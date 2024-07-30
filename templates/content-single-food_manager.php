@@ -309,14 +309,14 @@ $food = $post;
                                                                                         <div class="wpfm-additional-info-block-details-content-items wpfm-additional-file-slider">
                                                                                             <?php if (is_array($child_value[$child_field_name])) : ?>
                                                                                                 <?php foreach ($child_value[$child_field_name] as $file) : ?>
-                                                                                                    <?php if (in_array(pathinfo($file, PATHINFO_EXTENSION), ['png', 'jpg', 'jpeg', 'gif', 'svg'])) : ?>
+                                                                                                    <?php if (in_array(pathinfo($file, PATHINFO_EXTENSION), ['png', 'jpg', 'jpeg', 'gif', 'svg', 'webp'])) : ?>
                                                                                                         <div><img src="<?php echo esc_attr($file); ?>"></div>
                                                                                                     <?php else : ?>
                                                                                                         <div class="wpfm-icon"><a target="_blank" class="wpfm-icon-download3" href="<?php echo esc_attr($file); ?>"> <?php _e('Download', 'wp-food-manager'); ?></a></div>
                                                                                                     <?php endif; ?>
                                                                                                 <?php endforeach; ?>
                                                                                             <?php else : ?>
-                                                                                                <?php if (in_array(pathinfo($child_value[$child_field_name], PATHINFO_EXTENSION), ['png', 'jpg', 'jpeg', 'gif', 'svg'])) : ?>
+                                                                                                <?php if (in_array(pathinfo($child_value[$child_field_name], PATHINFO_EXTENSION), ['png', 'jpg', 'jpeg', 'gif', 'svg', 'webp'])) : ?>
                                                                                                     <div><img src="<?php echo esc_attr($child_value[$child_field_name]); ?>"></div>
                                                                                                 <?php else : ?>
                                                                                                     <div class="wpfm-icon"><a target="_blank" class="wpfm-icon-download3" href="<?php echo esc_attr($child_value[$child_field_name]); ?>"> <?php _e('Download', 'wp-food-manager'); ?></a></div>
@@ -413,7 +413,7 @@ $food = $post;
                                                                             <?php foreach ($field_value as $file) : ?>
                                                                                 <?php
                                                                                 if (!empty($file)) {
-                                                                                    if (in_array(pathinfo($file, PATHINFO_EXTENSION), ['png', 'jpg', 'jpeg', 'gif', 'svg'])) : ?>
+                                                                                    if (in_array(pathinfo($file, PATHINFO_EXTENSION), ['png', 'jpg', 'jpeg', 'gif', 'svg', 'webp'])) : ?>
                                                                                         <div class="wpfm-img-multiple"><img src="<?php echo esc_attr($file); ?>"></div>
                                                                                     <?php else : ?>
                                                                                         <div>
@@ -428,7 +428,7 @@ $food = $post;
                                                                             <?php endforeach; ?>
                                                                         </div>
                                                                     <?php else : ?>
-                                                                        <?php if (in_array(pathinfo($field_value, PATHINFO_EXTENSION), ['png', 'jpg', 'jpeg', 'gif', 'svg'])) : ?>
+                                                                        <?php if (in_array(pathinfo($field_value, PATHINFO_EXTENSION), ['png', 'jpg', 'jpeg', 'gif', 'svg', 'webp'])) : ?>
                                                                             <div class="wpfm-img-single"><img src="<?php echo esc_attr($field_value); ?>"></div>
                                                                             <?php else :
                                                                             if (wpfm_begnWith($field_value, "http")) { ?>

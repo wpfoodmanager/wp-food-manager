@@ -18,7 +18,7 @@ if (is_admin()) {
 			<span class="food-manager-uploaded-file multiple-file">
 				<input type="hidden" name="<?php echo esc_attr($name); ?>[]" placeholder="<?php echo esc_attr($field['placeholder']); ?>" value="<?php echo esc_attr($value); ?>" />
 				<span class="food-manager-uploaded-file-preview">
-					<?php if (in_array(pathinfo($value, PATHINFO_EXTENSION), ['png', 'jpg', 'jpeg', 'gif', 'svg'])) : ?>
+					<?php if (in_array(pathinfo($value, PATHINFO_EXTENSION), ['png', 'jpg', 'jpeg', 'gif', 'svg', 'webp'])) : ?>
 						<img src="<?php echo esc_attr($value); ?>">
 						<a class="food-manager-remove-uploaded-file" href="javascript:void(0);">[remove]</a>
 						<?php else :

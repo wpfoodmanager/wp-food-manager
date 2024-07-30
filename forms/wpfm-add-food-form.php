@@ -214,7 +214,8 @@ class WPFM_Add_Food_Form extends WPFM_Form {
 						'jpg'  => 'image/jpeg',
 						'jpeg' => 'image/jpeg',
 						'gif'  => 'image/gif',
-						'png'  => 'image/png'
+						'png'  => 'image/png',
+						'webp'  => 'image/webp'
 					),
 					'tabgroup' => 1,
 				),

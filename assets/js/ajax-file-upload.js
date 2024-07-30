@@ -54,7 +54,7 @@ var WPFM_AjaxFileUpload = function () {
 						var $form = $file_field.closest('form');
 						var $uploaded_files = $file_field.parent().find('.food-manager-uploaded-files');
 						var multiple = $file_field.attr('multiple') ? 1 : 0;
-						var image_types = ['jpg', 'gif', 'png', 'jpeg', 'jpe'];
+						var image_types = ['jpg', 'gif', 'png', 'jpeg', 'jpe', 'webp'];
 						data.context.remove();
 						jQuery.each(data.result.files, function (index, file) {
 							if (file.error) {
