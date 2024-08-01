@@ -15,6 +15,7 @@
 # 10. FOOD LISTING
   10.1 BOX VIEW
   10.2 LIST VIEW
+  10.3 FOOD POPUP
 # 11. FOOD SINGLE PAGE
 # 12. TOOLTIPS
 # 13. TABLE
@@ -1613,6 +1614,49 @@ a.button.wpfm-add-row:hover {
 }
 
 /* ===== 10.2 FOOD LISTING LIST VIEW END ===== */
+
+
+/* ===== 10.3 FOOD POPUP START ===== */
+.wpfm-food-modal-food_image {
+    position: relative;
+    line-height: 0;
+    margin: -20px -20px 20px;
+}
+.wpfm-food-modal-food_image img {
+    height: 300px;
+    width: 100%;
+    object-fit: cover;
+    border-radius: 4px 4px 0 0;
+}
+.wpfm-modal.wpfm-food-popup .wpfm-modal-content-wrapper .wpfm-food-modal-content .wpfm-modal-header {
+    position: absolute;
+    right: 0;
+    top: 5px;
+    z-index: 1;
+    border: 0;
+}
+.wpfm-food-modal-food_details {
+    margin-top: 20px;
+}
+.wpfm-food-modal-food_title h3 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+.wpfm-food-modal-food_price {
+    font-size: 20px;
+    font-weight: 500;
+    color: var(--wpfm-primary-color);
+    margin-bottom: 10px;
+}
+.wpfm-modal .wpfm-modal-content-wrapper.wpfm-modal-content-centered {
+    transform: translate(-50%, -50%);
+    top: 50%;
+    margin: 0 !important;
+}
+.wpfm-food-modal-food_description {
+    margin-bottom: 20px;
+}
+/* ===== 10.3 FOOD POPUP END ===== */
 
 
 /* ===== 11. FOOD SINGLE PAGE START ===== */

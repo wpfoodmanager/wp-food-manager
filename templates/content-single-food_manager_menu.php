@@ -142,5 +142,45 @@ if ( 'food_manager_menu' == get_post_type() ) {
     }
     ?>
 </div>
+
+
+<!-- FOOD POPUP HTML -->
+<!-- <div id="wpfm_food_popup" class="wpfm-modal wpfm-modal-open wpfm-food-popup" role="dialog" aria-labelledby="Food" style="">
+	<div class="wpfm-modal-content-wrapper wpfm-modal-content-centered">
+		<div class="wpfm-modal-content wpfm-main wpfm-food-modal-content">
+            <div class="wpfm-food-modal-food_image">
+                <img src="https://harimoksh-restaurant.com/wp-content/uploads/2024/06/Kleiner-Salat-scaled.jpg" alt="Creamy zucchini soup" />
+                <div class="wpfm-modal-header"><div class="wpfm-modal-header-close"><a href="javascript:void(0)" class="wpfm-modal-close" id="wpfm-modal-close">x</a></div></div>
+            </div>
+            <div class="wpfm-food-modal-food_details">
+                <div class="wpfm-food-modal-food_title">
+                    <h3>Creamy zucchini soup</h3>
+                </div>
+                <div class="wpfm-food-modal-food_price"><span class="food-manager-Price-currencySymbol">$</span>10.00</div>
+                <div class="wpfm-food-modal-food_description"><p>Pikante südindische Suppe aus Linsen und Gemüse, mit Tamarind, Kräutern und Gewürzen [a South Indian stew made with lentils, mixed vegetables, tamarind, herbs and spices]</p></div>
+                <div class="product woocommerce add_to_cart_inline wpfm-add-to-cart-btn">
+                    <div class="addto-cart-btn">
+                        <div class="item-quantity-label">
+                            <input type="number" id="quantity_36" class="input-text qty text" name="quantity" value="1" aria-label="Product quantity" min="1" max="" step="1" placeholder="" inputmode="numeric" autocomplete="off">
+                            <div class="wpfm-quantity-sub-add-btn-group">
+                                <button type="button" id="add" class="wpfm-quantity-add"><i class="wpfm-icon-plus"></i></button>
+                                <button type="button" id="sub" class="wpfm-quantity-sub"><i class="wpfm-icon-minus"></i></button>
+                            </div>
+                        </div>
+                        <input type="hidden" id="restaurant_id" name="restaurant_id" value="31">
+                        <button type="submit" class="button wp-element-button btn_add_to_cart_list add_to_cart_button wpfm-theme-button Closed" data-quantity="1" title="Restaurant is closed" data-product_id="36" data-product_sku="" rel="nofollow">
+                            Add to order
+                        </button>
+                    </div>
+                    <div id="add_to_cart_message_36" class="add_to_cart_message"></div>
+                </div>
+            </div>
+        </div>
+	</div>
+	<a href="#">
+		<div class="wpfm-modal-overlay"></div>
+	</a>
+</div> -->
+
 <!-- add to cart notification -->
 <?php do_action('wpfm_food_manager_food_menu_listing_after'); ?>
