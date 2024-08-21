@@ -2730,6 +2730,7 @@ span.fm-divider {
     height: 100%;
     object-fit: contain;
     border-radius: 4px;
+    cursor: pointer;
 }
 .fm-food-menu-container .wpfm-food-list-box-content-col {
     flex: 1;
@@ -2941,7 +2942,6 @@ span.fm-divider {
     background: transparent;
     color: #f74747;
 }
-
 
 small.wpfm-food-status-pending-approval {
     font-weight: 400;

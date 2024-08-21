@@ -14,16 +14,13 @@ $term_name = !empty($term_id[0]) ? get_term($term_id[0])->name : '';
 $image_id = !empty($term_id) ? get_term_meta($term_id[0], 'food_cat_image_id', true) : '';
 $image_url = wp_get_attachment_image_src($image_id, 'full');
 
-
 if ( 'food_manager_menu' == get_post_type() ) {
     $featured_img_url = get_the_post_thumbnail_url(get_the_ID(), 'full');
 } elseif(isset($menu_id) && !empty($menu_id) ) {
     $featured_img_url = get_the_post_thumbnail_url($menu_id, 'full');
-}
-?>
+} ?>
 
 <div class="wpfm-main wpfm-single-food-menu-page wpfm-accordion-body">
-
     <?php if ( 'food_manager_menu' == get_post_type() ) { 
         the_content(); ?>
         <h2 class="wpfm-heading-text">
@@ -47,8 +44,7 @@ if ( 'food_manager_menu' == get_post_type() ) {
                         echo "<span class 'wpfm-front-radio-icon food-icon' data-food-menu='" . esc_attr($data_food_menu2) . "'><span class='wpfm-menu " . esc_attr($wpfm_radio_icons) . "'></span></span>";
                     }
                 }
-            }
-            ?>
+            } ?>
         </h2>
     <?php }
     if (!empty($featured_img_url)) {
@@ -111,7 +107,7 @@ if ( 'food_manager_menu' == get_post_type() ) {
             if (!empty($food_listing->post_content)) {
                 $menu_food_desc = "<p class='fm-food-menu-desc'>" . wp_kses_post($food_listing->post_content) . "</p>";
             }
-            echo "<div class='food-list-box'>";
+            echo "<div class='food-list-box' data-id='".$food_listing->ID."'>";
             if($thumbnail_option != 'thumbnail_disabled'){
                 echo "<div class='wpfm-food-list-box-image-col wpfm-food-image-". esc_attr($thumbnail_option) ."'><img src='" . esc_url($featured_img) . "' alt='". esc_html($food_listing->post_title) ."'></div>";
             }
@@ -132,55 +128,21 @@ if ( 'food_manager_menu' == get_post_type() ) {
             }
             echo "</div>";
             echo "</a>";
-
+            echo "<div class='fm-food-menu-description'>";
             echo $menu_food_desc;
+            echo "</div>";
             do_action('food_menu_list_overview_after', $food_listing->ID);
             echo "</div>";
             echo "</div>";
         }
         echo "</div>";
-    }
-    ?>
+    } ?>
 </div>
 
-
 <!-- FOOD POPUP HTML -->
-<!-- <div id="wpfm_food_popup" class="wpfm-modal wpfm-modal-open wpfm-food-popup" role="dialog" aria-labelledby="Food" style="">
-	<div class="wpfm-modal-content-wrapper wpfm-modal-content-centered">
-		<div class="wpfm-modal-content wpfm-main wpfm-food-modal-content">
-            <div class="wpfm-food-modal-food_image">
-                <img src="https://harimoksh-restaurant.com/wp-content/uploads/2024/06/Kleiner-Salat-scaled.jpg" alt="Creamy zucchini soup" />
-                <div class="wpfm-modal-header"><div class="wpfm-modal-header-close"><a href="javascript:void(0)" class="wpfm-modal-close" id="wpfm-modal-close">x</a></div></div>
-            </div>
-            <div class="wpfm-food-modal-food_details">
-                <div class="wpfm-food-modal-food_title">
-                    <h3>Creamy zucchini soup</h3>
-                </div>
-                <div class="wpfm-food-modal-food_price"><span class="food-manager-Price-currencySymbol">$</span>10.00</div>
-                <div class="wpfm-food-modal-food_description"><p>Pikante südindische Suppe aus Linsen und Gemüse, mit Tamarind, Kräutern und Gewürzen [a South Indian stew made with lentils, mixed vegetables, tamarind, herbs and spices]</p></div>
-                <div class="product woocommerce add_to_cart_inline wpfm-add-to-cart-btn">
-                    <div class="addto-cart-btn">
-                        <div class="item-quantity-label">
-                            <input type="number" id="quantity_36" class="input-text qty text" name="quantity" value="1" aria-label="Product quantity" min="1" max="" step="1" placeholder="" inputmode="numeric" autocomplete="off">
-                            <div class="wpfm-quantity-sub-add-btn-group">
-                                <button type="button" id="add" class="wpfm-quantity-add"><i class="wpfm-icon-plus"></i></button>
-                                <button type="button" id="sub" class="wpfm-quantity-sub"><i class="wpfm-icon-minus"></i></button>
-                            </div>
-                        </div>
-                        <input type="hidden" id="restaurant_id" name="restaurant_id" value="31">
-                        <button type="submit" class="button wp-element-button btn_add_to_cart_list add_to_cart_button wpfm-theme-button Closed" data-quantity="1" title="Restaurant is closed" data-product_id="36" data-product_sku="" rel="nofollow">
-                            Add to order
-                        </button>
-                    </div>
-                    <div id="add_to_cart_message_36" class="add_to_cart_message"></div>
-                </div>
-            </div>
-        </div>
-	</div>
-	<a href="#">
-		<div class="wpfm-modal-overlay"></div>
-	</a>
-</div> -->
+ <div id="wpfm_food_popup" class="wpfm-modal wpfm-food-popup" role="dialog" aria-labelledby="Food" style="">
+	
+</div>
 
 <!-- add to cart notification -->
 <?php do_action('wpfm_food_manager_food_menu_listing_after'); ?>

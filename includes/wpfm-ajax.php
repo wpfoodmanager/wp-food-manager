@@ -50,6 +50,8 @@ class WPFM_Ajax {
         add_action('wp_ajax_food_manager_upload_file', array($this, 'upload_file'));
         add_action('wp_ajax_term_ajax_search', array($this, 'term_ajax_search'));
         add_action('wp_ajax_nopriv_term_ajax_search', array($this, 'term_ajax_search'));
+        add_action('wp_ajax_nopriv_food_manager_get_food_popup', array($this, 'get_food_popup'));
+		add_action('wp_ajax_food_manager_get_food_popup', array($this, 'get_food_popup'));
 	}
 	
 	/**
@@ -316,6 +318,33 @@ class WPFM_Ajax {
         wp_send_json(apply_filters('food_manager_get_listings_result', $result, $foods));
     }
     
+    /**
+     * open food popup for selected food
+     * 
+     * @access public
+     * @return void
+     * @since 1.0.6
+     */
+    public function get_food_popup(){
+        if(isset($_POST['food_id']) && $_POST['food_id'] > 0){
+            $food_id = $_POST['food_id'];
+            $food = get_post($food_id);
+            ob_start();
+            get_food_manager_template('food_menu_popup.php', array(
+                'food_id' => $food_id,
+                'food'    => $food,
+                'quantity'=> isset($_POST['quantity']) ? $_POST['quantity'] : 1,
+                'product_id'=> isset($_POST['product_id']) ? $_POST['product_id'] : 0,
+            ));
+            $result['html']    = ob_get_clean();
+            wp_send_json($result);
+        } else {
+            // Return an error message if no food ID is provided
+            echo 'No food ID provided';
+            wp_die();
+        }
+       
+    }
 	
 	/**
      * Upload file via ajax.

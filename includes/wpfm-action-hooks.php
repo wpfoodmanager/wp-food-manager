@@ -138,6 +138,9 @@ class WPFM_ActionHooks {
      
         // Frontend js.
         wp_register_script('wp-food-manager-frontend', esc_url(WPFM_PLUGIN_URL . '/assets/js/frontend.min.js'), array('jquery'), WPFM_VERSION, true);
+        wp_localize_script('wp-food-manager-frontend', 'wpfm_frontend', array(
+            'ajax_url' => esc_url(admin_url('admin-ajax.php')),
+        ));
         wp_enqueue_script('wp-food-manager-frontend');
 
         // Common js.
