@@ -4,6 +4,12 @@ var WPFM_Frontend = function () {
             if( jQuery(".food-manager-post_type-dropdown").length > 0 ){
                 jQuery(".food-manager-post_type-dropdown").chosen({ search_contains: !0 });
             }
+            // Open modal popup on food image click
+            jQuery('.food_manager_menu .food-list-box img').on('click', WPFM_Frontend.actions.openFoodMenuPopup);                
+            jQuery(document).on('click', '#wpfm-modal-close', function(){
+                jQuery('#wpfm_food_popup').removeClass('wpfm-modal-open');
+            });
+           
             // For Extra Toppings view Toggle.
             if (jQuery('.wpfm-additional-main-row').length > 0) {
                 jQuery('.wpfm-additional-main-row').hide();
@@ -11,7 +17,6 @@ var WPFM_Frontend = function () {
                     jQuery(this).text((jQuery(this).text() == 'View less -') ? 'View more +' : 'View less -');
                     jQuery(this).parent().find('.wpfm-additional-main-row').slideToggle()
                 });
-                
             }
             jQuery('.wpfm-single-food-slider, .wpfm-img-multi-container').slick({
                 dots: true,
@@ -186,7 +191,6 @@ var WPFM_Frontend = function () {
                     });
                 }
             }
-
             if(jQuery('.food-menu-page-filter-tab-link').length > 0 ){
                 jQuery(document).on("click", ".food-menu-page-filter-tab-link", WPFM_Frontend.actions.smoothScrolling)
             }
@@ -299,6 +303,34 @@ var WPFM_Frontend = function () {
                         scrollTop: target.offset().top - 50
                     }, 1000); // 1000ms is the duration of the scroll
                 }
+            },
+             /// <summary>
+            /// To open food pop for selected food on food menu page
+            /// </summary>                 
+            /// <returns type="generate name and id " />     
+            /// <since>1.0.6</since>            
+            openFoodMenuPopup : function(event){
+                event.preventDefault();
+                var foodId = jQuery(this).closest('.food-list-box').attr('data-id');
+                var productId = jQuery(this).closest('.food-list-box').find('.list_add_to_cart_button').attr("data-product_id");
+                var quantity = jQuery(this).closest('.food-list-box').find('#quantity_'+productId).val();
+                jQuery.ajax({
+                    url: wpfm_frontend.ajax_url, // Or the URL to admin-ajax.php
+                    method: 'POST',
+                    data: {
+                        action: 'food_manager_get_food_popup',
+                        food_id: foodId,
+                        product_id: productId,
+                        quantity: quantity,
+                    },
+                    success: function(response) {
+                        jQuery('#wpfm_food_popup').html(response.html);
+                        jQuery('#wpfm_food_popup').addClass('wpfm-modal-open');
+                    },
+                    error: function(xhr, status, error) {
+                        console.error(error);
+                    }
+                });
             }
         },
     }
@@ -308,5 +340,3 @@ WPFM_Frontend = WPFM_Frontend();
 jQuery(document).ready(function ($) {
     WPFM_Frontend.init();
 });
-
-
