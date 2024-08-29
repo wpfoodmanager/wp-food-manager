@@ -1642,12 +1642,26 @@ a.button.wpfm-add-row:hover {
     object-fit: cover;
     border-radius: 4px 4px 0 0;
 }
-.wpfm-modal.wpfm-food-popup .wpfm-modal-content-wrapper .wpfm-food-modal-content .wpfm-modal-header {
+.wpfm-modal.wpfm-food-popup .wpfm-modal-content-wrapper .wpfm-food-modal-content .wpfm-food-popup-header {
     position: absolute;
     right: 0;
-    top: 5px;
+    top: 10px;
     z-index: 1;
     border: 0;
+}
+.wpfm-modal.wpfm-food-popup .wpfm-modal-content-wrapper .wpfm-food-modal-content .wpfm-food-popup-header .wpfm-modal-header-close a {
+    background-color: var(--wpfm-gray-bg-color);
+    width: 36px;
+    height: 36px;
+    opacity: .8;
+    border-radius: 4px;
+}
+.wpfm-modal.wpfm-food-popup .wpfm-modal-content-wrapper .wpfm-food-popup-header .wpfm-modal-header-close {
+    width: 40px;
+    height: 40px;
+}
+.wpfm-modal.wpfm-food-popup .wpfm-modal-content-wrapper .wpfm-food-modal-content .wpfm-food-popup-header .wpfm-modal-header-close a:hover {
+    opacity: 1;
 }
 .wpfm-food-modal-food_details {
     margin-top: 20px;
