@@ -343,7 +343,6 @@ class WPFM_Ajax {
             echo 'No food ID provided';
             wp_die();
         }
-       
     }
 	
 	/**
@@ -374,7 +373,6 @@ class WPFM_Ajax {
                 }
             }
         }
-
         wp_send_json($data);
     }
 }
