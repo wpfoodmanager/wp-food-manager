@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Contributors: wpfoodmanager,ashokdudhat,krinay
  * Plugin Name: WP Food Manager
@@ -22,10 +21,14 @@ if (!defined('ABSPATH')) {
 	exit;
 }
 
+if ( !class_exists( 'WPFM_Updater' ) ) {
+	include( 'autoupdater/wpfm-updater.php' );
+}
+
 /**
  * WP_Food_Manager Main Class.
  */
-class WP_Food_Manager {
+class WP_Food_Manager extends WPFM_Updater {
 
 	/**
 	 * The single instance of the class.
@@ -71,7 +74,6 @@ class WP_Food_Manager {
 	 * @since 1.0.0
 	 */
 	public function __construct() {
-
 		// Define constants
 		define('WPFM_VERSION', '1.0.4');
 		define('WPFM_PLUGIN_DIR', untrailingslashit(plugin_dir_path(__FILE__)));
@@ -96,7 +98,6 @@ class WP_Food_Manager {
 			include('includes/wpfm-action-hooks.php');
 			include('includes/wpfm-filter-hooks.php');
 		}
-
 		include('wp-food-manager-functions.php');
         include('wp-food-manager-template.php');
 
@@ -106,7 +107,9 @@ class WP_Food_Manager {
 
 		// Activation - works with symlinks
 		register_activation_hook(basename(dirname(__FILE__)) . '/' . basename(__FILE__), array($this, 'activate'));
-
+		
+		// Call updater for WPFM addons update
+		$this->init_updates( __FILE__ );
 		// Overwriting the content of custom post types of WP food manager.
 		global $wp_embed;
 		add_filter('wpfm_the_content', array($wp_embed, 'run_shortcode'), 8);

@@ -2030,3 +2030,31 @@ function food_manager_menu($restaurant_ids){
 	$food_menus = new WP_Query(apply_filters('food_manager_food_menu_args', $title_args));
 	return $food_menus;
 }
+
+/** 
+* This function is used to get all wpfm plugin basic information
+*
+* @since 1.0.6
+*/
+if (!function_exists('get_wpfm_plugins_info')) {
+	function get_wpfm_plugins_info() {
+		$plugins_info = array();
+		if (!function_exists('get_plugins')) {
+			require_once ABSPATH . 'wp-admin/includes/plugin.php';
+		}
+		$plugins = get_plugins(); 
+		
+		foreach ($plugins as $filename => $plugin) {
+			if ($plugin['AuthorName'] == 'WP Food Manager' && is_plugin_active($filename) && !in_array($plugin['TextDomain'], ["wp-food-manager"])) {
+				$plugin_info = array();
+				$plugin_info['Name'] = $plugin['Name'];
+				$plugin_info['TextDomain'] = $plugin['TextDomain'];
+				$plugin_info['Version'] = $plugin['Version'];
+				$plugin_info['Title'] = $plugin['Title'];
+				$plugin_info['AuthorName'] = $plugin['AuthorName'];
+				array_push($plugins_info, $plugin_info);
+			}
+		} 
+		return $plugins_info;
+	}
+}
