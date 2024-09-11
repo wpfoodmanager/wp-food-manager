@@ -163,11 +163,9 @@ class WPFM_Updater {
 
 	//Ran on plugin-activation.
 	public function plugin_activation() {
-		error_log("plugin_activation..."); 
 		$plugin_slug = dirname( plugin_basename( __FILE__ ) );
 
         // Log or use the plugin slug
-        error_log( 'Plugin Slug: ' . $plugin_slug );
 		delete_option( $this->plugin_slug . '_hide_key_notice' );
 	}
 
@@ -176,7 +174,6 @@ class WPFM_Updater {
 		$plugin_slug = dirname( plugin_basename( __FILE__ ) );
 
         // Log or use the plugin slug
-        error_log( 'Plugin Slug: ' . $plugin_slug );
 		// $this->deactivate_licence();
 	}
 
@@ -375,7 +372,6 @@ class WPFM_Updater {
 	 * @return array|bool
 	 */
 	public function get_plugin_version($plugin_names, $plugin_slugs, $plugin_licenses, $plugin_emails, $plugin_versions) {
-		error_log("get_plugin_version");
 		$response = WPFM_Updater_API::plugin_update_check( array(
 			'plugin_name'    => $plugin_names,
 			'version'        => $plugin_versions,
@@ -383,7 +379,6 @@ class WPFM_Updater {
 			'licence_key'    => $plugin_licenses,
 			'email'          => $plugin_emails
 		) );
-error_log(print_r($response, true));
 		if ( isset( $response->errors ) ) {
 			delete_option( $this->plugin_slug . '_licence_key_activate' );
 			$this->handle_errors( $response->errors );
