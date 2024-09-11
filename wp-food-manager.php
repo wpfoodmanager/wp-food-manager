@@ -110,6 +110,7 @@ class WP_Food_Manager extends WPFM_Updater {
 		
 		// Call updater for WPFM addons update
 		$this->init_updates( __FILE__ );
+
 		// Overwriting the content of custom post types of WP food manager.
 		global $wp_embed;
 		add_filter('wpfm_the_content', array($wp_embed, 'run_shortcode'), 8);

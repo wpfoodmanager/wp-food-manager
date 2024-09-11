@@ -100,11 +100,11 @@ class WPFM_Updater {
 			$email       = get_option( $plugin_info['TextDomain'] . '_email' );
 			if ( ! $licence_key ) {
 				add_action( 'admin_print_styles-plugins.php', array( $this, 'styles' ) );
-				add_filter( 'plugin_action_links_' . $plugin_info['TextDomain'], array( $this, 'activation_links' ) );
+				add_filter( 'plugin_action_links_' . $plugin_info['TextDomain'].'/'.$plugin_info['TextDomain'].'.php', array( $this, 'activation_links' ) );
 				$this->add_notice( array( $this, 'key_notice' ) );
 			} else {
 				add_action( 'after_plugin_row_' . $plugin_info['TextDomain'], array( $this, 'multisite_updates' ), 10, 2 );
-				add_filter( 'plugin_action_links_' . $plugin_info['TextDomain'], array( $this, 'deactivation_links' ) );
+				add_filter( 'plugin_action_links_' . $plugin_info['TextDomain'].'/'.$plugin_info['TextDomain'].'.php', array( $this, 'deactivation_links' ) );
 			}
 		}
 		$this->add_notice( array( $this, 'error_notices' ) );
@@ -244,8 +244,19 @@ class WPFM_Updater {
 
 	//Deactivation links.
 	public function deactivation_links( $links ) {
-		foreach ($this->plugin_data as $plugin) {
-			$links[] = '<a href="' . remove_query_arg( array( 'deactivated_licence', 'activated_licence' ), add_query_arg( $plugin['TextDomain'] . '_deactivate_licence', 1 ) ) . '">' . __('Deactivate licence', 'wpfm-restaurant-manager') . '</a>';
+		// Check if the 'Deactivate' link exists
+		if (isset($links['deactivate'])) {
+			// Extract the URL from the existing 'Deactivate' link
+			$deactivate_link = $links['deactivate'];
+	
+			// Use a regular expression to capture the plugin slug from the 'plugin' parameter
+			if (preg_match('/plugin=([^%]+)%2F/', $deactivate_link, $matches)) {
+				// The plugin slug is in $matches[1]
+				$plugin_slug = $matches[1];
+	
+				// Create the dynamic 'Deactivate Licence' link based on the plugin slug
+				$links[] = '<a href="' . admin_url('plugins.php?' . $plugin_slug . '_deactivate_licence=1') . '">Deactivate Licence</a>';
+			}
 		}
 		return $links;
 	}
