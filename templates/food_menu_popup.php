@@ -32,6 +32,7 @@ if (!empty($regular_price)) {
             <div class="wpfm-food-modal-food_title">
                 <h3 id="wpfm_food_menu_modal_title"><?php echo wp_kses_post($food->post_title);?></h3>
             </div>
+            <?php do_action('wpfm_food_menu_popup_title_after', $food_id); ?>
             <div id="wpfm_food_menu_modal_price" class="wpfm-food-modal-food_price">
                 <?php if (!empty($regular_price) && !empty($sale_price)) {
                     $food_regular_price = sprintf($price_format, '<span class="food-manager-Price-currencySymbol">' . esc_html(get_food_manager_currency_symbol()) . '</span>', $formatted_sale_price);
@@ -42,6 +43,7 @@ if (!empty($regular_price)) {
                     echo sprintf($price_format, '<span class="food-manager-Price-currencySymbol">' . esc_html(get_food_manager_currency_symbol()) . '</span>', esc_attr($formatted_regular_price));
                 } ?>
             </div>
+            <?php do_action('wpfm_food_menu_popup_price_after', $food_id); ?>
             <div id="wpfm_food_menu_modal_description" class="wpfm-food-modal-food_description">
                 <?php echo wp_kses_post($food->post_content);?>
             </div>
