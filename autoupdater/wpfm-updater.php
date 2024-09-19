@@ -38,6 +38,7 @@ class WPFM_Updater {
 		}
 		add_filter( 'block_local_requests', '__return_false' );
 		add_action( 'admin_init', array( $this, 'admin_init' ) );
+		add_action('wpfm_check_for_licence_expire', array($this, 'wpfm_check_for_licence_expire'));
 
 		include_once( 'wpfm-updater-api.php' );
 		include_once( 'wpfm-updater-key-api.php' );
@@ -205,6 +206,15 @@ class WPFM_Updater {
 				update_option( $plugin_info['TextDomain'] . '_licence_key_activate', 1 );
 				update_option( $plugin_info['TextDomain'] . '_licence_key_activate', 1 );
 				delete_option( $plugin_info['TextDomain'] . '_errors' );
+
+				$subscription_expire_date = $activate_results['activations']['date_expires'];
+				// Hook for registering cron job
+				$activation_detail['expire_date'] = $subscription_expire_date;
+				$activation_detail['licence_key'] = $licence_key;
+				$activation_detail['email'] = $email;
+				$activation_detail['api_product_ids'] = array($this->plugin_slug);
+				wp_schedule_single_event(strtotime($subscription_expire_date), 'wpfm_check_for_licence_expire', array($activation_detail));
+				
 				return true;
 			} elseif ( $activate_results === false ) {
 				throw new Exception( 'Connection failed to the Licence Key API server. Try again later.' );
@@ -341,14 +351,6 @@ class WPFM_Updater {
 					$new_version = $response->$plugin_slug->new_version;
 					if (isset($transient->checked[$plugin_slug]) && !isset($transient->response[$plugin_slug]) && version_compare( $new_version, $plugin_info['Version'], '>' ) ) {
 						$check_for_updates_data->response[ $plugin_info['TextDomain'] ] = $response[$plugin_slug];
-
-						// $transient->response[$plugin_slug] = array(
-						// 	'theme'       => $plugin_slug,
-						// 	'new_version' => $response_theme_version,
-						// 	'package'     => $response->$theme_slug->package, // Replace with the actual theme package URL
-						// 	'url'         => $response->$theme_slug->url,
-						// 	'requires'    => $response->$theme_slug->requires,
-						// );
 					}
 				}
 			}
@@ -491,4 +493,37 @@ class WPFM_Updater {
         }
     }
 
+	/**
+	 * This function is used to check license key is expired or not
+	 */
+	public function wpfm_check_for_licence_expire($activation_detail){
+		$args = array();
+		$endpoint = 'https://wpfoodmanager.com/?wc-api=wpfmstore_licensing_update_api';
+		$activation_detail = apply_filters('wpfm_cron_default_activation_args', $activation_detail);
+		$defaults = array(
+			'request'  => 'checklicenceexpire',
+			'instance' => site_url(),
+			'activation_detail' => $activation_detail,
+		);
+		$args    = wp_parse_args( $args, $defaults );
+		$request = wp_remote_get( $endpoint . '&' . http_build_query( $args, '', '&' ) );
+		
+		if ( is_wp_error( $request ) || wp_remote_retrieve_response_code( $request ) != 200 ) {
+			return false;
+		} else {
+			$response_data =  wp_remote_retrieve_body( $request );
+			$response_data = json_decode($response_data, true);
+			if(isset($response_data['errors'])){
+				foreach($activation_detail['api_product_ids'] as $plugin){
+					update_option( $plugin . '_key_expire', 'key_expire' );
+					delete_option( $plugin . '_licence_key_activate' );
+				}
+			} else {
+				$subscription_expire_date = $response_data['date_expires'];
+				$activation_detail['expire_date'] = $subscription_expire_date;
+				wp_schedule_single_event(strtotime($subscription_expire_date), 'wpfm_check_for_licence_expire', array($activation_detail));
+			}
+			return $response_data;
+		}
+	}
 }
