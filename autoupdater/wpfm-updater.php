@@ -370,7 +370,6 @@ class WPFM_Updater {
 		return $check_for_updates_data;
 	}
 
-	
 	//Take over the Plugin info screen.
 	public function plugins_api( $false, $action, $args ) {
 		global $wp_version;
