@@ -39,6 +39,7 @@ class WPFM_Updater {
 		add_filter( 'block_local_requests', '__return_false' );
 		add_action( 'admin_init', array( $this, 'admin_init' ) );
 		add_action('wpfm_check_for_licence_expire', array($this, 'wpfm_check_for_licence_expire'));
+		add_action('wpfm_set_suscription_expire_message', array($this, 'wpfm_suscription_expire_message'));
 
 		include_once( 'wpfm-updater-api.php' );
 		include_once( 'wpfm-updater-key-api.php' );
@@ -160,6 +161,13 @@ class WPFM_Updater {
 				}
 			}
 		}
+		foreach($this->plugin_data as $plugin_info){
+			if( get_option( $plugin_info['TextDomain'] . '_key_expire') || get_option( $plugin_info['TextDomain'] . '_key_expire_pre' )){
+				$plugin_name = $plugin_info['Name'];
+				$plugin_slug = $plugin_info['TextDomain'];
+				include( 'templates/key-expire-notice.php' );
+			}
+		}
 	}
 
 	//Ran on plugin-activation.
@@ -204,15 +212,18 @@ class WPFM_Updater {
 				update_option( $plugin_info['TextDomain'] . '_licence_key', $licence_key );
 				update_option( $plugin_info['TextDomain'] . '_email', $email );
 				update_option( $plugin_info['TextDomain'] . '_licence_key_activate', 1 );
-				update_option( $plugin_info['TextDomain'] . '_licence_key_activate', 1 );
+				update_option( $plugin_info['TextDomain'] . '_licence_expired', $activate_results['activations']['date_expires'] );
 				delete_option( $plugin_info['TextDomain'] . '_errors' );
+				delete_option( $plugin_info['TextDomain'] . '_key_expire_pre' );
 
 				$subscription_expire_date = $activate_results['activations']['date_expires'];
 				// Hook for registering cron job
 				$activation_detail['expire_date'] = $subscription_expire_date;
 				$activation_detail['licence_key'] = $licence_key;
 				$activation_detail['email'] = $email;
-				$activation_detail['api_product_ids'] = array($this->plugin_slug);
+				$activation_detail['api_product_ids'] = array($activate_results['activations']['api_product_id']);
+				wp_schedule_single_event(strtotime($subscription_expire_date) - (48 * 60 * 60), 'wpfm_set_suscription_expire_message', array($activation_detail));
+
 				wp_schedule_single_event(strtotime($subscription_expire_date), 'wpfm_check_for_licence_expire', array($activation_detail));
 				
 				return true;
@@ -517,6 +528,8 @@ class WPFM_Updater {
 				foreach($activation_detail['api_product_ids'] as $plugin){
 					update_option( $plugin . '_key_expire', 'key_expire' );
 					delete_option( $plugin . '_licence_key_activate' );
+					delete_option( $plugin . '_licence_expired' );
+					delete_option( $plugin . '_key_expire_pre' );
 				}
 			} else {
 				$subscription_expire_date = $response_data['date_expires'];
@@ -524,6 +537,14 @@ class WPFM_Updater {
 				wp_schedule_single_event(strtotime($subscription_expire_date), 'wpfm_check_for_licence_expire', array($activation_detail));
 			}
 			return $response_data;
+		}
+	}
+	/**
+	 * This function is used to show subscription expire notice
+	 */
+	public function wpfm_suscription_expire_message($activation_detail){
+		foreach($activation_detail['api_product_ids'] as $plugin){
+			update_option( $plugin . '_key_expire_pre', $plugin );
 		}
 	}
 }
