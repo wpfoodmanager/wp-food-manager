@@ -5,7 +5,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags:  food menu, restaurant menu, food ordering, restaurant, table reservation, food delivery, food pickup, cafe menu, food order,food,menu
 Requires at least: 6.2
 Tested up to: 6.4.2
-Stable tag: 1.0.5
+Stable tag: 1.0.6
 Requires PHP: 5.6
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
@@ -199,6 +199,34 @@ You can also find us on GitHub: see the [WP Food Manager GitHub Repository](http
 
 
 == Changelog ==
+
+= 1.0.6 [ 23rd Sep 2024 ] =
+
+Fixed : The warning message in the location availability popup at the front end is removed.
+Fixed : The issue related to adding toppings from the frontend is now resolved.
+Fixed : Filters are now added to the Food Listing page based on restaurants.
+Fixed : The menu appears perfectly on the restaurant detail page.
+Fixed : The display issue of the Frontside Food Thumbnail on the menu page is resolved.
+Fixed : Now the food topping creation feature is working properly.
+Fixed : Links are now crawlable.
+Fixed : The foods page menu is displaying a filter properly.
+Fixed : The warning that appeared in the display of the frontside “update food” option is removed.
+Fixed : An option to choose to place the food thumbnail at the food menu is added.
+Fixed : Add option is added to the food label.
+Fixed : Add option is added for food redirection in the food menu.
+Fixed : The issue related to deleting an additional field in the Field editor section at the Admin panel is now resolved.
+Fixed : The food image display issue when a logged out user tries to add food is now resolved.
+Fixed : The display of regular and sale price of food menus is improved.
+Fixed : The position of the “add to cart” button at the frontend is improved.
+Fixed : The gallery section on the food detail page is displayed properly.
+Fixed : The space issue related to the menu page at the frontend is resolved.
+Fixed : Hook added for Restaurant Manager Addon.
+Fixed : The icon for the food dashboard of the food delivery addon at the frontend is changed.
+Fixed : The UI Issue on the license page in the admin section is resolved.
+Fixed : Image height issue in the gallery addon is resolved.
+Fixed : Added code for Restaurant Gallery addon.
+Fixed : The UI issue of the restaurant dashboard page when the core plugin is deactivated is resolved.
+Fixed : The warning message that appeared on the Category and Tag Listing page is removed.
 
 = 1.0.5 [ 26th Dec 2023 ] =
 
