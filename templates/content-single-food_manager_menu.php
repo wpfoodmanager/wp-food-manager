@@ -135,6 +135,7 @@ if ( 'food_manager_menu' == get_post_type() ) {
             echo "</div>";
             echo "</div>";
         }
+        do_action('food_menu_list_end');
         echo "</div>";
     } ?>
 </div>
