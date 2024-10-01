@@ -18,12 +18,16 @@ var WPFM_Frontend = function () {
                     jQuery(this).parent().find('.wpfm-additional-main-row').slideToggle()
                 });
             }
-            jQuery('.wpfm-single-food-slider, .wpfm-img-multi-container').slick({
-                dots: true,
-                infinite: true,
-                speed: 500,
-                adaptiveHeight: true,
-            });
+            try {
+                jQuery('.wpfm-single-food-slider, .wpfm-img-multi-container').slick({
+                    dots: true,
+                    infinite: true,
+                    speed: 500,
+                    adaptiveHeight: true,
+                });
+            } catch (error) {
+                
+            }
             jQuery(".wpfm-form-group.fieldset-topping_description").hide();
             //use body to call after dom update.
             jQuery("body").on('click', 'a.wpfm-food-item-remove', WPFM_Frontend.actions.removeFoodItem);
