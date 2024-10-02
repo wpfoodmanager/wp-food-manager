@@ -128,7 +128,7 @@ if ( 'food_manager_menu' == get_post_type() ) {
             }
             echo "</div>";
             echo "</a>";
-	    do_action('food_menu_list_title_after', $food_listing->ID);
+	        do_action('food_menu_list_title_after', $food_listing->ID);
             echo "<div class='fm-food-menu-description'>";
             echo $menu_food_desc;
             echo "</div>";

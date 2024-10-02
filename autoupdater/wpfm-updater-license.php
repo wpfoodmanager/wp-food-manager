@@ -66,7 +66,7 @@ if (!function_exists('wpfm_manage_license')) {
 			<div class="wpfm-updater-licence">
 				<?php
 				foreach ($plugins as $filename => $plugin) {
-					if ($plugin['AuthorName'] == 'WP Food Manager' && is_plugin_active($filename) && !in_array($plugin['TextDomain'], ["wp-food-manager"])) {
+					if ($plugin['AuthorName'] == 'WP Food Manager' && is_plugin_active($filename) && !in_array($plugin['TextDomain'], ["wp-food-manager"]) && !in_array($plugin['TextDomain'], ["wpfm-rest-api"])) {
 						$licence_key = get_option($plugin['TextDomain'] . '_licence_key');
 						$email = get_option($plugin['TextDomain'] . '_email');
 
