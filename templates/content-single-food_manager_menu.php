@@ -112,6 +112,7 @@ if ( 'food_manager_menu' == get_post_type() ) {
                 echo "<div class='wpfm-food-list-box-image-col wpfm-food-image-". esc_attr($thumbnail_option) ."'><img src='" . esc_url($featured_img) . "' alt='". esc_html($food_listing->post_title) ."'></div>";
             }
             echo "<div class='wpfm-food-list-box-content-col'>";
+            do_action('food_menu_list_title_before',$food_listing->ID); 
             if (!empty($food_label)) {
                 echo "<div class='food-menu-label'>" . $food_label . "</div>";
             }

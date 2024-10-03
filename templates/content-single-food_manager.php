@@ -42,7 +42,7 @@ $food = $post;
                 <div class="wpfm-single-food-body">
                     <div class="wpfm-row">
                         <div class="wpfm-col-xs-12 wpfm-col-sm-7 wpfm-col-md-8 wpfm-single-food-left-content">
-                            <?php do_action('single_food_overview_before'); ?>
+                            <?php do_action('single_food_overview_before',get_the_ID()); ?>
                             <div class="wpfm-single-food-short-info">
                                 <div class="wpfm-food-details">
                                     <div class="food-details-row">
