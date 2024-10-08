@@ -2045,7 +2045,7 @@ if (!function_exists('get_wpfm_plugins_info')) {
 		$plugins = get_plugins(); 
 		
 		foreach ($plugins as $filename => $plugin) {
-			if ($plugin['AuthorName'] == 'WP Food Manager' && is_plugin_active($filename) && !in_array($plugin['TextDomain'], ["wp-food-manager"])) {
+			if ($plugin['AuthorName'] == 'WP Food Manager' && is_plugin_active($filename) && !in_array($plugin['TextDomain'], ["wp-food-manager", "wpfm-rest-api"])) {
 				$plugin_info = array();
 				$plugin_info['Name'] = $plugin['Name'];
 				$plugin_info['TextDomain'] = $plugin['TextDomain'];
