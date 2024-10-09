@@ -48,13 +48,13 @@ if (get_option('food_manager_food_item_show_hide') == 0 && get_stock_status() !=
                         <a href="<?php display_food_permalink(); ?>"
                             class="wpfm-food-action-url food-style-color <?php echo esc_attr($food_type); ?>">
                             <div class="wpfm-food-title">
-                                <?php do_action('food_list_title_after', get_the_ID()); ?>
                                 <h3 class="wpfm-heading-text">
                                     <?php
                                     $out = strlen(get_the_title()) > 50 ? substr(get_the_title(), 0, 50) . "..." : get_the_title();
                                     echo esc_html($out); ?>
                                     <?php display_food_veg_nonveg_icon_tag(); ?>
                                 </h3>
+                                <?php do_action('food_list_title_after', get_the_ID()); ?>
                             </div>
                         </a>
                         <div class="wpfm-food-pricing-box">
