@@ -147,7 +147,7 @@ class WPFM_Add_Food_Form extends WPFM_Form {
 		$current_user_id = get_current_user_id();
 
 		return apply_filters('add_food_fields', array(
-			'food' => array(
+			'Add Food' => array(
 				'food_title' => array(
 					'label'       => __('Food Title', 'wp-food-manager'),
 					'type'        => 'text',
