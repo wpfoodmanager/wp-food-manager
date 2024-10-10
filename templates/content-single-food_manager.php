@@ -42,7 +42,6 @@ $food = $post;
                 <div class="wpfm-single-food-body">
                     <div class="wpfm-row">
                         <div class="wpfm-col-xs-12 wpfm-col-sm-7 wpfm-col-md-8 wpfm-single-food-left-content">
-                            <?php do_action('single_food_overview_before',get_the_ID()); ?>
                             <div class="wpfm-single-food-short-info">
                                 <div class="wpfm-food-details">
                                     <div class="food-details-row">
@@ -53,6 +52,7 @@ $food = $post;
                                             <div class="wpfm-viewed-food wpfm-tooltip wpfm-tooltip-bottom"><i class="wpfm-icon-eye"></i> <?php printf(esc_html__(' %d', 'wp-food-manager'), $view_count); ?>
                                                 <span class="wpfm-tooltiptext"><?php printf(esc_html__('%d people viewed this food.', 'wp-food-manager'), $view_count); ?></span>
                                             </div>
+                                            <?php do_action('single_food_overview_before',get_the_ID()); ?>
                                         <?php endif; ?>
                                     </div>
                                     
