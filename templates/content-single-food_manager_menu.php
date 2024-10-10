@@ -116,8 +116,10 @@ if ( 'food_manager_menu' == get_post_type() ) {
                 echo "<div class='food-menu-label'>" . $food_label . "</div>";
             }
             echo "<a $food_menu_return_false href='" . $food_menu_permalink . "'>";
+            echo "<div class='wpfm-food-menu-title-container'>";
             echo "<h3 class='fm-food-menu-title'>" . esc_html($food_listing->post_title) . "</h3>";
-            do_action('food_menu_list_title_before',$food_listing->ID); 
+            do_action('food_menu_list_title_before',$food_listing->ID);
+            echo "</div>";
             echo "<div class='fm-food-menu-pricing'>";
 
             if (!empty($regular_price) && !empty($sale_price)) {

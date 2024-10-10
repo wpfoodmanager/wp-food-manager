@@ -119,6 +119,7 @@ if ('food_manager_menu' == get_post_type() || (isset($menu_id) && !empty($menu_i
                         }
 
                         echo "<a href='" . $food_menu_permalink . "'>";
+                        
                             echo "<h3 class='fm-food-menu-title'>" . esc_html($food_listing->post_title) . "</h3>";
                             echo "<div class='fm-food-menu-pricing'>";
                                 if (!empty($regular_price) && !empty($sale_price)) {
