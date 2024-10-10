@@ -2388,6 +2388,14 @@ form#food_preview {
     align-items: center;
     justify-content: space-between;
 }
+.food-views-favourite-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.food-views-favourite-container .favorite-heart-btn {
+    margin-left: 20px;
+}
 
 /* ===== 11. FOOD SINGLE PAGE END ===== */
 
@@ -2701,7 +2709,11 @@ span.fm-divider {
     background-color: var(--wpfm-white-color);
     color: var(--wpfm-dark-color);
 }
-
+.fm-food-menu-container .wpfm-food-menu-title-container {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+}
 .fm-food-menu-container .food-list-box:focus {
     color: var(--wpfm-dark-color);
 }
