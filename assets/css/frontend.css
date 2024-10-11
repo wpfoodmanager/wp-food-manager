@@ -2722,6 +2722,17 @@ span.fm-divider {
     display: block;
     font-size: 18px;
 }
+.fm-food-menu-container .food-list-box .fm-food-menu-title{
+    display: flex;
+    align-items: flex-start;
+}
+.fm-food-menu-container .food-list-box .fm-food-menu-title .wpfm-food-type-tag{
+    width: 20px;
+    height: 20px;
+    flex: 0 0 20px;
+    margin: 0 10px 0 10px;
+    line-height: 30px;
+}
 
 .fm-food-menu-container .food-list-box .fm-food-menu-pricing {
     white-space: nowrap;
