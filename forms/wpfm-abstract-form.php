@@ -673,7 +673,7 @@ abstract class WPFM_Form {
 			$this->fields = apply_filters('merge_with_custom_fields', $default_fields, $default_fields);
 			return $this->fields;
 		}
-		$updated_fields = !empty($custom_fields) ? array_replace_recursive($default_fields, $custom_fields) : $default_fields;
+		$updated_fields = !empty($custom_fields) ? array_replace($default_fields, $custom_fields) : $default_fields;
 
 		/**
 		 * Above array_replace_recursive function will replace the default fields by custom fields.
