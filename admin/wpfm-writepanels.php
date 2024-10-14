@@ -134,9 +134,9 @@ class WPFM_Writepanels {
 
 				</ul>
 				<?php if ($item_ids && is_array($item_ids)) { ?>
-					<span class="no-menu-item-handle" style="display: none;">There is no food available in the selected category.</span>
+					<span class="no-menu-item-handle" style="display: none;">Please select the food category/types.</span>
 				<?php } else { ?>
-					<span class="no-menu-item-handle">There is no food available in the selected category.</span>
+					<span class="no-menu-item-handle">Please select the food category/types.</span>
 				<?php } ?>
 			</div>
 		</div>

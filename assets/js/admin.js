@@ -284,7 +284,7 @@ var WPFM_Admin = function () {
                 var post_count = jQuery(this).find(":selected").attr('data-count');
                 var exclude = [];
                 if (post_count == 0) {
-                    var NoMenuItemText = (taxonomy == 'food_manager_type') ? 'There is no food available in the selected food type.' : 'There is no food available in the selected category.';
+                    var NoMenuItemText = (taxonomy == 'food_manager_type') ? 'There is no food available in the selected food type.' : 'Please select the food category/types.';
                     jQuery('.no-menu-item-handle').html(NoMenuItemText);
                     jQuery('.no-menu-item-handle').show();
                     return false;
