@@ -86,7 +86,7 @@ class WPFM_Writepanels {
 				<div class="wpfm-admin-menu-selection wpfm-admin-postbox-form-field">
 
 					<?php food_manager_dropdown_selection(array(
-						'multiple' => false, 'show_option_all' => __('Please select Food Category', 'wp-food-manager'),
+						'multiple' => false, 'show_option_all' => __('Select food category', 'wp-food-manager'),
 						'id' => 'wpfm-admin-food-selection',
 						'taxonomy' => 'food_manager_category',
 						'hide_empty' => false,
@@ -99,7 +99,7 @@ class WPFM_Writepanels {
 				<div class="wpfm-admin-menu-selection wpfm-admin-postbox-form-field">
 
 					<?php food_manager_dropdown_selection(array(
-						'multiple' => false, 'show_option_all' => __('Please select Food Types', 'wp-food-manager'),
+						'multiple' => false, 'show_option_all' => __('Select food types', 'wp-food-manager'),
 						'id' => 'wpfm-admin-food-types-selection',
 						'taxonomy' => 'food_manager_type',
 						'hide_empty' => false,
