@@ -86,7 +86,7 @@ class WPFM_Writepanels {
 				<div class="wpfm-admin-menu-selection wpfm-admin-postbox-form-field">
 
 					<?php food_manager_dropdown_selection(array(
-						'multiple' => false, 'show_option_all' => __('All category', 'wp-food-manager'),
+						'multiple' => false, 'show_option_all' => __('Please select Food Category', 'wp-food-manager'),
 						'id' => 'wpfm-admin-food-selection',
 						'taxonomy' => 'food_manager_category',
 						'hide_empty' => false,
@@ -99,7 +99,7 @@ class WPFM_Writepanels {
 				<div class="wpfm-admin-menu-selection wpfm-admin-postbox-form-field">
 
 					<?php food_manager_dropdown_selection(array(
-						'multiple' => false, 'show_option_all' => __('All food types', 'wp-food-manager'),
+						'multiple' => false, 'show_option_all' => __('Please select Food Types', 'wp-food-manager'),
 						'id' => 'wpfm-admin-food-types-selection',
 						'taxonomy' => 'food_manager_type',
 						'hide_empty' => false,
@@ -134,9 +134,9 @@ class WPFM_Writepanels {
 
 				</ul>
 				<?php if ($item_ids && is_array($item_ids)) { ?>
-					<span class="no-menu-item-handle" style="display: none;">Please select the food category/types.</span>
+					<span class="no-menu-item-handle" style="display: none;">Please select the food category or food types to add food items to the menu.</span>
 				<?php } else { ?>
-					<span class="no-menu-item-handle">Please select the food category/types.</span>
+					<span class="no-menu-item-handle">Please select the food category or food types to add food items to the menu.</span>
 				<?php } ?>
 			</div>
 		</div>
