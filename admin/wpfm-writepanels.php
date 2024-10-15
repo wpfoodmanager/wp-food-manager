@@ -48,6 +48,23 @@ class WPFM_Writepanels {
         add_filter('use_block_editor_for_post_type', array($this, 'disable_gutenberg'), 10, 2);
         add_filter('wpfm_term_radio_checklist_taxonomy', array($this, 'wpfm_food_manager_taxonomy'), 10, 2);
         add_filter('wpfm_term_radio_checklist_post_type', array($this, 'wpfm_food_manager_post_type'));
+        add_filter( 'enter_title_here', array( $this, 'wpfm_change_default_title' ));
+	}
+
+    /**
+	 * Change the placeholder for Add Food in backend.
+	 *
+	 * @access public
+	 * @param string $title
+	 * @return string
+	 * @since 1.0.0
+	 */
+    public function wpfm_change_default_title( $title ) {
+		$screen = get_current_screen();
+		if ( $screen && 'food_manager' === $screen->post_type ) {
+			return esc_html__( 'Enter Your Food Name', 'wp-food-manager' );
+		}
+		return $title;
 	}
 
 	/**
