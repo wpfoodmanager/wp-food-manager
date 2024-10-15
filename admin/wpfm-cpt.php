@@ -248,7 +248,7 @@ class WPFM_CPT {
                 break;
             case 'thumbnail':
                 if (has_post_thumbnail()) {
-                    echo the_post_thumbnail('medium');
+                    echo get_the_post_thumbnail($post_id, 'thumbnail'); 
                 } else {
                     echo '-';
                 }
@@ -268,7 +268,7 @@ class WPFM_CPT {
      */
     public function set_shortcode_copy_columns($columns) {
         $columns['shortcode'] = __('Shortcode', 'wp-food-manager');
-        $columns['thumbnail'] = __('Images', 'wp-food-manager');
+        $columns['thumbnail'] = __('Food menu image', 'wp-food-manager');
         return $columns;
     }
 
