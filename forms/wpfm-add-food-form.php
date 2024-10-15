@@ -325,7 +325,7 @@ class WPFM_Add_Food_Form extends WPFM_Form {
 				if ($group_key == 'toppings') {
 					if (isset($_POST['repeated_options'])) {
 						foreach ($_POST['repeated_options'] as $repeated_options) {
-							if ($field['required'] && empty($_POST[$key . '_' . $repeated_options])) {
+							if (isset($field['required']) && $field['required'] && empty($_POST[$key . '_' . $repeated_options])) {
 								return new WP_Error('validation-error', sprintf(__('%s is a required field.', 'wp-food-manager'), $field['label']));
 							}
 						}
