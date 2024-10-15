@@ -44,6 +44,7 @@ if (is_admin()) {
 		<span class="food-manager-uploaded-file2">
 			<button class="button button-small wp_food_manager_upload_file_button" style="display: block;" data-uploader_button_text="<?php esc_attr_e('Use file', 'wp-food-manager'); ?>"><?php esc_attr_e('Upload', 'wp-food-manager'); ?></button>
 		</span>
+		<?php if (!empty($field['description'])) : ?><small class="description"><?php echo esc_html(trim($field['description'])); ?></small><?php endif; ?>
 	<?php } ?>
 <?php } else {
 	$classes            = array('input-text');

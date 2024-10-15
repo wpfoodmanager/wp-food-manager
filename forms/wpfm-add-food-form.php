@@ -205,6 +205,7 @@ class WPFM_Add_Food_Form extends WPFM_Form {
 				'food_banner' => array(
 					'label'       => __('Food Banner ', 'wp-food-manager'),
 					'type'        => 'file',
+					'description' => 'Upload the food banner image for the top section of the food details page.', 
 					'required'    => true,
 					'placeholder' => '',
 					'priority'    => 7,
