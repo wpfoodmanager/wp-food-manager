@@ -13,7 +13,7 @@
 				<!-- shows default keywords text field  start-->
 				<div class="wpfm-form-group">
 					<label for="search_keywords" class="wpfm-form-label"><?php _e('Keywords', 'wp-food-manager'); ?></label>
-					<input type="text" name="search_keywords" id="search_keywords" placeholder="<?php echo esc_attr__('Keywords', 'wp-food-manager'); ?>" value="<?php echo esc_attr($keywords); ?>" />
+					<input type="text" name="search_keywords" id="search_keywords" placeholder="<?php echo esc_attr__('Search for food items', 'wp-food-manager'); ?>" value="<?php echo esc_attr($keywords); ?>" />
 				</div>
 				<!-- shows default keywords text field end -->
 			</div>
