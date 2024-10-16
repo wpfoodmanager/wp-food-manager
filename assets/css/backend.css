@@ -1564,6 +1564,22 @@ span.toppings-radio-btn {
 /*License End*/
 
 
+.widefat td.thumbnail.column-thumbnail img {
+  max-width: 60px;
+  height: auto;
+}
+#wpfm_menu_shortcode .dashicons {
+  margin-top: 7px;
+  margin-left: 5px;
+  font-size: 16px;
+}
+#wpfm_menu_shortcode .tooltip {
+  color: green;
+  margin-top: 5px;
+  display: inline-block;
+}
+
+
 @media only screen and (max-width: 1280px) {
 
   .wpfm_panel .wpfm-small-field,
