@@ -171,14 +171,6 @@ class WPFM_Settings {
 							'type'       => 'checkbox',
 							'attributes' => array(),
 						),
-						array(
-                            'label'    => __('Restaurant Menu Title', 'wp-food-manager'),
-                            'desc'        => __('Displays the list of restaurant food menu titles using the shortcode.', 'wpfm-favorites-list'),
-                            'name'       => 'wpfm_restaurant_food_menu_title',
-                            'std'         => '[restaurant_food_menu_title restaurant_id=""]',
-                            'type'     => 'text',
-                            'attributes' => array(),
-                        ),
 					)
 				),
 				'food_listings'       => array(
