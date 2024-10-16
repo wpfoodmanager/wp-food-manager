@@ -403,6 +403,10 @@ class WPFM_Writepanels {
             ),
             'value' => get_post_meta($thepostid, '_wpfm_disable_food_redirect', true),
         );
+        // Display the notice
+        echo '<div class="wpfm-notice">';
+        echo '<p>' . __('If Food Redirection is enabled, it will redirect to the food.', 'wp-food-manager') . '</p>';
+        echo '</div>';
         get_food_manager_template('form-fields/' . $field['type'] . '-field.php', array('key' => esc_attr($key), 'field' => $field));
     }
     
