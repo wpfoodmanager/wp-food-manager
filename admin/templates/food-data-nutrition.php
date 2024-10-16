@@ -95,6 +95,8 @@ $units = get_terms(
 				}
 			}
 			?>
+			<!-- Placeholder for 'No results found' message -->
+			<li class="wpfm-no-results" style="display: none;"><?php _e('No results found', 'wp-food-manager'); ?></li>
 		</ul>
 	</div>
 	<?php if (isset($food_fields['food']))

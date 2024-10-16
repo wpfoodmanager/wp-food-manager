@@ -60,6 +60,18 @@ span.wpfm-searh-clear {
   height: 22px;
 }
 
+/* Admin-specific styles for 'No results found' message */
+.wpfm-no-results {
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+  border-radius: 4px;
+  padding: 10px;
+  margin: 10px 0;
+  text-align: center;
+  font-weight: bold;
+}
+
 .sub-font-icon input[type=radio]:hover+label span.wpfm-key-name {
   font-size: 10px;
   position: absolute;

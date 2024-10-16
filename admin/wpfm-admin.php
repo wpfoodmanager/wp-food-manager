@@ -494,7 +494,7 @@ class WPFM_Admin {
         $screen = get_current_screen();
         $jquery_version = isset($wp_scripts->registered['jquery-ui-core']->ver) ? $wp_scripts->registered['jquery-ui-core']->ver : '1.9.2';
 
-        wp_enqueue_style('wpfm-backend-css', esc_url(WPFM_PLUGIN_URL) . '/assets/css/backend.min.css');
+        wp_enqueue_style('wpfm-backend-css', esc_url(WPFM_PLUGIN_URL) . '/assets/css/backend.css');
         wp_enqueue_style('jquery-ui-style', esc_url(WPFM_PLUGIN_URL) . '/assets/css/jquery-ui/jquery-ui.min.css', array(), $jquery_version);
 
         $units = get_terms([

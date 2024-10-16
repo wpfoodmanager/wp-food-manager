@@ -150,15 +150,35 @@ var WPFM_Admin = function () {
                 jQuery(".no-radio-icons").hide();
             });
             /* For Ingredient and Nutrition tab */
-            jQuery('body').on("keyup", ".wpfm-item-search input[type=text]", (function () {
+            jQuery('body').on("keyup", ".wpfm-item-search input[type=text]", function () {
                 var t = jQuery(this),
                     i = t.parents("ul.wpfm-available-list").find("li.available-item"),
-                    a = new RegExp(t.val(), "gi");
-                a ? i.each((function () {
-                    var t = jQuery(this);
-                    t.find("label").text().match(a) ? t.show() : t.hide()
-                })) : item.show()
-            }));
+                    noResultsMessage = t.parents("ul.wpfm-available-list").find("li.wpfm-no-results"),
+                    a = new RegExp(t.val(), "gi"),
+                    hasResults = false;
+            
+                if (a) {
+                    i.each(function () {
+                        var item = jQuery(this);
+                        if (item.find("label").text().match(a)) {
+                            item.show();
+                            hasResults = true;
+                        } else {
+                            item.hide();
+                        }
+                    });
+                } else {
+                    i.show();
+                    hasResults = true;
+                }
+            
+                // Show or hide the 'No results found' message
+                if (hasResults) {
+                    noResultsMessage.hide();
+                } else {
+                    noResultsMessage.show();
+                }
+            });
             jQuery("#wpfm-ingredient-container .wpfm-sortable-list").sortable({
                 connectWith: ".wpfm-sortable-list",
                  items: "li.wpfm-sortable-item",
