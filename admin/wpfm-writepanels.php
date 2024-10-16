@@ -406,7 +406,7 @@ class WPFM_Writepanels {
         );
         // Display the notice
         echo '<div class="wpfm-notice">';
-        echo '<p>' . __('If Food Redirection is enabled, it will redirect to the food.', 'wp-food-manager') . '</p>';
+        echo '<p>' . __('If Food Redirection is enabled, it will not redirect to the food.', 'wp-food-manager') . '</p>';
         echo '</div>';
         get_food_manager_template('form-fields/' . $field['type'] . '-field.php', array('key' => esc_attr($key), 'field' => $field));
     }
