@@ -377,7 +377,7 @@ class WPFM_Writepanels {
     public function food_menu_shortcode() {
         global $post;
         $menu_id = $post->ID;
-        echo '<input type="text" value="[food_menu id=' . esc_attr($menu_id) . ']" readonly>';
+        echo '<input type="text" value="[food_menu id=' . esc_attr($menu_id) . ']" readonly><span class="dashicons dashicons-admin-page copy-shortcode-button"></span><span class="tooltip" style="display:none;">Shortcode copied</span>';
     }
     
     /**

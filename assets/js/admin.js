@@ -53,6 +53,7 @@ var WPFM_Admin = function () {
             }
             // Bind on click food of the settings section.
             jQuery(".wpfm-tabs li a").on('click', WPFM_Admin.actions.tabClick);
+            jQuery('.copy-shortcode-button').on('click', WPFM_Admin.actions.copyButton);
             // Show by default first food Listings Settings Tab.
             jQuery('.wpfm-tabs li a:first').click();
             jQuery(document).on('change', '.wpfm-admin-menu-selection select.food-manager-category-dropdown', WPFM_Admin.actions.updateFoodinMenu);
@@ -279,7 +280,6 @@ var WPFM_Admin = function () {
             jQuery(document).on("click", ".wpfm-add-row", WPFM_Admin.actions.addElementRow)
             jQuery(document).on("click", ".wpfm-delete-btn", WPFM_Admin.actions.removeAttributes)
             jQuery(document).on("click", ".option-delete-btn", WPFM_Admin.actions.removeAttributesOptions)
-
         },
 
         actions: {
@@ -296,6 +296,29 @@ var WPFM_Admin = function () {
                 jQuery(jQuery(this).attr('href')).show();
                 jQuery(this).addClass('nav-tab-active');
                 return false;
+            },
+                  /// <summary>
+            /// Copy food menu shortcode from admin side.
+            /// </summary>
+            /// <param name="parent" type="Food"></param>
+            /// <returns type="actions" />
+            /// <since>1.0.0</since>
+            copyButton: function (event) {
+                event.preventDefault(); //
+                // Find the input field that holds the shortcode
+                var shortcodeInput = jQuery(this).prev('input'); // Select the input just before the icon
+                // Select the text in the input field
+                shortcodeInput.select();
+                // Copy the text to the clipboard
+                document.execCommand('copy');
+        
+                var tooltip = jQuery(this).next('.tooltip'); // Select the tooltip right after the icon
+                tooltip.fadeIn(200); // Fade in the tooltip
+        
+                // Hide the tooltip after 2 seconds
+                setTimeout(function() {
+                    tooltip.fadeOut(200);
+                }, 2000);
             },
             /// <summary>
             /// Click on category dropdown to update food menu.   
@@ -630,7 +653,8 @@ var WPFM_Admin = function () {
                 var button_text = jQuery(this).data('uploader_button_text');
                 var button = jQuery(this).data('uploader_button');
                 jQuery(this).before('<span class="file_url"><input type="text" name="' + field_name + '[]" placeholder="' + field_placeholder + '" /><button class="button button-small wp_food_manager_upload_file_button" data-uploader_button_text="' + button_text + '">' + button + '</button></span>');
-            }
+            },
+            
         }
     } //enf of return.
 }; //end of class.
