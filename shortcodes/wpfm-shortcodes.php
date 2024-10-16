@@ -45,6 +45,7 @@ class WPFM_Shortcodes {
 		add_shortcode('food', array($this, 'output_food'));
 		add_shortcode('wpfm_food_menu', array($this, 'output_food_menu'));
 		add_shortcode('food_menu', array($this, 'food_menu_output_callback_function'));
+		add_shortcode('restaurant_food_menu_title', array($this, 'food_menu_title_output_callback_function_for_restaurant'));
 	}
 
 	/**
@@ -759,6 +760,63 @@ class WPFM_Shortcodes {
 		return ob_get_clean();
 	}
 
+	/**
+	 * Output food menu title by restaurant ID.
+	 * 
+	 * @access public
+	 * @param array $atts
+	 * @return string
+	 * @since 1.0.0
+	 */
+	public function food_menu_title_output_callback_function_for_restaurant($atts) {
+		ob_start();
+		$atts = shortcode_atts(array(
+			'restaurant_id' => '',
+		), $atts);
+	
+		$restaurant_id = (isset($atts['restaurant_id'])) ? $atts['restaurant_id'] : '';
+	
+		// Check if restaurant ID is provided
+		if (!$restaurant_id) {
+			error_message_for_menu_page('No restaurant ID provided.');
+			return ob_get_clean();
+		}
+	
+		// Query for the restaurant menu
+		$restaurant_args = array(
+			'post_type'   => 'restaurant_manager',
+			'post_status' => 'publish',
+			'p'           => $restaurant_id,
+			'posts_per_page' => 1
+		);
+	
+		$restaurant_query = new WP_Query($restaurant_args);
+		if ($restaurant_query->have_posts()) {
+			while ($restaurant_query->have_posts()) {
+				$restaurant_query->the_post();
+				$restaurant_menus = get_post_meta(get_the_ID(), '_restaurant_menus', true);
+				
+				if (!empty($restaurant_menus) && is_array($restaurant_menus)) {
+					echo '<h2>'. get_the_title() .'</h2>';
+					foreach ($restaurant_menus as $menu_id) {
+						$menu_title = get_the_title($menu_id);
+						$menu_link = get_permalink($menu_id); 
+	
+						echo '<div class="menu-title"><a href="' . esc_url($menu_link) . '">' . esc_html($menu_title) . '</a></div>';
+					}
+				} else {
+					error_message_for_menu_page('No menus found for this restaurant.');
+					
+				}
+			}
+			wp_reset_postdata();
+		} else {
+			error_message_for_menu_page('Invalid restaurant ID.');
+		}
+	
+		return ob_get_clean();
+	}
+	
 	/**
 	 * output food menu by menu id.
 	 *
