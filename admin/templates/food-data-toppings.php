@@ -109,6 +109,12 @@ $food_toppings = get_post_meta($thepostid, '_food_toppings', true);
 									<p class="wpfm-admin-postbox-form-field <?php echo esc_attr($key);
 																			echo ($type == "wp_editor") ? ' wp-editor-field' : ''; ?>" <?php echo ($type == "wp_editor") ? 'data-field-name="' . esc_attr($key) . '"' : ''; ?>>
 										<label for="<?php echo esc_attr($key); ?>"><?php echo esc_html($field['label']); ?> : </label>
+										    <!-- Adding the notice -->
+											<?php if ($field['label'] === "Options") : ?>
+												<div class="wpfm-topping-option-notice">
+													<?php _e("Please provide the options and price for the topping."); ?>
+												</div>
+											<?php endif; ?>
 										<?php if ($type != 'options') echo '<span class="wpfm-input-field">'; ?>
 											<?php get_food_manager_template('form-fields/' . $field['type'] . '-field.php', array('key' => esc_attr($key), 'field' => $field)); ?>
 										<?php if ($type != 'options') echo '</span>'; ?>

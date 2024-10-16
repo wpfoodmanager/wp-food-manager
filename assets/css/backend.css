@@ -72,6 +72,18 @@ span.wpfm-searh-clear {
   font-weight: bold;
 }
 
+/* Admin-specific styles for topping option notice */
+.wpfm-topping-option-notice {
+  font-size: 14px;
+  font-weight: 500;
+  background: bisque;
+  padding: 5px 10px;
+  border-radius: 4px;
+  display: inline-block;
+  margin-bottom: 7px;
+  color: #333;
+}
+
 .sub-font-icon input[type=radio]:hover+label span.wpfm-key-name {
   font-size: 10px;
   position: absolute;
