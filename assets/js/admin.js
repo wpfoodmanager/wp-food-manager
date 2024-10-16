@@ -194,7 +194,9 @@ var WPFM_Admin = function () {
                             o && jQuery.map(o, (function (e, t) {
                                 l = l + "<option value='" + t + "'>" + e + "</option>"
                             }));
-                            var s = "<input type='number' step='any' name='food_ingredients[" + r + "][value]'><select name='food_ingredients[" + r + "][unit_id]'><option value=''>Unit</option>" + l + "</select>";
+                            var s = "<input type='number' step='any' name='food_ingredients[" + r + "][value]' placeholder='Enter value'>" +
+                            "<select name='food_ingredients[" + r + "][unit_id]'>" +
+                            "<option value=''>Select Unit</option>" + l + "</select>";
                             n.find(".wpfm-sortable-item-values").html(s), n.removeClass("available-item").addClass("active-item")
                         }
                     } else n.find(".wpfm-sortable-item-values").html(""), n.removeClass("active-item").addClass("available-item")
@@ -264,8 +266,11 @@ var WPFM_Admin = function () {
                             o && jQuery.map(o, (function (e, t) {
                                 l = l + "<option value='" + t + "'>" + e + "</option>"
                             }));
-                            var s = "<input type='number' step='any' name='food_nutritions[" + r + "][value]'><select name='food_nutritions[" + r + "][unit_id]'><option value=''>Unit</option>" + l + "</select>";
-                            n.find(".wpfm-sortable-item-values").html(s), n.removeClass("available-item").addClass("active-item")
+                            var s = "<input type='number' step='any' name='food_nutritions[" + r + "][value]' placeholder='Enter value'>" +
+                            "<select name='food_nutritions[" + r + "][unit_id]'>" +
+                            "<option value=''>Select Unit</option>" + l + "</select>";
+                            n.find(".wpfm-sortable-item-values").html(s), n.removeClass("available-item").addClass("active-item");
+                    
                         }
                     } else n.find(".wpfm-sortable-item-values").html(""), n.removeClass("active-item").addClass("available-item")
                 }
