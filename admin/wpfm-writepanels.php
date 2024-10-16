@@ -364,6 +364,7 @@ class WPFM_Writepanels {
             // Show food menu Shortcode on edit menu page - admin.
             add_meta_box('wpfm_menu_shortcode', 'Shortcode', array($this, 'food_menu_shortcode'), 'food_manager_menu', 'side', 'low');
             add_meta_box('wpfm_menu_disable_redirection', 'Disable Food Redirection', array($this, 'food_menu_disable_food_redirection'), 'food_manager_menu', 'side', 'low');
+            add_meta_box('wpfm_menu_disable_image', 'Disable Food Image', array($this, 'food_menu_disable_food_image'), 'food_manager_menu', 'side', 'low');
         }
     }
 
@@ -406,6 +407,36 @@ class WPFM_Writepanels {
         // Display the notice
         echo '<div class="wpfm-notice">';
         echo '<p>' . __('If Food Redirection is enabled, it will redirect to the food.', 'wp-food-manager') . '</p>';
+        echo '</div>';
+        get_food_manager_template('form-fields/' . $field['type'] . '-field.php', array('key' => esc_attr($key), 'field' => $field));
+    }
+
+    /**
+     * This function is responsible for disabling image to the food.
+     * 
+     * @access public
+     * @return void
+     * @since 1.0.2
+     */
+    public function food_menu_disable_food_image() {
+        global $post;
+        $thepostid = $post->ID;
+        $key = 'wpfm_disable_food_image';
+        $field = array(
+            'name' => 'wpfm_disable_food_image',
+            'label' => __('Food Image Enable/Disable', 'wp-food-manager'),
+            'type' => 'radio',
+            'desc' => '',
+            'std' => 'no',
+            'options' => array(
+                'no' => 'No',
+                'yes' => 'Yes'
+            ),
+            'value' => get_post_meta($thepostid, '_wpfm_disable_food_image', true),
+        );
+        // Display the notice
+        echo '<div class="wpfm-notice">';
+        echo '<p>' . __('If Food Image is enabled, it will Not Display food image.', 'wp-food-manager') . '</p>';
         echo '</div>';
         get_food_manager_template('form-fields/' . $field['type'] . '-field.php', array('key' => esc_attr($key), 'field' => $field));
     }
@@ -909,6 +940,13 @@ class WPFM_Writepanels {
             update_post_meta($post_id, '_wpfm_disable_food_redirect', $disable_option);
         } else {
             update_post_meta($post_id, '_wpfm_disable_food_redirect', '');
+        }
+
+        if (isset($_POST['wpfm_disable_food_image'])) {
+            $disable_option = esc_attr($_POST['wpfm_disable_food_image']);
+            update_post_meta($post_id, '_wpfm_disable_food_image', $disable_option);
+        } else {
+            update_post_meta($post_id, '_wpfm_disable_food_image', '');
         }
     }
     
