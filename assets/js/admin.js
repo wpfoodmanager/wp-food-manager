@@ -12,6 +12,9 @@ var WPFM_Admin = function () {
         ///<returns type="initialization AdminSettings" />   
         /// <since>1.0.0</since> 
         init: function () {
+            if( jQuery("#wpfm-admin-food-types-selection, #wpfm-admin-food-selection").length > 0 ){
+                jQuery("#wpfm-admin-food-types-selection, #wpfm-admin-food-selection").chosen({ search_contains: !0 });
+            }
             jQuery('div.food tr.wpfm-admin-common td.field-type select option').each(function () {
                 if (jQuery(this).val() == 'term-checklist' || jQuery(this).val() == 'term-multiselect' || jQuery(this).val() == 'term-select') {
                     jQuery(this).remove();

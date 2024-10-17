@@ -102,21 +102,34 @@ class WPFM_Writepanels {
 			<div class="wpfm-admin-postbox-meta-data">
 				<div class="wpfm-admin-menu-selection wpfm-admin-postbox-form-field">
 
-					<?php food_manager_dropdown_selection(array(
-						'multiple' => false, 'show_option_all' => __('Select food category', 'wp-food-manager'),
+					<?php 
+					$selected_ids = get_post_meta(get_the_ID(), '_food_cats_ids', true);
+                    // Ensure $selected_ids is an array
+                    if ( !empty($selected_ids)) {
+                        $selected_ids = !empty($selected_ids) ? (array)$selected_ids : array();
+                    }
+					food_manager_dropdown_selection(array(
+						'multiple' => true, 'show_option_all' => __('Select food category', 'wp-food-manager'),
 						'id' => 'wpfm-admin-food-selection',
 						'taxonomy' => 'food_manager_category',
 						'hide_empty' => false,
 						'pad_counts' => true,
 						'show_count' => true,
 						'hierarchical' => false,
+						'selected' => $selected_ids,
 					)); ?>
 
 				</div>
 				<div class="wpfm-admin-menu-selection wpfm-admin-postbox-form-field">
-
-					<?php food_manager_dropdown_selection(array(
-						'multiple' => false, 'show_option_all' => __('Select food types', 'wp-food-manager'),
+					<?php 
+					$selected_ids = get_post_meta(get_the_ID(), '_food_type_ids', true);
+                    if ( !empty($selected_ids)) {
+                        $selected_ids = !empty($selected_ids) ? (array)$selected_ids : array();
+                    } else{
+                        $selected_ids = array();
+                    }
+					food_manager_dropdown_selection(array(
+						'multiple' => true, 'show_option_all' => __('Select food types', 'wp-food-manager'),
 						'id' => 'wpfm-admin-food-types-selection',
 						'taxonomy' => 'food_manager_type',
 						'hide_empty' => false,
@@ -124,6 +137,7 @@ class WPFM_Writepanels {
 						'show_count' => true,
 						'hierarchical' => false,
 						'name' => 'food_type',
+						'selected' => $selected_ids,
 					)); ?>
 
 				</div>
@@ -844,7 +858,8 @@ class WPFM_Writepanels {
                 'tax_query' => [
                     [
                         'taxonomy' => esc_attr($_POST['taxonomy']),
-                        'terms' => esc_attr($_POST['category_id']),
+                        'terms' => array_map('intval', $_POST['category_id']),
+                        'field' => 'term_id',
                     ],
                 ],
                 // Rest of your arguments.
@@ -934,6 +949,20 @@ class WPFM_Writepanels {
             update_post_meta($post_id, '_food_item_ids', $item_ids);
         } else {
             update_post_meta($post_id, '_food_item_ids', '');
+        }
+        
+        if (isset($_POST['cat'])) {
+            $cats_ids = array_map('esc_attr', $_POST['cat']);
+            update_post_meta($post_id, '_food_cats_ids', $cats_ids);
+        } else {
+            update_post_meta($post_id, '_food_cats_ids', '');
+        }
+        
+        if (isset($_POST['food_type'])) {
+            $type_ids = array_map('esc_attr', $_POST['food_type']);
+            update_post_meta($post_id, '_food_type_ids', $type_ids);
+        } else {
+            update_post_meta($post_id, '_food_type_ids', '');
         }
         
         if (isset($_POST['wpfm_disable_food_redirect'])) {
