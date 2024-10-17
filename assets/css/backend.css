@@ -84,6 +84,25 @@ span.wpfm-searh-clear {
   color: #333;
 }
 
+/* Admin-specific styles for loader */
+.wpfm-loader img {
+  width: 20px;
+  height: 20px; 
+  margin-left: 160px; 
+  display: flex; 
+  padding: 9px; 
+}
+
+/* Admin-specific styles for Loader sucess message */
+span.wpfm-success-message {
+  font-size: 14px;
+  font-weight: 500;
+  background: #3ab757;
+  padding: 5px 10px;
+  border-radius: 4px;
+  display: inline-block;
+}
+
 .sub-font-icon input[type=radio]:hover+label span.wpfm-key-name {
   font-size: 10px;
   position: absolute;

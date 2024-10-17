@@ -512,6 +512,7 @@ class WPFM_Admin {
         }
 
         wp_register_script('wpfm-admin', esc_url(WPFM_PLUGIN_URL) . '/assets/js/admin.js', array('jquery', 'jquery-ui-core', 'jquery-ui-datepicker'), WPFM_VERSION, true);
+        wp_register_script('wpfm-loader', esc_url(WPFM_PLUGIN_URL) . '/assets/js/loader.js', array('jquery'), WPFM_VERSION, true);
         wp_localize_script(
             'wpfm-admin',
             'wpfm_admin',

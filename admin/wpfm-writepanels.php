@@ -83,26 +83,26 @@ class WPFM_Writepanels {
 		include('templates/food-data-tabs.php');
 	}
 
-	/**
-	 * Display the food menu content.
-	 *
-	 * @access public
-	 * @param mixed $post
-	 * @return void
-	 * @since 1.0.0
-	 */
-	public function food_manager_menu_data_icons($post) {
-		global $post, $thepostid;
-		$thepostid = $post->ID;
-
-		wp_enqueue_script('wpfm-admin');
-		wp_nonce_field('save_meta_data', 'food_manager_nonce'); ?>
-
-		<div class="wpfm-admin-food-menu-container wpfm-flex-col wpfm-admin-postbox-meta-data">
-			<div class="wpfm-admin-postbox-meta-data">
-				<div class="wpfm-admin-menu-selection wpfm-admin-postbox-form-field">
-
-					<?php 
+    /**
+     * Display the food menu content.
+     *
+     * @access public
+     * @param mixed $post
+     * @return void
+     * @since 1.0.0
+     */
+    public function food_manager_menu_data_icons($post) {
+        global $post, $thepostid;
+        $thepostid = $post->ID;
+    
+        wp_enqueue_script('wpfm-admin');
+        wp_enqueue_script('wpfm-loader');
+        wp_nonce_field('save_meta_data', 'food_manager_nonce'); ?>
+    
+        <div class="wpfm-admin-food-menu-container wpfm-flex-col wpfm-admin-postbox-meta-data">
+            <div class="wpfm-admin-postbox-meta-data">
+                <div class="wpfm-admin-menu-selection wpfm-admin-postbox-form-field">
+                <?php 
 					$selected_ids = get_post_meta(get_the_ID(), '_food_cats_ids', true);
                     // Ensure $selected_ids is an array
                     if ( !empty($selected_ids)) {
@@ -110,18 +110,17 @@ class WPFM_Writepanels {
                     }
 					food_manager_dropdown_selection(array(
 						'multiple' => true, 'show_option_all' => __('Select food category', 'wp-food-manager'),
-						'id' => 'wpfm-admin-food-selection',
-						'taxonomy' => 'food_manager_category',
-						'hide_empty' => false,
-						'pad_counts' => true,
-						'show_count' => true,
-						'hierarchical' => false,
-						'selected' => $selected_ids,
-					)); ?>
-
-				</div>
-				<div class="wpfm-admin-menu-selection wpfm-admin-postbox-form-field">
-					<?php 
+                        'id' => 'wpfm-admin-food-selection',
+                        'taxonomy' => 'food_manager_category',
+                        'hide_empty' => false,
+                        'pad_counts' => true,
+                        'show_count' => true,
+                        'hierarchical' => false,
+                        'selected' => $selected_ids,
+                    )); ?>
+                </div>
+                <div class="wpfm-admin-menu-selection wpfm-admin-postbox-form-field">
+                <?php 
 					$selected_ids = get_post_meta(get_the_ID(), '_food_type_ids', true);
                     if ( !empty($selected_ids)) {
                         $selected_ids = !empty($selected_ids) ? (array)$selected_ids : array();
@@ -130,49 +129,52 @@ class WPFM_Writepanels {
                     }
 					food_manager_dropdown_selection(array(
 						'multiple' => true, 'show_option_all' => __('Select food types', 'wp-food-manager'),
-						'id' => 'wpfm-admin-food-types-selection',
-						'taxonomy' => 'food_manager_type',
-						'hide_empty' => false,
-						'pad_counts' => true,
-						'show_count' => true,
-						'hierarchical' => false,
-						'name' => 'food_type',
-						'selected' => $selected_ids,
-					)); ?>
-
-				</div>
-			</div>
-			<div class="wpfm-admin-food-menu-items">
-				<?php $item_ids = get_post_meta($thepostid, '_food_item_ids', true); ?>
-				<ul class="wpfm-food-menu menu menu-item-bar ">
-
-					<?php if ($item_ids && is_array($item_ids)) { ?>
-						<?php foreach ($item_ids as $key => $id) { ?>
-							<li class="menu-item-handle" data-food-id="<?= $id; ?>">
-								<div class="wpfm-admin-left-col">
-									<span class="dashicons dashicons-menu"></span>
-									<span class="item-title"><?php echo esc_html(get_the_title($id)); ?></span>
-								</div>
-								<div class="wpfm-admin-right-col">
-									<a href="javascript:void(0);" class="wpfm-food-item-remove">
-										<span class="dashicons dashicons-dismiss"></span>
-									</a>
-								</div>
-								<input type="hidden" name="wpfm_food_listing_ids[]" value="<?= $id; ?>" />
-							</li>
-					<?php }
-					} ?>
-
-				</ul>
-				<?php if ($item_ids && is_array($item_ids)) { ?>
-					<span class="no-menu-item-handle" style="display: none;">Please select the food category or food types to add food items to the menu.</span>
-				<?php } else { ?>
-					<span class="no-menu-item-handle">Please select the food category or food types to add food items to the menu.</span>
-				<?php } ?>
-			</div>
-		</div>
-<?php
-	}
+                        'id' => 'wpfm-admin-food-types-selection',
+                        'taxonomy' => 'food_manager_type',
+                        'hide_empty' => false,
+                        'pad_counts' => true,
+                        'show_count' => true,
+                        'hierarchical' => false,
+                        'name' => 'food_type',
+                        'selected' => $selected_ids,
+                    )); ?>
+                </div>
+            </div>
+            <div class="wpfm-admin-food-menu-items">
+                <?php $item_ids = get_post_meta($thepostid, '_food_item_ids', true); ?>
+                <ul class="wpfm-food-menu menu menu-item-bar" id="wpfm-food-menu-list">
+                    <?php if ($item_ids && is_array($item_ids)) { ?>
+                        <?php foreach ($item_ids as $key => $id) { ?>
+                            <li class="menu-item-handle" data-food-id="<?= $id; ?>">
+                                <div class="wpfm-admin-left-col">
+                                    <span class="dashicons dashicons-menu"></span>
+                                    <span class="item-title"><?php echo esc_html(get_the_title($id)); ?></span>
+                                </div>
+                                <div class="wpfm-admin-right-col">
+                                    <a href="javascript:void(0);" class="wpfm-food-item-remove">
+                                        <span class="dashicons dashicons-dismiss"></span>
+                                    </a>
+                                </div>
+                                <input type="hidden" name="wpfm_food_listing_ids[]" value="<?= $id; ?>" />
+                            </li>
+                        <?php }
+                    } ?>
+                </ul>
+                <?php if ($item_ids && is_array($item_ids)) { ?>
+                    <span class="no-menu-item-handle" style="display: none;">Please select the food category or food types to add food items to the menu.</span>
+                <?php } else { ?>
+                    <span class="no-menu-item-handle">Please select the food category or food types to add food items to the menu.</span>
+                <?php } ?>
+    
+                <!-- Loader and success message -->
+                <div class="wpfm-loader" style="display: none;">
+                <img src="<?php echo esc_url(WPFM_PLUGIN_URL . '/assets/images/loader.gif'); ?>" alt="Loading..." class="wpfm-loader-image">
+                </div>
+                <span class="wpfm-success-message" style="display: none;">Foods added to the menu successfully!</span>
+            </div>
+        </div>
+        <?php
+    }
 
 	/**
 	 * Display the food menu data.
@@ -950,7 +952,7 @@ class WPFM_Writepanels {
         } else {
             update_post_meta($post_id, '_food_item_ids', '');
         }
-        
+
         if (isset($_POST['cat'])) {
             $cats_ids = array_map('esc_attr', $_POST['cat']);
             update_post_meta($post_id, '_food_cats_ids', $cats_ids);
