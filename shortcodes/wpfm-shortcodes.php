@@ -46,6 +46,7 @@ class WPFM_Shortcodes {
 		add_shortcode('wpfm_food_menu', array($this, 'output_food_menu'));
 		add_shortcode('food_menu', array($this, 'food_menu_output_callback_function'));
 		add_shortcode('restaurant_food_menu_title', array($this, 'food_menu_title_output_callback_function_for_restaurant'));
+		add_shortcode('restaurant_food_menu', array($this, 'food_menu_output_callback_function_for_restaurant'));
 	}
 
 	/**
@@ -815,8 +816,134 @@ class WPFM_Shortcodes {
 		}
 	
 		return ob_get_clean();
-	}
+	} 
+
+	/**
+	 * Output food menu by restaurant ID.
+	 * 
+	 * @access public
+	 * @param array $atts
+	 * @return string
+	 * @since 1.0.0
+	 */
+	public function food_menu_output_callback_function_for_restaurant($atts) {
+		ob_start();
+		$atts = shortcode_atts(array(
+			'restaurant_id' => '',
+		), $atts);
 	
+		$restaurant_id = (isset($atts['restaurant_id'])) ? $atts['restaurant_id'] : $_GET['restaurant_id'];
+		$search_term = (isset($_GET['search_term'])) ? sanitize_text_field($_GET['search_term']) : '';
+	
+		if (empty($restaurant_id)) {
+			error_message_for_menu_page('Restaurant ID is required.');
+			return ob_get_clean();
+		}
+	
+		// Get the restaurant title
+		$restaurant_title = get_the_title($restaurant_id);
+	
+		// Get restaurant menus
+		$restaurant_menus = get_post_meta($restaurant_id, '_restaurant_menus', true);
+	
+		if (empty($restaurant_menus) || !is_array($restaurant_menus)) {
+			error_message_for_menu_page('No Food Menu available for this restaurant.');
+			return ob_get_clean();
+		}
+	
+		// Display the restaurant title, search form, and food menu titles
+		if (!isset($_GET['is_ajax'])) {
+			?>
+			<div class="food-menu-page-filters">
+				<h2 class="restaurant-title"><?php echo esc_html($restaurant_title); ?></h2>
+				<div class="wpfm-form-wrapper">
+					<div class="wpfm-form-group">
+						<form method="GET" action="<?php echo esc_url(get_permalink()); ?>">
+							<input type="hidden" name="restaurant_id" value="<?php echo esc_attr($restaurant_id); ?>">
+							<input type="text" name="search_term" id="food-menu-search" value="<?php echo esc_attr($search_term); ?>" placeholder="Search for food items...">
+						</form>
+					</div>
+				</div>
+				<?php if (empty($_GET['search_term'])) { ?>
+					<div class="food-menu-page-filter-tabs-wrapper">
+						<div class="food-menu-page-filter-tabs" id="food-menu-titles">
+							<?php
+							$title_query = new WP_Query(array(
+								'post_type'      => 'food_manager_menu',
+								'post__in'       => $restaurant_menus,
+								'posts_per_page' => -1,
+								'post_status'    => 'publish'
+							));
+							if ($title_query->have_posts()) {
+								while ($title_query->have_posts()) {
+									$title_query->the_post();
+									?>
+									<div class="food-menu-page-filter-tab">
+										<a href="#menu-<?php the_ID(); ?>" class="food-menu-page-filter-tab-link"><?php echo get_the_title(); ?></a>
+									</div>
+									<?php
+								}
+								wp_reset_postdata();
+							}
+							?>
+						</div>
+					</div>
+				<?php } ?>
+			</div>
+			<?php
+		}
+	
+		// Query food menus by restaurant
+		$args = array(
+			'post_type'      => 'food_manager_menu',
+			'post__in'       => $restaurant_menus,
+			'posts_per_page' => -1,
+			'post_status'    => 'publish',
+		);
+	
+		$menu_query = new WP_Query($args);
+	
+		if ($menu_query->have_posts()) {
+			echo '<div id="food-menu-results">';
+			while ($menu_query->have_posts()) {
+				$menu_query->the_post();
+	
+				// Get food items in this menu
+				$food_menu_ids = get_post_meta(get_the_ID(), '_food_item_ids', true);
+	
+				if (!empty($food_menu_ids) && is_array($food_menu_ids)) {
+					$food_args = array(
+						'post_type'      => 'food_manager',
+						'post__in'       => $food_menu_ids,
+						'orderby'        => 'post__in',
+						'posts_per_page' => -1,
+						's'              => $search_term,
+					);
+	
+					$food_items = get_posts($food_args);
+	
+					if ($food_items) {
+						?>
+						<div id="menu-<?php the_ID(); ?>" class="food-menu-section">
+							<div class="clearfix">
+								<?php get_food_manager_template_part('content-single', 'food_manager_menu'); ?>
+							</div>
+						</div>
+						<?php
+					} else {
+						error_message_for_menu_page('No food items found for this menu.');
+					}
+				}
+			}
+			echo '</div>';
+		} else {
+			error_message_for_menu_page('No Food Menu available.');
+		}
+	
+		wp_reset_postdata();
+		return ob_get_clean();
+	}
+
 	/**
 	 * output food menu by menu id.
 	 *

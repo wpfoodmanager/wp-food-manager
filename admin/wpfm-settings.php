@@ -389,6 +389,16 @@ class WPFM_Settings {
                                 'readonly' => 'readonly',
                             ),
                         ),
+						array(
+                            'label'    => __('Restaurant Menu', 'wp-food-manager'),
+                            'desc'        => __('Displays the list of restaurant food menu using the shortcode.', 'wpfm-favorites-list'),
+                            'name'       => 'wpfm_restaurant_food_menu',
+                            'std'         => '[restaurant_food_menu restaurant_id=""]',
+                            'type'     => 'text',
+                            'attributes' => array(
+                                'readonly' => 'readonly',
+                            ),
+                        ),
 					),
 				),
 			)
