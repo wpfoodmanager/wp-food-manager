@@ -184,8 +184,10 @@ $food = $post;
                                                             wpfm_extra_topping_form_fields($post, $field, $field_value);
                                                         }
                                                     }
-                                                    echo "</div>";
-                                                    echo ($val_flag) ? '<span class="wpfm-view-more">'. _e('View more +', 'wp-food-manager').'</span>' : '';
+                                                    echo "</div>"; 
+                                                    if ($val_flag) {
+                                                        echo '<span class="wpfm-view-more">' . esc_html__('View more +', 'wp-food-manager') . '</span>';
+                                                    }
                                                 }
                                                 echo "</div>";
                                             }
