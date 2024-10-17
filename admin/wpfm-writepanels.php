@@ -102,14 +102,14 @@ class WPFM_Writepanels {
         <div class="wpfm-admin-food-menu-container wpfm-flex-col wpfm-admin-postbox-meta-data">
             <div class="wpfm-admin-postbox-meta-data">
                 <div class="wpfm-admin-menu-selection wpfm-admin-postbox-form-field">
-                <?php 
-					$selected_ids = get_post_meta(get_the_ID(), '_food_cats_ids', true);
+                    <?php 
+                    $selected_ids = get_post_meta(get_the_ID(), '_food_cats_ids', true);
                     // Ensure $selected_ids is an array
                     if ( !empty($selected_ids)) {
                         $selected_ids = !empty($selected_ids) ? (array)$selected_ids : array();
                     }
-					food_manager_dropdown_selection(array(
-						'multiple' => true, 'show_option_all' => __('Select food category', 'wp-food-manager'),
+                    food_manager_dropdown_selection(array(
+                        'multiple' => true, 'show_option_all' => __('Select food category', 'wp-food-manager'),
                         'id' => 'wpfm-admin-food-selection',
                         'taxonomy' => 'food_manager_category',
                         'hide_empty' => false,
@@ -120,24 +120,24 @@ class WPFM_Writepanels {
                     )); ?>
                 </div>
                 <div class="wpfm-admin-menu-selection wpfm-admin-postbox-form-field">
-                <?php 
-					$selected_ids = get_post_meta(get_the_ID(), '_food_type_ids', true);
-                    if ( !empty($selected_ids)) {
-                        $selected_ids = !empty($selected_ids) ? (array)$selected_ids : array();
-                    } else{
-                        $selected_ids = array();
-                    }
-					food_manager_dropdown_selection(array(
-						'multiple' => true, 'show_option_all' => __('Select food types', 'wp-food-manager'),
-                        'id' => 'wpfm-admin-food-types-selection',
-                        'taxonomy' => 'food_manager_type',
-                        'hide_empty' => false,
-                        'pad_counts' => true,
-                        'show_count' => true,
-                        'hierarchical' => false,
-                        'name' => 'food_type',
-                        'selected' => $selected_ids,
-                    )); ?>
+                    <?php 
+                        $selected_ids = get_post_meta(get_the_ID(), '_food_type_ids', true);
+                        if ( !empty($selected_ids)) {
+                            $selected_ids = !empty($selected_ids) ? (array)$selected_ids : array();
+                        } else{
+                            $selected_ids = array();
+                        }
+                        food_manager_dropdown_selection(array(
+                            'multiple' => true, 'show_option_all' => __('Select food types', 'wp-food-manager'),
+                            'id' => 'wpfm-admin-food-types-selection',
+                            'taxonomy' => 'food_manager_type',
+                            'hide_empty' => false,
+                            'pad_counts' => true,
+                            'show_count' => true,
+                            'hierarchical' => false,
+                            'name' => 'food_type',
+                            'selected' => $selected_ids,
+                        )); ?>
                 </div>
             </div>
             <div class="wpfm-admin-food-menu-items">
@@ -168,7 +168,7 @@ class WPFM_Writepanels {
     
                 <!-- Loader and success message -->
                 <div class="wpfm-loader" style="display: none;">
-                <img src="<?php echo esc_url(WPFM_PLUGIN_URL . '/assets/images/loader.gif'); ?>" alt="Loading..." class="wpfm-loader-image">
+                 <img src="<?php echo esc_url(WPFM_PLUGIN_URL . '/assets/images/loader.gif'); ?>" alt="Loading..." class="wpfm-loader-image">
                 </div>
                 <span class="wpfm-success-message" style="display: none;">Foods added to the menu successfully!</span>
             </div>
