@@ -228,8 +228,8 @@ var WPFM_Admin = function () {
                     })
                 }
             });
-            jQuery(".post-type-food_manager .wpfm-admin-options-table table.widefat tbody").sortable({
-                connectWith: ".post-type-food_manager .wpfm-admin-options-table table.widefat tbody",
+            jQuery(".post-type-food_manager #toppings_food_data_content table.widefat tbody").sortable({
+                connectWith: ".post-type-food_manager #toppings_food_data_content table.widefat tbody",
                 items: "tr",
                 axis: "y",
                 helper: function (t, i) {

@@ -18,7 +18,7 @@
             <th></th>
         </tr>
     </thead>
-    <tbody>
+    <tbody class="ui-sortable">
         <?php
         if (isset($field['value']) && !empty($field['value']) && is_array($field['value'])) {
             $count = 1;
