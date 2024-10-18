@@ -211,6 +211,11 @@ class WPFM_Install {
 				'Dessert',
 				'Beverage',
 				'Main dishes',
+				'Lunch',
+				'After Hours',
+				'Drinks',
+				'Brunch',
+				'Dinner'
 			),
 			'food_manager_topping' => array(
 				'Yellow mustard',
