@@ -38,6 +38,7 @@ $units = get_terms(
 	]
 ); ?>
 <div class="wpfm-ingredient-fields wpfm-metaboxes">
+<p class="wpfm-ingredient-notice"><?php _e('Please drag and drop the available ingredient and enter the value.', 'wp-food-manager'); ?></p>
 	<div id="wpfm-ingredient-container" class="wpfm-clear wpfm-lists-container">
 		<ul id="wpfm-active-ing-list" class="wpfm-active-list wpfm-sortable-list wpfm-clear ui-sortable" data-title="Active Ingredient">
 

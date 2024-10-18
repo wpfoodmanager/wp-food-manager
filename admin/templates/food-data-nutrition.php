@@ -39,6 +39,8 @@ $units = get_terms(
 ); ?>
 
 <div class="wpfm-nutrition-fields wpfm-metaboxes">
+<p class="wpfm- nutrition-notice"><?php _e('Please drag and drop the available nutritions and enter the value.', 'wp-food-manager'); ?></p>
+
 	<div id="wpfm-nutrition-container" class="wpfm-clear wpfm-lists-container">
 		<ul id="wpfm-active-nutri-list" class="wpfm-active-list wpfm-sortable-list wpfm-clear ui-sortable" data-title="Active Nutrition">
 
