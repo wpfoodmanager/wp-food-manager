@@ -62,7 +62,7 @@
                 <?php do_action('wpfm_repeated_option_price_after', array()); ?>
                 <td><a href=&apos;javascript: void(0);&apos; data-id=&apos;%%repeated-option-index3%%&apos; class=&apos;option-delete-btn dashicons dashicons-dismiss&apos;></a></td>
                 <input type=&apos;hidden&apos; class=&apos;option-value-class&apos; name=&apos;option_value_count[]&apos; value=&apos;%%repeated-option-index3%%&apos;>
-            </tr>">Add Row</a>
+            </tr>">Add Option</a>
         </td>
 
         </tr>

@@ -191,7 +191,7 @@ if (!empty($extra_fields_options)) {
 								                    <input type='hidden' class='option-value-class' name='option_value_count[%%repeated-option-index2%%][]' value='%%repeated-option-index3%%'>
 								                </tr>
 												<?php echo esc_attr(ob_get_clean()); ?>
-												"><?php _e('Add Row', 'wp-food-manager'); ?></a>
+												"><?php _e('Add Option', 'wp-food-manager'); ?></a>
 																	</td>
 																</tr>
 															</tfoot>
