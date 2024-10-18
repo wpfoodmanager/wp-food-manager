@@ -5,19 +5,18 @@ var WPFM_Frontend = function () {
                 jQuery(".food-manager-post_type-dropdown").chosen({ search_contains: !0 });
             }
             // Open modal popup on food image click
-            jQuery('.food_manager_menu .food-list-box img').on('click', WPFM_Frontend.actions.openFoodMenuPopup);                
-            jQuery(document).on('click', '#wpfm-modal-close', function(){
+            jQuery('.food_manager_menu .food-list-box img').on('click', WPFM_Frontend.actions.openFoodMenuPopup);
+            jQuery('.fm-food-menu-container .food-list-box img').on('click', WPFM_Frontend.actions.openFoodMenuPopup);
+
+            jQuery(document).on('click', '#wpfm-modal-close', function() {
                 jQuery('#wpfm_food_popup').removeClass('wpfm-modal-open');
             });
-           
-            // For Extra Toppings view Toggle.
-            if (jQuery('.wpfm-additional-main-row').length > 0) {
-                jQuery('.wpfm-additional-main-row').hide();
-                jQuery(".wpfm-view-more").click(function(){
-                    jQuery(this).text((jQuery(this).text() == 'View less -') ? 'View more +' : 'View less -');
-                    jQuery(this).parent().find('.wpfm-additional-main-row').slideToggle()
-                });
-            }
+
+            // For Extra Toppings view Toggle
+            jQuery(document).on('click', '.wpfm-view-more', function() {
+            jQuery(this).text((jQuery(this).text() === 'View less -') ? 'View more +' : 'View less -');
+            jQuery(this).parent().find('.wpfm-additional-main-row').slideToggle();
+            });
             try {
                 jQuery('.wpfm-single-food-slider, .wpfm-img-multi-container').slick({
                     dots: true,

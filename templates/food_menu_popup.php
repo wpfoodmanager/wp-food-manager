@@ -1,4 +1,5 @@
-<?php $thumbnail_option = get_option('food_manager_enable_thumbnail');
+<?php 
+$thumbnail_option = get_option('food_manager_enable_thumbnail');
 $featured_img = get_the_post_thumbnail_url($food_id, 'full');
 if (isset($featured_img) && empty($featured_img)) {
     $featured_img = apply_filters('wpfm_default_food_banner', esc_url(WPFM_PLUGIN_URL . '/assets/images/wpfm-placeholder.jpg'));
@@ -122,7 +123,7 @@ if (!empty($regular_price)) {
                                                 $topping_htm .= '</ul>';
                                                 echo apply_filters('wpfm_toppings_list_htm', $topping_htm, array('ext_option' => $ext_option, 'more_class' => $more_class, 'key' => $key));
                                                 do_action('wpfm_singular_option_input_after');
-                                                if (!empty($additional_fields_extra_topping)) {
+                                               if (!empty($additional_fields_extra_topping)) {
                                                     echo "<div class='wpfm-additional-main-row wpfm-row'>";
                                                     $val_flag = 0;
                                                     foreach ($additional_fields_extra_topping as $name => $field) {
@@ -133,8 +134,10 @@ if (!empty($regular_price)) {
                                                             wpfm_extra_topping_form_fields($post, $field, $field_value);
                                                         }
                                                     }
-                                                    echo "</div>";
-                                                    echo ($val_flag) ? '<span class="wpfm-view-more">'. _e('View more +', 'wp-food-manager').'</span>' : '';
+                                                    echo "</div>"; 
+                                                    if ($val_flag) {
+                                                        echo '<span class="wpfm-view-more">' . esc_html__('View more +', 'wp-food-manager') . '</span>';
+                                                    }
                                                 }
                                                 echo "</div>";
                                             }
