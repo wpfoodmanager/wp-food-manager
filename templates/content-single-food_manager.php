@@ -174,7 +174,7 @@ $food = $post;
                                                 echo apply_filters('wpfm_toppings_list_htm', $topping_htm, array('ext_option' => $ext_option, 'more_class' => $more_class, 'key' => $key));
                                                 do_action('wpfm_singular_option_input_after');
                                                 if (!empty($additional_fields_extra_topping)) {
-                                                    echo "<div class='wpfm-additional-main-row wpfm-row'>";
+                                                    echo "<div class='wpfm-additional-main-row wpfm-row' style='display: none;'>";
                                                     $val_flag = 0;
                                                     foreach ($additional_fields_extra_topping as $name => $field) {
                                                         $field_key = '_' . $name;

@@ -14,9 +14,16 @@ var WPFM_Frontend = function () {
 
             // For Extra Toppings view Toggle
             jQuery(document).on('click', '.wpfm-view-more', function() {
-            jQuery(this).text((jQuery(this).text() === 'View less -') ? 'View more +' : 'View less -');
-            jQuery(this).parent().find('.wpfm-additional-main-row').slideToggle();
+                var additionalRow = jQuery(this).parent().find('.wpfm-additional-main-row');
+                if (additionalRow.is(':visible')) {
+                    additionalRow.slideUp(); 
+                    jQuery(this).text('View more +'); 
+                } else {
+                    additionalRow.slideDown(); 
+                    jQuery(this).text('View less -'); 
+                }
             });
+
             try {
                 jQuery('.wpfm-single-food-slider, .wpfm-img-multi-container').slick({
                     dots: true,
@@ -312,11 +319,12 @@ var WPFM_Frontend = function () {
             /// </summary>                 
             /// <returns type="generate name and id " />     
             /// <since>1.0.6</since>            
-            openFoodMenuPopup : function(event){
+            openFoodMenuPopup: function(event) {
                 event.preventDefault();
                 var foodId = jQuery(this).closest('.food-list-box').attr('data-id');
                 var productId = jQuery(this).closest('.food-list-box').find('.list_add_to_cart_button').attr("data-product_id");
-                var quantity = jQuery(this).closest('.food-list-box').find('#quantity_'+productId).val();
+                var quantity = jQuery(this).closest('.food-list-box').find('#quantity_' + productId).val();
+                
                 jQuery.ajax({
                     url: wpfm_frontend.ajax_url, // Or the URL to admin-ajax.php
                     method: 'POST',
@@ -329,6 +337,10 @@ var WPFM_Frontend = function () {
                     success: function(response) {
                         jQuery('#wpfm_food_popup').html(response.html);
                         jQuery('#wpfm_food_popup').addClass('wpfm-modal-open');
+
+                        // Hide additional rows and set initial button text inside the popup
+                        jQuery('#wpfm_food_popup .wpfm-additional-main-row').hide();
+                        jQuery('#wpfm_food_popup .wpfm-view-more').text('View more +'); // Set initial text
                     },
                     error: function(xhr, status, error) {
                         console.error(error);
