@@ -289,11 +289,20 @@ var WPFM_Admin = function () {
             jQuery(document).on("click", ".wpfm-delete-btn", WPFM_Admin.actions.removeAttributes)
             jQuery(document).on("click", ".option-delete-btn", WPFM_Admin.actions.removeAttributesOptions)
 
-            // Find the meta box title and append the tooltip icon
-            jQuery('#wpfm_menu_disable_redirection .hndle').append(
-            '<span class="tooltip-icon" style="margin-left: 5px;"><img src="' + wpfmTooltipIcon.url + '" alt="' + wpfmTooltipIcon.alt + '" title="' + wpfmTooltipIcon.title + '" /></span>'
-            );
-    
+           // Find the meta box titles and append the tooltip icon
+            var tooltips = {
+                '#wpfm_menu_disable_redirection': wpfmTooltipData.redirection,
+                '#wpfm_menu_disable_image': wpfmTooltipData.image
+            };
+
+            // Iterate through each tooltip configuration and append the tooltip icon.
+            jQuery.each(tooltips, function (selector, tooltip) {
+                jQuery(selector + ' .hndle').append(
+                    '<span class="tooltip-icon" style="margin-left: 5px;">' +
+                    '<img src="' + tooltip.url + '" title="' + tooltip.title + '" alt="' + tooltip.alt + '"/>' +
+                    '</span>'
+                );
+            });
         },
 
         actions: {
