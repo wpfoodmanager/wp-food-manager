@@ -16,10 +16,7 @@ var WPFM_Admin = function () {
                 jQuery("#wpfm-admin-food-types-selection, #wpfm-admin-food-selection").chosen({ search_contains: !0 });
             }
 
-            // Find the meta box title and append the tooltip icon
-            jQuery('#wpfm_menu_disable_redirection .hndle').append(
-                '<span class="tooltip-icon" style="margin-left: 5px;"><img src="' + wpfmTooltipIcon.url + '" alt="' + wpfmTooltipIcon.alt + '" title="' + wpfmTooltipIcon.title + '" /></span>'
-            );
+           
             
             jQuery('div.food tr.wpfm-admin-common td.field-type select option').each(function () {
                 if (jQuery(this).val() == 'term-checklist' || jQuery(this).val() == 'term-multiselect' || jQuery(this).val() == 'term-select') {
@@ -88,6 +85,12 @@ var WPFM_Admin = function () {
                 }
                 jQuery(this).parents('.postbox').find('.wpfm-options-box-' + row_count + ' .wpfm-metabox-content').slideToggle("slow");
             });
+          
+            // Find the meta box title and append the tooltip icon
+            jQuery('#wpfm_menu_disable_redirection .hndle').append(
+            '<span class="tooltip-icon" style="margin-left: 5px;"><img src="' + wpfmTooltipIcon.url + '" alt="' + wpfmTooltipIcon.alt + '" title="' + wpfmTooltipIcon.title + '" /></span>'
+            );
+
             /* General tab - Regular and Sale price validation */
             jQuery('body').on('wpfm_add_error_tip', function (e, element, error_type) {
                 var offset = element.position();
