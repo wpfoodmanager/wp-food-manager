@@ -552,6 +552,15 @@ class WPFM_Admin {
         wp_enqueue_script('wpfm-accounting');
         wp_enqueue_style('dashicons');
 
+        // Register the JavaScript file for info tooltiop - Food Redirection Enable/Displabe.
+        wp_register_script('admin-tooltip-script', plugin_dir_url(__FILE__) . 'assets/js/admin-tooltip.js', array('jquery'), WPFM_VERSION, true); 
+        // Localize the script to pass dynamic data.
+        wp_localize_script('admin-tooltip-script', 'wpfmTooltipIcon', array(
+            'url'   => esc_url(plugin_dir_url(__FILE__) . '../assets/images/service-tooptip-icon.png'),
+            'alt'   => esc_attr__('Info', 'wp-food-manager'),
+            'title' => esc_attr__('If Food Redirection is enabled, it will not redirect to the food.', 'wp-food-manager')
+        ));
+        
         // File upload - vendor.
         if (apply_filters('wpfm_ajax_file_upload_enabled', true)) {
             wp_register_script('jquery-iframe-transport', esc_url(WPFM_PLUGIN_URL) . '/assets/js/jquery-fileupload/jquery.iframe-transport.min.js', array('jquery'), '1.8.3', true);

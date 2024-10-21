@@ -103,6 +103,36 @@ span.wpfm-success-message {
   display: inline-block;
 }
 
+/* Admin-specific styles info tooltip icon*/
+.tooltip-icon {
+  cursor: pointer;
+  display: inline-block;
+  margin-left: 5px; 
+  position: relative;
+}
+
+.tooltip-icon img {
+  width: 16px; 
+  height: 16px; 
+  vertical-align: middle; 
+}
+
+.tooltip-icon img:hover::after {
+  content: attr(title);
+  position: absolute;
+  background: #f9f9f9;
+  border: 1px solid #ccc;
+  padding: 5px;
+  z-index: 1000;
+  white-space: nowrap;
+  left: 0;
+  top: 100%;
+  margin-top: 5px;
+  border-radius: 4px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  display: block; 
+}
+
 .sub-font-icon input[type=radio]:hover+label span.wpfm-key-name {
   font-size: 10px;
   position: absolute;

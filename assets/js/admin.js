@@ -15,6 +15,12 @@ var WPFM_Admin = function () {
             if( jQuery("#wpfm-admin-food-types-selection, #wpfm-admin-food-selection").length > 0 ){
                 jQuery("#wpfm-admin-food-types-selection, #wpfm-admin-food-selection").chosen({ search_contains: !0 });
             }
+
+            // Find the meta box title and append the tooltip icon
+            jQuery('#wpfm_menu_disable_redirection .hndle').append(
+                '<span class="tooltip-icon" style="margin-left: 5px;"><img src="' + wpfmTooltipIcon.url + '" alt="' + wpfmTooltipIcon.alt + '" title="' + wpfmTooltipIcon.title + '" /></span>'
+            );
+            
             jQuery('div.food tr.wpfm-admin-common td.field-type select option').each(function () {
                 if (jQuery(this).val() == 'term-checklist' || jQuery(this).val() == 'term-multiselect' || jQuery(this).val() == 'term-select') {
                     jQuery(this).remove();
