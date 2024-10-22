@@ -275,6 +275,7 @@ class WPFM_Add_Food_Form extends WPFM_Form {
 				'food_label' => array(
 					'label'       => __('Food Label', 'wp-food-manager'),
 					'type'        => 'text',
+					'description'     => 'Enter food label will be show on Food menu and Food detail page.',
 					'required'    => false,
 					'placeholder' => 'Food label',
 					'priority'    => 14,
