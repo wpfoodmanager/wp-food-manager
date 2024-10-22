@@ -1,0 +1,3088 @@
+msgid ""
+msgstr ""
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Project-Id-Version: WP Food Manager\n"
+"POT-Creation-Date: 2024-10-22 13:43+0530\n"
+"PO-Revision-Date: 2024-10-22 14:53+0530\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.4.3\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-Flags-xgettext: --add-comments=translators:\n"
+"X-Poedit-WPHeader: wp-food-manager.php\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
+"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;"
+"_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"Last-Translator: \n"
+"Language: af_ZA\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: *.min.js\n"
+
+#: admin/templates/food-data-ingredient.php:41
+#, fuzzy
+msgid "Please drag and drop the available ingredient and enter the value."
+msgstr "Sleep die beskikbare bestanddeel en voer die waarde in."
+
+#: admin/templates/food-data-ingredient.php:88
+#, fuzzy
+msgid "Search Ingredient"
+msgstr "Soek bestanddeel"
+
+#: admin/templates/food-data-ingredient.php:103
+#: admin/templates/food-data-nutrition.php:101
+#, fuzzy
+msgid "No results found"
+msgstr "Geen resultate gevind nie"
+
+#: admin/templates/food-data-nutrition.php:42
+#, fuzzy
+msgid "Please drag and drop the available nutritions and enter the value."
+msgstr "Sleep asseblief die beskikbare voedingsmiddels en voer die waarde in."
+
+#: admin/templates/food-data-nutrition.php:87
+#, fuzzy
+msgid "Search Nutrition"
+msgstr "Soek voeding"
+
+#: admin/templates/food-data-tabs.php:33
+#, fuzzy
+msgid ""
+"Based on the given setting the ingredients and nutrition will be show on "
+"food detail page."
+msgstr ""
+"Op grond van die gegewe instelling sal die bestanddele en voeding op die "
+"voedselbesettingsbladsy gewys word."
+
+#: admin/templates/food-data-toppings.php:24
+#: admin/wpfm-field-editor-form-field.php:109 admin/wpfm-settings.php:532
+#: includes/wpfm-custom-post-types.php:147
+#: templates/content-single-food_manager.php:267
+#: templates/content-single-food_manager.php:273
+#: templates/content-single-food_manager.php:279
+#: templates/content-single-food_manager.php:280
+#: templates/content-single-food_manager.php:286
+#: templates/content-single-food_manager.php:292
+#: templates/content-single-food_manager.php:298
+#: templates/content-single-food_manager.php:304
+#: templates/content-single-food_manager.php:309
+#: templates/content-single-food_manager.php:331
+#: templates/content-single-food_manager.php:361
+#: templates/content-single-food_manager.php:362
+#: templates/content-single-food_manager.php:378
+#: templates/content-single-food_manager.php:384
+#: templates/content-single-food_manager.php:387
+#: templates/content-single-food_manager.php:389
+#: templates/content-single-food_manager.php:399
+#: templates/content-single-food_manager.php:405
+#: templates/content-single-food_manager.php:410
+#: templates/content-single-food_manager.php:449
+#: templates/content-single-food_manager.php:451
+#: templates/content-single-food_manager.php:465
+#: templates/content-single-food_manager.php:493
+#: templates/food-extra-topping.php:9 templates/food-extra-topping.php:61
+#: templates/food-extra-topping.php:115 templates/food-extra-topping.php:133
+#: templates/food-extra-topping.php:177
+#, php-format
+msgid "%s"
+msgstr "%s"
+
+#: admin/templates/food-data-toppings.php:80
+#, fuzzy
+msgid "Option 1"
+msgstr "Opsie 1"
+
+#: admin/templates/food-data-toppings.php:116
+#: admin/templates/food-data-toppings.php:174
+#, fuzzy
+msgid "Please provide the options and price for the topping."
+msgstr "Verskaf asseblief die opsies en prys vir die bolaag."
+
+#: admin/templates/food-data-toppings.php:141
+#, fuzzy
+msgid "Option __repeated-option-index__"
+msgstr "Opsie __repeated-opsie-index__"
+
+#: admin/wpfm-admin.php:123 admin/wpfm-admin.php:301
+#, fuzzy
+msgid "Image/Icon"
+msgstr "Beeld/ikoon"
+
+#: admin/wpfm-admin.php:127 admin/wpfm-admin.php:173 admin/wpfm-admin.php:305
+#: admin/wpfm-admin.php:351 includes/wpfm-custom-post-types.php:160
+#, fuzzy
+msgid "Add Image"
+msgstr "Voeg beeld by"
+
+#: admin/wpfm-admin.php:128 admin/wpfm-admin.php:174 admin/wpfm-admin.php:306
+#: admin/wpfm-admin.php:352 includes/wpfm-custom-post-types.php:161
+msgid "Remove Image"
+msgstr "Verwyder foto"
+
+#: admin/wpfm-admin.php:162 admin/wpfm-admin.php:340 admin/wpfm-cpt.php:346
+#: includes/wpfm-filter-hooks.php:63 includes/wpfm-filter-hooks.php:76
+msgid "Image"
+msgstr "Image"
+
+#: admin/wpfm-admin.php:479 admin/wpfm-settings.php:148
+#, fuzzy
+msgid "Field Editor"
+msgstr "Veld Redigeerder"
+
+#: admin/wpfm-admin.php:481 admin/wpfm-admin.php:847
+#: admin/wpfm-settings.php:420 admin/wpfm-setup.php:225
+#: templates/form-fields/repeated-field.php:43
+msgid "Settings"
+msgstr "Vertellings"
+
+#: admin/wpfm-admin.php:482
+#, fuzzy
+msgid "Setup"
+msgstr "Opstelling"
+
+#: admin/wpfm-admin.php:549 includes/wpfm-action-hooks.php:163
+msgid "Please enter in a value less than the regular price."
+msgstr "Voer asseblief 'n waarde minder as die gewone prys in."
+
+#: admin/wpfm-admin.php:561 admin/wpfm-admin.php:566
+msgid "Info"
+msgstr "Inligting"
+
+#: admin/wpfm-admin.php:562
+#, fuzzy
+msgid "If Food Redirection is enabled, it will not redirect to the food."
+msgstr "As voedselherleiding geaktiveer is, sal dit nie na die kos herlei nie."
+
+#: admin/wpfm-admin.php:567
+#, fuzzy
+msgid "If Food Image is enabled, it will not be displayed for food."
+msgstr "As Food Image geaktiveer is, sal dit nie vir kos vertoon word nie."
+
+#: admin/wpfm-admin.php:587 includes/wpfm-action-hooks.php:133
+#, fuzzy
+msgid "The file type you have mentioned is invalid."
+msgstr "Die lêertipe wat jy genoem het, is ongeldig."
+
+#: admin/wpfm-admin.php:597
+#, fuzzy
+msgid "Are you sure you want to delete this row?"
+msgstr "Wil u definitief hierdie ry skrap?"
+
+#: admin/wpfm-admin.php:598
+#, fuzzy
+msgid "Are you sure you want to reset your changes? This cannot be undone."
+msgstr ""
+"Wil u definitief u veranderinge terugstel? Dit kan nie ongedaan gemaak word "
+"nie."
+
+#: admin/wpfm-admin.php:658 includes/wpfm-custom-post-types.php:86
+#, fuzzy
+msgid "Food Manager"
+msgstr "Kos Bestuurder"
+
+#: admin/wpfm-admin.php:794
+#, fuzzy
+msgid "Select Food Type"
+msgstr "Kies voedseltipe"
+
+#: admin/wpfm-admin.php:830
+#, fuzzy
+msgid "Select Food Category"
+msgstr "Kies voedselkategorie"
+
+#: admin/wpfm-cpt.php:90 admin/wpfm-cpt.php:91
+#, php-format
+msgid "Approve %s"
+msgstr "Anvaar %s"
+
+#: admin/wpfm-cpt.php:151
+msgid "Show more details"
+msgstr "Wys meer inligting"
+
+#: admin/wpfm-cpt.php:188
+msgid "Publish"
+msgstr "Publiseer"
+
+#: admin/wpfm-cpt.php:197
+msgid "View"
+msgstr "Besigtig"
+
+#: admin/wpfm-cpt.php:205 includes/wpfm-custom-post-types.php:90
+#: includes/wpfm-custom-post-types.php:150 templates/food-dashboard.php:208
+#: templates/food-dashboard.php:227
+msgid "Edit"
+msgstr "Wysig"
+
+#: admin/wpfm-cpt.php:213 includes/wpfm-action-hooks.php:190
+#: templates/food-dashboard.php:233
+msgid "Delete"
+msgstr "Skrap"
+
+#: admin/wpfm-cpt.php:246
+#, fuzzy, php-format
+msgid "[food_menu id=%d]"
+msgstr "[food_menu id=%d]"
+
+#: admin/wpfm-cpt.php:270
+msgid "Shortcode"
+msgstr "Kortkode"
+
+#: admin/wpfm-cpt.php:271
+#, fuzzy
+msgid "Food menu image"
+msgstr "Kos spyskaart beeld"
+
+#: admin/wpfm-cpt.php:289 shortcodes/wpfm-shortcodes.php:220
+msgid "Title"
+msgstr "Titel"
+
+#: admin/wpfm-cpt.php:290
+#, fuzzy
+msgid "Banner"
+msgstr "Banier"
+
+#: admin/wpfm-cpt.php:291 admin/wpfm-cpt.php:347
+#: forms/wpfm-add-food-form.php:247
+msgid "Stock Status"
+msgstr "Voorraad Status"
+
+#: admin/wpfm-cpt.php:292 admin/wpfm-cpt.php:349
+#: includes/wpfm-custom-taxonomies.php:22
+#, fuzzy
+msgid "Categories"
+msgstr "Kategorieë"
+
+#: admin/wpfm-cpt.php:293 admin/wpfm-cpt.php:350
+msgid "Order"
+msgstr "Stuur aansoek"
+
+#: admin/wpfm-cpt.php:294 admin/wpfm-cpt.php:351
+msgid "Status"
+msgstr "Status"
+
+#: admin/wpfm-cpt.php:295 admin/wpfm-cpt.php:353
+msgid "Actions"
+msgstr "Aksies"
+
+#: admin/wpfm-cpt.php:348 templates/food-submit.php:143
+msgid "Price"
+msgstr "Prys"
+
+#: admin/wpfm-field-editor-form-field.php:23 admin/wpfm-field-editor.php:86
+msgid "Text"
+msgstr "Teks"
+
+#: admin/wpfm-field-editor-form-field.php:24 admin/wpfm-field-editor.php:87
+#, fuzzy
+msgid "Checkbox"
+msgstr "Merkblokkie"
+
+#: admin/wpfm-field-editor-form-field.php:25 admin/wpfm-field-editor.php:88
+#, fuzzy
+msgid "Date"
+msgstr "Okkasie Begin Datum"
+
+#: admin/wpfm-field-editor-form-field.php:26 admin/wpfm-field-editor.php:89
+msgid "File"
+msgstr "Lêer"
+
+#: admin/wpfm-field-editor-form-field.php:27 admin/wpfm-field-editor.php:90
+msgid "Hidden"
+msgstr "Verborge"
+
+#: admin/wpfm-field-editor-form-field.php:28 admin/wpfm-field-editor.php:91
+#, fuzzy
+msgid "Multiselect"
+msgstr "Meervoudige selekteer"
+
+#: admin/wpfm-field-editor-form-field.php:29 admin/wpfm-field-editor.php:92
+msgid "Number"
+msgstr "Nommer"
+
+#: admin/wpfm-field-editor-form-field.php:30 admin/wpfm-field-editor.php:93
+#, fuzzy
+msgid "Radio"
+msgstr "Radio"
+
+#: admin/wpfm-field-editor-form-field.php:31 admin/wpfm-field-editor.php:94
+msgid "Select"
+msgstr "Selekteer"
+
+#: admin/wpfm-field-editor-form-field.php:32 admin/wpfm-field-editor.php:95
+#, fuzzy
+msgid "Term Checklist"
+msgstr "Termyn kontrolelys"
+
+#: admin/wpfm-field-editor-form-field.php:33 admin/wpfm-field-editor.php:96
+#, fuzzy
+msgid "Term Multiselect"
+msgstr "Termyn Multiselekteer"
+
+#: admin/wpfm-field-editor-form-field.php:34 admin/wpfm-field-editor.php:97
+#, fuzzy
+msgid "Term Select"
+msgstr "Termyn Kies"
+
+#: admin/wpfm-field-editor-form-field.php:35 admin/wpfm-field-editor.php:98
+#, fuzzy
+msgid "Term Multi Select Appearance"
+msgstr "Termyn Multi Kies Voorkoms"
+
+#: admin/wpfm-field-editor-form-field.php:36 admin/wpfm-field-editor.php:99
+msgid "Textarea"
+msgstr "Teksarea"
+
+#: admin/wpfm-field-editor-form-field.php:37 admin/wpfm-field-editor.php:100
+#, fuzzy
+msgid "WP Editor"
+msgstr "WP-redakteur"
+
+#: admin/wpfm-field-editor-form-field.php:38 admin/wpfm-field-editor.php:101
+msgid "URL"
+msgstr "URL"
+
+#: admin/wpfm-field-editor-form-field.php:39
+#, fuzzy
+msgid "Term Autocomplete"
+msgstr "Termyn Outovoltooi"
+
+#: admin/wpfm-field-editor-form-field.php:40 admin/wpfm-field-editor.php:103
+msgid "Switch"
+msgstr "Skakel oor"
+
+#: admin/wpfm-field-editor-form-field.php:45 admin/wpfm-field-editor.php:102
+#: forms/wpfm-add-food-form.php:302 templates/food-submit.php:134
+msgid "Options"
+msgstr "Opsies"
+
+#: admin/wpfm-field-editor-form-field.php:90
+#: admin/wpfm-field-editor-form-field.php:110
+#: admin/wpfm-field-editor-form-field.php:144
+msgid "N/A"
+msgstr "N.V.T"
+
+#: admin/wpfm-field-editor-form-field.php:111
+#, fuzzy
+msgid "Pipe (|) separate options."
+msgstr "Pyp (|) afsonderlike opsies."
+
+#: admin/wpfm-field-editor-form-field.php:113
+#, fuzzy
+msgid "Multiple Files?"
+msgstr "Veelvuldige lêers?"
+
+#: admin/wpfm-field-editor-form-field.php:172
+msgid "Not Required"
+msgstr "Nie vereis nie"
+
+#: admin/wpfm-field-editor-form-field.php:178
+msgid "Required"
+msgstr "Vereis"
+
+#: admin/wpfm-field-editor.php:49
+msgid "Form fields"
+msgstr "Vorm velde"
+
+#: admin/wpfm-field-editor.php:119
+#, fuzzy, php-format
+msgid "Add %s form fields"
+msgstr "Voeg %s vormvelde by"
+
+#: admin/wpfm-field-editor.php:124
+msgid "Field Label"
+msgstr "Veldetiket"
+
+#: admin/wpfm-field-editor.php:125
+msgid "Type"
+msgstr "Tipe"
+
+#: admin/wpfm-field-editor.php:126 forms/wpfm-add-food-form.php:224
+msgid "Description"
+msgstr "Beskrywing"
+
+#: admin/wpfm-field-editor.php:127
+#, fuzzy
+msgid "Placeholder / Options"
+msgstr "Plekhouer / Opsies"
+
+#: admin/wpfm-field-editor.php:128
+#, fuzzy
+msgid "Meta Key"
+msgstr "Meta-sleutel"
+
+#: admin/wpfm-field-editor.php:129
+#, fuzzy
+msgid "Only For Admin"
+msgstr "Slegs vir admin"
+
+#: admin/wpfm-field-editor.php:130
+#, fuzzy
+msgid "Priority"
+msgstr "Prioriteit"
+
+#: admin/wpfm-field-editor.php:132
+#, fuzzy
+msgid "Tab Group (Only For Admin)"
+msgstr "Oortjiegroep (slegs vir admin)"
+
+#: admin/wpfm-field-editor.php:134
+msgid "Validation"
+msgstr "Bekragtiging"
+
+#: admin/wpfm-field-editor.php:141 templates/form-fields/repeated-field.php:30
+msgid "Add field"
+msgstr "Voeg Velde by"
+
+#: admin/wpfm-field-editor.php:144
+msgid "Reset to default"
+msgstr "Stel terug na standaard"
+
+#: admin/wpfm-field-editor.php:145 admin/wpfm-settings.php:553
+msgid "Save Changes"
+msgstr "Stoor veranderinge"
+
+#: admin/wpfm-field-editor.php:300
+#, fuzzy
+msgid "The fields were successfully saved."
+msgstr "Die velde is suksesvol gered."
+
+#: admin/wpfm-permalink-settings.php:62
+#, fuzzy
+msgid "Food base"
+msgstr "Voedsel basis"
+
+#: admin/wpfm-permalink-settings.php:70
+#, fuzzy
+msgid "Food category base"
+msgstr "Voedselkategorie basis"
+
+#: admin/wpfm-permalink-settings.php:78
+#, fuzzy
+msgid "Food type base"
+msgstr "Voedsel tipe basis"
+
+#: admin/wpfm-permalink-settings.php:93
+#, fuzzy
+msgctxt "food permalink - resave permalinks after changing this"
+msgid "food"
+msgstr "Kos"
+
+#: admin/wpfm-permalink-settings.php:104
+#, fuzzy
+msgctxt "food category slug - resave permalinks after changing this"
+msgid "food-category"
+msgstr "voedsel-kategorie"
+
+#: admin/wpfm-permalink-settings.php:115
+#, fuzzy
+msgctxt "food type slug - resave permalinks after changing this"
+msgid "food-type"
+msgstr "voedsel-tipe"
+
+#: admin/wpfm-settings.php:116 admin/wpfm-writepanels.php:236
+msgid "General"
+msgstr "G&eacute;n&eacute;ral"
+
+#: admin/wpfm-settings.php:121 shortcodes/wpfm-shortcodes.php:422
+#, fuzzy
+msgid "Food Categories"
+msgstr "Kos kategorieë"
+
+#: admin/wpfm-settings.php:122
+#, fuzzy
+msgid "Display Food Categories."
+msgstr "Vertoon voedselkategorieë."
+
+#: admin/wpfm-settings.php:123
+#, fuzzy
+msgid ""
+"If enabled, the Food Categories option will display and manage from the both "
+"side at frontend and backend. "
+msgstr ""
+"As dit geaktiveer is, sal die opsie Voedselkategorieë van beide kante aan "
+"die voorkant en agterkant vertoon en bestuur. "
+
+#: admin/wpfm-settings.php:130 shortcodes/wpfm-shortcodes.php:438
+#: templates/content-single-food_manager.php:579
+#, fuzzy
+msgid "Food Types"
+msgstr "Voedsel tipes"
+
+#: admin/wpfm-settings.php:131
+#, fuzzy
+msgid "Display Food Types."
+msgstr "Vertoon voedseltipes."
+
+#: admin/wpfm-settings.php:139 includes/wpfm-custom-taxonomies.php:128
+#: templates/content-single-food_manager.php:584
+#, fuzzy
+msgid "Food Tags"
+msgstr "Kos etikette"
+
+#: admin/wpfm-settings.php:140
+#, fuzzy
+msgid "Display Food Tags."
+msgstr "Vertoon kosetikette."
+
+#: admin/wpfm-settings.php:149
+#, fuzzy
+msgid "Display Field Editor."
+msgstr "Vertoon veldredigeerder."
+
+#: admin/wpfm-settings.php:156
+#, fuzzy
+msgid "Food Items"
+msgstr "Voedsel items"
+
+#: admin/wpfm-settings.php:168
+msgid "Delete Data On Uninstall"
+msgstr "Verwyder data met Verwydering"
+
+#: admin/wpfm-settings.php:169
+#, fuzzy
+msgid ""
+"Delete WP Food Manager data when the plugin is deleted. Once removed, this "
+"data cannot be restored."
+msgstr ""
+"Vee WP Food Manager-data uit wanneer die inprop uitgevee word. Sodra dit "
+"verwyder is, kan hierdie data nie herstel word nie."
+
+#: admin/wpfm-settings.php:177
+#, fuzzy
+msgid "Food Listings"
+msgstr "Kos lyste"
+
+#: admin/wpfm-settings.php:183
+#, fuzzy
+msgid "Listings Per Page"
+msgstr "Lyste per bladsy"
+
+#: admin/wpfm-settings.php:184
+#, fuzzy
+msgid "How many listings should be shown per page by default?"
+msgstr "Hoeveel lyste moet standaard per bladsy vertoon word?"
+
+#: admin/wpfm-settings.php:194
+#, fuzzy
+msgid "Multi-select Food Categories"
+msgstr "Multi-selekteer voedselkategorieë"
+
+#: admin/wpfm-settings.php:195
+#, fuzzy
+msgid "Enable Food Category multiselect by default."
+msgstr "Aktiveer voedselkategorie-meervoudige seleksie by verstek."
+
+#: admin/wpfm-settings.php:196
+#, fuzzy
+msgid ""
+"If enabled, the Food Category select box will default to a multi select on "
+"the food listing page in filter section."
+msgstr ""
+"As dit geaktiveer is, sal die koskategorie-kiesblokkie standaard 'n multi-"
+"keuse hê op die voedsellysbladsy in die filterafdeling."
+
+#: admin/wpfm-settings.php:203
+#, fuzzy
+msgid "Multi-select Food Types"
+msgstr "Multi-selekteer voedseltipes"
+
+#: admin/wpfm-settings.php:204
+#, fuzzy
+msgid "Enable Food Type multiselect by default."
+msgstr "Aktiveer Food Type multiselect by verstek."
+
+#: admin/wpfm-settings.php:205
+#, fuzzy
+msgid ""
+"If enabled, the Food Type select box will default to a multi select on the "
+"food listing page in filter section."
+msgstr ""
+"As dit geaktiveer is, sal die kostipe-kieskassie standaard 'n multi-keuse op "
+"die voedsellysbladsy in die filterafdeling wees."
+
+#: admin/wpfm-settings.php:212
+#, fuzzy
+msgid "Multi-select Food Menu"
+msgstr "Multi-selekteer kosspyskaart"
+
+#: admin/wpfm-settings.php:213
+#, fuzzy
+msgid "Enable Food Menu multiselect by default."
+msgstr "Aktiveer Food Menu multiselect by verstek."
+
+#: admin/wpfm-settings.php:214
+#, fuzzy
+msgid ""
+"If enabled, the Food Menu select box will default to a multi select on the "
+"food listing page in filter section."
+msgstr ""
+"As dit geaktiveer is, sal die kosmenu-kieskassie standaard 'n meervoudige "
+"keuse hê op die voedsellysbladsy in die filterafdeling."
+
+#: admin/wpfm-settings.php:221 includes/wpfm-custom-post-types.php:99
+#, fuzzy
+msgid "Food Thumbnail"
+msgstr "Kos kleinkiekie"
+
+#: admin/wpfm-settings.php:222
+#, fuzzy
+msgid ""
+"Based on any option selection, it will reflect the thumbnail placement on "
+"food menu page."
+msgstr ""
+"Op grond van enige opsiekeuse, sal dit die miniatuurplasing op die "
+"kosspyskaartbladsy weerspieël."
+
+#: admin/wpfm-settings.php:225
+#, fuzzy
+msgid "Left Side."
+msgstr "Linkerkant."
+
+#: admin/wpfm-settings.php:226
+#, fuzzy
+msgid "Right Side."
+msgstr "Regterkant."
+
+#: admin/wpfm-settings.php:227
+#, fuzzy
+msgid "Disable."
+msgstr "Deaktiveer."
+
+#: admin/wpfm-settings.php:233
+#, fuzzy
+msgid "Food Submission"
+msgstr "Kos voorlegging"
+
+#: admin/wpfm-settings.php:238
+msgid "Account Required"
+msgstr "Rekening versoek"
+
+#: admin/wpfm-settings.php:239
+#, fuzzy
+msgid "Submitting listings requires an account."
+msgstr "Die indiening van lyste vereis 'n rekening."
+
+#: admin/wpfm-settings.php:240
+#, fuzzy
+msgid ""
+"If disabled, non-logged in users will be able to submit listings without "
+"creating an account."
+msgstr ""
+"As dit gedeaktiveer is, sal nie-aangemelde gebruikers lyste kan indien "
+"sonder om 'n rekening te skep."
+
+#: admin/wpfm-settings.php:247
+msgid "Account Creation"
+msgstr "Skep van profiel"
+
+#: admin/wpfm-settings.php:248
+#, fuzzy
+msgid "Allow account creation."
+msgstr "Laat rekeningskepping toe."
+
+#: admin/wpfm-settings.php:249
+#, fuzzy
+msgid ""
+"If enabled, non-logged in users will be able to create an account by "
+"entering their email address on the submission form."
+msgstr ""
+"Indien geaktiveer, sal nie-aangemelde gebruikers 'n rekening kan skep deur "
+"hul e-posadres op die indieningsvorm in te voer."
+
+#: admin/wpfm-settings.php:256
+#, fuzzy
+msgid "Account Username"
+msgstr "Rekening Gebruikersnaam"
+
+#: admin/wpfm-settings.php:257
+#, fuzzy
+msgid "Automatically Generate Username from Email Address."
+msgstr "Genereer outomaties gebruikersnaam vanaf e-posadres."
+
+#: admin/wpfm-settings.php:258
+#, fuzzy
+msgid ""
+"If enabled, a username will be generated from the first part of the user "
+"email address. Otherwise, a username field will be shown."
+msgstr ""
+"Indien geaktiveer, sal 'n gebruikersnaam gegenereer word vanaf die eerste "
+"deel van die gebruiker se e-posadres. Andersins sal 'n gebruikersnaamveld "
+"vertoon word."
+
+#: admin/wpfm-settings.php:265
+msgid "Account Password"
+msgstr "Profiel wagwoord"
+
+#: admin/wpfm-settings.php:266
+#, fuzzy
+msgid ""
+"Use WordPress' default behavior and email new users link to set a password."
+msgstr ""
+"Gebruik WordPress se verstekgedrag en e-pos nuwe gebruikers skakel om 'n "
+"wagwoord in te stel."
+
+#: admin/wpfm-settings.php:267
+#, fuzzy
+msgid ""
+"If enabled, an email will be sent to the user with their username and a link "
+"to set their password. Otherwise, a password field will be shown and their "
+"email address won't be verified."
+msgstr ""
+"Indien geaktiveer, sal 'n e-pos aan die gebruiker gestuur word met hul "
+"gebruikersnaam en 'n skakel om hul wagwoord in te stel. Andersins sal 'n "
+"wagwoordveld gewys word en hul e-posadres sal nie geverifieer word nie."
+
+#: admin/wpfm-settings.php:274
+#, fuzzy
+msgid "Account Role"
+msgstr "Rekening rol"
+
+#: admin/wpfm-settings.php:275
+#, fuzzy
+msgid ""
+"If you enable user registration on your submission form, choose a role for "
+"the new user."
+msgstr ""
+"As jy gebruikerregistrasie op jou indieningsvorm aktiveer, kies 'n rol vir "
+"die nuwe gebruiker."
+
+#: admin/wpfm-settings.php:282
+#, fuzzy
+msgid "Moderate New Listings"
+msgstr "Matig nuwe lyste"
+
+#: admin/wpfm-settings.php:283
+#, fuzzy
+msgid "New listing submissions require admin approval."
+msgstr "Nuwe lysvoorleggings vereis admin-goedkeuring."
+
+#: admin/wpfm-settings.php:284
+#, fuzzy
+msgid "If enabled, new submissions will be inactive, pending admin approval."
+msgstr ""
+"Indien geaktiveer, sal nuwe voorleggings onaktief wees, hangende "
+"administrateurgoedkeuring."
+
+#: admin/wpfm-settings.php:291
+msgid "Pages"
+msgstr "Bladsye"
+
+#: admin/wpfm-settings.php:296
+#, fuzzy
+msgid "Submit a Food"
+msgstr "Dien 'n kos in"
+
+#: admin/wpfm-settings.php:297
+#, fuzzy
+msgid ""
+"Select the page where you have placed the [add_food] shortcode. This lets "
+"the plugin know where the form is located."
+msgstr ""
+"Kies die bladsy waar jy die [add_food] kortkode geplaas het. Dit laat die "
+"inprop weet waar die vorm geleë is."
+
+#: admin/wpfm-settings.php:303 templates/food-dashboard.php:87
+#, fuzzy
+msgid "Food Dashboard"
+msgstr "Kos Dashboard"
+
+#: admin/wpfm-settings.php:304
+#, fuzzy
+msgid ""
+"Select the page where you have placed the [food_dashboard] shortcode. This "
+"lets the plugin know where the dashboard is located."
+msgstr ""
+"Kies die bladsy waar jy die [food_dashboard] kortkode geplaas het. Dit laat "
+"die inprop weet waar die dashboard geleë is."
+
+#: admin/wpfm-settings.php:310 includes/wpfm-custom-post-types.php:59
+#: shortcodes/wpfm-shortcodes.php:264 templates/food-dashboard.php:14
+#, fuzzy
+msgid "Foods"
+msgstr "Voedsel"
+
+#: admin/wpfm-settings.php:311
+#, fuzzy
+msgid ""
+"Select the page where you have placed the [foods] shortcode. This lets the "
+"plugin know where the food listings page is located."
+msgstr ""
+"Kies die bladsy waar jy die [voedsel]-kortkode geplaas het. Dit laat die "
+"inprop weet waar die koslysbladsy geleë is."
+
+#: admin/wpfm-settings.php:317 includes/wpfm-custom-post-types.php:130
+#, fuzzy
+msgid "Menu"
+msgstr "Kieslys"
+
+#: admin/wpfm-settings.php:318
+#, fuzzy
+msgid ""
+"Select the page where you have placed the [wpfm_food_menu] shortcode. This "
+"lets the plugin know where the food menu listings page is located."
+msgstr ""
+"Kies die bladsy waar jy die [wpfm_food_menu] kortkode geplaas het. Dit laat "
+"die inprop weet waar die kosspyskaartlysbladsy geleë is."
+
+#: admin/wpfm-settings.php:324 admin/wpfm-settings.php:327
+msgid "Currency"
+msgstr "Geldeenheid"
+
+#: admin/wpfm-settings.php:328
+msgid ""
+"This controls what currency prices are listed at in the catalog and which "
+"currency gateways will take payments in."
+msgstr ""
+"Hiermee word gekontroleer watter geldeenheidspryse in die katalogus gelys "
+"word en watter geldeenheidspoorte betalings sal neem."
+
+#: admin/wpfm-settings.php:336
+msgid "Currency Position"
+msgstr "Geldeenheid posisie"
+
+#: admin/wpfm-settings.php:337
+msgid "This controls the position of the currency symbol."
+msgstr "Dit beheer die posisie van die geldeenheid simbool."
+
+#: admin/wpfm-settings.php:343
+msgid "Left"
+msgstr "Links"
+
+#: admin/wpfm-settings.php:344
+msgid "Right"
+msgstr "Regs"
+
+#: admin/wpfm-settings.php:345
+#, fuzzy
+msgid "Left with space"
+msgstr "Met spasie gelaat"
+
+#: admin/wpfm-settings.php:346
+#, fuzzy
+msgid "Right with space"
+msgstr "Reg met spasie"
+
+#: admin/wpfm-settings.php:350
+msgid "Thousand Separator"
+msgstr "Duisend verdeler"
+
+#: admin/wpfm-settings.php:351
+msgid "This sets the thousand separator of displayed prices."
+msgstr "Dit stel die duisend skeiding van die vertoonde pryse in."
+
+#: admin/wpfm-settings.php:358
+msgid "Decimal Separator"
+msgstr "Desimaal verdeler"
+
+#: admin/wpfm-settings.php:359
+msgid "This sets the decimal separator of displayed prices."
+msgstr "Dit stel die desimale skeiding van die vertoonde pryse in."
+
+#: admin/wpfm-settings.php:366
+#, fuzzy
+msgid "Number of Decimals"
+msgstr "Aantal desimale"
+
+#: admin/wpfm-settings.php:367
+msgid "This sets the number of decimal points shown in displayed prices."
+msgstr "Dit stel die aantal desimale punte in getoonde pryse in."
+
+#: admin/wpfm-settings.php:380
+#, fuzzy
+msgid "Shortcodes"
+msgstr "Kortkodes"
+
+#: admin/wpfm-settings.php:383
+#, fuzzy
+msgid "Restaurant Menu Title"
+msgstr "Restaurant spyskaart titel"
+
+#: admin/wpfm-settings.php:384
+#, fuzzy
+msgid "Displays the list of restaurant food menu titles using the shortcode."
+msgstr ""
+"Vertoon die lys van restaurantkos-spyskaarttitels met behulp van die "
+"kortkode."
+
+#: admin/wpfm-settings.php:393
+#, fuzzy
+msgid "Restaurant Menu"
+msgstr "Restaurant spyskaart"
+
+#: admin/wpfm-settings.php:394
+#, fuzzy
+msgid "Displays the list of restaurant food menu using the shortcode."
+msgstr ""
+"Vertoon die lys van restaurantkosspyskaarte met behulp van die kortkode."
+
+#: admin/wpfm-settings.php:434
+#, fuzzy
+msgid "Settings successfully saved"
+msgstr "Instellings suksesvol gestoor"
+
+#: admin/wpfm-settings.php:503
+#, fuzzy
+msgid "--no page--"
+msgstr "Posteer per bladsy"
+
+#: admin/wpfm-settings.php:507
+msgid "Select a page&hellip;"
+msgstr "Selekteer 'n bladsy&hellip;"
+
+#: admin/wpfm-settings.php:559 admin/wpfm-setup.php:229
+#, fuzzy
+msgid "Helpful Resources"
+msgstr "Nuttige hulpbronne"
+
+#: admin/wpfm-settings.php:567 admin/wpfm-setup.php:236
+msgid "Knowledge Base"
+msgstr "Kennis basis"
+
+#: admin/wpfm-settings.php:568 admin/wpfm-setup.php:237
+#, fuzzy
+msgid "Solve your queries by browsing our documentation."
+msgstr "Los jou navrae op deur deur ons dokumentasie te blaai."
+
+#: admin/wpfm-settings.php:569 admin/wpfm-setup.php:238
+#, fuzzy
+msgid "Browse More"
+msgstr "Blaai meer"
+
+#: admin/wpfm-settings.php:577 admin/wpfm-setup.php:246
+msgid "FAQs"
+msgstr "V&A"
+
+#: admin/wpfm-settings.php:578 admin/wpfm-setup.php:247
+#, fuzzy
+msgid "Explore through the frequently asked questions."
+msgstr "Verken deur die gereelde vrae."
+
+#: admin/wpfm-settings.php:579 admin/wpfm-setup.php:248
+#, fuzzy
+msgid "Get Answers"
+msgstr "Kry antwoorde"
+
+#: admin/wpfm-settings.php:587 admin/wpfm-setup.php:256
+#, fuzzy
+msgid "Video Tutorials"
+msgstr "Video tutoriale"
+
+#: admin/wpfm-settings.php:588 admin/wpfm-setup.php:257
+#, fuzzy
+msgid "Learn different skills by examining attractive video tutorials."
+msgstr ""
+"Leer verskillende vaardighede deur aantreklike video-tutoriale te ondersoek."
+
+#: admin/wpfm-settings.php:589 admin/wpfm-setup.php:258
+#, fuzzy
+msgid "Watch all"
+msgstr "Kyk alles"
+
+#: admin/wpfm-settings.php:593
+#, fuzzy
+msgid "Powered By"
+msgstr "Aangevuur deur"
+
+#: admin/wpfm-setup.php:94
+#, fuzzy
+msgid "Error in nonce. Try again."
+msgstr "Fout in nonce. Probeer weer."
+
+#: admin/wpfm-setup.php:118
+#, fuzzy
+msgid "WP Food Manager Setup"
+msgstr "WP Voedselbestuurder-opstelling"
+
+#: admin/wpfm-setup.php:123 admin/wpfm-setup.php:128 admin/wpfm-setup.php:133
+#, fuzzy
+msgid "1. Introduction"
+msgstr "1. Inleiding"
+
+#: admin/wpfm-setup.php:124 admin/wpfm-setup.php:129 admin/wpfm-setup.php:134
+#, fuzzy
+msgid "2. Page Setup"
+msgstr "2. Bladsy opstelling"
+
+#: admin/wpfm-setup.php:125 admin/wpfm-setup.php:130 admin/wpfm-setup.php:135
+msgid "3. Done"
+msgstr "3. Afgehandel"
+
+#: admin/wpfm-setup.php:142
+#, fuzzy
+msgid "Setup Wizard Introduction"
+msgstr "Inleiding tot die opstel van die towenaar"
+
+#: admin/wpfm-setup.php:143
+#, fuzzy
+msgid "Thanks for installing WP Food Manager!"
+msgstr "Dankie vir die installering van WP Food Manager!"
+
+#: admin/wpfm-setup.php:144
+#, fuzzy
+msgid ""
+"This setup wizard will help you get started by creating various pages for "
+"listing your foods, food dashboard and add food along with setting up "
+"Ingredients and Nutritions."
+msgstr ""
+"Hierdie opstelassistent sal jou help om aan die gang te kom deur verskeie "
+"bladsye te skep vir die lys van jou kosse, koskontroleskerm en kos by te "
+"voeg saam met die opstel van bestanddele en voedingstowwe."
+
+#: admin/wpfm-setup.php:145
+#, fuzzy, php-format
+msgid ""
+"The process is still relatively simple if you want to skip the wizard and "
+"manually set up the pages and shortcodes yourself. Please refer to the "
+"%1$sdocumentation%2$s for support."
+msgstr ""
+"Die proses is steeds relatief eenvoudig as jy die towenaar wil oorslaan en "
+"self die bladsye en kortkodes handmatig wil opstel. Verwys asseblief na die "
+"%1$sdokumentasie%2$s vir ondersteuning."
+
+#: admin/wpfm-setup.php:148
+#, fuzzy
+msgid "Continue to page setup"
+msgstr "Gaan voort na bladsyopstelling"
+
+#: admin/wpfm-setup.php:149
+#, fuzzy
+msgid "Skip for now"
+msgstr "Slaan vir eers oor"
+
+#: admin/wpfm-setup.php:154
+msgid "Page Setup"
+msgstr "Bladsy opstelling"
+
+#: admin/wpfm-setup.php:155
+#, fuzzy, php-format
+msgid ""
+"The <em>WP Food Manager</em> includes %1$sshortcodes%2$s which can be used "
+"to output content within your %3$spages%2$s. These can be generated directly "
+"as mentioned below. Check the shortcode documentation for more information "
+"on food %4$sshortcodes%2$s."
+msgstr ""
+"Die <em>WP Food Manager</em> bevat %1$skortkodes%2$s wat gebruik kan word om "
+"inhoud op jou %3$sbladsye%2$s uit te voer. Dit kan direk gegenereer word "
+"soos hieronder genoem. Gaan die kortkode-dokumentasie na vir meer inligting "
+"oor voedselkortkodes%4$s%2$s."
+
+#: admin/wpfm-setup.php:162
+msgid "Page Title"
+msgstr "Bladsy Titel"
+
+#: admin/wpfm-setup.php:163
+msgid "Page Description"
+msgstr "Bladsy Beskrywing"
+
+#: admin/wpfm-setup.php:164
+#, fuzzy
+msgid "Content Shortcode"
+msgstr "Inhoud kortkode"
+
+#: admin/wpfm-setup.php:170
+#, fuzzy
+msgctxt "Default page title (wizard)"
+msgid "Foods"
+msgstr "Voedsel"
+
+#: admin/wpfm-setup.php:171
+#, fuzzy
+msgid ""
+"This page allows users to browse, search, and filter food listings on the "
+"front-end of your site."
+msgstr ""
+"Hierdie bladsy stel gebruikers in staat om koslyste aan die voorkant van u "
+"webwerf te blaai, te soek en te filter."
+
+#: admin/wpfm-setup.php:176
+#, fuzzy
+msgctxt "Default page title (wizard)"
+msgid "Add Food"
+msgstr "Voeg kos by"
+
+#: admin/wpfm-setup.php:178
+#, fuzzy
+msgid ""
+"This page allows peoples to add food to your website from the front-end."
+msgstr ""
+"Hierdie bladsy stel mense in staat om kos vanaf die voorkant by jou webwerf "
+"te voeg."
+
+#: admin/wpfm-setup.php:179
+#, fuzzy
+msgid ""
+"If you do not wish to accept submissions from users in this way (for example "
+"you just want to post foods from the admin dashboard) you can skip creating "
+"this page."
+msgstr ""
+"As jy nie voorleggings van gebruikers op hierdie manier wil aanvaar nie "
+"(byvoorbeeld, jy wil net kos vanaf die admin-dashboard plaas), kan jy "
+"oorslaan om hierdie bladsy te skep."
+
+#: admin/wpfm-setup.php:185
+#, fuzzy
+msgctxt "Default page title (wizard)"
+msgid "Food Dashboard"
+msgstr "Kos Dashboard"
+
+#: admin/wpfm-setup.php:187
+#, fuzzy
+msgid ""
+"This page allows peoples to manage and edit their own foods from the front-"
+"end."
+msgstr ""
+"Hierdie bladsy stel mense in staat om hul eie kos vanaf die voorkant te "
+"bestuur en te redigeer."
+
+#: admin/wpfm-setup.php:188 admin/wpfm-setup.php:197
+#, fuzzy
+msgid ""
+"If you plan on managing all listings from the admin dashboard you can skip "
+"creating this page."
+msgstr ""
+"As jy van plan is om alle lyste vanaf die administrasiekontroleskerm te "
+"bestuur, kan jy oorslaan om hierdie bladsy te skep."
+
+#: admin/wpfm-setup.php:194
+#, fuzzy
+msgctxt "Default page title (wizard)"
+msgid "Menu"
+msgstr "Kieslys"
+
+#: admin/wpfm-setup.php:196
+#, fuzzy
+msgid ""
+"This page allows peoples to manage and edit their own food menu from the "
+"front-end."
+msgstr ""
+"Hierdie bladsy stel mense in staat om hul eie kosspyskaart vanaf die "
+"voorkant te bestuur en te wysig."
+
+#: admin/wpfm-setup.php:206
+#, fuzzy
+msgid "Skip this step"
+msgstr "Slaan hierdie stap oor"
+
+#: admin/wpfm-setup.php:218
+msgid "All Done!"
+msgstr "Alles gedoen!"
+
+#: admin/wpfm-setup.php:222
+#, fuzzy
+msgid ""
+"Thanks for installing WP Food Manager! Here are some valuable resources that "
+"will assist you in getting started with our plugins."
+msgstr ""
+"Dankie vir die installering van WP Food Manager! Hier is 'n paar waardevolle "
+"hulpbronne wat jou sal help om met ons plugins te begin."
+
+#: admin/wpfm-setup.php:224
+#, fuzzy
+msgid "Create Your First Food"
+msgstr "Skep jou eerste kos"
+
+#: admin/wpfm-setup.php:268
+#, fuzzy
+msgid "Add ons Support"
+msgstr "Byvoegings Ondersteuning"
+
+#: admin/wpfm-setup.php:269
+#, fuzzy
+msgid ""
+"Get support for all the Add ons related queries with our experienced/ "
+"talented support team."
+msgstr ""
+"Kry ondersteuning vir al die byvoegingsverwante navrae met ons ervare / "
+"talentvolle ondersteuningspan."
+
+#: admin/wpfm-setup.php:270
+#, fuzzy
+msgid "Get Add ons Support"
+msgstr "Kry byvoegingsondersteuning"
+
+#: admin/wpfm-writepanels.php:65
+#, fuzzy
+msgid "Enter Your Food Name"
+msgstr "Voer jou kosnaam in"
+
+#: admin/wpfm-writepanels.php:112
+#, fuzzy
+msgid "Select food category"
+msgstr "Kies voedselkategorie"
+
+#: admin/wpfm-writepanels.php:131
+#, fuzzy
+msgid "Select food types"
+msgstr "Kies voedseltipes"
+
+#: admin/wpfm-writepanels.php:242 includes/wpfm-custom-taxonomies.php:232
+#, fuzzy
+msgid "Toppings"
+msgstr "Bolaag"
+
+#: admin/wpfm-writepanels.php:248 includes/wpfm-custom-taxonomies.php:181
+#, fuzzy
+msgid "Ingredients"
+msgstr "Bestanddele"
+
+#: admin/wpfm-writepanels.php:254 includes/wpfm-custom-taxonomies.php:283
+#, fuzzy
+msgid "Nutritions"
+msgstr "Voeding"
+
+#: admin/wpfm-writepanels.php:260
+msgid "Advanced"
+msgstr "Gevorderd"
+
+#: admin/wpfm-writepanels.php:372
+#, fuzzy, php-format
+msgid "%s Data"
+msgstr "%s data"
+
+#: admin/wpfm-writepanels.php:373
+msgid "Menu Icon"
+msgstr "Kieslys-ikoon"
+
+#: admin/wpfm-writepanels.php:374
+#, fuzzy
+msgid "Select Food "
+msgstr "Kies kos "
+
+#: admin/wpfm-writepanels.php:416
+#, fuzzy
+msgid "Food Redirection Enable/Disable"
+msgstr "Voedselherleiding aktiveer / deaktiveer"
+
+#: admin/wpfm-writepanels.php:443
+#, fuzzy
+msgid "Food Image Enable/Disable"
+msgstr "Voedselbeeld aktiveer/deaktiveer"
+
+#: autoupdater/templates/activated-key.php:2
+#, fuzzy, php-format
+msgid "Your licence for <strong>%s</strong> has been activated. Thanks!"
+msgstr "Jou lisensie vir <strong>%s</strong> is geaktiveer. Dankie!"
+
+#: autoupdater/templates/addon-licence.php:10
+#: autoupdater/wpfm-updater-license.php:36
+#: autoupdater/wpfm-updater-license.php:37
+#: autoupdater/wpfm-updater-license.php:64
+msgid "License"
+msgstr "Lisensie"
+
+#: autoupdater/templates/addon-licence.php:14
+msgid "Email"
+msgstr "E-posadres"
+
+#: autoupdater/templates/addon-licence.php:15
+msgid "Email address"
+msgstr "Eposadres"
+
+#: autoupdater/templates/addon-licence.php:19
+#, fuzzy
+msgid "Deactivate License"
+msgstr "Deaktiveer lisensie"
+
+#: autoupdater/templates/addon-licence.php:21
+msgid "Activate License"
+msgstr "Aktiveer Lisensie"
+
+#: autoupdater/templates/deactivated-key.php:2
+#, fuzzy, php-format
+msgid "Your licence for <strong>%s</strong> has been deactivated."
+msgstr "Jou lisensie vir <strong>%s</strong> is gedeaktiveer."
+
+#: autoupdater/templates/key-expire-notice.php:6
+#: autoupdater/templates/key-expire-notice.php:12
+#: autoupdater/templates/key-notice.php:3
+#, fuzzy
+msgid "Hide notice"
+msgstr "Versteek kennisgewing"
+
+#: autoupdater/templates/key-expire-notice.php:7
+#, fuzzy, php-format
+msgid ""
+"A licence key for <strong>\"%1$s\"</strong> will expired on<strong> %2$s</"
+"strong>. Please renew your subscription to continue the plugin work."
+msgstr ""
+"'n Lisensie sleutel vir <strong>\"%1$s\"</strong> sal verval op<strong> "
+"%2$s</strong>. Hernu asseblief jou intekening om voort te gaan met die "
+"inpropwerk."
+
+#: autoupdater/templates/key-expire-notice.php:13
+#, fuzzy, php-format
+msgid ""
+"A licence key for <strong>\"%1$s\"</strong> is expired. Please renew your "
+"subscription to continue the plugin work."
+msgstr ""
+"'n Lisensiesleutel vir <strong>\"%1$s\"</strong> het verval. Hernu asseblief "
+"jou intekening om voort te gaan met die inpropwerk."
+
+#: autoupdater/templates/key-notice.php:4
+#, fuzzy, php-format
+msgid ""
+"Please enter your licence key in <a href=\"%1$s\">the plugin list</a> below "
+"to get activate all features of \"%2$s\"."
+msgstr ""
+"Voer asseblief jou lisensiesleutel in <a href=\"%1$s\">die inproplys</a> "
+"hieronder in om te aktiveer alle kenmerke van \"%2$s\"."
+
+#: autoupdater/templates/key-notice.php:5
+#, fuzzy, php-format
+msgid "Lost your key? <a href=\"%s\">Retrieve it here</a>."
+msgstr "Het jy jou sleutel verloor? <a href=\"%s\">Haal dit hier af</a>."
+
+#: autoupdater/templates/ms-update.php:6
+#, fuzzy, php-format
+msgid ""
+"There is a new version of %1$s available. <a target=\"_blank\" class="
+"\"thickbox\" href=\"%2$s\">View version %3$s details</a> or <a href=\"%4$s"
+"\">update now</a>."
+msgstr ""
+"Daar is 'n nuwe weergawe van %1$s beskikbaar. <a target=\"_blank\" class="
+"\"thickbox\" href=\"%2$s\">Bekyk weergawebesonderhede %3$s</a> of <a href="
+"\"%4$s\">dateer nou op</a>."
+
+#: autoupdater/wpfm-updater-license.php:83
+#, fuzzy
+msgid "Lost your license key?"
+msgstr "Het jy jou lisensiesleutel verloor?"
+
+#: autoupdater/wpfm-updater-license.php:83
+#, fuzzy
+msgid "Retrieve it here"
+msgstr "Haal dit hier op"
+
+#: autoupdater/wpfm-updater.php:262
+#, fuzzy
+msgid "Activate licence"
+msgstr "Aktiveer lisensie"
+
+#: autoupdater/wpfm-updater.php:449
+#, fuzzy, php-format
+msgid ""
+"A licence key for %1$s could not be found. Maybe you forgot to enter a "
+"licence key when setting up %2$s."
+msgstr ""
+"'n Lisensiesleutel vir %1$s kon nie gevind word nie. Miskien het jy vergeet "
+"om 'n lisensiesleutel in te voer toe jy %2$s opgestel het."
+
+#: forms/wpfm-add-food-form.php:35
+#, fuzzy
+msgid "Submit Details"
+msgstr "Dien besonderhede in"
+
+#: forms/wpfm-add-food-form.php:41 forms/wpfm-add-food-form.php:482
+#: templates/food-preview.php:18
+msgid "Preview"
+msgstr "Voorskou"
+
+#: forms/wpfm-add-food-form.php:47
+msgid "Done"
+msgstr "Gedoen"
+
+#: forms/wpfm-add-food-form.php:124 forms/wpfm-add-food-form.php:197
+#, fuzzy
+msgid "Food Tag"
+msgstr "Kos etiket"
+
+#: forms/wpfm-add-food-form.php:152 forms/wpfm-add-food-form.php:155
+#: wp-food-manager-functions.php:792
+#, fuzzy
+msgid "Food Title"
+msgstr "Kos Titel"
+
+#: forms/wpfm-add-food-form.php:159 includes/wpfm-custom-taxonomies.php:21
+#: templates/content-single-food_manager.php:574
+#, fuzzy
+msgid "Food Category"
+msgstr "Kos kategorie"
+
+#: forms/wpfm-add-food-form.php:168 includes/wpfm-custom-taxonomies.php:74
+#, fuzzy
+msgid "Food Type"
+msgstr "Kos tipe"
+
+#: forms/wpfm-add-food-form.php:177 includes/wpfm-custom-taxonomies.php:180
+#, fuzzy
+msgid "Food Ingredient"
+msgstr "Voedsel bestanddeel"
+
+#: forms/wpfm-add-food-form.php:187
+#, fuzzy
+msgid "Food Nutrition"
+msgstr "Voedsel Voeding"
+
+#: forms/wpfm-add-food-form.php:206
+#, fuzzy
+msgid "Food Banner "
+msgstr "Kos banier "
+
+#: forms/wpfm-add-food-form.php:231
+#, fuzzy
+msgid "Regular Price"
+msgstr "Gewone prys"
+
+#: forms/wpfm-add-food-form.php:239
+msgid "Sale Price"
+msgstr "Verkoopprys"
+
+#: forms/wpfm-add-food-form.php:251
+msgid "In stock"
+msgstr "In voorraad"
+
+#: forms/wpfm-add-food-form.php:252
+#, fuzzy
+msgid "Out of stock"
+msgstr "Uit voorraad"
+
+#: forms/wpfm-add-food-form.php:258
+#, fuzzy
+msgid "Enable Ingredient"
+msgstr "Aktiveer bestanddeel"
+
+#: forms/wpfm-add-food-form.php:267
+#, fuzzy
+msgid "Enable Nutrition"
+msgstr "Aktiveer voeding"
+
+#: forms/wpfm-add-food-form.php:276
+#, fuzzy
+msgid "Food Label"
+msgstr "Voedsel etiket"
+
+#: forms/wpfm-add-food-form.php:286
+#, fuzzy
+msgid "Topping Name"
+msgstr "Bolaag Naam"
+
+#: forms/wpfm-add-food-form.php:289
+#, fuzzy
+msgid "Enter Topping option name"
+msgstr "Voer die naam van die bolaag in"
+
+#: forms/wpfm-add-food-form.php:294
+#, fuzzy
+msgid "Topping Description"
+msgstr "Bolaag beskrywing"
+
+#: forms/wpfm-add-food-form.php:305
+#, fuzzy
+msgid "Enter option name"
+msgstr "Invoer opsie naam"
+
+#: forms/wpfm-add-food-form.php:330 forms/wpfm-add-food-form.php:336
+#, fuzzy, php-format
+msgid "%s is a required field."
+msgstr "%s is 'n vereiste veld."
+
+#: forms/wpfm-add-food-form.php:348
+#, fuzzy, php-format
+msgid "%s is invalid."
+msgstr "%s is ongeldig."
+
+#: forms/wpfm-add-food-form.php:364 wp-food-manager-functions.php:759
+#, fuzzy, php-format
+msgid "\"%s\" (filetype %s) needs to be one of the following file types: %s."
+msgstr "\"%s\" (lêertipe %s) moet een van die volgende lêertipes wees: %s."
+
+#: forms/wpfm-add-food-form.php:520
+msgid "Please enter a username."
+msgstr "Voltooi asseblief jou gebruikersnaam."
+
+#: forms/wpfm-add-food-form.php:524 forms/wpfm-add-food-form.php:528
+msgid "Please enter your email address."
+msgstr "Voltooi asseblief jou e-posadres."
+
+#: forms/wpfm-add-food-form.php:533
+msgid "Passwords must match."
+msgstr "Wagwoord moet ooreenstem."
+
+#: forms/wpfm-add-food-form.php:539
+#, php-format
+msgid "Invalid Password: %s"
+msgstr "Ongeldige Wagwoord: %s"
+
+#: forms/wpfm-add-food-form.php:541
+msgid "Password is not valid."
+msgstr "Wagwoord is ongeldig."
+
+#: forms/wpfm-add-food-form.php:561
+#, fuzzy
+msgid "You must be signed in to post a new listing."
+msgstr "Jy moet aangemeld wees om 'n nuwe lysinskrywing te plaas."
+
+#: forms/wpfm-edit-food-form.php:61
+#, fuzzy
+msgid "Invalid listing"
+msgstr "Ongeldige lys"
+
+#: forms/wpfm-edit-food-form.php:147
+msgid "Save changes"
+msgstr "Stoor veranderinge"
+
+#: forms/wpfm-edit-food-form.php:182 forms/wpfm-edit-food-form.php:185
+msgid "Your changes have been saved."
+msgstr "Jou veranderinge is bygewerk."
+
+#: forms/wpfm-edit-food-form.php:182
+#, fuzzy
+msgid "View &rarr;"
+msgstr "Bekyk →"
+
+#: includes/wpfm-action-hooks.php:168
+#, fuzzy
+msgid "Select Date"
+msgstr "Kies datum"
+
+#: includes/wpfm-action-hooks.php:169
+#, fuzzy
+msgid "Today"
+msgstr "Vandag"
+
+#: includes/wpfm-action-hooks.php:170
+msgid "Tomorrow"
+msgstr "Môre"
+
+#: includes/wpfm-action-hooks.php:171
+#, fuzzy
+msgid "This Week"
+msgstr "Volgende Week"
+
+#: includes/wpfm-action-hooks.php:172
+msgid "Next Week"
+msgstr "Volgende Week"
+
+#: includes/wpfm-action-hooks.php:173
+#, fuzzy
+msgid "This Month"
+msgstr "Hierdie maand"
+
+#: includes/wpfm-action-hooks.php:174 includes/wpfm-action-hooks.php:176
+#, fuzzy
+msgid "Next Month"
+msgstr "Volgende maand"
+
+#: includes/wpfm-action-hooks.php:175
+#, fuzzy
+msgid "This Year"
+msgstr "Hierdie jaar"
+
+#: includes/wpfm-action-hooks.php:191
+msgid "Cancel"
+msgstr "Kanselleer"
+
+#: includes/wpfm-action-hooks.php:192
+#, fuzzy
+msgid "Are you sure you want to delete this food?"
+msgstr "Wil u definitief hierdie kos uitvee?"
+
+#: includes/wpfm-ajax.php:215
+#, fuzzy
+msgid "There is no food item listed in your food manager."
+msgstr "Daar is geen voedselitem in jou voedselbestuurder gelys nie."
+
+#: includes/wpfm-ajax.php:283
+#, fuzzy, php-format
+msgid "Search completed. Found %d matching record."
+msgid_plural "Search completed. Found %d matching records."
+msgstr[0] "Soektog voltooi. Het %d ooreenstemmende rekord gevind."
+msgstr[1] "Soektog voltooi. Gevind %d ooreenstemmende rekords."
+
+#: includes/wpfm-ajax.php:358
+msgid "You must be logged in to upload files using this method."
+msgstr "Jy moet ingeteken wees om lêers met hierdie metode op te laai ."
+
+#: includes/wpfm-custom-post-types.php:58
+#, fuzzy
+msgid "Food"
+msgstr "Kos"
+
+#: includes/wpfm-custom-post-types.php:68
+#, fuzzy
+msgctxt "Post type archive slug - resave permalinks after changing this"
+msgid "foods"
+msgstr "Voedsel"
+
+#: includes/wpfm-custom-post-types.php:88 templates/food-dashboard.php:97
+#, fuzzy
+msgid "Add Food"
+msgstr "Voeg kos by"
+
+#: includes/wpfm-custom-post-types.php:100
+#, fuzzy
+msgid "Set food thumbnail"
+msgstr "Stel kos kleinkiekie"
+
+#: includes/wpfm-custom-post-types.php:101
+#, fuzzy
+msgid "Remove food thumbnail"
+msgstr "Verwyder koskleinkiekie"
+
+#: includes/wpfm-custom-post-types.php:102
+#: includes/wpfm-custom-post-types.php:162
+#, fuzzy
+msgid "Use as food thumbnail"
+msgstr "Gebruik as koskleinkiekie"
+
+#: includes/wpfm-custom-post-types.php:131
+msgid "Menus"
+msgstr "Kieslyste"
+
+#: includes/wpfm-custom-post-types.php:146 templates/food-filters.php:28
+#, fuzzy
+msgid "Food Menu"
+msgstr "Kos spyskaart"
+
+#: includes/wpfm-custom-post-types.php:148
+msgid "Add New"
+msgstr "Skep Nuwe"
+
+#: includes/wpfm-custom-post-types.php:149
+#, fuzzy, php-format
+msgid "Add %s"
+msgstr "Voeg %s by"
+
+#: includes/wpfm-custom-post-types.php:151
+#: includes/wpfm-custom-taxonomies.php:51
+#: includes/wpfm-custom-taxonomies.php:104
+#: includes/wpfm-custom-taxonomies.php:157
+#: includes/wpfm-custom-taxonomies.php:209
+#: includes/wpfm-custom-taxonomies.php:260
+#: includes/wpfm-custom-taxonomies.php:311
+#: includes/wpfm-custom-taxonomies.php:362
+#, php-format
+msgid "Edit %s"
+msgstr "Wysig %s"
+
+#: includes/wpfm-custom-post-types.php:152
+#, fuzzy, php-format
+msgid "New %s"
+msgstr "Nuwe %s"
+
+#: includes/wpfm-custom-post-types.php:153
+#: includes/wpfm-custom-post-types.php:154
+#: includes/wpfm-custom-post-types.php:163
+#: includes/wpfm-custom-taxonomies.php:105
+#, fuzzy, php-format
+msgid "View %s"
+msgstr "Bekyk %s"
+
+#: includes/wpfm-custom-post-types.php:155
+#: includes/wpfm-custom-taxonomies.php:47
+#: includes/wpfm-custom-taxonomies.php:99
+#: includes/wpfm-custom-taxonomies.php:153
+#: includes/wpfm-custom-taxonomies.php:205
+#: includes/wpfm-custom-taxonomies.php:256
+#: includes/wpfm-custom-taxonomies.php:307
+#: includes/wpfm-custom-taxonomies.php:358
+#, fuzzy, php-format
+msgid "Search %s"
+msgstr "Soek %s"
+
+#: includes/wpfm-custom-post-types.php:156
+#: includes/wpfm-custom-taxonomies.php:103
+#, fuzzy, php-format
+msgid "No %s found"
+msgstr "Geen %s gevind nie"
+
+#: includes/wpfm-custom-post-types.php:157
+#, fuzzy, php-format
+msgid "No %s found in trash"
+msgstr "Geen %s in asblik gevind nie"
+
+#: includes/wpfm-custom-post-types.php:158
+#: includes/wpfm-custom-taxonomies.php:49
+#: includes/wpfm-custom-taxonomies.php:101
+#: includes/wpfm-custom-taxonomies.php:155
+#: includes/wpfm-custom-taxonomies.php:207
+#: includes/wpfm-custom-taxonomies.php:258
+#: includes/wpfm-custom-taxonomies.php:309
+#: includes/wpfm-custom-taxonomies.php:360
+#, fuzzy, php-format
+msgid "Parent %s"
+msgstr "Ouer %s"
+
+#: includes/wpfm-custom-post-types.php:159
+#, fuzzy
+msgid "Food Menu Image"
+msgstr "Kos spyskaart beeld"
+
+#: includes/wpfm-custom-post-types.php:165
+#, fuzzy, php-format
+msgid "This is where you can create and manage %s."
+msgstr "Dit is waar jy %s kan skep en bestuur."
+
+#: includes/wpfm-custom-post-types.php:189
+#, fuzzy, php-format
+msgid "Preview <span class=\"count\">(%s)</span>"
+msgid_plural "Preview <span class=\"count\">(%s)</span>"
+msgstr[0] "In voorskou <span class=\"count\">(%s)</span>"
+msgstr[1] "In voorskou <span class=\"count\">(%s)</span>"
+
+#: includes/wpfm-custom-post-types.php:497
+#, fuzzy
+msgctxt "Food permalink - resave permalinks after changing this"
+msgid "food"
+msgstr "Kos"
+
+#: includes/wpfm-custom-post-types.php:498
+#, fuzzy
+msgctxt "Food category slug - resave permalinks after changing this"
+msgid "food-category"
+msgstr "voedsel-kategorie"
+
+#: includes/wpfm-custom-post-types.php:499
+#, fuzzy
+msgctxt "Food type slug - resave permalinks after changing this"
+msgid "food-type"
+msgstr "voedsel-tipe"
+
+#: includes/wpfm-custom-post-types.php:500
+#, fuzzy
+msgctxt "Food topping slug - resave permalinks after changing this"
+msgid "food-topping"
+msgstr "kos bolaag"
+
+#. translators: %s: product count
+#: includes/wpfm-custom-post-types.php:522
+#, fuzzy, php-format
+msgid "%s food updated."
+msgid_plural "%s foods updated."
+msgstr[0] "%s kos opgedateer."
+msgstr[1] "%s kosse opgedateer."
+
+#. translators: %s: product count
+#: includes/wpfm-custom-post-types.php:524
+#, fuzzy, php-format
+msgid "%s food not updated, somebody is editing it."
+msgid_plural "%s foods not updated, somebody is editing them."
+msgstr[0] "%s kos nie opgedateer word nie, redigeer iemand dit."
+msgstr[1] "%s voedsel nie opgedateer word nie, redigeer iemand dit."
+
+#. translators: %s: product count
+#: includes/wpfm-custom-post-types.php:526
+#, fuzzy, php-format
+msgid "%s food permanently deleted."
+msgid_plural "%s foods permanently deleted."
+msgstr[0] "%s kos permanent uitgevee."
+msgstr[1] "%s kosse permanent uitgevee."
+
+#. translators: %s: product count
+#: includes/wpfm-custom-post-types.php:528
+#, fuzzy, php-format
+msgid "%s food moved to the Trash."
+msgid_plural "%s foods moved to the Trash."
+msgstr[0] "%s kos het na die asblik verskuif."
+msgstr[1] "%s kosse het na die asblik geskuif."
+
+#. translators: %s: product count
+#: includes/wpfm-custom-post-types.php:530
+#, fuzzy, php-format
+msgid "%s food restored from the Trash."
+msgid_plural "%s foods restored from the Trash."
+msgstr[0] "%s kos uit die asblik herstel."
+msgstr[1] "%s kosse uit die asblik herstel."
+
+#: includes/wpfm-custom-taxonomies.php:48
+#: includes/wpfm-custom-taxonomies.php:100
+#: includes/wpfm-custom-taxonomies.php:154
+#: includes/wpfm-custom-taxonomies.php:206
+#: includes/wpfm-custom-taxonomies.php:257
+#: includes/wpfm-custom-taxonomies.php:308
+#: includes/wpfm-custom-taxonomies.php:359
+#, fuzzy, php-format
+msgid "All %s"
+msgstr "Al %s"
+
+#: includes/wpfm-custom-taxonomies.php:50
+#: includes/wpfm-custom-taxonomies.php:102
+#: includes/wpfm-custom-taxonomies.php:156
+#: includes/wpfm-custom-taxonomies.php:208
+#: includes/wpfm-custom-taxonomies.php:259
+#: includes/wpfm-custom-taxonomies.php:310
+#: includes/wpfm-custom-taxonomies.php:361
+#, fuzzy, php-format
+msgid "Parent %s:"
+msgstr "Ouer %s:"
+
+#: includes/wpfm-custom-taxonomies.php:52
+#: includes/wpfm-custom-taxonomies.php:106
+#: includes/wpfm-custom-taxonomies.php:158
+#: includes/wpfm-custom-taxonomies.php:210
+#: includes/wpfm-custom-taxonomies.php:261
+#: includes/wpfm-custom-taxonomies.php:312
+#: includes/wpfm-custom-taxonomies.php:363
+#, php-format
+msgid "Update %s"
+msgstr "Dateer %s op"
+
+#: includes/wpfm-custom-taxonomies.php:53
+#: includes/wpfm-custom-taxonomies.php:107
+#: includes/wpfm-custom-taxonomies.php:159
+#: includes/wpfm-custom-taxonomies.php:211
+#: includes/wpfm-custom-taxonomies.php:262
+#: includes/wpfm-custom-taxonomies.php:313
+#: includes/wpfm-custom-taxonomies.php:364
+#, php-format
+msgid "Add New %s"
+msgstr "Voeg nuwe %s by"
+
+#: includes/wpfm-custom-taxonomies.php:54
+#: includes/wpfm-custom-taxonomies.php:108
+#: includes/wpfm-custom-taxonomies.php:160
+#: includes/wpfm-custom-taxonomies.php:212
+#: includes/wpfm-custom-taxonomies.php:263
+#: includes/wpfm-custom-taxonomies.php:314
+#: includes/wpfm-custom-taxonomies.php:365
+#, fuzzy, php-format
+msgid "New %s Name"
+msgstr "Nuwe %s naam"
+
+#: includes/wpfm-custom-taxonomies.php:55
+#: includes/wpfm-custom-taxonomies.php:109
+#: includes/wpfm-custom-taxonomies.php:161
+#, fuzzy, php-format
+msgid "No Food %s Found."
+msgstr "Geen kos %s gevind nie."
+
+#: includes/wpfm-custom-taxonomies.php:56
+#: includes/wpfm-custom-taxonomies.php:110
+#: includes/wpfm-custom-taxonomies.php:162
+#: includes/wpfm-custom-taxonomies.php:367
+#, fuzzy, php-format
+msgid "← Go to Food %s"
+msgstr "← Gaan na Kos %s"
+
+#: includes/wpfm-custom-taxonomies.php:75
+#, fuzzy
+msgid "Types"
+msgstr "Tipes"
+
+#: includes/wpfm-custom-taxonomies.php:129
+msgid "Tags"
+msgstr "Etikette"
+
+#: includes/wpfm-custom-taxonomies.php:213
+#: includes/wpfm-custom-taxonomies.php:264
+#: includes/wpfm-custom-taxonomies.php:315
+#: includes/wpfm-custom-taxonomies.php:366
+#, fuzzy, php-format
+msgid "No %s Found."
+msgstr "Geen %s gevind nie."
+
+#: includes/wpfm-custom-taxonomies.php:214
+#: includes/wpfm-custom-taxonomies.php:265
+#: includes/wpfm-custom-taxonomies.php:316
+#, fuzzy, php-format
+msgid "← Go to %s"
+msgstr "← Gaan na %s"
+
+#: includes/wpfm-custom-taxonomies.php:231
+#, fuzzy
+msgid "Food Topping"
+msgstr "Kos bolaag"
+
+#: includes/wpfm-custom-taxonomies.php:282
+#: templates/content-single-food_manager.php:97
+#, fuzzy
+msgid "Food Nutritions"
+msgstr "Voedsel Voeding"
+
+#: includes/wpfm-custom-taxonomies.php:333
+msgid "Unit"
+msgstr "Eenheid"
+
+#: includes/wpfm-custom-taxonomies.php:334
+msgid "Units"
+msgstr "Eenhede"
+
+#: includes/wpfm-install.php:86
+#, fuzzy
+msgid "Restaurant Owner"
+msgstr "Restaurant eienaar"
+
+#: shortcodes/wpfm-shortcodes.php:79
+msgid "Invalid ID"
+msgstr "Ongeldige ID"
+
+#: shortcodes/wpfm-shortcodes.php:88
+#, fuzzy, php-format
+msgid "%s has been deleted."
+msgstr "%s is uitgevee."
+
+#: shortcodes/wpfm-shortcodes.php:93
+#, fuzzy
+msgid "Missing submission page."
+msgstr "Ontbrekende indieningsbladsy."
+
+#: shortcodes/wpfm-shortcodes.php:221
+#, fuzzy
+msgid "Viewed"
+msgstr "Bekyk"
+
+#: shortcodes/wpfm-shortcodes.php:222
+msgid "Action"
+msgstr "Aksie"
+
+#: shortcodes/wpfm-shortcodes.php:352
+#, fuzzy
+msgid "Load more foods"
+msgstr "Laai meer kosse"
+
+#: shortcodes/wpfm-shortcodes.php:376
+#, fuzzy
+msgid "Load more listings"
+msgstr "Laai meer lyste"
+
+#: templates/account-signin.php:3
+msgid "Your Account"
+msgstr "Jou Profiel"
+
+#: templates/account-signin.php:6
+#, fuzzy, php-format
+msgid "You are currently signed in as <strong>%s</strong>."
+msgstr "Jy is tans aangemeld as <strong>%s</strong>."
+
+#: templates/account-signin.php:7
+#, fuzzy
+msgid "Sign out"
+msgstr "Teken af"
+
+#: templates/account-signin.php:16
+#, fuzzy
+msgid "Have an account?"
+msgstr "Het jy 'n rekening?"
+
+#: templates/account-signin.php:18 templates/food-dashboard-login.php:2
+msgid "Sign in"
+msgstr "Teken aan"
+
+#: templates/account-signin.php:20
+#, fuzzy
+msgid "You must sign in to create a new listing."
+msgstr "Jy moet aanmeld om 'n nuwe lysinskrywing te skep."
+
+#: templates/account-signin.php:28 templates/food-submit.php:66
+#: templates/food-submit.php:121 templates/food-submit.php:134
+#: templates/food-submit.php:251 templates/form-fields/repeated-field.php:11
+#: templates/form-fields/repeated-field.php:50
+#, fuzzy
+msgid "(optional)"
+msgstr "(opsioneel)"
+
+#: templates/content-food_manager_menu.php:14
+#, fuzzy
+msgid "Food Lists"
+msgstr "Kos lyste"
+
+#: templates/content-no-foods-found.php:2
+#, fuzzy
+msgid "There are no foods matching your search."
+msgstr "Daar is geen kosse wat by jou soektog pas nie."
+
+#: templates/content-no-foods-found.php:4
+#, fuzzy
+msgid "There are currently no foods."
+msgstr "Daar is tans geen kos nie."
+
+#: templates/content-single-food_manager.php:12
+#, fuzzy
+msgid "This listing has been expired."
+msgstr "Hierdie lys het verval."
+
+#: templates/content-single-food_manager.php:53
+#, fuzzy, php-format
+msgid " %d"
+msgstr " %d"
+
+#: templates/content-single-food_manager.php:54
+#, fuzzy, php-format
+msgid "%d people viewed this food."
+msgstr "%d mense het hierdie kos bekyk."
+
+#: templates/content-single-food_manager.php:89
+#, fuzzy
+msgid "Food Ingredients"
+msgstr "Voedsel bestanddele"
+
+#: templates/content-single-food_manager.php:189
+#: templates/food_menu_popup.php:139
+#, fuzzy
+msgid "View more +"
+msgstr "Sien meer +"
+
+#: templates/content-single-food_manager.php:239
+#, fuzzy
+msgid "Additional Details"
+msgstr "Bykomende besonderhede"
+
+#: templates/content-single-food_manager.php:316
+#: templates/content-single-food_manager.php:323
+#: templates/content-single-food_manager.php:423
+#: templates/content-single-food_manager.php:437
+msgid "Download"
+msgstr "Laai af"
+
+#: templates/content-single-food_manager.php:593
+#, fuzzy
+msgid "Share With Friends"
+msgstr "Deel met vriende"
+
+#: templates/food-dashboard-login.php:2
+#, fuzzy
+msgid "You need to be signed in to manage your food listings."
+msgstr "Jy moet aangemeld wees om jou koslyste te bestuur."
+
+#: templates/food-dashboard.php:92
+#, fuzzy
+msgid "Reset Filter"
+msgstr "Stel filter terug"
+
+#: templates/food-dashboard.php:92 wp-food-manager-functions.php:632
+msgid "Reset"
+msgstr "Herstel filters"
+
+#: templates/food-dashboard.php:102 templates/food-dashboard.php:144
+msgid "Filter"
+msgstr "Filter"
+
+#: templates/food-dashboard.php:121 templates/food-filters.php:15
+#, fuzzy
+msgid "Keywords"
+msgstr "Trefwoorde"
+
+#: templates/food-dashboard.php:126
+msgid "Order by"
+msgstr "Bestelling deur"
+
+#: templates/food-dashboard.php:152
+#, fuzzy
+msgid "You do not have any active listings."
+msgstr "Jy het geen aktiewe lyste nie."
+
+#: templates/food-dashboard.php:212
+msgid "Duplicate"
+msgstr "Duplikaat"
+
+#: templates/food-dashboard.php:219
+#, fuzzy
+msgid "Relist"
+msgstr "Herlys"
+
+#: templates/food-filters.php:16
+#, fuzzy
+msgid "Search for food items"
+msgstr "Soek vir voedselitems"
+
+#: templates/food-filters.php:30
+#, fuzzy
+msgid "Choose a Food Menu…"
+msgstr "Kies 'n kosspyskaart ..."
+
+#: templates/food-filters.php:30 templates/form-fields/multiselect-field.php:12
+#: wp-food-manager-functions.php:459
+#, fuzzy
+msgid "No results match"
+msgstr "Geen resultate pas nie"
+
+#: templates/food-filters.php:33
+#, fuzzy
+msgid "Choose a Food Menu"
+msgstr "Kies 'n kosspyskaart"
+
+#: templates/food-filters.php:57
+msgid "Category"
+msgstr "Kategorie"
+
+#: templates/food-filters.php:61
+#, fuzzy
+msgid "Choose a Food Category"
+msgstr "Kies 'n voedselkategorie"
+
+#: templates/food-filters.php:75
+#, fuzzy
+msgid "food Type"
+msgstr "kos Tipe"
+
+#: templates/food-filters.php:79
+#, fuzzy
+msgid "Choose a Food Type"
+msgstr "Kies 'n voedseltipe"
+
+#: templates/food-filters.php:90
+#, fuzzy
+msgid ""
+"Your browser does not support JavaScript, or it is disabled. JavaScript must "
+"be enabled in order to view listings."
+msgstr ""
+"Jou blaaier ondersteun nie JavaScript nie, of dit is gedeaktiveer. "
+"JavaScript moet geaktiveer wees om lyste te kan sien."
+
+#: templates/food-listings-start.php:17
+#, fuzzy
+msgid "foods Box View"
+msgstr "kosse Boks View"
+
+#: templates/food-listings-start.php:18
+#, fuzzy
+msgid "foods List View"
+msgstr "kos Lys View"
+
+#: templates/food-preview.php:17
+#, fuzzy
+msgid "← Edit listing"
+msgstr "← Redigeer lys"
+
+#: templates/food-preview.php:19
+#, fuzzy
+msgid "Submit Listing →"
+msgstr "Dien lys → in"
+
+#: templates/food-submit.php:48
+#, fuzzy
+msgid "Food Details"
+msgstr "Kos besonderhede"
+
+#: templates/food-submit.php:51
+#, fuzzy, php-format
+msgid "You are editing an existing food. %s"
+msgstr "Jy redigeer 'n bestaande kos. %s"
+
+#: templates/food-submit.php:51
+#, fuzzy
+msgid "Create A New Food"
+msgstr "Skep 'n nuwe kos"
+
+#: templates/food-submit.php:85
+#, fuzzy
+msgid "Extra Toppings"
+msgstr "Ekstra toppings"
+
+#: templates/food-submit.php:141
+msgid "Label"
+msgstr "Etiket"
+
+#: templates/food-submit.php:194
+msgid "Add Option"
+msgstr "Voeg opsie by"
+
+#: templates/food-submit.php:219
+#, fuzzy
+msgid "Topping Option __repeated-option-index__"
+msgstr "Bolaag opsie __repeated-opsie-index__"
+
+#: templates/food-submit.php:267
+#, fuzzy
+msgid "+ Add Topping"
+msgstr "+ Voeg bolaag by"
+
+#: templates/food-submitted.php:6
+#, fuzzy, php-format
+msgid ""
+"%s listed successfully. To view your listing <a href=\"%s\">click here</a>."
+msgstr ""
+"%s suksesvol gelys. Klik <a href=\"%s\">hier</a> om jou lysinskrywing te "
+"sien."
+
+#: templates/food-submitted.php:9
+#, fuzzy, php-format
+msgid ""
+"Your %s has been successfully added to WP Food Manager. Your food listing "
+"will be visible after the admin's approval."
+msgstr ""
+"Jou %s is suksesvol by WP Food Manager gevoeg. Jou koslys sal sigbaar wees "
+"na die administrateur se goedkeuring."
+
+#: templates/form-fields/file-field.php:42
+#: templates/form-fields/file-field.php:45
+#, fuzzy
+msgid "Use file"
+msgstr "Gebruik lêer"
+
+#: templates/form-fields/file-field.php:42
+#: templates/form-fields/file-field.php:45
+#, fuzzy
+msgid "Upload"
+msgstr "Oplaai"
+
+#: templates/form-fields/file-field.php:118
+#, fuzzy, php-format
+msgid "Maximum file size: %s."
+msgstr "Maksimum lêergrootte: %s."
+
+#: templates/form-fields/multiselect-field.php:12
+#: wp-food-manager-functions.php:460
+#, fuzzy
+msgid "Select Some Options"
+msgstr "Kies 'n paar opsies"
+
+#: templates/form-fields/repeated-field.php:39
+msgid "Remove"
+msgstr "Verwyder"
+
+#: templates/form-fields/repeated-field.php:42
+msgid "Details"
+msgstr "Lees meer"
+
+#: templates/form-fields/uploaded-file-html.php:15
+#: templates/form-fields/uploaded-file-html.php:17
+msgid "remove"
+msgstr "verwyder"
+
+#: wp-food-manager-functions.php:284
+msgid "Invalid email address."
+msgstr "Ongeldige e-pos adres."
+
+#: wp-food-manager-functions.php:292
+msgid "Your email address isn&#8217;t correct."
+msgstr "Jou eposadres is nie korrek nie."
+
+#: wp-food-manager-functions.php:296
+#, fuzzy
+msgid "This email is already registered, please choose another one."
+msgstr "Hierdie e-pos is reeds geregistreer, kies asseblief 'n ander een."
+
+#: wp-food-manager-functions.php:458
+#, fuzzy
+msgid "Choose a Food category&hellip;"
+msgstr "Kies 'n voedselkategorie..."
+
+#: wp-food-manager-functions.php:492
+#, fuzzy
+msgid "Choose a food Category&hellip;"
+msgstr "Kies 'n voedselkategorie..."
+
+#: wp-food-manager-functions.php:494
+#, fuzzy
+msgid "Choose a Food Type&hellip;"
+msgstr "Kies 'n voedseltipe..."
+
+#: wp-food-manager-functions.php:496
+#, fuzzy
+msgid "Choose a food Ingredients&hellip;"
+msgstr "Kies 'n kos Bestanddele ..."
+
+#: wp-food-manager-functions.php:498
+#, fuzzy
+msgid "Choose a food Nutritions&hellip;"
+msgstr "Kies 'n kos Voeding..."
+
+#: wp-food-manager-functions.php:502
+#, fuzzy
+msgid "Choose a Food type&hellip;"
+msgstr "Kies 'n kostipe..."
+
+#: wp-food-manager-functions.php:636
+#, fuzzy
+msgid "RSS"
+msgstr "RSS"
+
+#: wp-food-manager-functions.php:761
+#, fuzzy, php-format
+msgid "Uploaded files need to be one of the following file types: %s."
+msgstr "Opgelaaide lêers moet een van die volgende lêertipes wees: %s."
+
+#: wp-food-manager-functions.php:794
+#, fuzzy
+msgid "Ascending (ASC)"
+msgstr "Stygend (ASC)"
+
+#: wp-food-manager-functions.php:795
+#, fuzzy
+msgid "Descending (DESC)"
+msgstr "Dalende (DESC)"
+
+#: wp-food-manager-functions.php:995
+msgid "Passwords must be at least 8 characters long."
+msgstr "Jou wagwoord moet ten minste 8 karakters lank wees."
+
+#: wp-food-manager-functions.php:1008
+#, fuzzy
+msgctxt "post status"
+msgid "Draft"
+msgstr "Konsep"
+
+#: wp-food-manager-functions.php:1009
+msgctxt "post status"
+msgid "Expired"
+msgstr "Het Verval"
+
+#: wp-food-manager-functions.php:1010
+msgctxt "post status"
+msgid "Preview"
+msgstr "Voorskou"
+
+#: wp-food-manager-functions.php:1011
+#, fuzzy
+msgctxt "post status"
+msgid "Pending approval"
+msgstr "Hangende goedkeuring"
+
+#: wp-food-manager-functions.php:1012
+msgctxt "post status"
+msgid "Pending payment"
+msgstr "Betaling word afgewag"
+
+#: wp-food-manager-functions.php:1013
+msgctxt "post status"
+msgid "Active"
+msgstr "Aktief"
+
+#: wp-food-manager-functions.php:1096
+msgid "United Arab Emirates dirham"
+msgstr "Vereenigde Arabiese Emirate dirham"
+
+#: wp-food-manager-functions.php:1097
+msgid "Afghan afghani"
+msgstr "Afghanistan"
+
+#: wp-food-manager-functions.php:1098
+msgid "Albanian lek"
+msgstr "AlbaniÃ"
+
+#: wp-food-manager-functions.php:1099
+msgid "Armenian dram"
+msgstr "ArmeniÃ"
+
+#: wp-food-manager-functions.php:1100
+msgid "Netherlands Antillean guilder"
+msgstr "Nederland Antille"
+
+#: wp-food-manager-functions.php:1101
+msgid "Angolan kwanza"
+msgstr "Angola"
+
+#: wp-food-manager-functions.php:1102
+msgid "Argentine peso"
+msgstr "Argentinië"
+
+#: wp-food-manager-functions.php:1103
+msgid "Australian dollar"
+msgstr "Australiese dollar"
+
+#: wp-food-manager-functions.php:1104
+msgid "Aruban florin"
+msgstr "Aruban florin"
+
+#: wp-food-manager-functions.php:1105
+msgid "Azerbaijani manat"
+msgstr "Azerbaijani manat"
+
+#: wp-food-manager-functions.php:1106
+msgid "Bosnia and Herzegovina convertible mark"
+msgstr "Bosnië en Herzegovina"
+
+#: wp-food-manager-functions.php:1107
+msgid "Barbadian dollar"
+msgstr "Barbadiese dollar"
+
+#: wp-food-manager-functions.php:1108
+msgid "Bangladeshi taka"
+msgstr "Bangladesh"
+
+#: wp-food-manager-functions.php:1109
+msgid "Bulgarian lev"
+msgstr "Bulgaarse lev"
+
+#: wp-food-manager-functions.php:1110
+msgid "Bahraini dinar"
+msgstr "Bahreinse dinar"
+
+#: wp-food-manager-functions.php:1111
+#, fuzzy
+msgid "Burundian franc"
+msgstr "Burundese frank"
+
+#: wp-food-manager-functions.php:1112
+#, fuzzy
+msgid "Bermudian dollar"
+msgstr "Bermoediese dollar"
+
+#: wp-food-manager-functions.php:1113
+#, fuzzy
+msgid "Brunei dollar"
+msgstr "Brunei dollar"
+
+#: wp-food-manager-functions.php:1114
+#, fuzzy
+msgid "Bolivian boliviano"
+msgstr "Boliviaanse boliviano"
+
+#: wp-food-manager-functions.php:1115
+msgid "Brazilian real"
+msgstr "Brazilian real"
+
+#: wp-food-manager-functions.php:1116
+#, fuzzy
+msgid "Bahamian dollar"
+msgstr "Bahamaanse dollar"
+
+#: wp-food-manager-functions.php:1117
+#, fuzzy
+msgid "Bitcoin"
+msgstr "Bitcoin"
+
+#: wp-food-manager-functions.php:1118
+#, fuzzy
+msgid "Bhutanese ngultrum"
+msgstr "Bhoetanese ngultrum"
+
+#: wp-food-manager-functions.php:1119
+#, fuzzy
+msgid "Botswana pula"
+msgstr "Botswana pula"
+
+#: wp-food-manager-functions.php:1120
+msgid "Belarusian ruble (old)"
+msgstr "Wit-Russiese roebel (oud)"
+
+#: wp-food-manager-functions.php:1121
+#, fuzzy
+msgid "Belarusian ruble"
+msgstr "Wit-Russiese roebel"
+
+#: wp-food-manager-functions.php:1122
+#, fuzzy
+msgid "Belize dollar"
+msgstr "Belize-dollar"
+
+#: wp-food-manager-functions.php:1123
+msgid "Canadian dollar"
+msgstr "Kanadese dollar"
+
+#: wp-food-manager-functions.php:1124
+#, fuzzy
+msgid "Congolese franc"
+msgstr "Kongolese frank"
+
+#: wp-food-manager-functions.php:1125
+msgid "Swiss franc"
+msgstr "Switserse frank"
+
+#: wp-food-manager-functions.php:1126
+msgid "Chilean peso"
+msgstr "Chileense peso"
+
+#: wp-food-manager-functions.php:1127
+msgid "Chinese yuan"
+msgstr "Sjinese yuan renminbi"
+
+#: wp-food-manager-functions.php:1128
+msgid "Colombian peso"
+msgstr "Kolombi peso"
+
+#: wp-food-manager-functions.php:1129
+#, fuzzy
+msgid "Costa Rican col&oacute;n"
+msgstr "Costa Ricaanse colón"
+
+#: wp-food-manager-functions.php:1130
+#, fuzzy
+msgid "Cuban convertible peso"
+msgstr "Kubaanse omskepbare peso"
+
+#: wp-food-manager-functions.php:1131
+#, fuzzy
+msgid "Cuban peso"
+msgstr "Kubaanse peso"
+
+#: wp-food-manager-functions.php:1132
+#, fuzzy
+msgid "Cape Verdean escudo"
+msgstr "Kaap Verdiese escudo"
+
+#: wp-food-manager-functions.php:1133
+msgid "Czech koruna"
+msgstr "Tsjeggiese kroon"
+
+#: wp-food-manager-functions.php:1134
+#, fuzzy
+msgid "Djiboutian franc"
+msgstr "Djiboutiaanse frank"
+
+#: wp-food-manager-functions.php:1135
+msgid "Danish krone"
+msgstr "Deense kroon"
+
+#: wp-food-manager-functions.php:1136
+#, fuzzy
+msgid "Dominican peso"
+msgstr "Dominikaanse peso"
+
+#: wp-food-manager-functions.php:1137
+#, fuzzy
+msgid "Algerian dinar"
+msgstr "Algerynse dinar"
+
+#: wp-food-manager-functions.php:1138
+#, fuzzy
+msgid "Egyptian pound"
+msgstr "Egiptiese pond"
+
+#: wp-food-manager-functions.php:1139
+msgid "Eritrean nakfa"
+msgstr "Eritrean nakfa"
+
+#: wp-food-manager-functions.php:1140
+msgid "Ethiopian birr"
+msgstr "Ethiopian birr"
+
+#: wp-food-manager-functions.php:1141
+msgid "Euro"
+msgstr "Euro"
+
+#: wp-food-manager-functions.php:1142
+msgid "Fijian dollar"
+msgstr "Fijian dollar"
+
+#: wp-food-manager-functions.php:1143
+msgid "Falkland Islands pound"
+msgstr "Falkland Islands pond"
+
+#: wp-food-manager-functions.php:1144
+#, fuzzy
+msgid "Pound sterling"
+msgstr "Pond sterling"
+
+#: wp-food-manager-functions.php:1145
+msgid "Georgian lari"
+msgstr "Georgian lari"
+
+#: wp-food-manager-functions.php:1146
+msgid "Guernsey pound"
+msgstr "Guernsey pond"
+
+#: wp-food-manager-functions.php:1147
+msgid "Ghana cedi"
+msgstr "Ghana cedi"
+
+#: wp-food-manager-functions.php:1148
+msgid "Gibraltar pound"
+msgstr "Gibraltar"
+
+#: wp-food-manager-functions.php:1149
+msgid "Gambian dalasi"
+msgstr "Colombië"
+
+#: wp-food-manager-functions.php:1150
+msgid "Guinean franc"
+msgstr "Guinea frank"
+
+#: wp-food-manager-functions.php:1151
+msgid "Guatemalan quetzal"
+msgstr "Gautemala quetzal"
+
+#: wp-food-manager-functions.php:1152
+msgid "Guyanese dollar"
+msgstr "Guyanese dollar"
+
+#: wp-food-manager-functions.php:1153
+msgid "Hong Kong dollar"
+msgstr "Hongkong dollar"
+
+#: wp-food-manager-functions.php:1154
+msgid "Honduran lempira"
+msgstr "Honduran lempira"
+
+#: wp-food-manager-functions.php:1155
+msgid "Croatian kuna"
+msgstr "Kroatiese kuna"
+
+#: wp-food-manager-functions.php:1156
+msgid "Haitian gourde"
+msgstr "Haitian gourde"
+
+#: wp-food-manager-functions.php:1157
+msgid "Hungarian forint"
+msgstr "Hongaarse forint"
+
+#: wp-food-manager-functions.php:1158
+msgid "Indonesian rupiah"
+msgstr "Indonesiese rupee"
+
+#: wp-food-manager-functions.php:1159
+msgid "Israeli new shekel"
+msgstr "Israel se nuwe sjekel"
+
+#: wp-food-manager-functions.php:1160
+msgid "Manx pound"
+msgstr "Manx pond"
+
+#: wp-food-manager-functions.php:1161
+msgid "Indian rupee"
+msgstr "Indiese rupee"
+
+#: wp-food-manager-functions.php:1162
+msgid "Iraqi dinar"
+msgstr "Iraqi dinar"
+
+#: wp-food-manager-functions.php:1163
+msgid "Iranian rial"
+msgstr "Iranian rial"
+
+#: wp-food-manager-functions.php:1164
+#, fuzzy
+msgid "Iranian toman"
+msgstr "Iraanse toman"
+
+#: wp-food-manager-functions.php:1165
+msgid "Icelandic kr&oacute;na"
+msgstr "Icelandic króna"
+
+#: wp-food-manager-functions.php:1166
+msgid "Jersey pound"
+msgstr "Jersey pond"
+
+#: wp-food-manager-functions.php:1167
+msgid "Jamaican dollar"
+msgstr "Jamaika doller"
+
+#: wp-food-manager-functions.php:1168
+msgid "Jordanian dinar"
+msgstr "Jordanian dinar"
+
+#: wp-food-manager-functions.php:1169
+msgid "Japanese yen"
+msgstr "Japannese jen"
+
+#: wp-food-manager-functions.php:1170
+msgid "Kenyan shilling"
+msgstr "Kenyan sjilling"
+
+#: wp-food-manager-functions.php:1171
+msgid "Kyrgyzstani som"
+msgstr "Kyrgyzstani som"
+
+#: wp-food-manager-functions.php:1172
+msgid "Cambodian riel"
+msgstr "Cambodian riel"
+
+#: wp-food-manager-functions.php:1173
+msgid "Comorian franc"
+msgstr "Comorian frank"
+
+#: wp-food-manager-functions.php:1174
+msgid "North Korean won"
+msgstr "Noord-Koreaanse won"
+
+#: wp-food-manager-functions.php:1175
+msgid "South Korean won"
+msgstr "Suid-Koreaanse won"
+
+#: wp-food-manager-functions.php:1176
+msgid "Kuwaiti dinar"
+msgstr "Kuweit-dinar"
+
+#: wp-food-manager-functions.php:1177
+msgid "Cayman Islands dollar"
+msgstr "Cayman Eilande Doller"
+
+#: wp-food-manager-functions.php:1178
+msgid "Kazakhstani tenge"
+msgstr "Kazakhstan-tenge"
+
+#: wp-food-manager-functions.php:1179
+msgid "Lao kip"
+msgstr "Lao kip"
+
+#: wp-food-manager-functions.php:1180
+msgid "Lebanese pound"
+msgstr "Lebanese pound"
+
+#: wp-food-manager-functions.php:1181
+msgid "Sri Lankan rupee"
+msgstr "Sri Lankan rupee"
+
+#: wp-food-manager-functions.php:1182
+msgid "Liberian dollar"
+msgstr "Liberian doller"
+
+#: wp-food-manager-functions.php:1183
+msgid "Lesotho loti"
+msgstr "Lesotho loti"
+
+#: wp-food-manager-functions.php:1184
+msgid "Libyan dinar"
+msgstr "Libyan dinar"
+
+#: wp-food-manager-functions.php:1185
+msgid "Moroccan dirham"
+msgstr "Moroccan dirham"
+
+#: wp-food-manager-functions.php:1186
+msgid "Moldovan leu"
+msgstr "Moldovan leu"
+
+#: wp-food-manager-functions.php:1187
+msgid "Malagasy ariary"
+msgstr "Malagasy ariary"
+
+#: wp-food-manager-functions.php:1188
+msgid "Macedonian denar"
+msgstr "Macedonian denar"
+
+#: wp-food-manager-functions.php:1189
+msgid "Burmese kyat"
+msgstr "Birmaanse Kyat"
+
+#: wp-food-manager-functions.php:1190
+msgid "Mongolian t&ouml;gr&ouml;g"
+msgstr "Mongoolse tögrög"
+
+#: wp-food-manager-functions.php:1191
+msgid "Macanese pataca"
+msgstr "Macanese pataca"
+
+#: wp-food-manager-functions.php:1192
+msgid "Mauritanian ouguiya"
+msgstr "Mauritanië ouguiya"
+
+#: wp-food-manager-functions.php:1193
+#, fuzzy
+msgid "Mauritian rupee"
+msgstr "Mauritiaanse roepee"
+
+#: wp-food-manager-functions.php:1194
+msgid "Maldivian rufiyaa"
+msgstr "Maldivian rufiyaa"
+
+#: wp-food-manager-functions.php:1195
+msgid "Malawian kwacha"
+msgstr "Malawian kwacha"
+
+#: wp-food-manager-functions.php:1196
+msgid "Mexican peso"
+msgstr "Mexikaanse peso"
+
+#: wp-food-manager-functions.php:1197
+msgid "Malaysian ringgit"
+msgstr "Maleisiese ringgit"
+
+#: wp-food-manager-functions.php:1198
+msgid "Mozambican metical"
+msgstr "Mozambican metical"
+
+#: wp-food-manager-functions.php:1199
+#, fuzzy
+msgid "Namibian dollar"
+msgstr "Namibiese dollar"
+
+#: wp-food-manager-functions.php:1200
+msgid "Nigerian naira"
+msgstr "Nigerië naira"
+
+#: wp-food-manager-functions.php:1201
+msgid "Nicaraguan c&oacute;rdoba"
+msgstr "Nicaraguaanse Cordoba"
+
+#: wp-food-manager-functions.php:1202
+msgid "Norwegian krone"
+msgstr "Noorse kroon"
+
+#: wp-food-manager-functions.php:1203
+msgid "Nepalese rupee"
+msgstr "Nepalese rupee"
+
+#: wp-food-manager-functions.php:1204
+msgid "New Zealand dollar"
+msgstr "Nieu-Seelandse doller"
+
+#: wp-food-manager-functions.php:1205
+msgid "Omani rial"
+msgstr "Omani rial"
+
+#: wp-food-manager-functions.php:1206
+msgid "Panamanian balboa"
+msgstr "Panamanian balboa"
+
+#: wp-food-manager-functions.php:1207
+#, fuzzy
+msgid "Sol"
+msgstr "Sol"
+
+#: wp-food-manager-functions.php:1208
+msgid "Papua New Guinean kina"
+msgstr "Papua New Guinean kina"
+
+#: wp-food-manager-functions.php:1209
+msgid "Philippine peso"
+msgstr "Filippynse peso"
+
+#: wp-food-manager-functions.php:1210
+msgid "Pakistani rupee"
+msgstr "Pakistanse rupee"
+
+#: wp-food-manager-functions.php:1211
+msgid "Polish z&#x142;oty"
+msgstr "Pools złoty"
+
+#: wp-food-manager-functions.php:1212
+msgid "Transnistrian ruble"
+msgstr "Transnistriese roebel"
+
+#: wp-food-manager-functions.php:1213
+msgid "Paraguayan guaran&iacute;"
+msgstr "Paraguayan guaraní;"
+
+#: wp-food-manager-functions.php:1214
+msgid "Qatari riyal"
+msgstr "Qatari riyal"
+
+#: wp-food-manager-functions.php:1215
+msgid "Romanian leu"
+msgstr "Romanian leu"
+
+#: wp-food-manager-functions.php:1216
+msgid "Serbian dinar"
+msgstr "Serbian dinar"
+
+#: wp-food-manager-functions.php:1217
+msgid "Russian ruble"
+msgstr "Russian ruble"
+
+#: wp-food-manager-functions.php:1218
+#, fuzzy
+msgid "Rwandan franc"
+msgstr "Rwandese frank"
+
+#: wp-food-manager-functions.php:1219
+msgid "Saudi riyal"
+msgstr "Saudi riyal"
+
+#: wp-food-manager-functions.php:1220
+msgid "Solomon Islands dollar"
+msgstr "Solomon Islands doller"
+
+#: wp-food-manager-functions.php:1221
+#, fuzzy
+msgid "Seychellois rupee"
+msgstr "Seychellois roepee"
+
+#: wp-food-manager-functions.php:1222
+msgid "Sudanese pound"
+msgstr "Sudanese pond"
+
+#: wp-food-manager-functions.php:1223
+msgid "Swedish krona"
+msgstr "Sweedse kroon"
+
+#: wp-food-manager-functions.php:1224
+msgid "Singapore dollar"
+msgstr "Singapoer-doller"
+
+#: wp-food-manager-functions.php:1225
+msgid "Saint Helena pound"
+msgstr "Saint Helena pond"
+
+#: wp-food-manager-functions.php:1226
+#, fuzzy
+msgid "Sierra Leonean leone"
+msgstr "Sierra Leone Leone"
+
+#: wp-food-manager-functions.php:1227
+#, fuzzy
+msgid "Somali shilling"
+msgstr "Somaliese sjieling"
+
+#: wp-food-manager-functions.php:1228
+#, fuzzy
+msgid "Surinamese dollar"
+msgstr "Surinaamse dollar"
+
+#: wp-food-manager-functions.php:1229
+#, fuzzy
+msgid "South Sudanese pound"
+msgstr "Suid-Soedanese pond"
+
+#: wp-food-manager-functions.php:1230
+msgid "S&atilde;o Tom&eacute; and Pr&iacute;ncipe dobra"
+msgstr "São Tomé en Príncipe dobra"
+
+#: wp-food-manager-functions.php:1231
+#, fuzzy
+msgid "Syrian pound"
+msgstr "Siriese pond"
+
+#: wp-food-manager-functions.php:1232
+#, fuzzy
+msgid "Swazi lilangeni"
+msgstr "Swazi lilangeni"
+
+#: wp-food-manager-functions.php:1233
+msgid "Thai baht"
+msgstr "Thai baht"
+
+#: wp-food-manager-functions.php:1234
+msgid "Tajikistani somoni"
+msgstr "Tajikistani somoni"
+
+#: wp-food-manager-functions.php:1235
+msgid "Turkmenistan manat"
+msgstr "Turkmenistan Manat"
+
+#: wp-food-manager-functions.php:1236
+msgid "Tunisian dinar"
+msgstr "Tunisiese dinar"
+
+#: wp-food-manager-functions.php:1237
+msgid "Tongan pa&#x2bb;anga"
+msgstr "Tongaanse pa'anga"
+
+#: wp-food-manager-functions.php:1238
+msgid "Turkish lira"
+msgstr "Turkish lira"
+
+#: wp-food-manager-functions.php:1239
+msgid "Trinidad and Tobago dollar"
+msgstr "Trinidad en Tobago Doller"
+
+#: wp-food-manager-functions.php:1240
+msgid "New Taiwan dollar"
+msgstr "Nuwe Taiwanese doller"
+
+#: wp-food-manager-functions.php:1241
+msgid "Tanzanian shilling"
+msgstr "Tanzanian sjilling"
+
+#: wp-food-manager-functions.php:1242
+msgid "Ukrainian hryvnia"
+msgstr "Ukrainian hryvnia"
+
+#: wp-food-manager-functions.php:1243
+msgid "Ugandan shilling"
+msgstr "Ugandan sjilling"
+
+#: wp-food-manager-functions.php:1244
+msgid "United States (US) dollar"
+msgstr "Verenigde State (US) dollar"
+
+#: wp-food-manager-functions.php:1245
+msgid "Uruguayan peso"
+msgstr "Uruguayan peso"
+
+#: wp-food-manager-functions.php:1246
+msgid "Uzbekistani som"
+msgstr "Uzbekistani som"
+
+#: wp-food-manager-functions.php:1247
+#, fuzzy
+msgid "Venezuelan bol&iacute;var"
+msgstr "Venezolaanse bolívar"
+
+#: wp-food-manager-functions.php:1248
+#, fuzzy
+msgid "Bol&iacute;var soberano"
+msgstr "Bolívar soberano"
+
+#: wp-food-manager-functions.php:1249
+#, fuzzy
+msgid "Vietnamese &#x111;&#x1ed3;ng"
+msgstr "Viëtnamese đồng"
+
+#: wp-food-manager-functions.php:1250
+#, fuzzy
+msgid "Vanuatu vatu"
+msgstr "Vanuatu vatu"
+
+#: wp-food-manager-functions.php:1251
+#, fuzzy
+msgid "Samoan t&#x101;l&#x101;"
+msgstr "Samoaanse tālā"
+
+#: wp-food-manager-functions.php:1252
+#, fuzzy
+msgid "Central African CFA franc"
+msgstr "Sentraal-Afrikaanse CFA-frank"
+
+#: wp-food-manager-functions.php:1253
+#, fuzzy
+msgid "East Caribbean dollar"
+msgstr "Oos-Karibiese dollar"
+
+#: wp-food-manager-functions.php:1254
+#, fuzzy
+msgid "West African CFA franc"
+msgstr "Wes-Afrikaanse CFA-frank"
+
+#: wp-food-manager-functions.php:1255
+#, fuzzy
+msgid "CFP franc"
+msgstr "CFP-frank"
+
+#: wp-food-manager-functions.php:1256
+#, fuzzy
+msgid "Yemeni rial"
+msgstr "Jemenitiese rial"
+
+#: wp-food-manager-functions.php:1257
+#, fuzzy
+msgid "South African rand"
+msgstr "Suid-Afrikaanse rand"
+
+#: wp-food-manager-functions.php:1258
+#, fuzzy
+msgid "Zambian kwacha"
+msgstr "Zambiese kwacha"
+
+#: wp-food-manager-template.php:40
+msgid "Your email"
+msgstr "Jou eposadres"
+
+#: wp-food-manager-template.php:41
+#, fuzzy
+msgid "you@yourdomain.com"
+msgstr "you@yourdomain.com"
+
+#: wp-food-manager-template.php:48
+msgid "Username"
+msgstr "Gebruikernaam"
+
+#: wp-food-manager-template.php:56 wp-food-manager-template.php:57
+msgid "Password"
+msgstr "Wagwoord"
+
+#: wp-food-manager-template.php:67
+msgid "Verify Password"
+msgstr "Bevestig wagwoord"
+
+#: wp-food-manager-template.php:68
+msgid "Confirm Password"
+msgstr "Bevestig wagwoord"
+
+#: wp-food-manager-template.php:719
+msgid "Inactive"
+msgstr "Onaktief"
+
+#. translators: %s: add new taxonomy label
+#: wp-food-manager-template.php:991
+#, fuzzy, php-format
+msgid "+ %s"
+msgstr "deur %s"
+
+#. Plugin Name of the plugin/theme
+#. Author of the plugin/theme
+#, fuzzy
+msgid "WP Food Manager"
+msgstr "WP Voedselbestuurder"
+
+#. Plugin URI of the plugin/theme
+#, fuzzy
+msgid "https://www.wpfoodmanager.com/"
+msgstr "https://www.wpfoodmanager.com/"
+
+#. Description of the plugin/theme
+#, fuzzy
+msgid ""
+"Lightweight, scalable and full-featured food listings & management plugin "
+"for managing food listings from the Frontend and Backend."
+msgstr ""
+"Liggewig, skaalbare en volledige voedsellyste en -bestuur-inprop vir die "
+"bestuur van voedsellyste vanaf die Frontend en Backend."
+
+#. Author URI of the plugin/theme
+#, fuzzy
+msgid "https://www.wpfoodmanager.com"
+msgstr "https://www.wpfoodmanager.com"
