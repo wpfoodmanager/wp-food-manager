@@ -34,14 +34,15 @@ $disbled_fields_for_admin = array('food_category', 'food_tag', 'food_nutritions'
 						<?php } ?>
 						<?php do_action('food_manager_food_data_start', $thepostid);
 						if (isset($food_fields['food']))
+error_log(print_r($food_fields['food'], true));
+						
 							foreach ($food_fields['food'] as $key => $field) {
-
 								if (!isset($field['value'])) {
 									$field['value'] = get_post_meta($thepostid, '_' . $key, true);
 								}
 
 								$field['required'] = false;
-								$field['tabgroup'] = isset($field['tabgroup']) ? $field['tabgroup'] : 0;
+								$field['tabgroup'] = isset($field['tabgroup']) ? $field['tabgroup'] : 1;
 								if (!in_array($key, $disbled_fields_for_admin) && $field['tabgroup'] == $tab['priority']) {
 
 									$type = !empty($field['type']) ? $field['type'] : 'text';
