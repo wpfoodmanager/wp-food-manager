@@ -214,31 +214,33 @@ class WPFM_Field_Editor {
 	 */
 	private function form_editor_save() {
 		if (wp_verify_nonce($_POST['_wpnonce'], 'save-wp-food-manager-form-field-editor')) {
-			$food_field     = !empty($_POST['food']) ? $this->sanitize_array($_POST['food']) : array();
+			$food_field = !empty($_POST['food']) ? $this->sanitize_array($_POST['food']) : array();
 			$toppings = !empty($_POST['toppings']) ? $this->sanitize_array($_POST['toppings']) : array();
-			$index           = 0;
+			$index = 0;
 			if (!empty($food_field)) {
 				$new_fields = array(
 					'food'     => $food_field,
-					'toppings'     => $toppings,
+					'toppings' => $toppings,
 				);
-
-				// Find the numers keys from the fields array and replace with lable if label not exist remove that field.
+	
+				// Find the numeric keys from the fields array and replace with label if label does not exist, remove that field.
 				foreach ($new_fields as $group_key => $group_fields) {
 					$index = 0;
 					foreach ($group_fields as $field_key => $field_value) {
-
+	
 						$index++;
 						if (isset($new_fields[$group_key][$field_key]['type']) && $new_fields[$group_key][$field_key]['type'] === 'switch') {
 							$new_fields[$group_key][$field_key]['required'] = 0;
 						}
 						$new_fields[$group_key][$field_key]['priority'] = $index;
 						$new_fields[$group_key][$field_key]['label'] = trim($new_fields[$group_key][$field_key]['label']);
-						if (isset($new_fields[$group_key][$field_key]['type']) && !in_array($new_fields[$group_key][$field_key]['type'], array('term-select', 'term-select-multi-appearance', 'term-multiselect', 'term-checklist'))) {
+	
+						// Update this condition to include 'term-autocomplete' for preserving taxonomy.
+						if (isset($new_fields[$group_key][$field_key]['type']) && !in_array($new_fields[$group_key][$field_key]['type'], array('term-select', 'term-select-multi-appearance', 'term-multiselect', 'term-checklist', 'term-autocomplete'))) {
 							unset($new_fields[$group_key][$field_key]['taxonomy']);
 						}
-
-						if (isset($new_fields[$group_key][$field_key]['type']) && ($new_fields[$group_key][$field_key]['type'] == 'select' || $new_fields[$group_key][$field_key]['type'] == 'radio' || $new_fields[$group_key][$field_key]['type'] == 'multiselect' || $new_fields[$group_key][$field_key]['type'] == 'button-options' || $new_fields[$group_key][$field_key]['type'] == 'checkbox')) {
+	
+						if (isset($new_fields[$group_key][$field_key]['type']) && in_array($new_fields[$group_key][$field_key]['type'], array('select', 'radio', 'multiselect', 'button-options', 'checkbox'))) {
 							if (isset($new_fields[$group_key][$field_key]['options'])) {
 								$new_fields[$group_key][$field_key]['options'] = explode('|', $new_fields[$group_key][$field_key]['options']);
 								$temp_options = array();
@@ -255,11 +257,11 @@ class WPFM_Field_Editor {
 						} else {
 							unset($new_fields[$group_key][$field_key]['options']);
 						}
-
+	
 						if (!is_int($field_key)) {
 							continue;
 						}
-
+	
 						if (isset($new_fields[$group_key][$field_key]['label'])) {
 							$label_key = str_replace(' ', '_', $new_fields[$group_key][$field_key]['label']);
 							$new_fields[$group_key][strtolower($label_key)] = $new_fields[$group_key][$field_key];
@@ -267,38 +269,40 @@ class WPFM_Field_Editor {
 						unset($new_fields[$group_key][$field_key]);
 					}
 				}
-				// merge field with default fields.
+	
+				// Merge field with default fields.
 				$GLOBALS['food_manager']->forms->get_form('add-food', array());
 				$form_add_food_instance = call_user_func(array('WPFM_Add_Food_Form', 'instance'));
 				$food_fields = $form_add_food_instance->get_default_food_fields();
-
-				// if field in not exist in new fields array then make visiblity false.
+	
+				// If a field does not exist in new fields array, set visibility to false.
 				if (!empty($food_fields)) {
 					foreach ($food_fields as $group_key => $group_fields) {
 						foreach ($group_fields as $key => $field) {
 							if (!isset($new_fields[$group_key][$key])) {
-								$new_fields[$group_key][$key]               = $field;
-								$new_fields[$group_key][$key]['visibility'] = 0; // it will make visiblity false means removed from the field editor.
+								$new_fields[$group_key][$key] = $field;
+								$new_fields[$group_key][$key]['visibility'] = 0; // Set visibility to false, meaning removed from the field editor.
 							}
 						}
 					}
 				}
-
+	
+				// Update options with the new fields.
 				if (isset($new_fields['food'])) {
 					update_option('food_manager_add_food_form_fields', array('food' => $new_fields['food']));
 				}
-
+	
 				if (isset($new_fields['toppings'])) {
 					update_option('food_manager_submit_toppings_form_fields', array('toppings' => $new_fields['toppings']));
 				}
-
+	
 				// This will be removed in future.
 				$result = update_option('food_manager_form_fields', $new_fields);
 			}
 		}
-
 		echo wp_kses_post('<div class="updated"><p>' . esc_attr__('The fields were successfully saved.', 'wp-food-manager') . '</p></div>');
 	}
+	
 
 	/**
 	 * Sanitize a 2 dimension array.
