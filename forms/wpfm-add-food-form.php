@@ -333,7 +333,7 @@ class WPFM_Add_Food_Form extends WPFM_Form {
 						}
 					}
 				} else {
-					if ($field['required'] && empty($values[$group_key][$key])) {
+					if (isset($field['required']) && $field['required'] && empty($values[$group_key][$key])) {
 						return new WP_Error('validation-error', sprintf(__('%s is a required field.', 'wp-food-manager'), $field['label']));
 					}
 				}
