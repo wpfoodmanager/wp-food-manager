@@ -5,25 +5,20 @@ var WPFM_Frontend = function () {
                 jQuery(".food-manager-post_type-dropdown").chosen({ search_contains: !0 });
             }
             // Open modal popup on food image click
-            jQuery('.food_manager_menu .food-list-box img').on('click', WPFM_Frontend.actions.openFoodMenuPopup);
-            jQuery('.fm-food-menu-container .food-list-box img').on('click', WPFM_Frontend.actions.openFoodMenuPopup);
-
-            jQuery(document).on('click', '#wpfm-modal-close', function() {
-                jQuery('#wpfm_food_popup').removeClass('wpfm-modal-open');
+            jQuery('.food_manager_menu .food-list-box img').on('click', WPFM_Frontend.actions.openFoodMenuPopup);  
+            jQuery('.fm-food-menu-container .food-list-box img').on('click', WPFM_Frontend.actions.openFoodMenuPopup);                
+            jQuery(document).on('click', '.wpfm-modal-close', function(){
+                jQuery(this).parents('#wpfm_food_popup').removeClass('wpfm-modal-open');
             });
-
-            // For Extra Toppings view Toggle
-            jQuery(document).on('click', '.wpfm-view-more', function() {
-                var additionalRow = jQuery(this).parent().find('.wpfm-additional-main-row');
-                if (additionalRow.is(':visible')) {
-                    additionalRow.slideUp(); 
-                    jQuery(this).text('View more +'); 
-                } else {
-                    additionalRow.slideDown(); 
-                    jQuery(this).text('View less -'); 
-                }
-            });
-
+           
+            // For Extra Toppings view Toggle.
+            if (jQuery('.wpfm-additional-main-row').length > 0) {
+                jQuery('.wpfm-additional-main-row').hide();
+                jQuery(".wpfm-view-more").click(function(){
+                    jQuery(this).text((jQuery(this).text() == 'View less -') ? 'View more +' : 'View less -');
+                    jQuery(this).parent().find('.wpfm-additional-main-row').slideToggle()
+                });
+            }
             try {
                 jQuery('.wpfm-single-food-slider, .wpfm-img-multi-container').slick({
                     dots: true,
@@ -319,12 +314,14 @@ var WPFM_Frontend = function () {
             /// </summary>                 
             /// <returns type="generate name and id " />     
             /// <since>1.0.6</since>            
-            openFoodMenuPopup: function(event) {
+            openFoodMenuPopup : function(event){
                 event.preventDefault();
+                var button = jQuery(this);
+                button.prop('disabled', true);
+                var _this = this;
                 var foodId = jQuery(this).closest('.food-list-box').attr('data-id');
-                var productId = jQuery(this).closest('.food-list-box').find('.list_add_to_cart_button').attr("data-product_id");
-                var quantity = jQuery(this).closest('.food-list-box').find('#quantity_' + productId).val();
-                
+                var productId = jQuery(this).closest('.food-list-box').find('.add_to_cart_button').attr("data-product_id");
+                var quantity = jQuery(this).closest('.food-list-box').find('#quantity_'+productId).val();
                 jQuery.ajax({
                     url: wpfm_frontend.ajax_url, // Or the URL to admin-ajax.php
                     method: 'POST',
@@ -335,15 +332,13 @@ var WPFM_Frontend = function () {
                         quantity: quantity,
                     },
                     success: function(response) {
-                        jQuery('#wpfm_food_popup').html(response.html);
-                        jQuery('#wpfm_food_popup').addClass('wpfm-modal-open');
-
-                        // Hide additional rows and set initial button text inside the popup
-                        jQuery('#wpfm_food_popup .wpfm-additional-main-row').hide();
-                        jQuery('#wpfm_food_popup .wpfm-view-more').text('View more +'); // Set initial text
+                        jQuery(_this).parents('.wpfm-single-food-menu-page').next('.wpfm-modal.wpfm-food-popup').html(response.html);
+                        jQuery(_this).parents('.wpfm-single-food-menu-page').next('.wpfm-modal.wpfm-food-popup').addClass('wpfm-modal-open');
+                        button.prop('disabled', false);
                     },
                     error: function(xhr, status, error) {
                         console.error(error);
+                        button.prop('disabled', false);
                     }
                 });
             }
