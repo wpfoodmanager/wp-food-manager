@@ -105,8 +105,10 @@ $disable_field_types = array('term-autocomplete', 'term-select-multi-appearance'
 		} else {
 			$options = '';
 		} ?>
-		<input type="text" class="input-text placeholder" name="<?php echo esc_attr($group_key); ?>[<?php echo esc_attr($field_key); ?>][placeholder]" value="<?php if (isset($field['placeholder'])) {
-																																									printf(esc_html__('%s', 'wp-food-manager'), esc_attr(stripslashes($field['placeholder'])));
+		<input type="text" class="input-text placeholder" name="<?php echo esc_attr($group_key); ?>[<?php echo esc_attr($field_key); ?>][placeholder]" value="<?php if (isset($field['placeholder']) && !empty(esc_attr(stripslashes($field['placeholder'])))) {
+																																									// translators: %s: placeholder text for the field
+printf(esc_html__('%s', 'wp-food-manager'), esc_attr(stripslashes($field['placeholder'])));
+
 																																								}	?>" placeholder="<?php esc_attr_e('N/A', 'wp-food-manager'); ?>" />
 		<input type="text" class="input-text options" name="<?php echo esc_attr($group_key); ?>[<?php echo esc_attr($field_key); ?>][options]" placeholder="<?php esc_attr_e('Pipe (|) separate options.', 'wp-food-manager'); ?>" value="<?php echo esc_attr($options); ?>" />
 		<div class="file-options">
