@@ -170,7 +170,7 @@ class WPFM_Writepanels {
                 <div class="wpfm-loader" style="display: none;">
                  <img src="<?php echo esc_url(WPFM_PLUGIN_URL . '/assets/images/loader.gif'); ?>" alt="Loading..." class="wpfm-loader-image">
                 </div>
-                <span class="wpfm-success-message" style="display: none;">Foods added to the menu successfully!</span>
+                <div class="success_message"><span class="wpfm-success-message" style="display: none;">Foods added to the menu successfully!</span></div>
             </div>
         </div>
         <?php
@@ -846,18 +846,27 @@ class WPFM_Writepanels {
      * @return void
      * @since 1.0.0
      */
-    public function get_food_listing_by_category_id() {
+    public function get_food_listing_by_category_id() {        
         if (isset($_POST['category_id']) && !empty($_POST['category_id'])) {
+            $category_ids = array_map('intval', (array) $_POST['category_id']); // Cast to array if needed
+
             $args = [
                 'post_type' => 'food_manager',
                 'posts_per_page' => -1,
                 'post_status' => 'publish',
-                'post__not_in' => isset($_POST['exclude']) && !empty($_POST['exclude']) ? array_map('esc_attr', $_POST['exclude']) : array(),
                 'tax_query' => [
+                'relation' => 'OR',
                     [
-                        'taxonomy' => esc_attr($_POST['taxonomy']),
-                        'terms' => array_map('intval', $_POST['category_id']),
+                        'taxonomy' => 'food_manager_category', // Ensure this is sanitized
+                        'terms' => $category_ids, // Use the sanitized category IDs
+                        'field' => 'term_id', // Match by term ID
+                        'operator' => 'IN', // Only retrieve posts in the specified categories
+                    ],
+                    [
+                        'taxonomy' => 'food_manager_type',
+                        'terms' => $category_ids,
                         'field' => 'term_id',
+                        'operator' => 'IN',
                     ],
                 ],
                 // Rest of your arguments.
@@ -887,38 +896,7 @@ class WPFM_Writepanels {
             wp_reset_postdata();
             wp_send_json(array('html' => $html, 'success' => true));
         } else {
-
-            $args = [
-                'post_type' => 'food_manager',
-                'posts_per_page' => -1,
-                'post__not_in' => isset($_POST['exclude']) && !empty($_POST['exclude']) ? array_map('esc_attr', $_POST['exclude']) : array(),
-            ];
-
-            $food_listing = new WP_Query(apply_filters('get_food_listings_category_args',$args));
-            $html = [];
-
-            if ($food_listing->have_posts()) :
-                while ($food_listing->have_posts()) : $food_listing->the_post();
-                    $id = get_the_ID();
-
-                    $html[] =
-                        '<li class="menu-item-handle" data-food-id="' . esc_attr($id) . '">
-                        <div class="wpfm-admin-left-col">
-                            <span class="dashicons dashicons-menu"></span>
-                            <span class="item-title">' . esc_html(get_the_title($id)) . '</span>
-                        </div>
-                        <div class="wpfm-admin-right-col">
-                            <a href="javascript:void(0);" class="wpfm-food-item-remove">
-                                <span class="dashicons dashicons-dismiss"></span>
-                            </a>
-                        </div>
-                        <input type="hidden" name="wpfm_food_listing_ids[]" value="' . esc_attr($id) . '" />
-                    </li>';
-                endwhile;
-            endif;
-            wp_reset_postdata();
-
-            wp_send_json(array('html' => $html, 'success' => true));
+            wp_send_json(array('html' => '', 'success' => false));
         }
         wp_die();
     }
