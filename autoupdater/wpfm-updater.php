@@ -452,6 +452,7 @@ class WPFM_Updater {
 	 */
 	public function handle_errors( $errors ) {
 		if ( !empty( $errors['no_key'] ) ) {
+			// translators: 1: plugin name, 2: plugin name (repeated for setup)
 			$this->add_error( sprintf( __('A licence key for %1$s could not be found. Maybe you forgot to enter a licence key when setting up %2$s.', 'wpfm-restaurant-manager'), esc_html( $this->plugin_data['Name'] ), esc_html( $this->plugin_data['Name'] ) ) );
 		} elseif ( !empty( $errors['invalid_request'] ) ) {
 			$this->add_error( 'Invalid update request' );

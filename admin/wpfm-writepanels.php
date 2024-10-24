@@ -369,6 +369,7 @@ class WPFM_Writepanels {
         $taxonomy_slug = 'food_manager_type';
         $taxonomy = get_taxonomy($taxonomy_slug);
 
+       // translators: %s: singular name of the food manager post type
         add_meta_box('food_manager_data', sprintf(__('%s Data', 'wp-food-manager'), $wp_post_types['food_manager']->labels->singular_name), array($this, 'food_manager_data'), 'food_manager', 'normal', 'high');
         add_meta_box('food_manager_menu_data', __('Menu Icon', 'wp-food-manager'), array($this, 'food_manager_menu_data'), 'food_manager_menu', 'normal', 'high');
         add_meta_box('food_manager_menu_data_icons', __('Select Food ', 'wp-food-manager'), array($this, 'food_manager_menu_data_icons'), 'food_manager_menu', 'normal', 'high');

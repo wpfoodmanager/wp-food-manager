@@ -328,12 +328,14 @@ class WPFM_Add_Food_Form extends WPFM_Form {
 					if (isset($_POST['repeated_options'])) {
 						foreach ($_POST['repeated_options'] as $repeated_options) {
 							if (isset($field['required']) && $field['required'] && empty($_POST[$key . '_' . $repeated_options])) {
+								// translators: %s: field label
 								return new WP_Error('validation-error', sprintf(__('%s is a required field.', 'wp-food-manager'), $field['label']));
 							}
 						}
 					}
 				} else {
 					if (isset($field['required']) && $field['required'] && empty($values[$group_key][$key])) {
+						// translators: %s: field label
 						return new WP_Error('validation-error', sprintf(__('%s is a required field.', 'wp-food-manager'), $field['label']));
 					}
 				}
@@ -346,6 +348,7 @@ class WPFM_Add_Food_Form extends WPFM_Form {
 					}
 					foreach ($check_value as $term) {
 						if (!term_exists($term, $field['taxonomy'])) {
+							// translators: %s: field label
 							return new WP_Error('validation-error', sprintf(__('%s is invalid.', 'wp-food-manager'), $field['label']));
 						}
 					}
@@ -362,7 +365,8 @@ class WPFM_Add_Food_Form extends WPFM_Form {
 							$file_url = current(explode('?', $file_url));
 							$file_info = wp_check_filetype($file_url);
 							if (!is_numeric($file_url) && $file_info && !in_array($file_info['type'], $field['allowed_mime_types'])) {
-								throw new Exception(sprintf(__('"%s" (filetype %s) needs to be one of the following file types: %s.', 'wp-food-manager'), $field['label'], '', implode(', ', array_keys($field['allowed_mime_types']))));
+								// translators: 1: field label, 2: file type (currently an empty string), 3: allowed file types
+								throw new Exception(sprintf(__('"%1$s" (filetype %2$s) needs to be one of the following file types: %3$s.', 'wp-food-manager'), $field['label'], '', implode(', ', array_keys($field['allowed_mime_types']))));
 							}
 						}
 					}
@@ -537,6 +541,7 @@ class WPFM_Add_Food_Form extends WPFM_Form {
 						if (!food_manager_validate_new_password($_POST['create_account_password'])) {
 							$password_hint = food_manager_get_password_rules_hint();
 							if ($password_hint) {
+								// translators: %s: password hint
 								throw new Exception(sprintf(__('Invalid Password: %s', 'wp-food-manager'), $password_hint));
 							} else {
 								throw new Exception(__('Password is not valid.', 'wp-food-manager'));

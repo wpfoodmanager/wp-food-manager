@@ -280,6 +280,7 @@ class WPFM_Ajax {
         $result['filter_value'][] = $last_filter_value . " " . $post_type_label;
 
         if (sizeof(apply_filters('wpfm_show_apply_filter_result_count', $result['filter_value'])) > 1) {
+            // translators: %d: number of matching records
             $message = sprintf(_n('Search completed. Found %d matching record.', 'Search completed. Found %d matching records.', $foods->found_posts, 'wp-food-manager'), $foods->found_posts);
             $result['showing_applied_filters'] = true;
         } else {
