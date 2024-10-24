@@ -2058,3 +2058,65 @@ if (!function_exists('get_wpfm_plugins_info')) {
 		return $plugins_info;
 	}
 }
+
+/**
+ * Renders the HTML structure for a food topping.
+ *
+ * This function generates the markup for a food topping entry in the admin interface.
+ * It displays the topping name, along with any associated fields for that topping.
+ * If no topping data is provided, it shows a default message indicating that no toppings are available.
+ *
+ * @param int $count The index of the topping being rendered. Used for unique field names and IDs.
+ * @param array|null $topping Optional. An associative array containing the topping data.
+ */
+function render_topping($count, $topping = null) {
+	global $post, $thepostid;
+	$thepostid = $post->ID;
+    ?>
+    <div class="wpfm-options-wrap wpfm-metabox postbox wpfm-options-box-<?php echo esc_attr($count); ?>">
+        <input type="hidden" name="repeated_options[]" value="<?php echo esc_attr($count); ?>" class="repeated-options">
+        <h3 class="">
+            <a href="javascript: void(0);" data-id="<?php echo esc_attr($count); ?>" class="wpfm-delete-btn">Remove</a>
+            <div class="wpfm-togglediv" title="Click to toggle" aria-expanded="false" data-row-count="<?php echo esc_attr($count); ?>"></div>
+            <div class="wpfm-sort"></div>
+            <strong class="attribute_name"><?php printf(__('%s', 'wp-food-manager'), esc_html($topping ? $topping['_topping_name'] : __('Option 1', 'wp-food-manager'))); ?></strong>
+            <span class="attribute_key">
+                <input type="hidden" name="topping_key_<?php echo esc_attr($count); ?>" value="<?php echo esc_attr($topping['topping_key'] ?? ''); ?>" readonly>
+            </span>
+        </h3>
+        <div class="wpfm-metabox-content wpfm-options-box-<?php echo esc_attr($count); ?>">
+            <div class="wpfm-content">
+                <?php
+                do_action('food_manager_food_data_start', $thepostid);
+				$writepanels = WPFM_Writepanels::instance();
+                $topping_fields = $writepanels->food_manager_data_fields();
+                if (isset($topping_fields['toppings'])) {
+                    foreach ($topping_fields['toppings'] as $key => $field) {
+                        $field['required'] = false;
+                        if (!$topping || empty($topping['_' . $key])) {
+                            $field['value'] = '';
+                        } else {
+                            $field['value'] = $topping['_' . $key];
+                        }
+
+                        $key .= '_' . $count;
+
+                        $type = $field['type'] ?? 'text';
+                        if ($type == 'wp-editor') $type = 'wp_editor';
+                        if ($type == "term-autocomplete") $type = "term_autocomplete";
+                        ?>
+                        <p class="wpfm-admin-postbox-form-field <?php echo esc_attr($key) . ($type == 'wp_editor' ? ' wp-editor-field' : ''); ?>" <?php echo ($type == "wp_editor") ? 'data-field-name="' . esc_attr($key) . '"' : ''; ?>>
+                            <label for="<?php echo esc_attr($key); ?>"><?php echo esc_html($field['label']); ?> : </label>
+                            <?php if ($type != 'options') echo '<span class="wpfm-input-field">'; ?>
+                            <?php get_food_manager_template('form-fields/' . $field['type'] . '-field.php', array('key' => esc_attr($key), 'field' => $field)); ?>
+                            <?php if ($type != 'options') echo '</span>'; ?>
+                        </p>
+                        <?php
+                    }
+                }
+                do_action('food_manager_food_data_end', $thepostid); ?>
+            </div>
+        </div>
+    </div>
+    <?php
+}

@@ -33,9 +33,7 @@ $disbled_fields_for_admin = array('food_category', 'food_tag', 'food_nutritions'
 						  <p class="wpfm-advanced-notice"><?php _e('Based on the given setting the ingredients and nutrition will be show on food detail page.', 'wp-food-manager'); ?></p> 
 						<?php } ?>
 						<?php do_action('food_manager_food_data_start', $thepostid);
-						if (isset($food_fields['food']))
-error_log(print_r($food_fields['food'], true));
-						
+						if (isset($food_fields['food']))						
 							foreach ($food_fields['food'] as $key => $field) {
 								if (!isset($field['value'])) {
 									$field['value'] = get_post_meta($thepostid, '_' . $key, true);
