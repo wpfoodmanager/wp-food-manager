@@ -144,37 +144,50 @@ class WPFM_Post_Types {
 					'name'                     => $plural_menu,
 					'singular_name'         => $singular_menu,
 					'menu_name'             => esc_html__('Food Menu', 'wp-food-manager'),
-					'all_items'             => sprintf(esc_html__('%s', 'wp-food-manager'), $plural_menu),
-					'add_new'                 => esc_html__('Add New', 'wp-food-manager'),
-					'add_new_item'             => sprintf(esc_html__('Add %s', 'wp-food-manager'), $singular_menu),
-					'edit'                     => esc_html__('Edit', 'wp-food-manager'),
-					'edit_item'             => sprintf(esc_html__('Edit %s', 'wp-food-manager'), $singular_menu),
-					'new_item'                 => sprintf(esc_html__('New %s', 'wp-food-manager'), $singular_menu),
-					'view'                     => sprintf(esc_html__('View %s', 'wp-food-manager'), $singular_menu),
-					'view_item'             => sprintf(esc_html__('View %s', 'wp-food-manager'), $singular_menu),
-					'search_items'             => sprintf(esc_html__('Search %s', 'wp-food-manager'), $plural_menu),
-					'not_found'             => sprintf(esc_html__('No %s found', 'wp-food-manager'), $plural_menu),
-					'not_found_in_trash'     => sprintf(esc_html__('No %s found in trash', 'wp-food-manager'), $plural_menu),
-					'parent'                 => sprintf(esc_html__('Parent %s', 'wp-food-manager'), $singular_menu),
+					'all_items'             => sprintf(// translators: %s: plural menu name 
+												esc_html__('%s', 'wp-food-manager'), $plural_menu),
+					'add_new'               => esc_html__('Add New', 'wp-food-manager'),
+					'add_new_item'          => sprintf(// translators: %s: singular menu name
+											   esc_html__('Add %s', 'wp-food-manager'), $singular_menu),
+					'edit'                  => esc_html__('Edit', 'wp-food-manager'),
+					'edit_item'             => sprintf(// translators: %s: singular menu name
+											   esc_html__('Edit %s', 'wp-food-manager'), $singular_menu),
+					'new_item'              => sprintf(// translators: %s: singular menu name
+						                       esc_html__('New %s', 'wp-food-manager'),$singular_menu),
+					'view'                  => sprintf(// translators: %s: singular menu name
+						                       esc_html__('View %s', 'wp-food-manager'),$singular_menu),
+					'view_item'             => sprintf(// translators: %s: singular menu name
+						                       esc_html__('View %s', 'wp-food-manager'),$singular_menu),
+					'search_items'          => sprintf(// translators: %s: plural menu name
+						                       esc_html__('Search %s', 'wp-food-manager'),$plural_menu),
+					'not_found'             => sprintf(// translators: %s: plural menu name
+						                       esc_html__('No %s found', 'wp-food-manager'),$plural_menu),
+					'not_found_in_trash'    => sprintf(// translators: %s: plural menu name
+						                       esc_html__('No %s found in trash', 'wp-food-manager'),$plural_menu),
+					'parent'                => sprintf(// translators: %s: singular menu name
+						                       esc_html__('Parent %s', 'wp-food-manager'),$singular_menu),
 					'featured_image'        => esc_html__('Food Menu Image', 'wp-food-manager'),
 					'set_featured_image'    => esc_html__('Add Image', 'wp-food-manager'),
 					'remove_featured_image' => esc_html__('Remove Image', 'wp-food-manager'),
 					'use_featured_image'    => esc_html__('Use as food thumbnail', 'wp-food-manager'),
-					'view_items'    => sprintf(esc_html__('View %s', 'wp-food-manager'), $plural_menu),
+					'view_items'            => sprintf(// translators: %s: plural menu name
+						                       esc_html__('View %s', 'wp-food-manager'),$plural_menu),
+
 				),
-				'description' => sprintf(esc_html__('This is where you can create and manage %s.', 'wp-food-manager'), $plural_menu),
-				'public'                 => true,
-				'show_ui'                 => true,
-				'map_meta_cap'          => true,
-				'publicly_queryable'     => true,
-				'exclude_from_search'     => false,
-				'hierarchical'             => false,
-				'rewrite'                 => $rewrite_menu,
-				'query_var'             => true,
-				'show_in_rest'             => true,
-				'supports'                 => array('title', 'thumbnail', 'publicize'),
-				'has_archive'             => true,
-				'show_in_menu' => 'edit.php?post_type=food_manager'
+				'description'               => sprintf(// translators: %s: plural menu name
+											   esc_html__('This is where you can create and manage %s.', 'wp-food-manager'), $plural_menu),
+				'public'                    => true,
+				'show_ui'                   => true,
+				'map_meta_cap'              => true,
+				'publicly_queryable'        => true,
+				'exclude_from_search'       => false,
+				'hierarchical'              => false,
+				'rewrite'                   => $rewrite_menu,
+				'query_var'                 => true,
+				'show_in_rest'              => true,
+				'supports'                  => array('title', 'thumbnail', 'publicize'),
+				'has_archive'               => true,
+				'show_in_menu'              => 'edit.php?post_type=food_manager'
 			))
 		);
 
@@ -182,11 +195,12 @@ class WPFM_Post_Types {
 		 * Post status.
 		 */
 		register_post_status('preview', array(
-			'public'                    => true,
-			'exclude_from_search'       => true,
-			'show_in_admin_all_list'    => true,
-			'show_in_admin_status_list' => true,
-			'label_count'               => _n_noop('Preview <span class="count">(%s)</span>', 'Preview <span class="count">(%s)</span>', 'wp-food-manager')
+			'public'                    	=> true,
+			'exclude_from_search'      	 	=> true,
+			'show_in_admin_all_list'    	=> true,
+			'show_in_admin_status_list' 	=> true,
+			// translators: %s: count of items
+			'label_count'              	 	=> _n_noop('Preview <span class="count">(%s)</span>', 'Preview <span class="count">(%s)</span>', 'wp-food-manager')
 		));
 	}
 

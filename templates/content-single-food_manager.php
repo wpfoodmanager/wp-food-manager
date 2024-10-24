@@ -50,9 +50,14 @@ $food = $post;
                                         $view_count = get_food_views_count($post);
                                         if ($view_count) : ?>
                                         <div class="food-views-favourite-container">
-                                            <div class="wpfm-viewed-food wpfm-tooltip wpfm-tooltip-bottom"><i class="wpfm-icon-eye"></i> <?php printf(esc_html__(' %d', 'wp-food-manager'), $view_count); ?>
-                                                <span class="wpfm-tooltiptext"><?php printf(esc_html__('%d people viewed this food.', 'wp-food-manager'), $view_count); ?></span>
+                                            <div class="wpfm-viewed-food wpfm-tooltip wpfm-tooltip-bottom">
+                                                <i class="wpfm-icon-eye"></i> 
+                                                <?php // translators: %d: View count of the food item ?>
+                                                <?php printf(esc_html__('%d', 'wp-food-manager'), $view_count); ?> 
                                             </div>
+                                                <?php // translators: %d: Number of people who viewed the food item ?>
+                                                <span class="wpfm-tooltiptext"><?php printf(esc_html__('%d people viewed this food.', 'wp-food-manager'), $view_count); ?></span>
+                                        </div>
                                             <?php do_action('single_food_overview_before',get_the_ID()); ?>
                                         </div>
                                         <?php endif; ?>
@@ -264,7 +269,14 @@ $food = $post;
                                                                                             $my_value_arr[] = $child_field['options'][$my_value];
                                                                                         }
                                                                                         ?>
-                                                                                        <p class="wpfm-additional-info-block-title"><strong><?php printf(__('%s', 'wp-food-manager'),  $child_field['label']); ?> -</strong> <?php printf(__('%s', 'wp-food-manager'),  implode(', ', $my_value_arr)); ?></p>
+                                                                                        <p class="wpfm-additional-info-block-title">
+                                                                                        <?php // translators: %s: The label of the child field ?>
+                                                                                        <strong><?php printf(__('%s', 'wp-food-manager'), $child_field['label']); ?> -</strong>
+                                                                                        <?php 
+                                                                                        // translators: %s: A comma-separated list of values
+                                                                                        printf(__('%s', 'wp-food-manager'), implode(', ', $my_value_arr)); ?>
+                                                                                        </p>
+
                                                                                     </div>
                                                                                 </div>
                                                                             <?php elseif ($child_field['type'] == 'select') : ?>

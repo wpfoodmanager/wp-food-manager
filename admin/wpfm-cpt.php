@@ -87,16 +87,21 @@ class WPFM_CPT {
         if ($post_type == 'food_manager') { ?>
             <script type="text/javascript">
                 jQuery(document).ready(function() {
-                    // translators: %s: food manager name
-                    jQuery('<option>').val('approve_food').text('<?php printf(__('Approve %s', 'wp-food-manager'), esc_attr($wp_post_types['food_manager']->labels->name)); ?>').appendTo("select[name='action']");
-
-                    // translators: %s: food manager name
-                    jQuery('<option>').val('approve_food').text('<?php printf(__('Approve %s', 'wp-food-manager'), esc_attr($wp_post_types['food_manager']->labels->name)); ?>').appendTo("select[name='action2']");
-                    });
+                    jQuery('<option>').val('approve_food').text('<?php 
+                        // translators: %s: food manager name
+                        printf(__('Approve %s', 'wp-food-manager'), esc_attr($wp_post_types['food_manager']->labels->name)); 
+                    ?>').appendTo("select[name='action']");
+    
+                    jQuery('<option>').val('approve_food').text('<?php 
+                        // translators: %s: food manager name
+                        printf(__('Approve %s', 'wp-food-manager'), esc_attr($wp_post_types['food_manager']->labels->name)); 
+                    ?>').appendTo("select[name='action2']");
+                });
             </script>
         <?php
         }
     }
+    
 
     /**
      * Do custom bulk actions.
@@ -246,6 +251,7 @@ class WPFM_CPT {
         switch ($column) {
             case 'shortcode':
                 echo '<code>';
+                // translators: %d: food menu ID
                 printf(esc_html__('[food_menu id=%d]', 'wp-food-manager'), esc_attr($post_id));
                 echo '</code>';
                 break;

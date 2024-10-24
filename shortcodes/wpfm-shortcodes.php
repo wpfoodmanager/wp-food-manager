@@ -85,6 +85,7 @@ class WPFM_Shortcodes {
 						wp_trash_post($food_id);
 						// Message.
 						if (!in_array($foods_status, ['trash'])) {
+							// translators: %s: Title of the food item that has been deleted
 							$this->food_dashboard_message = '<div class="food-manager-message wpfm-alert wpfm-alert-danger">' . sprintf(__('%s has been deleted.', 'wp-food-manager'), esc_html($food->post_title)) . '</div>';
 						}
 						break;
