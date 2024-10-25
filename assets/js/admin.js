@@ -236,8 +236,8 @@ var WPFM_Admin = function () {
                     })
                 }
             });
-            jQuery(".post-type-food_manager #toppings_food_data_content table.widefat tbody").sortable({
-                connectWith: ".post-type-food_manager #toppings_food_data_content table.widefat tbody",
+            jQuery(".post-type-food_manager .wpfm-topping-food-data table.widefat tbody").sortable({
+                connectWith: ".post-type-food_manager .wpfm-topping-food-data table.widefat tbody",
                 items: "tr",
                 axis: "y",
                 helper: function (t, i) {
@@ -250,7 +250,7 @@ var WPFM_Admin = function () {
                 opacity: .65,
                 update: function (event, ui) {
                     var repeater_row_count = jQuery(this).closest(".postbox").children(".repeated-options").val();
-                    jQuery('.post-type-food_manager .wpfm-admin-options-table._topping_options_' + repeater_row_count + ' table.widefat tbody tr').each(function (i) {
+                    jQuery('.post-type-food_manager .wpfm-topping-meta-options.wpfm-options-box-' + repeater_row_count + ' table.widefat tbody tr').each(function (i) {
                         var humanNum = i + 1;
                         jQuery(this).children('td:nth-child(2)').html(humanNum);
                         jQuery(this).attr('class', 'option-tr-' + humanNum);
@@ -452,9 +452,9 @@ var WPFM_Admin = function () {
                 }
                 max_index = max_index + 1;
                 var html = jQuery(this).data('row').replace(/__repeated-option-index__/g, max_index);
-                jQuery('#toppings_food_data_content .wpfm-options-wrapper .wpfm-actions').before(html);
-                jQuery(".post-type-food_manager .wpfm-admin-options-table table.widefat tbody").sortable({
-                    connectWith: ".post-type-food_manager .wpfm-admin-options-table table.widefat tbody",
+                jQuery('.wpfm-topping-food-data .wpfm-options-wrapper .wpfm-actions').before(html);
+                jQuery(".post-type-food_manager .wpfm-topping-meta-options table.widefat tbody").sortable({
+                    connectWith: ".post-type-food_manager .wpfm-topping-meta-options table.widefat tbody",
                     items: "tr",
                     axis: "y",
                     helper: function (t, i) {
@@ -467,7 +467,7 @@ var WPFM_Admin = function () {
                     opacity: .65,
                     update: function (event, ui) {
                         var repeater_row_count = jQuery(this).closest(".postbox").children(".repeated-options").val();
-                        jQuery('.post-type-food_manager .wpfm-admin-options-table._topping_options_' + repeater_row_count + ' table.widefat tbody tr').each(function (i) {
+                        jQuery('.post-type-food_manager .wpfm-topping-meta-options.wpfm-options-box-' + repeater_row_count + ' table.widefat tbody tr').each(function (i) {
                             var humanNum = i + 1;
                             jQuery(this).children('td:nth-child(2)').html(humanNum);
                             jQuery(this).attr('class', 'option-tr-' + humanNum);
@@ -521,11 +521,11 @@ var WPFM_Admin = function () {
                 var field_type = this.value;
                 var row_count = jQuery(this).closest(".postbox").children(".repeated-options").val();
                 if (jQuery.inArray(field_type, ["checkbox", "select", "radio"]) !== -1) {
-                    jQuery(this).closest('.postbox').children('.wpfm-metabox-content').children('.wpfm-content').children('.wpfm-admin-options-table').show();
+                    jQuery(this).closest('.postbox').children('.wpfm-metabox-content').children('.wpfm-content').children('.wpfm-topping-meta-options').show();
                     jQuery(this).closest('.postbox').children('.wpfm-metabox-content').children('.wpfm-content').children('.wpfm-admin-postbox-form-field._option_price_' + row_count).hide();
 
                 } else {
-                    jQuery(this).closest('.postbox').children('.wpfm-metabox-content').children('.wpfm-content').children('.wpfm-admin-options-table').hide();
+                    jQuery(this).closest('.postbox').children('.wpfm-metabox-content').children('.wpfm-content').children('.wpfm-topping-meta-options').hide();
                     jQuery(this).closest('.postbox').children('.wpfm-metabox-content').children('.wpfm-content').children('.wpfm-admin-postbox-form-field._option_price_' + row_count).show();
                 }
             },

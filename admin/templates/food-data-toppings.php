@@ -6,7 +6,7 @@
 $food_toppings = get_post_meta($thepostid, '_food_toppings', true);
 ?>
 
-<div id="toppings_food_data_content" class="panel wpfm_panel wpfm-metaboxes-wrapper">
+<div id="toppings_food_data_content" class="panel wpfm_panel wpfm-metaboxes-wrapper wpfm-topping-food-data">
 	<div class="wp_food_manager_meta_data">
 		<div class="wpfm-options-wrapper wpfm-metaboxes">
 			<?php if (!empty($food_toppings)) {

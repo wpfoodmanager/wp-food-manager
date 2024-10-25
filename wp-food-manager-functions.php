@@ -2084,7 +2084,7 @@ function render_topping($count, $topping = null) {
                 <input type="hidden" name="topping_key_<?php echo esc_attr($count); ?>" value="<?php echo esc_attr($topping['topping_key'] ?? ''); ?>" readonly>
             </span>
         </h3>
-        <div class="wpfm-metabox-content wpfm-options-box-<?php echo esc_attr($count); ?>">
+        <div class="wpfm-metabox-content wpfm-topping-meta-options wpfm-options-box-<?php echo esc_attr($count); ?>">
             <div class="wpfm-content">
                 <?php
                 do_action('food_manager_food_data_start', $thepostid);
@@ -2105,7 +2105,7 @@ function render_topping($count, $topping = null) {
                         if ($type == 'wp-editor') $type = 'wp_editor';
                         if ($type == "term-autocomplete") $type = "term_autocomplete";
                         ?>
-                        <p class="wpfm-admin-postbox-form-field <?php echo esc_attr($key) . ($type == 'wp_editor' ? ' wp-editor-field' : ''); ?>" <?php echo ($type == "wp_editor") ? 'data-field-name="' . esc_attr($key) . '"' : ''; ?>>
+                        <p class="wpfm-admin-postbox-form-field wpfm-topping-meta <?php echo esc_attr($key) . ($type == 'wp_editor' ? ' wp-editor-field' : ''); ?>" <?php echo ($type == "wp_editor") ? 'data-field-name="' . esc_attr($key) . '"' : ''; ?>>
                             <label for="<?php echo esc_attr($key); ?>"><?php echo esc_html($field['label']); ?> : </label>
                             <?php if ($type != 'options') echo '<span class="wpfm-input-field">'; ?>
                             <?php get_food_manager_template('form-fields/' . $field['type'] . '-field.php', array('key' => esc_attr($key), 'field' => $field)); ?>
