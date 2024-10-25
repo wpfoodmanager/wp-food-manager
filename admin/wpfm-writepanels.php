@@ -145,7 +145,7 @@ class WPFM_Writepanels {
                 <ul class="wpfm-food-menu menu menu-item-bar" id="wpfm-food-menu-list">
                     <?php if ($item_ids && is_array($item_ids)) { ?>
                         <?php foreach ($item_ids as $key => $id) { ?>
-                            <li class="menu-item-handle" data-food-id="<?= $id; ?>">
+                            <li class="menu-item-handle" data-food-id="<?php echo esc_attr($id); ?>">
                                 <div class="wpfm-admin-left-col">
                                     <span class="dashicons dashicons-menu"></span>
                                     <span class="item-title"><?php echo esc_html(get_the_title($id)); ?></span>
@@ -155,7 +155,7 @@ class WPFM_Writepanels {
                                         <span class="dashicons dashicons-dismiss"></span>
                                     </a>
                                 </div>
-                                <input type="hidden" name="wpfm_food_listing_ids[]" value="<?= $id; ?>" />
+                                <input type="hidden" name="wpfm_food_listing_ids[]" value="<?php echo esc_attr($id); ?>" />
                             </li>
                         <?php }
                     } ?>

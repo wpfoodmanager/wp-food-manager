@@ -89,12 +89,12 @@ class WPFM_CPT {
                 jQuery(document).ready(function() {
                     jQuery('<option>').val('approve_food').text('<?php 
                         // translators: %s: food manager name
-                        printf(__('Approve %s', 'wp-food-manager'), esc_html($wp_post_types['food_manager']->labels->name));
+                        printf(esc_html__('Approve %s', 'wp-food-manager'), esc_html($wp_post_types['food_manager']->labels->name));
                     ?>').appendTo("select[name='action']");
     
                     jQuery('<option>').val('approve_food').text('<?php 
                         // translators: %s: food manager name
-                        printf(__('Approve %s', 'wp-food-manager'), esc_html($wp_post_types['food_manager']->labels->name)); 
+                        printf(esc_html__('Approve %s', 'wp-food-manager'), esc_html($wp_post_types['food_manager']->labels->name)); 
                     ?>').appendTo("select[name='action2']");
                 });
             </script>

@@ -117,7 +117,7 @@ class WPFM_Field_Editor {
 			} ?>
 			<div class="wp-food-manager-food-form-field-editor <?php echo esc_attr($group_key); ?>">
 			<?php // translators: %s: name of the form field group ?>
-			<h3><?php printf(esc_html__('Add %s form fields', 'wp-food-manager'), ucfirst(str_replace("options", "Toppings", str_replace("_", " ", $group_key)))); ?></h3>
+			<h3><?php printf(esc_html__('Add %s form fields', 'wp-food-manager'), esc_html(ucfirst(str_replace("options", "Toppings", str_replace("_", " ", $group_key))))); ?></h3>
 
 				<table class="widefat">
 					<thead>

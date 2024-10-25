@@ -120,12 +120,12 @@ class WPFM_Admin {
      */
     public function add_custom_taxonomy_image_for_food_type($taxonomy) { ?>
         <div class="form-field term-group">
-            <label for="image_id" class="wpfm-food-type-tax-image"><?php _e('Image/Icon', 'taxt-domain'); ?></label>
+            <label for="image_id" class="wpfm-food-type-tax-image"><?php esc_html_e('Image/Icon', 'taxt-domain'); ?></label>
             <input type="hidden" id="image_id" name="image_id" class="custom_media_url" value="">
             <div id="image_wrapper"></div>
             <p>
-                <input type="button" class="button button-secondary taxonomy_media_button" id="taxonomy_media_button" name="taxonomy_media_button" value="<?php _e('Add Image', 'taxt-domain'); ?>">
-                <input type="button" class="button button-secondary taxonomy_media_remove" id="taxonomy_media_remove" name="taxonomy_media_remove" value="<?php _e('Remove Image', 'taxt-domain'); ?>">
+                <input type="button" class="button button-secondary taxonomy_media_button" id="taxonomy_media_button" name="taxonomy_media_button" value="<?php esc_html_e('Add Image', 'taxt-domain'); ?>">
+                <input type="button" class="button button-secondary taxonomy_media_remove" id="taxonomy_media_remove" name="taxonomy_media_remove" value="<?php esc_html_e('Remove Image', 'taxt-domain'); ?>">
             </p>
         </div>
     <?php
@@ -159,7 +159,7 @@ class WPFM_Admin {
     public function update_custom_taxonomy_image_for_food_type($term, $taxonomy) { ?>
         <tr class="form-field term-group-wrap">
             <th scope="row">
-                <label for="image_id"><?php _e('Image', 'taxt-domain'); ?></label>
+                <label for="image_id"><?php esc_html_e('Image', 'taxt-domain'); ?></label>
             </th>
             <td>
                 <?php $image_id = get_term_meta($term->term_id, 'image_id', true); ?>
@@ -170,8 +170,8 @@ class WPFM_Admin {
                     <?php } ?>
                 </div>
                 <p>
-                    <input type="button" class="button button-secondary taxonomy_media_button" id="taxonomy_media_button" name="taxonomy_media_button" value="<?php _e('Add Image', 'taxt-domain'); ?>">
-                    <input type="button" class="button button-secondary taxonomy_media_remove" id="taxonomy_media_remove" name="taxonomy_media_remove" value="<?php _e('Remove Image', 'taxt-domain'); ?>">
+                    <input type="button" class="button button-secondary taxonomy_media_button" id="taxonomy_media_button" name="taxonomy_media_button" value="<?php esc_html_e('Add Image', 'taxt-domain'); ?>">
+                    <input type="button" class="button button-secondary taxonomy_media_remove" id="taxonomy_media_remove" name="taxonomy_media_remove" value="<?php esc_html_e('Remove Image', 'taxt-domain'); ?>">
                 </p>
                 </div>
             </td>
@@ -631,7 +631,7 @@ class WPFM_Admin {
                 require_once $file_path;
                 } else {
                 // Handle the case where the file doesn't exist.
-                echo "File not found: $file_path";
+               echo 'File not found: ' . esc_html($file_path);
                 }
                 break;
         }

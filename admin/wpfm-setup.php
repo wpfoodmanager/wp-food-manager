@@ -155,7 +155,7 @@ class WPFM_Setup {
 				<?php if (2 === $step) : ?>
 					<h3><?php esc_attr_e('Page Setup', 'wp-food-manager'); ?></h3>
 					<?php // translators: 1: opening anchor tag for the shortcode documentation link, 2: closing anchor tag, 3: opening anchor tag for WordPress pages documentation, 4: opening anchor tag for food shortcodes documentation ?>
-					<p><?php printf(__('The <em>WP Food Manager</em> includes %1$sshortcodes%2$s which can be used to output content within your %3$spages%2$s. These can be generated directly as mentioned below. Check the shortcode documentation for more information on food %4$sshortcodes%2$s.', 'wp-food-manager'), '<a href="https://wpfoodmanager.com/knowledge-base/" title="What is a shortcode?" target="_blank" class="help-page-link">', '</a>', '<a href="https://wordpress.org/support/article/pages/" target="_blank" class="help-page-link">', '<a href="https://wpfoodmanager.com/knowledge-base/" target="_blank" class="help-page-link">'); ?></p>
+					<p><?php printf(wp_kses(__('The <em>WP Food Manager</em> includes %1$sshortcodes%2$s which can be used to output content within your %3$spages%2$s. These can be generated directly as mentioned below. Check the shortcode documentation for more information on food %4$sshortcodes%2$s.', 'wp-food-manager'),['em' => [], 'a' => [ 'href' => [],'title' => [],'target' => [],'class' => [],],]  ),'<a href="https://wpfoodmanager.com/knowledge-base/" title="What is a shortcode?" target="_blank" class="help-page-link">','</a>','<a href="https://wordpress.org/support/article/pages/" target="_blank" class="help-page-link">','<a href="https://wpfoodmanager.com/knowledge-base/" target="_blank" class="help-page-link">');?></p>
 
 					<form action="<?php echo esc_url(add_query_arg('step', 3)); ?>" method="post">
 						<?php wp_nonce_field('step_3', 'setup_wizard'); ?>
@@ -222,7 +222,7 @@ class WPFM_Setup {
 								<h3><?php esc_attr_e('All Done!', 'wp-food-manager'); ?></h3>
 							</div>
 							<div class="wpfm-setup-intro-block-welcome">
-								<img src="<?php echo WPFM_PLUGIN_URL; ?>/assets/images/wpfm-logo.svg" alt="WP Food Manager">
+								<img src="<?php echo esc_url(WPFM_PLUGIN_URL . '/assets/images/wpfm-logo.svg'); ?>" alt="<?php echo esc_attr__('WP Food Manager', 'wp-food-manager'); ?>">
 								<p><?php esc_attr_e('Thanks for installing WP Food Manager! Here are some valuable resources that will assist you in getting started with our plugins.', 'wp-food-manager'); ?></p>
 								<div class="wpfm-setup-intro-block-btn">
 									<a href="<?php echo esc_url(admin_url('post-new.php?post_type=food_manager')); ?>" class="button button-primary button-hero"><?php esc_attr_e('Create Your First Food', 'wp-food-manager'); ?></a>
