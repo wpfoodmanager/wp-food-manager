@@ -511,7 +511,7 @@ class WPFM_Settings {
 										break;
 
 									case "password": ?>
-										<input id="setting-<?php echo $option['name']; ?>" class="regular-text" type="password" name="<?php echo $option['name']; ?>" value="<?php esc_attr_e($value); ?>" <?php echo implode(' ', $attributes); ?> <?php echo $placeholder; ?> />
+										<input id="setting-<?php echo esc_attr($option['name']); ?>" class="regular-text" type="password" name="<?php echo esc_attr($option['name']); ?>" value="<?php echo esc_attr($value); ?>" <?php echo implode(' ', $attributes); ?> <?php echo esc_attr($placeholder); ?> />
 										<?php
 										if ($option['desc']) {
 											echo wp_kses_post(' <p class="description">' . $option['desc'] . '</p>');
@@ -519,7 +519,7 @@ class WPFM_Settings {
 										break;
 
 									case "text": ?>
-										<input id="setting-<?php echo $option['name']; ?>" class="regular-text" type="text" name="<?php echo $option['name']; ?>" value="<?php esc_attr_e($value); ?>" <?php echo implode(' ', $attributes); ?> <?php echo $placeholder; ?> />
+										<input id="setting-<?php echo esc_attr($option['name']); ?>" class="regular-text" type="text" name="<?php echo esc_attr($option['name']); ?>" value="<?php echo esc_attr($value); ?>" <?php echo implode(' ', $attributes); ?> <?php echo esc_attr($placeholder); ?> />
 										<?php
 										if ($option['desc']) {
 											echo ' <p class="description">' . $option['desc'] . '</p>';
@@ -527,7 +527,7 @@ class WPFM_Settings {
 										break;
 
 									case 'number': ?>
-										<input id="setting-<?php echo esc_attr($option['name']); ?>" class="regular-text" type="number" min="<?php echo esc_attr($option['custom_attributes']['min']); ?>" step="<?php echo esc_attr($option['custom_attributes']['step']); ?>" name="<?php echo esc_attr($option['name']); ?>" value="<?php esc_attr_e($value); ?>" <?php echo implode(' ', $attributes); ?> <?php echo esc_attr($placeholder); ?> />
+										<input id="setting-<?php echo esc_attr($option['name']); ?>" class="regular-text" type="number" min="<?php echo esc_attr($option['custom_attributes']['min']); ?>" step="<?php echo esc_attr($option['custom_attributes']['step']); ?>" name="<?php echo esc_attr($option['name']); ?>" value="<?php echo esc_attr($value); ?>" <?php echo implode(' ', $attributes); ?> <?php echo esc_attr($placeholder); ?> />
 								<?php if ($option['desc']) {
 										// translators: %s: description text for the option
 										echo wp_kses_post('<p class="description">' . sprintf(__('%s', 'wp-food-manager'), $option['desc']) . '</p>');

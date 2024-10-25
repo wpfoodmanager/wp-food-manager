@@ -5,7 +5,7 @@ $disbled_fields_for_admin = array('food_category', 'food_tag', 'food_nutritions'
 	<ul class="wpfm-tabs">
 		<?php foreach ($this->get_food_data_tabs() as $key => $tab) : ?>
 			<li class="<?php echo esc_attr($key); ?>_options <?php echo esc_attr($key); ?>_tab <?php echo esc_attr(isset($tab['class']) ? implode(' ', (array) $tab['class']) : ''); ?>">
-				<a href="#<?php if (isset($tab['target'])) echo $tab['target']; ?>" class=""><span><?php echo esc_html($tab['label']); ?></span></a>
+			<a href="#<?php if (isset($tab['target'])) echo esc_attr($tab['target']); ?>" class=""><span><?php echo esc_html($tab['label']); ?></span></a>
 			</li>
 		<?php endforeach; ?>
 		<?php do_action('wpfm_food_write_panel_tabs'); ?>
@@ -26,11 +26,11 @@ $disbled_fields_for_admin = array('food_category', 'food_tag', 'food_nutritions'
 				}else{ 
 					?>
 
-			<div id="<?php echo (isset($tab['target'])) ? $tab['target'] : ''; ?>" class="panel wpfm_panel wpfm-metaboxes-wrapper">
+			<div id="<?php echo (isset($tab['target'])) ? esc_attr($tab['target']) : ''; ?>" class="panel wpfm_panel wpfm-metaboxes-wrapper">
 				<div class="wp_food_manager_meta_data">
 					<div class="wpfm-variation-wrapper wpfm-metaboxes">
 						<?php if($key === 'advanced') { ?>
-						  <p class="wpfm-advanced-notice"><?php _e('Based on the given setting the ingredients and nutrition will be show on food detail page.', 'wp-food-manager'); ?></p> 
+						  <p class="wpfm-advanced-notice"><?php esc_html_e('Based on the given setting the ingredients and nutrition will be show on food detail page.', 'wp-food-manager'); ?></p> 
 						<?php } ?>
 						<?php do_action('food_manager_food_data_start', $thepostid);
 						if (isset($food_fields['food']))						
@@ -65,8 +65,8 @@ $disbled_fields_for_admin = array('food_category', 'food_tag', 'food_nutritions'
 											$field['value'] = '';
 										} ?>
 
-									<div class="wpfm_editor" data-field-name="<?= $name; ?>">
-										<p class="wpfm-admin-postbox-form-field <?= $name; ?>">
+									<div class="wpfm_editor" data-field-name="<?= esc_attr($name); ?>">
+										<p class="wpfm-admin-postbox-form-field <?= esc_attr($name); ?>">
 											<label for="<?php echo esc_attr($key); ?>"><?php echo esc_html($field['label']); ?>:
 												<?php if (!empty($field['description'])) : ?>
 													<span class="wpfm-tooltip" wpfm-data-tip="<?php echo esc_attr($field['description']); ?>">[?]</span>
@@ -78,8 +78,8 @@ $disbled_fields_for_admin = array('food_category', 'food_tag', 'food_nutritions'
 										</span>
 									</div>
 								<?php } else { ?>
-									<p class="wpfm-admin-postbox-form-field <?php echo $key; ?>" data-field-name="<?= $key; ?>">
-										<label for="<?php echo $key; ?>"><?php echo $field['label']; ?> : </label>
+									<p class="wpfm-admin-postbox-form-field <?php echo esc_attr($key); ?>" data-field-name="<?= esc_attr($key); ?>">
+										<label for="<?php echo esc_attr($key); ?>"><?php echo esc_html($field['label']); ?> : </label>
 										<span class="wpfm-input-field">
 											<?php get_food_manager_template('form-fields/' . $field['type'] . '-field.php', array('key' => $key, 'field' => $field)); ?>
 										</span>

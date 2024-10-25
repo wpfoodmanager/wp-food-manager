@@ -89,12 +89,12 @@ class WPFM_CPT {
                 jQuery(document).ready(function() {
                     jQuery('<option>').val('approve_food').text('<?php 
                         // translators: %s: food manager name
-                        printf(__('Approve %s', 'wp-food-manager'), esc_attr($wp_post_types['food_manager']->labels->name)); 
+                        printf(__('Approve %s', 'wp-food-manager'), esc_html($wp_post_types['food_manager']->labels->name));
                     ?>').appendTo("select[name='action']");
     
                     jQuery('<option>').val('approve_food').text('<?php 
                         // translators: %s: food manager name
-                        printf(__('Approve %s', 'wp-food-manager'), esc_attr($wp_post_types['food_manager']->labels->name)); 
+                        printf(__('Approve %s', 'wp-food-manager'), esc_html($wp_post_types['food_manager']->labels->name)); 
                     ?>').appendTo("select[name='action2']");
                 });
             </script>
@@ -154,7 +154,7 @@ class WPFM_CPT {
         switch ($column) {
             case 'food_title':
                 echo '<div class="food_title">';
-                echo '<a href="' . esc_url(admin_url('post.php?post=' . $post->ID . '&action=edit')) . '" class="wpfm-tooltip food_title" wpfm-data-tip="' . sprintf(wp_kses('ID: %d', 'wp-food-manager'), $post->ID) . '">' . esc_html($post->post_title) . '</a>';
+                echo '<a href="' . esc_url(admin_url('post.php?post=' . esc_attr($post->ID) . '&action=edit')) . '" class="wpfm-tooltip food_title" wpfm-data-tip="' . esc_attr(sprintf(wp_kses('ID: %d', 'wp-food-manager'), $post->ID)) . '">' . esc_html($post->post_title) . '</a>';
                 echo '</div>';
                 echo '<button type="button" class="toggle-row"><span class="screen-reader-text">' . esc_html__('Show more details', 'wp-food-manager') . '</span></button>';
                 break;
@@ -171,11 +171,11 @@ class WPFM_CPT {
                 break;
 
             case 'food_categories':
-                echo display_food_category();
+               echo esc_html(display_food_category()); 
                 break;
 
             case 'food_stock_status':
-                echo display_stock_status();
+                echo esc_html(display_stock_status());
                 break;
 
             case 'food_menu_order':
@@ -183,7 +183,7 @@ class WPFM_CPT {
                 break;
 
             case 'food_status':
-                echo ucfirst($thispost->post_status);
+                echo esc_html(ucfirst($thispost->post_status));
                 break;
 
             case 'food_actions':

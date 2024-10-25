@@ -39,7 +39,7 @@ $units = get_terms(
 ); ?>
 
 <div class="wpfm-nutrition-fields wpfm-metaboxes">
-<p class="wpfm-nutrition-notice"><?php _e('Please drag and drop the available nutritions and enter the value.', 'wp-food-manager'); ?></p>
+<p class="wpfm-nutrition-notice"><?php esc_html_e('Please drag and drop the available nutritions and enter the value.', 'wp-food-manager'); ?></p>
 
 	<div id="wpfm-nutrition-container" class="wpfm-clear wpfm-lists-container">
 		<ul id="wpfm-active-nutri-list" class="wpfm-active-list wpfm-sortable-list wpfm-clear ui-sortable" data-title="Active Nutrition">
@@ -68,7 +68,7 @@ $units = get_terms(
 							if (!empty($units)) {
 								foreach ($units as $unit) {
 									$sel = ($unit_id == $unit->term_id ? ' selected' : null);
-									echo "<option value='" . esc_attr($unit->term_id) . "'{$sel}>" . esc_html($unit->name) . "</option>";
+									echo "<option value='" . esc_attr($unit->term_id) . "'" . ( !empty($sel) ? ' ' . esc_attr($sel) : '') . ">" . esc_html($unit->name) . "</option>";
 								}
 							}
 
@@ -84,7 +84,7 @@ $units = get_terms(
 		<ul id="wpfm-available-nutri-list" class="wpfm-available-list wpfm-sortable-list wpfm-clear ui-sortable" data-title="Available Nutrition">
 			<li class="wpfm-item-search with-title">
 				<label class="wpfm-search-label">
-					<span><?php _e('Search Nutrition', 'wp-food-manager')?></span>
+					<span><?php esc_html_e('Search Nutrition', 'wp-food-manager')?></span>
 					<input type="text" placeholder="Search">
 				</label>
 			</li>
@@ -98,7 +98,7 @@ $units = get_terms(
 			}
 			?>
 			<!-- Placeholder for 'No results found' message -->
-			<li class="wpfm-no-results" style="display: none;"><?php _e('No results found', 'wp-food-manager'); ?></li>
+			<li class="wpfm-no-results" style="display: none;"><?php esc_html_e('No results found', 'wp-food-manager'); ?></li>
 		</ul>
 	</div>
 	<?php if (isset($food_fields['food']))

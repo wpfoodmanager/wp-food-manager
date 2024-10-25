@@ -25,7 +25,7 @@ $food_toppings = get_post_meta($thepostid, '_food_toppings', true);
 						<a href="javascript: void(0);" data-id="__repeated-option-index__" class="wpfm-delete-btn">Remove</a>
 						<div class="wpfm-togglediv" title="Click to toggle" aria-expanded="false" data-row-count="__repeated-option-index__"></div>
 						<div class="wpfm-sort"></div>
-						<strong class="attribute_name"><?php _e("Option __repeated-option-index__", "wp-food-manager"); ?></strong>
+						<strong class="attribute_name"><?php esc_html_e("Option __repeated-option-index__", "wp-food-manager"); ?></strong>
 						<span class="attribute_key"><input type="hidden" name="topping_key___repeated-option-index__" value="option___repeated-option-index__" readonly>
 							</span>
 					</h3>
@@ -58,7 +58,7 @@ $food_toppings = get_post_meta($thepostid, '_food_toppings', true);
 										    <!-- Adding the notice -->
 											<?php if ($field['label'] === "Options") : ?>
 												<div class="wpfm-topping-option-notice">
-													<?php _e("Please provide the options and price for the topping."); ?>
+													<?php esc_html_e("Please provide the options and price for the topping."); ?>
 												</div>
 											<?php endif; ?>
 										<?php if ($type != 'options') echo '<span class="wpfm-input-field">'; ?>
