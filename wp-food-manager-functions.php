@@ -756,8 +756,10 @@ function wpfm_upload_file($file, $args = array()) {
 
 	if (!in_array($file['type'], $allowed_mime_types)) {
 		if ($args['file_label']) {
-			return new WP_Error('upload', sprintf(__('"%s" (filetype %s) needs to be one of the following file types: %s.', 'wp-food-manager'), $args['file_label'], $file['type'], implode(', ', array_keys($args['allowed_mime_types']))));
+			// Translators: %1$s is replaced with the file label, %2$s is replaced with the file type, %3$s is replaced with the allowed file types.
+			return new WP_Error('upload', sprintf(__('"%1$s" (filetype %2$s) needs to be one of the following file types: %3$s.', 'wp-food-manager'), $args['file_label'], $file['type'], implode(', ', array_keys($args['allowed_mime_types']))));
 		} else {
+			// Translators: %s is replaced with a comma-separated list of allowed file types.
 			return new WP_Error('upload', sprintf(__('Uploaded files need to be one of the following file types: %s.', 'wp-food-manager'), implode(', ', array_keys($args['allowed_mime_types']))));
 		}
 	} else {
@@ -2010,7 +2012,7 @@ function wpfm_term_menu_lists(){
 */
 function error_message_for_menu_page($message){ ?>
 	<div class="wpfm-alert wpfm-alert-danger">
-		<?php _e($message, "wp-food-manager"); ?>
+		<?php echo esc_html($message, "wp-food-manager"); ?>
 	</div>
 <?php }
 
@@ -2079,12 +2081,14 @@ function render_topping($count, $topping = null) {
             <a href="javascript: void(0);" data-id="<?php echo esc_attr($count); ?>" class="wpfm-delete-btn">Remove</a>
             <div class="wpfm-togglediv" title="Click to toggle" aria-expanded="false" data-row-count="<?php echo esc_attr($count); ?>"></div>
             <div class="wpfm-sort"></div>
-            <strong class="attribute_name"><?php printf(__('%s', 'wp-food-manager'), esc_html($topping ? $topping['_topping_name'] : __('Option 1', 'wp-food-manager'))); ?></strong>
+            <strong class="attribute_name">
+			<?php // Translators: %s is replaced with the topping name or a default option if none is provided.
+			printf(__('%s', 'wp-food-manager'), esc_html($topping ? $topping['_topping_name'] : __('Option 1', 'wp-food-manager'))); ?></strong>
             <span class="attribute_key">
                 <input type="hidden" name="topping_key_<?php echo esc_attr($count); ?>" value="<?php echo esc_attr($topping['topping_key'] ?? ''); ?>" readonly>
             </span>
         </h3>
-        <div class="wpfm-metabox-content wpfm-topping-meta-options wpfm-options-box-<?php echo esc_attr($count); ?>">
+        <div class="wpfm-metabox-content wpfm-options-box-<?php echo esc_attr($count); ?>">
             <div class="wpfm-content">
                 <?php
                 do_action('food_manager_food_data_start', $thepostid);
@@ -2105,7 +2109,7 @@ function render_topping($count, $topping = null) {
                         if ($type == 'wp-editor') $type = 'wp_editor';
                         if ($type == "term-autocomplete") $type = "term_autocomplete";
                         ?>
-                        <p class="wpfm-admin-postbox-form-field wpfm-topping-meta <?php echo esc_attr($key) . ($type == 'wp_editor' ? ' wp-editor-field' : ''); ?>" <?php echo ($type == "wp_editor") ? 'data-field-name="' . esc_attr($key) . '"' : ''; ?>>
+                        <p class="wpfm-admin-postbox-form-field <?php echo esc_attr($key) . ($type == 'wp_editor' ? ' wp-editor-field' : ''); ?>" <?php echo ($type == "wp_editor") ? 'data-field-name="' . esc_attr($key) . '"' : ''; ?>>
                             <label for="<?php echo esc_attr($key); ?>"><?php echo esc_html($field['label']); ?> : </label>
                             <?php if ($type != 'options') echo '<span class="wpfm-input-field">'; ?>
                             <?php get_food_manager_template('form-fields/' . $field['type'] . '-field.php', array('key' => esc_attr($key), 'field' => $field)); ?>

@@ -6,6 +6,7 @@ if ($field['type'] == 'url') {
     if (isset($field_value) && !empty($field_value) && wpfm_begnWith($field_value, "http")) {
         echo '<a target="_blank" href="' . esc_url($field_value, 'wp-food-manager') . '">' . sanitize_title(esc_html($field['label'], 'wp-food-manager')) . '</a>';
     } else {
+        // Translators: %s represents the sanitized field label
         printf(__('%s', 'wp-food-manager'), sanitize_title(esc_html($field['label'])));
     }
     echo '</p>';
@@ -58,7 +59,10 @@ if ($field['type'] == 'url') {
 } elseif (isset($field['type']) && $field['type'] == 'time') {
     echo '<div class="wpfm-col-md-6 wpfm-col-sm-12 wpfm-additional-info-block-details-content-left">';
     echo '<div class="wpfm-additional-info-block-details-content-items">';
-    echo '<p class="wpfm-additional-info-block-title"><strong>' . printf(__('%s', 'wp-food-manager'), esc_attr(sanitize_title($field['label']))) . ' - </strong> ' . date(esc_attr($time_format), absint(strtotime($field_value))) . '</p>';
+    echo '<p class="wpfm-additional-info-block-title"> <strong>' . 
+    // Translators: %s represents the sanitized field label 
+    printf(__('%s', 'wp-food-manager'), esc_attr(sanitize_title($field['label']))) 
+    . ' - </strong> '. date(esc_attr($time_format), absint(strtotime($field_value))) . '</p>';
     echo '</div>';
     echo '</div>';
 } elseif ($field['type'] == 'file') {
@@ -112,6 +116,7 @@ if ($field['type'] == 'url') {
                     $my_checks_value_arr[] = esc_attr(sanitize_title($term_name));
                 }
             }
+            // Translators: %s represents a comma-separated list of checked values
             printf(__('%s', 'wp-food-manager'),  implode(', ', $my_checks_value_arr));
         } else {
             echo !empty(get_term(ucfirst($field_value))) ? esc_attr(sanitize_title(get_term(ucfirst($field_value))->name)) : '';
@@ -130,6 +135,7 @@ if ($field['type'] == 'url') {
         foreach ($field_value as $key => $my_value) {
             $my_check_value_arr[] = $field['options'][$my_value];
         }
+        // Translators: %s represents a list of values joined by commas
         printf(__('%s', 'wp-food-manager'),  implode(', ', $my_check_value_arr));
     } else {
         if ($field_value == 1) {
@@ -174,6 +180,7 @@ if ($field['type'] == 'url') {
                 $term_name = get_term($my_value)->name;
                 $my_select_value_arr[] = $term_name;
             }
+            // Translators: %s represents a comma-separated list of selected values
             printf(__('%s', 'wp-food-manager'),  implode(', ', $my_select_value_arr));
         } else {
             echo esc_attr(sanitize_title(get_term(ucfirst($field_value))->name));
