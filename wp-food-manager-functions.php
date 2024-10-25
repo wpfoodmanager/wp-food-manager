@@ -2124,3 +2124,23 @@ function render_topping($count, $topping = null) {
     </div>
     <?php
 }
+
+/**
+ * Checks if an array is not blank.
+ *
+ * This function checks if any of the specified keys in the array
+ * contain non-empty values. If at least one key has a non-empty value,
+ * the function returns true; otherwise, it returns false.
+ *
+ * @param array $array The array to check for non-empty values.
+ * @return bool True if the array contains at least one non-empty value; otherwise, false.
+ */
+function isArrayNotBlank($array) {
+    foreach ($array as $item) {
+        // Check if required keys are not empty
+        if (!empty($item['_topping_name']) || !empty($item['_topping_description']) || !empty($item['_topping_options'])) {
+            return true; // Found a non-empty value
+        }
+    }
+    return false; // All values are empty
+}

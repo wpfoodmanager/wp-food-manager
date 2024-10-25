@@ -135,7 +135,8 @@ $food = $post;
                                     }
                                     $more_class = !empty($additional_fields_extra_topping) ? 'with-more' : '';
                                     if (!empty($repeated_count)) {
-                                        if (!empty($ext_options)) {
+                                        if (!empty($ext_options) && isArrayNotBlank($ext_options)) {
+                                        print_r($ext_options);
                                             echo "<h3 class='wpfm-heading-text'>Extra Toppings</h3>";
                                             foreach ($ext_options as $key => $ext_option) {
                                                 $field_required = '';
