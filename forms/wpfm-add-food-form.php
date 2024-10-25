@@ -366,7 +366,7 @@ class WPFM_Add_Food_Form extends WPFM_Form {
 							$file_info = wp_check_filetype($file_url);
 							if (!is_numeric($file_url) && $file_info && !in_array($file_info['type'], $field['allowed_mime_types'])) {
 								// translators: 1: field label, 2: file type (currently an empty string), 3: allowed file types
-								throw new Exception(sprintf(__('"%1$s" (filetype %2$s) needs to be one of the following file types: %3$s.', 'wp-food-manager'), $field['label'], '', implode(', ', array_keys($field['allowed_mime_types']))));
+								throw new Exception(sprintf(esc_html__('"%1$s" (filetype %2$s) needs to be one of the following file types: %3$s.', 'wp-food-manager'),esc_html($field['label']),'', esc_html(implode(', ', array_map('esc_html', array_keys($field['allowed_mime_types'])))) ));
 							}
 						}
 					}

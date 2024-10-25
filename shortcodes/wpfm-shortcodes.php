@@ -350,7 +350,8 @@ class WPFM_Shortcodes {
 			get_food_manager_template('food-listings-start.php', array('layout_type' => $layout_type, 'title' => $title));
 			get_food_manager_template('food-listings-end.php');
 			if (!$show_pagination && $show_more) {
-				echo '<a class="load_more_foods" id="load_more_foods" href="javascript:void(0);" style="display:none;"><strong>' . __('Load more foods', 'wp-food-manager') . '</strong></a>';
+				echo '<a class="load_more_foods" id="load_more_foods" href="javascript:void(0);" style="display:none;"><strong>' . esc_html__('Load more foods', 'wp-food-manager') . '</strong></a>';
+
 			}
 		} else {
 			$foods = get_food_listings(apply_filters('food_manager_output_foods_args', array(
