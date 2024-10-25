@@ -212,7 +212,7 @@ class WPFM_Ajax {
                 'post_status' => 'publish'
             ));
             if (count($default_foods) == 0) { ?>
-                <div class="no_food_listings_found wpfm-alert wpfm-alert-danger"><?php _e('There is no food item listed in your food manager.', 'wp-food-manager'); ?></div>
+                <div class="no_food_listings_found wpfm-alert wpfm-alert-danger"><?php esc_html_e('There is no food item listed in your food manager.', 'wp-food-manager'); ?></div>
             <?php } else {
                 get_food_manager_template_part('content', 'no-foods-found');
             }
