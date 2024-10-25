@@ -1,5 +1,5 @@
 <?php $food_fields = $this->food_manager_data_fields();
-$disbled_fields_for_admin = array('food_category', 'food_tag', 'food_nutritions', 'food_ingredients'); ?>
+$disbled_fields_for_admin = array('food_category', 'food_tag', 'food_nutritions', 'food_ingredients', 'food_type'); ?>
 
 <div class="panel-wrap">
 	<ul class="wpfm-tabs">
