@@ -52,7 +52,11 @@ class WPFM_ActionHooks {
         add_action('food_manager_output_foods_no_results', array($this, 'output_no_results'));
        
         add_action('wpfm_save_food_data', array($this, 'food_manager_save_food_manager_data'), 20, 3);
+        
     }
+
+    
+    
     
     /**
      * Output some content when no results were found.
@@ -134,12 +138,19 @@ class WPFM_ActionHooks {
         ));
         
         // Frontend Css.
-        wp_enqueue_style('wpfm-frontend', esc_url(WPFM_PLUGIN_URL . '/assets/css/frontend.min.css'));
-     
+        wp_enqueue_style('wpfm-frontend', esc_url(WPFM_PLUGIN_URL . '/assets/css/frontend.css'));
+
+        // Enqueue the script for search food menu.
+        wp_register_script('food-menu-search', esc_url(WPFM_PLUGIN_URL . '/assets/js/food-menu-search.js'), array('jquery'), WPFM_VERSION, true);
+        wp_localize_script('food-menu-search', 'foodMenuAjax', array(
+            'ajax_url' => esc_url(admin_url('admin-ajax.php')),
+            'nonce'   => wp_create_nonce('food_menu_search_nonce')
+        ));
         // Frontend js.
         wp_register_script('wp-food-manager-frontend', esc_url(WPFM_PLUGIN_URL . '/assets/js/frontend.js'), array('jquery'), WPFM_VERSION, true);
         wp_localize_script('wp-food-manager-frontend', 'wpfm_frontend', array(
             'ajax_url' => esc_url(admin_url('admin-ajax.php')),
+            'nonce' => wp_create_nonce('food_menu_search_nonce'),
         ));
         wp_enqueue_script('wp-food-manager-frontend');
 

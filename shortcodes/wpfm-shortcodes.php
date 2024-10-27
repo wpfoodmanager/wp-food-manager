@@ -954,48 +954,62 @@ class WPFM_Shortcodes {
 	 * @return string
 	 * @since 1.0.0
 	 */
-	public function food_menu_output_callback_function($atts){
+	public function food_menu_output_callback_function($atts) {
 		ob_start();
+		
+		// Set default attributes
 		$atts = shortcode_atts(array(
-			'id' => '',
+			'search_term' => '',
+			'is_ajax'     => 'false', // Default to false if not set
 		), $atts);
 		
-		$id = (isset($atts['id'])) ? $atts['id'] : '';
-	
+		$search_term = sanitize_text_field($atts['search_term']);
+		
+		// Arguments for the query
 		$args = array(
-			'post_type'   => 'food_manager_menu',
+			'post_type'   => 'food_manager',
 			'post_status' => 'publish',
+			'posts_per_page' => -1, // Retrieve all matching menus
 		);
-
-		if(isset($id)){
-			$args['p'] = $id;
+	
+		// If search_term is provided, modify the query to filter results
+		if (!empty($search_term)) {
+			$args['s'] = $search_term; // This will search the title and content
 		}
-
-		$food_menus = new WP_Query(apply_filters('food_manager_food_menu_args',$args));
-		if ($food_menus->have_posts()) { ?>
-			<?php while ($food_menus->have_posts()) : $food_menus->the_post();
+	
+		// Query the food menus
+		$food_menus = new WP_Query(apply_filters('food_manager_food_menu_args', $args));
+	
+		// Check if there are posts and output them
+		if ($food_menus->have_posts()) {
+			while ($food_menus->have_posts()) {
+				$food_menus->the_post();
 				$post_id = get_the_ID();
 				// Get the meta value for this post
 				$food_ids = get_post_meta($post_id, '_food_item_ids', true);
-			?>
-				<div class="clearfix">
-					<?php get_food_manager_template_part('content-single', 'food_manager_menu'); ?>
-				</div>
-			<?php endwhile; ?>
-		<?php } else{
-			error_message_for_menu_page('Invalid Menu id.'); 
+				?>
+				<div id="menu-<?php the_ID(); ?>" class="food-menu-section">
+								<div class="clearfix">
+									<?php get_food_manager_template_part('content-single', 'food_manager_menu_list'); ?>
+								</div>
+							</div>
+				<?php
+			}
+		} else {
+			// If no menus found, return an appropriate message
+			if (!empty($search_term)) {
+				error_message_for_menu_page('No food menu items found for the search term: ' . esc_html($search_term));
+			} else {
+				error_message_for_menu_page('No Food Menu are available.');
+			}
 			return ob_get_clean();
 		}
-		
-		if(!$food_ids){ 
-			error_message_for_menu_page('No Food Menu are available.'); 
-			return ob_get_clean();
-		}
-		wp_reset_postdata();
-
-		return ob_get_clean();
 	
+		wp_reset_postdata();
+	
+		return ob_get_clean();
 	}
+	
 }
 
 WPFM_Shortcodes::instance();

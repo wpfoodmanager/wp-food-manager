@@ -32,7 +32,7 @@ var WPFM_Frontend = function () {
             jQuery(".wpfm-form-group.fieldset-topping_description").hide();
             //use body to call after dom update.
             jQuery("body").on('click', 'a.wpfm-food-item-remove', WPFM_Frontend.actions.removeFoodItem);
-            
+            jQuery('#food-menu-search').on('keyup', WPFM_Frontend.actions.handleSearch);
             /* General tab - Regular and Sale price validation */
             jQuery('body').on('wpfm_add_error_tip', function (e, element, error_type) {
                 var offset = element.position();
@@ -44,6 +44,7 @@ var WPFM_Frontend = function () {
                         .fadeIn('100');
                 }
             });
+            
             jQuery('body').on('wpfm_remove_error_tip', function (e, element, error_type) {
                 element.parent().find('.wpfm_error_tip.' + error_type).fadeOut('100', function () { jQuery(this).remove(); });
             });
@@ -341,6 +342,36 @@ var WPFM_Frontend = function () {
                         button.prop('disabled', false);
                     }
                 });
+            },
+            handleSearch: function(e) {
+                e.preventDefault();
+                var search_term = jQuery(this).val().toLowerCase();
+                console.log({
+                    action: 'food_menu_search',
+                    search_term: search_term,
+                    nonce: wpfm_frontend.nonce,
+                    is_ajax: true,
+                    url: wpfm_frontend.ajax_url
+                });
+                
+                jQuery.ajax({
+                    url: wpfm_frontend.ajax_url, // Or the URL to admin-ajax.php
+                    method: 'POST',
+                    data: {
+                        action: 'food_menu_search',
+                        search_term: search_term,
+                        nonce: wpfm_frontend.nonce, // Include the nonce for security
+                        is_ajax: true
+                    },
+                    success: function(response) {
+                        jQuery('#food-menu-results').html(response);
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('AJAX Error:', xhr.status, status, error);
+                        console.log('Response:', xhr.responseText); // Log the full response for more insight
+                    }
+                });
+                
             }
         },
     }

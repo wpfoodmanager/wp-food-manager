@@ -52,6 +52,8 @@ class WPFM_Ajax {
         add_action('wp_ajax_nopriv_term_ajax_search', array($this, 'term_ajax_search'));
         add_action('wp_ajax_nopriv_food_manager_get_food_popup', array($this, 'get_food_popup'));
 		add_action('wp_ajax_food_manager_get_food_popup', array($this, 'get_food_popup'));
+		add_action('wp_ajax_food_menu_search', array($this, 'ajax_food_menu_search'));
+        add_action('wp_ajax_nopriv_food_menu_search', array($this, 'ajax_food_menu_search'));
 	}
 	
 	/**
@@ -344,6 +346,29 @@ class WPFM_Ajax {
             echo 'No food ID provided';
             wp_die();
         }
+    }
+    
+    /**
+     *Search food from food menu.
+     * 
+     * @access public
+     * @since 1.0.1
+     */
+    public function ajax_food_menu_search() {
+        check_ajax_referer('food_menu_search_nonce', 'nonce');
+    
+        $search_term = isset($_POST['search_term']) ? sanitize_text_field($_POST['search_term']) : '';
+        if (empty($search_term)) {
+            wp_send_json_error('Search term is empty');
+        }
+    
+        // Use the shortcode to get the results
+        echo do_shortcode("[food_menu search_term='$search_term' is_ajax='true']");
+    
+        wp_reset_postdata();
+        
+        // Properly end the AJAX request
+        wp_die();
     }
 	
 	/**
