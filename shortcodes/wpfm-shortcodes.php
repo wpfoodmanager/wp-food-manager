@@ -804,8 +804,9 @@ class WPFM_Shortcodes {
 					foreach ($restaurant_menus as $menu_id) {
 						$menu_title = get_the_title($menu_id);
 						$menu_link = get_permalink($menu_id); 
-	
-						echo '<div class="menu-title"><a href="' . esc_url($menu_link) . '">' . esc_html($menu_title) . '</a></div>';
+						$food_item_ids = get_post_meta($menu_id, '_food_item_ids', true);
+						$food_item_ids_count = count($food_item_ids);
+						echo '<div class="menu-title"><a href="' . esc_url($menu_link) . '">' . esc_html($menu_title) . ' &nbsp;( '. intval($food_item_ids_count) . ' )' .'</a></div>';
 					}
 				} else {
 					error_message_for_menu_page('No menus found for this restaurant.');
