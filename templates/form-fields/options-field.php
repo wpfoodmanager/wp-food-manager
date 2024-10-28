@@ -39,9 +39,9 @@
                 <tr class="option-tr-<?php echo esc_attr($count); ?>">
                     <td><span class="wpfm-option-sort">☰</span></td>
                     <td><?php echo esc_html($count); ?></td>
-                    <td><input type="text" name="<?php echo esc_attr($wpfm_key_num); ?>_option_name_<?php echo esc_attr($count); ?>" value="<?php if (isset($op_value['option_name'])) echo $op_value['option_name']; ?>" class="opt_name" pattern=".*\S+.*" <?php echo (is_admin()) ? '' : 'required'; ?>></td>
+                    <td><input type="text" name="<?php echo esc_attr($wpfm_key_num); ?>_option_name_<?php echo esc_attr($count); ?>" value="<?php if (isset($op_value['option_name'])) echo esc_attr($op_value['option_name']); ?>" class="opt_name" pattern=".*\S+.*" <?php echo (is_admin()) ? '' : 'required'; ?>></td>
                     <?php do_action('wpfm_repeated_option_name_after', $args); ?>
-                    <td><input type="number" name="<?php echo esc_attr($wpfm_key_num); ?>_option_price_<?php echo esc_attr($count); ?>" value="<?php if (isset($op_value['option_price'])) echo $op_value['option_price']; ?>" class="opt_price" step="any" min="0" <?php echo (is_admin()) ? '' : 'required'; ?>></td>
+                    <td><input type="number" name="<?php echo esc_attr($wpfm_key_num); ?>_option_price_<?php echo esc_attr($count); ?>" value="<?php if (isset($op_value['option_price'])) echo esc_attr($op_value['option_price']); ?>" class="opt_price" step="any" min="0" <?php echo (is_admin()) ? '' : 'required'; ?>></td>
                     <?php do_action('wpfm_repeated_option_price_after', $args); ?>
                     <td><a href="javascript: void(0);" data-id="<?php echo esc_attr($count); ?>" class="option-delete-btn dashicons dashicons-dismiss"></a></td>
                     <input type="hidden" class="option-value-class" name="option_value_count[]" value="<?php echo esc_attr($count); ?>">

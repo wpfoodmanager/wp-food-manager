@@ -116,7 +116,7 @@ if (is_admin()) {
 			<?php echo esc_html(sanitize_textarea_field($field['description'])); ?>
 		<?php else : ?>
 			<?php // Translators: %s is replaced with the maximum file size formatted as a readable string. 
-			printf(__('Maximum file size: %s.', 'wp-food-manager'), size_format(wp_max_upload_size())); ?>
+			printf(esc_html__('Maximum file size: %s.', 'wp-food-manager'), esc_html(size_format(wp_max_upload_size()))); ?>
 		<?php endif; ?>
 	</small>
 <?php } ?>

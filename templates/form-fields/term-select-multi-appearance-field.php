@@ -122,7 +122,7 @@ if (!empty($field['description'])) : ?>
     <small class="description"><?php echo esc_html($field['description']); ?></small>
 <?php endif; ?>
 
-<div class="<?php echo isset($field['name']) ? esc_attr($field['name']) : $key; ?>-preview selection-preview" style="<?php echo esc_attr($style); ?>" data-name="<?php echo ($field['taxonomy'] == 'food_manager_ingredient') ? 'food_ingredients' : 'food_nutritions'; ?>">
+<div class="<?php echo isset($field['name']) ? esc_attr($field['name']) : esc_attr($key); ?>-preview selection-preview" style="<?php echo esc_attr($style); ?>" data-name="<?php echo ($field['taxonomy'] == 'food_manager_ingredient') ? 'food_ingredients' : 'food_nutritions'; ?>">
     <legend>Preview:</legend>
-    <ul class="preview-items"><?php echo $preview_htm; ?></ul>
+    <ul class="preview-items"><?php echo wp_kses_post($preview_htm); ?></ul>
 </div>
