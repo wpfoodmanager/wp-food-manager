@@ -373,9 +373,9 @@ class WPFM_Shortcodes {
 				<?php if ($foods->found_posts > $per_page && $show_more) : ?>
 					<?php wp_enqueue_script('wpfm-ajax-filters'); ?>
 					<?php if ($show_pagination) : ?>
-						<?php echo get_food_manager_pagination($foods->max_num_pages); ?>
+						<?php echo esc_html( get_food_manager_pagination( $foods->max_num_pages ) ); ?>
 					<?php else : ?>
-						<a class="load_more_foods" id="load_more_foods" href="javascript:void(0);"><strong><?php _e('Load more listings', 'wp-food-manager'); ?></strong></a>
+						<a class="load_more_foods" id="load_more_foods" href="javascript:void(0);"><strong><?php esc_html_e('Load more listings', 'wp-food-manager'); ?></strong></a>
 					<?php endif; ?>
 				<?php endif; ?>
 		<?php else :
@@ -650,7 +650,7 @@ class WPFM_Shortcodes {
 										if($title_query->have_posts()) {
 											while ($title_query->have_posts()) { $title_query->the_post(); ?>
 												<div class="food-menu-page-filter-tab">
-													<a href="#menu-<?php the_ID(); ?>" class="food-menu-page-filter-tab-link"><?php echo get_the_title(); ?></a>
+													<a href="#menu-<?php the_ID(); ?>" class="food-menu-page-filter-tab-link"><?php echo esc_html( get_the_title() ); ?></a>
 												</div>
 											<?php } wp_reset_postdata();
 										} ?>
@@ -800,7 +800,7 @@ class WPFM_Shortcodes {
 				$restaurant_menus = get_post_meta(get_the_ID(), '_restaurant_menus', true);
 				
 				if (!empty($restaurant_menus) && is_array($restaurant_menus)) {
-					echo '<h2>'. get_the_title() .'</h2>';
+					echo '<h2>'.esc_html(get_the_title()) .'</h2>';
 					foreach ($restaurant_menus as $menu_id) {
 						$menu_title = get_the_title($menu_id);
 						$menu_link = get_permalink($menu_id); 
@@ -882,7 +882,7 @@ class WPFM_Shortcodes {
 									$title_query->the_post();
 									?>
 									<div class="food-menu-page-filter-tab">
-										<a href="#menu-<?php the_ID(); ?>" class="food-menu-page-filter-tab-link"><?php echo get_the_title(); ?></a>
+										<a href="#menu-<?php the_ID(); ?>" class="food-menu-page-filter-tab-link"><?php echo esc_html(get_the_title()); ?></a>
 									</div>
 									<?php
 								}

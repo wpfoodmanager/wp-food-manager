@@ -12,7 +12,7 @@ global $wp_query;
             <div class="wpfm-col-12 wpfm-food-listing-tag-page-wrapper">
                 <div class="wpfm-my-5 wpfm-food-listing-tag-page-title">
                     <h1 class="wpfm-heading-text"><?php echo wp_kses_post(get_the_archive_title()); ?></h1>
-                    <?php echo get_the_archive_description(); ?>
+                    <?php echo wp_kses_post( get_the_archive_description() ); ?>
                 </div>
                 <div class="food_listings">
                     <?php if (have_posts()) : ?>

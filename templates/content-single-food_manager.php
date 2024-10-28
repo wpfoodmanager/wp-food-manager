@@ -45,7 +45,7 @@ $food = $post;
                             <div class="wpfm-single-food-short-info">
                                 <div class="wpfm-food-details">
                                     <div class="food-details-row">
-                                        <div class="food-menu-label"><?php echo apply_filters('wpfm_food_label', get_post_meta($post->ID, '_food_label', true)); ?></div>
+                                    <div class="food-menu-label"><?php echo esc_html( apply_filters( 'wpfm_food_label', get_post_meta( $post->ID, '_food_label', true ) ) ); ?></div>
                                         <?php
                                         $view_count = get_food_views_count($post);
                                         if ($view_count) : ?>
@@ -53,10 +53,11 @@ $food = $post;
                                             <div class="wpfm-viewed-food wpfm-tooltip wpfm-tooltip-bottom">
                                                 <i class="wpfm-icon-eye"></i> 
                                                 <?php // translators: %d: View count of the food item ?>
-                                                <?php printf(esc_html__('%d', 'wp-food-manager'), $view_count); ?> 
+                                               <?php printf( esc_html__( '%d', 'wp-food-manager' ), intval( $view_count ) ); ?>
                                             </div>
                                                 <?php // translators: %d: Number of people who viewed the food item ?>
-                                                <span class="wpfm-tooltiptext"><?php printf(esc_html__('%d people viewed this food.', 'wp-food-manager'), $view_count); ?></span>
+                                                <span class="wpfm-tooltiptext"><?php printf( esc_html__( '%d people viewed this food.', 'wp-food-manager' ), intval( $view_count ) ); ?></span>
+
                                             <?php do_action('single_food_overview_before',get_the_ID()); ?>
                                         </div>
                                         <?php endif; ?>
@@ -82,7 +83,7 @@ $food = $post;
                             </div>
                             <div class="wpfm-single-food-body-content">
                                 <?php do_action('single_food_overview_start'); ?>
-                                <?php echo apply_filters('wpfm_the_content', $post->post_content); ?>
+                                <?php echo wp_kses_post( apply_filters( 'wpfm_the_content', $post->post_content ) ); ?>
                                 <?php do_action('single_food_overview_end'); ?>
                                 <?php
                                 $ingredients = get_food_ingredients();
@@ -102,7 +103,7 @@ $food = $post;
                                     </div>
                                 <?php endif; ?>
                             
-                                <form class="wpfm-toppings" id="wpfm_single_food_topping_form" method="post" action="" data-product-attribute='<?php echo apply_filters( 'wpfm_food_toppings_form_variation', '' ); ?>'>
+                                <form class="wpfm-toppings" id="wpfm_single_food_topping_form" method="post" action="" data-product-attribute='<?php echo esc_attr( apply_filters( 'wpfm_food_toppings_form_variation', '' ) ); ?>'>
                                     <?php
                                     $ext_options = get_post_meta(get_the_ID(), '_food_toppings', true);
                                     $repeated_count = get_post_meta(get_the_ID(), '_food_repeated_options', true);
@@ -176,7 +177,7 @@ $food = $post;
                                                         }
                                                     }
                                                     $topping_htm .= '</ul>';
-                                                    echo apply_filters('wpfm_toppings_list_htm', $topping_htm, array('ext_option' => $ext_option, 'more_class' => $more_class, 'key' => $key));
+                                                   echo wp_kses_post( apply_filters( 'wpfm_toppings_list_htm', $topping_htm, array( 'ext_option' => $ext_option, 'more_class' => $more_class, 'key' => $key ) ) ); 
                                                     do_action('wpfm_singular_option_input_after');
                                                     if (!empty($additional_fields_extra_topping)) {
                                                         echo "<div class='wpfm-additional-main-row wpfm-row' style='display: none;'>";
@@ -202,7 +203,7 @@ $food = $post;
                                     do_action('single_food_toppings_after');
                                     ?>
                                 </form>
-                                <?php echo do_action('food_manager_addons_html');?>
+                                <?php  echo do_action('food_manager_addons_html'); ?>
                             </div>
                             <!-- Additional Info Block Start -->
                             <?php
