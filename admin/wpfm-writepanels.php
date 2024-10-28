@@ -200,14 +200,13 @@ class WPFM_Writepanels {
 
 		foreach ($icon_arrs as $key => $icon_arr) {
 			$radio_checked = (get_post_meta($thepostid, 'wpfm_radio_icons', true) === $key) ? "checked" : "";
-            echo '<div class="sub-font-icon"><input type="radio" id="' . esc_attr($key) . '" name="radio_icons" value="' . esc_attr($key) . '" ' . esc_attr($radio_checked) . '><label for="' . esc_attr($key) . '"><span class="wpfm-key-name">' . esc_html($key) . '</span><i class="dashicons ' . esc_attr($key) . '"></i></label></div>';
-		}
+            echo '<div class="sub-font-icon"><input type="radio" id="' . $key . '" name="radio_icons" value="' . $key . '" ' . $radio_checked . '><label for="' . $key . '"><span class="wpfm-key-name">' . $key . '</span><i class="dashicons ' . $key . '"></i></label></div>';
+        }
 
 		foreach ($food_icon_arrs as $key => $icon_arr) {
 			$radio_checked = (get_post_meta($thepostid, 'wpfm_radio_icons', true) === $key) ? "checked" : "";
 			$key_name = str_replace("wpfm-menu-", "", $key);
-            echo '<div class="sub-font-icon"><input type="radio" id="' . esc_attr($key) . '" name="radio_icons" value="' . esc_attr($key) . '" ' . esc_attr($radio_checked) . '><label for="' . esc_attr($key) . '"><span class="wpfm-key-name">' . esc_html($key_name) . '</span></label></div>';
-    
+            echo '<div class="sub-font-icon"><input type="radio" id="' . $key . '" name="radio_icons" value="' . $key . '" ' . $radio_checked . '><label for="' . $key . '"><span class="wpfm-key-name">' . $key_name . '</span>';
 			if ($key_name == 'fast-cart') {
 				echo '<span class="wpfm-menu wpfm-menu-fast-cart"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span></span>';
 			} elseif ($key_name == 'rice-bowl') {
