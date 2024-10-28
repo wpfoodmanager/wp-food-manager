@@ -112,7 +112,7 @@ $show_image = ($disable_food_image !== 'yes');
             if (!empty($food_listing->post_content)) {
                 $menu_food_desc = "<p class='fm-food-menu-desc'>" . wp_kses_post($food_listing->post_content) . "</p>";
             }
-            echo "<div class='food-list-box' data-id='".$food_listing->ID."'>";
+            echo "<div class='food-list-box' data-id='" . esc_attr($food_listing->ID) . "'>";
 
             if ($thumbnail_option != 'thumbnail_disabled' && $show_image) {
                 echo "<div class='wpfm-food-list-box-image-col wpfm-food-image-". esc_attr($thumbnail_option) ."'><img src='" . esc_url($featured_img) . "' alt='". esc_html($food_listing->post_title) ."'></div>";
@@ -120,9 +120,9 @@ $show_image = ($disable_food_image !== 'yes');
 
             echo "<div class='wpfm-food-list-box-content-col'>";
             if (!empty($food_label)) {
-                echo "<div class='food-menu-label'>" . $food_label . "</div>";
+                echo "<div class='food-menu-label'>" . esc_attr($food_label) . "</div>";
             }
-            echo "<a $food_menu_return_false href='" . $food_menu_permalink . "'>";
+            echo "<a $food_menu_return_false href='" . esc_url($food_menu_permalink) . "'>";
             echo "<div class='wpfm-food-menu-title-container'>";?>
             <h3 class='fm-food-menu-title'> <?php echo esc_html($food_listing->post_title); ?> 
             <?php display_food_veg_nonveg_icon_tag($food_listing);?>
