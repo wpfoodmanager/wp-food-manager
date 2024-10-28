@@ -48,7 +48,7 @@ if (!empty($regular_price)) {
             <div id="wpfm_food_menu_modal_description" class="wpfm-food-modal-food_description">
                 <?php echo wp_kses_post($food->post_content);?>
             </div>
-            <form class="wpfm-toppings" id="wpfm_single_food_topping_form" method="post" action="" data-product-attribute='<?php echo apply_filters( 'wpfm_food_toppings_form_variation', '' ); ?>'>
+            <form class="wpfm-toppings" id="wpfm_single_food_topping_form" method="post" action="" data-product-attribute='<?php echo apply_filters( 'wpfm_food_toppings_form_variation', '' , $food_id); ?>'>
                                     <?php
                                     $ext_options = get_post_meta($food_id, '_food_toppings', true);
                                     $repeated_count = get_post_meta($food_id, '_food_repeated_options', true);

@@ -336,6 +336,7 @@ var WPFM_Frontend = function () {
                         jQuery(_this).parents('.wpfm-single-food-menu-page').next('.wpfm-modal.wpfm-food-popup').html(response.html);
                         jQuery(_this).parents('.wpfm-single-food-menu-page').next('.wpfm-modal.wpfm-food-popup').addClass('wpfm-modal-open');
                         button.prop('disabled', false);
+                        jQuery(document).trigger('wpfm-food-popup-opened');
                     },
                     error: function(xhr, status, error) {
                         console.error(error);
