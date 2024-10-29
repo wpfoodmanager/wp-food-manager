@@ -1,5 +1,3 @@
-
-
 <div id="food-menu-container" class="wpfm-food-menu-page-main-container">
      <div class="food-menu-page-filters">
         <!-- search box for search food menu -->

@@ -62,7 +62,7 @@ if ($field['type'] == 'url') {
     echo '<p class="wpfm-additional-info-block-title"> <strong>' . 
     // Translators: %s represents the sanitized field label 
     Sprintf(esc_html__('%s', 'wp-food-manager'), esc_html(sanitize_title($field['label']))) 
-    . ' - </strong> '.. esc_html(date(esc_attr($time_format), absint(strtotime($field_value)))) . '</p>';
+    . ' - </strong> '. esc_html(date(esc_attr($time_format), absint(strtotime($field_value)))) . '</p>';
     echo '</div>';
     echo '</div>';
 } elseif ($field['type'] == 'file') {

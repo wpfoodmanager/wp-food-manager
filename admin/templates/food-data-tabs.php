@@ -64,9 +64,8 @@ $disbled_fields_for_admin = array('food_category', 'food_tag', 'food_nutritions'
 										if (wpfm_begnWith($field['value'], "http")) {
 											$field['value'] = '';
 										} ?>
-
-									<div class="wpfm_editor" data-field-name="<?= esc_attr($name); ?>">
-										<p class="wpfm-admin-postbox-form-field <?= esc_attr($name); ?>">
+									<div class="wpfm_editor" data-field-name="<?php echo esc_attr($name); ?>">
+										<p class="wpfm-admin-postbox-form-field <?php echo esc_attr($name); ?>">
 											<label for="<?php echo esc_attr($key); ?>"><?php echo esc_html($field['label']); ?>:
 												<?php if (!empty($field['description'])) : ?>
 													<span class="wpfm-tooltip" wpfm-data-tip="<?php echo esc_attr($field['description']); ?>">[?]</span>
@@ -78,7 +77,7 @@ $disbled_fields_for_admin = array('food_category', 'food_tag', 'food_nutritions'
 										</span>
 									</div>
 								<?php } else { ?>
-									<p class="wpfm-admin-postbox-form-field <?php echo esc_attr($key); ?>" data-field-name="<?= esc_attr($key); ?>">
+									<p class="wpfm-admin-postbox-form-field <?php echo esc_attr($key); ?>" data-field-name="<?php echo esc_attr($key); ?>">
 										<label for="<?php echo esc_attr($key); ?>"><?php echo esc_html($field['label']); ?> : </label>
 										<span class="wpfm-input-field">
 											<?php get_food_manager_template('form-fields/' . $field['type'] . '-field.php', array('key' => $key, 'field' => $field)); ?>

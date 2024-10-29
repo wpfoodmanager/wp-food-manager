@@ -1906,7 +1906,7 @@ function wpfm_category_checklist($taxonomy, $key_name, $checked_term) {
 		$wpfm_term_ids[] = $term->term_id;
 		$id      = "$taxonomy-$term->term_id";
 		$checked = in_array($term->term_id, $checked_term) ? 'checked="checked"' : ''; ?>
-		<li id="<?php echo $tax->name; ?>-<?php echo $id; ?>" class="<?php echo $tax->name; ?>">
+		<li id="<?php echo esc_attr( $tax->name . '-' . $id ); ?>" class="<?php echo esc_attr( $tax->name ); ?>">
 			<label class="selectit">
 				<input id="in-<?php echo esc_attr(sanitize_title($tax->name)); ?>-<?php echo absint($id); ?>" type="checkbox" <?php echo wp_kses_post($checked); ?> name="<?php echo esc_attr($key_name); ?>[<?php echo esc_attr($tax->name); ?>][]" value="<?php echo (int) $term->term_id; ?>" <?php disabled(!current_user_can($tax->cap->assign_terms)); ?> />
 				<?php echo esc_html(apply_filters('the_category', $term->name, '', '')); ?>
@@ -1937,7 +1937,7 @@ function wpfm_dropdown_categories($taxonomy, $key_name, $selected_term) {
 		)
 	);
 	if (is_wp_error($terms)) {
-        echo 'Error: ' . $terms->get_error_message();
+		echo 'Error: ' . esc_html( $terms->get_error_message() );
         return;
     }
 	$wpfm_term_ids = array();
@@ -2083,7 +2083,7 @@ function render_topping($count, $topping = null) {
             <div class="wpfm-sort"></div>
             <strong class="attribute_name">
 			<?php // Translators: %s is replaced with the topping name or a default option if none is provided.
-			printf(__('%s', 'wp-food-manager'), esc_html($topping ? $topping['_topping_name'] : __('Option 1', 'wp-food-manager'))); ?></strong>
+			printf(esc_html__('%s', 'wp-food-manager'), esc_html($topping ? $topping['_topping_name'] : esc_html__('Option 1', 'wp-food-manager'))); ?></strong>
             <span class="attribute_key">
                 <input type="hidden" name="topping_key_<?php echo esc_attr($count); ?>" value="<?php echo esc_attr($topping['topping_key'] ?? ''); ?>" readonly>
             </span>
