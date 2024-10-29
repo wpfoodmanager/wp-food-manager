@@ -402,7 +402,7 @@ class WPFM_Settings {
                         array(
                             'label'    => __('Count Restaurant Foods', 'wp-food-manager'),
                             'desc'        => __('Displays the count of restaurant food menu using the shortcode. If yes, display the count otherwise blank.', 'wp-food-manager'),
-                            'name'       => 'wpfm_restaurant_food_menu',
+                            'name'       => 'wpfm_restaurant_food_menu_count',
                             'std'         => '[restaurant_food_menu restaurant_id="" count="yes"]',
                             'type'     => 'text',
                             'attributes' => array(
