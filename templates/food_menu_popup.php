@@ -38,7 +38,7 @@ if (!empty($regular_price)) {
                 <?php if (!empty($regular_price) && !empty($sale_price)) {
                     $food_regular_price = sprintf($price_format, '<span class="food-manager-Price-currencySymbol">' . esc_html(get_food_manager_currency_symbol()) . '</span>', $formatted_sale_price);
                     $food_sale_price = sprintf($price_format, '<span class="food-manager-Price-currencySymbol">' . esc_html(get_food_manager_currency_symbol()) . '</span>', $formatted_regular_price);
-                    echo "<del>" . $food_sale_price . "</del>";
+                    echo "<del> " . $food_sale_price . "</del>";
                     echo "<ins><strong>" . wp_kses_post($food_regular_price) . "</strong></ins>"; 
                 } elseif (!empty($regular_price)) {
                     echo sprintf(esc_html($price_format), '<span class="food-manager-Price-currencySymbol">' . esc_html(get_food_manager_currency_symbol()) . '</span>', esc_attr($formatted_regular_price));
@@ -122,7 +122,31 @@ if (!empty($regular_price)) {
                                                         }
                                                     }
                                                     $topping_htm .= '</ul>';
-                                                    echo wp_kses_post(apply_filters('wpfm_toppings_list_htm', $topping_htm, array('ext_option' => $ext_option, 'more_class' => $more_class, 'key' => $key)));
+                                                     $allowed_html = array(
+                                                        'input' => array(
+                                                            'type'    => array('checkbox'), // Only allow input with type="checkbox"
+                                                            'name'    => array(),
+                                                            'value'   => array(),
+                                                            'checked' => array(),           // Allow the checked attribute
+                                                            'class'   => array(),
+                                                            'id'      => array(),
+                                                        ),
+                                                        'label' => array(
+                                                            'for'   => array(),
+                                                            'class' => array(),
+                                                        ),
+                                                        'p'     => array(),
+                                                        'div'   => array(
+                                                            'class' => array(),
+                                                        ),
+                                                        // Add other allowed tags and attributes as needed
+                                                    );
+                                                    
+                                                    echo wp_kses( apply_filters( 'wpfm_toppings_list_htm', $topping_htm, array(
+                                                        'ext_option' => $ext_option,
+                                                        'more_class' => $more_class,
+                                                        'key'        => $key
+                                                    )), $allowed_html );
                                                     do_action('wpfm_singular_option_input_after');
                                                    if (!empty($additional_fields_extra_topping)) {
                                                         echo "<div class='wpfm-additional-main-row wpfm-row'>";

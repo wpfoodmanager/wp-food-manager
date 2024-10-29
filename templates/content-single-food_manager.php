@@ -177,7 +177,31 @@ $food = $post;
                                                         }
                                                     }
                                                     $topping_htm .= '</ul>';
-                                                   echo wp_kses_post( apply_filters( 'wpfm_toppings_list_htm', $topping_htm, array( 'ext_option' => $ext_option, 'more_class' => $more_class, 'key' => $key ) ) ); 
+                                                    $allowed_html = array(
+                                                        'input' => array(
+                                                            'type'    => array('checkbox'), // Only allow input with type="checkbox"
+                                                            'name'    => array(),
+                                                            'value'   => array(),
+                                                            'checked' => array(),           // Allow the checked attribute
+                                                            'class'   => array(),
+                                                            'id'      => array(),
+                                                        ),
+                                                        'label' => array(
+                                                            'for'   => array(),
+                                                            'class' => array(),
+                                                        ),
+                                                        'p'     => array(),
+                                                        'div'   => array(
+                                                            'class' => array(),
+                                                        ),
+                                                        // Add other allowed tags and attributes as needed
+                                                    );
+                                                    
+                                                    echo wp_kses( apply_filters( 'wpfm_toppings_list_htm', $topping_htm, array(
+                                                        'ext_option' => $ext_option,
+                                                        'more_class' => $more_class,
+                                                        'key'        => $key
+                                                    )), $allowed_html ); 
                                                     do_action('wpfm_singular_option_input_after');
                                                     if (!empty($additional_fields_extra_topping)) {
                                                         echo "<div class='wpfm-additional-main-row wpfm-row' style='display: none;'>";
