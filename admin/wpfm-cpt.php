@@ -60,8 +60,8 @@ class WPFM_CPT {
      * @since 1.0.0
      */
     public function approve_food() {
-        if (!empty($_GET['approve_food']) && wp_verify_nonce($_REQUEST['_wpnonce'], 'approve_food') && current_user_can('publish_post', $_GET['approve_food'])) {
-
+      if (
+        !empty($_GET['approve_food']) && isset($_REQUEST['_wpnonce']) && wp_verify_nonce(wp_unslash($_REQUEST['_wpnonce']), 'approve_food') && current_user_can('publish_post', (int) $_GET['approve_food'])) {
             $post_id = absint($_GET['approve_food']);
             $food_data = array(
                 'ID'          => $post_id,
@@ -117,24 +117,26 @@ class WPFM_CPT {
         switch ($action) {
             case 'approve_food':
                 check_admin_referer('bulk-posts');
-                $post_ids = array_map('absint', array_filter((array) $_GET['post']));
-                $published_foods = array();
-                if (!empty($post_ids)) {
-                    foreach ($post_ids as $post_id) {
-                        $food_data = array(
-                            'ID'          => $post_id,
-                            'post_status' => 'publish',
-                        );
-                        if (in_array(get_post_status($post_id), array('pending', 'pending_payment')) && current_user_can('publish_post', $post_id) && wp_update_post($food_data)) {
-                            $published_foods[] = $post_id;
+                if (isset($_GET['post']) && is_array($_GET['post'])) {
+                    $post_ids = array_map('absint', array_filter(wp_unslash($_GET['post'])));
+                    $published_foods = array();
+        
+                    if (!empty($post_ids)) {
+                        foreach ($post_ids as $post_id) {
+                            $food_data = array(
+                                'ID'          => $post_id,
+                                'post_status' => 'publish',
+                            );
+        
+                            if (in_array(get_post_status($post_id), array('pending', 'pending_payment')) &&current_user_can('publish_post', $post_id) &&wp_update_post($food_data)) {
+                                $published_foods[] = $post_id;
+                            }
                         }
                     }
+                    wp_redirect(add_query_arg('published_foods', $published_foods, remove_query_arg(array('published_foods'), admin_url('edit.php?post_type=food_manager'))));
+                    exit;
                 }
-                wp_redirect(add_query_arg('published_foods', $published_foods, remove_query_arg(array('published_foods'), admin_url('edit.php?post_type=food_manager'))));
-                exit;
-                break;
         }
-
         return;
     }
     

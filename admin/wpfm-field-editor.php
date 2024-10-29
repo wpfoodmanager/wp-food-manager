@@ -65,12 +65,12 @@ class WPFM_Field_Editor {
 	 * @since 1.0.0
 	 */
 	private function form_editor() {
-		if (!empty($_GET['food-reset-fields']) && !empty($_GET['_wpnonce']) && wp_verify_nonce($_GET['_wpnonce'], 'reset')) {
+		if (!empty($_GET['food-reset-fields']) && isset($_GET['_wpnonce']) && wp_verify_nonce(wp_unslash($_GET['_wpnonce']), 'reset')){
 			delete_option('food_manager_add_food_form_fields');
 			echo wp_kses_post('<div class="updated"><p>' . esc_html('The fields were successfully reset.', 'wp-food-manager') . '</p></div>');
 		}
 
-		if (!empty($_GET['toppings-reset-fields']) && !empty($_GET['_wpnonce']) && wp_verify_nonce($_GET['_wpnonce'], 'reset')) {
+		if (!empty($_GET['toppings-reset-fields']) && isset($_GET['_wpnonce']) && wp_verify_nonce(wp_unslash($_GET['_wpnonce']), 'reset')) {
 			delete_option('food_manager_submit_toppings_form_fields');
 			echo wp_kses_post('<div class="updated"><p>' . esc_html('The fields were successfully reset.', 'wp-food-manager') . '</p></div>');
 		}
@@ -215,9 +215,9 @@ class WPFM_Field_Editor {
 	 * @since 1.0.0
 	 */
 	private function form_editor_save() {
-		if (wp_verify_nonce($_POST['_wpnonce'], 'save-wp-food-manager-form-field-editor')) {
-			$food_field = !empty($_POST['food']) ? $this->sanitize_array($_POST['food']) : array();
-			$toppings = !empty($_POST['toppings']) ? $this->sanitize_array($_POST['toppings']) : array();
+		if (isset($_POST['_wpnonce']) && wp_verify_nonce(wp_unslash($_POST['_wpnonce']), 'save-wp-food-manager-form-field-editor')) {
+			$food_field = !empty($_POST['food']) ? $this->sanitize_array(wp_unslash($_POST['food'])) : array();
+			$toppings = !empty($_POST['toppings']) ? $this->sanitize_array(wp_unslash($_POST['toppings'])) : array();
 			$index = 0;
 			if (!empty($food_field)) {
 				$new_fields = array(
