@@ -321,7 +321,7 @@ class WPFM_Writepanels {
         if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) return;
         if (is_int(wp_is_post_revision($post))) return;
         if (is_int(wp_is_post_autosave($post))) return;
-        if (empty($_POST['food_manager_nonce']) || !wp_verify_nonce($_POST['food_manager_nonce'], 'save_meta_data')) return;
+        if (empty($_POST['food_manager_nonce']) || !wp_verify_nonce(wp_unslash($_POST['food_manager_nonce']), 'save_meta_data')) return;
         if (!current_user_can('edit_post', $post_id)) return;
         if ($post->post_type == 'food_manager') {
             $writepanels = WPFM_Writepanels::instance();
@@ -475,12 +475,19 @@ class WPFM_Writepanels {
                 // Food Banner.
                 if ('food_banner' === $key) {
                     if (isset($_POST[$key]) && !empty($_POST[$key])) {
-                        $thumbnail_image = is_array($_POST[$key]) ? array_values(array_filter($_POST[$key])) : $_POST[$key];
+                        $input_data = wp_unslash($_POST[$key]); 
+                        $thumbnail_image = is_array($input_data) ? array_values(array_filter($input_data)) : $input_data;
+                        if (!is_array($thumbnail_image)) {
+                            $thumbnail_image = sanitize_text_field($thumbnail_image);
+                        } else {
+                            $thumbnail_image = array_map('sanitize_text_field', $thumbnail_image);
+                        }
+                        
 
                         // Update Food Banner Meta Data.
                         update_post_meta($post_id, '_' . esc_attr($key), $thumbnail_image);
                         if (is_array($_POST[$key])) {
-                            $_POST[$key] = array_values(array_filter($_POST[$key]));
+                            $_POST[$key] = array_map('sanitize_text_field', array_values(array_filter($input_data)));
                         }
                     }
 
@@ -544,13 +551,13 @@ class WPFM_Writepanels {
                 switch ($type) {
                     case 'textarea':
                         if (isset($_POST[$key])) {
-                            update_post_meta($post_id, '_' . esc_attr($key), wp_kses_post(stripslashes($_POST[$key])));
+                            update_post_meta($post_id, '_' . esc_attr($key), wp_kses_post(wp_unslash($_POST[$key])));
                         }
                         break;
 
                     case 'date':
                         if (isset($_POST[$key])) {
-                            $date = $_POST[$key];
+                            $date = sanitize_text_field(wp_unslash($_POST[$key]));
                             $datepicker_date_format = !empty(get_option('date_format')) ? get_option('date_format') : 'F j, Y';
                             $php_date_format = WPFM_Date_Time::get_view_date_format_from_datepicker_date_format($datepicker_date_format);
                             // Convert date and time value into DB formatted format and save eg. 1970-01-01.
@@ -565,9 +572,10 @@ class WPFM_Writepanels {
                             update_post_meta($post_id, '_' . esc_attr($key), '');
                             continue 2;
                         } elseif (is_array($_POST[$key])) {
-                            update_post_meta($post_id, '_' . esc_attr($key), array_filter(array_map('sanitize_text_field', $_POST[$key])));
+                            update_post_meta($post_id, '_' . esc_attr($key), array_filter(array_map('sanitize_text_field', wp_unslash($_POST[$key]))));
                         } else {
-                            update_post_meta($post_id, '_' . esc_attr($key), sanitize_text_field($_POST[$key]));
+                            update_post_meta($post_id, '_' . esc_attr($key), sanitize_text_field(wp_unslash($_POST[$key])));
+
                         }
                         break;
                 }
@@ -581,7 +589,7 @@ class WPFM_Writepanels {
                     $multi_array_ingredient = array();
 
                     if (isset($_POST[$key]) && !empty($_POST[$key])) {
-                        foreach ($_POST[$key] as $id => $ingredient) {
+                        foreach (wp_unslash($_POST[$key]) as $id => $ingredient) {
                             $term_name = esc_attr(get_term($id)->name);
                             $unit_name = "Unit";
 
@@ -632,7 +640,7 @@ class WPFM_Writepanels {
                     $multi_array_nutrition = array();
 
                     if (isset($_POST[$key]) && !empty($_POST[$key])) {
-                        foreach ($_POST[$key] as $id => $nutrition) {
+                        foreach (sanitize_key($_POST[$key]) as $id => $nutrition) {
                             $term_name = esc_attr(get_term($id)->name);
                             $unit_name = "Unit";
                             if ($nutrition['unit_id'] == '' && empty($nutrition['unit_id'])) {
@@ -697,7 +705,7 @@ class WPFM_Writepanels {
                         $terms = isset($field['value']) && !empty($field['value']) ? $field['value'] : '';
                         if ($field['taxonomy'] == 'food_manager_type') {
                             if (empty($terms)) {
-                                $terms = isset($_POST['food_type']) && !empty($_POST['food_type']) ? $_POST['food_type'] : '';
+                                $terms = isset($_POST['food_type']) && !empty($_POST['food_type']) ? array_map('sanitize_text_field', wp_unslash($_POST['food_type'])) : '';
                             }
                         }
                         if (is_array($terms)) {
@@ -716,7 +724,7 @@ class WPFM_Writepanels {
                 // Food Tags.
                 if ($key = 'food_tag') {
                     if (isset($_POST[$key]) && !empty($_POST[$key])) {
-                        $food_tag = explode(',', $_POST[$key]);
+                        $food_tag = isset($_POST[$key]) ? array_map('sanitize_text_field', explode(',', wp_unslash($_POST[$key]))) : [];
                         $food_tag = array_map('trim', $food_tag);
                         wp_set_object_terms($post_id, $food_tag, 'food_manager_tag');
                     }
@@ -734,7 +742,8 @@ class WPFM_Writepanels {
                 // Set toppings meta and assign them into food.
                 $taxonomy = 'food_manager_topping';
                 if (isset($_POST['repeated_options']) && !empty($_POST['repeated_options'])) {
-                    foreach ($_POST['repeated_options'] as $count) {
+                        $repeated_options = isset($_POST['repeated_options']) ? array_map('intval', wp_unslash($_POST['repeated_options'])) : [];
+                        foreach ($repeated_options as $count) {
                         $option_values = array();
                         if (isset($_POST['option_value_count'])) {
                             $find_option = array_search('__repeated-option-index__', $_POST['option_value_count']);
@@ -743,22 +752,22 @@ class WPFM_Writepanels {
                                 // Remove from array.
                                 unset($_POST['option_value_count'][$find_option]);
                             }
-
-                            foreach ($_POST['option_value_count'] as $option_key_count) {
+                            $option_value_counts = array_map('sanitize_text_field', wp_unslash($_POST['option_value_count']));
+                            foreach ($option_value_counts as $option_key_count) {
                                 if ($option_key_count && is_array($option_key_count)) {
                                     foreach ($option_key_count as $option_value_count) {
                                         if (!empty($_POST[$count . '_option_name_' . $option_value_count]) || !empty($_POST[$count . '_option_price_' . $option_value_count])) {
                                             $option_values[$option_value_count] = apply_filters('wpfm_topping_options_values_array', array(
-                                                'option_name' => isset($_POST[$count . '_option_name_' . $option_value_count]) ? $_POST[$count . '_option_name_' . $option_value_count] : '',
-                                                'option_price' => isset($_POST[$count . '_option_price_' . $option_value_count]) ? $_POST[$count . '_option_price_' . $option_value_count] : '',
+                                                'option_name' => isset($_POST[$count . '_option_name_' . $option_value_count]) ? sanitize_text_field(wp_unslash($_POST[$count . '_option_name_' . $option_value_count])) : '',
+                                                'option_price' => isset($_POST[$count . '_option_price_' . $option_value_count]) ? sanitize_text_field(wp_unslash($_POST[$count . '_option_price_' . $option_value_count])) : '',
                                             ), array('option_count' => $count, 'option_value_count' => $option_value_count));
                                         }
                                     }
                                 } else {
                                     if (!empty($_POST[$count . '_option_name_' . $option_key_count]) || !empty($_POST[$count . '_option_price_' . $option_key_count])) {
                                         $option_values[$option_key_count] = apply_filters('wpfm_topping_options_values_array', array(
-                                            'option_name' => isset($_POST[$count . '_option_name_' . $option_key_count]) ? $_POST[$count . '_option_name_' . $option_key_count] : '',
-                                            'option_price' => isset($_POST[$count . '_option_price_' . $option_key_count]) ? $_POST[$count . '_option_price_' . $option_key_count] : '',
+                                            'option_name' => isset($_POST[$count . '_option_name_' . $option_key_count]) ? sanitize_text_field(wp_unslash($_POST[$count . '_option_name_' . $option_key_count])) : '',
+                                            'option_price' => isset($_POST[$count . '_option_price_' . $option_key_count]) ? sanitize_text_field(wp_unslash($_POST[$count . '_option_price_' . $option_key_count])) : '',
                                         ), array('option_count' => $count, 'option_value_count' => $option_key_count));
                                     }
                                 }
@@ -766,14 +775,14 @@ class WPFM_Writepanels {
                         }
 
                         if ($key == 'topping_name') {
-                            $toppings_arr[] = isset($_POST[$key . '_' . $count]) ? esc_attr($_POST[$key . '_' . $count]) : '';
+                            $toppings_arr[] = isset($_POST[$key . '_' . $count]) ? esc_attr(wp_unslash($_POST[$key . '_' . $count])) : '';
                         }
 
                         if ($key == 'topping_description') {
-                            $toppings_meta[$count]['_' . $key] = isset($_POST[$key . '_' . $count]) && !empty($_POST[$key . '_' . $count]) ? wp_kses_post($_POST[$key . '_' . $count]) : '';
+                            $toppings_meta[$count]['_' . $key] = isset($_POST[$key . '_' . $count]) && !empty($_POST[$key . '_' . $count]) ? wp_kses_post(wp_unslash($_POST[$key . '_' . $count])) : '';
                         } else {
                             // Toppings Array.
-                            $toppings_meta[$count]['_' . $key] = isset($_POST[$key . '_' . $count]) && !empty($_POST[$key . '_' . $count]) ? esc_attr($_POST[$key . '_' . $count]) : '';
+                            $toppings_meta[$count]['_' . $key] = isset($_POST[$key . '_' . $count]) && !empty($_POST[$key . '_' . $count]) ? esc_attr(wp_unslash($_POST[$key . '_' . $count])) : '';
                         }
                         if ($key == 'topping_options') {
                             $toppings_meta[$count]['_' . $key] = $option_values;
@@ -795,7 +804,7 @@ class WPFM_Writepanels {
                 if ($term_ids) {
                     foreach ($term_ids as $t_key => $term_id) {
                         $t_key++;
-                        $description = (isset($_POST['topping_description_' . $t_key]) && !empty($_POST['topping_description_' . $t_key])) ? $_POST['topping_description_' . $t_key] : '';
+                        $description = (isset($_POST['topping_description_' . $t_key]) && !empty($_POST['topping_description_' . $t_key])) ? wp_unslash($_POST['topping_description_' . $t_key]) : '';
                         wp_update_term($term_id, $taxonomy, array('description' => wp_kses_post($description)));
                         do_action('wpfm_save_topping_meta_field', array('term_id' => absint($term_id), 'taxonomy' => esc_attr($taxonomy), 'count' => absint($t_key)));
                     }
@@ -805,7 +814,7 @@ class WPFM_Writepanels {
         }
 
         // Update repeated_options meta for the count of toppings.
-        $repeated_options = isset($_POST['repeated_options']) ? $_POST['repeated_options'] : '';
+        $repeated_options = isset($_POST['repeated_options']) ? wp_unslash($_POST['repeated_options']) : '';
         if (is_array($repeated_options)) {
             $repeated_options = array_map('esc_attr', $repeated_options);
         }
@@ -912,7 +921,7 @@ class WPFM_Writepanels {
      */
     public function wpfm_save_food_menu_data($post_id, $post){
         if (isset($_POST['radio_icons']) && !empty($_POST['radio_icons'])) {
-            $wpfm_radio_icon = esc_attr($_POST['radio_icons']);
+            $wpfm_radio_icon = esc_attr(wp_unslash($_POST['radio_icons']));
             if (isset($wpfm_radio_icon)) {
                 if (!add_post_meta($post_id, 'wpfm_radio_icons', $wpfm_radio_icon, true)) {
                     update_post_meta($post_id, 'wpfm_radio_icons', $wpfm_radio_icon);
@@ -921,35 +930,35 @@ class WPFM_Writepanels {
         }
 
         if (isset($_POST['wpfm_food_listing_ids'])) {
-            $item_ids = array_map('esc_attr', $_POST['wpfm_food_listing_ids']);
+            $item_ids = array_map('esc_attr', wp_unslash($_POST['wpfm_food_listing_ids']));
             update_post_meta($post_id, '_food_item_ids', $item_ids);
         } else {
             update_post_meta($post_id, '_food_item_ids', '');
         }
 
         if (isset($_POST['cat'])) {
-            $cats_ids = array_map('esc_attr', $_POST['cat']);
+            $cats_ids = array_map('esc_attr', wp_unslash($_POST['cat']));
             update_post_meta($post_id, '_food_cats_ids', $cats_ids);
         } else {
             update_post_meta($post_id, '_food_cats_ids', '');
         }
         
         if (isset($_POST['food_type'])) {
-            $type_ids = array_map('esc_attr', $_POST['food_type']);
+            $type_ids = array_map('esc_attr', wp_unslash($_POST['food_type']));
             update_post_meta($post_id, '_food_type_ids', $type_ids);
         } else {
             update_post_meta($post_id, '_food_type_ids', '');
         }
         
         if (isset($_POST['wpfm_disable_food_redirect'])) {
-            $disable_option = esc_attr($_POST['wpfm_disable_food_redirect']);
+            $disable_option = esc_attr(wp_unslash($_POST['wpfm_disable_food_redirect']));
             update_post_meta($post_id, '_wpfm_disable_food_redirect', $disable_option);
         } else {
             update_post_meta($post_id, '_wpfm_disable_food_redirect', '');
         }
 
         if (isset($_POST['wpfm_disable_food_image'])) {
-            $disable_option = esc_attr($_POST['wpfm_disable_food_image']);
+            $disable_option = esc_attr(wp_unslash($_POST['wpfm_disable_food_image']));
             update_post_meta($post_id, '_wpfm_disable_food_image', $disable_option);
         } else {
             update_post_meta($post_id, '_wpfm_disable_food_image', '');

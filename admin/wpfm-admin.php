@@ -142,7 +142,7 @@ class WPFM_Admin {
      */
     public function save_custom_taxonomy_image_for_food_type($term_id, $tt_id) {
         if (isset($_POST['image_id']) && '' !== $_POST['image_id']) {
-            $image = $_POST['image_id'];
+            $image = wp_unslash($_POST['image_id']);
             add_term_meta($term_id, 'image_id', $image, true);
         }
     }
@@ -189,7 +189,7 @@ class WPFM_Admin {
      */
     public function updated_custom_taxonomy_image_for_food_type($term_id, $tt_id) {
         if (isset($_POST['image_id']) && '' !== $_POST['image_id']) {
-            $image = $_POST['image_id'];
+            $image = wp_unslash($_POST['image_id']);
             update_term_meta($term_id, 'image_id', $image);
         } else {
             update_term_meta($term_id, 'image_id', '');
@@ -320,7 +320,7 @@ class WPFM_Admin {
      */
     public function save_custom_taxonomy_image_for_food_category($term_id, $tt_id) {
         if (isset($_POST['food_cat_image_id']) && '' !== $_POST['food_cat_image_id']) {
-            $image = $_POST['food_cat_image_id'];
+            $image = wp_unslash($_POST['food_cat_image_id']);
             add_term_meta($term_id, 'food_cat_image_id', $image, true);
         }
     }
@@ -368,7 +368,7 @@ class WPFM_Admin {
      */
     public function updated_custom_taxonomy_image_for_food_category($term_id, $tt_id) {
         if (isset($_POST['food_cat_image_id']) && '' !== $_POST['food_cat_image_id']) {
-            $image = sanitize_text_field($_POST['food_cat_image_id']);
+            $image = sanitize_text_field(wp_unslash($_POST['food_cat_image_id']));
             update_term_meta($term_id, 'food_cat_image_id', $image);
         } else {
             update_term_meta($term_id, 'food_cat_image_id', '');
@@ -701,7 +701,7 @@ class WPFM_Admin {
         if (is_network_admin() || isset($_GET['activate-multi']) || defined('IFRAME_REQUEST')) {
             return;
         }
-        if ((isset($_GET['action']) && 'upgrade-plugin' == $_GET['action']) && (isset($_GET['plugin']) && strstr($_GET['plugin'], 'wp-food-manager.php'))) {
+        if ((isset($_GET['action']) && 'upgrade-plugin' == $_GET['action']) && (isset($_GET['plugin']) && strstr(wp_unslash($_GET['plugin']), 'wp-food-manager.php'))) {
             return;
         }
         wp_redirect(admin_url('index.php?page=food_manager_setup'));
@@ -734,7 +734,7 @@ class WPFM_Admin {
     public function menuUpdateOrder() {
         global $wpdb;
 
-        $data = (!empty($_POST['post']) ? $_POST['post'] : []);
+        $data = (!empty($_POST['post']) ? wp_unslash($_POST['post']) : []);
         if (!is_array($data)) {
             return false;
         }
@@ -783,7 +783,8 @@ class WPFM_Admin {
         $food_dropdown['show_count']   = 1;
         $food_dropdown['selected']     = (isset($wp_query->query['food_manager_type'])) ? $wp_query->query['food_manager_type'] : '';
         $food_dropdown['menu_order']   = false;
-        $terms             = get_terms('food_manager_type', $food_dropdown);
+         $terms = get_terms('food_manager_type');
+
         $walker            = WPFM_Category_Walker::instance();
 
         if (!$terms) {
@@ -791,7 +792,7 @@ class WPFM_Admin {
         }
 
         $output  = "<select name='food_manager_type' id='dropdown_food_manager_type'>";
-        $output .= '<option value="" ' . selected(isset($_GET['food_manager_type']) ? $_GET['food_manager_type'] : '', '', false) . '>' . esc_html(__('Select Food Type', 'wp-food-manager')) . '</option>';
+        $output .= '<option value="" ' . selected(isset($_GET['food_manager_type']) ? wp_unslash($_GET['food_manager_type']) : '', '', false) . '>' . esc_html(__('Select Food Type', 'wp-food-manager')) . '</option>';;
         $output .= $walker->walk($terms, 0, $food_dropdown);
         $output .= '</select>';
         printf('%s', $output);
@@ -819,7 +820,7 @@ class WPFM_Admin {
         $food_dropdown['show_count'] = 1;
         $food_dropdown['selected'] = (isset($wp_query->query['food_manager_category'])) ? $wp_query->query['food_manager_category'] : '';
         $food_dropdown['menu_order'] = false;
-        $terms = get_terms('food_manager_category', $food_dropdown);
+        $terms = get_terms('food_manager_category');
         $walker = WPFM_Category_Walker::instance();
 
         if (!$terms) {
@@ -827,7 +828,7 @@ class WPFM_Admin {
         }
 
         $output = "<select name='food_manager_category' id='dropdown_food_manager_category'>";
-        $output .= '<option value="" ' . selected(isset($_GET['food_manager_category']) ? $_GET['food_manager_category'] : '', '', false) . '>' . esc_html(__('Select Food Category', 'wp-food-manager')) . '</option>';
+        $output .= '<option value="" ' . selected(isset($_GET['food_manager_category']) ? wp_unslash($_GET['food_manager_category']) : '', '', false) . '>' . esc_html(__('Select Food Category', 'wp-food-manager')) . '</option>';
         $output .= $walker->walk($terms, 0, $food_dropdown);
         $output .= '</select>';
         printf('%s', $output);

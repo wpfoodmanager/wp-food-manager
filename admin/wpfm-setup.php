@@ -90,12 +90,14 @@ class WPFM_Setup {
 		}
 
 		if (3 === $step && !empty($_POST)) {
-			if (false == wp_verify_nonce($_REQUEST['setup_wizard'], 'step_3')) {
+			if (isset($_REQUEST['setup_wizard']) && false == wp_verify_nonce(wp_unslash($_REQUEST['setup_wizard']), 'step_3')) {
 				wp_die(esc_attr__('Error in nonce. Try again.', 'wp-food-manager'));
 			}
 
-			$create_pages = isset($_POST['wp-food-manager-create-page']) ? $this->sanitize_array($_POST['wp-food-manager-create-page']) : array();
-			$page_titles = $this->sanitize_array($_POST['wp-food-manager-page-title']);
+			$create_pages = isset($_POST['wp-food-manager-create-page']) ? $this->sanitize_array(wp_unslash($_POST['wp-food-manager-create-page'])) : array();
+			if (isset($_POST['wp-food-manager-page-title'])) {
+				$page_titles = $this->sanitize_array(wp_unslash($_POST['wp-food-manager-page-title']));
+			} 
 			$pages_to_create = array(
 				'add_food'     => '[add_food]',
 				'food_dashboard'       => '[food_dashboard]',
