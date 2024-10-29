@@ -381,7 +381,7 @@ class WPFM_Settings {
                     array(
                         array(
                             'label'    => __('Restaurant Menu Title', 'wp-food-manager'),
-                            'desc'        => __('Displays the list of restaurant food menu titles using the shortcode.', 'wpfm-favorites-list'),
+                            'desc'        => __('Displays the list of restaurant food menu titles using the shortcode.', 'wp-food-manager'),
                             'name'       => 'wpfm_restaurant_food_menu_title',
                             'std'         => '[restaurant_food_menu_title restaurant_id=""]',
                             'type'     => 'text',
@@ -391,9 +391,19 @@ class WPFM_Settings {
                         ),
                         array(
                             'label'    => __('Restaurant Menu', 'wp-food-manager'),
-                            'desc'        => __('Displays the list of restaurant food menu using the shortcode.', 'wpfm-favorites-list'),
+                            'desc'        => __('Displays the list of restaurant food menu using the shortcode.', 'wp-food-manager'),
                             'name'       => 'wpfm_restaurant_food_menu',
                             'std'         => '[restaurant_food_menu restaurant_id=""]',
+                            'type'     => 'text',
+                            'attributes' => array(
+                                'readonly' => 'readonly',
+                            ),
+                        ),
+                        array(
+                            'label'    => __('Count Restaurant Foods', 'wp-food-manager'),
+                            'desc'        => __('Displays the count of restaurant food menu using the shortcode. If yes, display the count otherwise blank.', 'wp-food-manager'),
+                            'name'       => 'wpfm_restaurant_food_menu',
+                            'std'         => '[restaurant_food_menu restaurant_id="" count="yes"]',
                             'type'     => 'text',
                             'attributes' => array(
                                 'readonly' => 'readonly',

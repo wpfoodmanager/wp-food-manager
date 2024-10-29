@@ -775,9 +775,11 @@ class WPFM_Shortcodes {
 		ob_start();
 		$atts = shortcode_atts(array(
 			'restaurant_id' => '',
+			'count' => 'no',
 		), $atts);
 	
 		$restaurant_id = (isset($atts['restaurant_id'])) ? $atts['restaurant_id'] : '';
+		$count_display = $atts['count'];
 	
 		// Check if restaurant ID is provided
 		if (!$restaurant_id) {
@@ -804,8 +806,14 @@ class WPFM_Shortcodes {
 					foreach ($restaurant_menus as $menu_id) {
 						$menu_title = get_the_title($menu_id);
 						$menu_link = get_permalink($menu_id); 
-	
-						echo '<div class="menu-title"><a href="' . esc_url($menu_link) . '">' . esc_html($menu_title) . '</a></div>';
+						$food_item_ids = get_post_meta($menu_id, '_food_item_ids', true);
+						$food_item_ids_count = is_array($food_item_ids) ? count($food_item_ids) : 0;
+
+                        // Display menu title with count if specified
+                        $count_display_text = ($count_display === 'yes') ? ' &nbsp;( ' . intval($food_item_ids_count) . ' )' : '';
+						// echo '<div class="menu-title"><a href="' . esc_url($menu_link) . '">' . esc_html($menu_title) . ' &nbsp;( '. intval($food_item_ids_count) . ' )' .'</a></div>';
+						echo '<div class="menu-title"><a href="' . esc_url($menu_link) . '">' . esc_html($menu_title) . $count_display_text . '</a></div>';
+
 					}
 				} else {
 					error_message_for_menu_page('No menus found for this restaurant.');
