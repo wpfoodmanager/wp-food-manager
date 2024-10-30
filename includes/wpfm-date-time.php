@@ -192,7 +192,7 @@ class WPFM_Date_Time {
 	 */
 	public static function get_db_formatted_time($time) {
 		$time = is_numeric($time) ? $time : strtotime(esc_attr($time));
-		return date(self::DBTIMEFORMAT, $time);
+		return gmdate(self::DBTIMEFORMAT, $time);
 	}
 
 	/**
@@ -243,12 +243,12 @@ class WPFM_Date_Time {
 	 * @since 1.0.0
 	 */
 	public static function get_food_manager_date_admin_settings() {
-		$dummy_date = strtotime('January 15 ' . date('Y'));
+		$dummy_date = strtotime('January 15 ' . gmdate('Y'));
 		$default_formats = self::get_default_date_formats();
 		$setting_values = array();
 
 		foreach ($default_formats['view_date_formats'] as $key => $value) {
-			$setting_values[$key] = date(esc_attr($value), $dummy_date);
+			$setting_values[$key] = gmdate(esc_attr($value), $dummy_date);
 		}
 
 		return $setting_values;
@@ -378,7 +378,7 @@ class WPFM_Date_Time {
 
 		$timezone = timezone_name_from_abbr('', $seconds, 0);
 		if (false === $timezone) {
-			$is_dst = date('I');
+			$is_dst = gmdate('I');
 			foreach (timezone_abbreviations_list() as $abbr) {
 				foreach ($abbr as $city) {
 					if ($city['dst'] == $is_dst && $city['offset'] == $seconds && !empty($city['timezone_id'])) {

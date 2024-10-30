@@ -2,7 +2,7 @@
 	<?php $license_page_url = get_admin_url() . 'edit.php?post_type=food_manager&page=wpfm_license'; ?>
 	<p class="wpfm-updater-dismiss" style="float:right;"><a href="<?php echo esc_url( add_query_arg( 'dismiss-' . sanitize_title( $plugin['TextDomain'] ), '1' ) ); ?>"><?php esc_html_e( 'Hide notice' ); ?></a></p>
 	<?php // translators: 1: plugin list URL, 2: plugin name ?>
-	<p><?php printf( esc_html__('Please enter your licence key in <a href="%1$s">the plugin list</a> below to get activate all features of "%2$s".', 'wpfm-restaurant-manager'), esc_url($license_page_url) , esc_html( $plugin['Name'] ) ); ?></p>
+	<p><?php printf(__('Please enter your licence key in <a href="%1$s">the plugin list</a> below to get activate all features of "%2$s".', 'wpfm-restaurant-manager'), esc_url($license_page_url) , esc_html( $plugin['Name'] ) ); ?></p>
 	<?php // translators: %s: URL to retrieve lost license key ?>
-	<p><small class="description"><?php printf( esc_html__('Lost your key? <a href="%s">Retrieve it here</a>.', 'wpfm-restaurant-manager'), esc_url( 'https://wpfoodmanager.com/lost-license-key/' ) ); ?></small></p>
+	<p><small class="description"><?php printf(__('Lost your key? <a href="%s">Retrieve it here</a>.', 'wpfm-restaurant-manager'), esc_url( 'https://wpfoodmanager.com/lost-license-key/' ) ); ?></small></p>
 </div>

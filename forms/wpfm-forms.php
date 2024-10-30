@@ -44,9 +44,10 @@ class WPFM_Forms {
      */
     public function load_posted_form() {
         $forms = WPFM_Forms::instance();
-        if (!empty($_POST['food_manager_form'])) {
-            $forms->load_form_class(sanitize_title($_POST['food_manager_form']));
-        }
+		if (!empty($_POST['food_manager_form'])) {
+			$forms->load_form_class(sanitize_title(wp_unslash($_POST['food_manager_form'])));
+		}
+		
     }
 
 	/**

@@ -267,7 +267,7 @@ class WPFM_Post_Types {
 		);
 
 		if (!empty($_GET['search_food_types'])) {
-			$cats     = explode(',', sanitize_text_field($_GET['search_food_types'])) + array(0);
+			$cats     = explode(',', sanitize_text_field(wp_unslash($_GET['search_food_types']))) + array(0);
 			$field    = is_numeric($cats) ? 'term_id' : 'slug';
 			$operator = 'all' === get_option('food_manager_food_type_filter_type', 'all') && sizeof($cats) > 1 ? 'AND' : 'IN';
 
@@ -281,7 +281,7 @@ class WPFM_Post_Types {
 		}
 
 		if (!empty($_GET['search_categories'])) {
-			$cats     = explode(',', sanitize_text_field($_GET['search_categories'])) + array(0);
+			$cats     = explode(',', sanitize_text_field(wp_unslash($_GET['search_categories']))) + array(0);
 			$field    = is_numeric($cats) ? 'term_id' : 'slug';
 			$operator = 'all' === get_option('food_manager_category_filter_type', 'all') && sizeof($cats) > 1 ? 'AND' : 'IN';
 
@@ -295,7 +295,7 @@ class WPFM_Post_Types {
 		}
 
 		if (isset($_GET['search_food_menu']) && !empty($_GET['search_food_menu'])) {
-			$search_food_menu = explode(',', sanitize_text_field($_GET['search_food_menu']));
+			$search_food_menu = explode(',', sanitize_text_field(wp_unslash($_GET['search_food_menu'])));
 			$food_ids = [];
 			foreach ($search_food_menu as $menu_id) {
 				$food_item_ids = get_post_meta($menu_id, '_food_item_ids', true);
@@ -307,8 +307,7 @@ class WPFM_Post_Types {
 			}
 			$query_args['post__in'] = $food_ids;
 		}
-
-		if ($food_manager_keyword = sanitize_text_field($_GET['search_keywords'])) {
+		if (isset($_GET['search_keywords']) && $food_manager_keyword = sanitize_text_field(wp_unslash($_GET['search_keywords']))) {
 			$query_args['s'] = $food_manager_keyword;
 		}
 
@@ -477,7 +476,8 @@ class WPFM_Post_Types {
 			if ($attachments) {
 				foreach ($attachments as $attachment) {
 					wp_delete_attachment($attachment->ID);
-					@unlink(get_attached_file($attachment->ID));
+					wp_delete_file(get_attached_file($attachment->ID));
+
 				}
 			}
 		}

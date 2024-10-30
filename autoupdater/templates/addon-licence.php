@@ -1,5 +1,5 @@
 <div class="licence-row">
-	<div class="plugin-info"><?php echo esc_html( $plugin['Title'] ); ?></div>
+	<div class="plugin-info"><?php echo esc_html( $plugin['Title'] ); ?>
 		<div class="plugin-author">
 			<a target="_blank" href="//wpfoodmanager.com/"><?php echo esc_html($plugin['Author']); ?></a>				
 		</div>
