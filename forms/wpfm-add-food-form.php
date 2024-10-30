@@ -326,7 +326,7 @@ class WPFM_Add_Food_Form extends WPFM_Form {
 
 				if ($group_key == 'toppings') {
 					if (isset($_POST['repeated_options'])) {
-						foreach ($_POST['repeated_options'] as $repeated_options) {
+						foreach (wp_unslash($_POST['repeated_options']) as $repeated_options) {
 							if (isset($field['required']) && $field['required'] && empty($_POST[$key . '_' . $repeated_options])) {
 								// translators: %s: field label
 								return new WP_Error('validation-error', sprintf(__('%s is a required field.', 'wp-food-manager'), $field['label']));
@@ -457,7 +457,7 @@ class WPFM_Add_Food_Form extends WPFM_Form {
 
 					if (!empty($field['type']) && $field['type'] == 'date') {
 						$food_date = get_post_meta($food->ID, '_' . $key, true);
-						$this->fields[$group_key][$key]['value'] = date($php_date_format, strtotime($food_date));
+						$this->fields[$group_key][$key]['value'] = gmdate($php_date_format, strtotime($food_date));
 					}
 				}
 			}
@@ -538,7 +538,7 @@ class WPFM_Add_Food_Form extends WPFM_Form {
 							throw new Exception(__('Passwords must match.', 'wp-food-manager'));
 						}
 
-						if (!food_manager_validate_new_password($_POST['create_account_password'])) {
+						if (!food_manager_validate_new_password(wp_unslash($_POST['create_account_password']))) {
 							$password_hint = food_manager_get_password_rules_hint();
 							if ($password_hint) {
 								// translators: %s: password hint
@@ -551,9 +551,9 @@ class WPFM_Add_Food_Form extends WPFM_Form {
 
 					if (!empty($_POST['create_account_email'])) {
 						$create_account = wpfm_create_account(array(
-							'username' => (food_manager_generate_username_from_email() || empty($_POST['create_account_username'])) ? '' : $_POST['create_account_username'],
-							'password' => (food_manager_use_standard_password_setup_email() || empty($_POST['create_account_password'])) ? '' : $_POST['create_account_password'],
-							'email'    => $_POST['create_account_email'],
+							'username' => (food_manager_generate_username_from_email() || empty($_POST['create_account_username'])) ? '' : wp_unslash($_POST['create_account_username']),
+							'password' => (food_manager_use_standard_password_setup_email() || empty($_POST['create_account_password'])) ? '' : wp_unslash($_POST['create_account_password']),
+							'email'    => wp_unslash($_POST['create_account_email']),
 							'role'     => get_option('food_manager_registration_role', 'food_owner')
 						));
 					}

@@ -5,7 +5,7 @@
 			<?php
 				printf(
 					// translators: 1: plugin name, 2: URL to view version details, 3: version number, 4: URL to update plugin
-					esc_html__( 'There is a new version of %1$s available. <a target="_blank" class="thickbox" href="%2$s">View version %3$s details</a> or <a href="%4$s">update now</a>.', 'wpfm-restaurant-manager'),
+					__( 'There is a new version of %1$s available. <a target="_blank" class="thickbox" href="%2$s">View version %3$s details</a> or <a href="%4$s">update now</a>.', 'wpfm-restaurant-manager'),
 					esc_html( $this->plugin_data['Name'] ),
 					esc_url( $changelog_link ),
 					esc_html( $version_info->new_version ),

@@ -242,7 +242,7 @@ class WPFM_ActionHooks {
                 // Food Banner.
                 if ('food_banner' === $key) {
                     if (isset($_POST[$key]) && !empty($_POST[$key])) {
-                        $thumbnail_image = is_array($_POST[$key]) ? array_values(array_filter($_POST[$key])) : $_POST[$key];
+                        $thumbnail_image = is_array($_POST[$key]) ? array_values(array_filter(wp_unslash($_POST[$key]))) : wp_unslash($_POST[$key]);
                         // Update Food Banner Meta Data.
                         update_post_meta($post_id, '_' . esc_attr($key), $thumbnail_image);
                         if (is_array($_POST[$key])) {
