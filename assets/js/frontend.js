@@ -316,6 +316,7 @@ var WPFM_Frontend = function () {
             /// <returns type="generate name and id " />     
             /// <since>1.0.6</since>            
             openFoodMenuPopup : function(event){
+                alert('rashmi');
                 event.preventDefault();
                 var button = jQuery(this);
                 button.prop('disabled', true);
@@ -367,6 +368,7 @@ var WPFM_Frontend = function () {
                         success: function(response) {
                             console.log(response);
                                 jQuery('#food-menu-results').html(response);
+                                jQuery('.wpfm-food-list-box-image-col img').on('click', WPFM_Frontend.actions.openFoodMenuPopup);
                         },
                         error: function(xhr, status, error) {
                             console.error('AJAX Error:', xhr.status, status, error);
