@@ -316,7 +316,6 @@ var WPFM_Frontend = function () {
             /// <returns type="generate name and id " />     
             /// <since>1.0.6</since>            
             openFoodMenuPopup : function(event){
-                alert('rashmi');
                 event.preventDefault();
                 var button = jQuery(this);
                 button.prop('disabled', true);
