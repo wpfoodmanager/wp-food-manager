@@ -62,6 +62,7 @@ class WPFM_Admin {
 		include_once('wpfm-writepanels.php');
 		include_once('wpfm-setup.php');
 		include_once('wpfm-field-editor.php');
+		include_once('wpfm-shortcode-list.php');
         $this->post_types = WPFM_Post_Types::instance();
 		
 		add_action('food_manager_type_add_form_fields', array($this, 'add_custom_taxonomy_image_for_food_type'), 10, 2);
@@ -480,7 +481,17 @@ class WPFM_Admin {
         }
         add_submenu_page('edit.php?post_type=food_manager', esc_html__('Settings', 'wp-food-manager'), esc_html__('Settings', 'wp-food-manager'), 'manage_options', 'food-manager-settings', array($this->settings_page, 'output'));
         add_dashboard_page(esc_html__('Setup', 'wp-food-manager'), esc_html__('Setup', 'wp-food-manager'), 'manage_options', 'food_manager_setup', array(WPFM_Setup::instance(), 'output'));
+		add_submenu_page('edit.php?post_type=food_manager', __('WPFM Shortcodes', 'wp-food-manager'), __('Shortcodes', 'wp-food-manager'), 'manage_options', 'food-manager-shortcodes', array($this, 'shortcodes_page'));
+        
     }
+    
+    /**
+	 * Output shortcode page.
+	 */
+	public function shortcodes_page() {
+		$shortcodes = new WP_Food_Manager_Shortcode_List();
+		$shortcodes->shortcode_list();
+	}
 
     /**
      * Enqueue the scripts in the admin.
