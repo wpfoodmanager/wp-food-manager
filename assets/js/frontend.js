@@ -354,25 +354,28 @@ var WPFM_Frontend = function () {
                     is_ajax: true,
                     url: wpfm_frontend.ajax_url
                 });
-                
-                jQuery.ajax({
-                    url: wpfm_frontend.ajax_url, // Or the URL to admin-ajax.php
-                    method: 'POST',
-                    data: {
-                        action: 'food_menu_search',
-                        search_term: search_term,
-                        nonce: wpfm_frontend.nonce, // Include the nonce for security
-                        is_ajax: true
-                    },
-                    success: function(response) {
-                        jQuery('#food-menu-results').html(response);
-                    },
-                    error: function(xhr, status, error) {
-                        console.error('AJAX Error:', xhr.status, status, error);
-                        console.log('Response:', xhr.responseText); // Log the full response for more insight
-                    }
-                });
-                
+                if(search_term != ''){
+                    jQuery.ajax({
+                        url: wpfm_frontend.ajax_url, // Or the URL to admin-ajax.php
+                        method: 'POST',
+                        data: {
+                            action: 'food_menu_search',
+                            search_term: search_term,
+                            nonce: wpfm_frontend.nonce, // Include the nonce for security
+                            is_ajax: true
+                        },
+                        success: function(response) {
+                            console.log(response);
+                                jQuery('#food-menu-results').html(response);
+                        },
+                        error: function(xhr, status, error) {
+                            console.error('AJAX Error:', xhr.status, status, error);
+                            console.log('Response:', xhr.responseText); // Log the full response for more insight
+                        }
+                    });
+                } else{
+                    
+                }
             }
         },
     }

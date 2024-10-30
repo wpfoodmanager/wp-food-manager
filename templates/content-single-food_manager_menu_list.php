@@ -60,6 +60,8 @@ $show_image = ($disable_food_image !== 'yes');
             }
             $formatted_sale_price = ''; // Initialize the variable
             $formatted_regular_price = ''; // Initialize the variable
+            $food_menu_ids = get_post_meta(get_the_ID(), '_food_item_ids', true);
+            $food_redirect_option = get_post_meta(get_the_ID(), '_wpfm_disable_food_redirect', true);
             if( $food_redirect_option == 'yes'){
                 $food_menu_permalink = '#';
                 $food_menu_return_false ='onclick="return false;"';
