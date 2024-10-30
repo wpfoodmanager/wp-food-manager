@@ -91,7 +91,7 @@ $show_image = ($disable_food_image !== 'yes');
             echo "<a $food_menu_return_false href='" . $food_menu_permalink . "'>";
             echo "<div class='wpfm-food-menu-title-container'>";?>
             <h3 class='fm-food-menu-title'> <?php echo esc_html(get_the_title()); ?> 
-            <?php display_food_veg_nonveg_icon_tag(get_the_content());?>
+            <?php display_food_veg_nonveg_icon_tag(get_the_ID());?>
            </h3>
            <?php
             do_action('food_menu_list_title_before',get_the_ID());
