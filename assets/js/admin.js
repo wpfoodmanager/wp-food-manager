@@ -288,11 +288,11 @@ var WPFM_Admin = function () {
             jQuery(document).on("click", ".wpfm-add-row", WPFM_Admin.actions.addElementRow)
             jQuery(document).on("click", ".wpfm-delete-btn", WPFM_Admin.actions.removeAttributes)
             jQuery(document).on("click", ".option-delete-btn", WPFM_Admin.actions.removeAttributesOptions)
-            jQuery('#wpfm_shortcode_filter').trigger('change');
             jQuery('#wpfm_shortcode_filter').on("change", function(){
                jQuery('tr.shortcode_list').hide();
                jQuery('tr.' + jQuery(this).val()).show();
             });
+            jQuery('#wpfm_shortcode_filter').trigger('change');
            // Find the meta box titles and append the tooltip icon
             var tooltips = {
                 '#wpfm_menu_disable_redirection': wpfmTooltipData.redirection,
