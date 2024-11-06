@@ -964,15 +964,12 @@ class WPFM_Shortcodes {
 	 * @since 1.0.0
 	 */
 	public function food_menu_output_callback_function($atts){
-		error_log('food_menu_output_callback_function');
-	
 		ob_start();
 		$atts = shortcode_atts(array(
 			'id' => '',
 		), $atts);
 		
 		$id = (isset($atts['id'])) ? $atts['id'] : '';
-		$search_term = sanitize_text_field($atts['search_term']);
 		$args = array(
 			'post_type'   => 'food_manager_menu',
 			'post_status' => 'publish',
@@ -1013,8 +1010,6 @@ class WPFM_Shortcodes {
 	 * @since 1.0.0
 	 */
 	public function food_menu_output_search_callback_function($atts){
-		error_log('food_menu_output_callback_function');
-	
 		ob_start();
 		$atts = shortcode_atts(array(
 			'id' => '',
