@@ -363,7 +363,7 @@ class WPFM_Ajax {
         }
     
         // Use the shortcode to get the results
-        echo do_shortcode("[food_menu search_term='$search_term' is_ajax='true']");
+        echo do_shortcode("[food_menu_search search_term='$search_term' is_ajax='true']");
     
         wp_reset_postdata();
         

@@ -45,6 +45,7 @@ class WPFM_Shortcodes {
 		add_shortcode('food', array($this, 'output_food'));
 		add_shortcode('wpfm_food_menu', array($this, 'output_food_menu'));
 		add_shortcode('food_menu', array($this, 'food_menu_output_callback_function'));
+		add_shortcode('food_menu_search', array($this, 'food_menu_output_search_callback_function'));
 		add_shortcode('restaurant_food_menu_title', array($this, 'food_menu_title_output_callback_function_for_restaurant'));
 		add_shortcode('restaurant_food_menu', array($this, 'food_menu_output_callback_function_for_restaurant'));
 	}
@@ -953,7 +954,7 @@ class WPFM_Shortcodes {
 		wp_reset_postdata();
 		return ob_get_clean();
 	}
-
+	
 	/**
 	 * output food menu by menu id.
 	 *
@@ -963,6 +964,57 @@ class WPFM_Shortcodes {
 	 * @since 1.0.0
 	 */
 	public function food_menu_output_callback_function($atts){
+		error_log('food_menu_output_callback_function');
+	
+		ob_start();
+		$atts = shortcode_atts(array(
+			'id' => '',
+		), $atts);
+		
+		$id = (isset($atts['id'])) ? $atts['id'] : '';
+		$search_term = sanitize_text_field($atts['search_term']);
+		$args = array(
+			'post_type'   => 'food_manager_menu',
+			'post_status' => 'publish',
+			'posts_per_page' => -1,
+		);
+
+		if(isset($id)){
+			$args['p'] = $id;
+		}
+
+		$food_menus = new WP_Query(apply_filters('food_manager_food_menu_args',$args));
+		if ($food_menus->have_posts()) { ?>
+			<?php while ($food_menus->have_posts()) : $food_menus->the_post();
+				$post_id = get_the_ID();
+				// Get the meta value for this post
+				$food_ids = get_post_meta($post_id, '_food_item_ids', true);
+			?>
+				<div class="fm-food-menu-block">
+					<?php get_food_manager_template_part('content-single','food_manager_menu'); ?>
+				</div>
+			<?php endwhile; ?>
+		<?php } else{
+			error_message_for_menu_page('No Foods are available..'); 
+			return ob_get_clean();
+		}
+		wp_reset_postdata();
+
+		return ob_get_clean();
+	
+	}
+
+	/**
+	 * output search food menu by menu id.
+	 *
+	 * @access public
+	 * @param array $atts
+	 * @return string
+	 * @since 1.0.0
+	 */
+	public function food_menu_output_search_callback_function($atts){
+		error_log('food_menu_output_callback_function');
+	
 		ob_start();
 		$atts = shortcode_atts(array(
 			'id' => '',
