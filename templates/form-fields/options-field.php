@@ -16,6 +16,7 @@
             <th>Price</th>
             <?php do_action('wpfm_repeated_option_price_label_after'); ?>
             <th></th>
+            <th></th>
         </tr>
     </thead>
     <tbody class="ui-sortable">

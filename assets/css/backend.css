@@ -560,7 +560,9 @@ label.add-food-small {
 #toppings_food_data_content .wpfm-admin-options-table .widefat tfoot {
   background: #f6f7f7;
 }
-
+#toppings_food_data_content input[type=text], #toppings_food_data_content input[type=number] {
+  width: 100%;
+}
 a.button.wpfm-add-row {
   float: right;
 }
