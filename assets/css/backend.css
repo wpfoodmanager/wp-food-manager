@@ -396,6 +396,13 @@ label.add-food-small {
   content: "\f509";
 }
 
+#food_manager_data ul.wpfm-tabs li.tax_classes_tab a::before {
+  content: "\f16a";
+}
+#food_manager_data ul.wpfm-tabs li.ingredients_tab a::before {
+  content: "\f450";
+}
+
 #food_manager_data .wpfm_panel {
   float: left;
   width: 80%;
