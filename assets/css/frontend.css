@@ -1679,6 +1679,12 @@ a.button.wpfm-add-row:hover {
     color: var(--wpfm-primary-color);
     margin-bottom: 10px;
 }
+.wpfm-food-modal-food_details .wpfm-food-modal-food_price del {
+    color: var(--wpfm-gray-color);
+    font-weight: 500;
+    font-size: 16px;
+    margin-right: 10px;
+}
 .wpfm-modal .wpfm-modal-content-wrapper.wpfm-modal-content-centered {
     transform: translate(-50%, -50%);
     top: 50%;
