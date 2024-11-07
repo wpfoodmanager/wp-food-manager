@@ -185,6 +185,10 @@ $food = $post;
                                                             'checked' => array(),           // Allow the checked attribute
                                                             'class'   => array(),
                                                             'id'      => array(),
+                                                            'data-attribute_name' => array(),
+                                                            'data-val' => array(),
+                                                            'data-attr-name' => array(),
+                                                            'data-attribute_name' => array(),
                                                         ),
                                                         'label' => array(
                                                             'for'   => array(),
@@ -193,6 +197,7 @@ $food = $post;
                                                         'p'     => array(),
                                                         'div'   => array(
                                                             'class' => array(),
+                                                            'data-attribute_name' => array()
                                                         ),
                                                         // Add other allowed tags and attributes as needed
                                                     );
