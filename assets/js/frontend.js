@@ -197,9 +197,24 @@ var WPFM_Frontend = function () {
                     });
                 }
             }
-            if(jQuery('.food-menu-page-filter-tab-link').length > 0 ){
-                jQuery(document).on("click", ".food-menu-page-filter-tab-link", WPFM_Frontend.actions.smoothScrolling)
+            // if(jQuery('.food-menu-page-filter-tab-link').length > 0 ){
+            //     jQuery(document).on("click", ".food-menu-page-filter-tab-link", WPFM_Frontend.actions.smoothScrolling)
+            // }
+
+            if (jQuery('.food-menu-page-filter-tab-link').length > 0) {
+                jQuery(document).on("click", ".food-menu-page-filter-tab-link", function(event) {
+                    event.preventDefault();
+                    var target = jQuery(this.getAttribute("href"));
+                    
+                    if (target.length) {
+                        jQuery("html, body").animate({
+                            scrollTop: target.offset().top - 140 // Offset of 140px from the top
+                        }, 800); // Adjust the duration as needed
+                    }
+                });
             }
+
+
         },
         actions: {
             removeFoodItem: function (event) {

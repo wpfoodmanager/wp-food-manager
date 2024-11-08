@@ -2824,8 +2824,6 @@ span.fm-divider {
     max-width: 100%;
     width: 100%;
 }
-
-
 .wpfm-accordion-item {
     border: 1px solid var(--wpfm-gray-border-color);
     padding: 15px 15px 5px;
@@ -2931,7 +2929,16 @@ span.fm-divider {
 }
 .food-menu-page-filters {
     margin-bottom: 30px;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    background: #fff;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    
 }
+
 
 /* ===== 14. FOOD MENU END ===== */
 
