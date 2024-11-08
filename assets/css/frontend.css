@@ -2993,6 +2993,9 @@ span.fm-divider {
 .wpfm-input-description>p {
     margin-bottom: 0;
 }
+.wpfm-checkbox-options {
+    margin-bottom: 10px;
+}
 
 .food-stock-status mark.food_outofstock {
     background: transparent;
