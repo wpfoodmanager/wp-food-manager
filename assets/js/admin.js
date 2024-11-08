@@ -71,11 +71,16 @@ var WPFM_Admin = function () {
             jQuery('body').on('click', '.wp_food_manager_upload_file_button_multiple', WPFM_Admin.fileUpload.multipleFile);
             jQuery('body').on('click', '.wp_food_manager_upload_file_button', WPFM_Admin.fileUpload.addFile);
             jQuery(".wp_food_manager_add_another_file_button").on('click', WPFM_Admin.fileUpload.addAnotherFile);
+
             // Food extra options.
+            jQuery('.wpfm-options-wrap').addClass('closed');
+            jQuery('.wpfm-metabox-content').css('display', 'none');
             jQuery('#wpfm-add-new-option').on('click', WPFM_Admin.actions.addNewOption);
+
             jQuery(document).on("click", ".wpfm-togglediv", function (e) {
                 var row_count = jQuery(this).data('row-count');
                 var menuItem = jQuery(e.currentTarget);
+
                 if (menuItem.attr('aria-expanded') === 'true') {
                     jQuery('.wpfm-options-wrap.wpfm-options-box-' + row_count).removeClass("closed");
                     jQuery(this).attr('aria-expanded', 'false');
@@ -83,9 +88,9 @@ var WPFM_Admin = function () {
                     jQuery('.wpfm-options-wrap.wpfm-options-box-' + row_count).addClass("closed");
                     jQuery(this).attr('aria-expanded', 'true');
                 }
+                
                 jQuery(this).parents('.postbox').find('.wpfm-options-box-' + row_count + ' .wpfm-metabox-content').slideToggle("slow");
             });
-          
             
             /* General tab - Regular and Sale price validation */
             jQuery('body').on('wpfm_add_error_tip', function (e, element, error_type) {
