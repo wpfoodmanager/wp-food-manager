@@ -365,9 +365,6 @@ var WPFM_Frontend = function () {
                 console.log({
                     action: 'food_menu_search',
                     search_term: search_term,
-                    nonce: wpfm_frontend.nonce,
-                    is_ajax: true,
-                    url: wpfm_frontend.ajax_url
                 });
                 if(search_term != ''){
                     jQuery.ajax({
@@ -381,7 +378,9 @@ var WPFM_Frontend = function () {
                         },
                         success: function(response) {
                             console.log(response);
-                                jQuery('#food-menu-results').html(response);
+                                jQuery('#food-menu-results').hide();
+                                jQuery('#food_menu_results_block').show();
+                                jQuery('#food_menu_results_block').html(response);
                                 jQuery('.wpfm-food-list-box-image-col img').on('click', WPFM_Frontend.actions.openFoodMenuPopup);
                         },
                         error: function(xhr, status, error) {
@@ -390,7 +389,9 @@ var WPFM_Frontend = function () {
                         }
                     });
                 } else{
-                    
+                    jQuery('#food-menu-results').show();
+                    jQuery('#food_menu_results_block').hide();
+
                 }
             }
         },

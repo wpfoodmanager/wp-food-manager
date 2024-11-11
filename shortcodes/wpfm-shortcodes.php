@@ -759,6 +759,7 @@ class WPFM_Shortcodes {
 				}
 				?>
 			</div>
+			<div id="food_menu_results_block"></div>
 		</div>
 		<?php
 		return ob_get_clean();
