@@ -759,7 +759,7 @@ class WPFM_Shortcodes {
 				}
 				?>
 			</div>
-			<div id="food_menu_results_block"></div>
+			<div id="food_menu_results_block" class="fm-food-menu-container"></div>
 		</div>
 		<?php
 		return ob_get_clean();
@@ -1040,7 +1040,7 @@ class WPFM_Shortcodes {
 				// Get the meta value for this post
 				$food_ids = get_post_meta($post_id, '_food_item_ids', true);
 			?>
-				<div class="fm-food-menu-block">
+				<div class="fm-food-menu-block food-list-box">
 					<?php get_food_manager_template_part('content-single','food_manager_menu_list'); ?>
 				</div>
 			<?php endwhile; ?>
