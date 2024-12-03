@@ -746,6 +746,8 @@ function display_stock_status($post = null, $after = '') {
         } elseif ($food_stock_status == 'food_outofstock') {
             $food_stock_status_label = 'Out of stock';
         }
+        // Apply filter to the label
+		$food_stock_status_label = apply_filters('wpfm_food_stock_status_label', $food_stock_status_label);
         echo '<mark class="' . esc_attr($food_stock_status) . '">' . esc_html($food_stock_status_label) . '</mark>';
     }
 }
