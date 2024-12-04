@@ -132,6 +132,11 @@ if ('food_manager_menu' == get_post_type() || (isset($menu_id) && !empty($menu_i
                             echo "</div>";
                         echo "</a>";
                         echo esc_html($menu_food_desc);
+                        if (get_stock_status($food_listing) == 'food_outofstock') {
+                            echo '<div class="food-stock-status">';
+                                display_stock_status($food_listing);
+                            echo '</div>';
+                        }
                         do_action('food_menu_list_overview_after', $food_listing->ID);
                     echo "</div>";
                 echo "</div>";
