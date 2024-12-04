@@ -8,6 +8,7 @@ $food_thumbnail = get_the_post_thumbnail_url($post->ID, 'full');
 if (isset($food_thumbnail) && empty($food_thumbnail)) {
     $food_thumbnail = apply_filters('wpfm_default_food_banner', esc_url(WPFM_PLUGIN_URL . '/assets/images/wpfm-placeholder.jpg'));
 }
+
 if (get_option('food_manager_food_item_show_hide') == 0 && get_stock_status() !== 'food_outofstock') { ?>
     <div class="wpfm-food-box-col wpfm-col wpfm-col-12 wpfm-col-md-6 wpfm-col-lg-<?php echo esc_attr(apply_filters('food_manager_food_wpfm_column', '4')); ?>">
         <!----- wpfm-col-lg-4 value can be change by admin settings ------->
@@ -61,13 +62,13 @@ if (get_option('food_manager_food_item_show_hide') == 0 && get_stock_status() !=
                             <div class="wpfm-food-price">
                                 <?php display_food_price_tag(); ?>
                             </div>
-                            <?php do_action('food_list_overview_after', get_the_ID()); ?>
                         </div>
                         <?php if (get_stock_status() == 'food_outofstock') { ?>
                             <div class="food-stock-status">
                                 <?php display_stock_status(); ?>
                             </div>
                         <?php } ?> 
+                        <?php do_action('food_list_overview_after', get_the_ID()); ?>
                     </div>
                 </div>
             </div>

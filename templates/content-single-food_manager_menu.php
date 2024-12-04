@@ -125,8 +125,8 @@ $show_image = ($disable_food_image !== 'yes');
             echo "<a $food_menu_return_false href='" . $food_menu_permalink . "'>";
             echo "<div class='wpfm-food-menu-title-container'>";?>
             <h3 class='fm-food-menu-title'> <?php echo esc_html($food_listing->post_title); ?> 
-            <?php display_food_veg_nonveg_icon_tag($food_listing);?>
-           </h3>
+                <?php display_food_veg_nonveg_icon_tag($food_listing);?>
+            </h3>
            <?php
             do_action('food_menu_list_title_before',$food_listing->ID);
             echo "</div>";
@@ -145,6 +145,11 @@ $show_image = ($disable_food_image !== 'yes');
             echo "<div class='fm-food-menu-description'>";
             echo $menu_food_desc;
             echo "</div>";
+            if (get_stock_status($food_listing) == 'food_outofstock') {
+                echo '<div class="food-stock-status">';
+                    display_stock_status($food_listing);
+                echo '</div>';
+            }
             do_action('food_menu_list_overview_after', $food_listing->ID);
             echo "</div>";
             echo "</div>";
