@@ -63,6 +63,7 @@ var WPFM_Admin = function () {
             // Show by default first food Listings Settings Tab.
             jQuery('.wpfm-tabs li a:first').click();
             jQuery(document).on('change', '.wpfm-admin-menu-selection select.food-manager-category-dropdown', WPFM_Admin.actions.updateFoodinMenu);
+            jQuery(document).on('change', '.wpfm-admin-menu-selected-item select.food-manager-category-dropdown', WPFM_Admin.actions.updateSelectedFoodinMenu);
             // Use body to call after dom update.
             jQuery("body").on('click', 'a.wpfm-food-item-remove', WPFM_Admin.actions.removeFoodItem);
             // Sortable.
@@ -427,6 +428,114 @@ var WPFM_Admin = function () {
                     });
                 }
             },
+            /// <summary>
+            /// Click on category dropdown to update food menu.   
+            /// </summary>
+            /// <param name="parent" type="Food"></param>    
+            /// <returns type="actions" />
+            /// <since>1.0.0</since> 
+            updateSelectedFoodinMenu: function (event) {
+                var category_ids = [];
+                var $select = jQuery(this);
+                var day = $select.closest('tr').find('td:first').text().trim(); // Get the day name (e.g., 'Monday', 'Tuesday', etc.)
+                
+                // Get the category IDs for the selected dropdown
+                $select.closest('tr').find('.food-manager-category-dropdown').each(function() {
+                    category_ids = category_ids.concat(jQuery(this).val()); // Merge values into the array
+                });
+            
+                var taxonomy = $select.attr('data-taxonomy');
+                var post_count = $select.find(":selected").attr('data-count');
+                var exclude = [];
+            
+                // If no menu items available for the selected food category or type
+                if (post_count == 0) {
+                    var NoMenuItemText = (taxonomy == 'food_manager_type') ? 'There is no food available in the selected food type.' : 'Please select the food category or food types to add food items to the menu.';
+                    jQuery('.no-menu-item-handle').html(NoMenuItemText);
+                    jQuery('.no-menu-item-handle').show();
+                    return false;
+                }
+            
+                // Exclude already selected food items
+                if (jQuery('ul.wpfm-food-menu li').length > 0) {
+                    jQuery('ul.wpfm-food-menu li').each(function () {
+                        exclude.push(jQuery(this).attr('data-food-id'));
+                    });
+                }
+            
+                // If category_ids are selected, make an AJAX request to fetch the food items for that category
+                if (category_ids.length > 0) {
+                    jQuery.ajax({
+                        type: 'POST',
+                        url: wpfm_admin.ajax_url,
+                        data: {
+                            action: 'wpfm_get_food_listings_by_category_id',
+                            category_id: category_ids,
+                            taxonomy: taxonomy,
+                            exclude: exclude,
+                            day: day  // Pass the current day to the AJAX request to scope the result
+                        },
+                        success: function (response) {
+                            if (response.html.length !== 0) {
+                                // Update the food menu for the specific day
+                                jQuery('tr').each(function() {
+                                    if (jQuery(this).find('td:first').text().trim() === day) {
+                                        jQuery(this).find('ul.wpfm-food-menu').html(response.html);
+                                        jQuery(this).find('.no-menu-item-handle').hide();
+                                        jQuery(this).find('.success_message').show();
+                                    }
+                                });
+                            } else {
+                                // If no items found, show the 'No items' message
+                                jQuery('tr').each(function() {
+                                    if (jQuery(this).find('td:first').text().trim() === day) {
+                                        jQuery(this).find('.no-menu-item-handle').show();
+                                    }
+                                });
+                            }
+                        },
+                        error: function (result) {
+                            console.error('AJAX request failed:', result);
+                        }
+                    });
+                } else {
+                    // If no category is selected, make the AJAX call without category_id
+                    jQuery.ajax({
+                        type: 'POST',
+                        url: wpfm_admin.ajax_url,
+                        data: {
+                            action: 'wpfm_get_food_listings_by_days',
+                            taxonomy: taxonomy,
+                            exclude: exclude,
+                            day: day  // Pass the current day to the AJAX request to scope the result
+                        },
+                        success: function (response) {
+                            if (response.html.length !== 0) {
+                                // Update the food menu for the specific day
+                                jQuery('tr').each(function() {
+                                    if (jQuery(this).find('td:first').text().trim() === day) {
+                                        jQuery(this).find('ul.wpfm-food-menu').html(response.html);
+                                        jQuery(this).find('.no-menu-item-handle').hide();
+                                        jQuery(this).find('.success_message').show();
+                                    }
+                                });
+                            } else {
+                                // Show the 'No items' message if no items found
+                                jQuery('tr').each(function() {
+                                    if (jQuery(this).find('td:first').text().trim() === day) {
+                                        jQuery(this).find('ul.wpfm-food-menu').html(response.html);
+                                        jQuery(this).find('.success_message').hide();
+                                        jQuery(this).find('.no-menu-item-handle').show();
+                                    }
+                                });
+                            }
+                        },
+                        error: function (result) {
+                            console.error('AJAX request failed:', result);
+                        }
+                    });
+                }
+            },            
             /// <summary>
             /// Remove food item from food menu.
             /// </summary>

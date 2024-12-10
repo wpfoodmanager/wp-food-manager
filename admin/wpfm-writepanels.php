@@ -44,6 +44,7 @@ class WPFM_Writepanels {
         add_action('wpfm_save_food_data', array($this, 'food_manager_save_food_manager_data'), 20, 3);
         // Food menu.
         add_action('wp_ajax_wpfm_get_food_listings_by_category_id', array($this, 'get_food_listing_by_category_id'));
+        add_action('wp_ajax_wpfm_get_food_listings_by_days', array($this, 'get_food_listing_by_days'));
         add_action('food_manager_save_food_manager_menu', array($this, 'wpfm_save_food_menu_data'), 20, 2);
         add_filter('use_block_editor_for_post_type', array($this, 'disable_gutenberg'), 10, 2);
         add_filter('wpfm_term_radio_checklist_taxonomy', array($this, 'wpfm_food_manager_taxonomy'), 10, 2);
@@ -97,83 +98,88 @@ class WPFM_Writepanels {
     
         wp_enqueue_script('wpfm-admin');
         wp_enqueue_script('wpfm-loader');
-        wp_nonce_field('save_meta_data', 'food_manager_nonce'); ?>
-    
-        <div class="wpfm-admin-food-menu-container wpfm-flex-col wpfm-admin-postbox-meta-data">
-            <div class="wpfm-admin-postbox-meta-data">
-                <div class="wpfm-admin-menu-selection wpfm-admin-postbox-form-field">
-                    <?php 
-                    $selected_ids = get_post_meta(get_the_ID(), '_food_cats_ids', true);
-                    // Ensure $selected_ids is an array
-                    if ( !empty($selected_ids)) {
-                        $selected_ids = !empty($selected_ids) ? (array)$selected_ids : array();
-                    }
-                    food_manager_dropdown_selection(array(
-                        'multiple' => true, 'show_option_all' => __('Select food category', 'wp-food-manager'),
-                        'id' => 'wpfm-admin-food-selection',
-                        'taxonomy' => 'food_manager_category',
-                        'hide_empty' => false,
-                        'pad_counts' => true,
-                        'show_count' => true,
-                        'hierarchical' => false,
-                        'selected' => $selected_ids,
-                    )); ?>
-                </div>
-                <div class="wpfm-admin-menu-selection wpfm-admin-postbox-form-field">
-                    <?php 
-                        $selected_ids = get_post_meta(get_the_ID(), '_food_type_ids', true);
+        wp_nonce_field('save_meta_data', 'food_manager_nonce'); 
+        $get_menu_options = get_post_meta(get_the_ID(), '_food_menu_option', true); 
+        if(empty($get_menu_options) || $get_menu_options == 'static_menu'){
+        ?>
+            <div class="wpfm-admin-food-menu-container wpfm-flex-col wpfm-admin-postbox-meta-data">
+                <div class="wpfm-admin-postbox-meta-data">
+                    <div class="wpfm-admin-menu-selection wpfm-admin-postbox-form-field">
+                        <?php 
+                        $selected_ids = get_post_meta(get_the_ID(), '_food_cats_ids', true);
+                        // Ensure $selected_ids is an array
                         if ( !empty($selected_ids)) {
                             $selected_ids = !empty($selected_ids) ? (array)$selected_ids : array();
-                        } else{
-                            $selected_ids = array();
                         }
                         food_manager_dropdown_selection(array(
-                            'multiple' => true, 'show_option_all' => __('Select food types', 'wp-food-manager'),
-                            'id' => 'wpfm-admin-food-types-selection',
-                            'taxonomy' => 'food_manager_type',
+                            'multiple' => true, 'show_option_all' => __('Select food category', 'wp-food-manager'),
+                            'id' => 'wpfm-admin-food-selection',
+                            'taxonomy' => 'food_manager_category',
                             'hide_empty' => false,
                             'pad_counts' => true,
                             'show_count' => true,
                             'hierarchical' => false,
-                            'name' => 'food_type',
                             'selected' => $selected_ids,
                         )); ?>
+                    </div>
+                    <div class="wpfm-admin-menu-selection wpfm-admin-postbox-form-field">
+                        <?php 
+                            $selected_ids = get_post_meta(get_the_ID(), '_food_type_ids', true);
+                            if ( !empty($selected_ids)) {
+                                $selected_ids = !empty($selected_ids) ? (array)$selected_ids : array();
+                            } else{
+                                $selected_ids = array();
+                            }
+                            food_manager_dropdown_selection(array(
+                                'multiple' => true, 'show_option_all' => __('Select food types', 'wp-food-manager'),
+                                'id' => 'wpfm-admin-food-types-selection',
+                                'taxonomy' => 'food_manager_type',
+                                'hide_empty' => false,
+                                'pad_counts' => true,
+                                'show_count' => true,
+                                'hierarchical' => false,
+                                'name' => 'food_type',
+                                'selected' => $selected_ids,
+                            )); ?>
+                    </div>
                 </div>
-            </div>
-            <div class="wpfm-admin-food-menu-items">
-                <?php $item_ids = get_post_meta($thepostid, '_food_item_ids', true); ?>
-                <ul class="wpfm-food-menu menu menu-item-bar" id="wpfm-food-menu-list">
+                <div class="wpfm-admin-food-menu-items">
+                    <?php $item_ids = get_post_meta($thepostid, '_food_item_ids', true); ?>
+                    <ul class="wpfm-food-menu menu menu-item-bar" id="wpfm-food-menu-list">
+                        <?php if ($item_ids && is_array($item_ids)) { ?>
+                            <?php foreach ($item_ids as $key => $id) { ?>
+                                <li class="menu-item-handle" data-food-id="<?php echo esc_attr($id); ?>">
+                                    <div class="wpfm-admin-left-col">
+                                        <span class="dashicons dashicons-menu"></span>
+                                        <span class="item-title"><?php echo esc_html(get_the_title($id)); ?></span>
+                                    </div>
+                                    <div class="wpfm-admin-right-col">
+                                        <a href="javascript:void(0);" class="wpfm-food-item-remove">
+                                            <span class="dashicons dashicons-dismiss"></span>
+                                        </a>
+                                    </div>
+                                    <input type="hidden" name="wpfm_food_listing_ids[]" value="<?php echo esc_attr($id); ?>" />
+                                </li>
+                            <?php }
+                        } ?>
+                    </ul>
                     <?php if ($item_ids && is_array($item_ids)) { ?>
-                        <?php foreach ($item_ids as $key => $id) { ?>
-                            <li class="menu-item-handle" data-food-id="<?php echo esc_attr($id); ?>">
-                                <div class="wpfm-admin-left-col">
-                                    <span class="dashicons dashicons-menu"></span>
-                                    <span class="item-title"><?php echo esc_html(get_the_title($id)); ?></span>
-                                </div>
-                                <div class="wpfm-admin-right-col">
-                                    <a href="javascript:void(0);" class="wpfm-food-item-remove">
-                                        <span class="dashicons dashicons-dismiss"></span>
-                                    </a>
-                                </div>
-                                <input type="hidden" name="wpfm_food_listing_ids[]" value="<?php echo esc_attr($id); ?>" />
-                            </li>
-                        <?php }
-                    } ?>
-                </ul>
-                <?php if ($item_ids && is_array($item_ids)) { ?>
-                    <span class="no-menu-item-handle" style="display: none;">Please select the food category or food types to add food items to the menu.</span>
-                <?php } else { ?>
-                    <span class="no-menu-item-handle">Please select the food category or food types to add food items to the menu.</span>
-                <?php } ?>
-    
-                <!-- Loader and success message -->
-                <div class="wpfm-loader" style="display: none;">
-                 <img src="<?php echo esc_url(WPFM_PLUGIN_URL . '/assets/images/loader.gif'); ?>" alt="Loading..." class="wpfm-loader-image">
+                        <span class="no-menu-item-handle" style="display: none;">Please select the food category or food types to add food items to the menu.</span>
+                    <?php } else { ?>
+                        <span class="no-menu-item-handle">Please select the food category or food types to add food items to the menu.</span>
+                    <?php } ?>
+        
+                    <!-- Loader and success message -->
+                    <div class="wpfm-loader" style="display: none;">
+                     <img src="<?php echo esc_url(WPFM_PLUGIN_URL . '/assets/images/loader.gif'); ?>" alt="Loading..." class="wpfm-loader-image">
+                    </div>
+                    <div class="success_message"><span class="wpfm-success-message" style="display: none;">Foods added to the menu successfully!</span></div>
                 </div>
-                <div class="success_message"><span class="wpfm-success-message" style="display: none;">Foods added to the menu successfully!</span></div>
             </div>
-        </div>
         <?php
+        } else{
+			include 'templates/food-menu-data-by-days.php';
+        }
     }
 
 	/**
@@ -371,6 +377,7 @@ class WPFM_Writepanels {
        // translators: %s: singular name of the food manager post type
         add_meta_box('food_manager_data', sprintf(__('%s Data', 'wp-food-manager'), $wp_post_types['food_manager']->labels->singular_name), array($this, 'food_manager_data'), 'food_manager', 'normal', 'high');
         add_meta_box('food_manager_menu_data', __('Menu Icon', 'wp-food-manager'), array($this, 'food_manager_menu_data'), 'food_manager_menu', 'normal', 'high');
+        add_meta_box('food_manager_menu_options', __('Select Food Menu Options ', 'wp-food-manager'), array($this, 'food_manager_menu_options'), 'food_manager_menu', 'normal', 'high');
         add_meta_box('food_manager_menu_data_icons', __('Select Food ', 'wp-food-manager'), array($this, 'food_manager_menu_data_icons'), 'food_manager_menu', 'normal', 'high');
 
         // Replace the food_manager_type taxonomy metabox for changing checkbox to radio button in backend.
@@ -910,6 +917,78 @@ class WPFM_Writepanels {
         wp_die();
     }
     
+    public function get_food_listing_by_days() {
+        // Ensure category_id is passed
+        if (isset($_POST['category_id']) && !empty($_POST['category_id'])) {
+            $category_ids = array_map('intval', (array) $_POST['category_id']); // Sanitize and cast to array
+    
+            // Check if we received a valid day (optional, depending on if you need to use it in the query)
+            $day = isset($_POST['day']) ? sanitize_text_field($_POST['day']) : '';
+    
+            // Setup the WP_Query args
+            $args = [
+                'post_type' => 'food_manager',
+                'posts_per_page' => -1,
+                'post_status' => 'publish',
+                'tax_query' => [
+                    'relation' => 'OR',
+                    [
+                        'taxonomy' => 'food_manager_category', // Ensure the category taxonomy is sanitized
+                        'terms' => $category_ids, // Use the sanitized category IDs
+                        'field' => 'term_id',
+                        'operator' => 'IN',
+                    ],
+                    [
+                        'taxonomy' => 'food_manager_type',
+                        'terms' => $category_ids, // This assumes you may also want food types
+                        'field' => 'term_id',
+                        'operator' => 'IN',
+                    ],
+                ],
+            ];
+    
+            // Execute the query
+            $food_listing = new WP_Query(apply_filters('get_food_listings_by_category_args', $args));
+            $html = [];
+    
+            // Check if we have any posts
+            if ($food_listing->have_posts()) :
+                while ($food_listing->have_posts()) : $food_listing->the_post();
+                    $id = get_the_ID();
+                    $html[] =
+                        '<li class="menu-item-handle" data-food-id="' . esc_attr($id) . '">
+                            <div class="wpfm-admin-left-col">
+                                <span class="dashicons dashicons-menu"></span>
+                                <span class="item-title">' . esc_html(get_the_title($id)) . '</span>
+                            </div>
+                            <div class="wpfm-admin-right-col">
+                                <a href="javascript:void(0);" class="wpfm-food-item-remove">
+                                    <span class="dashicons dashicons-dismiss"></span>
+                                </a>
+                            </div>
+                            <input type="hidden" name="wpfm_food_listing_ids[]" value="' . esc_attr($id) . '" />
+                        </li>';
+                endwhile;
+            endif;
+    
+            // Reset query data
+            wp_reset_postdata();
+    
+            // Return the response
+            wp_send_json([
+                'html' => $html,
+                'success' => true,
+                'day' => $day, // Optionally include day in response if you need it for debugging or further handling
+            ]);
+        } else {
+            // If category_id is missing or empty, return failure response
+            wp_send_json(['html' => '', 'success' => false]);
+        }
+    
+        wp_die(); // End the request
+    }
+    
+    
     /**
      * Save the food menu meta data.
      *
@@ -920,6 +999,8 @@ class WPFM_Writepanels {
      * @since 1.0.0
      */
     public function wpfm_save_food_menu_data($post_id, $post){
+        // echo '<pre>';
+        // print_r($_POST);die;
         if (isset($_POST['radio_icons']) && !empty($_POST['radio_icons'])) {
             $wpfm_radio_icon = esc_attr(wp_unslash($_POST['radio_icons']));
             if (isset($wpfm_radio_icon)) {
@@ -963,6 +1044,14 @@ class WPFM_Writepanels {
         } else {
             update_post_meta($post_id, '_wpfm_disable_food_image', '');
         }
+        
+        if (isset($_POST['wpfm_food_menu_option'])) {
+            $menus_option = esc_attr(wp_unslash($_POST['wpfm_food_menu_option']));
+            update_post_meta($post_id, '_food_menu_option', $menus_option);
+        } else {
+            update_post_meta($post_id, '_food_menu_option', '');
+        }
+        
     }
     
     /**
@@ -1005,6 +1094,46 @@ class WPFM_Writepanels {
         }
         return $post_type;
     
+    }
+    
+    /**
+     * Display the food menu content.
+     *
+     * @access public
+     * @param mixed $post
+     * @return void
+     * @since 1.0.0
+     */
+    public function food_manager_menu_options($post) {
+        global $post, $thepostid;
+        $thepostid = $post->ID;
+    
+        wp_enqueue_script('wpfm-admin');
+        wp_enqueue_script('wpfm-loader');
+        wp_nonce_field('save_meta_data', 'food_manager_nonce'); ?>
+    
+        <div class="wpfm-admin-food-menu-container wpfm-flex-col wpfm-admin-postbox-meta-data">
+            <div class="wpfm-admin-food-menu-items">
+                <?php $item_menu_option = get_post_meta($thepostid, '_food_menu_option', true); 
+                $key = 'food_menu_options';
+                $field = array(
+                    'name'        => 'wpfm_food_menu_option',
+					'label'       => __('Food Menu Options', 'wp-food-manager'),
+					'type'        => 'radio',
+					'required'    => true,
+					'options' 	  => array(
+						'static_menu' => __('Static Menu', 'wp-food-manager'),
+						'dynamic_menu' => __('Dynamic Menu', 'wp-food-manager'),
+					),
+					'value'       => $item_menu_option,
+				);
+                get_food_manager_template('form-fields/' . $field['type'] . '-field.php', array('key' => esc_attr($key), 'field' => $field));
+				
+                ?>
+                
+            </div>
+        </div>
+        <?php
     }
 }
 
