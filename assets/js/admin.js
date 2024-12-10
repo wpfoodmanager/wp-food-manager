@@ -62,8 +62,8 @@ var WPFM_Admin = function () {
             jQuery('.copy-shortcode-button').on('click', WPFM_Admin.actions.copyButton);
             // Show by default first food Listings Settings Tab.
             jQuery('.wpfm-tabs li a:first').click();
-            jQuery(document).on('change', '.wpfm-admin-menu-selection select.food-manager-category-dropdown', WPFM_Admin.actions.updateFoodinMenu);
-            jQuery(document).on('change', '.wpfm-admin-menu-selected-item select.food-manager-category-dropdown', WPFM_Admin.actions.updateSelectedFoodinMenu);
+            // jQuery(document).on('change', '.wpfm-admin-menu-selection select.food-manager-category-dropdown', WPFM_Admin.actions.updateFoodinMenu);
+            jQuery(document).on('change', '.wpfm-admin-menu-selected-item select[name="cat[]"], .wpfm-admin-menu-selected-item select[name="food_type[]"]', WPFM_Admin.actions.updateSelectedFoodinMenu);
             // Use body to call after dom update.
             jQuery("body").on('click', 'a.wpfm-food-item-remove', WPFM_Admin.actions.removeFoodItem);
             // Sortable.
