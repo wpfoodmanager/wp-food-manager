@@ -109,7 +109,7 @@ class WPFM_Writepanels {
             $second_div_hide_block = ''; // Second div is visible
         }
         ?>
-            <div class="wpfm-admin-food-menu-container wpfm-flex-col wpfm-admin-postbox-meta-data <?php echo $first_div_hide_block; ?>">
+            <div class="wpfm-admin-food-menu-container wpfm-flex-col wpfm-admin-postbox-meta-data static_menu <?php echo $first_div_hide_block; ?>">
                 <div class="wpfm-admin-postbox-meta-data">
                     <div class="wpfm-admin-menu-selection wpfm-admin-postbox-form-field">
                         <?php 
@@ -183,10 +183,10 @@ class WPFM_Writepanels {
                     <div class="success_message"><span class="wpfm-success-message" style="display: none;">Foods added to the menu successfully!</span></div>
                 </div>
             </div>
-        <div class="wpfm-admin-food-menu-container wpfm-flex-col wpfm-admin-postbox-meta-data  <?php echo $second_div_hide_block; ?>">
-        <?php
-			include 'templates/food-menu-data-by-days.php'; ?>
-        </div>
+        <div class="wpfm-admin-food-menu-container wpfm-flex-col wpfm-admin-postbox-meta-data dynamic_menu <?php echo $second_div_hide_block; ?>">
+            <?php
+    			include 'templates/food-menu-data-by-days.php'; ?>
+            </div>
     <?php }
 
 	/**

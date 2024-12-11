@@ -15,8 +15,22 @@ var WPFM_Admin = function () {
             if( jQuery("#wpfm-admin-food-types-selection, #wpfm-admin-food-selection").length > 0 ){
                 jQuery("#wpfm-admin-food-types-selection, #wpfm-admin-food-selection").chosen({ search_contains: !0 });
             }
+            
+            var selectedValue = jQuery(".wpfm-admin-food-menu-items input[type='radio']:checked").val();
 
-           
+            // If a radio button is selected, show its value
+            if (selectedValue) {
+                if( selectedValue == 'static_menu'){
+                    
+                    jQuery('.static_menu').show();
+                    jQuery('.dynamic_menu').hide();
+                } else{
+                    jQuery('.static_menu').hide();
+                    jQuery('.dynamic_menu').show();
+                }
+            } else {
+                console.log("No radio button selected.");
+            }
             
             jQuery('div.food tr.wpfm-admin-common td.field-type select option').each(function () {
                 if (jQuery(this).val() == 'term-checklist' || jQuery(this).val() == 'term-multiselect' || jQuery(this).val() == 'term-select') {
@@ -59,6 +73,7 @@ var WPFM_Admin = function () {
             }
             // Bind on click food of the settings section.
             jQuery(".wpfm-tabs li a").on('click', WPFM_Admin.actions.tabClick);
+            jQuery(".wpfm-admin-food-menu-items input").on('click', WPFM_Admin.actions.menuOptions);            
             jQuery('.copy-shortcode-button').on('click', WPFM_Admin.actions.copyButton);
             // Show by default first food Listings Settings Tab.
             jQuery('.wpfm-tabs li a:first').click();
@@ -330,7 +345,27 @@ var WPFM_Admin = function () {
                 jQuery(this).addClass('nav-tab-active');
                 return false;
             },
-                  /// <summary>
+            /// <summary>
+            /// Click on tab food manager genera or other food tab.     
+            /// </summary>
+            /// <param name="parent" type="Food"></param>    
+            /// <returns type="actions" />
+            /// <since>1.0.0</since>    
+            menuOptions: function (event) {
+                alert('dgdfgdf');
+                // event.preventDefault();
+                var menuOpt = jQuery(this).val();
+                console.log(jQuery(this).val());
+                if( menuOpt == 'static_menu'){
+                    
+                    jQuery('.static_menu').show();
+                    jQuery('.dynamic_menu').hide();
+                } else{
+                    jQuery('.static_menu').hide();
+                    jQuery('.dynamic_menu').show();
+                }
+            },
+            /// <summary>
             /// Copy food menu shortcode from admin side.
             /// </summary>
             /// <param name="parent" type="Food"></param>
