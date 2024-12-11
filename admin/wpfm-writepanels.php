@@ -99,10 +99,17 @@ class WPFM_Writepanels {
         wp_enqueue_script('wpfm-admin');
         wp_enqueue_script('wpfm-loader');
         wp_nonce_field('save_meta_data', 'food_manager_nonce'); 
+        // Determine visibility for the first div (static or empty)
         $get_menu_options = get_post_meta(get_the_ID(), '_food_menu_option', true); 
-        if(empty($get_menu_options) || $get_menu_options == 'static_menu'){
+        if (empty($get_menu_options) || $get_menu_options == 'static_menu') {
+            $first_div_hide_block = ''; // First div is visible
+            $second_div_hide_block = 'hide_block'; // Second div is hidden
+        } else {
+            $first_div_hide_block = 'hide_block'; // First div is hidden
+            $second_div_hide_block = ''; // Second div is visible
+        }
         ?>
-            <div class="wpfm-admin-food-menu-container wpfm-flex-col wpfm-admin-postbox-meta-data">
+            <div class="wpfm-admin-food-menu-container wpfm-flex-col wpfm-admin-postbox-meta-data <?php echo $first_div_hide_block; ?>">
                 <div class="wpfm-admin-postbox-meta-data">
                     <div class="wpfm-admin-menu-selection wpfm-admin-postbox-form-field">
                         <?php 
@@ -176,11 +183,11 @@ class WPFM_Writepanels {
                     <div class="success_message"><span class="wpfm-success-message" style="display: none;">Foods added to the menu successfully!</span></div>
                 </div>
             </div>
+        <div class="wpfm-admin-food-menu-container wpfm-flex-col wpfm-admin-postbox-meta-data  <?php echo $second_div_hide_block; ?>">
         <?php
-        } else{
-			include 'templates/food-menu-data-by-days.php';
-        }
-    }
+			include 'templates/food-menu-data-by-days.php'; ?>
+        </div>
+    <?php }
 
 	/**
 	 * Display the food menu data.
@@ -966,7 +973,7 @@ class WPFM_Writepanels {
                                     <span class="dashicons dashicons-dismiss"></span>
                                 </a>
                             </div>
-                            <input type="hidden" name="wpfm_food_listing_ids[]" value="' . esc_attr($id) . '" />
+                            <input type="hidden" name="wpfm_food_menu_listing_ids_'.$day.'[]" value="' . esc_attr($id) . '" />
                         </li>';
                 endwhile;
             endif;
@@ -1050,6 +1057,25 @@ class WPFM_Writepanels {
             update_post_meta($post_id, '_food_menu_option', $menus_option);
         } else {
             update_post_meta($post_id, '_food_menu_option', '');
+        }
+        // Days of the week, starting with Sunday
+        $days_of_week = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+        if (isset($days_of_week)) {
+            // Collect data for each day
+            $open_hours_data = array();
+            foreach ($days_of_week as $day) {
+                $categories = isset($_POST["food_cats_$day"]) ? $_POST["food_cats_$day"] : array();
+                $types = isset($_POST["food_types_$day"]) ? $_POST["food_types_$day"] : array();
+                $items = isset($_POST["wpfm_food_menu_listing_ids_$day"]) ? $_POST["wpfm_food_menu_listing_ids_$day"] : array();
+
+                $open_hours_data[$day] = array(
+                    'food_categories' => $categories,
+                    'food_types' => $types,
+                    'food_items' => $items
+                );
+            }
+            // Serialize the data and save it
+            update_post_meta($post_id, '_open_hours_data', $open_hours_data);
         }
         
     }

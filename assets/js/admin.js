@@ -62,8 +62,8 @@ var WPFM_Admin = function () {
             jQuery('.copy-shortcode-button').on('click', WPFM_Admin.actions.copyButton);
             // Show by default first food Listings Settings Tab.
             jQuery('.wpfm-tabs li a:first').click();
-            // jQuery(document).on('change', '.wpfm-admin-menu-selection select.food-manager-category-dropdown', WPFM_Admin.actions.updateFoodinMenu);
-            jQuery(document).on('change', '.wpfm-admin-menu-selected-item select[name="cat[]"], .wpfm-admin-menu-selected-item select[name="food_type[]"]', WPFM_Admin.actions.updateSelectedFoodinMenu);
+            jQuery(document).on('change', '.wpfm-admin-menu-selection select.food-manager-category-dropdown', WPFM_Admin.actions.updateFoodinMenu);
+            jQuery(document).on('change', '.wpfm-admin-menu-selected-item select.food-manager-cat-dropdown', WPFM_Admin.actions.updateSelectedFoodinMenu);
             // Use body to call after dom update.
             jQuery("body").on('click', 'a.wpfm-food-item-remove', WPFM_Admin.actions.removeFoodItem);
             // Sortable.
@@ -440,10 +440,10 @@ var WPFM_Admin = function () {
                 var day = $select.closest('tr').find('td:first').text().trim(); // Get the day name (e.g., 'Monday', 'Tuesday', etc.)
                 
                 // Get the category IDs for the selected dropdown
-                $select.closest('tr').find('.food-manager-category-dropdown').each(function() {
+                $select.closest('tr').find('.food-manager-cat-dropdown').each(function() {
                     category_ids = category_ids.concat(jQuery(this).val()); // Merge values into the array
                 });
-            
+                alert(category_ids);
                 var taxonomy = $select.attr('data-taxonomy');
                 var post_count = $select.find(":selected").attr('data-count');
                 var exclude = [];
@@ -469,7 +469,7 @@ var WPFM_Admin = function () {
                         type: 'POST',
                         url: wpfm_admin.ajax_url,
                         data: {
-                            action: 'wpfm_get_food_listings_by_category_id',
+                            action: 'wpfm_get_food_listings_by_days',
                             category_id: category_ids,
                             taxonomy: taxonomy,
                             exclude: exclude,

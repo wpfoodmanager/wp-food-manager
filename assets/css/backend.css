@@ -1636,7 +1636,9 @@ span.toppings-radio-btn {
   margin-top: 5px;
   display: inline-block;
 }
-
+.hide_block{
+  display: none;
+}
 
 @media only screen and (max-width: 1280px) {
 

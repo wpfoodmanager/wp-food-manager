@@ -1,4 +1,3 @@
-<div class="wpfm-admin-food-menu-container wpfm-flex-col wpfm-admin-postbox-meta-data">
     <div class="wpfm-admin-postbox-meta-data">
         <table class="open-hours-table">
             <thead>
@@ -46,6 +45,8 @@
                                         'show_count' => true,
                                         'hierarchical' => false,
                                         'selected' => $selected_ids,
+                                        'class'   => 'food-manager-cat-dropdown',
+                                        'name'    => 'food_cats_'.$day
                                     ));
                                     ?>
                                 </div>
@@ -63,8 +64,9 @@
                                         'pad_counts' => true,
                                         'show_count' => true,
                                         'hierarchical' => false,
-                                        'name' => 'food_type',
+                                        'name' => 'food_types_'.$day,
                                         'selected' => $selected_ids,
+                                        'class'   => 'food-manager-cat-dropdown',
                                     ));
                                     ?>
                                 </div>
@@ -88,7 +90,7 @@
                                                         <span class="dashicons dashicons-dismiss"></span>
                                                     </a>
                                                 </div>
-                                                <input type="hidden" name="wpfm_food_listing_ids[]" value="<?php echo esc_attr($id); ?>" />
+                                                <input type="hidden" name="wpfm_food_menu_listing_ids_<?php echo $day?>'[]" value="<?php echo esc_attr($id); ?>" />
                                             </li>
                                         <?php }
                                     } ?>
@@ -108,28 +110,28 @@
             
                 <!-- Handle the form submission to save serialized data -->
                 <?php
-                if (isset($_POST)) {
-                    // Collect data for each day
-                    $open_hours_data = array();
+                // if (isset($_POST)) {
+                //     // Collect data for each day
+                //     $open_hours_data = array();
+                //     error_log(print_r($_POST, true));
 
-                    foreach ($days_of_week as $day) {
-                        $categories = isset($_POST["food_categories_$day"]) ? $_POST["food_categories_$day"] : array();
-                        $types = isset($_POST["food_types_$day"]) ? $_POST["food_types_$day"] : array();
-                        $items = isset($_POST["wpfm_food_listing_ids"]) ? $_POST["wpfm_food_listing_ids"] : array();
+                //     foreach ($days_of_week as $day) {
+                //         $categories = isset($_POST["food_categories_$day"]) ? $_POST["food_categories_$day"] : array();
+                //         $types = isset($_POST["food_types_$day"]) ? $_POST["food_types_$day"] : array();
+                //         $items = isset($_POST["wpfm_food_listing_ids"]) ? $_POST["wpfm_food_listing_ids"] : array();
 
-                        $open_hours_data[$day] = array(
-                            'food_categories' => $categories,
-                            'food_types' => $types,
-                            'food_items' => $items
-                        );
-                    }
-
-                    // Serialize the data and save it
-                    update_post_meta($post_id, '_open_hours_data', $open_hours_data);
-                }
+                //         $open_hours_data[$day] = array(
+                //             'food_categories' => $categories,
+                //             'food_types' => $types,
+                //             'food_items' => $items
+                //         );
+                //     }
+                //     error_log(print_r($open_hours_data, true));
+                //     // Serialize the data and save it
+                //     update_post_meta($post_id, '_open_hours_data', $open_hours_data);
+                // }
                 ?>
             
             </tbody>
         </table>
     </div>
-</div>
