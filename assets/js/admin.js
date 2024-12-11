@@ -443,7 +443,6 @@ var WPFM_Admin = function () {
                 $select.closest('tr').find('.food-manager-cat-dropdown').each(function() {
                     category_ids = category_ids.concat(jQuery(this).val()); // Merge values into the array
                 });
-                alert(category_ids);
                 var taxonomy = $select.attr('data-taxonomy');
                 var post_count = $select.find(":selected").attr('data-count');
                 var exclude = [];
