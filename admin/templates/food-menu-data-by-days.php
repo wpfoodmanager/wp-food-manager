@@ -38,7 +38,7 @@
                                     food_manager_dropdown_selection(array(
                                         'multiple' => true,
                                         'show_option_all' => __('Select food category', 'wp-food-manager'),
-                                        'id' => 'wpfm-admin-food-selection',
+                                        'id' => 'wpfm-admin-food-selections',
                                         'taxonomy' => 'food_manager_category',
                                         'hide_empty' => false,
                                         'pad_counts' => true,
@@ -58,7 +58,7 @@
                                     food_manager_dropdown_selection(array(
                                         'multiple' => true,
                                         'show_option_all' => __('Select food types', 'wp-food-manager'),
-                                        'id' => 'wpfm-admin-food-types-selection',
+                                        'id' => 'wpfm-admin-food-types-selections',
                                         'taxonomy' => 'food_manager_type',
                                         'hide_empty' => false,
                                         'pad_counts' => true,
@@ -77,7 +77,7 @@
                                 <?php
                                 $item_ids = isset($day_data['food_items']) ? $day_data['food_items'] : array();
                                 ?>
-                                <ul class="wpfm-food-menu menu menu-item-bar" id="wpfm-food-menu-list">
+                                <ul class="wpfm-food-menus menu menu-item-bar" id="wpfm-food-menu-list">
                                     <?php if ($item_ids && is_array($item_ids)) { ?>
                                         <?php foreach ($item_ids as $key => $id) { ?>
                                             <li class="menu-item-handle" data-food-id="<?php echo esc_attr($id); ?>">
@@ -95,43 +95,18 @@
                                         <?php }
                                     } ?>
                                 </ul>
-                                <span class="no-menu-item-handle" style="display: none;">Please select the food category or food types
+                                <span class="no-menu-item-handle_<?php echo $day?>" style="display: none;">Please select the food category or food types
                                     to add food items to the menu.</span>
-                                <div class="wpfm-loader" style="display: none;">
+                                <div class="wpfm-loader_<?php echo $day?>" style="display: none;">
                                     <img src="<?php echo esc_url(WPFM_PLUGIN_URL . '/assets/images/loader.gif'); ?>" alt="Loading..."
                                         class="wpfm-loader-image">
                                 </div>
-                                <div class="success_message"><span class="wpfm-success-message" style="display: none;">Foods added to
+                                <div class="success_message"><span class="wpfm-success-message_<?php echo $day?>" style="display: none;">Foods added to
                                         the menu successfully!</span></div>
                             </div>
                         </td>
                     </tr>
                 <?php endforeach; ?>
-            
-                <!-- Handle the form submission to save serialized data -->
-                <?php
-                // if (isset($_POST)) {
-                //     // Collect data for each day
-                //     $open_hours_data = array();
-                //     error_log(print_r($_POST, true));
-
-                //     foreach ($days_of_week as $day) {
-                //         $categories = isset($_POST["food_categories_$day"]) ? $_POST["food_categories_$day"] : array();
-                //         $types = isset($_POST["food_types_$day"]) ? $_POST["food_types_$day"] : array();
-                //         $items = isset($_POST["wpfm_food_listing_ids"]) ? $_POST["wpfm_food_listing_ids"] : array();
-
-                //         $open_hours_data[$day] = array(
-                //             'food_categories' => $categories,
-                //             'food_types' => $types,
-                //             'food_items' => $items
-                //         );
-                //     }
-                //     error_log(print_r($open_hours_data, true));
-                //     // Serialize the data and save it
-                //     update_post_meta($post_id, '_wpfm_food_menu_by_days', $open_hours_data);
-                // }
-                ?>
-            
             </tbody>
         </table>
     </div>

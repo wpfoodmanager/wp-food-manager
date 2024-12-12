@@ -12,8 +12,8 @@ var WPFM_Admin = function () {
         ///<returns type="initialization AdminSettings" />   
         /// <since>1.0.0</since> 
         init: function () {
-            if( jQuery("#wpfm-admin-food-types-selection, #wpfm-admin-food-selection").length > 0 ){
-                jQuery("#wpfm-admin-food-types-selection, #wpfm-admin-food-selection").chosen({ search_contains: !0 });
+            if( jQuery("#wpfm-admin-food-types-selection, #wpfm-admin-food-selection, #wpfm-admin-food-types-selections, #wpfm-admin-food-selections").length > 0 ){
+                jQuery("#wpfm-admin-food-types-selection, #wpfm-admin-food-selection, #wpfm-admin-food-types-selections, #wpfm-admin-food-selections").chosen({ search_contains: !0 });
             }
             
             var selectedValue = jQuery(".wpfm-admin-food-menu-items input[type='radio']:checked").val();
@@ -352,7 +352,6 @@ var WPFM_Admin = function () {
             /// <returns type="actions" />
             /// <since>1.0.0</since>    
             menuOptions: function (event) {
-                alert('dgdfgdf');
                 // event.preventDefault();
                 var menuOpt = jQuery(this).val();
                 console.log(jQuery(this).val());
@@ -511,19 +510,30 @@ var WPFM_Admin = function () {
                         },
                         success: function (response) {
                             if (response.html.length !== 0) {
+                            
                                 // Update the food menu for the specific day
                                 jQuery('tr').each(function() {
+                                    console.log(day);
+                                    jQuery('.wpfm-loader').show();
+                                    // Show the menu items and any data result after loader is hidden
                                     if (jQuery(this).find('td:first').text().trim() === day) {
-                                        jQuery(this).find('ul.wpfm-food-menu').html(response.html);
-                                        jQuery(this).find('.no-menu-item-handle').hide();
-                                        jQuery(this).find('.success_message').show();
+                                        jQuery(this).find('ul.wpfm-food-menus').html(response.html);
+                                        jQuery(this).find('no-menu-item-handle_'+day).hide();                                        
+                                        setTimeout(function() {
+                                            jQuery('.wpfm-success-message_'+day).fadeIn();
+                                            setTimeout(function() {
+                                                jQuery('.wpfm-success-message_'+day).fadeOut();
+                                            }, 5000);
+                                        }, 3000); 
                                     }
                                 });
                             } else {
+                                console.log('hello332323');
+                            
                                 // If no items found, show the 'No items' message
                                 jQuery('tr').each(function() {
                                     if (jQuery(this).find('td:first').text().trim() === day) {
-                                        jQuery(this).find('.no-menu-item-handle').show();
+                                        jQuery(this).find('no-menu-item-handle_'+day).show();
                                     }
                                 });
                             }
@@ -545,21 +555,30 @@ var WPFM_Admin = function () {
                         },
                         success: function (response) {
                             if (response.html.length !== 0) {
+                                    console.log('hello33232');
                                 // Update the food menu for the specific day
                                 jQuery('tr').each(function() {
+                                    console.log('hello');
                                     if (jQuery(this).find('td:first').text().trim() === day) {
-                                        jQuery(this).find('ul.wpfm-food-menu').html(response.html);
-                                        jQuery(this).find('.no-menu-item-handle').hide();
-                                        jQuery(this).find('.success_message').show();
+                                        jQuery(this).find('ul.wpfm-food-menus').html(response.html);
+                                        jQuery(this).find('no-menu-item-handle_'+day).hide();
+                                        jQuery(this).find('.success_message_'+day).show();
                                     }
                                 });
                             } else {
+                                console.log('hello123');
+                                
                                 // Show the 'No items' message if no items found
                                 jQuery('tr').each(function() {
                                     if (jQuery(this).find('td:first').text().trim() === day) {
-                                        jQuery(this).find('ul.wpfm-food-menu').html(response.html);
-                                        jQuery(this).find('.success_message').hide();
-                                        jQuery(this).find('.no-menu-item-handle').show();
+                                        jQuery(this).find('ul.wpfm-food-menus').html(response.html);
+                                        jQuery(this).find('no-menu-item-handle_'+day).show();
+                                        setTimeout(function() {
+                                            jQuery('.wpfm-success-message_'+day).fadeIn();
+                                            setTimeout(function() {
+                                                jQuery('.wpfm-success-message_'+day).fadeOut();
+                                            }, 5000);
+                                        }, 3000); 
                                     }
                                 });
                             }

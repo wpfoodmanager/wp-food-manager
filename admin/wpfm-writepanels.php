@@ -393,12 +393,14 @@ class WPFM_Writepanels {
         if ('add' != $screen->action) {
             // Show food menu Shortcode on edit menu page - admin.
             add_meta_box('wpfm_menu_shortcode', 'Shortcode', array($this, 'food_menu_shortcode'), 'food_manager_menu', 'side', 'low');
+            
+            add_meta_box('wpfm_food_menu_qr_code', 'QR Code', array($this, 'wpfm_food_menu_qr_code'), 'food_manager_menu', 'side', 'low');
           
         }
         add_meta_box('wpfm_menu_disable_redirection', 'Disable Food Redirection', array($this, 'food_menu_disable_food_redirection'), 'food_manager_menu', 'side', 'low');
         add_meta_box('wpfm_menu_disable_image', 'Disable Food Image', array($this, 'food_menu_disable_food_image'), 'food_manager_menu', 'side', 'low');
     }
-
+    
     /**
      * Show menu shortcode in single edit menu.
      * 
@@ -410,6 +412,37 @@ class WPFM_Writepanels {
         global $post;
         $menu_id = $post->ID;
         echo '<input type="text" value="[food_menu id=' . esc_attr($menu_id) . ']" readonly><span class="dashicons dashicons-admin-page copy-shortcode-button"></span><span class="tooltip" style="display:none;">Shortcode copied</span>';
+    }
+    
+    /**
+     * Show menu shortcode in single edit menu.
+     * 
+     * @access public
+     * @return void
+     * @since 1.0.2
+     */
+    public function wpfm_food_menu_qr_code() {
+        global $post;
+        $menu_id = $post->ID;
+        // if(!class_exists('QRcode')) {
+		// 	require_once 'lib/phpqrcode/qrlib.php';
+		// }
+		// if(!class_exists('Dompdf')) {
+		// 	// see: http://getcomposer.org/doc/00-intro.md
+		// 	require_once 'dompdf/vendor/autoload.php';
+		// }
+		
+		// $upload_dir = wp_upload_dir();
+		// if(!empty($upload_dir['basedir'])) {
+		// 	$ticket_dirname = $upload_dir['basedir'].'/wp-event-manager-sell-tickets';
+		// 	if(!file_exists($ticket_dirname)) {
+		// 		wp_mkdir_p($ticket_dirname);
+		// 	} 
+		// 	$qrcode_dirname = $upload_dir['basedir'].'/wp-event-manager-sell-tickets/qr-code';
+		// 	if(!file_exists($qrcode_dirname)) {
+		// 		wp_mkdir_p($qrcode_dirname);
+		// 	}
+		// }
     }
     
     /**
@@ -1152,6 +1185,7 @@ class WPFM_Writepanels {
 						'dynamic_menu' => __('Dynamic Menu', 'wp-food-manager'),
 					),
 					'value'       => $item_menu_option,
+					'description' => __('Please select a menu option to define your food menu type.', 'wp-food-manager'),
 				);
                 get_food_manager_template('form-fields/' . $field['type'] . '-field.php', array('key' => esc_attr($key), 'field' => $field));
 				

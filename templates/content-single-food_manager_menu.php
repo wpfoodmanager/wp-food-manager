@@ -72,7 +72,7 @@ $show_image = ($disable_food_image !== 'yes');
     }
     
     $get_menu_options = get_post_meta(get_the_ID(), '_food_menu_option', true); 
-    if ( $get_menu_options == 'static_menu') {
+    if ( empty($get_menu_options) || $get_menu_options == 'static_menu') {
         if ( 'food_manager_menu' == get_post_type() ) {
             $food_menu_ids = get_post_meta($post->ID, '_food_item_ids', true);
         } elseif(isset($menu_id) && !empty($menu_id) ){
