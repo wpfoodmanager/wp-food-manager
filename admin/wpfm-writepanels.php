@@ -423,27 +423,27 @@ class WPFM_Writepanels {
      */
     public function wpfm_food_menu_qr_code() {
         global $post;
+        
+        // Get the Post ID and Post URL
         $menu_id = $post->ID;
-        // if(!class_exists('QRcode')) {
-		// 	require_once 'lib/phpqrcode/qrlib.php';
-		// }
-		// if(!class_exists('Dompdf')) {
-		// 	// see: http://getcomposer.org/doc/00-intro.md
-		// 	require_once 'dompdf/vendor/autoload.php';
-		// }
-		
-		// $upload_dir = wp_upload_dir();
-		// if(!empty($upload_dir['basedir'])) {
-		// 	$ticket_dirname = $upload_dir['basedir'].'/wp-event-manager-sell-tickets';
-		// 	if(!file_exists($ticket_dirname)) {
-		// 		wp_mkdir_p($ticket_dirname);
-		// 	} 
-		// 	$qrcode_dirname = $upload_dir['basedir'].'/wp-event-manager-sell-tickets/qr-code';
-		// 	if(!file_exists($qrcode_dirname)) {
-		// 		wp_mkdir_p($qrcode_dirname);
-		// 	}
-		// }
+        $post_url = get_permalink($menu_id);  // Get the URL of the post
+    
+        // Check if the QR code class exists and include it if it doesn't
+        if(!class_exists('QRcode')) {
+            require_once plugin_dir_path(__FILE__) . 'includes/lib/phpqrcode/qrlib.php';
+        }
+    
+        // Define the path to store the generated QR code image
+        $upload_dir = wp_upload_dir(); // Get the upload directory
+        $qr_code_image = $upload_dir['path'] . "/qr_code_$menu_id.png"; // Path for the QR code image
+        
+        // Generate QR code image
+        QRcode::png($post_url, $qr_code_image, 'L', 4, 2);  // 'L' for low error correction, 4 is the size, 2 is the margin
+    
+        // Output the QR code image
+        echo '<img src="' . $upload_dir['url'] . "/qr_code_$menu_id.png" . '" alt="QR Code" style="max-width: 100%; height: auto;">';
     }
+    
     
     /**
      * This function is responsible for disabling any redirection related to the food.
