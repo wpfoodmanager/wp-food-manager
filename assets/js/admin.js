@@ -28,9 +28,7 @@ var WPFM_Admin = function () {
                     jQuery('.static_menu').hide();
                     jQuery('.dynamic_menu').show();
                 }
-            } else {
-                console.log("No radio button selected.");
-            }
+            } 
             
             jQuery('div.food tr.wpfm-admin-common td.field-type select option').each(function () {
                 if (jQuery(this).val() == 'term-checklist' || jQuery(this).val() == 'term-multiselect' || jQuery(this).val() == 'term-select') {
@@ -354,9 +352,7 @@ var WPFM_Admin = function () {
             menuOptions: function (event) {
                 // event.preventDefault();
                 var menuOpt = jQuery(this).val();
-                console.log(jQuery(this).val());
                 if( menuOpt == 'static_menu'){
-                    
                     jQuery('.static_menu').show();
                     jQuery('.dynamic_menu').hide();
                 } else{
@@ -513,7 +509,6 @@ var WPFM_Admin = function () {
                             
                                 // Update the food menu for the specific day
                                 jQuery('tr').each(function() {
-                                    console.log(day);
                                     jQuery('.wpfm-loader').show();
                                     // Show the menu items and any data result after loader is hidden
                                     if (jQuery(this).find('td:first').text().trim() === day) {
@@ -528,8 +523,6 @@ var WPFM_Admin = function () {
                                     }
                                 });
                             } else {
-                                console.log('hello332323');
-                            
                                 // If no items found, show the 'No items' message
                                 jQuery('tr').each(function() {
                                     if (jQuery(this).find('td:first').text().trim() === day) {
@@ -555,10 +548,8 @@ var WPFM_Admin = function () {
                         },
                         success: function (response) {
                             if (response.html.length !== 0) {
-                                    console.log('hello33232');
                                 // Update the food menu for the specific day
                                 jQuery('tr').each(function() {
-                                    console.log('hello');
                                     if (jQuery(this).find('td:first').text().trim() === day) {
                                         jQuery(this).find('ul.wpfm-food-menus').html(response.html);
                                         jQuery(this).find('no-menu-item-handle_'+day).hide();
@@ -566,8 +557,6 @@ var WPFM_Admin = function () {
                                     }
                                 });
                             } else {
-                                console.log('hello123');
-                                
                                 // Show the 'No items' message if no items found
                                 jQuery('tr').each(function() {
                                     if (jQuery(this).find('td:first').text().trim() === day) {
