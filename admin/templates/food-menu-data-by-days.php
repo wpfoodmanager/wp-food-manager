@@ -17,7 +17,7 @@
                 // Loop through the days of the week
                 foreach ($days_of_week as $day):
                     // Retrieve the serialized data for this day (if it exists)
-                    $saved_data = get_post_meta($post_id, '_open_hours_data', true);
+                    $saved_data = get_post_meta($post_id, '_wpfm_food_menu_by_days', true);
                     $day_data = isset($saved_data[$day]) ? $saved_data[$day] : array();
 
                     ?>
@@ -128,7 +128,7 @@
                 //     }
                 //     error_log(print_r($open_hours_data, true));
                 //     // Serialize the data and save it
-                //     update_post_meta($post_id, '_open_hours_data', $open_hours_data);
+                //     update_post_meta($post_id, '_wpfm_food_menu_by_days', $open_hours_data);
                 // }
                 ?>
             

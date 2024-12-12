@@ -1075,7 +1075,7 @@ class WPFM_Writepanels {
                 );
             }
             // Serialize the data and save it
-            update_post_meta($post_id, '_open_hours_data', $open_hours_data);
+            update_post_meta($post_id, '_wpfm_food_menu_by_days', $open_hours_data);
         }
         
     }
