@@ -430,7 +430,7 @@ class WPFM_Writepanels {
     
         // Check if the QR code class exists and include it if it doesn't
         if(!class_exists('QRcode')) {
-            require_once plugin_dir_path(__FILE__) . 'includes/lib/phpqrcode/qrlib.php';
+            require_once WPFM_PLUGIN_DIR . '/includes/lib/phpqrcode/qrlib.php';
         }
     
         // Define the path to store the generated QR code image
