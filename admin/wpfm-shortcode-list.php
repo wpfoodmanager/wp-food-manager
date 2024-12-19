@@ -93,24 +93,6 @@ if(!class_exists('WP_Food_Manager_Shortcode_List')) :
 									<td><?php _e('You can add a Food Menu to a new page by pasting the appropriate shortcode on the HTML editor. To display a specific food menu by menu ID, create a page from the Pages menu in the Admin Panel and add the shortcode [food_menu id="YOUR_MENU_ID"]. Replace "YOUR_MENU_ID" with the actual ID of the food menu you want to display.', 'wp-food-manager'); ?>
 									<td><a class="button add-field" href="<?php echo $detail_link.'the-food-dashboard/';?>" target="_blank"><?php _e('View Details', 'wp-food-manager');?></td>
 								</tr>
-								<tr class="shortcode_list wp-food-manager">
-									<td class="wpfm-shortcode-td">[restaurant_food_menu_title restaurant_id=""]</td>
-									<td><?php _e('The Restaurant Food Menu', 'wp-food-manager');?></td>
-									<td><?php _e('To display the title of a specific food menu for a restaurant, insert the shortcode in the HTML editor. Create a new page from the Pages menu in the Admin Panel and use the shortcode [restaurant_food_menu_title restaurant_id="YOUR_RESTAURANT_ID"]. Replace "YOUR_RESTAURANT_ID" with the actual ID of the restaurant to show its menu title.', 'wp-food-manager'); ?>
-									<td><a class="button add-field" href="<?php echo $detail_link.'the-food-dashboard/';?>" target="_blank"><?php _e('View Details', 'wp-food-manager');?></td>
-								</tr>
-								<tr class="shortcode_list wp-food-manager">
-									<td class="wpfm-shortcode-td">[restaurant_food_menu restaurant_id=""]</td>
-									<td><?php _e('The Restaurant Food Menu Title', 'wp-food-manager');?></td>
-									<td><?php _e('To display the full food menu for a specific restaurant, use the following shortcode in the HTML editor. Create a new page from the Pages menu in the Admin Panel and add the shortcode [restaurant_food_menu restaurant_id="YOUR_RESTAURANT_ID"]. Replace "YOUR_RESTAURANT_ID" with the actual ID of the restaurant to showcase its menu.', 'wp-food-manager');?>
-									<td><a class="button add-field" href="<?php echo $detail_link.'the-food-dashboard/';?>" target="_blank"><?php _e('View Details', 'wp-food-manager');?></td>
-								</tr>
-								<tr class="shortcode_list wp-food-manager">
-									<td class="wpfm-shortcode-td">[restaurant_food_menu count="yes" restaurant_id=""]</td>
-									<td><?php _e('Apply Count Filter on Food Menu', 'wp-food-manager');?></td>
-									<td><?php _e('To display the food menu for a specific restaurant along with the item count, use this shortcode in the HTML editor. Create a new page from the Pages menu in the Admin Panel and add the shortcode [restaurant_food_menu count="yes" restaurant_id="YOUR_RESTAURANT_ID"]. Replace "YOUR_RESTAURANT_ID" with the actual ID of the restaurant to show its menu and the total number of items.', 'wp-food-manager');?>
-									<td><a class="button add-field" href="<?php echo $detail_link.'the-food-dashboard/';?>" target="_blank"><?php _e('View Details', 'wp-food-manager');?></td>
-								</tr>
 								<?php do_action('WP_Food_Manager_Shortcode_List', $detail_link); ?>
 							</tbody>
 						</table>
