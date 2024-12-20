@@ -6,6 +6,7 @@ var WPFM_Frontend = function () {
             }
             // Open modal popup on food image click
             jQuery('.food_manager_menu .food-list-box img').on('click', WPFM_Frontend.actions.openFoodMenuPopup);  
+            jQuery('.fm-food-menu-container .fm-food-menu-title').on('click', WPFM_Frontend.actions.openFoodMenuPopup);  
             jQuery('.fm-food-menu-container .food-list-box img').on('click', WPFM_Frontend.actions.openFoodMenuPopup);                
             jQuery(document).on('click', '.wpfm-modal-close', function(){
                 jQuery(this).parents('#wpfm_food_popup').removeClass('wpfm-modal-open');
