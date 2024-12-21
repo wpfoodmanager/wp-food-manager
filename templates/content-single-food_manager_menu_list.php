@@ -111,9 +111,9 @@ $show_image = ($disable_food_image !== 'yes');
             echo "<div class='fm-food-menu-description'>";
             echo $menu_food_desc;
             echo "</div>";
-            if (get_stock_status($food_listing) == 'food_outofstock') {
+            if (get_stock_status(get_the_ID()) == 'food_outofstock') {
                 echo '<div class="food-stock-status">';
-                    display_stock_status($food_listing);
+                    display_stock_status(get_the_ID());
                 echo '</div>';
             }
             do_action('food_menu_list_overview_after', get_the_ID());

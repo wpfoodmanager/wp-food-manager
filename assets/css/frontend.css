@@ -3412,4 +3412,16 @@ img.wpfm-organic-tag-icon {
     border: 1px solid  rgb(216, 234, 235);
 }
 
+.fm-food-menu-block.food-list-box.search_filter {
+    padding: 4px;
+}
+.search_filter .fm-food-menu-container {
+    display: block;
+    margin: 0;
+}
+.search_filter .food-list-box {
+    width: calc(100% - 20px);
+    padding: 0;
+}
+
 /* ===== 17. WOOCOMMERCE END ===== */
