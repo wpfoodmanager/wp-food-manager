@@ -239,14 +239,14 @@ class WPFM_Shortcodes {
 	public function output_foods($atts) {
 		ob_start();
 		extract($atts = shortcode_atts(apply_filters('food_manager_output_foods_defaults', array(
-			'per_page'                  => get_option('food_manager_per_page'),
+			'per_page'                  => get_option('food_manager_per_page') ? get_option('food_manager_per_page') : 5,
 			'orderby'                   => 'meta_value', // meta_value
 			'order'                     => 'ASC',
 			// Filters + cats
 			'show_filters'              => true,
 			'show_categories'           => true,
-			'show_food_types'          => true,
-			'show_food_tags'          => true,
+			'show_food_types'           => true,
+			'show_food_tags'            => true,
 			'show_category_multiselect' => get_option('food_manager_enable_default_category_multiselect', false),
 			'show_food_type_multiselect' => get_option('food_manager_enable_default_food_type_multiselect', false),
 			'show_food_menu_multiselect' => get_option('food_manager_enable_default_food_menu_multiselect', false),
@@ -254,7 +254,7 @@ class WPFM_Shortcodes {
 			'show_more'                 => true,
 			// Limit what foods are shown based on category and type.
 			'categories'                => '',
-			'food_types'               => '',
+			'food_types'                => '',
 			'featured'                  => null, // True to show only featured, false to hide featured, leave null to show both.
 			'cancelled'                 => null, // True to show only cancelled, false to hide cancelled, leave null to show both/use the settings.
 			// Default values for filters.
@@ -264,8 +264,7 @@ class WPFM_Shortcodes {
 			'selected_food_type'        => '',
 			'layout_type'               => 'all',
 			'title'			            => __('Foods', 'wp-food-manager'),
-		)), $atts));
-
+		)), $atts));		
 		//Categories.
 		if (!get_option('food_manager_enable_categories')) {
 			$show_categories = false;

@@ -49,7 +49,8 @@
 			<!-- Search by food categories section start -->
 			<?php if ($categories) : 
 				foreach ($categories as $category) : ?>
-					<input type="hidden" name="search_categories[]" value="<?php echo esc_attr(sanitize_title($category)); ?>" />
+					<!-- <input type="hidden" name="search_categories[]" value="<?php //echo esc_attr(sanitize_title($category)); ?>" /> -->
+					<?php food_manager_dropdown_selection(array('value' => 'slug', 'taxonomy' => 'food_manager_category', 'hierarchical' => 1, 'name' => 'search_categories', 'orderby' => 'name', 'selected' => $category, 'hide_empty' => false)); ?>
 				<?php endforeach; 
 			elseif ($show_categories && !is_tax('food_manager_category') && get_terms('food_manager_category', ['hide_empty' => false])) : ?>
 				<div class="wpfm-col">
