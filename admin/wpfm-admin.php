@@ -576,7 +576,12 @@ class WPFM_Admin {
                 'url'   => esc_url(plugin_dir_url(__FILE__) . '../assets/images/service-tooptip-icon.png'),
                 'alt'   => esc_attr__('Info', 'wp-food-manager'),
                 'title' => esc_attr__('If Food Image is enabled, it will not be displayed for food.', 'wp-food-manager')
-            )
+            ),
+            'fm_menu' => array(
+                'url'   => esc_url(plugin_dir_url(__FILE__) . '../assets/images/service-tooptip-icon.png'),
+                'alt'   => esc_attr__('Info', 'wp-food-manager'),
+                'title' => esc_html__('If static menu is enabled, A fixed menu with a predetermined list of food items that remains the same every day. Ideal for establishments offering a consistent menu. If dynamic menu is enabled, A menu that changes daily, offering a rotating selection of dishes based on the current day. Perfect for establishments with daily specials or rotating menus.', 'wp-food-manager')
+            ),
         ));
         // File upload - vendor.
         if (apply_filters('wpfm_ajax_file_upload_enabled', true)) {

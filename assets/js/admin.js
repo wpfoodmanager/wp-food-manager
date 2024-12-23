@@ -315,7 +315,9 @@ var WPFM_Admin = function () {
            // Find the meta box titles and append the tooltip icon
             var tooltips = {
                 '#wpfm_menu_disable_redirection': wpfmTooltipData.redirection,
-                '#wpfm_menu_disable_image': wpfmTooltipData.image
+                '#wpfm_menu_disable_image': wpfmTooltipData.image,
+                '#food_manager_menu_options': wpfmTooltipData.fm_menu,
+                
             };
 
             // Iterate through each tooltip configuration and append the tooltip icon.
@@ -326,6 +328,18 @@ var WPFM_Admin = function () {
                     '</span>'
                 );
             });
+            
+            // var menuTooltips = {
+            //     '#food_menu_options[value="static_menu"]': wpfmTooltipData.static_menu,
+            //     '#food_menu_options[value="dynamic_menu"]': wpfmTooltipData.dynamic_menu
+            // };
+            // jQuery.each(menuTooltips, function (selector, tooltip) {
+            //     jQuery(selector).append(
+            //         '<span class="tooltip-icon" style="margin-left: 5px;">' +
+            //         '<img src="' + tooltip.url + '" title="' + tooltip.title + '" alt="' + tooltip.alt + '"/>' +
+            //         '</span>'
+            //     );
+            // });
         },
 
         actions: {
@@ -506,7 +520,6 @@ var WPFM_Admin = function () {
                         },
                         success: function (response) {
                             if (response.html.length !== 0) {
-                            
                                 // Update the food menu for the specific day
                                 jQuery('tr').each(function() {
                                     jQuery('.wpfm-loader').show();
@@ -562,12 +575,6 @@ var WPFM_Admin = function () {
                                     if (jQuery(this).find('td:first').text().trim() === day) {
                                         jQuery(this).find('ul.wpfm-food-menus').html(response.html);
                                         jQuery(this).find('no-menu-item-handle_'+day).show();
-                                        setTimeout(function() {
-                                            jQuery('.wpfm-success-message_'+day).fadeIn();
-                                            setTimeout(function() {
-                                                jQuery('.wpfm-success-message_'+day).fadeOut();
-                                            }, 5000);
-                                        }, 3000); 
                                     }
                                 });
                             }

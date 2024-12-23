@@ -175,8 +175,8 @@ $show_image = ($disable_food_image !== 'yes');
         do_action('food_menu_list_end');
         echo "</div>";
     } else{
-        echo "<div class='fm-food-menu-description'>";
-        echo esc_html("No Food Available for this day.", "wp-food-manager");
+        echo "<div class='no_food_listings_found wpfm-alert wpfm-alert-danger'>";
+        echo esc_html_e("No Food Available for this day.", "wp-food-manager");
         echo "</div>";
     }?>
 </div>

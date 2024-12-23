@@ -1185,7 +1185,6 @@ class WPFM_Writepanels {
 						'dynamic_menu' => __('Dynamic Menu', 'wp-food-manager'),
 					),
 					'value'       => $item_menu_option,
-					'description' => __('Please select a menu option to define your food menu type.', 'wp-food-manager'),
 				);
                 get_food_manager_template('form-fields/' . $field['type'] . '-field.php', array('key' => esc_attr($key), 'field' => $field));
 				
