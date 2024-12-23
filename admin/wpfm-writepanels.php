@@ -394,7 +394,7 @@ class WPFM_Writepanels {
             // Show food menu Shortcode on edit menu page - admin.
             add_meta_box('wpfm_menu_shortcode', 'Shortcode', array($this, 'food_menu_shortcode'), 'food_manager_menu', 'side', 'low');
             
-            add_meta_box('wpfm_food_menu_qr_code', 'QR Code', array($this, 'wpfm_food_menu_qr_code'), 'food_manager_menu', 'side', 'low');
+            add_meta_box('wpfm_food_menu_qr_code', 'Food Menu QR Code', array($this, 'wpfm_food_menu_qr_code'), 'food_manager_menu', 'side', 'low');
           
         }
         add_meta_box('wpfm_menu_disable_redirection', 'Disable Food Redirection', array($this, 'food_menu_disable_food_redirection'), 'food_manager_menu', 'side', 'low');
@@ -441,7 +441,13 @@ class WPFM_Writepanels {
         QRcode::png($post_url, $qr_code_image, 'L', 4, 2);  // 'L' for low error correction, 4 is the size, 2 is the margin
     
         // Output the QR code image
-        echo '<img src="' . $upload_dir['url'] . "/qr_code_$menu_id.png" . '" alt="QR Code" style="max-width: 100%; height: auto;">';
+        $qr_code_url = $upload_dir['url'] . "/qr_code_$menu_id.png";
+        
+        // Output the QR code image and the download button
+	    echo '<div style="display: flex; align-items: center;">';
+	    echo '<img src="' . $qr_code_url . '" alt="QR Code" style="max-width: 100%; height: auto;">';
+	    echo '<a href="' . $qr_code_url . '" download="QR_Code_' . $menu_id . '.png" style="margin-right: 10px; text-decoration: none; background-color: #0073aa; color: #fff; padding: 10px 15px; border-radius: 5px;"><span class="dashicons dashicons-download"></span></a>';
+	    echo '</div>';
     }
     
     
