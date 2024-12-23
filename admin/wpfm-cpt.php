@@ -264,6 +264,9 @@ class WPFM_CPT {
                     echo '-';
                 }
                 break;
+            case 'qr_code':
+                display_menu_qr_code();
+                break;
             default:
                 break;
         }
@@ -280,6 +283,7 @@ class WPFM_CPT {
     public function set_shortcode_copy_columns($columns) {
         $columns['shortcode'] = __('Shortcode', 'wp-food-manager');
         $columns['thumbnail'] = __('Food menu image', 'wp-food-manager');
+        $columns['qr_code'] = __('QR Code', 'wp-food-manager');
         return $columns;
     }
 

@@ -71,6 +71,7 @@ var WPFM_Admin = function () {
             }
             // Bind on click food of the settings section.
             jQuery(".wpfm-tabs li a").on('click', WPFM_Admin.actions.tabClick);
+            jQuery(".qr_preview").on('click', WPFM_Admin.actions.QRPreview);
             jQuery(".wpfm-admin-food-menu-items input").on('click', WPFM_Admin.actions.menuOptions);            
             jQuery('.copy-shortcode-button').on('click', WPFM_Admin.actions.copyButton);
             // Show by default first food Listings Settings Tab.
@@ -328,18 +329,6 @@ var WPFM_Admin = function () {
                     '</span>'
                 );
             });
-            
-            // var menuTooltips = {
-            //     '#food_menu_options[value="static_menu"]': wpfmTooltipData.static_menu,
-            //     '#food_menu_options[value="dynamic_menu"]': wpfmTooltipData.dynamic_menu
-            // };
-            // jQuery.each(menuTooltips, function (selector, tooltip) {
-            //     jQuery(selector).append(
-            //         '<span class="tooltip-icon" style="margin-left: 5px;">' +
-            //         '<img src="' + tooltip.url + '" title="' + tooltip.title + '" alt="' + tooltip.alt + '"/>' +
-            //         '</span>'
-            //     );
-            // });
         },
 
         actions: {
@@ -356,6 +345,20 @@ var WPFM_Admin = function () {
                 jQuery(jQuery(this).attr('href')).show();
                 jQuery(this).addClass('nav-tab-active');
                 return false;
+            },
+            /// <summary>
+            /// Click on tab food manager genera or other food tab.     
+            /// </summary>
+            /// <param name="parent" type="Food"></param>    
+            /// <returns type="actions" />
+            /// <since>1.0.0</since>   
+            QRPreview: function (event) {
+                event.preventDefault();
+                jQuery(this).next('.qrcode_img').show();
+                jQuery(this).next('.qrcode_img').find('.dashicons-no-alt').on('click', function(){
+                    jQuery('.qrcode_img').hide();
+                });
+                
             },
             /// <summary>
             /// Click on tab food manager genera or other food tab.     
