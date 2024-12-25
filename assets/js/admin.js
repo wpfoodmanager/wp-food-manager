@@ -484,7 +484,7 @@ var WPFM_Admin = function () {
             updateSelectedFoodinMenu: function (event) {
                 var category_ids = [];
                 var $select = jQuery(this);
-                var day = $select.closest('tr').find('td:first').text().trim(); // Get the day name (e.g., 'Monday', 'Tuesday', etc.)
+                var day = $select.closest('tr').find('th:first').text().trim(); // Get the day name (e.g., 'Monday', 'Tuesday', etc.)
                 
                 // Get the category IDs for the selected dropdown
                 $select.closest('tr').find('.food-manager-cat-dropdown').each(function() {
@@ -527,7 +527,7 @@ var WPFM_Admin = function () {
                                 jQuery('tr').each(function() {
                                     jQuery('.wpfm-loader').show();
                                     // Show the menu items and any data result after loader is hidden
-                                    if (jQuery(this).find('td:first').text().trim() === day) {
+                                    if (jQuery(this).find('th:first').text().trim() === day) {
                                         jQuery(this).find('ul.wpfm-food-menus').html(response.html);
                                         jQuery(this).find('no-menu-item-handle_'+day).hide();                                        
                                         setTimeout(function() {
