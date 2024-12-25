@@ -1737,3 +1737,35 @@ span.toppings-radio-btn {
 }
 
 /* WPFM tabs */
+
+
+/* Shortcode Page CSS */
+
+.wpfm-shortcode-page {
+  margin-top: 10px;
+}
+.wpfm-shortcode-table {
+  margin-top: 15px;
+  overflow: auto;
+}
+.wpfm-shortcode-table table {
+  border: 1px solid #c3c4c7;
+  background-color: #ffffff;
+  border-spacing: 0;
+  width: 100%;
+}
+.wpfm-shortcode-table td {
+  border-top: 1px solid #c3c4c7;
+}
+.wpfm-shortcode-table td, .wpfm-shortcode-table th {
+  padding: 10px 20px;
+  text-align: left;
+}
+.wpfm-shortcode-td {
+  font-size: 16px;
+}
+.wpfm-shortcode-table tbody {
+  background-color: #f6f7f7;
+}
+
+/* Shortcode Page CSS */
