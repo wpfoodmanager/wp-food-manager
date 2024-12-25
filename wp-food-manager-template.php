@@ -443,7 +443,7 @@ function display_food_category($post = null, $after = '') {
 			$numCategory = count($food_category);
 			$i = 0;
 			foreach ($food_category as $cat) {
-				echo wp_kses(('<a href="' . get_term_link($cat->term_id) . '"><span class="wpfm-food-cat-text food-category ' . esc_attr(sanitize_title($cat->slug)) . ' ">' . esc_attr(sanitize_text_field($cat->name)) . '</span></a>'), array(
+				echo wp_kses(('<a href="' . get_term_link($cat->term_id) . '"><span class="wpfm-food-category-text food-category ' . esc_attr(sanitize_title($cat->slug)) . ' ">' . esc_attr(sanitize_text_field($cat->name)) . '</span></a>'), array(
 					'a' => array(
 						'href' => array(),
 						'title' => array()

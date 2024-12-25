@@ -1402,11 +1402,13 @@ a.button.wpfm-add-row:hover {
     align-items: center;
 }
 
-.wpfm-food-listings .wpfm-food-layout-wrapper .wpfm-food-infomation .wpfm-food-details .wpfm-food-type {
+.wpfm-food-listings .wpfm-food-layout-wrapper .wpfm-food-infomation .wpfm-food-details .wpfm-food-type,
+.wpfm-food-listings .wpfm-food-layout-wrapper .wpfm-food-infomation .wpfm-food-details .wpfm-food-category {
     display: inline-block;
 }
 
-.wpfm-food-listings .wpfm-food-layout-wrapper .wpfm-food-infomation .wpfm-food-details .wpfm-food-type .wpfm-food-type-text {
+.wpfm-food-listings .wpfm-food-layout-wrapper .wpfm-food-infomation .wpfm-food-details .wpfm-food-type .wpfm-food-type-text,
+.wpfm-food-listings .wpfm-food-layout-wrapper .wpfm-food-infomation .wpfm-food-details .wpfm-food-category .wpfm-food-category-text {
     background: var(--wpfm-gray-bg-color);
     color: var(--wpfm-dark-color);
     padding: 5px 7px;
@@ -1415,11 +1417,14 @@ a.button.wpfm-add-row:hover {
     font-weight: 400;
     font-size: 14px;
     border-radius: 2px;
+    margin-right: 5px;
+    margin-top: 5px;
 }
 
 .wpfm-food-listings .wpfm-food-layout-wrapper .wpfm-food-infomation .wpfm-food-details .wpfm-food-title,
 .wpfm-food-listings .wpfm-food-layout-wrapper .wpfm-food-infomation .wpfm-food-details .wpfm-food-price,
-.wpfm-food-listings .wpfm-food-layout-wrapper .wpfm-food-infomation .wpfm-food-details .wpfm-food-type {
+.wpfm-food-listings .wpfm-food-layout-wrapper .wpfm-food-infomation .wpfm-food-details .wpfm-food-type,
+.wpfm-food-listings .wpfm-food-layout-wrapper .wpfm-food-infomation .wpfm-food-details .wpfm-food-category {
     margin: 5px;
     min-height: 23px;
 }

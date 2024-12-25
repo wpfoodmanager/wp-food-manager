@@ -58,10 +58,8 @@ if (get_option('food_manager_food_item_show_hide') == 0 && get_stock_status() !=
                                 <?php do_action('food_list_title_after', get_the_ID()); ?>
                             </div>
                         </a>
-                        <div class="wpfm-food-pricing-box">
-                            <div class="wpfm-food-price">
-                                <?php display_food_category(); ?>
-                            </div>
+                        <div class="wpfm-food-category">
+                            <?php display_food_category(); ?>
                         </div>
                         <div class="wpfm-food-pricing-box">
                             <div class="wpfm-food-price">
