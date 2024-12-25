@@ -98,6 +98,7 @@ span.wpfm-success-message {
   font-size: 14px;
   font-weight: 500;
   background: #3ab757;
+  color: #fff;
   padding: 5px 10px;
   border-radius: 4px;
   display: inline-block;
@@ -1769,3 +1770,58 @@ span.toppings-radio-btn {
 }
 
 /* Shortcode Page CSS */
+
+
+
+/*Food Menu Option Start*/
+.wpem-backend-food-menu-table .wpfm-admin-postbox-form-field {
+  max-width: 350px;
+  width: 50%;
+}
+.wpem-backend-food-menu-table .menu-item-bar .menu-item-handle {
+  display: flex;
+  justify-content: space-between;
+}
+.wpem-backend-food-menu-table tbody th{
+  text-align: center;
+}
+.wpem-backend-food-menu-table .menu-item-bar {
+  margin: 0;
+}
+.wpem-backend-food-menu-table .menu-item-bar .menu-item-handle:first-of-type {
+  margin-top: 10px;
+}
+.wpem-backend-food-menu-table .chosen-container-multi .chosen-choices li.search-choice{
+  margin: 5px 0 3px 5px;
+}
+
+@media only screen and (max-width: 575px) {
+  .wpem-backend-food-menu-table .wpfm-admin-postbox-form-field {
+    width: 100%;
+  }
+}
+/*Food Menu Option End*/
+
+/*Custom Table Start*/
+.wpem-backend-custom-table {
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  width: 100%;
+  border-collapse: collapse;
+}
+.wpem-backend-custom-table tbody tr {
+  transition: background-color .3s
+}
+.wpem-backend-custom-table tbody tr:hover {
+  background-color: #f1f1f1
+}
+.wpem-backend-custom-table td, .wpem-backend-custom-table th {
+  border: 1px solid #ddd;
+  padding: 10px;
+}
+.wpem-backend-custom-table thead th {
+  font-weight: 700;
+  background-color: #2271b1;
+  color: #fff
+}
+/*Custom Table End*/

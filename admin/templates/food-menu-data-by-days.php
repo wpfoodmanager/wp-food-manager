@@ -1,5 +1,5 @@
     <div class="wpfm-admin-postbox-meta-data">
-        <table class="open-hours-table">
+        <table class="wpem-backend-custom-table wpem-backend-food-menu-table">
             <thead>
                 <tr>
                     <th><?php esc_html_e('Days', 'wp-food-manager'); ?></th>
@@ -22,13 +22,13 @@
 
                     ?>
                     <tr>
-                        <td>
+                        <th>
                             <label>
                                 <input type="hidden" name="days_<?php echo esc_attr($day); ?>"
                                     value="days_<?php echo esc_attr($day); ?>">
                                 <?php echo esc_html($day); ?>
                             </label>
-                        </td>
+                        </th>
                         <td>
                             <div class="wpfm-admin-postbox-meta-data">
                                 <!-- Food Category Selection -->
@@ -77,7 +77,7 @@
                                 <?php
                                 $item_ids = isset($day_data['food_items']) ? $day_data['food_items'] : array();
                                 ?>
-                                <ul class="wpfm-food-menus menu menu-item-bar" id="wpfm-food-menu-list">
+                                <ul class="wpfm-food-menus menu-item-bar" id="wpfm-food-menu-list">
                                     <?php if ($item_ids && is_array($item_ids)) { ?>
                                         <?php foreach ($item_ids as $key => $id) { ?>
                                             <li class="menu-item-handle" data-food-id="<?php echo esc_attr($id); ?>">
@@ -95,13 +95,13 @@
                                         <?php }
                                     } ?>
                                 </ul>
-                                <span class="no-menu-item-handle_<?php echo $day?>" style="display: none;">Please select the food category or food types
+                                <span class="no-menu-item-handle no-menu-item-handle_<?php echo $day?>" style="display: none;">Please select the food category or food types
                                     to add food items to the menu.</span>
                                 <div class="wpfm-loader_<?php echo $day?>" style="display: none;">
                                     <img src="<?php echo esc_url(WPFM_PLUGIN_URL . '/assets/images/loader.gif'); ?>" alt="Loading..."
                                         class="wpfm-loader-image">
                                 </div>
-                                <div class="success_message"><span class="wpfm-success-message_<?php echo $day?>" style="display: none;">Foods added to
+                                <div class="success_message"><span class="wpfm-success-message wpfm-success-message_<?php echo $day?>" style="display: none;">Foods added to
                                         the menu successfully!</span></div>
                             </div>
                         </td>
