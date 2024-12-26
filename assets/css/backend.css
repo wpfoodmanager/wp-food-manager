@@ -1640,31 +1640,7 @@ span.toppings-radio-btn {
 #food_manager_menu_options .postbox-header .hndle {
   justify-content: flex-start;
 }
-.qrcode_img {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background: #00000045;
-  height: 100%;
-  width: 100%;
-  z-index: 9;
-}
 
-.qrcode_img img{
-  position: absolute;
-  left: 50%;
-  z-index: 9999;
-  top: 50%;
-}
-
-.qrcode_img span.dashicons-no-alt {
-  position: absolute;
-  right: 16px;
-  top: 50px;
-  background: #000000;
-  color: #fff;
-}
 
 @media only screen and (max-width: 1280px) {
 
@@ -1825,3 +1801,64 @@ span.toppings-radio-btn {
   color: #fff
 }
 /*Custom Table End*/
+
+
+/*QR code actions start*/
+.widefat .column-qr_code {
+  width: 100px;
+}
+.qr_code-actions a.wpfm-tooltip {
+  padding: 0 !important;
+  width: 2em;
+  height: 30px;
+  text-align: center;
+  overflow: inherit;
+  margin: 0 4px 2px 0px;
+}
+.qr_code-actions a.wpfm-tooltip span {
+  line-height: 30px;
+  margin: 0 auto;
+  font-size: 16px;
+}
+
+.qrcode_img {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgb(0 0 0 / 50%);
+  height: 100%;
+  width: 100%;
+  z-index: 99999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.qr_code-modal {
+  background-color: #fff;
+  max-width: 200px;
+  width: 100%;
+  padding: 1.5rem;
+  border-radius: 10px;
+  text-align: center;
+  position: relative;
+}
+.qr_code-modal h2 {
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+}
+.qrcode_img span.dashicons-no-alt {
+  position: absolute;
+  right: 18px;
+  top: 18px;
+  background: #eee;
+  color: #000;
+  border-radius: 4px;
+  font-size: 20px;
+  width: 26px;
+  height: 26px;
+  line-height: 26px;
+  padding: 0;
+  cursor: pointer;
+}
+/*QR code actions end*/

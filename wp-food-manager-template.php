@@ -1046,11 +1046,11 @@ function display_menu_qr_code(){
 		$qr_code_url = $upload_dir['url'] . "/qr_code_$menu_id.png";
 
         // Output the QR code image and the download button
-	    echo '<div style="display: flex; align-items: center;">';
+	    echo '<div class="qr_code-actions">';
 	     // Print button
-		 echo '<a href="javascript:void(0)" class="qr_print_button" style="margin-right: 10px; text-decoration: none; background-color: #0073aa; color: #fff; padding: 10px 15px; border-radius: 5px;"><span class="dashicons dashicons-printer"></span> </a>';
-	    echo '<a href="' . $qr_code_url . '" download="QR_Code_' . $menu_id . '.png" style="margin-right: 10px; text-decoration: none; background-color: #0073aa; color: #fff; padding: 10px 15px; border-radius: 5px;"><span class="dashicons dashicons-download"></span></a>';
-	    echo '<a href="javascript:void(0)" style="margin-right: 10px; text-decoration: none; background-color: #0073aa; color: #fff; padding: 10px 15px; border-radius: 5px;" class="qr_preview"><span class="dashicons dashicons-visibility"></span></a>';
-	    echo '<div class="qrcode_img" style="display: none"><img src="' . $qr_code_url . '" alt="QR Code" style="max-width: 100%; height: auto;"><span class="dashicons dashicons-no-alt"></span></div>';
+		 echo '<a href="javascript:void(0)" class="qr_print_button button button-icon wpfm-tooltip" wpfm-data-tip="' . esc_attr(sprintf(__('Print', 'wpfm-food-manager'))) . '"><span class="dashicons dashicons-printer"></span> </a>';
+	    echo '<a href="' . $qr_code_url . '" download="QR_Code_' . $menu_id . '.png" class="button button-icon wpfm-tooltip" wpfm-data-tip="' . esc_attr(sprintf(__('Download', 'wpfm-restaurant-manager'))) . '"><span class="dashicons dashicons-download"></span></a>';
+	    echo '<a href="javascript:void(0)" class="qr_preview button button-icon wpfm-tooltip" wpfm-data-tip="' . esc_attr(sprintf(__('Qr Code', 'wpfm-restaurant-manager'))) . '"><span class="dashicons dashicons-visibility"></span></a>';
+	    echo '<div class="qrcode_img" style="display: none"><div class="qr_code-modal"><h2>QR Code Scan</h2><img src="' . $qr_code_url . '" alt="QR Code"><span class="dashicons dashicons-no-alt"></span></div></div>';
 	    echo '</div>';
 }
