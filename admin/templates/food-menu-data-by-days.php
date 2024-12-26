@@ -90,7 +90,7 @@
                                                         <span class="dashicons dashicons-dismiss"></span>
                                                     </a>
                                                 </div>
-                                                <input type="hidden" name="wpfm_food_menu_listing_ids_<?php echo $day?>'[]" value="<?php echo esc_attr($id); ?>" />
+                                                <input type="hidden" name="wpfm_food_menu_listing_ids_<?php echo $day?>[]" value="<?php echo esc_attr($id); ?>" />
                                             </li>
                                         <?php }
                                     } ?>

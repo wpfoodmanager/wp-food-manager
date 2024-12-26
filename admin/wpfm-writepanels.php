@@ -1045,8 +1045,7 @@ class WPFM_Writepanels {
      * @since 1.0.0
      */
     public function wpfm_save_food_menu_data($post_id, $post){
-        // echo '<pre>';
-        // print_r($_POST);die;
+        
         if (isset($_POST['radio_icons']) && !empty($_POST['radio_icons'])) {
             $wpfm_radio_icon = esc_attr(wp_unslash($_POST['radio_icons']));
             if (isset($wpfm_radio_icon)) {
@@ -1054,27 +1053,6 @@ class WPFM_Writepanels {
                     update_post_meta($post_id, 'wpfm_radio_icons', $wpfm_radio_icon);
                 }
             }
-        }
-
-        if (isset($_POST['wpfm_food_listing_ids'])) {
-            $item_ids = array_map('esc_attr', wp_unslash($_POST['wpfm_food_listing_ids']));
-            update_post_meta($post_id, '_food_item_ids', $item_ids);
-        } else {
-            update_post_meta($post_id, '_food_item_ids', '');
-        }
-
-        if (isset($_POST['cat'])) {
-            $cats_ids = array_map('esc_attr', wp_unslash($_POST['cat']));
-            update_post_meta($post_id, '_food_cats_ids', $cats_ids);
-        } else {
-            update_post_meta($post_id, '_food_cats_ids', '');
-        }
-        
-        if (isset($_POST['food_type'])) {
-            $type_ids = array_map('esc_attr', wp_unslash($_POST['food_type']));
-            update_post_meta($post_id, '_food_type_ids', $type_ids);
-        } else {
-            update_post_meta($post_id, '_food_type_ids', '');
         }
         
         if (isset($_POST['wpfm_disable_food_redirect'])) {
@@ -1097,24 +1075,55 @@ class WPFM_Writepanels {
         } else {
             update_post_meta($post_id, '_food_menu_option', '');
         }
-        // Days of the week, starting with Sunday
-        $days_of_week = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-        if (isset($days_of_week)) {
-            // Collect data for each day
-            $open_hours_data = array();
-            foreach ($days_of_week as $day) {
-                $categories = isset($_POST["food_cats_$day"]) ? $_POST["food_cats_$day"] : array();
-                $types = isset($_POST["food_types_$day"]) ? $_POST["food_types_$day"] : array();
-                $items = isset($_POST["wpfm_food_menu_listing_ids_$day"]) ? $_POST["wpfm_food_menu_listing_ids_$day"] : array();
-
-                $open_hours_data[$day] = array(
-                    'food_categories' => $categories,
-                    'food_types' => $types,
-                    'food_items' => $items
-                );
+        if($_POST['wpfm_food_menu_option'] == 'dynamic_menu'){
+            // Days of the week, starting with Sunday
+            $days_of_week = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+            if (isset($days_of_week)) {
+                // Collect data for each day
+                $open_hours_data = array();
+                foreach ($days_of_week as $day) {
+                    error_log(print_r($_POST, true));
+                    $categories = isset($_POST["food_cats_$day"]) ? $_POST["food_cats_$day"] : array();
+                    $types = isset($_POST["food_types_$day"]) ? $_POST["food_types_$day"] : array();
+                    $items = isset($_POST["wpfm_food_menu_listing_ids_$day"]) ? $_POST["wpfm_food_menu_listing_ids_$day"] : array();
+    
+                    $open_hours_data[$day] = array(
+                        'food_categories' => $categories,
+                        'food_types' => $types,
+                        'food_items' => $items
+                    );
+                }
+                // Serialize the data and save it
+                update_post_meta($post_id, '_wpfm_food_menu_by_days', $open_hours_data);
             }
-            // Serialize the data and save it
-            update_post_meta($post_id, '_wpfm_food_menu_by_days', $open_hours_data);
+            update_post_meta($post_id, '_food_type_ids', '');
+            update_post_meta($post_id, '_food_item_ids', '');
+            update_post_meta($post_id, '_food_cats_ids', '');
+            
+        } else{
+            if (isset($_POST['wpfm_food_listing_ids'])) {
+                $item_ids = array_map('esc_attr', wp_unslash($_POST['wpfm_food_listing_ids']));
+                update_post_meta($post_id, '_food_item_ids', $item_ids);
+            } else {
+                update_post_meta($post_id, '_food_item_ids', '');
+            }
+    
+            if (isset($_POST['cat'])) {
+                $cats_ids = array_map('esc_attr', wp_unslash($_POST['cat']));
+                update_post_meta($post_id, '_food_cats_ids', $cats_ids);
+            } else {
+                update_post_meta($post_id, '_food_cats_ids', '');
+            }
+            
+            if (isset($_POST['food_type'])) {
+                $type_ids = array_map('esc_attr', wp_unslash($_POST['food_type']));
+                update_post_meta($post_id, '_food_type_ids', $type_ids);
+            } else {
+                update_post_meta($post_id, '_food_type_ids', '');
+            }
+            
+            update_post_meta($post_id, '_wpfm_food_menu_by_days', '');
+            
         }
         
     }
