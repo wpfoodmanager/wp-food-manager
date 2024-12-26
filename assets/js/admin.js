@@ -72,6 +72,7 @@ var WPFM_Admin = function () {
             // Bind on click food of the settings section.
             jQuery(".wpfm-tabs li a").on('click', WPFM_Admin.actions.tabClick);
             jQuery(".qr_preview").on('click', WPFM_Admin.actions.QRPreview);
+            jQuery(".qr_print_button").on('click', WPFM_Admin.actions.QRPrint);
             jQuery(".wpfm-admin-food-menu-items input").on('click', WPFM_Admin.actions.menuOptions);            
             jQuery('.copy-shortcode-button').on('click', WPFM_Admin.actions.copyButton);
             // Show by default first food Listings Settings Tab.
@@ -358,6 +359,30 @@ var WPFM_Admin = function () {
                 jQuery(this).next('.qrcode_img').find('.dashicons-no-alt').on('click', function(){
                     jQuery('.qrcode_img').hide();
                 });
+                
+            },
+             /// <summary>
+            /// QR Code Print
+            /// </summary>
+            /// <param name="parent" type="Event"></param>
+            /// <returns type="actions" />
+            /// <since>1.0.0</since>
+            QRPrint: function (event) {
+                event.preventDefault();
+                var qrCodeUrl = jQuery(this).closest('div').find('img').attr('src');  // Get the QR code image URL
+                console.log(qrCodeUrl);
+                // Open a new window for printing
+                // Open a new window for printing
+                var printWindow = window.open('', '', 'width=600,height=400');
+                printWindow.document.write('<html><head><title>Print QR Code</title></head><body>');
+                printWindow.document.write('<img src="' + qrCodeUrl + '" style="max-width: 100%; height: auto;" />');
+                printWindow.document.write('</body></html>');
+                printWindow.document.close(); // Close the document to trigger the print dialog
+                
+                // Wait for the image to load before triggering the print
+                printWindow.onload = function() {
+                    printWindow.print(); // Trigger the print dialog
+                };
                 
             },
             /// <summary>

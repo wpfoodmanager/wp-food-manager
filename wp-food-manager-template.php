@@ -1047,6 +1047,8 @@ function display_menu_qr_code(){
 
         // Output the QR code image and the download button
 	    echo '<div style="display: flex; align-items: center;">';
+	     // Print button
+		 echo '<a href="javascript:void(0)" class="qr_print_button" style="margin-right: 10px; text-decoration: none; background-color: #0073aa; color: #fff; padding: 10px 15px; border-radius: 5px;"><span class="dashicons dashicons-printer"></span> </a>';
 	    echo '<a href="' . $qr_code_url . '" download="QR_Code_' . $menu_id . '.png" style="margin-right: 10px; text-decoration: none; background-color: #0073aa; color: #fff; padding: 10px 15px; border-radius: 5px;"><span class="dashicons dashicons-download"></span></a>';
 	    echo '<a href="javascript:void(0)" style="margin-right: 10px; text-decoration: none; background-color: #0073aa; color: #fff; padding: 10px 15px; border-radius: 5px;" class="qr_preview"><span class="dashicons dashicons-visibility"></span></a>';
 	    echo '<div class="qrcode_img" style="display: none"><img src="' . $qr_code_url . '" alt="QR Code" style="max-width: 100%; height: auto;"><span class="dashicons dashicons-no-alt"></span></div>';
