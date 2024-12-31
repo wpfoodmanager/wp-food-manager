@@ -95,13 +95,13 @@
                                         <?php }
                                     } ?>
                                 </ul>
-                                <span class="no-menu-item-handle no-menu-item-handle_<?php echo $day?>" style="display: none;">Please select the food category or food types
+                                <span class="no-menu-item-handle-days no-menu-item-handle_<?php echo $day?>" style="display: none;">Please select the food category or food types
                                     to add food items to the menu.</span>
                                 <div class="wpfm-loader_<?php echo $day?>" style="display: none;">
                                     <img src="<?php echo esc_url(WPFM_PLUGIN_URL . '/assets/images/loader.gif'); ?>" alt="Loading..."
                                         class="wpfm-loader-image">
                                 </div>
-                                <div class="success_message"><span class="wpfm-success-message wpfm-success-message_<?php echo $day?>" style="display: none;">Foods added to
+                                <div class="success_message"><span class="wpfm-success-message-days wpfm-success-message_<?php echo $day?>" style="display: none;">Foods added to
                                         the menu successfully!</span></div>
                             </div>
                         </td>

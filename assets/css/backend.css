@@ -94,7 +94,7 @@ span.wpfm-searh-clear {
 }
 
 /* Admin-specific styles for Loader sucess message */
-span.wpfm-success-message {
+span.wpfm-success-message, span.wpfm-success-message-days {
   font-size: 14px;
   font-weight: 500;
   background: #3ab757;
@@ -1318,7 +1318,7 @@ span.food-manager-uploaded-file {
   height: auto;
 }
 
-span.no-menu-item-handle {
+span.no-menu-item-handle, span.no-menu-item-handle-days {
   font-size: 14px;
   font-weight: 500;
   background: bisque;
