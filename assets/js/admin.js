@@ -568,7 +568,7 @@ var WPFM_Admin = function () {
                             } else {
                                 // If no items found, show the 'No items' message
                                 jQuery('tr').each(function() {
-                                    if (jQuery(this).find('td:first').text().trim() === day) {
+                                    if (jQuery(this).find('th:first').text().trim() === day) {
                                         jQuery(this).find('no-menu-item-handle_'+day).show();
                                     }
                                 });
@@ -591,20 +591,27 @@ var WPFM_Admin = function () {
                         },
                         success: function (response) {
                             if (response.html.length !== 0) {
-                                // Update the food menu for the specific day
+                                // Update the food menu for the specific day                                
                                 jQuery('tr').each(function() {
-                                    if (jQuery(this).find('td:first').text().trim() === day) {
+                                    if (jQuery(this).find('th:first').text().trim() === day) {
+                                        console.log(response.html);
                                         jQuery(this).find('ul.wpfm-food-menus').html(response.html);
                                         jQuery(this).find('no-menu-item-handle_'+day).hide();
-                                        jQuery(this).find('.success_message_'+day).show();
+                                        jQuery(this).find('.wpfm-success-message_'+day).show();
                                     }
                                 });
                             } else {
                                 // Show the 'No items' message if no items found
                                 jQuery('tr').each(function() {
-                                    if (jQuery(this).find('td:first').text().trim() === day) {
+                                    if (jQuery(this).find('th:first').text().trim() === day) {
+                                        console.log(response.html);
                                         jQuery(this).find('ul.wpfm-food-menus').html(response.html);
                                         jQuery(this).find('no-menu-item-handle_'+day).show();
+                                        jQuery(this).find('.wpfm-success-message_'+day).hide();
+                                        if (jQuery('ul.wpfm-food-menus li').length < 0) {
+                                            jQuery('.no-menu-item-handle_'+day).show();
+                                        }
+                                        
                                     }
                                 });
                             }
@@ -622,8 +629,8 @@ var WPFM_Admin = function () {
             /// <returns type="actions" />     
             /// <since>1.0.0</since>
             removeFoodItem: function (event) {
-                jQuery(this).parents('li').remove();
-                if (jQuery("ul.wpfm-food-menu li").length == 0) {
+                jQuery(this).parents('lifood').remove();
+                if (jQuery("ul.wpfm--menu li").length == 0) {
                     jQuery(".wpfm-admin-postbox-meta-data .food-manager-category-dropdown").val('');
                 }
             },
