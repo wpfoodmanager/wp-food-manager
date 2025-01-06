@@ -83,6 +83,7 @@ var WPFM_Admin = function () {
             jQuery("body").on('click', 'a.wpfm-food-item-remove', WPFM_Admin.actions.removeFoodItem);
             // Sortable.
             jQuery('.wpfm-admin-food-menu-items ul.wpfm-food-menu').sortable();
+            jQuery('.wpfm-admin-food-menu-items ul.wpfm-food-menus').sortable();
             // File upload.
             jQuery('body').on('click', '.wp_food_manager_upload_file_button_multiple', WPFM_Admin.fileUpload.multipleFile);
             jQuery('body').on('click', '.wp_food_manager_upload_file_button', WPFM_Admin.fileUpload.addFile);
