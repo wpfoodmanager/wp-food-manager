@@ -1525,7 +1525,9 @@ a.button.wpfm-add-row:hover {
 .wpfm-food-listings .food-stock-status {
     margin: 5px;
 }
-
+.search_filter .wpfm-main {
+    width: 100%;
+}
 /* ===== 10. FOOD LISTING END ===== */
 
 /* ===== 10.1 FOOD LISTING BOX VIEW START ===== */
