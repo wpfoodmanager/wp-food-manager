@@ -363,10 +363,6 @@ var WPFM_Frontend = function () {
             handleSearch: function(e) {
                 e.preventDefault();
                 var search_term = jQuery(this).val().toLowerCase();
-                console.log({
-                    action: 'food_menu_search',
-                    search_term: search_term,
-                });
                 if(search_term != ''){
                     jQuery.ajax({
                         url: wpfm_frontend.ajax_url, // Or the URL to admin-ajax.php
@@ -378,7 +374,6 @@ var WPFM_Frontend = function () {
                             is_ajax: true
                         },
                         success: function(response) {
-                            console.log(response);
                                 jQuery('#food-menu-results').hide();
                                 jQuery('#food_menu_results_block').show();
                                 jQuery('#food_menu_results_block').html(response);

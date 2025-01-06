@@ -315,21 +315,23 @@ var WPFM_Admin = function () {
             });
             jQuery('#wpfm_shortcode_filter').trigger('change');
            // Find the meta box titles and append the tooltip icon
-            var tooltips = {
-                '#wpfm_menu_disable_redirection': wpfmTooltipData.redirection,
-                '#wpfm_menu_disable_image': wpfmTooltipData.image,
-                '#food_manager_menu_options': wpfmTooltipData.fm_menu,
-                
-            };
-
-            // Iterate through each tooltip configuration and append the tooltip icon.
-            jQuery.each(tooltips, function (selector, tooltip) {
-                jQuery(selector + ' .hndle').append(
-                    '<span class="tooltip-icon" style="margin-left: 5px;">' +
-                    '<img src="' + tooltip.url + '" title="' + tooltip.title + '" alt="' + tooltip.alt + '"/>' +
-                    '</span>'
-                );
-            });
+           if (typeof wpfmTooltipData !== 'undefined') {
+                var tooltips = {
+                    '#wpfm_menu_disable_redirection': wpfmTooltipData.redirection,
+                    '#wpfm_menu_disable_image': wpfmTooltipData.image,
+                    '#food_manager_menu_options': wpfmTooltipData.fm_menu,
+                    
+                };
+    
+                // Iterate through each tooltip configuration and append the tooltip icon.
+                jQuery.each(tooltips, function (selector, tooltip) {
+                    jQuery(selector + ' .hndle').append(
+                        '<span class="tooltip-icon" style="margin-left: 5px;">' +
+                        '<img src="' + tooltip.url + '" title="' + tooltip.title + '" alt="' + tooltip.alt + '"/>' +
+                        '</span>'
+                    );
+                });
+            }
         },
 
         actions: {
