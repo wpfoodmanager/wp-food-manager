@@ -138,7 +138,7 @@ class WPFM_ActionHooks {
         ));
         
         // Frontend Css.
-        wp_enqueue_style('wpfm-frontend', esc_url(WPFM_PLUGIN_URL . '/assets/css/frontend.css'));
+        wp_enqueue_style('wpfm-frontend', esc_url(WPFM_PLUGIN_URL . '/assets/css/frontend.min.css'));
 
         // Enqueue the script for search food menu.
         wp_register_script('food-menu-search', esc_url(WPFM_PLUGIN_URL . '/assets/js/food-menu-search.js'), array('jquery'), WPFM_VERSION, true);
