@@ -270,7 +270,7 @@ class WPFM_Settings {
                         ),
                         array(
                             'name'    => 'food_manager_registration_role',
-                            'std'     => 'restaurant_owner',
+                            'std'     => 'fm_restaurant_owner',
                             'label'   => __('Account Role', 'wp-food-manager'),
                             'desc'    => __('If you enable user registration on your submission form, choose a role for the new user.', 'wp-food-manager'),
                             'type'    => 'select',
