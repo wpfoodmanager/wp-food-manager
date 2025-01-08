@@ -1659,8 +1659,8 @@ a.button.wpfm-add-row:hover {
     z-index: 1;
     border: 0;
 }
-.wpfm-modal.wpfm-food-popup .wpfm-modal-content-wrapper .wpfm-food-modal-content .wpfm-food-popup-header .wpfm-modal-header-close a {
-    background-color: var(--wpfm-gray-bg-color);
+.wpfm-modal.wpfm-food-popup .wpfm-modal-content-wrapper .wpfm-food-modal-content .wpfm-food-popup-header .wpfm-modal-header-close .wpfm-modal-close {
+    background-color: var(--wpfm-gray-bg-color) !important;
     width: 36px;
     height: 36px;
     opacity: .8;
@@ -1670,7 +1670,7 @@ a.button.wpfm-add-row:hover {
     width: 40px;
     height: 40px;
 }
-.wpfm-modal.wpfm-food-popup .wpfm-modal-content-wrapper .wpfm-food-modal-content .wpfm-food-popup-header .wpfm-modal-header-close a:hover {
+.wpfm-modal.wpfm-food-popup .wpfm-modal-content-wrapper .wpfm-food-modal-content .wpfm-food-popup-header .wpfm-modal-header-close .wpfm-modal-close:hover {
     opacity: 1;
 }
 .wpfm-food-modal-food_details {

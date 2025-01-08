@@ -25,7 +25,7 @@ if (!empty($regular_price)) {
             <img src="<?php echo esc_url($featured_img); ?>" alt="<?php echo esc_attr($food->post_title); ?>" />
             <div class="wpfm-modal-header wpfm-food-popup-header">
                 <div class="wpfm-modal-header-close">
-                    <a href="javascript:void(0)" class="wpfm-modal-close" id="wpfm-modal-close">x</a>
+                    <button type="button" class="wpfm-modal-close" aria-label="Close" id="wpfm-modal-close">X</button>
                 </div>
             </div>
         </div>
