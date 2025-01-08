@@ -119,7 +119,6 @@ $show_image = ($disable_food_image !== 'yes');
             do_action('food_menu_list_overview_after', get_the_ID());
             echo "</div>";
             echo "</div>";
-        do_action('food_menu_list_end');
         echo "</div>";
     ?>
 </div>
