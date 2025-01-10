@@ -172,6 +172,7 @@ $show_image = ($disable_food_image !== 'yes');
             echo "</div>";
             echo "</div>";
         }
+        do_action('food_menu_list_end');
         echo "</div>";
     } else{
         echo "<div class='no_food_listings_found wpfm-alert wpfm-alert-danger'>";
