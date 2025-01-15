@@ -152,6 +152,15 @@ class WPFM_Settings {
                             'attributes' => array(),
                         ),
                         array(
+                            'name'       => 'food_manager_enable_food_menu',
+                            'std'        => '1',
+                            'label'      => __('Food Menu', 'wp-food-manager'),
+                            'cb_label'   => __('Display Food Menu.', 'wp-food-manager'),
+                            'desc'       => 'If enabled, the Food Menu option will display at frontend and manage from the backend. ',
+                            'type'       => 'checkbox',
+                            'attributes' => array(),
+                        ),
+                        array(
                             'name'       => 'food_manager_food_item_show_hide',
                             'label'      => __('Food Items', 'wp-food-manager'),
                             'type'       => 'radio',

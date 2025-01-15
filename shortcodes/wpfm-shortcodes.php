@@ -43,7 +43,9 @@ class WPFM_Shortcodes {
 		add_shortcode('food_dashboard', array($this, 'food_dashboard'));
 		add_shortcode('foods', array($this, 'output_foods'));
 		add_shortcode('food', array($this, 'output_food'));
-		add_shortcode('wpfm_food_menu', array($this, 'output_food_menu'));
+		if (get_option('food_manager_enable_food_menu', true)) {
+			add_shortcode('wpfm_food_menu', array($this, 'output_food_menu'));
+		}
 		add_shortcode('food_menu', array($this, 'food_menu_output_callback_function'));
 		add_shortcode('food_menu_search', array($this, 'food_menu_output_search_callback_function'));
 		add_shortcode('restaurant_food_menu_title', array($this, 'food_menu_title_output_callback_function_for_restaurant'));

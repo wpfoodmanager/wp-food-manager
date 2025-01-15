@@ -19,28 +19,30 @@
 			</div>
 			<!-- Search by keywords section end-->
 			<?php
-			if ($food_menu_query) {
-				?>
-				<!-- Search by food menu section start -->
-				<div class="wpfm-col">
-					<!-- shows default food menu items text field start-->
-					<div class="wpfm-form-group">
-						<label for="search_food_menu" class="wpfm-form-label"><?php esc_html_e('Food Menu', 'wp-food-manager'); ?></label>
-
-						<select name="search_food_menu[]" id="search_food_menu" class="food-manager-post_type-dropdown " <?php echo ($show_food_menu_multiselect) ? 'multiple' : ''; ?> data-placeholder="<?php echo esc_attr__('Choose a Food Menu…'); ?>" data-no_results_text="<?php echo esc_attr__('No results match'); ?>" data-multiple_text="<?php echo esc_attr__('Choose a Food Menu…'); ?>">
-							<?php
-							if (!$show_food_menu_multiselect) {
-								echo '<option value="">' . esc_html__('Choose a Food Menu') . '</option>';
-							}
-							foreach($food_menu_query as $food_menu) { ?>
-								<option value="<?php echo esc_attr($food_menu->ID); ?>"><?php echo esc_html($food_menu->post_title); ?></option>
-							<?php } ?>
-						</select>
+			if (get_option('food_manager_enable_food_menu', true)) {
+				if ($food_menu_query) {
+					?>
+					<!-- Search by food menu section start -->
+					<div class="wpfm-col">
+						<!-- shows default food menu items text field start-->
+						<div class="wpfm-form-group">
+							<label for="search_food_menu" class="wpfm-form-label"><?php esc_html_e('Food Menu', 'wp-food-manager'); ?></label>
+	
+							<select name="search_food_menu[]" id="search_food_menu" class="food-manager-post_type-dropdown " <?php echo ($show_food_menu_multiselect) ? 'multiple' : ''; ?> data-placeholder="<?php echo esc_attr__('Choose a Food Menu…'); ?>" data-no_results_text="<?php echo esc_attr__('No results match'); ?>" data-multiple_text="<?php echo esc_attr__('Choose a Food Menu…'); ?>">
+								<?php
+								if (!$show_food_menu_multiselect) {
+									echo '<option value="">' . esc_html__('Choose a Food Menu') . '</option>';
+								}
+								foreach($food_menu_query as $food_menu) { ?>
+									<option value="<?php echo esc_attr($food_menu->ID); ?>"><?php echo esc_html($food_menu->post_title); ?></option>
+								<?php } ?>
+							</select>
+						</div>
+						<!-- shows default food menu items text field end -->
 					</div>
-					<!-- shows default food menu items text field end -->
-				</div>
-				<!-- Search by food menu section end-->
-				<?php
+					<!-- Search by food menu section end-->
+					<?php
+				}
 			}
 			wp_reset_postdata(); ?>
 

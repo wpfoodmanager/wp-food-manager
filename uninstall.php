@@ -69,7 +69,8 @@ $options = array(
 	'food_manager_upgrade_database',
 	'food_manager_installation',
 	'food_manager_installation_skip',
-	'food_manager_enable_thumbnail'
+	'food_manager_enable_thumbnail',
+	'food_manager_enable_food_menu'
 );
 
 //Delete the options.
