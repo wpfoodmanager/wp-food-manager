@@ -227,6 +227,14 @@ class WPFM_Add_Food_Form extends WPFM_Form {
 					'placeholder' => '',
 					'priority'    => 8
 				),
+				'food_quantity' => array(
+					'label'       => __('Food Quantity', 'wp-food-manager'),
+					'type'        => 'number',
+					'required'    => true,
+					'placeholder' => '',
+					'priority'    => 9,
+					'tabgroup' => 1,
+				),
 				'food_price' => array(
 					'label'       => __('Regular Price', 'wp-food-manager'),
 					'type'        => 'number',
