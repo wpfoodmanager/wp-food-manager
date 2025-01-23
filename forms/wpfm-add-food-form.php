@@ -307,12 +307,30 @@ class WPFM_Add_Food_Form extends WPFM_Form {
 					'default' => 1,
 					'priority'    => 2
 				),
+				'topping_image' => array(
+					'label'       => __('Topping Image ', 'wp-food-manager'),
+					'type'        => 'file',
+					'description' => 'Upload the topping image for the topping image of the food details page.', 
+					'required'    => true,
+					'placeholder' => '',
+					'priority'    => 3,
+					'ajax'        => true,
+					'multiple'    => false,
+					'allowed_mime_types' => array(
+						'jpg'  => 'image/jpeg',
+						'jpeg' => 'image/jpeg',
+						'gif'  => 'image/gif',
+						'png'  => 'image/png',
+						'webp'  => 'image/webp'
+					),
+					'tabgroup' => 1,
+				),
 				'topping_options' => array(
 					'label'       => __('Options', 'wp-food-manager'),
 					'type'        => 'options',
 					'required'    => false,
 					'placeholder' => __('Enter option name', 'wp-food-manager'),
-					'priority'    => 3
+					'priority'    => 4
 				),
 			)
 		));
