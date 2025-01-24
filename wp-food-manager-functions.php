@@ -2138,7 +2138,7 @@ function render_topping($count, $topping = null) {
 function isArrayNotBlank($array) {
     foreach ($array as $item) {
         // Check if required keys are not empty
-        if (!empty($item['_topping_name']) || !empty($item['_topping_description'] || !empty($item['topping_image']) || !empty($item['_topping_options'])) {
+        if (!empty($item['_topping_name']) || !empty($item['_topping_description']) || !empty($item['topping_image']) || !empty($item['_topping_options'])) {
             return true; // Found a non-empty value
         }
     }

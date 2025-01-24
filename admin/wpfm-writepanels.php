@@ -399,6 +399,7 @@ class WPFM_Writepanels {
         }
         add_meta_box('wpfm_menu_disable_redirection', 'Disable Food Redirection', array($this, 'food_menu_disable_food_redirection'), 'food_manager_menu', 'side', 'low');
         add_meta_box('wpfm_menu_disable_image', 'Disable Food Image', array($this, 'food_menu_disable_food_image'), 'food_manager_menu', 'side', 'low');
+        add_meta_box('wpfm_hide_food_menu', 'Hide Food Menu', array($this, 'food_menu_disable_menu_visibility'), 'food_manager_menu', 'side', 'high');
     }
     
     /**
@@ -475,6 +476,35 @@ class WPFM_Writepanels {
                 'yes' => 'Yes'
             ),
             'value' => get_post_meta($thepostid, '_wpfm_disable_food_redirect', true),
+        );
+
+        get_food_manager_template('form-fields/' . $field['type'] . '-field.php', array('key' => esc_attr($key), 'field' => $field));
+    }
+    
+    /**
+     * This function is responsible for disabling any redirection related to the food.
+     * 
+     * @access public
+     * @return void
+     * @since 1.0.2
+     */
+    public function food_menu_disable_menu_visibility() {
+        wp_enqueue_script('admin-tooltip-script');
+        
+        global $post;
+        $thepostid = $post->ID;
+        $key = 'wpfm_disable_food_visibility';
+        $field = array(
+            'name' => 'wpfm_disable_food_visibility',
+            'label' => __('Food Menu Enable/Disable', 'wp-food-manager'),
+            'type' => 'radio',
+            'desc' => '',
+            'std' => 'no',
+            'options' => array(
+                'no' => 'No',
+                'yes' => 'Yes'
+            ),
+            'value' => get_post_meta($thepostid, '_wpfm_disable_food_visibility', true),
         );
 
         get_food_manager_template('form-fields/' . $field['type'] . '-field.php', array('key' => esc_attr($key), 'field' => $field));
