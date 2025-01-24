@@ -51,25 +51,10 @@ var WPFM_Frontend = function () {
             });
             
             // Use event delegation to apply sortable when #navbar exists in the DOM
-            jQuery("body").on("DOMNodeInserted", "#navbar", function () {
+            if (jQuery('#navbar').length) {
                 // Check if #navbar is in the DOM and apply sortable only once
-                if (!jQuery(this).hasClass("sortable-applied")) {
-                  jQuery(this).sortable({
-                    items: "a", // Make only <a> tags sortable
-                    cursor: "move", // Change the cursor when dragging
-                    placeholder: "sortable-placeholder", // Class for the placeholder (visual feedback)
-                    forcePlaceholderSize: true, // Ensure the placeholder size matches the dragged item
-                    tolerance: "pointer", // Dragging tolerance for more precision
-                    update: function (event, ui) {
-                      // This function is triggered when the sorting ends
-                      console.log("New order: ", jQuery("#navbar").sortable("toArray"));
-                    },
-                  });
-              
-                  // Add a class to ensure sortable is applied only once
-                  jQuery(this).addClass("sortable-applied");
-                }
-              });
+                jQuery('#navbar').sortable();
+            }
   
             jQuery('body').on('click', function () {
                 jQuery('.wpfm_error_tip').fadeOut('100', function () { jQuery(this).remove(); });
