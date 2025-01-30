@@ -20,11 +20,17 @@ if ( 'food_manager_menu' == get_post_type() ) {
     $featured_img_url = get_the_post_thumbnail_url($menu_id, 'full');
 } 
 
+if ( 'food_manager_menu' == get_post_type() ) {
+    $disable_food_visibility = get_post_meta(get_the_ID(), '_wpfm_disable_food_visibility', true);
+} elseif(isset($menu_id) && !empty($menu_id) ) {
+    $disable_food_visibility = get_post_meta($menu_id, '_wpfm_disable_food_visibility', true);
+}
+
 // Get the image display option
 $disable_food_image = get_post_meta($post->ID, '_wpfm_disable_food_image', true);
 $show_image = ($disable_food_image !== 'yes'); 
+if($disable_food_visibility !== 'yes'){
 ?>
-
 <div class="wpfm-main wpfm-single-food-menu-page wpfm-accordion-body">
     <?php if ( 'food_manager_menu' == get_post_type() ) { 
         the_content(); ?>
@@ -187,4 +193,8 @@ $show_image = ($disable_food_image !== 'yes');
 </div>
 
 <!-- add to cart notification -->
-<?php do_action('wpfm_food_manager_food_menu_listing_after'); ?>
+<?php do_action('wpfm_food_manager_food_menu_listing_after'); 
+} else{
+    get_food_manager_template_part('content', 'no-foods-found');
+}
+?>

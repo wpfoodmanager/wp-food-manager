@@ -307,6 +307,12 @@ class WPFM_Admin {
                 <input type="button" class="button button-secondary taxonomy_media_remove" id="taxonomy_media_remove" name="taxonomy_media_remove" value="<?php esc_attr_e('Remove Image', 'taxt-domain'); ?>">
             </p>
         </div>
+        
+        <div class="form-field term-group">
+            <label for="wpfm_disable_cat_visibility">Food Category Enable/Disable</label>
+            <input type="radio" name="wpfm_disable_cat_visibility" value="yes" id="yes" /> Yes
+            <input type="radio" name="wpfm_disable_cat_visibility" value="no" id="no" checked /> No
+        </div>
     <?php
     }
 
@@ -323,6 +329,10 @@ class WPFM_Admin {
         if (isset($_POST['food_cat_image_id']) && '' !== $_POST['food_cat_image_id']) {
             $image = wp_unslash($_POST['food_cat_image_id']);
             add_term_meta($term_id, 'food_cat_image_id', $image, true);
+        }
+        
+        if (isset($_POST['wpfm_disable_cat_visibility'])) {
+            add_term_meta($term_id, '_wpfm_disable_cat_visibility', sanitize_text_field($_POST['wpfm_disable_cat_visibility']), true);
         }
     }
 
@@ -355,6 +365,17 @@ class WPFM_Admin {
                 </div>
             </td>
         </tr>
+    <?php $value = get_term_meta($term->term_id, '_wpfm_disable_cat_visibility', true);
+    $checked_option_1 = ($value === 'yes') ? 'checked' : '';
+    $checked_option_2 = ($value === 'no' || !$value) ? 'checked' : '';
+    ?>
+         <tr class="form-field term-group-wrap">
+             <th scope="row"><label for="wpfm_disable_cat_visibility">Select Option</label></th>
+             <td>
+                 <input type="radio" name="wpfm_disable_cat_visibility" value="yes" id="yes" <?php echo $checked_option_1; ?> /> Yes<br />
+                 <input type="radio" name="wpfm_disable_cat_visibility" value="no" id="no" <?php echo $checked_option_2; ?> /> No
+             </td>
+         </tr>
     <?php
     }
 
@@ -373,6 +394,10 @@ class WPFM_Admin {
             update_term_meta($term_id, 'food_cat_image_id', $image);
         } else {
             update_term_meta($term_id, 'food_cat_image_id', '');
+        }
+        
+        if (isset($_POST['wpfm_disable_cat_visibility'])) {
+            update_term_meta($term_id, '_wpfm_disable_cat_visibility', sanitize_text_field($_POST['wpfm_disable_cat_visibility']));
         }
     }
 

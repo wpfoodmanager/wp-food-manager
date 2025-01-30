@@ -1099,6 +1099,13 @@ class WPFM_Writepanels {
             update_post_meta($post_id, '_wpfm_disable_food_image', '');
         }
         
+        if (isset($_POST['wpfm_disable_food_visibility'])) {
+            $disable_option = esc_attr(wp_unslash($_POST['wpfm_disable_food_visibility']));
+            update_post_meta($post_id, '_wpfm_disable_food_visibility', $disable_option);
+        } else {
+            update_post_meta($post_id, '_wpfm_disable_food_visibility', '');
+        }
+        
         if (isset($_POST['wpfm_food_menu_option'])) {
             $menus_option = esc_attr(wp_unslash($_POST['wpfm_food_menu_option']));
             update_post_meta($post_id, '_food_menu_option', $menus_option);

@@ -967,6 +967,7 @@ class WPFM_Shortcodes {
 	 */
 	public function food_menu_output_callback_function($atts){
 		ob_start();
+		
 		$atts = shortcode_atts(array(
 			'id' => '',
 		), $atts);
