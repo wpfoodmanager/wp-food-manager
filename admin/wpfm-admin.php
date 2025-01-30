@@ -372,7 +372,7 @@ class WPFM_Admin {
     $checked_option_2 = ($value === 'no' || !$value) ? 'checked' : '';
     ?>
          <tr class="form-field term-group-wrap">
-             <th scope="row"><label for="wpfm_disable_cat_visibility">Select Option</label></th>
+             <th scope="row"><label for="wpfm_disable_cat_visibility">Hide Category</label></th>
              <td>
                  <input type="radio" name="wpfm_disable_cat_visibility" value="yes" id="yes" <?php echo $checked_option_1; ?> /> Yes<br />
                  <input type="radio" name="wpfm_disable_cat_visibility" value="no" id="no" <?php echo $checked_option_2; ?> /> No
@@ -588,7 +588,7 @@ class WPFM_Admin {
             )
         );
         wp_enqueue_script('wpfm-accounting');
-        wp_enqueue_style('dashicons');
+        // wp_enqueue_style('dashicons');
 
         // Register the JavaScript file for info tooltiop - Food Redirection Enable/Displabe.
         wp_register_script('admin-tooltip-script', plugin_dir_url(__FILE__) . 'assets/js/admin-tooltip.js', array('jquery'), WPFM_VERSION, true); 
@@ -643,7 +643,7 @@ class WPFM_Admin {
                 'wpfm_form_editor_security' => wp_create_nonce('_nonce_wpfm_form_editor_security'),
             )
         );
-        wp_register_style('food_manager_setup_css', esc_url(WPFM_PLUGIN_URL) . '/assets/css/setup.min.css', array('dashicons'));
+        wp_register_style('food_manager_setup_css', esc_url(WPFM_PLUGIN_URL) . '/assets/css/setup.min.css', array());
         wp_register_script('wpfm-term-autocomplete', esc_url(WPFM_PLUGIN_URL) . '/assets/js/term-autocomplete.min.js', array('jquery', 'jquery-ui-autocomplete'), WPFM_VERSION, true);
         wp_localize_script(
             'wpfm-term-autocomplete',

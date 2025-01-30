@@ -630,8 +630,8 @@ var WPFM_Admin = function () {
             /// <returns type="actions" />     
             /// <since>1.0.0</since>
             removeFoodItem: function (event) {
-                jQuery(this).parents('lifood').remove();
-                if (jQuery("ul.wpfm--menu li").length == 0) {
+                jQuery(this).parents('li').remove();
+                if (jQuery("ul.wpfm-food-menu li").length == 0) {
                     jQuery(".wpfm-admin-postbox-meta-data .food-manager-category-dropdown").val('');
                 }
             },
