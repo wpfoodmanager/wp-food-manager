@@ -55,6 +55,30 @@ var WPFM_Frontend = function () {
                 // Check if #navbar is in the DOM and apply sortable only once
                 jQuery('#navbar').sortable();
             }
+            
+                // Initialize the sortable tabs
+                jQuery('#food-menu-titles').sortable({
+                    update: function(event, ui) {
+                        // Reorder the accordion sections when tabs are sorted
+                        reorderAccordionSections();
+                    }
+                });
+            
+                // Function to reorder the accordion sections based on the new tab order
+                function reorderAccordionSections() {
+                    var tabs = jQuery('#food-menu-titles .food-menu-page-filter-tab');
+                    var sections = jQuery('#food-menu-results .food-menu-section');
+            
+                    // Loop through each tab and match it with its corresponding section
+                    tabs.each(function(index) {
+                        var tabId = jQuery(this).find('a').attr('href').substring(1); // Get the menu ID from href (#menu-xxxx)
+                        var correspondingSection = jQuery('#' + tabId);
+            
+                        // Move the section to the correct place based on tab order
+                        jQuery(correspondingSection).detach().appendTo('#food-menu-results');
+                    });
+                }
+            
   
             jQuery('body').on('click', function () {
                 jQuery('.wpfm_error_tip').fadeOut('100', function () { jQuery(this).remove(); });

@@ -1270,7 +1270,7 @@ div#wpfm-loading {
   object-fit: cover;
 }
 
-.food-manager-uploaded-file-preview .food-manager-remove-uploaded-file {
+.food-manager-remove-uploaded-file {
   font-size: 0;
   height: 20px;
   width: 20px;
@@ -1283,7 +1283,7 @@ div#wpfm-loading {
   box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
 }
 
-.food-manager-uploaded-file-preview .food-manager-remove-uploaded-file::before {
+.food-manager-remove-uploaded-file::before {
   content: "\ea0f";
   font-family: wp-food-manager;
   font-size: 10px;
