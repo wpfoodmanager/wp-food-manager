@@ -917,6 +917,40 @@ class WPFM_Admin {
          }
      }
 	
+	/**
+	 * Get the core capabilities.
+	 * 
+	 * @access private
+	 * @return array
+	 * @since 1.0.0
+	 */
+	private static function get_core_capabilities() {
+		return array(
+			'core' => array(
+				'manage_food_managers'
+			),
+			'food_manager' => array(
+				"edit_food_manager",
+				"read_food_manager",
+				"delete_food_manager",
+				"edit_food_managers",
+				"edit_others_food_managers",
+				"publish_food_managers",
+				"read_private_food_managers",
+				"delete_food_managers",
+				"delete_private_food_managers",
+				"delete_published_food_managers",
+				"delete_others_food_managers",
+				"edit_private_food_managers",
+				"edit_published_food_managers",
+				"manage_food_manager_terms",
+				"edit_food_manager_terms",
+				"delete_food_manager_terms",
+				"assign_food_manager_terms"
+			)
+		);
+	}
+	
 	private static function fm_update_or_add_role($old_role_slug, $new_role_slug, $role_name, $capabilities)
      {
          // Check if the old role exists
