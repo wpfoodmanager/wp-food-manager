@@ -504,7 +504,7 @@ class WPFM_Writepanels {
                 'no' => 'No',
                 'yes' => 'Yes'
             ),
-            'value' => get_post_meta($thepostid, '_wpfm_disable_food_visibility', true),
+            'value' => get_post_meta($thepostid, '_wpfm_food_menu_visibility', true),
         );
 
         get_food_manager_template('form-fields/' . $field['type'] . '-field.php', array('key' => esc_attr($key), 'field' => $field));
@@ -1119,9 +1119,9 @@ class WPFM_Writepanels {
         
         if (isset($_POST['wpfm_disable_food_visibility'])) {
             $disable_option = esc_attr(wp_unslash($_POST['wpfm_disable_food_visibility']));
-            update_post_meta($post_id, '_wpfm_disable_food_visibility', $disable_option);
+            update_post_meta($post_id, '_wpfm_food_menu_visibility', $disable_option);
         } else {
-            update_post_meta($post_id, '_wpfm_disable_food_visibility', '');
+            update_post_meta($post_id, '_wpfm_food_menu_visibility', '');
         }
         
         if (isset($_POST['wpfm_food_menu_option'])) {

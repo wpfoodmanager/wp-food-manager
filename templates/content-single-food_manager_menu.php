@@ -21,9 +21,9 @@ if ( 'food_manager_menu' == get_post_type() ) {
 } 
 
 if ( 'food_manager_menu' == get_post_type() ) {
-    $disable_food_visibility = get_post_meta(get_the_ID(), '_wpfm_disable_food_visibility', true);
+    $disable_food_visibility = get_post_meta(get_the_ID(), '_wpfm_food_menu_visibility', true);
 } elseif(isset($menu_id) && !empty($menu_id) ) {
-    $disable_food_visibility = get_post_meta($menu_id, '_wpfm_disable_food_visibility', true);
+    $disable_food_visibility = get_post_meta($menu_id, '_wpfm_food_menu_visibility', true);
 }
 
 // Get the image display option
