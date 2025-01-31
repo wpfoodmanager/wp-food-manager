@@ -856,7 +856,7 @@ class WPFM_Writepanels {
                                 }
                             }
                         }
-
+                        
                         if ($key == 'topping_name') {
                             $toppings_arr[] = isset($_POST[$key . '_' . $count]) ? esc_attr(wp_unslash($_POST[$key . '_' . $count])) : '';
                         }
@@ -867,6 +867,24 @@ class WPFM_Writepanels {
                             // Toppings Array.
                             $toppings_meta[$count]['_' . $key] = isset($_POST[$key . '_' . $count]) && !empty($_POST[$key . '_' . $count]) ? esc_attr(wp_unslash($_POST[$key . '_' . $count])) : '';
                         }
+                        
+                        if ($key == 'topping_image') {
+                            $input_data = isset($_POST[$key . '_' . $count]) ? $_POST[$key . '_' . $count] : '';
+                            if (!empty($input_data)) {
+                                if (is_array($input_data) && isset($input_data[0]) && is_array($input_data[0])) {
+                                    // Extract the correct value if there's an extra array layer
+                                    $input_data = $input_data[0];
+                                }
+                        
+                                $thumbnail_image1 = is_array($input_data) ? array_map('sanitize_text_field', array_filter($input_data)) : sanitize_text_field($input_data);
+                        
+                                $toppings_meta[$count]['_' . $key] = $thumbnail_image1;
+                            } else {
+                                $toppings_meta[$count]['_' . $key] = '';
+                            }
+                        }
+                        
+                        
                         if ($key == 'topping_options') {
                             $toppings_meta[$count]['_' . $key] = $option_values;
                         }
@@ -1119,7 +1137,6 @@ class WPFM_Writepanels {
                 // Collect data for each day
                 $open_hours_data = array();
                 foreach ($days_of_week as $day) {
-                    error_log(print_r($_POST, true));
                     $categories = isset($_POST["food_cats_$day"]) ? $_POST["food_cats_$day"] : array();
                     $types = isset($_POST["food_types_$day"]) ? $_POST["food_types_$day"] : array();
                     $items = isset($_POST["wpfm_food_menu_listing_ids_$day"]) ? $_POST["wpfm_food_menu_listing_ids_$day"] : array();

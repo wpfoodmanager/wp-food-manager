@@ -2109,7 +2109,7 @@ function render_topping($count, $topping = null) {
                         if ($type == 'wp-editor') $type = 'wp_editor';
                         if ($type == "term-autocomplete") $type = "term_autocomplete";
                         ?>
-                        <p class="wpfm-admin-postbox-form-field <?php echo esc_attr($key) . ($type == 'wp_editor' ? ' wp-editor-field' : ''); ?>" <?php echo ($type == "wp_editor") ? 'data-field-name="' . esc_attr($key) . '"' : ''; ?>>
+                        <p class="wpfm-admin-postbox-form-field <?php echo esc_attr($key) . ($type == 'wp_editor' ? ' wp-editor-field' : ''); ?>" <?php echo ($type == "wp_editor" || $type == "file") ? 'data-field-name="' . esc_attr($key) . '"' : ''; ?>>
                             <label for="<?php echo esc_attr($key); ?>"><?php echo esc_html($field['label']); ?> : </label>
                             <?php if ($type != 'options') echo '<span class="wpfm-input-field">'; ?>
                             <?php get_food_manager_template('form-fields/' . $field['type'] . '-field.php', array('key' => esc_attr($key), 'field' => $field)); ?>

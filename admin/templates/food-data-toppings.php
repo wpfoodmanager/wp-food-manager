@@ -53,7 +53,7 @@ $food_toppings = get_post_meta($thepostid, '_food_toppings', true);
 									if ($type == "term-autocomplete") $type = "term_autocomplete";
 							?>
 									<p class="wpfm-admin-postbox-form-field <?php echo esc_attr($key);
-																			echo ($type == "wp_editor") ? ' wp-editor-field' : ''; ?>" <?php echo ($type == "wp_editor") ? 'data-field-name="' . esc_attr($key) . '"' : ''; ?>>
+																			echo ($type == "wp_editor") ? ' wp-editor-field' : ''; ?>" <?php echo ($type == "wp_editor" || $type == "file") ? 'data-field-name="' . esc_attr($key) . '"' : ''; ?>>
 										<label for="<?php echo esc_attr($key); ?>"><?php echo esc_html($field['label']); ?> : </label>
 										    <!-- Adding the notice -->
 											<?php if ($field['label'] === "Options") : ?>
