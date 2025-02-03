@@ -87,7 +87,7 @@ if (!empty($regular_price)) {
                                                 if (!empty($ext_option['_topping_name']) && !empty($ext_option['_topping_options'])) {
                                                     $field_required = '';
                                                     echo "<div class='wpfm-input-field-common " . esc_attr($more_class) . "'>";
-                                                    echo '<h4 class="wpfm-heading-text">' . esc_html($ext_option['_topping_name']) . '';
+                                                    echo '<img src="'.$topping_images.'" alt="topping_image" width="100" height="20" /> <h4 class="wpfm-heading-text">' . esc_html($ext_option['_topping_name']) . '';
                                                     if( isset($ext_option['_topping_required']) && $ext_option['_topping_required'] === 'yes') {
                                                         echo '<span class="wpfm-require-mark"> *</span></h4>';
                                                     } else {
