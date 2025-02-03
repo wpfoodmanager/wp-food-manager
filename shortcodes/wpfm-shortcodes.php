@@ -975,7 +975,7 @@ class WPFM_Shortcodes {
 		$id = (isset($atts['id'])) ? $atts['id'] : '';
 		$food_exists = get_post_meta($id, '_wpfm_food_menu_visibility', true);
 		if($food_exists == 'yes'){
-			echo "[food_menu id=$id]";
+			return;
 		} else {
 			$args = array(
 				'post_type'   => 'food_manager_menu',
