@@ -493,9 +493,9 @@ class WPFM_Writepanels {
         
         global $post;
         $thepostid = $post->ID;
-        $key = 'wpfm_disable_food_visibility';
+        $key = 'wpfm_food_menu_visibility';
         $field = array(
-            'name' => 'wpfm_disable_food_visibility',
+            'name' => 'wpfm_food_menu_visibility',
             'label' => __('Food Menu Enable/Disable', 'wp-food-manager'),
             'type' => 'radio',
             'desc' => '',
@@ -1117,8 +1117,8 @@ class WPFM_Writepanels {
             update_post_meta($post_id, '_wpfm_disable_food_image', '');
         }
         
-        if (isset($_POST['wpfm_disable_food_visibility'])) {
-            $disable_option = esc_attr(wp_unslash($_POST['wpfm_disable_food_visibility']));
+        if (isset($_POST['wpfm_food_menu_visibility'])) {
+            $disable_option = esc_attr(wp_unslash($_POST['wpfm_food_menu_visibility']));
             update_post_meta($post_id, '_wpfm_food_menu_visibility', $disable_option);
         } else {
             update_post_meta($post_id, '_wpfm_food_menu_visibility', '');

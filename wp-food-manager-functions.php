@@ -2023,13 +2023,20 @@ function error_message_for_menu_page($message){ ?>
 */
 function food_manager_menu($restaurant_ids){
 	$title_args = array(
-		'post_type'   => 'food_manager_menu',
-		'post_status' => 'publish',
-		'post__in'    => $restaurant_ids,
-		'orderby'     => 'post__in',
-	);
-
+        'post_type'   => 'food_manager_menu',
+        'post_status' => 'publish',
+        'post__in'    => $restaurant_ids,
+        'orderby'     => 'post__in',
+        'meta_query'  => array(
+            array(
+                'key'     => '_wpfm_food_menu_visibility', // The postmeta key
+                'value'   => 'yes',                            // The value to filter by
+                'compare' => 'NOT EXISTS',                             // Comparison operator
+            ),
+        ),
+    );
 	$food_menus = new WP_Query(apply_filters('food_manager_food_menu_args', $title_args));
+	error_log(print_r($food_menus, true));
 	return $food_menus;
 }
 
