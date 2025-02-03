@@ -2028,14 +2028,20 @@ function food_manager_menu($restaurant_ids){
         'post__in'    => $restaurant_ids,
         'orderby'     => 'post__in',
         'meta_query'  => array(
-            array(
-                'key'     => '_wpfm_food_menu_visibility', // The postmeta key
-                'value'   => 'yes',                            // The value to filter by
-                'compare' => 'NOT EXISTS',                             // Comparison operator
-            ),
-        ),
+	        'relation' => 'OR', // Use OR for the two possible conditions
+	        array(
+	            'key'     => '_wpfm_food_menu_visibility',  // The postmeta key
+	            'compare' => 'NOT EXISTS',                  // Include if the key does not exist
+	        ),
+	        array(
+	            'key'     => '_wpfm_food_menu_visibility',  // The postmeta key
+	            'value'   => 'yes',                         // Exclude 'yes' values
+	            'compare' => '!=',                          // Only include posts where the value is NOT 'yes'
+	        ),
+	    ),
     );
 	$food_menus = new WP_Query(apply_filters('food_manager_food_menu_args', $title_args));
+	error_log(print_r($food_menus, true));
 	return $food_menus;
 }
 
