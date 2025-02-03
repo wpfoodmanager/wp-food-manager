@@ -2041,7 +2041,6 @@ function food_manager_menu($restaurant_ids){
 	    ),
     );
 	$food_menus = new WP_Query(apply_filters('food_manager_food_menu_args', $title_args));
-	error_log(print_r($food_menus, true));
 	return $food_menus;
 }
 
