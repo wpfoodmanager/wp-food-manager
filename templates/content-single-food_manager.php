@@ -70,11 +70,13 @@ $food = $post;
                                     <div class="wpfm-food-price">
                                         <?php display_food_price_tag(); ?>
                                     </div>
-                                    <?php if (get_option('food_manager_food_item_show_hide') && get_stock_status()) : ?>
-                                            <div class="food-stock-status">
-                                                <?php display_stock_status(); ?>
-                                            </div>
-                                        <?php endif; ?>
+                                    <div class="food-stock-status">
+                                        <?php display_stock_status();
+                                            if (get_stock_status() == 'food_instock') {
+                                                display_food_quantity(get_the_ID());     
+                                            }
+                                        ?>
+                                    </div>
                                     <?php /* ?><div class="wpfm-food-author">
                                         <div class="wpfm-food-author-name">by <?php echo the_author_posts_link(); ?></div>
                                     </div><?php */ ?>

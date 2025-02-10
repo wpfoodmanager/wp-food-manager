@@ -169,11 +169,12 @@ if($disable_food_visibility !== 'yes'){
             echo "<div class='fm-food-menu-description'>";
             echo $menu_food_desc;
             echo "</div>";
-            if (get_stock_status($food_listing) == 'food_outofstock') {
-                echo '<div class="food-stock-status">';
+            echo '<div class="food-stock-status">';
                     display_stock_status($food_listing);
+                    if (get_stock_status($food_listing) == 'food_instock') {
+                        display_food_quantity($food_listing->ID);     
+                    }
                 echo '</div>';
-            }
             do_action('food_menu_list_overview_after', $food_listing->ID);
             echo "</div>";
             echo "</div>";

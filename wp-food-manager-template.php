@@ -747,7 +747,7 @@ function display_stock_status($post = null, $after = '') {
             $food_stock_status_label = 'Out of stock';
         }
         // Apply filter to the label
-		$food_stock_status_label = apply_filters('wpfm_food_stock_status_label', $food_stock_status_label);
+    	$food_stock_status_label = apply_filters('wpfm_food_stock_status_label', $food_stock_status_label);
         echo '<mark class="' . esc_attr($food_stock_status) . '">' . esc_html($food_stock_status_label) . '</mark>';
     }
 }
@@ -1053,4 +1053,21 @@ function display_menu_qr_code(){
 	    echo '<a href="javascript:void(0)" class="qr_preview button button-icon wpfm-tooltip" wpfm-data-tip="' . esc_attr(sprintf(__('Qr Code', 'wpfm-restaurant-manager'))) . '"><span class="dashicons dashicons-visibility"></span></a>';
 	    echo '<div class="qrcode_img" style="display: none"><div class="qr_code-modal"><h2>QR Code Scan</h2><img src="' . $qr_code_url . '" alt="QR Code"><span class="dashicons dashicons-no-alt"></span></div></div>';
 	    echo '</div>';
+}
+/**
+ * This display_food_quantity() function is used to Display food quantity.
+ *
+ * @access public
+ * @param mixed $post (default: null)
+ * @return void
+ * @since 1.0.0
+ */
+function display_food_quantity($post = null){
+	// Retrieve the _food_quantity meta value
+	$food_quantity = get_post_meta($post, '_food_quantity', true);
+
+	// Check if the meta value exists and display it
+	if (!empty($food_quantity)) {
+	    echo esc_html("($food_quantity)");
+	}
 }
