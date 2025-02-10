@@ -3426,7 +3426,7 @@ img.wpfm-organic-tag-icon {
     display: block;
     margin: 0;
 }
-.search_filter .food-list-box {
+#food_menu_results_block .search_filter .food-list-box {
     width: calc(100% - 20px);
     padding: 0;
 }
