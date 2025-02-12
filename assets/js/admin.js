@@ -804,6 +804,7 @@ var WPFM_Admin = function () {
                 file_target_wrapper = jQuery(this).closest('.food-manager-uploaded-file');
                 file_target_input = file_target_wrapper.find('input');
                 var data_field_name = jQuery(this).parents(".wpfm-admin-postbox-form-field")[0].dataset.fieldName;
+                console.log(data_field_name);
                 var image_types = ['jpg', 'gif', 'png', 'jpeg', 'jpe', 'webp'];
                 file_target_wrapper_append = jQuery(this).closest('.food-manager-uploaded-file2');
                 // If the media frame already exists, reopen it.
