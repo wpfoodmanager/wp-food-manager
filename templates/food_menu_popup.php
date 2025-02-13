@@ -48,13 +48,11 @@ if (!empty($regular_price)) {
             <div id="wpfm_food_menu_modal_description" class="wpfm-food-modal-food_description">
                 <?php echo wp_kses_post($food->post_content);?>
             </div>
-            <div class="food-stock-status">
-                <?php display_stock_status($food_id);
-                    if (get_stock_status($food_id) == 'food_instock') {
-                        display_food_quantity($food_id);     
-                    }
-                ?>
-            </div>
+            <?php if (get_stock_status() == 'food_outofstock') { ?>
+             <div class="food-stock-status">
+                 <?php display_stock_status(); ?>
+             </div>
+            <?php } ?>
             <form class="wpfm-toppings" id="wpfm_single_food_topping_form" method="post" action="" data-product-attribute='<?php echo esc_attr(apply_filters('wpfm_food_toppings_form_variation', '', $food_id)); ?>'>
                                     <?php
                                     $ext_options = get_post_meta($food_id, '_food_toppings', true);

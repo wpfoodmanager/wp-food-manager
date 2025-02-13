@@ -1054,20 +1054,3 @@ function display_menu_qr_code(){
 	    echo '<div class="qrcode_img" style="display: none"><div class="qr_code-modal"><h2>QR Code Scan</h2><img src="' . $qr_code_url . '" alt="QR Code"><span class="dashicons dashicons-no-alt"></span></div></div>';
 	    echo '</div>';
 }
-/**
- * This display_food_quantity() function is used to Display food quantity.
- *
- * @access public
- * @param mixed $post (default: null)
- * @return void
- * @since 1.0.0
- */
-function display_food_quantity($post = null){
-	// Retrieve the _food_quantity meta value
-	$food_quantity = get_post_meta($post, '_food_quantity', true);
-
-	// Check if the meta value exists and display it
-	if (!empty($food_quantity)) {
-	    echo esc_html("($food_quantity)");
-	}
-}
