@@ -121,6 +121,19 @@ class WP_Food_Manager extends WPFM_Updater {
 		add_filter('wpfm_the_content', 'shortcode_unautop');
 		add_filter('wpfm_the_content', 'do_shortcode');
 		add_action('after_setup_theme', array($this, 'load_plugin_textdomain'));
+		add_filter('pre_unschedule_event', function($null, $timestamp, $hook, $args) {
+		    if ($hook === 'wpfm_check_for_licence_expire') {
+		        // Reschedule the cron event for the same timestamp
+		        wp_schedule_single_event($timestamp, 'wpfm_check_for_licence_expire', $args);
+		        return true; // Prevent deletion
+		    }
+		    if ($hook === 'wpfm_set_suscription_expire_message') {
+		        // Reschedule the cron event for the same timestamp
+		        wp_schedule_single_event($timestamp, 'wpfm_set_suscription_expire_message', $args);
+		        return true; // Prevent deletion
+		    }
+		    return $null;
+		}, 10, 4);
 		// Schedule cron foods
 		self::check_schedule_crons();
 	}
