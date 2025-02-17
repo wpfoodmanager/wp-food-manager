@@ -142,7 +142,7 @@ class WPFM_Setup {
 
 					<div class="wpfm-step-window">
 						<h3><?php esc_attr_e('Setup Wizard Introduction', 'wp-food-manager'); ?></h3>
-						<p><?php printf(esc_attr_e('Thanks for installing WP Food Manager!', 'wp-food-manager')); ?></p>
+						<p><?php printf(esc_attr__('Thanks for installing %s!', 'wp-food-manager'), 'WP Food Manager'); ?></p>
 						<p><?php esc_attr_e('This setup wizard will help you get started by creating various pages for listing your foods, food dashboard and add food along with setting up Ingredients and Nutritions.'); ?></p>
 						<?php // translators: 1: opening anchor tag for documentation link, 2: closing anchor tag ?>
 						<p><?php printf(esc_attr__('The process is still relatively simple if you want to skip the wizard and manually set up the pages and shortcodes yourself. Please refer to the %1$sdocumentation%2$s for support.', 'wp-food-manager'), '<a href="https://wpfoodmanager.com/knowledge-base/">', '</a>'); ?></p>
