@@ -87,7 +87,7 @@ if (!function_exists('get_food_listings')) :
 		if (!empty($args['search_food_menu'])) {
 			$food_ids = [];
 			foreach ($args['search_food_menu'] as $menu_id) {
-				$food_item_ids = get_post_meta($menu_id, '_food_item_ids', true);
+				$food_item_ids = get_menu_list($menu_id,get_the_ID());
 				if ($food_item_ids) {
 					foreach ($food_item_ids as $food_item_id) {
 						$food_ids[] = absint($food_item_id);
@@ -2154,4 +2154,46 @@ function isArrayNotBlank($array) {
         }
     }
     return false; // All values are empty
+}
+
+/**
+ * get ids of menu items
+ *
+ * @param  $menu_id 
+ * @param $post
+ * @return $food_menu_ids
+ */
+// get ids of menu items
+function get_menu_list($menu_id, $post) {
+
+	$get_menu_options = get_post_meta($menu_id, '_food_menu_option', true); 
+	if(empty($get_menu_options))
+	{
+		$get_menu_options = get_post_meta($post, '_food_menu_option', true); 
+	}
+    
+    if (empty($get_menu_options) || $get_menu_options == 'static_menu') {
+        if ('food_manager_menu' == get_post_type($post)) {
+            $food_menu_ids = get_post_meta($post, '_food_item_ids', true);
+        } elseif (isset($menu_id) && !empty($menu_id)) {
+            $food_menu_ids = get_post_meta($menu_id, '_food_item_ids', true);
+        }
+    } else {
+        if ('food_manager_menu' == get_post_type($post)) {
+            $food_menu_ids = get_post_meta($post, '_wpfm_food_menu_by_days', true);
+        } elseif (isset($menu_id) && !empty($menu_id)) {
+            $food_menu_ids = get_post_meta($menu_id, '_wpfm_food_menu_by_days', true);
+        }
+        
+        $current_day = date('l'); 
+
+        // Check if $food_menu_ids is an array and fetch the food items for the current day
+        if (is_array($food_menu_ids) && isset($food_menu_ids[$current_day]) && isset($food_menu_ids[$current_day]['food_items'])) {
+            $food_menu_ids = $food_menu_ids[$current_day]['food_items'];
+        } else {
+            $food_menu_ids = array(); // Return an empty array if no items for the current day
+        }
+    }
+
+    return $food_menu_ids;
 }
