@@ -1707,6 +1707,44 @@ a.button.wpfm-add-row:hover {
 
 
 /* ===== 11. FOOD SINGLE PAGE START ===== */
+
+/* 11.1 TOOPING START */
+.wpfm-single-food-page .wpfm-toppings h3 {
+    font-size: 18px;
+}
+.wpfm-topping-list-item{
+    position: relative;
+    padding: 20px;
+    border-radius: 4px;
+    background: var(--wpfm-gray-bg-color);
+    margin-bottom: 15px;
+}
+.wpfm-topping-list-item:last-of-type {
+    margin: 0;
+}
+.wpfm-topping-list-item .wpfm-checkbox-options {
+    margin: 0;
+}
+.wpfm-topping-list-item .wpfm-topping-item-header img {
+    border-radius: 4px;
+    border: 1px solid var(--wpfm-gray-border-color);
+    flex: 0 0 100px;
+    max-width: 100px;
+    margin-right: 10px;
+}
+.wpfm-topping-list-item .wpfm-topping-item-title {
+    margin: 0 0 5px 0;
+}
+.wpfm-topping-list-item .wpfm-topping-item-description {
+    margin-bottom: 10px;
+}
+.wpfm-topping-list-item .wpfm-topping-item-description p {
+    color: var(--wpfm-gray-color);
+    font-size: 14px;
+    margin: 0;
+}
+/* 11.1 TOOPING END */
+
 .wpfm-input-field-common {
     position: relative;
     padding: 20px;
@@ -1714,12 +1752,23 @@ a.button.wpfm-add-row:hover {
     background: var(--wpfm-gray-bg-color);
     margin-bottom: 30px;
 }
-
 .wpfm-input-field-common>label {
     display: block;
     position: relative;
     overflow: hidden;
     padding-bottom: 5px;
+}
+.wpfm-input-description {
+    color: var(--wpfm-gray-color);
+    font-size: 13px;
+    display: block;
+    overflow: hidden;
+    position: relative;
+    top: -3px;
+    padding-bottom: 10px;
+}
+.wpfm-input-description>p {
+    margin-bottom: 0;
 }
 
 .wpfm-input-field-common.with-more {
@@ -2986,20 +3035,6 @@ span.fm-divider {
     line-height: 34px;
     display: inline-block;
 }
-
-.wpfm-input-description {
-    color: var(--wpfm-gray-color);
-    font-size: 13px;
-    display: block;
-    overflow: hidden;
-    position: relative;
-    top: -3px;
-    padding-bottom: 10px;
-}
-
-.wpfm-input-description>p {
-    margin-bottom: 0;
-}
 .wpfm-checkbox-options {
     margin-bottom: 10px;
 }
@@ -3395,6 +3430,10 @@ img.wpfm-organic-tag-icon {
     }
     .wpfm-single-restaurant-body-content .fm-food-menu-container .food-list-box{
         flex-direction: column;
+    }
+    .wpfm-topping-list-item .wpfm-topping-item-header img {
+        max-width: 50px;
+        flex: 0 0 50px;
     }
 }
 

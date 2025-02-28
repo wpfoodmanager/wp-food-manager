@@ -103,7 +103,7 @@ $food = $post;
                                     </div>
                                 <?php endif; ?>
                             
-                                <form class="wpfm-toppings" id="wpfm_single_food_topping_form" method="post" action="" data-product-attribute='<?php echo esc_attr( apply_filters( 'wpfm_food_toppings_form_variation', '',  $food->ID ) ); ?>'>
+                                <form class="wpfm-toppings wpfm-mt-4" id="wpfm_single_food_topping_form" method="post" action="" data-product-attribute='<?php echo esc_attr( apply_filters( 'wpfm_food_toppings_form_variation', '',  $food->ID ) ); ?>'>
                                     <?php
                                     $ext_options = get_post_meta(get_the_ID(), '_food_toppings', true);
                                     $repeated_count = get_post_meta(get_the_ID(), '_food_repeated_options', true);
@@ -142,16 +142,18 @@ $food = $post;
                                                 if (!empty($ext_option['_topping_name']) && !empty($ext_option['_topping_options'])) {
                                                     $field_required = '';
                                                     $topping_images = is_array($ext_option['_topping_image']) ? $ext_option['_topping_image'][0] : $ext_option['_topping_image'];
-                                                    echo "<div class='wpfm-input-field-common " . esc_attr($more_class) . "'>";
-                                                    echo '<img src="'.$topping_images.'" alt="topping_image" width="100" height="20" /> <h4 class="wpfm-heading-text">' . esc_html($ext_option['_topping_name']) . '';
+                                                    echo "<div class='wpfm-topping-list-item" . esc_attr($more_class) . "'>";
+                                                    echo "<div class='wpfm-topping-item-header wpfm-d-flex wpfm-align-items-start'>";
+                                                    echo '<img src="'.$topping_images.'" alt="topping image" width="100" height="20" /> <div class="wpfm-topping-item-header-text"> <h4 class="wpfm-topping-item-title">' . esc_html($ext_option['_topping_name']) . '';
                                                     if( isset($ext_option['_topping_required']) && $ext_option['_topping_required'] === 'yes') {
                                                         echo '<span class="wpfm-require-mark"> *</span></h4>';
                                                     } else {
                                                         echo '</h4>';
                                                     }
                                                     if( isset($ext_option['_topping_description']) && !empty($ext_option['_topping_description'])) {
-                                                        echo '<div class="wpfm-input-description">' . wp_kses_post($ext_option['_topping_description']) . '</div>';
+                                                        echo '<div class="wpfm-topping-item-description">' . wp_kses_post($ext_option['_topping_description']) . '</div>';
                                                     }
+                                                    
                                                     do_action('wpfm_singular_option_input_before');
     
                                                     $topping_htm = '<ul class="wpfm-topping-options">';
@@ -226,6 +228,7 @@ $food = $post;
                                                         }
                                                     }
                                                     echo "</div>";
+                                                    echo "</div></div>";
                                                 }
                                             }
                                         }
