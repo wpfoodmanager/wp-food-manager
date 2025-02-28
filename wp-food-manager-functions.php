@@ -2166,6 +2166,7 @@ function isArrayNotBlank($array) {
 // get ids of menu items
 function get_menu_list($menu_id, $post) {
 
+	$food_menu_ids=array();
 	$get_menu_options = get_post_meta($menu_id, '_food_menu_option', true); 
 	if(empty($get_menu_options))
 	{
