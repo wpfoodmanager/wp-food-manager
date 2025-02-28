@@ -94,7 +94,10 @@ if (!empty($regular_price)) {
                                                     $topping_images = is_array($ext_option['_topping_image']) ? $ext_option['_topping_image'][0] : $ext_option['_topping_image'];
                                                     echo "<div class='wpfm-topping-list-item" . esc_attr($more_class) . "'>";
                                                     echo "<div class='wpfm-topping-item-header wpfm-d-flex wpfm-align-items-start'>";
-                                                    echo '<img src="'.$topping_images.'" alt="topping image" width="100" height="20" /> <div class="wpfm-topping-item-header-text"> <h4 class="wpfm-topping-item-title">' . esc_html($ext_option['_topping_name']) . '';
+                                                    if (!empty($topping_images)) {
+                                                        echo '<img src="'.$topping_images.'" alt="topping image" width="100" height="20" />';
+                                                    }
+                                                    echo ' <div class="wpfm-topping-item-header-text"> <h4 class="wpfm-topping-item-title">' . esc_html($ext_option['_topping_name']) . '';
                                                     if( isset($ext_option['_topping_required']) && $ext_option['_topping_required'] === 'yes') {
                                                         echo '<span class="wpfm-require-mark"> *</span></h4>';
                                                     } else {
