@@ -76,7 +76,7 @@ if($disable_food_visibility !== 'yes'){
     } elseif(isset($menu_id) && !empty($menu_id) ){
         $food_redirect_option = get_post_meta($menu_id, '_wpfm_disable_food_redirect', true);
     }
-    $food_menu_ids = get_menu_list($menu_id, $post->ID);
+    $food_menu_ids = get_menu_list($post->ID, $post->ID);
     if (!empty($food_menu_ids)) {
         $food_listings = get_posts(array(
             'include'   => implode(",", $food_menu_ids),
