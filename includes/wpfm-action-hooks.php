@@ -211,7 +211,12 @@ class WPFM_ActionHooks {
         wp_enqueue_style('wpfm-grid-style');
         wp_enqueue_style('wp-food-manager-font-style');
         wp_enqueue_style('wp-food-manager-food-icons-style');
-        wp_enqueue_editor();
+        if (is_singular() && is_a($post, 'WP_Post')) {
+            $content = $post->post_content;
+            if (has_shortcode($content, 'food_dashboard') && has_shortcode($content, 'add_food')) {
+                wp_enqueue_editor();
+            }
+        }
         wp_register_script('wpfm-term-autocomplete', esc_url(WPFM_PLUGIN_URL . '/assets/js/term-autocomplete.min.js'), array('jquery'), WPFM_VERSION, true);
         wp_localize_script(
             'wpfm-term-autocomplete',
