@@ -61,6 +61,7 @@ class WPFM_Admin {
 		include_once('wpfm-cpt.php');
 		include_once('wpfm-writepanels.php');
 		include_once('wpfm-setup.php');
+		include_once('wpfm-import.php');
 		include_once('wpfm-field-editor.php');
 		include_once('wpfm-shortcode-list.php');
         $this->post_types = WPFM_Post_Types::instance();
@@ -97,7 +98,7 @@ class WPFM_Admin {
         }
 		add_filter('plugin_action_links_' . plugin_basename(__FILE__), array($this, 'add_plugin_page_food_manager_settings_link'));
         add_action('admin_init', array($this, 'init_user_roles'));
-		
+        add_action('admin_init',  array($this, 'wpfm_export_csv'));	
 	}
 
 	/**
@@ -509,6 +510,7 @@ class WPFM_Admin {
         add_submenu_page('edit.php?post_type=food_manager', esc_html__('Settings', 'wp-food-manager'), esc_html__('Settings', 'wp-food-manager'), 'manage_options', 'food-manager-settings', array($this->settings_page, 'output'));
         add_dashboard_page(esc_html__('Setup', 'wp-food-manager'), esc_html__('Setup', 'wp-food-manager'), 'manage_options', 'food_manager_setup', array(WPFM_Setup::instance(), 'output'));
 		add_submenu_page('edit.php?post_type=food_manager', __('WPFM Shortcodes', 'wp-food-manager'), __('Shortcodes', 'wp-food-manager'), 'manage_options', 'food-manager-shortcodes', array($this, 'shortcodes_page'));
+		add_submenu_page('edit.php?post_type=food_manager', __('WPFM Import', 'wp-food-manager'), __('Import', 'wp-food-manager'), 'manage_options', 'food-manager-import', array(WPFM_Import::instance(), 'output'));
         
     }
     
@@ -838,6 +840,7 @@ class WPFM_Admin {
         $output .= '<option value="" ' . selected(isset($_GET['food_manager_type']) ? wp_unslash($_GET['food_manager_type']) : '', '', false) . '>' . esc_html(__('Select Food Type', 'wp-food-manager')) . '</option>';;
         $output .= $walker->walk($terms, 0, $food_dropdown);
         $output .= '</select>';
+        $output .= '<a href="' . esc_url(add_query_arg('wpfm_export_csv', '1')) . '" class="button" style="margin-left: 10px; float: right;">' . esc_html__('Export to CSV', 'wp-food-manager') . '</a>';
         printf('%s', $output);
     }
 
@@ -964,6 +967,26 @@ class WPFM_Admin {
          // Add the new role with 'fm_' prefix
          add_role($new_role_slug, $role_name, $capabilities);
      }
+
+      /**
+	 * Export filtered posts as a CSV file.
+	 * 
+	 * The CSV file is generated and downloaded directly via the browser.
+	 * 
+	 * @access public
+	 * @return void
+	 */
+	public function wpfm_export_csv() {
+		if (isset($_GET['wpfm_export_csv'])) { // phpcs:ignore
+			// Check user capabilities
+			if (!current_user_can('manage_options')) {
+				return;
+			}
+			wpfm_export_csv_file('food-manager');
+			exit;
+		}
+	}
+
 }
 
 WPFM_Admin::instance();

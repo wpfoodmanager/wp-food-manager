@@ -94,6 +94,19 @@ var WPFM_Admin = function () {
             jQuery('.wpfm-metabox-content').css('display', 'none');
             jQuery('#wpfm-add-new-option').on('click', WPFM_Admin.actions.addNewOption);
 
+            jQuery( 'body' ).on('click', '.wp-food-manager-upload-file input[type="button"]', WPFM_Admin.actions.checkFile);
+            jQuery( 'body' ).on('click', '.wp-food-manager-upload-file .upload-file', WPFM_Admin.actions.uploadFile);
+            jQuery('.wp-food-manager-mapping-form .food-field').each(function() {
+                var selectedValue = jQuery(this).val(); // Get the currently selected value
+                if (selectedValue) {
+                    // If there is a pre-selected value, trigger the selectDataField function manually
+                    WPFM_Admin.actions.selectDataField({ target: this });
+                }
+            });
+            jQuery('body').on('change', '.wp-food-manager-mapping-form .food-field', WPFM_Admin.actions.selectDataField);
+            jQuery( 'body' ).on('click', '.wp-food-manager-mapping-form .add-default-value', WPFM_Admin.actions.addDefaultValue);
+            jQuery( 'body' ).on('change', '.wp-food-manager-mapping-form select[class*="default_value_"]', WPFM_Admin.actions.selectDefaultValue);
+
             jQuery(document).on("click", ".wpfm-togglediv", function (e) {
                 var row_count = jQuery(this).data('row-count');
                 var menuItem = jQuery(e.currentTarget);
@@ -387,6 +400,145 @@ var WPFM_Admin = function () {
                     printWindow.print(); // Trigger the print dialog
                 };
                 
+            },
+             /**
+             * checkFile function.
+             *
+             * @access public
+             * @param 
+             * @return 
+             */
+             checkFile: function (e){
+                jQuery('span.response-message').addClass('error');
+                jQuery('span.response-message').html('Please select .csv file');
+            },
+
+            /**
+             * uploadFile function.
+             *
+             * @access public
+             * @param 
+             * @return 
+             */
+            uploadFile: function (e){
+                var upload = wp.media({
+                    title:'Choose .csv or.xml file', /*Title for Media Box*/
+                    multiple: false /*For limiting multiple image*/
+                })
+                .on('select', function (){
+                    var select = upload.state().get('selection');
+                    var attach = select.first().toJSON();
+
+                    var file = attach.filename;
+                    var extension = file.substr( (file.lastIndexOf('.') +1) );
+
+                    if(jQuery.inArray(extension, ['csv'])!='-1'){
+                        jQuery('span.response-message').removeClass('error');
+                        jQuery('span.response-message').html(attach.filename);
+                        jQuery('input#file_id').attr('value', attach.id);
+                        jQuery('input#file_type').attr('value', extension);
+                        jQuery('input[name="wp_food_manager_upload"]').attr('type', 'submit');
+                    } else{
+                        jQuery('span.response-message').addClass('error');
+                        jQuery('input#file_id').attr('value', '');
+                        jQuery('input#file_type').attr('value', '');
+                        jQuery('span.response-message').html('Please select .csv or.xml or file');
+                        jQuery('input[name="wp_food_manager_upload"]').attr('type', 'button');
+                    }
+                })
+                .open();
+            },
+
+             /**
+             * selectDataField function.
+             *
+             * @access public
+             * @param 
+             * @return 
+             */
+             selectDataField: function (e){   
+                var field_val = jQuery(e.target).val();            
+                var field_id = jQuery(e.target).attr('id');
+                var field_type = jQuery(e.target).find("option:selected").attr('class');
+
+                jQuery(e.target).attr( "data-type", field_type );
+                jQuery(e.target).attr( "data-val", field_val );
+
+                if(jQuery(e.target).closest('tr').find('.add-default-value').prop("checked") == true){
+                    jQuery(e.target).closest('tr').find('.add-default-value').prop('checked', false);
+
+                    jQuery(e.target).closest('tr').find('select[class*="default_value_"]').html('');
+                    jQuery(e.target).closest('tr').find('select[class*="default_value_"]').hide();
+                    
+                    jQuery(e.target).closest('tr').find('input[class*="default_value_"]').val('');
+                    jQuery(e.target).closest('tr').find('input[class*="default_value_"]').attr('type', 'hidden');
+                }
+
+                jQuery('body input.'+ field_id).val('');
+                jQuery('body input.'+ field_id).attr('type', 'hidden');
+                jQuery(e.target).closest('tr').find('input[class*="taxonomy_field_"]').val('');
+
+                if(field_type == 'custom-field'){
+                    jQuery('body input.'+ field_id).val('');
+                    jQuery('body input.'+ field_id).attr('type', 'text');
+                }else if(field_type == 'taxonomy'){
+                    jQuery(e.target).closest('tr').find('input[class*="taxonomy_field_"]').val(field_val);
+                }else{
+                    jQuery('body input.'+ field_id).val(field_val);
+                    jQuery('body input.'+ field_id).attr('type', 'hidden');
+                }
+            },
+
+            /**
+             * addDefaultValue function.
+             *
+             * @access public
+             * @param 
+             * @return 
+             */
+            addDefaultValue: function (e){
+                var food_field_type = jQuery(e.target).closest('tr').find('.food-field').attr('data-type');
+                var food_field_val = jQuery(e.target).closest('tr').find('.food-field').attr('data-val');
+
+                var field_id = jQuery(e.target).attr('id');
+
+                if(jQuery(e.target).prop("checked") == true){
+                    jQuery('body input.'+ field_id).val('');
+
+                    if(food_field_type == 'taxonomy'){
+                        jQuery('body select.'+ field_id).show();
+
+                        var data = {
+                            action: 'get_food_terms',
+                            taxonomy: food_field_val,
+                        };
+                        jQuery.post( wpfm-admin.ajax_url, data, function( response ) {
+                            jQuery('body select.'+ field_id).html(response);
+                        },'html');
+                    }else{
+                        jQuery('body input.'+ field_id).attr('type', 'text');
+                    }                
+                }else{
+                    jQuery('body input.'+ field_id).val('');
+                    jQuery('body input.'+ field_id).attr('type', 'hidden');
+
+                    jQuery('body select.'+ field_id).html('');
+                    jQuery('body select.'+ field_id).hide();
+                }
+            },
+
+            /**
+             * selectDefaultValue function.
+             *
+             * @access public
+             * @param 
+             * @return 
+             */
+            selectDefaultValue: function (e){
+                var field_class = jQuery(e.target).attr('class');
+                var field_val = jQuery(e.target).val();
+
+                jQuery('body input.'+ field_class).val(field_val);
             },
             /// <summary>
             /// Click on tab food manager genera or other food tab.     
