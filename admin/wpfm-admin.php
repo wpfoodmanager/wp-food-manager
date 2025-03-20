@@ -905,7 +905,7 @@ class WPFM_Admin {
      
          if (is_object($wp_roles)) {
              // Update or add 'fm_' prefixed roles
-             self::fm_update_or_add_role('restaurant_owner', 'fm_restaurant_owner', __('Restaurant Manager', 'wpfm-restaurant-manager'), array(
+             self::fm_update_or_add_role('fm_restaurant_owner', 'fm_restaurant_owner', __('Restaurant Owner', 'wpfm-restaurant-manager'), array(
                  'read'         => true,
                  'edit_posts'   => false,
                  'delete_posts' => false
