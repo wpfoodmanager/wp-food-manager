@@ -177,13 +177,13 @@
 																		$imagePath = '';
 																		if (empty($image_src)) {
 																			if ($wpfm_veg_nonveg_tag->slug === 'vegetarian') {
-																				$imagePath = WPFM_PLUGIN_URL . "/assets/images/wpfm-veg-organic.png";
+																				$imagePath = WPFM_PLUGIN_URL . "/assets/images/wpfm-veg-organic.svg";
 																			}
 																			if ($wpfm_veg_nonveg_tag->slug === 'non-vegetarian') {
-																				$imagePath = WPFM_PLUGIN_URL . "/assets/images/wpfm-non-veg-organic.png";
+																				$imagePath = WPFM_PLUGIN_URL . "/assets/images/wpfm-non-veg-organic.svg";
 																			}
 																			if ($wpfm_veg_nonveg_tag->slug === 'vegan') {
-																				$imagePath = WPFM_PLUGIN_URL . "/assets/images/wpfm-vegan-organic.png";
+																				$imagePath = WPFM_PLUGIN_URL . "/assets/images/wpfm-vegan-organic.svg";
 																			}
 																		} else {
 																			$imagePath = $image_src[0];
