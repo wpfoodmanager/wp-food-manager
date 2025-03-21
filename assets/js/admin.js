@@ -422,7 +422,7 @@ var WPFM_Admin = function () {
              */
             uploadFile: function (e){
                 var upload = wp.media({
-                    title:'Choose .csv or.xml file', /*Title for Media Box*/
+                    title:'Choose .csv file', /*Title for Media Box*/
                     multiple: false /*For limiting multiple image*/
                 })
                 .on('select', function (){
@@ -442,7 +442,7 @@ var WPFM_Admin = function () {
                         jQuery('span.response-message').addClass('error');
                         jQuery('input#file_id').attr('value', '');
                         jQuery('input#file_type').attr('value', '');
-                        jQuery('span.response-message').html('Please select .csv or.xml or file');
+                        jQuery('span.response-message').html('Please select .csv file');
                         jQuery('input[name="wp_food_manager_upload"]').attr('type', 'button');
                     }
                 })

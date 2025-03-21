@@ -9,7 +9,7 @@
         <tr>
             <th>
                 <a href="<?php echo get_site_url(); ?>/wp-admin/admin.php?page=food-manager-import" class="button">
-                    <?php _e('Import new .csv or .xml', 'wp-food-manager'); ?>
+                    <?php _e('Import new .csv file', 'wp-food-manager'); ?>
                 </a>
             </th>
         </tr>
