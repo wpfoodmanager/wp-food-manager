@@ -118,7 +118,8 @@ class WPFM_Import{
                     $value = !empty($file_sample_data[$field_data['key']]) ? $file_sample_data[$field_data['key']] : $field_data['default_value'];
                     $sample_data[$field_name] = $value;
                 }
-
+                $food_post_type = get_food_post_type();
+                $import_type_label = $food_post_type[sanitize_text_field($_POST['food_post_type'])];
                 get_food_manager_template(
                     'food-import.php',
                     array(
@@ -127,6 +128,7 @@ class WPFM_Import{
                         'import_fields' => $import_fields,
                         'food_post_type' => sanitize_text_field($_POST['food_post_type']),
                         'sample_data' => $sample_data,
+                        'import_type_label' => $import_type_label,
                     ),
                     'wp-food-manager',
                     WPFM_PLUGIN_DIR . '/admin/templates/'

@@ -1,6 +1,6 @@
 <?php wp_enqueue_script('wpfm-admin'); ?>
 <div class="wrap wp-food-manager-wrap">
-    <h2><?php _e('Food Mapping Form', 'wp-food-manager'); ?></h2>
+    <h2><?php echo sprintf(__('%s Mapping Form', 'wp-food-manager'), $import_type_label); ?></h2>
     
     <form method="post" class="wp-food-manager-mapping-form">
         <table class="widefat">

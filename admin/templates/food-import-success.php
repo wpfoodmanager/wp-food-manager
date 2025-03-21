@@ -1,9 +1,9 @@
 <div class="wrap wp-food-manager-wrap">
-	<h2><?php _e('Food Import Successfully', 'wp-food-manager'); ?></h2>
+   <h2><?php echo sprintf( __( '%s Import Successfully', 'wp-food-manager' ),$import_type_label ); ?></h2>
     <table class="widefat">
         <tr>
             <th>
-                <?php echo sprintf( __( 'Total: <b>%s</b> %s Successfully Import', 'wp-food-manager' ), $total_records, $import_type_label ); ?>
+                <?php echo sprintf( __( 'Total: <b>%s</b> %s Successfully Imported', 'wp-food-manager' ), $total_records, $import_type_label ); ?>
             </th>
         </tr>
         <tr>

@@ -1,5 +1,5 @@
 <div class="wrap wp-food-manager-wrap">
-	<h2><?php _e('Import Food', 'wp-food-manager'); ?></h2>
+	<h2><?php _e('Import Food & Menu', 'wp-food-manager'); ?></h2>
 
 	<form method="post" class="wp-food-manager-upload-file">
 		<table class="widefat">

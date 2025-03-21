@@ -1,5 +1,5 @@
 <div class="wrap wp-food-manager-wrap">
-	<h2><?php _e('Import Food', 'wp-food-manager'); ?></h2>
+    <h2><?php echo sprintf(__('Import %s', 'wp-food-manager'), $import_type_label); ?></h2>
 
     <table class="widefat">
         <tr>
