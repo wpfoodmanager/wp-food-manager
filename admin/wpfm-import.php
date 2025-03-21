@@ -158,6 +158,7 @@ class WPFM_Import{
                     array(
                         'total_records' => count($file_data),
                         'import_type_label' => $import_type_label,
+                        'food_post_type' => sanitize_text_field($_POST['food_post_type']),
                     ),
                     'wp-food-manager',
                     WPFM_PLUGIN_DIR . '/admin/templates/'
