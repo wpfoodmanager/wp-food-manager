@@ -1,5 +1,8 @@
 <div class="wrap wp-food-manager-wrap">
 	<h2><?php _e('Import Food & Menu', 'wp-food-manager'); ?></h2>
+	<div class="notice notice-warning is-dismissible">
+    	<p><?php _e('Before adding imported food items to the menu, make sure they have been successfully imported.', 'wp-food-manager'); ?></p>
+	</div>
 
 	<form method="post" class="wp-food-manager-upload-file">
 		<table class="widefat">
