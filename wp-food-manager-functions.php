@@ -2709,6 +2709,7 @@ function import_food_menu($post_id, $post_type, $params) {
        
 
         $image_url = isset($params['_thumbnail_id']) ? $params['_thumbnail_id'] : '';       
+			if (!empty($image_url)) {
         // Initialize food IDs with empty arrays if not set
         $food_item_ids = isset($params['_food_item_ids']) ? $params['_food_item_ids'] : '';
         $food_cats_ids = isset($params['_food_cats_ids']) ? $params['_food_cats_ids'] : '';
