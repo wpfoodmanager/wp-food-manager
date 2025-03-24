@@ -2440,8 +2440,6 @@ function handle_food_banner($post_id, $meta_value, $meta_key, $params) {
             update_post_meta($post_id, $meta_key, $imageData);
             if (empty($params['_thumbnail_id'])) {
                 update_post_meta($post_id, '_thumbnail_id', $image_post_id);  // Use the image post ID
-            } else {
-                handle_thumbnail($params['_thumbnail_id']);
             }
         }
     }
@@ -2710,6 +2708,7 @@ function import_food_menu($post_id, $post_type, $params) {
 		handle_thumbnail($params['_thumbnail_id']);
        
 
+        $image_url = isset($params['_thumbnail_id']) ? $params['_thumbnail_id'] : '';       
         // Initialize food IDs with empty arrays if not set
         $food_item_ids = isset($params['_food_item_ids']) ? $params['_food_item_ids'] : '';
         $food_cats_ids = isset($params['_food_cats_ids']) ? $params['_food_cats_ids'] : '';
