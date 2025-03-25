@@ -453,8 +453,8 @@ function display_food_category($post = null, $after = '') {
 					),
 				));
 				if ($numCategory > ++$i) {
-                    echo ', ' . esc_attr($after);  // Add a comma and the 'after' string
-                }
+					echo esc_attr($after);
+				}
 			}
 		}
 	} else {
