@@ -1,5 +1,10 @@
 <?php
 
+// Start session to use for storing the error message temporarily
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+
 /**
  * From admin panel, setuping post food page, food dashboard page and food listings page.
  */
@@ -9,7 +14,7 @@ if (!defined('ABSPATH')) {
 }
 
 /**
- * WPFM_Setup class.
+ * WPFM_Import class.
  */
 class WPFM_Import{
 
@@ -44,7 +49,6 @@ class WPFM_Import{
     public function __construct() {
         add_action('admin_init',  array($this, 'wpfm_export_menu_csv'));	
         add_action('restrict_manage_posts', array($this, 'export_menu_button'), 10, 2);  // Add to the table's 'alignleft actions'
-
     }
 
     public function export_menu_button() {
@@ -54,6 +58,7 @@ class WPFM_Import{
                   </div>';
         }
     }
+
     /**
      * Output Setup page.
      * 
@@ -65,11 +70,43 @@ class WPFM_Import{
         global $wpdb;
         wp_enqueue_media();
 
+        // Check for error message in session
+        if (isset($_SESSION['error_message']) && !empty($_SESSION['error_message'])) {
+            $error_message = $_SESSION['error_message']; // Get error message from session
+            echo '<div class="notice notice-error is-dismissible">';
+            echo '<p>' . esc_html($error_message) . '</p>';
+            echo '</div>';
+            // Unset error message from session to prevent it from showing on next page load
+            unset($_SESSION['error_message']);
+        }
+
         if (!empty($_POST['wp_food_manager_upload']) && wp_verify_nonce($_POST['_wpnonce'], 'food_manager_file_upload')) {
             if ($_POST['action'] == 'upload' && $_POST['file_id'] != '') {
                 $file = get_attached_file(absint($_POST['file_id']));
                 $file_data = get_food_file_data($_POST['file_type'], $file);
                 $file_head_fields = array_shift($file_data);
+                if (in_array('_menu_title', $file_head_fields)) {
+                    // Check if the food_post_type is 'food_manager'
+                    if (sanitize_text_field($_POST['food_post_type']) == 'food_manager') {
+                        // Store error message in session
+                        $_SESSION['error_message'] = __('Please select Food Menu as a content type.', 'wp-food-manager');
+                        wp_redirect(admin_url('admin.php?page=food-manager-import'));
+                        exit; 
+                    }
+                } elseif (in_array('_food_title', $file_head_fields)) {
+                    // Check if the food_post_type is 'food_manager_menu'
+                    if (sanitize_text_field($_POST['food_post_type']) == 'food_manager_menu') {
+                        // Store error message in session
+                        $_SESSION['error_message'] = __('Please select Food as a content type.', 'wp-food-manager');
+                        wp_redirect(admin_url('admin.php?page=food-manager-import'));
+                        exit; 
+                    }
+                }else {
+                    $_SESSION['error_message'] = __('Please upload proper csv file', 'wp-food-manager');
+                    wp_redirect(admin_url('admin.php?page=food-manager-import'));
+                    exit; 
+                }
+                
                 $food_import_fields = get_food_form_field_lists(sanitize_text_field($_POST['food_post_type']));
                 $taxonomies = get_object_taxonomies(sanitize_text_field($_POST['food_post_type']), 'objects');
                 $food_post_type = get_food_post_type();
