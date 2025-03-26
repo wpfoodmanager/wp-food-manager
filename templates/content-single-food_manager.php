@@ -141,7 +141,7 @@ $food = $post;
                                             foreach ($ext_options as $key => $ext_option) {
                                                 if (!empty($ext_option['_topping_name']) && !empty($ext_option['_topping_options'])) {
                                                     $field_required = '';
-                                                    $topping_images = is_array($ext_option['_topping_image']) ? $ext_option['_topping_image'][0] : $ext_option['_topping_image'];
+                                                    $topping_images = isset($ext_option['_topping_image']) && is_array($ext_option['_topping_image']) && isset($ext_option['_topping_image'][0]) ? $ext_option['_topping_image'][0] : $ext_option['_topping_image'];
                                                     echo "<div class='wpfm-topping-list-item" . esc_attr($more_class) . "'>";
                                                     echo "<div class='wpfm-topping-item-header wpfm-d-flex wpfm-align-items-start'>";
                                                     if (!empty($topping_images)) {
