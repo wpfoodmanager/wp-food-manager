@@ -2365,26 +2365,27 @@ function import_data($post_type, $params) {
 				'post_status'   => 'publish',
 			]
 		);
-	
-		// Insert WooCommerce product 
-		$post_data = array(
-			'post_title'    => sanitize_text_field($post_title),
-			'post_content'  => sanitize_textarea_field($post_description),
-			'post_status'   => 'publish',
-			'post_author'   => (int) $user_id,
-			'post_type'     => 'product',
-			'post_parent'   => (int) $params['_post_id'], 
-			'post_date'     => current_time('mysql'),
-			'post_date_gmt' => current_time('mysql', 1),
-			'comment_status'=> 'closed',
-		);
 		$post_id = $params['_post_id'];
 
-		// Insert the product post
-		$post_id1 = wp_insert_post($post_data);
-	
-		// Link product to custom post
-		update_post_meta($post_id1, '_food_id', (int) $params['_post_id']);
+		if($post_type == "food_manager"){
+			// Insert WooCommerce product
+			$post_data = array(
+				'post_title'    => sanitize_text_field($post_title),
+				'post_content'  => sanitize_textarea_field($post_description),
+				'post_status'   => 'publish',
+				'post_author'   => (int) $user_id,
+				'post_type'     => 'product',
+				'post_parent'   => (int) $params['_post_id'], 
+				'post_date'     => current_time('mysql'),
+				'post_date_gmt' => current_time('mysql', 1),
+				'comment_status'=> 'closed',
+			);
+
+			// Insert the product post
+			$post_id1 = wp_insert_post($post_data);
+			// Link product to custom post
+			update_post_meta($post_id1, '_food_id', (int) $params['_post_id']);
+		}
 	}
 	
 	// Fetch the product by meta key
@@ -2402,8 +2403,7 @@ function import_data($post_type, $params) {
 		import_food_menu($post_id, $post_type, $params);
 	}
 	
-	do_action('wpfm_food_import_file_data', $post_id, $post_type, $params);
-	
+	do_action('wpfm_food_import_file_data', $post_id, $post_type, $params);	
 }
 	
 
