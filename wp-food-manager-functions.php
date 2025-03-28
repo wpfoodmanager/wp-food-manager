@@ -2715,6 +2715,7 @@ function handle_post_meta($post_id, $meta_key, $meta_value, $import_fields, $par
     update_post_meta($meta_id, '_sale_price', floatval($params['_food_sale_price']));
     update_post_meta($meta_id, '_regular_price', floatval($params['_food_price']));
     update_post_meta($meta_id, '_price', floatval($params['_food_price']));
+    update_post_meta($meta_id, '_tax_class', '');
 
     $thumbnail_id = get_post_meta($post_id, '_thumbnail_id', true);
     update_post_meta($meta_id, '_thumbnail_id', $thumbnail_id);
