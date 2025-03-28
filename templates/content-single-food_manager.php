@@ -52,8 +52,6 @@ $food = $post;
                                         <div class="food-views-favourite-container">
                                             <div class="wpfm-viewed-food wpfm-tooltip wpfm-tooltip-bottom">
                                                 <i class="wpfm-icon-eye"></i> 
-                                                <?php // translators: %d: View count of the food item ?>
-                                               <?php printf( esc_html__( '%d', 'wp-food-manager' ), intval( $view_count ) ); ?>
                                             </div>
                                                 <?php // translators: %d: Number of people who viewed the food item ?>
                                                 <span class="wpfm-tooltiptext"><?php printf( esc_html__( '%d people viewed this food.', 'wp-food-manager' ), intval( $view_count ) ); ?></span>
