@@ -2514,7 +2514,12 @@ function handle_taxonomy_terms($post_id, $meta_key, $meta_value, $import_fields)
 			}
 		}
 		if (!empty($term_ids)) {
-			if($meta_key == 'food_manager_tax_classes' || $meta_key == 'food_manager_tag'){
+			if($meta_key == 'food_manager_tax_classes' ){
+				wp_set_post_terms($post_id, $terms , $import_fields['taxonomy'], true);
+				update_post_meta($post_id,'_tax_class_id',$term['term_id']);
+				update_post_meta($post_id,'_tax_classes_cat',$term['term_id']);
+			}
+			elseif ($meta_key == 'food_manager_tag') {
 				wp_set_post_terms($post_id, $terms , $import_fields['taxonomy'], true);
 			}
 			else{
