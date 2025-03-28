@@ -2315,7 +2315,8 @@ function get_food_terms() {
 
 function import_data($post_type, $params) {
 	$user_id = get_current_user_id();
-
+	global $wpdb;
+	
 	// Check if $params is a WP_Error
 	if (is_wp_error($params)) {
 		return; 
@@ -2330,11 +2331,15 @@ function import_data($post_type, $params) {
 	}
 	if ($post_type == 'food_manager') {
 		$post_title = !empty($params['_food_title']) ? $params['_food_title'] : '';
+		$post_description = !empty($params['_food_description']) ? $params['_food_description'] : '';
 	} else if ($post_type == 'food_manager_menu') {
 		$post_title = !empty($params['_menu_title']) ? $params['_menu_title'] : '';
+		$post_description ='';
 	}
 	$post_title = apply_filters('wpfm_food_import_set_post_title', $post_title, $params);
-	if ($post_id == '' && $post_title != '') {
+	$exist_post = get_post($params['_post_id']);
+
+	if ($params['_post_id'] == '' && $post_title != '') {
 		$args = [
 			'post_title' => $post_title,
 			'post_type' => $post_type,
@@ -2343,18 +2348,62 @@ function import_data($post_type, $params) {
 			'post_status' => 'publish',
 		];
 		$post_id = wp_insert_post($args);
-		if ($post_type == 'food_manager') {
-			if (isset($params['_post_id']) && $params['_post_id'] != '') {
-				update_post_meta($post_id, '_food_id', $params['_post_id']);
-			}
-		}
+
+	}elseif (empty($exist_post)) {
+		// Insert custom post into the database
+		$wpdb->insert(
+			$wpdb->posts,
+			[
+				'ID'            => (int) $params['_post_id'], // Ensure it's an integer
+				'post_title'    => sanitize_text_field($post_title), // Sanitize title
+				'post_content'  => sanitize_textarea_field($post_description), // Sanitize description
+				'post_type'     => $post_type,
+				'post_author'   => (int) $user_id, // Ensure user_id is an integer
+				'post_date'     => current_time('mysql'),
+				'post_date_gmt' => current_time('mysql', 1),
+				'comment_status'=> 'closed',
+				'post_status'   => 'publish',
+			]
+		);
+	
+		// Insert WooCommerce product 
+		$post_data = array(
+			'post_title'    => sanitize_text_field($post_title),
+			'post_content'  => sanitize_textarea_field($post_description),
+			'post_status'   => 'publish',
+			'post_author'   => (int) $user_id,
+			'post_type'     => 'product',
+			'post_parent'   => (int) $params['_post_id'], 
+			'post_date'     => current_time('mysql'),
+			'post_date_gmt' => current_time('mysql', 1),
+			'comment_status'=> 'closed',
+		);
+		$post_id = $params['_post_id'];
+
+		// Insert the product post
+		$post_id1 = wp_insert_post($post_data);
+	
+		// Link product to custom post
+		update_post_meta($post_id1, '_food_id', (int) $params['_post_id']);
 	}
+	
+	// Fetch the product by meta key
+	$meta_id = $wpdb->get_var(
+		$wpdb->prepare(
+			"SELECT post_id FROM {$wpdb->postmeta} WHERE meta_key = %s AND meta_value = %d LIMIT 1",
+			'_food_id',
+			(int) $post_id
+		)
+	);
+	// Update product or process further
 	if ($post_type == 'food_manager') {
-		import_food($post_id, $post_type, $params);
+		import_food($post_id, $post_type, $params, $meta_id);
 	} else if ($post_type == 'food_manager_menu') {
 		import_food_menu($post_id, $post_type, $params);
 	}
+	
 	do_action('wpfm_food_import_file_data', $post_id, $post_type, $params);
+	
 }
 	
 
@@ -2365,7 +2414,7 @@ function import_data($post_type, $params) {
  * @param $post_id, $post_type, $params
  * @return 
  */
-function import_food($post_id, $post_type, $params) {
+function import_food($post_id, $post_type, $params , $meta_id) {
 	if (!$post_id) return;
 
 	// Prepare post data for update
@@ -2395,7 +2444,7 @@ function import_food($post_id, $post_type, $params) {
 		elseif (($meta_key == '_topping_names') || ($meta_key == '_topping_description') || ($meta_key == '_topping_image')|| ($meta_key == '_topping_options')) {
 				handle_topping_data($post_id, $params );
 		}else {
-			handle_post_meta($post_id, $meta_key, $meta_value, $import_fields);
+			handle_post_meta($post_id, $meta_key, $meta_value, $import_fields,$params,$meta_id);
 		}
 	}
 }
@@ -2639,30 +2688,7 @@ function handle_topping_data($post_id, $params) {
         update_post_meta($post_id, '_food_toppings', $toppings_meta);
     }
 }
-
-function handle_thumbnail($image_url){
-	if (!empty($image_url)) {
-		$response = image_exists($image_url);
-		if ($response) {
-			$image = upload_image($image_url);
-			if (!empty($image)) {
-				$imageData = $image['image_url'];
 	
-				// Find the post ID for the image URL
-				$image_post_id = attachment_url_to_postid($imageData);
-	
-				// If a valid post ID is found, update the post meta
-				if ($image_post_id) {
-					update_post_meta($post_id, '_thumbnail_id', $image_post_id);
-				}
-			}
-			else {
-				error_log(print_r('not uploaded'));
-			}
-		}
-	}
-}
-		
 /**
  * save the post meta fields
  *
@@ -2670,11 +2696,27 @@ function handle_thumbnail($image_url){
  * @param $post_id,$meta_key, $import_fields
  * @return 
  */
-function handle_post_meta($post_id, $meta_key, $meta_value, $import_fields) {
-	if ($meta_value == '') {
-		$meta_value = $import_fields['default_value'];
-	}
-	update_post_meta($post_id, $meta_key, sanitize_text_field($meta_value));
+function handle_post_meta($post_id, $meta_key, $meta_value, $import_fields, $params, $meta_id) {
+
+	if (empty($meta_value) && isset($import_fields['default_value'])) {
+        $meta_value = $import_fields['default_value'];
+    }
+
+    // Update the main post meta
+    update_post_meta($post_id, $meta_key, sanitize_text_field($meta_value));
+
+    update_post_meta($meta_id, '_stock', sanitize_text_field($params['_food_quantity']));
+    update_post_meta($meta_id, '_stock_status', sanitize_text_field($params['_food_stock_status']));
+    update_post_meta($meta_id, '_sale_price', floatval($params['_food_sale_price']));
+    update_post_meta($meta_id, '_regular_price', floatval($params['_food_price']));
+    update_post_meta($meta_id, '_price', floatval($params['_food_price']));
+
+    $thumbnail_id = get_post_meta($post_id, '_thumbnail_id', true);
+    update_post_meta($meta_id, '_thumbnail_id', $thumbnail_id);
+
+    if (!empty($params['_food_quantity'])) {
+        update_post_meta($meta_id, '_manage_stock', 'yes');
+    }
 }
 			
  /**
@@ -2705,10 +2747,7 @@ function import_food_menu($post_id, $post_type, $params) {
         $wpfm_food_menu_visibility = isset($params['_wpfm_food_menu_visibility']) ? $params['_wpfm_food_menu_visibility'] : '';
         $food_menu_option = isset($params['_food_menu_option']) ? $params['_food_menu_option'] : '';
         $image_url = isset($params['_thumbnail_id']) ? $params['_thumbnail_id'] : '';
-		handle_thumbnail($params['_thumbnail_id']);
-       
 
-        $image_url = isset($params['_thumbnail_id']) ? $params['_thumbnail_id'] : '';       
 			if (!empty($image_url)) {
 				$response = image_exists($image_url);
 				if ($response) {
@@ -2722,7 +2761,7 @@ function import_food_menu($post_id, $post_type, $params) {
 					}
 				}
 			}
-	
+
         // Initialize food IDs with empty arrays if not set
         $food_item_ids = isset($params['_food_item_ids']) ? $params['_food_item_ids'] : '';
         $food_cats_ids = isset($params['_food_cats_ids']) ? $params['_food_cats_ids'] : '';
@@ -2731,7 +2770,7 @@ function import_food_menu($post_id, $post_type, $params) {
         $serialized_food_item_ids = $food_item_ids ? array_map('strval', explode(', ', $food_item_ids)) : [];
         $serialized_food_cats_ids = $food_cats_ids ? array_map('strval', explode(', ', $food_cats_ids)) : [];
         $serialized_food_type_ids = $food_type_ids ? array_map('strval', explode(', ', $food_type_ids)) : [];
-		
+
         // Handle other fields as normal
         update_post_meta($post_id, 'wpfm_radio_icons', $wpfm_radio_icons);
         update_post_meta($post_id, '_wpfm_disable_food_redirect', $wpfm_disable_food_redirect);
@@ -2741,7 +2780,7 @@ function import_food_menu($post_id, $post_type, $params) {
         update_post_meta($post_id, '_food_item_ids', $serialized_food_item_ids);
         update_post_meta($post_id, '_food_cats_ids', $serialized_food_cats_ids);
         update_post_meta($post_id, '_food_type_ids', $serialized_food_type_ids);
-		
+
         // Handle the 'food menu by days' field
         if (isset($params['_wpfm_food_menu_by_days'])) {
             $type = json_decode($params['_wpfm_food_menu_by_days'], true);
@@ -2752,7 +2791,6 @@ function import_food_menu($post_id, $post_type, $params) {
     }
 }
 
-	
 /**
  * Upload image function.
  *
@@ -3088,4 +3126,3 @@ if (!function_exists('wpfm_export_menu_csv_file')) {
 		exit;
 	}
 }
-	
