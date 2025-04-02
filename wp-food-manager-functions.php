@@ -2689,7 +2689,6 @@ function handle_topping_data($post_id, $params) {
 
     // Assign toppings terms to the post and save meta data
     if ($toppings_arr) {
-        wp_set_object_terms($post_id, $toppings_arr, 'food_manager_topping');
         update_post_meta($post_id, '_food_toppings', $toppings_meta);
     }
 }
@@ -2754,19 +2753,19 @@ function import_food_menu($post_id, $post_type, $params) {
         $food_menu_option = isset($params['_food_menu_option']) ? $params['_food_menu_option'] : '';
         $image_url = isset($params['_thumbnail_id']) ? $params['_thumbnail_id'] : '';
 
-			if (!empty($image_url)) {
-				$response = image_exists($image_url);
-				if ($response) {
-					$image = upload_image($image_url);
-					if (!empty($image)) {
-						$imageData =  $image['image_url'];
-						$image_post_id = attachment_url_to_postid($imageData);
-						if ($image_post_id) {
-							update_post_meta($post_id, '_thumbnail_id', $image_post_id);
-						}
+		if (!empty($image_url)) {
+			$response = image_exists($image_url);
+			if ($response == 'true' || $response == 'false' ) {
+				$image = upload_image($image_url);
+				if (!empty($image)) {
+					$imageData =  $image['image_url'];
+					$image_post_id = attachment_url_to_postid($imageData);
+					if ($image_post_id) {
+						update_post_meta($post_id, '_thumbnail_id', $image_post_id);
 					}
 				}
 			}
+		}
 
         // Initialize food IDs with empty arrays if not set
         $food_item_ids = isset($params['_food_item_ids']) ? $params['_food_item_ids'] : '';
