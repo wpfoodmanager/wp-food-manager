@@ -336,7 +336,7 @@ class WPFM_Settings {
                             'label'    => __('Currency', 'wp-food-manager'),
                             'desc'     => __('This controls what currency prices are listed at in the catalog and which currency gateways will take payments in.', 'wp-food-manager'),
                             'name'       => 'wpfm_currency',
-                            'std'  => 'USD',
+                            'std'  => 'EUR',
                             'type'     => 'select',
                             'class'    => 'wc-enhanced-select',
                             'options'  => $currency_code_options,
