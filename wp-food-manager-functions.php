@@ -2337,9 +2337,11 @@ function import_data($post_type, $params) {
 		$post_description ='';
 	}
 	$post_title = apply_filters('wpfm_food_import_set_post_title', $post_title, $params);
-	$exist_post = get_post($params['_post_id']);
+	if (!empty($params['_post_id'])) {
+		$exist_post = get_post($params['_post_id']);
+	}
 
-	if ($params['_post_id'] == '' && $post_title != '') {
+	if (empty($params['_post_id']) && $post_title != '') {
 		$args = [
 			'post_title' => $post_title,
 			'post_type' => $post_type,
@@ -2769,12 +2771,12 @@ function import_food_menu($post_id, $post_type, $params) {
 
         // Initialize food IDs with empty arrays if not set
         $food_item_ids = isset($params['_food_item_ids']) ? $params['_food_item_ids'] : '';
-        $food_cats_ids = isset($params['_food_cats_ids']) ? $params['_food_cats_ids'] : '';
-        $food_type_ids = isset($params['_food_type_ids']) ? $params['_food_type_ids'] : '';
-
+        $food_cats_names = isset($params['_food_cats_ids']) ? $params['_food_cats_ids'] : '';
+        $food_types_names = isset($params['_food_type_ids']) ? $params['_food_type_ids'] : '';
+		
+		$serialized_food_cats_ids = convert_term_names_to_ids($food_cats_names, 'food_manager_category');
+		$serialized_food_types_ids = convert_term_names_to_ids($food_types_names, 'food_manager_type');
         $serialized_food_item_ids = $food_item_ids ? array_map('strval', explode(', ', $food_item_ids)) : [];
-        $serialized_food_cats_ids = $food_cats_ids ? array_map('strval', explode(', ', $food_cats_ids)) : [];
-        $serialized_food_type_ids = $food_type_ids ? array_map('strval', explode(', ', $food_type_ids)) : [];
 
         // Handle other fields as normal
         update_post_meta($post_id, 'wpfm_radio_icons', $wpfm_radio_icons);
@@ -2784,16 +2786,65 @@ function import_food_menu($post_id, $post_type, $params) {
         update_post_meta($post_id, '_food_menu_option', $food_menu_option);
         update_post_meta($post_id, '_food_item_ids', $serialized_food_item_ids);
         update_post_meta($post_id, '_food_cats_ids', $serialized_food_cats_ids);
-        update_post_meta($post_id, '_food_type_ids', $serialized_food_type_ids);
+        update_post_meta($post_id, '_food_type_ids', $serialized_food_types_ids);
 
-        // Handle the 'food menu by days' field
-        if (isset($params['_wpfm_food_menu_by_days'])) {
-            $type = json_decode($params['_wpfm_food_menu_by_days'], true);
-            update_post_meta($post_id, '_wpfm_food_menu_by_days', $type);
+        // Convert food categories and types to IDs
+    	$convert_terms = function($names, $taxonomy) {
+    	    $ids = [];
+    	    if ($names) {
+    	        foreach (explode(', ', $names) as $name) {
+    	            $term = get_term_by('name', $name, $taxonomy);
+    	            if ($term) {
+    	                $ids[] = (string) $term->term_id;
+    	            } else {
+    	                $new_term = wp_insert_term($name, $taxonomy);
+    	                if (!is_wp_error($new_term)) $ids[] = (string) $new_term['term_id'];
+    	            }
+    	        }
+    	    }
+    	    return $ids;
+    	};
+
+    	// Handle 'food menu by days' field
+    	if (isset($params['_wpfm_food_menu_by_days'])) {
+    	    $menu_by_days_data = json_decode($params['_wpfm_food_menu_by_days'], true);
+    	    if (is_array($menu_by_days_data)) {
+    	        foreach ($menu_by_days_data as $day => &$data) {
+    	            if (isset($data['food_categories'])) {
+    	                $data['food_categories'] = $convert_terms(implode(', ', $data['food_categories']), 'food_manager_category');
+    	            }
+    	            if (isset($data['food_types'])) {
+    	                $data['food_types'] = $convert_terms(implode(', ', $data['food_types']), 'food_manager_type');
+    	            }
+    	        }
+    	    }
+    	    update_post_meta($post_id, '_wpfm_food_menu_by_days', $menu_by_days_data);
+    	}
+    }
+}
+/**
+ * convert term name to term id.
+ *
+ * @param $term_names, $taxonomy
+ * @return $term_ids
+ */
+function convert_term_names_to_ids($term_names, $taxonomy) {
+    $term_ids = [];
+    foreach (explode(', ', $term_names) as $name) {
+        $term = get_term_by('name', $name, $taxonomy);
+
+        if (!$term) {
+            // If term doesn't exist, create it
+            $new_term = wp_insert_term($name, $taxonomy);
+            if (!is_wp_error($new_term)) {
+                $term_ids[] = (string) $new_term['term_id'];
+            }
         } else {
-            update_post_meta($post_id, '_wpfm_food_menu_by_days', '');
+            // If term exists, get the term_id
+            $term_ids[] = (string) $term->term_id;
         }
     }
+    return $term_ids;
 }
 
 /**
@@ -2815,7 +2866,6 @@ function upload_image($url) {
 			$arrData['image_url'] = wp_get_attachment_url($attachment_id);
 			return $arrData;  // Skip uploading and return existing image details
 		}
-
 		// If image doesn't exist, proceed with upload
 		require_once(ABSPATH . 'wp-admin/includes/image.php');
 		require_once(ABSPATH . 'wp-admin/includes/file.php');
@@ -3060,12 +3110,11 @@ if (!function_exists('wpfm_export_menu_csv_file')) {
 	 * @return void
 	 */
 	function wpfm_export_menu_csv_file($message) {
-		$args = array(
+		// Setup WP_Query to get the posts
+		$query = new WP_Query(array(
 			'post_type'      => 'food_manager_menu',
 			'posts_per_page' => -1,
-		);
-	
-		$query = new WP_Query($args);
+		));
 	
 		// Prepare headers to generate a CSV file with the dynamic filename
 		header('Content-Type: text/csv; charset=utf-8');
@@ -3090,44 +3139,102 @@ if (!function_exists('wpfm_export_menu_csv_file')) {
 		if ($query->have_posts()) {
 			while ($query->have_posts()) {
 				$query->the_post();
-		
-				// Get post meta for serialized values
+	
+				// Get post meta
 				$menu_by_days_data = get_post_meta(get_the_ID(), '_wpfm_food_menu_by_days', true);
-				$json_menu_by_days = json_encode(maybe_unserialize($menu_by_days_data));
-				$attachment_id = get_post_meta(get_the_ID(), '_thumbnail_id', true);
-				$thumbnail_id = wp_get_attachment_url($attachment_id);
-				// Get serialized values and unserialize them
+				$menu_by_days = maybe_unserialize($menu_by_days_data);
+				$thumbnail_url = wp_get_attachment_url(get_post_meta(get_the_ID(), '_thumbnail_id', true));
+	
+				// Fetch and unserialize relevant fields
 				$food_item_ids = maybe_unserialize(get_post_meta(get_the_ID(), '_food_item_ids', true));
+				$food_item_ids = is_array($food_item_ids) ? implode(', ', $food_item_ids) : '';
+				
 				$food_cats_ids = maybe_unserialize(get_post_meta(get_the_ID(), '_food_cats_ids', true));
 				$food_type_ids = maybe_unserialize(get_post_meta(get_the_ID(), '_food_type_ids', true));
-		
-				// Convert arrays to comma-separated strings for CSV
-				$food_item_ids = is_array($food_item_ids) ? implode(', ', $food_item_ids) : '';
-				$food_cats_ids = is_array($food_cats_ids) ? implode(', ', $food_cats_ids) : '';
-				$food_type_ids = is_array($food_type_ids) ? implode(', ', $food_type_ids) : '';
-		
+				$get_menu_option = get_post_meta(get_the_ID(), '_food_menu_option', true);
+				// Fetch category and type names
+				if($get_menu_option == 'static_menu'){
+					$food_cats_names = get_term_names_from_ids($food_cats_ids, 'food_manager_category');
+					$food_type_names = get_term_names_from_ids($food_type_ids, 'food_manager_type');
+				}elseif($get_menu_option == 'dynamic_menu') {
+					$food_cats_names = '';
+					$food_type_names = '';
+				}
+	
+				if (is_array($menu_by_days)) {
+					foreach ($menu_by_days as $day => &$data) {
+						if (isset($data['food_categories']) && is_array($data['food_categories'])) {
+							$category_names = array();
+							foreach ($data['food_categories'] as $category_id) {
+								$term = get_term($category_id, 'food_manager_category');
+								if (!is_wp_error($term) && $term) {
+									$category_names[] = $term->name;
+								}
+							}
+							$data['food_categories'] = $category_names;
+						}
+	
+						if (isset($data['food_types']) && is_array($data['food_types'])) {
+							$type_names = array();
+							foreach ($data['food_types'] as $type_id) {
+								$term = get_term($type_id, 'food_manager_type');
+								if (!is_wp_error($term) && $term) {
+									$type_names[] = $term->name;
+								}
+							}
+							$data['food_types'] = $type_names;
+						}
+					}
+				}				
+				$json_menu_by_days = json_encode($menu_by_days);
+				
+				// Prepare meta values for the CSV
 				$meta_values = array(
 					'post_id' => get_the_ID(),
-					'menu_title' => get_the_title(get_the_ID()),
+					'menu_title' => get_the_title(),
 					'wpfm_radio_icons' => get_post_meta(get_the_ID(), 'wpfm_radio_icons', true),
-					'thumbnail_id' => $thumbnail_id,
+					'thumbnail_id' => $thumbnail_url,
 					'wpfm_disable_food_redirect' => get_post_meta(get_the_ID(), '_wpfm_disable_food_redirect', true),
 					'wpfm_disable_food_image' => get_post_meta(get_the_ID(), '_wpfm_disable_food_image', true),
 					'wpfm_food_menu_visibility' => get_post_meta(get_the_ID(), '_wpfm_food_menu_visibility', true),
 					'food_menu_option' => get_post_meta(get_the_ID(), '_food_menu_option', true),
 					'food_item_ids' => $food_item_ids,
-					'food_cats_ids' => $food_cats_ids,
-					'food_type_ids' => $food_type_ids,
+					'food_cats_ids' => $food_cats_names,
+					'food_type_ids' => $food_type_names,
 					'wpfm_food_menu_by_days' => $json_menu_by_days,
 				);
-		
-				$data = apply_filters('wpfm_reservation_export_file_data',array_values($meta_values), get_the_ID(), $meta_values);
-				fputcsv($output, $data);
+	
+				// Write the row data to CSV
+				fputcsv($output, apply_filters('wpfm_reservation_export_file_data', array_values($meta_values), get_the_ID(), $meta_values));
 			}
 		} else {
 			fputcsv($output, array('No records found'));
 		}
-		fclose($output); // phpcs:ignore
+		fclose($output); // Close output stream
 		exit;
 	}
+}
+
+/**
+ *Function to get term names from term IDs.
+ * 
+ * @param $term_ids, $taxonomy
+ * @return $terms
+*/
+function get_term_names_from_ids($term_ids, $taxonomy) {
+	if (is_array($term_ids)) {
+		// Get all terms in the taxonomy, including those that may not be assigned to any food items.
+		$terms = get_terms(array(
+			'taxonomy' => $taxonomy,
+			'include' => $term_ids,
+			'fields' => 'names',
+			'orderby' => 'name',
+			'order' => 'ASC',
+			'hide_empty' => false, // This ensures that all terms are included, even if not assigned to any food.
+		));
+		
+		// If there's an error, return an empty string, otherwise return the terms as a comma-separated list
+		return is_wp_error($terms) ? '' : implode(', ', $terms);
+	}
+	return '';
 }
