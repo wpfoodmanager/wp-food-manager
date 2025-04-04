@@ -2857,15 +2857,41 @@ function upload_image($url) {
 	$arrData = [];
 
 	if ($url != '') {
-		// Check if the image already exists in the media library
-		$attachment_id = attachment_url_to_postid($url);
-
-		if ($attachment_id) {
-			// Image already exists, return the existing attachment details
-			$arrData['image_id'] = $attachment_id;
-			$arrData['image_url'] = wp_get_attachment_url($attachment_id);
-			return $arrData;  // Skip uploading and return existing image details
+		// Get file name and extension
+		$path_info = pathinfo($url);
+		$file_name = $path_info['filename'];
+		$extension = $path_info['extension'];
+			
+		// Get upload directory
+		$upload_dir = wp_upload_dir()['basedir'];
+		$upload_path = '/' . date('Y') . '/' . date('m') . '/';
+			
+		// Check if the file exists
+		$original_file_path = $upload_dir . $upload_path . $file_name . '.' . $extension;
+		if (file_exists($original_file_path)) {
+		    $attachment_url = wp_upload_dir()['baseurl'] . $upload_path . $file_name . '.' . $extension;
+		    $attachment_id = attachment_url_to_postid($attachment_url);
+		    if ($attachment_id) {
+		        $arrData['image_id'] = $attachment_id;
+		        $arrData['image_url'] = wp_get_attachment_url($attachment_id);
+		        return $arrData;  // Return existing image details
+		    }
 		}
+		$count = 1;
+		while (file_exists($upload_dir . $upload_path . $file_name . '-' . $count . '.' . $extension)) {
+		    $file_with_number_path = $upload_dir . $upload_path . $file_name . '-' . $count . '.' . $extension;
+		    if (file_exists($file_with_number_path)) {
+		        $attachment_url = wp_upload_dir()['baseurl'] . $upload_path . $file_name . '-' . $count . '.' . $extension;
+		        $attachment_id = attachment_url_to_postid($attachment_url);
+		        if ($attachment_id) {
+		            $arrData['image_id'] = $attachment_id;
+		            $arrData['image_url'] = wp_get_attachment_url($attachment_id);
+		            return $arrData;  // Return existing image details
+		        }
+		    }
+		    $count++;
+		}
+
 		// If image doesn't exist, proceed with upload
 		require_once(ABSPATH . 'wp-admin/includes/image.php');
 		require_once(ABSPATH . 'wp-admin/includes/file.php');
