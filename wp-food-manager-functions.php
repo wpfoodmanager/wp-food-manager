@@ -3180,8 +3180,14 @@ if (!function_exists('wpfm_export_menu_csv_file')) {
 				$get_menu_option = get_post_meta(get_the_ID(), '_food_menu_option', true);
 				// Fetch category and type names
 				if($get_menu_option == 'static_menu'){
-					$food_cats_names = get_term_names_from_ids($food_cats_ids, 'food_manager_category');
-					$food_type_names = get_term_names_from_ids($food_type_ids, 'food_manager_type');
+					$food_cats_names = '';
+					if (!empty($food_cats_ids)) {
+						$food_cats_names = get_term_names_from_ids($food_cats_ids, 'food_manager_category');
+					}
+					$food_type_names = '';
+					if (!empty($food_type_ids)) {
+						$food_type_names = get_term_names_from_ids($food_type_ids, 'food_manager_type');
+					}
 				}elseif($get_menu_option == 'dynamic_menu') {
 					$food_cats_names = '';
 					$food_type_names = '';
