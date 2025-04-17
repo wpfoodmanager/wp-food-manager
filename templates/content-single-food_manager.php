@@ -42,17 +42,22 @@ $food = $post;
                 <div class="wpfm-single-food-body">
                     <div class="wpfm-row">
                         <div class="wpfm-col-xs-12 wpfm-col-sm-7 wpfm-col-md-8 wpfm-single-food-left-content">
-                            <?php do_action('single_food_overview_before'); ?>
                             <div class="wpfm-single-food-short-info">
                                 <div class="wpfm-food-details">
                                     <div class="food-details-row">
-                                        <div class="food-menu-label"><?php echo apply_filters('wpfm_food_label', get_post_meta($post->ID, '_food_label', true)); ?></div>
+                                    <div class="food-menu-label"><?php echo esc_html( apply_filters( 'wpfm_food_label', get_post_meta( $post->ID, '_food_label', true ) ) ); ?></div>
                                         <?php
                                         $view_count = get_food_views_count($post);
                                         if ($view_count) : ?>
-                                            <div class="wpfm-viewed-food wpfm-tooltip wpfm-tooltip-bottom"><i class="wpfm-icon-eye"></i> <?php printf(esc_html__(' %d', 'wp-food-manager'), $view_count); ?>
-                                                <span class="wpfm-tooltiptext"><?php printf(esc_html__('%d people viewed this food.', 'wp-food-manager'), $view_count); ?></span>
+                                        <div class="food-views-favourite-container">
+                                            <div class="wpfm-viewed-food wpfm-tooltip wpfm-tooltip-bottom">
+                                                <i class="wpfm-icon-eye"></i> 
                                             </div>
+                                                <?php // translators: %d: Number of people who viewed the food item ?>
+                                                <span class="wpfm-tooltiptext"><?php printf( esc_html__( '%d people viewed this food.', 'wp-food-manager' ), intval( $view_count ) ); ?></span>
+
+                                            <?php do_action('single_food_overview_before',get_the_ID()); ?>
+                                        </div>
                                         <?php endif; ?>
                                     </div>
                                     
@@ -63,11 +68,11 @@ $food = $post;
                                     <div class="wpfm-food-price">
                                         <?php display_food_price_tag(); ?>
                                     </div>
-                                    <?php if (get_option('food_manager_food_item_show_hide') && get_stock_status()) : ?>
+                                    <?php if (get_stock_status() == 'food_outofstock') : ?>
                                             <div class="food-stock-status">
                                                 <?php display_stock_status(); ?>
                                             </div>
-                                        <?php endif; ?>
+                                    <?php endif; ?>
                                     <?php /* ?><div class="wpfm-food-author">
                                         <div class="wpfm-food-author-name">by <?php echo the_author_posts_link(); ?></div>
                                     </div><?php */ ?>
@@ -76,7 +81,7 @@ $food = $post;
                             </div>
                             <div class="wpfm-single-food-body-content">
                                 <?php do_action('single_food_overview_start'); ?>
-                                <?php echo apply_filters('wpfm_the_content', $post->post_content); ?>
+                                <?php echo wp_kses_post( apply_filters( 'wpfm_the_content', $post->post_content ) ); ?>
                                 <?php do_action('single_food_overview_end'); ?>
                                 <?php
                                 $ingredients = get_food_ingredients();
@@ -96,7 +101,7 @@ $food = $post;
                                     </div>
                                 <?php endif; ?>
                             
-                                <form class="wpfm-toppings" id="wpfm_single_food_topping_form" method="post" action="" data-product-attribute='<?php echo apply_filters( 'wpfm_food_toppings_form_variation', '' ); ?>'>
+                                <form class="wpfm-toppings wpfm-mt-4" id="wpfm_single_food_topping_form" method="post" action="" data-product-attribute='<?php echo esc_attr( apply_filters( 'wpfm_food_toppings_form_variation', '',  $food->ID ) ); ?>'>
                                     <?php
                                     $ext_options = get_post_meta(get_the_ID(), '_food_toppings', true);
                                     $repeated_count = get_post_meta(get_the_ID(), '_food_repeated_options', true);
@@ -129,70 +134,115 @@ $food = $post;
                                     }
                                     $more_class = !empty($additional_fields_extra_topping) ? 'with-more' : '';
                                     if (!empty($repeated_count)) {
-                                        if (!empty($ext_options)) {
+                                        if (!empty($ext_options) && isArrayNotBlank($ext_options)) {
                                             echo "<h3 class='wpfm-heading-text'>Extra Toppings</h3>";
                                             foreach ($ext_options as $key => $ext_option) {
-                                                $field_required = '';
-                                                echo "<div class='wpfm-input-field-common " . esc_attr($more_class) . "'>";
-                                                echo '<h4 class="wpfm-heading-text">' . esc_html($ext_option['_topping_name']) . '';
-                                                if( isset($ext_option['_topping_required']) && $ext_option['_topping_required'] === 'yes') {
-                                                    echo '<span class="wpfm-require-mark"> *</span></h4>';
-                                                } else {
-                                                    echo '</h4>';
-                                                }
-                                                if( isset($ext_option['_topping_description']) && !empty($ext_option['_topping_description'])) {
-                                                    echo '<div class="wpfm-input-description">' . wp_kses_post($ext_option['_topping_description']) . '</div>';
-                                                }
-                                                do_action('wpfm_singular_option_input_before');
-
-                                                $topping_htm = '<ul class="wpfm-topping-options">';
-                                                if (isset($ext_option['_topping_options']) && !empty($ext_option['_topping_options'])) {
-                                                    foreach ($ext_option['_topping_options'] as $key2 => $value2) {
-                                                        $price_decimals = wpfm_get_price_decimals();
-                                                        $price_format = get_food_manager_price_format();
-                                                        $price_thousand_separator = wpfm_get_price_thousand_separator();
-                                                        $price_decimal_separator = wpfm_get_price_decimal_separator();
-                                                        $option_price = $value2['option_price'];
-                                                        $f_formatted_option_price = '';
-
-                                                        if (!empty($option_price)) {
-                                                            $formatted_option_price = number_format($option_price, $price_decimals, $price_decimal_separator, $price_thousand_separator);
-                                                            $f_formatted_option_price = sprintf($price_format, '<span class="food-manager-Price-currencySymbol">' . get_food_manager_currency_symbol() . '</span>', $formatted_option_price);
-                                                        }
-
-                                                        $option_price_sep = '';
-                                                        if ($f_formatted_option_price != '') {
-                                                            $option_price_sep = ' - ';
-                                                        }
-
-                                                        $topping_htm .= '<li class="wpfm-topping-items">' . esc_attr($value2['option_name']) . $option_price_sep . $f_formatted_option_price . '</li>';
+                                                if (!empty($ext_option['_topping_name']) && !empty($ext_option['_topping_options'])) {
+                                                    $field_required = '';
+                                                    $topping_images = isset($ext_option['_topping_image']) && is_array($ext_option['_topping_image']) && isset($ext_option['_topping_image'][0]) ? $ext_option['_topping_image'][0] : $ext_option['_topping_image'];
+                                                    echo "<div class='wpfm-topping-list-item" . esc_attr($more_class) . "'>";
+                                                    echo "<div class='wpfm-topping-item-header wpfm-d-flex wpfm-align-items-start'>";
+                                                    if (!empty($topping_images)) {
+                                                        echo '<img src="'.$topping_images.'" alt="topping image" width="100" height="20" />';
                                                     }
-                                                }
-                                                $topping_htm .= '</ul>';
-                                                echo apply_filters('wpfm_toppings_list_htm', $topping_htm, array('ext_option' => $ext_option, 'more_class' => $more_class, 'key' => $key));
-                                                do_action('wpfm_singular_option_input_after');
-                                                if (!empty($additional_fields_extra_topping)) {
-                                                    echo "<div class='wpfm-additional-main-row wpfm-row'>";
-                                                    $val_flag = 0;
-                                                    foreach ($additional_fields_extra_topping as $name => $field) {
-                                                        $field_key = '_' . $name;
-                                                        $field_value = !empty($ext_option[$field_key]) ? $ext_option[$field_key] : '';
-                                                        if (isset($field_value) && !empty($field_value)) {
-                                                            $val_flag = 1;
-                                                            wpfm_extra_topping_form_fields($post, $field, $field_value);
+                                                    echo ' <div class="wpfm-topping-item-header-text"> <h4 class="wpfm-topping-item-title">' . esc_html($ext_option['_topping_name']) . '';
+                                                    if( isset($ext_option['_topping_required']) && $ext_option['_topping_required'] === 'yes') {
+                                                        echo '<span class="wpfm-require-mark"> *</span></h4>';
+                                                    } else {
+                                                        echo '</h4>';
+                                                    }
+                                                    if( isset($ext_option['_topping_description']) && !empty($ext_option['_topping_description'])) {
+                                                        echo '<div class="wpfm-topping-item-description">' . wp_kses_post($ext_option['_topping_description']) . '</div>';
+                                                    }
+                                                    
+                                                    do_action('wpfm_singular_option_input_before');
+    
+                                                    $topping_htm = '<ul class="wpfm-topping-options">';
+                                                    if (isset($ext_option['_topping_options']) && !empty($ext_option['_topping_options'])) {
+                                                        foreach ($ext_option['_topping_options'] as $key2 => $value2) {
+                                                            $price_decimals = wpfm_get_price_decimals();
+                                                            $price_format = get_food_manager_price_format();
+                                                            $price_thousand_separator = wpfm_get_price_thousand_separator();
+                                                            $price_decimal_separator = wpfm_get_price_decimal_separator();
+                                                            $option_price = $value2['option_price'];
+                                                            $f_formatted_option_price = '';
+    
+                                                            if (!empty($option_price)) {
+                                                                $formatted_option_price = number_format($option_price, $price_decimals, $price_decimal_separator, $price_thousand_separator);
+                                                                $f_formatted_option_price = sprintf($price_format, '<span class="food-manager-Price-currencySymbol">' . get_food_manager_currency_symbol() . '</span>', $formatted_option_price);
+                                                            }
+    
+                                                            $option_price_sep = '';
+                                                            if ($f_formatted_option_price != '') {
+                                                                $option_price_sep = ' - ';
+                                                            }
+    
+                                                            $topping_htm .= '<li class="wpfm-topping-items">' . esc_attr($value2['option_name']) . $option_price_sep . $f_formatted_option_price . '</li>';
+                                                        }
+                                                    }
+                                                    $topping_htm .= '</ul>';
+                                                    $allowed_html = array(
+                                                        'input' => array(
+                                                            'type'    => array('checkbox'), // Only allow input with type="checkbox"
+                                                            'name'    => array(),
+                                                            'value'   => array(),
+                                                            'checked' => array(),           // Allow the checked attribute
+                                                            'class'   => array(),
+                                                            'id'      => array(),
+                                                            'data-attribute_name' => array(),
+                                                            'data-val' => array(),
+                                                            'data-attr-name' => array(),
+                                                            'data-attribute_name' => array(),
+                                                        ),
+                                                        'label' => array(
+                                                            'for'   => array(),
+                                                            'class' => array(),
+                                                        ),
+                                                        'p'     => array(),
+                                                        'div'   => array(
+                                                            'class' => array(),
+                                                            'data-attribute_name' => array()
+                                                        ),
+                                                        // Add other allowed tags and attributes as needed
+                                                    );
+                                                    
+                                                    echo wp_kses( apply_filters( 'wpfm_toppings_list_htm', $topping_htm, array(
+                                                        'ext_option' => $ext_option,
+                                                        'more_class' => $more_class,
+                                                        'key'        => $key
+                                                    )), $allowed_html ); 
+                                                    do_action('wpfm_singular_option_input_after');
+                                                    if (!empty($additional_fields_extra_topping)) {
+                                                        echo "<div class='wpfm-additional-main-row wpfm-row' style='display: none;'>";
+                                                        $val_flag = 0;
+                                                        foreach ($additional_fields_extra_topping as $name => $field) {
+                                                            $field_key = '_' . $name;
+                                                            $field_value = !empty($ext_option[$field_key]) ? $ext_option[$field_key] : '';
+                                                            if (isset($field_value) && !empty($field_value)) {
+                                                                $val_flag = 1;
+                                                                wpfm_extra_topping_form_fields($post, $field, $field_value);
+                                                            }
+                                                        }
+                                                        echo "</div>"; 
+                                                        if ($val_flag) {
+                                                            echo '<span class="wpfm-view-more">' . esc_html__('View more +', 'wp-food-manager') . '</span>';
                                                         }
                                                     }
                                                     echo "</div>";
-                                                    echo ($val_flag) ? '<span class="wpfm-view-more">'. _e('View more +', 'wp-food-manager').'</span>' : '';
+                                                    echo "</div></div>";
                                                 }
-                                                echo "</div>";
                                             }
                                         }
                                     }
                                     do_action('single_food_toppings_after');
                                     ?>
                                 </form>
-                                <?php echo do_action('food_manager_addons_html');?>
+                                <?php 
+                                ob_start(); // Start output buffering
+                                do_action( 'food_manager_addons_html' ); // Call the action
+                                $output = ob_get_clean(); // Get the buffered content and clean the buffer
+                                echo wp_kses_post( $output ); // Escape the output for safe HTML
+                                ?>
                             </div>
                             <!-- Additional Info Block Start -->
                             <?php
@@ -232,7 +282,7 @@ $food = $post;
                                 if (!empty($additional_fields)) : ?>
                                     <div class="wpfm-additional-info-block-wrapper">
                                         <div class="wpfm-additional-info-block">
-                                            <h3 class="wpfm-heading-text"><?php _e('Additional Details', 'wp-food-manager'); ?></h3>
+                                            <h3 class="wpfm-heading-text"><?php esc_html_e('Additional Details', 'wp-food-manager'); ?></h3>
                                         </div>
                                         <div class="wpfm-additional-info-block-details">
                                             <?php do_action('single_food_additional_details_start'); ?>
@@ -260,63 +310,96 @@ $food = $post;
                                                                                             $my_value_arr[] = $child_field['options'][$my_value];
                                                                                         }
                                                                                         ?>
-                                                                                        <p class="wpfm-additional-info-block-title"><strong><?php printf(__('%s', 'wp-food-manager'),  $child_field['label']); ?> -</strong> <?php printf(__('%s', 'wp-food-manager'),  implode(', ', $my_value_arr)); ?></p>
+                                                                                        <p class="wpfm-additional-info-block-title">
+                                                                                        <?php // translators: %s: The label of the child field ?>
+                                                                                        <strong><?php printf( esc_html__( '%s', 'wp-food-manager' ), esc_html( $child_field['label'] ) ); ?> -</strong>
+                                                                                        <?php 
+                                                                                        // translators: %s: A comma-separated list of values
+                                                                                        printf( esc_html__( '%s', 'wp-food-manager' ), esc_html( implode( ', ', $my_value_arr ) ) ); ?>
+                                                                                        </p>
+
                                                                                     </div>
                                                                                 </div>
                                                                             <?php elseif ($child_field['type'] == 'select') : ?>
                                                                                 <div class="wpfm-col-md-6 wpfm-col-sm-12 wpfm-additional-info-block-details-content-left">
                                                                                     <div class="wpfm-additional-info-block-details-content-items">
-                                                                                        <p class="wpfm-additional-info-block-title"><strong><?php printf(__('%s', 'wp-food-manager'),  $child_field['label']); ?> - </strong> <?php printf(__('%s', 'wp-food-manager'),  $child_value[$child_field_name]); ?></p>
+                                                                                        <p class="wpfm-additional-info-block-title">
+                                                                                        <?php // Translators: %s represents the field label ?>
+                                                                                        <strong><?php printf( esc_html__( '%s', 'wp-food-manager' ), esc_html( $child_field['label'] ) ); ?> - </strong>
+                                                                                        <?php // Translators: %s is replaced with the child field value ?> 
+                                                                                        <?php printf( esc_html__( '%s', 'wp-food-manager' ), esc_html( $child_value[$child_field_name] ) ); ?></p>
                                                                                     </div>
                                                                                 </div>
                                                                                 <?php if ($child_field['type'] == 'textarea' || $child_field['type'] == 'wp-editor') : ?>
                                                                                     <div class="wpfm-col-12 wpfm-additional-info-block-textarea">
                                                                                         <div class="wpfm-additional-info-block-details-content-items">
-                                                                                            <p class="wpfm-additional-info-block-title"><strong> <?php printf(__('%s', 'wp-food-manager'),  $child_field['label']); ?></strong></p>
-                                                                                            <p class="wpfm-additional-info-block-textarea-text"><?php printf(__('%s', 'wp-food-manager'),  $child_value[$child_field_name]); ?></p>
+                                                                                            <p class="wpfm-additional-info-block-title">
+                                                                                            <?php // Translators: %s represents the field label ?>
+                                                                                            <strong><?php printf( esc_html__( '%s', 'wp-food-manager' ), esc_html( $child_field['label'] ) ); ?></strong></p>
+                                                                                            <p class="wpfm-additional-info-block-textarea-text">
+                                                                                            <?php // Translators: %s is replaced with the child field value ?> 
+                                                                                            <?php printf( esc_html__( '%s', 'wp-food-manager' ), esc_html( $child_value[$child_field_name] ) ); ?></p>
                                                                                         </div>
                                                                                     </div>
                                                                                 <?php elseif ($child_field['type'] == 'multiselect') : ?>
                                                                                     <div class="wpfm-col-md-6 wpfm-col-sm-12 wpfm-additional-info-block-details-content-left">
                                                                                         <div class="wpfm-additional-info-block-details-content-items">
-                                                                                            <p class="wpfm-additional-info-block-title"><strong><?php printf(__('%s', 'wp-food-manager'),  $child_field['label']); ?> -</strong> <?php printf(__('%s', 'wp-food-manager'),  implode(', ', $my_value_arr)); ?></p>
+                                                                                            <p class="wpfm-additional-info-block-title">
+                                                                                            <?php // Translators: %s represents the field label ?>
+                                                                                            <strong><?php printf( esc_html__( '%s', 'wp-food-manager' ), esc_html( $child_field['label'] ) ); ?> -</strong>
+                                                                                            <?php // Translators: %s is replaced with the child field value ?> 
+                                                                                            <?php printf( esc_html__( '%s', 'wp-food-manager' ), esc_html( implode( ', ', $my_value_arr ) ) ); ?></p>
                                                                                         </div>
                                                                                     </div>
                                                                                 <?php elseif ($child_field['type'] == 'select') : ?>
                                                                                     <div class="wpfm-col-md-6 wpfm-col-sm-12 wpfm-additional-info-block-details-content-left">
                                                                                         <div class="wpfm-additional-info-block-details-content-items">
-                                                                                            <p class="wpfm-additional-info-block-title"><strong><?php printf(__('%s', 'wp-food-manager'),  $child_field['label']); ?> - </strong> <?php printf(__('%s', 'wp-food-manager'),  $child_value[$child_field_name]); ?></p>
+                                                                                            <p class="wpfm-additional-info-block-title"><strong>
+                                                                                            <?php // Translators: %s represents the field label ?>
+                                                                                            <strong><?php printf( esc_html__( '%s', 'wp-food-manager' ), esc_html( $child_field['label'] ) ); ?> - </strong> 
+                                                                                            <?php // Translators: %s is replaced with the child field value ?> 
+                                                                                            <?php printf( esc_html__( '%s', 'wp-food-manager' ), esc_html( $child_value[$child_field_name] ) ); ?></p>
                                                                                         </div>
                                                                                     </div>
                                                                                 <?php elseif ($child_field['type'] == 'date') : ?>
                                                                                     <div class="wpfm-col-md-6 wpfm-col-sm-12 wpfm-additional-info-block-details-content-left">
                                                                                         <div class="wpfm-additional-info-block-details-content-items">
-                                                                                            <p class="wpfm-additional-info-block-title"><strong><?php printf(__('%s', 'wp-food-manager'),  $child_field['label']); ?> - </strong> <?php echo date_i18n($date_format, strtotime($child_value[$child_field_name])); ?></p>
+                                                                                            <p class="wpfm-additional-info-block-title">
+                                                                                            <?php // Translators: %s represents the field label ?>
+                                                                                            <strong><?php printf( esc_html__( '%s', 'wp-food-manager' ), esc_html( $child_field['label'] ) ); ?> - </strong> 
+                                                                                            <?php // Translators: %s is replaced with the child field value ?> 
+                                                                                            <?php echo esc_html( date_i18n( $date_format, strtotime( $child_value[$child_field_name] ) ) ); ?></p>
+                                                                                            </div>
                                                                                         </div>
-                                                                                    </div>
                                                                                 <?php elseif ($child_field['type'] == 'time') : ?>
                                                                                     <div class="wpfm-col-md-6 wpfm-col-sm-12 wpfm-additional-info-block-details-content-left">
                                                                                         <div class="wpfm-additional-info-block-details-content-items">
-                                                                                            <p class="wpfm-additional-info-block-title"><strong><?php printf(__('%s', 'wp-food-manager'),  $child_field['label']); ?> - </strong> <?php echo date($time_format, strtotime($child_value[$child_field_name])); ?></p>
-                                                                                        </div>
+                                                                                            <p class="wpfm-additional-info-block-title">
+                                                                                            <?php // Translators: %s represents the field label ?>
+                                                                                            <strong><?php printf( esc_html__( '%s', 'wp-food-manager' ), esc_html( $child_field['label'] ) ); ?> - </strong> 
+                                                                                            <?php // Translators: %s is replaced with the child field value ?> 
+                                                                                            <?php echo esc_html( date( $time_format, strtotime( $child_value[$child_field_name] ) ) ); ?></p>
+                                                                                            </div>
                                                                                     </div>
                                                                                 <?php elseif ($child_field['type'] == 'file') : ?>
                                                                                     <div class="wpfm-col-md-6 wpfm-col-sm-12 wpfm-additional-info-block-details-content-left">
-                                                                                        <p class="wpfm-additional-info-block-title"><strong><?php printf(__('%s', 'wp-food-manager'),  $child_field['label']); ?> - </strong></p>
+                                                                                        <p class="wpfm-additional-info-block-title">
+                                                                                        <?php // Translators: %s represents the field label ?>
+                                                                                        <strong><?php printf( esc_html__( '%s', 'wp-food-manager' ), esc_html( $child_field['label'] ) ); ?> - </strong></p>
                                                                                         <div class="wpfm-additional-info-block-details-content-items wpfm-additional-file-slider">
                                                                                             <?php if (is_array($child_value[$child_field_name])) : ?>
                                                                                                 <?php foreach ($child_value[$child_field_name] as $file) : ?>
                                                                                                     <?php if (in_array(pathinfo($file, PATHINFO_EXTENSION), ['png', 'jpg', 'jpeg', 'gif', 'svg', 'webp'])) : ?>
                                                                                                         <div><img src="<?php echo esc_attr($file); ?>"></div>
                                                                                                     <?php else : ?>
-                                                                                                        <div class="wpfm-icon"><a target="_blank" class="wpfm-icon-download3" href="<?php echo esc_attr($file); ?>"> <?php _e('Download', 'wp-food-manager'); ?></a></div>
+                                                                                                        <div class="wpfm-icon"><a target="_blank" class="wpfm-icon-download3" href="<?php echo esc_attr($file); ?>"> <?php esc_html_e('Download', 'wp-food-manager'); ?></a></div>
                                                                                                     <?php endif; ?>
                                                                                                 <?php endforeach; ?>
                                                                                             <?php else : ?>
                                                                                                 <?php if (in_array(pathinfo($child_value[$child_field_name], PATHINFO_EXTENSION), ['png', 'jpg', 'jpeg', 'gif', 'svg', 'webp'])) : ?>
                                                                                                     <div><img src="<?php echo esc_attr($child_value[$child_field_name]); ?>"></div>
                                                                                                 <?php else : ?>
-                                                                                                    <div class="wpfm-icon"><a target="_blank" class="wpfm-icon-download3" href="<?php echo esc_attr($child_value[$child_field_name]); ?>"> <?php _e('Download', 'wp-food-manager'); ?></a></div>
+                                                                                                    <div class="wpfm-icon"><a target="_blank" class="wpfm-icon-download3" href="<?php echo esc_attr($child_value[$child_field_name]); ?>"> <?php esc_html_e('Download', 'wp-food-manager'); ?></a></div>
                                                                                                 <?php endif; ?>
                                                                                             <?php endif; ?>
                                                                                         </div>
@@ -324,7 +407,9 @@ $food = $post;
                                                                                 <?php elseif ($child_field['type'] == 'url') : ?>
                                                                                     <div class="wpfm-col-12 wpfm-additional-info-block-textarea">
                                                                                         <div class="wpfm-additional-info-block-details-content-items">
-                                                                                            <p class="wpfm-additional-info-block-textarea-text"><a href="<?php if (isset($child_value[$child_field_name])) echo esc_attr($child_value[$child_field_name]); ?>"><?php printf(__('%s', 'wp-food-manager'),  $child_field['label']); ?></a></p>
+                                                                                            <p class="wpfm-additional-info-block-textarea-text"><a href="<?php if (isset($child_value[$child_field_name])) echo esc_attr($child_value[$child_field_name]); ?>">
+                                                                                            <?php // Translators: %s represents the field label ?>   
+                                                                                            <?php printf( esc_html__( '%s', 'wp-food-manager' ), esc_html( $child_field['label'] ) ); ?></a></p>
                                                                                         </div>
                                                                                     </div>
                                                                                 <?php else : ?>
@@ -354,8 +439,12 @@ $food = $post;
                                                         ?>
                                                             <div class="wpfm-col-12 wpfm-additional-info-block-textarea">
                                                                 <div class="wpfm-additional-info-block-details-content-items">
-                                                                    <p class="wpfm-additional-info-block-title"><strong> <?php printf(__('%s', 'wp-food-manager'),  $field['label']); ?></strong></p>
-                                                                    <p class="wpfm-additional-info-block-textarea-text"><?php printf(__('%s', 'wp-food-manager'),  $field_value); ?></p>
+                                                                    <p class="wpfm-additional-info-block-title">
+                                                                        <?php  // Translators: %s represents the field label ?>
+                                                                        <strong><?php printf( esc_html__( '%s', 'wp-food-manager' ), esc_html( $field['label'] ) ); ?></strong></p>
+                                                                    <p class="wpfm-additional-info-block-textarea-text">
+                                                                        <?php  // Translators: %s represents the field value ?>
+                                                                        <?php printf( esc_html__( '%s', 'wp-food-manager' ), esc_html( $field_value ) ); ?></p>
                                                                 </div>
                                                             </div>
                                                         <?php elseif ($field['type'] == 'multiselect') : ?>
@@ -371,18 +460,26 @@ $food = $post;
                                                                         }
                                                                     }
                                                                     ?>
-                                                                    <p class="wpfm-additional-info-block-title"><strong><?php printf(__('%s', '-food-manager'),  $field['label']); ?> -</strong> <?php printf(__('%s', 'wp-food-manager'),  implode(', ', $my_value_arr)); ?></p>
+                                                                    <p class="wpfm-additional-info-block-title">
+                                                                        <?php // Translators: %s represents the field label ?>
+                                                                        <strong><?php printf( esc_html__( '%s', 'wp-food-manager' ), esc_html( $field['label'] ) ); ?> -</strong>
+                                                                        <?php // Translators: %s is replaced with the comma-separated values of the array ?>
+                                                                        <?php printf( esc_html__( '%s', 'wp-food-manager' ), esc_html( implode( ', ', array_map( 'esc_html', $my_value_arr ) ) ) ); ?></p>
                                                                 </div>
                                                             </div>
                                                         <?php elseif ($field['type'] == 'select') : ?>
                                                             <div class="wpfm-col-md-6 wpfm-col-sm-12 wpfm-additional-info-block-details-content-left">
                                                                 <div class="wpfm-additional-info-block-details-content-items">
-                                                                    <p class="wpfm-additional-info-block-title"><strong><?php printf(__('%s', 'wp-food-manager'),  $field['label']); ?> - </strong>
+                                                                    <p class="wpfm-additional-info-block-title">
+                                                                        <?php // Translators: %s represents the field label ?>
+                                                                        <strong><?php printf( esc_html__( '%s', 'wp-food-manager' ), esc_html( $field['label'] ) ); ?> - </strong>
                                                                         <?php
                                                                         if (isset($field['options'][$field_value]))
-                                                                            printf(__('%s', 'wp-food-manager'),  $field['options'][$field_value]);
+                                                                             // Translators: %s represents the field option label 
+                                                                           printf( esc_html__( '%s', 'wp-food-manager' ), esc_html( $field['options'][$field_value] ) ); 
                                                                         else
-                                                                            printf(__('%s', 'wp-food-manager'), $field_value);
+                                                                            // Translators: %s represents the field value
+                                                                            printf(esc_html__('%s', 'wp-food-manager'),  esc_html($field_value));
                                                                         ?></p>
                                                                 </div>
                                                             </div>
@@ -392,18 +489,24 @@ $food = $post;
                                                             } ?>
                                                             <div class="wpfm-col-md-6 wpfm-col-sm-12 wpfm-additional-info-block-details-content-left">
                                                                 <div class="wpfm-additional-info-block-details-content-items">
-                                                                    <p class="wpfm-additional-info-block-title"><strong><?php printf(__('%s', 'wp-food-manager'),  $field['label']); ?> - </strong> <?php echo date_i18n($date_format, strtotime($field_value)); ?></p>
+                                                                    <p class="wpfm-additional-info-block-title">
+                                                                    <?php // Translators: %s represents the field label ?>
+                                                                    <strong><?php printf( esc_html__('%s', 'wp-food-manager'), esc_html($field['label'])); ?> - </strong> <?php echo esc_html( date_i18n($date_format, strtotime($field_value)) ); ?></p>
                                                                 </div>
                                                             </div>
                                                         <?php elseif (isset($field['type']) && $field['type'] == 'time') : ?>
                                                             <div class="wpfm-col-md-6 wpfm-col-sm-12 wpfm-additional-info-block-details-content-left">
                                                                 <div class="wpfm-additional-info-block-details-content-items">
-                                                                    <p class="wpfm-additional-info-block-title"><strong><?php printf(__('%s', 'wp-food-manager'),  $field['label']); ?> - </strong> <?php echo date($time_format, strtotime($field_value)); ?></p>
+                                                                    <p class="wpfm-additional-info-block-title">
+                                                                        <?php // Translators: %s represents the field label ?>
+                                                                        <strong><?php printf(esc_html__('%s', 'wp-food-manager'), esc_html($field['label'])); ?> - </strong> <?php echo esc_html(date($time_format, strtotime($field_value))); ?></p>
                                                                 </div>
                                                             </div>
                                                         <?php elseif ($field['type'] == 'file') : ?>
                                                             <div class="wpfm-col-md-12 wpfm-col-sm-12 wpfm-additional-info-block-details-content-left" style="margin-bottom: 20px;">
-                                                                <p class="wpfm-additional-info-block-title"><strong><?php printf(__('%s', 'wp-food-manager'),  $field['label']); ?> - </strong></p>
+                                                                <p class="wpfm-additional-info-block-title">
+                                                                    <?php // Translators: %s represents the field label ?>
+                                                                    <strong><?php printf(esc_html__('%s', 'wp-food-manager'),  esc_html($field['label'])); ?> - </strong></p>
                                                                 <div class="wpfm-additional-info-block-details-content-items wpfm-additional-file-slider">
                                                                     <?php if (is_array($field_value)) : ?>
                                                                         <div class="wpfm-img-multi-container">
@@ -416,7 +519,7 @@ $food = $post;
                                                                                         <div>
                                                                                             <div class="wpfm-icon">
                                                                                                 <p class="wpfm-additional-info-block-title"><strong><?php echo esc_attr(wp_basename($file)); ?></strong></p>
-                                                                                                <a target="_blank" href="<?php echo esc_attr($file); ?>"><i class='wpfm-icon-download3' style='margin-right: 3px;'></i> <?php _e('Download', 'wp-food-manager'); ?></a>
+                                                                                                <a target="_blank" href="<?php echo esc_attr($file); ?>"><i class='wpfm-icon-download3' style='margin-right: 3px;'></i> <?php esc_html_e('Download', 'wp-food-manager'); ?></a>
                                                                                             </div>
                                                                                         </div>
                                                                                 <?php endif;
@@ -430,7 +533,7 @@ $food = $post;
                                                                             <?php else :
                                                                             if (wpfm_begnWith($field_value, "http")) { ?>
                                                                                 <div class="wpfm-icon">
-                                                                                    <p class="wpfm-additional-info-block-title"><strong><?php echo esc_attr(wp_basename($field_value)); ?></strong></p><a target="_blank" href="<?php echo esc_attr($field_value); ?>"><i class='wpfm-icon-download3' style='margin-right: 3px;'></i> <?php _e('Download', 'wp-food-manager'); ?></a>
+                                                                                    <p class="wpfm-additional-info-block-title"><strong><?php echo esc_attr(wp_basename($field_value)); ?></strong></p><a target="_blank" href="<?php echo esc_attr($field_value); ?>"><i class='wpfm-icon-download3' style='margin-right: 3px;'></i> <?php esc_html_e('Download', 'wp-food-manager'); ?></a>
                                                                                 </div>
                                                                         <?php }
                                                                         endif; ?>
@@ -442,9 +545,12 @@ $food = $post;
                                                                 <div class="wpfm-additional-info-block-details-content-items">
                                                                     <p class="wpfm-additional-info-block-textarea-text">
                                                                         <?php if (isset($field_value) && !empty($field_value)) { ?>
-                                                                            <a target="_blank" href="<?php echo esc_url($field_value); ?>"><?php printf(__('%s', 'wp-food-manager'),  esc_html($field['label'])); ?></a>
-                                                                        <?php } else {
-                                                                            printf(__('%s', 'wp-food-manager'),  esc_html($field['label']));
+                                                                            <a target="_blank" href="<?php echo esc_url($field_value); ?>">
+                                                                                <?php // Translators: %s represents the field label ?>
+                                                                                <?php printf(esc_html__('%s', 'wp-food-manager'),  esc_html($field['label'])); ?></a>
+                                                                            <?php } else {
+                                                                            // Translators: %s represents the field label 
+                                                                            printf(esc_html__('%s', 'wp-food-manager'),  esc_html($field['label']));
                                                                         } ?>
                                                                     </p>
                                                                 </div>
@@ -458,7 +564,9 @@ $food = $post;
                                                         <?php elseif ($field['type'] == 'term-checklist' && array_key_exists('taxonomy', $field)) : ?>
                                                             <div class="wpfm-col-md-6 wpfm-col-sm-12 wpfm-additional-info-block-details-content-left">
                                                                 <div class="wpfm-additional-info-block-details-content-items">
-                                                                    <p class="wpfm-additional-info-block-title"><strong><?php printf(__('%s', 'wp-food-manager'),  esc_html($field['label'])); ?> - </strong>
+                                                                    <p class="wpfm-additional-info-block-title">
+                                                                        <?php // Translators: %s represents the field label ?>
+                                                                        <strong><?php printf(esc_html__('%s', 'wp-food-manager'),  esc_html($field['label'])); ?> - </strong>
                                                                         <?php
                                                                         $terms = wp_get_post_terms($post->ID, $field['taxonomy']);
                                                                         $term_checklist = '';
@@ -486,7 +594,8 @@ $food = $post;
                                                                             foreach ($field_value as $key => $my_value) {
                                                                                 $my_check_value_arr[] = $field['options'][$my_value];
                                                                             }
-                                                                            printf(__('%s', 'wp-food-manager'),  implode(', ', $my_check_value_arr));
+                                                                            // Translators: %s is replaced with a list of values from the array
+                                                                            printf( esc_html__('%s', 'wp-food-manager'), esc_html( implode(', ', $my_check_value_arr) ) ); 
                                                                         } else {
                                                                             if ($field_value == 1) {
                                                                                 echo esc_attr("Yes", 'wp-food-manager');
@@ -567,17 +676,17 @@ $food = $post;
                                 <div class="wpfm-single-food-sidebar-info">
                                     <?php do_action('single_food_sidebar_start'); ?>
                                     <?php if (get_option('food_manager_enable_categories') && get_food_category()) : ?>
-                                        <h3 class="wpfm-heading-text"><?php _e('Food Category', 'wp-food-manager'); ?></h3>
+                                        <h3 class="wpfm-heading-text"><?php esc_html_e('Food Category', 'wp-food-manager'); ?></h3>
                                         <div class="wpfm-food-category"><?php display_food_category(); ?></div>
                                     <?php endif; ?>
                                     <?php if (get_option('food_manager_enable_food_types') && get_food_type()) : ?>
                                         <div class="clearfix">&nbsp;</div>
-                                        <h3 class="wpfm-heading-text"><?php _e('Food Types', 'wp-food-manager'); ?></h3>
+                                        <h3 class="wpfm-heading-text"><?php esc_html_e('Food Types', 'wp-food-manager'); ?></h3>
                                         <div class="wpfm-food-type"><?php display_food_type(); ?></div>
                                     <?php endif; ?>
                                     <?php if (get_option('food_manager_enable_food_tags') && get_food_tag()) : ?>
                                         <div class="clearfix">&nbsp;</div>
-                                        <h3 class="wpfm-heading-text"><?php _e('Food Tags', 'wp-food-manager'); ?></h3>
+                                        <h3 class="wpfm-heading-text"><?php esc_html_e('Food Tags', 'wp-food-manager'); ?></h3>
                                         <div class="wpfm-food-tag"><?php display_food_tag(); ?></div>
                                     <?php endif; ?>
                                     <?php do_action('single_food_sidebar_end', get_the_ID()); ?>
@@ -586,7 +695,7 @@ $food = $post;
                                 $is_friend_share = apply_filters('food_manager_food_friend_share', true);
                                 if ($is_friend_share) : ?>
                                     <div class="wpfm-share-this-food">
-                                        <h3 class="wpfm-heading-text"><?php _e('Share With Friends', 'wp-food-manager'); ?></h3>
+                                        <h3 class="wpfm-heading-text"><?php esc_html_e('Share With Friends', 'wp-food-manager'); ?></h3>
                                         <div class="wpfm-food-share-lists">
                                             <?php do_action('single_food_listing_social_share_start'); ?>
                                             <div class="wpfm-social-icon wpfm-facebook">

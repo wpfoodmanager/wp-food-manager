@@ -205,6 +205,7 @@ class WPFM_Add_Food_Form extends WPFM_Form {
 				'food_banner' => array(
 					'label'       => __('Food Banner ', 'wp-food-manager'),
 					'type'        => 'file',
+					'description' => 'Upload the food banner image for the top section of the food details page.', 
 					'required'    => true,
 					'placeholder' => '',
 					'priority'    => 7,
@@ -225,6 +226,14 @@ class WPFM_Add_Food_Form extends WPFM_Form {
 					'required'    => true,
 					'placeholder' => '',
 					'priority'    => 8
+				),
+				'food_quantity' => array(
+					'label'       => __('Food Quantity', 'wp-food-manager'),
+					'type'        => 'number',
+					'required'    => true,
+					'placeholder' => '',
+					'priority'    => 9,
+					'tabgroup' => 1,
 				),
 				'food_price' => array(
 					'label'       => __('Regular Price', 'wp-food-manager'),
@@ -274,6 +283,7 @@ class WPFM_Add_Food_Form extends WPFM_Form {
 				'food_label' => array(
 					'label'       => __('Food Label', 'wp-food-manager'),
 					'type'        => 'text',
+					'description' => __('Enter food label will be show on Food menu and Food detail page.'),
 					'required'    => false,
 					'placeholder' => 'Food label',
 					'priority'    => 14,
@@ -297,12 +307,30 @@ class WPFM_Add_Food_Form extends WPFM_Form {
 					'default' => 1,
 					'priority'    => 2
 				),
+				'topping_image' => array(
+					'label'       => __('Topping Image ', 'wp-food-manager'),
+					'type'        => 'file',
+					'description' => 'Upload the topping image for the topping image of the food details page.', 
+					'required'    => true,
+					'placeholder' => '',
+					'priority'    => 3,
+					'ajax'        => true,
+					'multiple'    => false,
+					'allowed_mime_types' => array(
+						'jpg'  => 'image/jpeg',
+						'jpeg' => 'image/jpeg',
+						'gif'  => 'image/gif',
+						'png'  => 'image/png',
+						'webp'  => 'image/webp'
+					),
+					'tabgroup' => 1,
+				),
 				'topping_options' => array(
 					'label'       => __('Options', 'wp-food-manager'),
 					'type'        => 'options',
 					'required'    => false,
 					'placeholder' => __('Enter option name', 'wp-food-manager'),
-					'priority'    => 3
+					'priority'    => 4
 				),
 			)
 		));
@@ -324,14 +352,16 @@ class WPFM_Add_Food_Form extends WPFM_Form {
 
 				if ($group_key == 'toppings') {
 					if (isset($_POST['repeated_options'])) {
-						foreach ($_POST['repeated_options'] as $repeated_options) {
-							if ($field['required'] && empty($_POST[$key . '_' . $repeated_options])) {
+						foreach (wp_unslash($_POST['repeated_options']) as $repeated_options) {
+							if (isset($field['required']) && $field['required'] && empty($_POST[$key . '_' . $repeated_options])) {
+								// translators: %s: field label
 								return new WP_Error('validation-error', sprintf(__('%s is a required field.', 'wp-food-manager'), $field['label']));
 							}
 						}
 					}
 				} else {
-					if ($field['required'] && empty($values[$group_key][$key])) {
+					if (isset($field['required']) && $field['required'] && empty($values[$group_key][$key])) {
+						// translators: %s: field label
 						return new WP_Error('validation-error', sprintf(__('%s is a required field.', 'wp-food-manager'), $field['label']));
 					}
 				}
@@ -344,6 +374,7 @@ class WPFM_Add_Food_Form extends WPFM_Form {
 					}
 					foreach ($check_value as $term) {
 						if (!term_exists($term, $field['taxonomy'])) {
+							// translators: %s: field label
 							return new WP_Error('validation-error', sprintf(__('%s is invalid.', 'wp-food-manager'), $field['label']));
 						}
 					}
@@ -360,7 +391,8 @@ class WPFM_Add_Food_Form extends WPFM_Form {
 							$file_url = current(explode('?', $file_url));
 							$file_info = wp_check_filetype($file_url);
 							if (!is_numeric($file_url) && $file_info && !in_array($file_info['type'], $field['allowed_mime_types'])) {
-								throw new Exception(sprintf(__('"%s" (filetype %s) needs to be one of the following file types: %s.', 'wp-food-manager'), $field['label'], '', implode(', ', array_keys($field['allowed_mime_types']))));
+								// translators: 1: field label, 2: file type (currently an empty string), 3: allowed file types
+								throw new Exception(sprintf(esc_html__('"%1$s" (filetype %2$s) needs to be one of the following file types: %3$s.', 'wp-food-manager'),esc_html($field['label']),'', esc_html(implode(', ', array_map('esc_html', array_keys($field['allowed_mime_types'])))) ));
 							}
 						}
 					}
@@ -451,7 +483,7 @@ class WPFM_Add_Food_Form extends WPFM_Form {
 
 					if (!empty($field['type']) && $field['type'] == 'date') {
 						$food_date = get_post_meta($food->ID, '_' . $key, true);
-						$this->fields[$group_key][$key]['value'] = date($php_date_format, strtotime($food_date));
+						$this->fields[$group_key][$key]['value'] = gmdate($php_date_format, strtotime($food_date));
 					}
 				}
 			}
@@ -532,9 +564,10 @@ class WPFM_Add_Food_Form extends WPFM_Form {
 							throw new Exception(__('Passwords must match.', 'wp-food-manager'));
 						}
 
-						if (!food_manager_validate_new_password($_POST['create_account_password'])) {
+						if (!food_manager_validate_new_password(wp_unslash($_POST['create_account_password']))) {
 							$password_hint = food_manager_get_password_rules_hint();
 							if ($password_hint) {
+								// translators: %s: password hint
 								throw new Exception(sprintf(__('Invalid Password: %s', 'wp-food-manager'), $password_hint));
 							} else {
 								throw new Exception(__('Password is not valid.', 'wp-food-manager'));
@@ -544,9 +577,9 @@ class WPFM_Add_Food_Form extends WPFM_Form {
 
 					if (!empty($_POST['create_account_email'])) {
 						$create_account = wpfm_create_account(array(
-							'username' => (food_manager_generate_username_from_email() || empty($_POST['create_account_username'])) ? '' : $_POST['create_account_username'],
-							'password' => (food_manager_use_standard_password_setup_email() || empty($_POST['create_account_password'])) ? '' : $_POST['create_account_password'],
-							'email'    => $_POST['create_account_email'],
+							'username' => (food_manager_generate_username_from_email() || empty($_POST['create_account_username'])) ? '' : wp_unslash($_POST['create_account_username']),
+							'password' => (food_manager_use_standard_password_setup_email() || empty($_POST['create_account_password'])) ? '' : wp_unslash($_POST['create_account_password']),
+							'email'    => wp_unslash($_POST['create_account_email']),
 							'role'     => get_option('food_manager_registration_role', 'food_owner')
 						));
 					}

@@ -44,16 +44,36 @@ class WPFM_Custom_Taxonomies{
 						'name' => $plural,
 						'singular_name' => $singular,
 						'menu_name' => ucwords($plural),
+						// translators: %s: plural form of the item
 						'search_items' => sprintf(esc_html__('Search %s', 'wp-food-manager'), $plural),
+
+						// translators: %s: plural form of the item
 						'all_items' => sprintf(esc_html__('All %s', 'wp-food-manager'), $plural),
+
+						// translators: %s: singular form of the item
 						'parent_item' => sprintf(esc_html__('Parent %s', 'wp-food-manager'), $singular),
+
+						// translators: %s: singular form of the item
 						'parent_item_colon' => sprintf(esc_html__('Parent %s:', 'wp-food-manager'), $singular),
+
+						// translators: %s: singular form of the item
 						'edit_item' => sprintf(esc_html__('Edit %s', 'wp-food-manager'), $singular),
+
+						// translators: %s: singular form of the item
 						'update_item' => sprintf(esc_html__('Update %s', 'wp-food-manager'), $singular),
+
+						// translators: %s: singular form of the item
 						'add_new_item' => sprintf(esc_html__('Add New %s', 'wp-food-manager'), $singular),
+
+						// translators: %s: singular form of the item
 						'new_item_name' => sprintf(esc_html__('New %s Name', 'wp-food-manager'), $singular),
+
+						// translators: %s: plural form of the item
 						'not_found' => sprintf(esc_html__('No Food %s Found.', 'wp-food-manager'), $plural),
-						'back_to_items' => sprintf(esc_html__('← Go to Food %s', 'wp-food-manager'), $plural)
+
+						// translators: %s: plural form of the item
+						'back_to_items' => sprintf(esc_html__('← Go to Food %s', 'wp-food-manager'), $plural),
+
 					),
 					'show_ui' => true,
 					'show_in_rest' => true,
@@ -96,18 +116,42 @@ class WPFM_Custom_Taxonomies{
 						'name' => $plural,
 						'singular_name' => $singular,
 						'menu_name' => ucwords($plural),
+						// translators: %s: plural form of the item
 						'search_items' => sprintf(esc_html__('Search %s', 'wp-food-manager'), $plural),
+
+						// translators: %s: plural form of the item
 						'all_items' => sprintf(esc_html__('All %s', 'wp-food-manager'), $plural),
+
+						// translators: %s: singular form of the item
 						'parent_item' => sprintf(esc_html__('Parent %s', 'wp-food-manager'), $singular),
+
+						// translators: %s: singular form of the item
 						'parent_item_colon' => sprintf(esc_html__('Parent %s:', 'wp-food-manager'), $singular),
+
+						// translators: %s: plural form of the item
 						'not_found' => sprintf(esc_html__('No %s found', 'wp-food-manager'), strtolower($plural)),
+
+						// translators: %s: singular form of the item
 						'edit_item' => sprintf(esc_html__('Edit %s', 'wp-food-manager'), $singular),
+
+						// translators: %s: singular form of the item
 						'view_item' => sprintf(esc_html__('View %s', 'wp-food-manager'), $singular),
+
+						// translators: %s: singular form of the item
 						'update_item' => sprintf(esc_html__('Update %s', 'wp-food-manager'), $singular),
+
+						// translators: %s: singular form of the item
 						'add_new_item' => sprintf(esc_html__('Add New %s', 'wp-food-manager'), $singular),
+
+						// translators: %s: singular form of the item
 						'new_item_name' => sprintf(esc_html__('New %s Name', 'wp-food-manager'), $singular),
+
+						// translators: %s: plural form of the item
 						'not_found' => sprintf(esc_html__('No Food %s Found.', 'wp-food-manager'), $plural),
-						'back_to_items' => sprintf(esc_html__('← Go to Food %s', 'wp-food-manager'), $plural)
+
+						// translators: %s: plural form of the item
+						'back_to_items' => sprintf(esc_html__('← Go to Food %s', 'wp-food-manager'), $plural),
+
 					),
 					'show_ui' => true,
 					'show_in_rest' => true,
@@ -150,16 +194,36 @@ class WPFM_Custom_Taxonomies{
 						'name' => $plural,
 						'singular_name' => $singular,
 						'menu_name' => ucwords($plural),
+						// translators: %s: plural form of the item
 						'search_items' => sprintf(esc_html__('Search %s', 'wp-food-manager'), $plural),
+
+						// translators: %s: plural form of the item
 						'all_items' => sprintf(esc_html__('All %s', 'wp-food-manager'), $plural),
+
+						// translators: %s: singular form of the item
 						'parent_item' => sprintf(esc_html__('Parent %s', 'wp-food-manager'), $singular),
+
+						// translators: %s: singular form of the item
 						'parent_item_colon' => sprintf(esc_html__('Parent %s:', 'wp-food-manager'), $singular),
+
+						// translators: %s: singular form of the item
 						'edit_item' => sprintf(esc_html__('Edit %s', 'wp-food-manager'), $singular),
+
+						// translators: %s: singular form of the item
 						'update_item' => sprintf(esc_html__('Update %s', 'wp-food-manager'), $singular),
+
+						// translators: %s: singular form of the item
 						'add_new_item' => sprintf(esc_html__('Add New %s', 'wp-food-manager'), $singular),
+
+						// translators: %s: singular form of the item
 						'new_item_name' => sprintf(esc_html__('New %s Name', 'wp-food-manager'), $singular),
+
+						// translators: %s: plural form of the item
 						'not_found' => sprintf(esc_html__('No Food %s Found.', 'wp-food-manager'), $plural),
-						'back_to_items' => sprintf(esc_html__('← Go to Food %s', 'wp-food-manager'), $plural)
+
+						// translators: %s: plural form of the item
+						'back_to_items' => sprintf(esc_html__('← Go to Food %s', 'wp-food-manager'), $plural),
+
 					),
 					'show_ui' => true,
 					'show_in_rest' => true,
@@ -202,16 +266,36 @@ class WPFM_Custom_Taxonomies{
 					'name' => $plural,
 					'singular_name' => $singular,
 					'menu_name' => ucwords($plural),
-					'search_items' => sprintf(esc_html__('Search %s', 'wp-food-manager'), $plural),
-					'all_items' => sprintf(esc_html__('All %s', 'wp-food-manager'), $plural),
-					'parent_item' => sprintf(esc_html__('Parent %s', 'wp-food-manager'), $singular),
-					'parent_item_colon' => sprintf(esc_html__('Parent %s:', 'wp-food-manager'), $singular),
-					'edit_item' => sprintf(esc_html__('Edit %s', 'wp-food-manager'), $singular),
-					'update_item' => sprintf(esc_html__('Update %s', 'wp-food-manager'), $singular),
-					'add_new_item' => sprintf(esc_html__('Add New %s', 'wp-food-manager'), $singular),
-					'new_item_name' => sprintf(esc_html__('New %s Name', 'wp-food-manager'), $singular),
-					'not_found' => sprintf(esc_html__('No %s Found.', 'wp-food-manager'), $plural),
-					'back_to_items' => sprintf(esc_html__('← Go to %s', 'wp-food-manager'), $plural)
+				// translators: %s: plural form of the item
+				'search_items' => sprintf(esc_html__('Search %s', 'wp-food-manager'), $plural),
+
+				// translators: %s: plural form of the item
+				'all_items' => sprintf(esc_html__('All %s', 'wp-food-manager'), $plural),
+
+				// translators: %s: singular form of the item
+				'parent_item' => sprintf(esc_html__('Parent %s', 'wp-food-manager'), $singular),
+
+				// translators: %s: singular form of the item
+				'parent_item_colon' => sprintf(esc_html__('Parent %s:', 'wp-food-manager'), $singular),
+
+				// translators: %s: singular form of the item
+				'edit_item' => sprintf(esc_html__('Edit %s', 'wp-food-manager'), $singular),
+
+				// translators: %s: singular form of the item
+				'update_item' => sprintf(esc_html__('Update %s', 'wp-food-manager'), $singular),
+
+				// translators: %s: singular form of the item
+				'add_new_item' => sprintf(esc_html__('Add New %s', 'wp-food-manager'), $singular),
+
+				// translators: %s: singular form of the item
+				'new_item_name' => sprintf(esc_html__('New %s Name', 'wp-food-manager'), $singular),
+
+				// translators: %s: plural form of the item
+				'not_found' => sprintf(esc_html__('No %s Found.', 'wp-food-manager'), $plural),
+
+				// translators: %s: plural form of the item
+				'back_to_items' => sprintf(esc_html__('← Go to %s', 'wp-food-manager'), $plural),
+
 				),
 				'show_ui' => true,
 				'show_in_rest' => true,
@@ -253,16 +337,36 @@ class WPFM_Custom_Taxonomies{
 					'name' => $plural,
 					'singular_name' => $singular,
 					'menu_name' => ucwords($plural),
+					// translators: %s: plural form of the item
 					'search_items' => sprintf(esc_html__('Search %s', 'wp-food-manager'), $plural),
+
+					// translators: %s: plural form of the item
 					'all_items' => sprintf(esc_html__('All %s', 'wp-food-manager'), $plural),
+
+					// translators: %s: singular form of the item
 					'parent_item' => sprintf(esc_html__('Parent %s', 'wp-food-manager'), $singular),
+
+					// translators: %s: singular form of the item
 					'parent_item_colon' => sprintf(esc_html__('Parent %s:', 'wp-food-manager'), $singular),
+
+					// translators: %s: singular form of the item
 					'edit_item' => sprintf(esc_html__('Edit %s', 'wp-food-manager'), $singular),
+
+					// translators: %s: singular form of the item
 					'update_item' => sprintf(esc_html__('Update %s', 'wp-food-manager'), $singular),
+
+					// translators: %s: singular form of the item
 					'add_new_item' => sprintf(esc_html__('Add New %s', 'wp-food-manager'), $singular),
+
+					// translators: %s: singular form of the item
 					'new_item_name' => sprintf(esc_html__('New %s Name', 'wp-food-manager'), $singular),
+
+					// translators: %s: plural form of the item
 					'not_found' => sprintf(esc_html__('No %s Found.', 'wp-food-manager'), $plural),
-					'back_to_items' => sprintf(esc_html__('← Go to %s', 'wp-food-manager'), $plural)
+
+					// translators: %s: plural form of the item
+					'back_to_items' => sprintf(esc_html__('← Go to %s', 'wp-food-manager'), $plural),
+
 				),
 				'show_ui' => true,
 				'show_in_rest' => true,
@@ -304,16 +408,36 @@ class WPFM_Custom_Taxonomies{
 					'name' => $plural,
 					'singular_name' => $singular,
 					'menu_name' => ucwords($plural),
+					// translators: %s: plural form of the item
 					'search_items' => sprintf(__('Search %s', 'wp-food-manager'), $plural),
+
+					// translators: %s: plural form of the item
 					'all_items' => sprintf(__('All %s', 'wp-food-manager'), $plural),
+
+					// translators: %s: singular form of the item
 					'parent_item' => sprintf(__('Parent %s', 'wp-food-manager'), $singular),
+
+					// translators: %s: singular form of the item
 					'parent_item_colon' => sprintf(__('Parent %s:', 'wp-food-manager'), $singular),
+
+					// translators: %s: singular form of the item
 					'edit_item' => sprintf(__('Edit %s', 'wp-food-manager'), $singular),
+
+					// translators: %s: singular form of the item
 					'update_item' => sprintf(__('Update %s', 'wp-food-manager'), $singular),
+
+					// translators: %s: singular form of the item
 					'add_new_item' => sprintf(__('Add New %s', 'wp-food-manager'), $singular),
+
+					// translators: %s: singular form of the item
 					'new_item_name' => sprintf(__('New %s Name', 'wp-food-manager'), $singular),
+
+					// translators: %s: plural form of the item
 					'not_found' => sprintf(__('No %s Found.', 'wp-food-manager'), $plural),
-					'back_to_items' => sprintf(__('← Go to %s', 'wp-food-manager'), $plural)
+
+					// translators: %s: plural form of the item
+					'back_to_items' => sprintf(__('← Go to %s', 'wp-food-manager'), $plural),
+
 				),
 				'show_ui' => true,
 				'show_in_rest' => true,
@@ -355,16 +479,36 @@ class WPFM_Custom_Taxonomies{
 					'name' => $plural,
 					'singular_name' => $singular,
 					'menu_name' => ucwords($plural),
+					// translators: %s: plural form of the item
 					'search_items' => sprintf(__('Search %s', 'wp-food-manager'), $plural),
+
+					// translators: %s: plural form of the item
 					'all_items' => sprintf(__('All %s', 'wp-food-manager'), $plural),
+
+					// translators: %s: singular form of the item
 					'parent_item' => sprintf(__('Parent %s', 'wp-food-manager'), $singular),
+
+					// translators: %s: singular form of the item
 					'parent_item_colon' => sprintf(__('Parent %s:', 'wp-food-manager'), $singular),
+
+					// translators: %s: singular form of the item
 					'edit_item' => sprintf(__('Edit %s', 'wp-food-manager'), $singular),
+
+					// translators: %s: singular form of the item
 					'update_item' => sprintf(__('Update %s', 'wp-food-manager'), $singular),
+
+					// translators: %s: singular form of the item
 					'add_new_item' => sprintf(__('Add New %s', 'wp-food-manager'), $singular),
+
+					// translators: %s: singular form of the item
 					'new_item_name' => sprintf(__('New %s Name', 'wp-food-manager'), $singular),
+
+					// translators: %s: plural form of the item
 					'not_found' => sprintf(__('No %s Found.', 'wp-food-manager'), $plural),
-					'back_to_items' => sprintf(__('← Go to Food %s', 'wp-food-manager'), $plural)
+
+					// translators: %s: plural form of the item
+					'back_to_items' => sprintf(__('← Go to %s', 'wp-food-manager'), $plural),
+
 				),
 				'show_ui' => true,
 				'show_in_rest' => true,

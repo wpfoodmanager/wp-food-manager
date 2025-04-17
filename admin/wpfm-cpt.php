@@ -60,8 +60,8 @@ class WPFM_CPT {
      * @since 1.0.0
      */
     public function approve_food() {
-        if (!empty($_GET['approve_food']) && wp_verify_nonce($_REQUEST['_wpnonce'], 'approve_food') && current_user_can('publish_post', $_GET['approve_food'])) {
-
+      if (
+        !empty($_GET['approve_food']) && isset($_REQUEST['_wpnonce']) && wp_verify_nonce(wp_unslash($_REQUEST['_wpnonce']), 'approve_food') && current_user_can('publish_post', (int) $_GET['approve_food'])) {
             $post_id = absint($_GET['approve_food']);
             $food_data = array(
                 'ID'          => $post_id,
@@ -87,13 +87,21 @@ class WPFM_CPT {
         if ($post_type == 'food_manager') { ?>
             <script type="text/javascript">
                 jQuery(document).ready(function() {
-                    jQuery('<option>').val('approve_food').text('<?php printf(__('Approve %s', 'wp-food-manager'), esc_attr($wp_post_types['food_manager']->labels->name)); ?>').appendTo("select[name='action']");
-                    jQuery('<option>').val('approve_food').text('<?php printf(__('Approve %s', 'wp-food-manager'), esc_attr($wp_post_types['food_manager']->labels->name)); ?>').appendTo("select[name='action2']");
+                    jQuery('<option>').val('approve_food').text('<?php 
+                        // translators: %s: food manager name
+                        printf(esc_html__('Approve %s', 'wp-food-manager'), esc_html($wp_post_types['food_manager']->labels->name));
+                    ?>').appendTo("select[name='action']");
+    
+                    jQuery('<option>').val('approve_food').text('<?php 
+                        // translators: %s: food manager name
+                        printf(esc_html__('Approve %s', 'wp-food-manager'), esc_html($wp_post_types['food_manager']->labels->name)); 
+                    ?>').appendTo("select[name='action2']");
                 });
             </script>
         <?php
         }
     }
+    
 
     /**
      * Do custom bulk actions.
@@ -109,24 +117,26 @@ class WPFM_CPT {
         switch ($action) {
             case 'approve_food':
                 check_admin_referer('bulk-posts');
-                $post_ids = array_map('absint', array_filter((array) $_GET['post']));
-                $published_foods = array();
-                if (!empty($post_ids)) {
-                    foreach ($post_ids as $post_id) {
-                        $food_data = array(
-                            'ID'          => $post_id,
-                            'post_status' => 'publish',
-                        );
-                        if (in_array(get_post_status($post_id), array('pending', 'pending_payment')) && current_user_can('publish_post', $post_id) && wp_update_post($food_data)) {
-                            $published_foods[] = $post_id;
+                if (isset($_GET['post']) && is_array($_GET['post'])) {
+                    $post_ids = array_map('absint', array_filter(wp_unslash($_GET['post'])));
+                    $published_foods = array();
+        
+                    if (!empty($post_ids)) {
+                        foreach ($post_ids as $post_id) {
+                            $food_data = array(
+                                'ID'          => $post_id,
+                                'post_status' => 'publish',
+                            );
+        
+                            if (in_array(get_post_status($post_id), array('pending', 'pending_payment')) &&current_user_can('publish_post', $post_id) &&wp_update_post($food_data)) {
+                                $published_foods[] = $post_id;
+                            }
                         }
                     }
+                    wp_redirect(add_query_arg('published_foods', $published_foods, remove_query_arg(array('published_foods'), admin_url('edit.php?post_type=food_manager'))));
+                    exit;
                 }
-                wp_redirect(add_query_arg('published_foods', $published_foods, remove_query_arg(array('published_foods'), admin_url('edit.php?post_type=food_manager'))));
-                exit;
-                break;
         }
-
         return;
     }
     
@@ -146,7 +156,7 @@ class WPFM_CPT {
         switch ($column) {
             case 'food_title':
                 echo '<div class="food_title">';
-                echo '<a href="' . esc_url(admin_url('post.php?post=' . $post->ID . '&action=edit')) . '" class="wpfm-tooltip food_title" wpfm-data-tip="' . sprintf(wp_kses('ID: %d', 'wp-food-manager'), $post->ID) . '">' . esc_html($post->post_title) . '</a>';
+                echo '<a href="' . esc_url(admin_url('post.php?post=' . esc_attr($post->ID) . '&action=edit')) . '" class="wpfm-tooltip food_title" wpfm-data-tip="' . esc_attr(sprintf(wp_kses('ID: %d', 'wp-food-manager'), $post->ID)) . '">' . esc_html($post->post_title) . '</a>';
                 echo '</div>';
                 echo '<button type="button" class="toggle-row"><span class="screen-reader-text">' . esc_html__('Show more details', 'wp-food-manager') . '</span></button>';
                 break;
@@ -163,11 +173,11 @@ class WPFM_CPT {
                 break;
 
             case 'food_categories':
-                echo display_food_category();
+               echo esc_html(display_food_category()); 
                 break;
 
             case 'food_stock_status':
-                echo display_stock_status();
+                echo esc_html(display_stock_status());
                 break;
 
             case 'food_menu_order':
@@ -175,7 +185,7 @@ class WPFM_CPT {
                 break;
 
             case 'food_status':
-                echo ucfirst($thispost->post_status);
+                echo esc_html(ucfirst($thispost->post_status));
                 break;
 
             case 'food_actions':
@@ -243,15 +253,19 @@ class WPFM_CPT {
         switch ($column) {
             case 'shortcode':
                 echo '<code>';
+                // translators: %d: food menu ID
                 printf(esc_html__('[food_menu id=%d]', 'wp-food-manager'), esc_attr($post_id));
                 echo '</code>';
                 break;
             case 'thumbnail':
                 if (has_post_thumbnail()) {
-                    echo the_post_thumbnail('medium');
+                    echo get_the_post_thumbnail($post_id, 'thumbnail'); 
                 } else {
                     echo '-';
                 }
+                break;
+            case 'qr_code':
+                display_menu_qr_code();
                 break;
             default:
                 break;
@@ -268,7 +282,8 @@ class WPFM_CPT {
      */
     public function set_shortcode_copy_columns($columns) {
         $columns['shortcode'] = __('Shortcode', 'wp-food-manager');
-        $columns['thumbnail'] = __('Images', 'wp-food-manager');
+        $columns['thumbnail'] = __('Food menu image', 'wp-food-manager');
+        $columns['qr_code'] = __('QR Code', 'wp-food-manager');
         return $columns;
     }
 

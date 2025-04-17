@@ -19,7 +19,7 @@
 	ob_start();
 	wpfm_category_checklist(esc_attr($field['taxonomy']), $key, $my_check_value_arr);
 	$checklist = ob_get_clean();
-	echo str_replace("disabled='disabled'", '', $checklist);
+	echo esc_html(str_replace("disabled='disabled'", '', $checklist));
 	?>
 </ul>
 <?php if (!empty($field['description'])) : ?><small class="description"><?php echo esc_html($field['description']); ?></small><?php endif; ?>

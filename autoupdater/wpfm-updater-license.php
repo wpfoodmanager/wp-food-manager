@@ -61,12 +61,12 @@ if (!function_exists('wpfm_manage_license')) {
 		$plugins = get_plugins(); ?>
 
 		<div class="wrap wpfm-updater-licence-wrap">
-			<h2><?php _e('License', 'wpfm-restaurant-manager'); ?></h2>
+			<h2><?php esc_html_e('License', 'wpfm-restaurant-manager'); ?></h2>
 
 			<div class="wpfm-updater-licence">
 				<?php
 				foreach ($plugins as $filename => $plugin) {
-					if ($plugin['AuthorName'] == 'WP Food Manager' && is_plugin_active($filename) && !in_array($plugin['TextDomain'], ["wp-food-manager"])) {
+					if ($plugin['AuthorName'] == 'WP Food Manager' && is_plugin_active($filename) && !in_array($plugin['TextDomain'], ["wp-food-manager"]) && !in_array($plugin['TextDomain'], ["wpfm-rest-api"])) {
 						$licence_key = get_option($plugin['TextDomain'] . '_licence_key');
 						$email = get_option($plugin['TextDomain'] . '_email');
 
@@ -80,7 +80,7 @@ if (!function_exists('wpfm_manage_license')) {
 				} ?>
 			</div>
 			<div class="notice notice-info inline">
-				<p><?php _e('Lost your license key?', 'wpfm-restaurant-manager'); ?> <a target="_blank" href="https://wpfoodmanager.com/lost-license-key/"><?php _e('Retrieve it here', 'wpfm-restaurant-manager'); ?></a>.</p>
+				<p><?php esc_html_e('Lost your license key?', 'wpfm-restaurant-manager'); ?> <a target="_blank" href="https://wpfoodmanager.com/lost-license-key/"><?php esc_html_e('Retrieve it here', 'wpfm-restaurant-manager'); ?></a>.</p>
 			</div>
 		</div>
 		<?php

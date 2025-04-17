@@ -52,6 +52,8 @@ class WPFM_Ajax {
         add_action('wp_ajax_nopriv_term_ajax_search', array($this, 'term_ajax_search'));
         add_action('wp_ajax_nopriv_food_manager_get_food_popup', array($this, 'get_food_popup'));
 		add_action('wp_ajax_food_manager_get_food_popup', array($this, 'get_food_popup'));
+		add_action('wp_ajax_food_menu_search', array($this, 'ajax_food_menu_search'));
+        add_action('wp_ajax_nopriv_food_menu_search', array($this, 'ajax_food_menu_search'));
 	}
 	
 	/**
@@ -212,7 +214,7 @@ class WPFM_Ajax {
                 'post_status' => 'publish'
             ));
             if (count($default_foods) == 0) { ?>
-                <div class="no_food_listings_found wpfm-alert wpfm-alert-danger"><?php _e('There is no food item listed in your food manager.', 'wp-food-manager'); ?></div>
+                <div class="no_food_listings_found wpfm-alert wpfm-alert-danger"><?php esc_html_e('There is no food item listed in your food manager.', 'wp-food-manager'); ?></div>
             <?php } else {
                 get_food_manager_template_part('content', 'no-foods-found');
             }
@@ -250,7 +252,7 @@ class WPFM_Ajax {
         if (is_array($search_food_menu) && implode(',', $search_food_menu)) {
             $showing_food_menus = array();
             foreach ($search_food_menu as $food_menu) {
-                $food_item_ids = get_post_meta($food_menu, '_food_item_ids', true);
+                $food_item_ids = get_menu_list($food_menu,get_the_ID());
                 if ($food_item_ids) {
                     foreach ($food_item_ids as $food_item_id) {
                         $showing_food_menus[] = $food_item_id;
@@ -280,6 +282,7 @@ class WPFM_Ajax {
         $result['filter_value'][] = $last_filter_value . " " . $post_type_label;
 
         if (sizeof(apply_filters('wpfm_show_apply_filter_result_count', $result['filter_value'])) > 1) {
+            // translators: %d: number of matching records
             $message = sprintf(_n('Search completed. Found %d matching record.', 'Search completed. Found %d matching records.', $foods->found_posts, 'wp-food-manager'), $foods->found_posts);
             $result['showing_applied_filters'] = true;
         } else {
@@ -343,6 +346,29 @@ class WPFM_Ajax {
             echo 'No food ID provided';
             wp_die();
         }
+    }
+    
+    /**
+     *Search food from food menu.
+     * 
+     * @access public
+     * @since 1.0.1
+     */
+    public function ajax_food_menu_search() {
+        check_ajax_referer('food_menu_search_nonce', 'nonce');
+    
+        $search_term = isset($_POST['search_term']) ? sanitize_text_field($_POST['search_term']) : '';
+        if (empty($search_term)) {
+            wp_send_json_error('Search term is empty');
+        }
+    
+        // Use the shortcode to get the results
+        echo do_shortcode("[food_menu_search search_term='$search_term' is_ajax='true']");
+    
+        wp_reset_postdata();
+        
+        // Properly end the AJAX request
+        wp_die();
     }
 	
 	/**

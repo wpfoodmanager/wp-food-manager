@@ -30,7 +30,7 @@ if ('food_manager_menu' == get_post_type() || (isset($menu_id) && !empty($menu_i
         if ('food_manager_menu' == get_post_type($id)) { ?>
             <h2 class="wpfm-heading-text">
                 <?php 
-                echo get_the_title($id);
+                echo esc_html(get_the_title($id));
                 $wpfm_radio_icons = get_post_meta($id, 'wpfm_radio_icons', true);
                 $data_food_menu2 = ucwords(str_replace(["wpfm-menu-", "dashicons-"], "", $wpfm_radio_icons));
                 
@@ -118,19 +118,25 @@ if ('food_manager_menu' == get_post_type() || (isset($menu_id) && !empty($menu_i
                             echo "<div class='food-menu-label'>" . esc_html($food_label) . "</div>";
                         }
 
-                        echo "<a href='" . $food_menu_permalink . "'>";
+                        echo "<a href='" . esc_url($food_menu_permalink) . "'>";
+                        
                             echo "<h3 class='fm-food-menu-title'>" . esc_html($food_listing->post_title) . "</h3>";
                             echo "<div class='fm-food-menu-pricing'>";
                                 if (!empty($regular_price) && !empty($sale_price)) {
                                     $food_regular_price = sprintf($price_format, '<span class="food-manager-Price-currencySymbol">' . esc_html(get_food_manager_currency_symbol()) . '</span>', $formatted_sale_price);
                                     $food_sale_price = sprintf($price_format, '<span class="food-manager-Price-currencySymbol">' . esc_html(get_food_manager_currency_symbol()) . '</span>', $formatted_regular_price);
-                                    echo "<del> " . $food_sale_price . "</del> <ins><span class='food-manager-Price-currencySymbol'><strong>" . $food_regular_price . "</strong></span></ins>";
+                                    echo "<del> " . esc_html($food_sale_price) . "</del> <ins><span class='food-manager-Price-currencySymbol'><strong>" . esc_html($food_regular_price) . "</strong></span></ins>";
                                 } elseif (!empty($regular_price)) {
-                                    echo sprintf($price_format, '<span class="food-manager-Price-currencySymbol">' . esc_html(get_food_manager_currency_symbol()) . '</span>', $formatted_regular_price);
+                                    echo sprintf(esc_html($price_format), '<span class="food-manager-Price-currencySymbol">' . esc_html(get_food_manager_currency_symbol()) . '</span>', esc_html($formatted_regular_price));
                                 }
                             echo "</div>";
                         echo "</a>";
-                        echo $menu_food_desc;
+                        echo esc_html($menu_food_desc);
+                        if (get_stock_status($food_listing) == 'food_outofstock') {
+                            echo '<div class="food-stock-status">';
+                                display_stock_status($food_listing);
+                            echo '</div>';
+                        }
                         do_action('food_menu_list_overview_after', $food_listing->ID);
                     echo "</div>";
                 echo "</div>";

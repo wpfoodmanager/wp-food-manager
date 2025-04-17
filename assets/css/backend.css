@@ -60,6 +60,80 @@ span.wpfm-searh-clear {
   height: 22px;
 }
 
+/* Admin-specific styles for 'No results found' message */
+.wpfm-no-results {
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+  border-radius: 4px;
+  padding: 10px;
+  margin: 10px 0;
+  text-align: center;
+  font-weight: bold;
+}
+
+/* Admin-specific styles for topping option notice */
+.wpfm-topping-option-notice {
+  font-size: 14px;
+  font-weight: 500;
+  background: bisque;
+  padding: 5px 10px;
+  border-radius: 4px;
+  display: inline-block;
+  margin-bottom: 7px;
+  color: #333;
+}
+
+/* Admin-specific styles for loader */
+.wpfm-loader img {
+  width: 20px;
+  height: 20px; 
+  margin-left: 160px; 
+  display: flex; 
+  padding: 9px; 
+}
+
+/* Admin-specific styles for Loader sucess message */
+span.wpfm-success-message, span.wpfm-success-message-days {
+  font-size: 14px;
+  font-weight: 500;
+  background: #3ab757;
+  color: #fff;
+  padding: 5px 10px;
+  border-radius: 4px;
+  display: inline-block;
+}
+
+/* Admin-specific styles info tooltip icon*/
+.tooltip-icon {
+  cursor: pointer;
+  display: inline-block;
+  margin-left: 5px; 
+  position: relative;
+}
+
+.tooltip-icon img {
+  width: 16px; 
+  height: 16px; 
+  vertical-align: middle; 
+}
+
+.tooltip-icon img:hover::after {
+  content: attr(title);
+  position: absolute;
+  background: #f9f9f9;
+  border: 1px solid #ccc;
+  padding: 5px;
+  z-index: 1000;
+  white-space: nowrap;
+  left: 0;
+  top: 100%;
+  margin-top: 5px;
+  border-radius: 4px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  display: block; 
+}
+
 .sub-font-icon input[type=radio]:hover+label span.wpfm-key-name {
   font-size: 10px;
   position: absolute;
@@ -323,6 +397,13 @@ label.add-food-small {
   content: "\f509";
 }
 
+#food_manager_data ul.wpfm-tabs li.tax_classes_tab a::before {
+  content: "\f16a";
+}
+#food_manager_data ul.wpfm-tabs li.ingredients_tab a::before {
+  content: "\f450";
+}
+
 #food_manager_data .wpfm_panel {
   float: left;
   width: 80%;
@@ -487,7 +568,9 @@ label.add-food-small {
 #toppings_food_data_content .wpfm-admin-options-table .widefat tfoot {
   background: #f6f7f7;
 }
-
+#toppings_food_data_content input[type=text], #toppings_food_data_content input[type=number] {
+  width: 100%;
+}
 a.button.wpfm-add-row {
   float: right;
 }
@@ -1187,7 +1270,7 @@ div#wpfm-loading {
   object-fit: cover;
 }
 
-.food-manager-uploaded-file-preview .food-manager-remove-uploaded-file {
+.food-manager-remove-uploaded-file {
   font-size: 0;
   height: 20px;
   width: 20px;
@@ -1200,7 +1283,7 @@ div#wpfm-loading {
   box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
 }
 
-.food-manager-uploaded-file-preview .food-manager-remove-uploaded-file::before {
+.food-manager-remove-uploaded-file::before {
   content: "\ea0f";
   font-family: wp-food-manager;
   font-size: 10px;
@@ -1235,7 +1318,7 @@ span.food-manager-uploaded-file {
   height: auto;
 }
 
-span.no-menu-item-handle {
+span.no-menu-item-handle, span.no-menu-item-handle-days {
   font-size: 14px;
   font-weight: 500;
   background: bisque;
@@ -1540,6 +1623,25 @@ span.toppings-radio-btn {
 /*License End*/
 
 
+.widefat td.thumbnail.column-thumbnail img {
+  max-width: 60px;
+  height: auto;
+}
+#wpfm_menu_shortcode .dashicons {
+  margin-top: 7px;
+  margin-left: 5px;
+  font-size: 16px;
+}
+#wpfm_menu_shortcode .tooltip {
+  color: green;
+  margin-top: 5px;
+  display: inline-block;
+}
+#food_manager_menu_options .postbox-header .hndle {
+  justify-content: flex-start;
+}
+
+
 @media only screen and (max-width: 1280px) {
 
   .wpfm_panel .wpfm-small-field,
@@ -1612,3 +1714,151 @@ span.toppings-radio-btn {
 }
 
 /* WPFM tabs */
+
+
+/* Shortcode Page CSS */
+
+.wpfm-shortcode-page {
+  margin-top: 10px;
+}
+.wpfm-shortcode-table {
+  margin-top: 15px;
+  overflow: auto;
+}
+.wpfm-shortcode-table table {
+  border: 1px solid #c3c4c7;
+  background-color: #ffffff;
+  border-spacing: 0;
+  width: 100%;
+}
+.wpfm-shortcode-table td {
+  border-top: 1px solid #c3c4c7;
+}
+.wpfm-shortcode-table td, .wpfm-shortcode-table th {
+  padding: 10px 20px;
+  text-align: left;
+}
+.wpfm-shortcode-td {
+  font-size: 16px;
+}
+.wpfm-shortcode-table tbody {
+  background-color: #f6f7f7;
+}
+
+/* Shortcode Page CSS */
+
+
+
+/*Food Menu Option Start*/
+.wpem-backend-food-menu-table .wpfm-admin-postbox-form-field {
+  max-width: 350px;
+  width: 50%;
+}
+.wpem-backend-food-menu-table .menu-item-bar .menu-item-handle {
+  display: flex;
+  justify-content: space-between;
+}
+.wpem-backend-food-menu-table tbody th{
+  text-align: center;
+}
+.wpem-backend-food-menu-table .menu-item-bar {
+  margin: 0;
+}
+.wpem-backend-food-menu-table .menu-item-bar .menu-item-handle:first-of-type {
+  margin-top: 10px;
+}
+.wpem-backend-food-menu-table .chosen-container-multi .chosen-choices li.search-choice{
+  margin: 5px 0 3px 5px;
+}
+
+@media only screen and (max-width: 575px) {
+  .wpem-backend-food-menu-table .wpfm-admin-postbox-form-field {
+    width: 100%;
+  }
+}
+/*Food Menu Option End*/
+
+/*Custom Table Start*/
+.wpem-backend-custom-table {
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  width: 100%;
+  border-collapse: collapse;
+}
+.wpem-backend-custom-table tbody tr {
+  transition: background-color .3s
+}
+.wpem-backend-custom-table tbody tr:hover {
+  background-color: #f1f1f1
+}
+.wpem-backend-custom-table td, .wpem-backend-custom-table th {
+  border: 1px solid #ddd;
+  padding: 10px;
+}
+.wpem-backend-custom-table thead th {
+  font-weight: 700;
+  background-color: #2271b1;
+  color: #fff
+}
+/*Custom Table End*/
+
+
+/*QR code actions start*/
+.widefat .column-qr_code {
+  width: 100px;
+}
+.qr_code-actions a.wpfm-tooltip {
+  padding: 0 !important;
+  width: 2em;
+  height: 30px;
+  text-align: center;
+  overflow: inherit;
+  margin: 0 4px 2px 0px;
+}
+.qr_code-actions a.wpfm-tooltip span {
+  line-height: 30px;
+  margin: 0 auto;
+  font-size: 16px;
+}
+
+.qrcode_img {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgb(0 0 0 / 50%);
+  height: 100%;
+  width: 100%;
+  z-index: 99999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.qr_code-modal {
+  background-color: #fff;
+  max-width: 200px;
+  width: 100%;
+  padding: 1.5rem;
+  border-radius: 10px;
+  text-align: center;
+  position: relative;
+}
+.qr_code-modal h2 {
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+}
+.qrcode_img span.dashicons-no-alt {
+  position: absolute;
+  right: 18px;
+  top: 18px;
+  background: #eee;
+  color: #000;
+  border-radius: 4px;
+  font-size: 20px;
+  width: 26px;
+  height: 26px;
+  line-height: 26px;
+  padding: 0;
+  cursor: pointer;
+}
+/*QR code actions end*/

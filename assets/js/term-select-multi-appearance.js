@@ -14,7 +14,7 @@ var WPFM_MultiAppearanceSelect = function () {
                 // defining variables
                 var data_name = jQuery(this).parents('.wpfm-form-group').find('.selection-preview').attr('data-name'),
                     preview_htm = '',
-                    unit_options = '<option value="">Unit</option>',
+                    unit_options = '<option value="">Select Unit</option>',
                     selected_terms = {},
                     units = JSON.parse(appearance_params.unit_terms);
                 // Push selected value array.
@@ -37,7 +37,7 @@ var WPFM_MultiAppearanceSelect = function () {
                     preview_htm += '<li class="term-item" data-id="' + term_id + '">';
                     preview_htm += '<label>' + label + '</label>';
                     preview_htm += '<div class="term-item-flex">';
-                    preview_htm += '<input type="number" min="0" step="any" name="' + data_name + '[' + term_id + '][value]">';
+                    preview_htm += '<input type="number" min="0" step="any" name="' + data_name + '[' + term_id + '][value]"  placeholder="Enter value">';
                     preview_htm += '<select name="' + data_name + '[' + term_id + '][unit_id]">' + unit_options + '</select>';
                     preview_htm += '</div>';
                     preview_htm += '</li>';

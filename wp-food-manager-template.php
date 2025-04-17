@@ -221,7 +221,7 @@ function display_food_price_tag($post = null) {
 		return false;
 	}
 	if (empty($sale_price)) {
-		echo sprintf($price_format, '<span class="food-manager-Price-currencySymbol">' . get_food_manager_currency_symbol() . '</span>', $formatted_regular_price);
+		echo sprintf(esc_html( $price_format ),'<span class="food-manager-Price-currencySymbol">' . esc_html( get_food_manager_currency_symbol() ) . '</span>',esc_html( $formatted_regular_price ));
 	}
 }
 
@@ -290,20 +290,20 @@ function display_food_veg_nonveg_icon_tag($post = null, $after = '') {
 			$imagePath = '';
 			if (empty($image_src)) {
 				if ($wpfm_veg_nonveg_tag->slug === 'vegetarian') {
-					$imagePath = WPFM_PLUGIN_URL . "/assets/images/wpfm-veg-organic.png";
+					$imagePath = WPFM_PLUGIN_URL . "/assets/images/wpfm-veg-organic.svg";
 				}
 				if ($wpfm_veg_nonveg_tag->slug === 'non-vegetarian') {
-					$imagePath = WPFM_PLUGIN_URL . "/assets/images/wpfm-non-veg-organic.png";
+					$imagePath = WPFM_PLUGIN_URL . "/assets/images/wpfm-non-veg-organic.svg";
 				}
 				if ($wpfm_veg_nonveg_tag->slug === 'vegan') {
-					$imagePath = WPFM_PLUGIN_URL . "/assets/images/wpfm-vegan-organic.png";
+					$imagePath = WPFM_PLUGIN_URL . "/assets/images/wpfm-vegan-organic.svg";
 				}
 			} else {
 				$imagePath = $image_src[0];
 			}
 			if (!empty($imagePath)) {
 				$data_icon_label = ucwords(str_replace("-", " ", sanitize_title($wpfm_veg_nonveg_tag->slug)));
-				echo '<div class="wpfm-food-type-tag ' . sanitize_title($wpfm_veg_nonveg_tag->slug) . '"><img alt="' . $wpfm_veg_nonveg_tag->slug . '" src="' . $imagePath . '" class="wpfm-organic-tag-icon ' . sanitize_title($wpfm_veg_nonveg_tag->slug) . '"></div>';
+				echo '<div class="wpfm-food-type-tag ' . esc_attr( sanitize_title( $wpfm_veg_nonveg_tag->slug ) ) . '"><img alt="' . esc_attr( $wpfm_veg_nonveg_tag->slug ) . '" src="' . esc_url( $imagePath ) . '" class="wpfm-organic-tag-icon ' . esc_attr( sanitize_title( $wpfm_veg_nonveg_tag->slug ) ) . '"></div>';
 			}
 		}
 	}
@@ -443,7 +443,7 @@ function display_food_category($post = null, $after = '') {
 			$numCategory = count($food_category);
 			$i = 0;
 			foreach ($food_category as $cat) {
-				echo wp_kses(('<a href="' . get_term_link($cat->term_id) . '"><span class="wpfm-food-cat-text food-category ' . esc_attr(sanitize_title($cat->slug)) . ' ">' . esc_attr(sanitize_text_field($cat->name)) . '</span></a>'), array(
+				echo wp_kses(('<a href="' . get_term_link($cat->term_id) . '"><span class="wpfm-food-category-text food-category ' . esc_attr(sanitize_title($cat->slug)) . ' ">' . esc_attr(sanitize_text_field($cat->name)) . '</span></a>'), array(
 					'a' => array(
 						'href' => array(),
 						'title' => array()
@@ -500,8 +500,8 @@ function display_food_ingredients($post = null, $after = '') {
 				);
 				if (!empty($ingTerm->term_id)) {
 					$ingredient_slug = strtolower(str_replace(" ", "_", sanitize_text_field($ingredient['ingredient_term_name'])));
-					echo '<span class="food-ingredients ' . esc_attr(sanitize_title($ingredient_slug)) . ' ">' . sanitize_text_field($ingredient['ingredient_term_name']) . ' - ' . sanitize_text_field($ingredient['value']) . ' ' . sanitize_text_field($ingredient['unit_term_name']) . '</span>';
-					if ($numIngredient > ++$i) {
+					echo '<span class="food-ingredients ' . esc_attr( sanitize_title( $ingredient_slug ) ) . ' ">' . esc_html( sanitize_text_field( $ingredient['ingredient_term_name'] ) ) . ' - ' . esc_html( sanitize_text_field( $ingredient['value'] ) ) . ' ' . esc_html( sanitize_text_field( $ingredient['unit_term_name'] ) ) . '</span>';
+						if ($numIngredient > ++$i) {
 						echo esc_attr($after);
 					}
 				}
@@ -548,7 +548,7 @@ function display_food_nutritions($post = null, $after = '') {
 				);
 				if (!empty($nutriTerm->term_id)) {
 					$nutrition_slug = strtolower(str_replace(" ", "_", sanitize_text_field($nutrition['nutrition_term_name'])));
-					echo '<span class="food-nutritions ' . esc_attr(sanitize_title($nutrition_slug)) . ' ">' . sanitize_text_field($nutrition['nutrition_term_name']) . ' - ' . sanitize_text_field($nutrition['value']) . ' ' . sanitize_text_field($nutrition['unit_term_name']) . '</span>';
+					echo '<span class="food-nutritions ' . esc_attr( sanitize_title( $nutrition_slug ) ) . ' ">' . esc_html( sanitize_text_field( $nutrition['nutrition_term_name'] ) ) . ' - ' . esc_html( sanitize_text_field( $nutrition['value'] ) ) . ' ' . esc_html( sanitize_text_field( $nutrition['unit_term_name'] ) ) . '</span>';
 					if ($numNutrition > ++$i) {
 						echo esc_attr($after);
 					}
@@ -653,7 +653,7 @@ function get_food_permalink($post = null) {
  */
 function food_manager_class($class = '', $post_id = null) {
 	// Separates classes with a single space, collates classes for post DIV
-	echo 'class="' . join(' ', get_food_manager_class($class, $post_id)) . '"';
+	echo 'class="' . esc_attr( join( ' ', get_food_manager_class( $class, $post_id ) ) ) . '"';
 }
 
 /**
@@ -746,6 +746,8 @@ function display_stock_status($post = null, $after = '') {
         } elseif ($food_stock_status == 'food_outofstock') {
             $food_stock_status_label = 'Out of stock';
         }
+        // Apply filter to the label
+    	$food_stock_status_label = apply_filters('wpfm_food_stock_status_label', $food_stock_status_label);
         echo '<mark class="' . esc_attr($food_stock_status) . '">' . esc_html($food_stock_status_label) . '</mark>';
     }
 }
@@ -790,7 +792,7 @@ function get_stock_status($post = null) {
  */
 function display_food_description($post = null) {
 	if ($food_description = get_food_description($post)) {
-		echo sanitize_textarea_field($food_description);
+		echo esc_html( sanitize_textarea_field( $food_description ) );
 	}
 }
 
@@ -967,7 +969,7 @@ function replace_food_manager_type_metabox($post, $box) {
 
 					<li id="<?php echo esc_attr($id); ?>" class="popular-category">
 						<label class="selectit">
-							<input id="in-<?php echo esc_attr($id); ?>" type="radio" <?php echo $checked; ?> name="tax_input[<?php echo esc_attr($tax_name) ?>][]" value="<?php echo (int) $term->term_id; ?>" <?php disabled(!current_user_can($taxonomy->cap->assign_terms)); ?> />
+						<input id="in-<?php echo esc_attr($id); ?>" type="radio" <?php echo esc_attr($checked); ?> name="tax_input[<?php echo esc_attr($tax_name); ?>][]" value="<?php echo esc_attr((int) $term->term_id); ?>" <?php disabled(!current_user_can($taxonomy->cap->assign_terms)); ?> />
 							<?php
 							/** This filter is documented in wp-includes/category-template.php */
 							echo esc_html(apply_filters('the_category', $term->name, '', ''));
@@ -988,14 +990,15 @@ function replace_food_manager_type_metabox($post, $box) {
 
 					<?php
 					/* translators: %s: add new taxonomy label */
-					printf(__('+ %s'), $taxonomy->labels->add_new_item);
+					printf( esc_html__( '+ %s', 'wp-food-manager' ), esc_html( $taxonomy->labels->add_new_item ) );
+
 					?>
 				</a>
 				<p id="<?php echo esc_attr($tax_name); ?>-add" class="category-add wp-hidden-child">
 					<label class="screen-reader-text" for="new<?php echo esc_attr($tax_name); ?>"><?php echo esc_html($taxonomy->labels->add_new_item); ?></label>
 					<input type="text" name="new<?php echo esc_attr($tax_name); ?>" id="new<?php echo esc_attr($tax_name); ?>" class="form-required form-input-tip" value="<?php echo esc_attr($taxonomy->labels->new_item_name); ?>" aria-required="true" />
 					<label class="screen-reader-text" for="new<?php echo esc_attr($tax_name); ?>_parent">
-						<?php echo $taxonomy->labels->parent_item_colon; ?>
+						<?php echo esc_html($taxonomy->labels->parent_item_colon); ?>
 					</label>
 
 					<?php
@@ -1021,4 +1024,33 @@ function replace_food_manager_type_metabox($post, $box) {
 		<?php endif; ?>
 	</div>
 <?php
+}
+function display_menu_qr_code(){
+	global $post;
+        
+        // Get the Post ID and Post URL
+        $menu_id = $post->ID;
+        $post_url = get_permalink($menu_id);  // Get the URL of the post
+    
+        // Check if the QR code class exists and include it if it doesn't
+        if(!class_exists('QRcode')) {
+            require_once WPFM_PLUGIN_DIR . '/includes/lib/phpqrcode/qrlib.php';
+        }
+    
+        // Define the path to store the generated QR code image
+        $upload_dir = wp_upload_dir(); // Get the upload directory
+        $qr_code_image = $upload_dir['path'] . "/qr_code_$menu_id.png"; // Path for the QR code image
+        
+        // Generate QR code image
+        QRcode::png($post_url, $qr_code_image, 'L', 4, 2);  // 'L' for low error correction, 4 is the size, 2 is the margin
+		$qr_code_url = $upload_dir['url'] . "/qr_code_$menu_id.png";
+
+        // Output the QR code image and the download button
+	    echo '<div class="qr_code-actions">';
+	     // Print button
+		 echo '<a href="javascript:void(0)" class="qr_print_button button button-icon wpfm-tooltip" wpfm-data-tip="' . esc_attr(sprintf(__('Print', 'wpfm-food-manager'))) . '"><span class="dashicons dashicons-printer"></span> </a>';
+	    echo '<a href="' . $qr_code_url . '" download="QR_Code_' . $menu_id . '.png" class="button button-icon wpfm-tooltip" wpfm-data-tip="' . esc_attr(sprintf(__('Download', 'wpfm-restaurant-manager'))) . '"><span class="dashicons dashicons-download"></span></a>';
+	    echo '<a href="javascript:void(0)" class="qr_preview button button-icon wpfm-tooltip" wpfm-data-tip="' . esc_attr(sprintf(__('Qr Code', 'wpfm-restaurant-manager'))) . '"><span class="dashicons dashicons-visibility"></span></a>';
+	    echo '<div class="qrcode_img" style="display: none"><div class="qr_code-modal"><h2>QR Code Scan</h2><img src="' . $qr_code_url . '" alt="QR Code"><span class="dashicons dashicons-no-alt"></span></div></div>';
+	    echo '</div>';
 }

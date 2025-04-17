@@ -67,6 +67,8 @@ class WPFM_Updater {
 				$this->activate_licence_request($plugin_info);
 			} elseif ( !empty( $_GET[ 'dismiss-' . sanitize_title( $plugin_info['TextDomain'] ) ] ) ) {
 				update_option( $plugin_info['TextDomain'] . '_hide_key_notice', 1 );
+			} elseif ( !empty( $_GET[ 'dismiss-key-expire-' . sanitize_title( $plugin_info['TextDomain'] ) ] ) ) {
+				update_option( $plugin_info['TextDomain'] . '_hide_key_expire_notice', 1 );
 			} elseif ( !empty( $_GET['activated_licence'] ) && $_GET['activated_licence'] === $plugin_info['TextDomain'] ) {
 				$this->add_notice( array( $this, 'activated_key_notice' ) );
 			} elseif ( !empty( $_GET['deactivated_licence'] ) && $_GET['deactivated_licence'] === $plugin_info['TextDomain'] ) {
@@ -162,7 +164,7 @@ class WPFM_Updater {
 			}
 		}
 		foreach($this->plugin_data as $plugin_info){
-			if( get_option( $plugin_info['TextDomain'] . '_key_expire') || get_option( $plugin_info['TextDomain'] . '_key_expire_pre' )){
+			if  (! get_option( $plugin_info['TextDomain'] . '_hide_key_expire_notice' ) && ( get_option( $plugin_info['TextDomain'] . '_key_expire') || get_option( $plugin_info['TextDomain'] . '_key_expire_pre' ))) {
 				$plugin_name = $plugin_info['Name'];
 				$plugin_slug = $plugin_info['TextDomain'];
 				include( 'templates/key-expire-notice.php' );
@@ -176,6 +178,7 @@ class WPFM_Updater {
 
         // Log or use the plugin slug
 		delete_option( $this->plugin_slug . '_hide_key_notice' );
+		delete_option( $this->plugin_slug . '_hide_key_expire_notice' );
 	}
 
 	//Ran on plugin-deactivation.
@@ -215,16 +218,17 @@ class WPFM_Updater {
 				update_option( $plugin_info['TextDomain'] . '_licence_expired', $activate_results['activations']['date_expires'] );
 				delete_option( $plugin_info['TextDomain'] . '_errors' );
 				delete_option( $plugin_info['TextDomain'] . '_key_expire_pre' );
+				delete_option( $plugin_info['TextDomain'] . '_key_expire' );
 
 				$subscription_expire_date = $activate_results['activations']['date_expires'];
 				// Hook for registering cron job
 				$activation_detail['expire_date'] = $subscription_expire_date;
 				$activation_detail['licence_key'] = $licence_key;
 				$activation_detail['email'] = $email;
-				$activation_detail['api_product_ids'] = array($activate_results['activations']['api_product_id']);
+				$activation_detail['api_product_ids'] = array( $activate_results['activations']['api_product_id'] );
 				wp_schedule_single_event(strtotime($subscription_expire_date) - (48 * 60 * 60), 'wpfm_set_suscription_expire_message', array($activation_detail));
 
-				wp_schedule_single_event(strtotime($subscription_expire_date), 'wpfm_check_for_licence_expire', array($activation_detail));
+				$this->update_cron_if_expire_date_exists($subscription_expire_date, $activate_results['activations']['api_product_id'], $activation_detail);
 				
 				return true;
 			} elseif ( $activate_results === false ) {
@@ -251,6 +255,8 @@ class WPFM_Updater {
 		delete_option( $plugin_info['TextDomain'] . '_email' );
 		delete_option( $plugin_info['TextDomain'] . '_licence_key_activate' );
 		delete_option( $plugin_info['TextDomain'] . '_errors' );
+		delete_option( $plugin_info['TextDomain'] . '_key_expire' );
+		delete_option( $plugin_info['TextDomain'] . '_key_expire_pre' );
 		delete_site_transient( 'update_plugins' );
 		$this->errors           = array();
 		$api_key          = '';
@@ -446,6 +452,7 @@ class WPFM_Updater {
 	 */
 	public function handle_errors( $errors ) {
 		if ( !empty( $errors['no_key'] ) ) {
+			// translators: 1: plugin name, 2: plugin name (repeated for setup)
 			$this->add_error( sprintf( __('A licence key for %1$s could not be found. Maybe you forgot to enter a licence key when setting up %2$s.', 'wpfm-restaurant-manager'), esc_html( $this->plugin_data['Name'] ), esc_html( $this->plugin_data['Name'] ) ) );
 		} elseif ( !empty( $errors['invalid_request'] ) ) {
 			$this->add_error( 'Invalid update request' );
@@ -545,5 +552,54 @@ class WPFM_Updater {
 		foreach($activation_detail['api_product_ids'] as $plugin){
 			update_option( $plugin . '_key_expire_pre', $plugin );
 		}
+	}
+
+	/**
+	 * This function is used to set/update cron based on plugin subscription expire date
+	 * @since 1.0.7
+	 */
+	public function update_cron_if_expire_date_exists($new_expire_date, $new_api_product_ids, $new_args) {
+    
+		// Check if the cron job with the same expire_date exists
+		$scheduled_jobs = _get_cron_array();
+		
+		// Iterate through scheduled jobs to check for already existing 
+		foreach ($scheduled_jobs as $timestamp => $cron) {
+			foreach ($cron as $hook => $details) {
+				
+				// Look for the specific hook 'wpfm_check_for_licence_expire'
+				if ($hook === 'wpfm_check_for_licence_expire') {
+					
+					// Iterate through all the jobs with this hook
+					foreach ($details as $key => $job) {
+						// Check if the expire_date matches
+						if (isset($job['args'][0]['expire_date']) && $job['args'][0]['expire_date'] === $new_expire_date) {
+							
+							$product_ids = array();
+							
+							if(!is_array($job['args'][0]['api_product_ids'])) {
+								array_push($product_ids, $job['args'][0]['api_product_ids']);
+							} else {
+								foreach($job['args'][0]['api_product_ids'] as $product_id){
+									array_push($product_ids, $product_id);
+								}
+							}
+							// Remove the existing cron job with the matching expire_date
+							wp_unschedule_event($timestamp, $hook, $job['args']);
+							array_push($product_ids, $new_api_product_ids);
+							// Update the api_product_ids
+							$updated_args = $job['args'][0]; // Copy existing arguments
+							$updated_args['api_product_ids'] = $product_ids; // Update the product IDs
+							// Schedule a new cron job with the updated parameters
+							wp_schedule_single_event(time(), 'wpfm_check_for_licence_expire', array($updated_args));
+							return;
+						}
+					}
+				}
+			}
+		}
+		// If no matching cron job is found, schedule a new one
+		wp_schedule_single_event(time(), 'wpfm_check_for_licence_expire', array($new_args));
+		return;
 	}
 }

@@ -52,7 +52,11 @@ class WPFM_ActionHooks {
         add_action('food_manager_output_foods_no_results', array($this, 'output_no_results'));
        
         add_action('wpfm_save_food_data', array($this, 'food_manager_save_food_manager_data'), 20, 3);
+        
     }
+
+    
+    
     
     /**
      * Output some content when no results were found.
@@ -134,12 +138,19 @@ class WPFM_ActionHooks {
         ));
         
         // Frontend Css.
-        wp_enqueue_style('wpfm-frontend', esc_url(WPFM_PLUGIN_URL . '/assets/css/frontend.css'));
-     
+        wp_enqueue_style('wpfm-frontend', esc_url(WPFM_PLUGIN_URL . '/assets/css/frontend.min.css'));
+
+        // Enqueue the script for search food menu.
+        wp_register_script('food-menu-search', esc_url(WPFM_PLUGIN_URL . '/assets/js/food-menu-search.js'), array('jquery'), WPFM_VERSION, true);
+        wp_localize_script('food-menu-search', 'foodMenuAjax', array(
+            'ajax_url' => esc_url(admin_url('admin-ajax.php')),
+            'nonce'   => wp_create_nonce('food_menu_search_nonce')
+        ));
         // Frontend js.
-        wp_register_script('wp-food-manager-frontend', esc_url(WPFM_PLUGIN_URL . '/assets/js/frontend.min.js'), array('jquery'), WPFM_VERSION, true);
+        wp_register_script('wp-food-manager-frontend', esc_url(WPFM_PLUGIN_URL . '/assets/js/frontend.js'), array('jquery'), WPFM_VERSION, true);
         wp_localize_script('wp-food-manager-frontend', 'wpfm_frontend', array(
             'ajax_url' => esc_url(admin_url('admin-ajax.php')),
+            'nonce' => wp_create_nonce('food_menu_search_nonce'),
         ));
         wp_enqueue_script('wp-food-manager-frontend');
 
@@ -200,7 +211,12 @@ class WPFM_ActionHooks {
         wp_enqueue_style('wpfm-grid-style');
         wp_enqueue_style('wp-food-manager-font-style');
         wp_enqueue_style('wp-food-manager-food-icons-style');
-        wp_enqueue_editor();
+        if (is_singular() && is_a($post, 'WP_Post')) {
+            $content = $post->post_content;
+            if (has_shortcode($content, 'food_dashboard') && has_shortcode($content, 'add_food')) {
+                wp_enqueue_editor();
+            }
+        }
         wp_register_script('wpfm-term-autocomplete', esc_url(WPFM_PLUGIN_URL . '/assets/js/term-autocomplete.min.js'), array('jquery'), WPFM_VERSION, true);
         wp_localize_script(
             'wpfm-term-autocomplete',
@@ -231,7 +247,7 @@ class WPFM_ActionHooks {
                 // Food Banner.
                 if ('food_banner' === $key) {
                     if (isset($_POST[$key]) && !empty($_POST[$key])) {
-                        $thumbnail_image = is_array($_POST[$key]) ? array_values(array_filter($_POST[$key])) : $_POST[$key];
+                        $thumbnail_image = is_array($_POST[$key]) ? array_values(array_filter(wp_unslash($_POST[$key]))) : wp_unslash($_POST[$key]);
                         // Update Food Banner Meta Data.
                         update_post_meta($post_id, '_' . esc_attr($key), $thumbnail_image);
                         if (is_array($_POST[$key])) {

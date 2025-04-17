@@ -8,6 +8,8 @@ global $wp_query;
 $term = get_queried_object();
 $image_id = !empty($term) ? get_term_meta($term->term_id, 'food_cat_image_id', true) : '';
 $image_url = wp_get_attachment_image_src($image_id, 'full');
+$disable_cat_visibility = !empty($term) ? get_term_meta($term->term_id, '_wpfm_disable_cat_visibility', true) : '';
+if($disable_cat_visibility !== 'yes'){
 ?>
 <div class="wpfm-container">
     <div class="wpfm-main wpfm-food-listing-category-page">
@@ -43,4 +45,11 @@ $image_url = wp_get_attachment_image_src($image_id, 'full');
         </div>
     </div>
 </div>
-<?php get_footer(); ?>
+<?php 
+} else{ ?>
+<div class="wpfm-container">
+    <div class="wpfm-main wpfm-food-listing-category-page">
+        <div class="wpfm-row"></div>
+    <div class="no_food_listings_found wpfm-alert wpfm-alert-danger"><?php esc_html_e('There are currently no category found.', 'wp-food-manager'); ?></div></div></div></div>
+<?php }
+get_footer(); ?>

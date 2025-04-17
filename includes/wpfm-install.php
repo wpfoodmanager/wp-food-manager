@@ -76,26 +76,45 @@ class WPFM_Install {
 	 * @access private
 	 * @return void
 	 * @since 1.0.0
-	 */
-	private static function init_user_roles() {
-		global $wp_roles;
-		if (class_exists('WP_Roles') && !isset($wp_roles)) {
-			$wp_roles = new WP_Roles();
-		}
-		if (is_object($wp_roles)) {
-			add_role('restaurant_owner', __('Restaurant Owner', 'wp-food-manager'), array(
-				'read'         => true,
-				'edit_posts'   => false,
-				'delete_posts' => false
-			));
-			$capabilities = self::get_core_capabilities();
-			foreach ($capabilities as $cap_group) {
-				foreach ($cap_group as $cap) {
-					$wp_roles->add_cap('administrator', $cap);
-				}
-			}
-		}
-	}
+	 */	
+	private static function init_user_roles()
+     {
+         global $wp_roles;
+     
+         if (class_exists('WP_Roles') && !isset($wp_roles)) {
+             $wp_roles = new WP_Roles();
+         }
+     
+         if (is_object($wp_roles)) {
+             // Update or add 'fm_' prefixed roles
+             self::fm_update_or_add_role('restaurant_owner', 'fm_restaurant_owner', __('Restaurant Manager', 'wpfm-restaurant-manager'), array(
+                 'read'         => true,
+                 'edit_posts'   => false,
+                 'delete_posts' => false
+             ));
+     
+             $capabilities = self::get_core_capabilities();
+             foreach ($capabilities as $cap_group) {
+                 foreach ($cap_group as $cap) {
+                     $wp_roles->add_cap('administrator', $cap);
+                 }
+             }
+         }
+     }
+	
+	private static function fm_update_or_add_role($old_role_slug, $new_role_slug, $role_name, $capabilities)
+     {
+         // Check if the old role exists
+         $old_role = get_role($old_role_slug);
+         
+         if ($old_role) {
+             // Remove the old role if it exists
+             remove_role($old_role_slug);
+         }
+         
+         // Add the new role with 'fm_' prefix
+         add_role($new_role_slug, $role_name, $capabilities);
+     }
 
 	/**
 	 * Get the core capabilities.
@@ -211,6 +230,11 @@ class WPFM_Install {
 				'Dessert',
 				'Beverage',
 				'Main dishes',
+				'Lunch',
+				'After Hours',
+				'Drinks',
+				'Brunch',
+				'Dinner'
 			),
 			'food_manager_topping' => array(
 				'Yellow mustard',

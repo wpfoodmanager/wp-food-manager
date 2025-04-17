@@ -1,0 +1,2929 @@
+msgid ""
+msgstr ""
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n>=2 && n<=4 ? 1 : 2);\n"
+"Project-Id-Version: WP Food Manager\n"
+"POT-Creation-Date: 2024-10-22 13:43+0530\n"
+"PO-Revision-Date: 2024-10-22 14:56+0530\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.4.3\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-Flags-xgettext: --add-comments=translators:\n"
+"X-Poedit-WPHeader: wp-food-manager.php\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
+"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;"
+"_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"Last-Translator: \n"
+"Language: cs_CZ\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: *.min.js\n"
+
+#: admin/templates/food-data-ingredient.php:41
+#, fuzzy
+msgid "Please drag and drop the available ingredient and enter the value."
+msgstr "Přetáhněte prosím dostupnou ingredienci a zadejte hodnotu."
+
+#: admin/templates/food-data-ingredient.php:88
+#, fuzzy
+msgid "Search Ingredient"
+msgstr "Hledat přísadu"
+
+#: admin/templates/food-data-ingredient.php:103
+#: admin/templates/food-data-nutrition.php:101
+msgid "No results found"
+msgstr "Nebyly nalezeny žádné výsledky"
+
+#: admin/templates/food-data-nutrition.php:42
+#, fuzzy
+msgid "Please drag and drop the available nutritions and enter the value."
+msgstr "Přetáhněte prosím dostupné výživové hodnoty a zadejte hodnotu."
+
+#: admin/templates/food-data-nutrition.php:87
+#, fuzzy
+msgid "Search Nutrition"
+msgstr "Hledat Výživa"
+
+#: admin/templates/food-data-tabs.php:33
+#, fuzzy
+msgid ""
+"Based on the given setting the ingredients and nutrition will be show on "
+"food detail page."
+msgstr ""
+"Na základě daného nastavení se suroviny a výživové hodnoty zobrazí na "
+"stránce s detailem jídla."
+
+#: admin/templates/food-data-toppings.php:24
+#: admin/wpfm-field-editor-form-field.php:109 admin/wpfm-settings.php:532
+#: includes/wpfm-custom-post-types.php:147
+#: templates/content-single-food_manager.php:267
+#: templates/content-single-food_manager.php:273
+#: templates/content-single-food_manager.php:279
+#: templates/content-single-food_manager.php:280
+#: templates/content-single-food_manager.php:286
+#: templates/content-single-food_manager.php:292
+#: templates/content-single-food_manager.php:298
+#: templates/content-single-food_manager.php:304
+#: templates/content-single-food_manager.php:309
+#: templates/content-single-food_manager.php:331
+#: templates/content-single-food_manager.php:361
+#: templates/content-single-food_manager.php:362
+#: templates/content-single-food_manager.php:378
+#: templates/content-single-food_manager.php:384
+#: templates/content-single-food_manager.php:387
+#: templates/content-single-food_manager.php:389
+#: templates/content-single-food_manager.php:399
+#: templates/content-single-food_manager.php:405
+#: templates/content-single-food_manager.php:410
+#: templates/content-single-food_manager.php:449
+#: templates/content-single-food_manager.php:451
+#: templates/content-single-food_manager.php:465
+#: templates/content-single-food_manager.php:493
+#: templates/food-extra-topping.php:9 templates/food-extra-topping.php:61
+#: templates/food-extra-topping.php:115 templates/food-extra-topping.php:133
+#: templates/food-extra-topping.php:177
+#, php-format
+msgid "%s"
+msgstr "%s"
+
+#: admin/templates/food-data-toppings.php:80
+msgid "Option 1"
+msgstr "Možnost 1"
+
+#: admin/templates/food-data-toppings.php:116
+#: admin/templates/food-data-toppings.php:174
+#, fuzzy
+msgid "Please provide the options and price for the topping."
+msgstr "Uveďte prosím možnosti a cenu polevy."
+
+#: admin/templates/food-data-toppings.php:141
+#, fuzzy
+msgid "Option __repeated-option-index__"
+msgstr "Varianta __repeated-option-index__"
+
+#: admin/wpfm-admin.php:123 admin/wpfm-admin.php:301
+#, fuzzy
+msgid "Image/Icon"
+msgstr "Obrázek/ikona"
+
+#: admin/wpfm-admin.php:127 admin/wpfm-admin.php:173 admin/wpfm-admin.php:305
+#: admin/wpfm-admin.php:351 includes/wpfm-custom-post-types.php:160
+msgid "Add Image"
+msgstr "Přidat obrázek"
+
+#: admin/wpfm-admin.php:128 admin/wpfm-admin.php:174 admin/wpfm-admin.php:306
+#: admin/wpfm-admin.php:352 includes/wpfm-custom-post-types.php:161
+msgid "Remove Image"
+msgstr "Odstranit obrázek"
+
+#: admin/wpfm-admin.php:162 admin/wpfm-admin.php:340 admin/wpfm-cpt.php:346
+#: includes/wpfm-filter-hooks.php:63 includes/wpfm-filter-hooks.php:76
+msgid "Image"
+msgstr "Obrázek"
+
+#: admin/wpfm-admin.php:479 admin/wpfm-settings.php:148
+msgid "Field Editor"
+msgstr "Editor polí"
+
+#: admin/wpfm-admin.php:481 admin/wpfm-admin.php:847
+#: admin/wpfm-settings.php:420 admin/wpfm-setup.php:225
+#: templates/form-fields/repeated-field.php:43
+msgid "Settings"
+msgstr "Nastavení"
+
+#: admin/wpfm-admin.php:482
+msgid "Setup"
+msgstr "Nastavení"
+
+#: admin/wpfm-admin.php:549 includes/wpfm-action-hooks.php:163
+msgid "Please enter in a value less than the regular price."
+msgstr "Vložte prosím nižší hodnotu, než je běžná cena."
+
+#: admin/wpfm-admin.php:561 admin/wpfm-admin.php:566
+msgid "Info"
+msgstr "Informace"
+
+#: admin/wpfm-admin.php:562
+#, fuzzy
+msgid "If Food Redirection is enabled, it will not redirect to the food."
+msgstr "Pokud je povoleno přesměrování jídla, nebude přesměrováno na jídlo."
+
+#: admin/wpfm-admin.php:567
+#, fuzzy
+msgid "If Food Image is enabled, it will not be displayed for food."
+msgstr "Pokud je povolen obrázek jídla, u jídla se nezobrazí."
+
+#: admin/wpfm-admin.php:587 includes/wpfm-action-hooks.php:133
+#, fuzzy
+msgid "The file type you have mentioned is invalid."
+msgstr "Typ souboru, který jste zmínili, je neplatný."
+
+#: admin/wpfm-admin.php:597
+msgid "Are you sure you want to delete this row?"
+msgstr "Jste si jistý, že chcete smazat tento řádek?"
+
+#: admin/wpfm-admin.php:598
+msgid "Are you sure you want to reset your changes? This cannot be undone."
+msgstr ""
+"Opravdu chcete vše vrátit do původního nastavení? Tuto akci nelze vrátit "
+"zpět."
+
+#: admin/wpfm-admin.php:658 includes/wpfm-custom-post-types.php:86
+#, fuzzy
+msgid "Food Manager"
+msgstr "Manažer potravin"
+
+#: admin/wpfm-admin.php:794
+#, fuzzy
+msgid "Select Food Type"
+msgstr "Vyberte typ jídla"
+
+#: admin/wpfm-admin.php:830
+#, fuzzy
+msgid "Select Food Category"
+msgstr "Vyberte kategorii potravin"
+
+#: admin/wpfm-cpt.php:90 admin/wpfm-cpt.php:91
+#, php-format
+msgid "Approve %s"
+msgstr "Schválit %s"
+
+#: admin/wpfm-cpt.php:151
+msgid "Show more details"
+msgstr "Zobrazit více informací"
+
+#: admin/wpfm-cpt.php:188
+msgid "Publish"
+msgstr "Zveřejnit"
+
+#: admin/wpfm-cpt.php:197
+msgid "View"
+msgstr "Zobrazit"
+
+#: admin/wpfm-cpt.php:205 includes/wpfm-custom-post-types.php:90
+#: includes/wpfm-custom-post-types.php:150 templates/food-dashboard.php:208
+#: templates/food-dashboard.php:227
+msgid "Edit"
+msgstr "Upravit"
+
+#: admin/wpfm-cpt.php:213 includes/wpfm-action-hooks.php:190
+#: templates/food-dashboard.php:233
+msgid "Delete"
+msgstr "Smazat"
+
+#: admin/wpfm-cpt.php:246
+#, fuzzy, php-format
+msgid "[food_menu id=%d]"
+msgstr "[food_menu id=%d]"
+
+#: admin/wpfm-cpt.php:270
+msgid "Shortcode"
+msgstr "Shortcode"
+
+#: admin/wpfm-cpt.php:271
+#, fuzzy
+msgid "Food menu image"
+msgstr "Obrázek jídelního lístku"
+
+#: admin/wpfm-cpt.php:289 shortcodes/wpfm-shortcodes.php:220
+msgid "Title"
+msgstr "Nadpis"
+
+#: admin/wpfm-cpt.php:290
+msgid "Banner"
+msgstr "Banner"
+
+#: admin/wpfm-cpt.php:291 admin/wpfm-cpt.php:347
+#: forms/wpfm-add-food-form.php:247
+msgid "Stock Status"
+msgstr "Dostupnost"
+
+#: admin/wpfm-cpt.php:292 admin/wpfm-cpt.php:349
+#: includes/wpfm-custom-taxonomies.php:22
+msgid "Categories"
+msgstr "Kategorie"
+
+#: admin/wpfm-cpt.php:293 admin/wpfm-cpt.php:350
+msgid "Order"
+msgstr "Objednávka"
+
+#: admin/wpfm-cpt.php:294 admin/wpfm-cpt.php:351
+msgid "Status"
+msgstr "Stav"
+
+#: admin/wpfm-cpt.php:295 admin/wpfm-cpt.php:353
+msgid "Actions"
+msgstr "Akce"
+
+#: admin/wpfm-cpt.php:348 templates/food-submit.php:143
+msgid "Price"
+msgstr "Cena"
+
+#: admin/wpfm-field-editor-form-field.php:23 admin/wpfm-field-editor.php:86
+msgid "Text"
+msgstr "Text"
+
+#: admin/wpfm-field-editor-form-field.php:24 admin/wpfm-field-editor.php:87
+msgid "Checkbox"
+msgstr "Zaškrtávací políčko"
+
+#: admin/wpfm-field-editor-form-field.php:25 admin/wpfm-field-editor.php:88
+msgid "Date"
+msgstr "Datum"
+
+#: admin/wpfm-field-editor-form-field.php:26 admin/wpfm-field-editor.php:89
+msgid "File"
+msgstr "Soubor"
+
+#: admin/wpfm-field-editor-form-field.php:27 admin/wpfm-field-editor.php:90
+msgid "Hidden"
+msgstr "Skryté"
+
+#: admin/wpfm-field-editor-form-field.php:28 admin/wpfm-field-editor.php:91
+msgid "Multiselect"
+msgstr "Režim multivýběr"
+
+#: admin/wpfm-field-editor-form-field.php:29 admin/wpfm-field-editor.php:92
+msgid "Number"
+msgstr "Číslo"
+
+#: admin/wpfm-field-editor-form-field.php:30 admin/wpfm-field-editor.php:93
+msgid "Radio"
+msgstr "Přepínač"
+
+#: admin/wpfm-field-editor-form-field.php:31 admin/wpfm-field-editor.php:94
+msgid "Select"
+msgstr "Vybrat"
+
+#: admin/wpfm-field-editor-form-field.php:32 admin/wpfm-field-editor.php:95
+msgid "Term Checklist"
+msgstr "Kontrolní seznam termínů"
+
+#: admin/wpfm-field-editor-form-field.php:33 admin/wpfm-field-editor.php:96
+msgid "Term Multiselect"
+msgstr "Termín vícenásobného výběru"
+
+#: admin/wpfm-field-editor-form-field.php:34 admin/wpfm-field-editor.php:97
+msgid "Term Select"
+msgstr "Výběr termínu"
+
+#: admin/wpfm-field-editor-form-field.php:35 admin/wpfm-field-editor.php:98
+#, fuzzy
+msgid "Term Multi Select Appearance"
+msgstr "Termín Vícenásobný výběr vzhledu"
+
+#: admin/wpfm-field-editor-form-field.php:36 admin/wpfm-field-editor.php:99
+msgid "Textarea"
+msgstr "Textová oblast"
+
+#: admin/wpfm-field-editor-form-field.php:37 admin/wpfm-field-editor.php:100
+msgid "WP Editor"
+msgstr "WP Editor"
+
+#: admin/wpfm-field-editor-form-field.php:38 admin/wpfm-field-editor.php:101
+msgid "URL"
+msgstr "URL"
+
+#: admin/wpfm-field-editor-form-field.php:39
+#, fuzzy
+msgid "Term Autocomplete"
+msgstr "Termín automatického doplňování"
+
+#: admin/wpfm-field-editor-form-field.php:40 admin/wpfm-field-editor.php:103
+msgid "Switch"
+msgstr "Přepínač"
+
+#: admin/wpfm-field-editor-form-field.php:45 admin/wpfm-field-editor.php:102
+#: forms/wpfm-add-food-form.php:302 templates/food-submit.php:134
+msgid "Options"
+msgstr "Možnosti"
+
+#: admin/wpfm-field-editor-form-field.php:90
+#: admin/wpfm-field-editor-form-field.php:110
+#: admin/wpfm-field-editor-form-field.php:144
+msgid "N/A"
+msgstr "N/A"
+
+#: admin/wpfm-field-editor-form-field.php:111
+msgid "Pipe (|) separate options."
+msgstr "Potrubí (|) samostatné možnosti."
+
+#: admin/wpfm-field-editor-form-field.php:113
+msgid "Multiple Files?"
+msgstr "Více souborů?"
+
+#: admin/wpfm-field-editor-form-field.php:172
+msgid "Not Required"
+msgstr "Není požadováno"
+
+#: admin/wpfm-field-editor-form-field.php:178
+msgid "Required"
+msgstr "Vyžadováno"
+
+#: admin/wpfm-field-editor.php:49
+msgid "Form fields"
+msgstr "Formovat políčka"
+
+#: admin/wpfm-field-editor.php:119
+#, fuzzy, php-format
+msgid "Add %s form fields"
+msgstr "Přidání polí formuláře %s"
+
+#: admin/wpfm-field-editor.php:124
+msgid "Field Label"
+msgstr "Označení pole"
+
+#: admin/wpfm-field-editor.php:125
+msgid "Type"
+msgstr "Typ"
+
+#: admin/wpfm-field-editor.php:126 forms/wpfm-add-food-form.php:224
+msgid "Description"
+msgstr "Popis"
+
+#: admin/wpfm-field-editor.php:127
+msgid "Placeholder / Options"
+msgstr "Zástupný text / Možnosti"
+
+#: admin/wpfm-field-editor.php:128
+msgid "Meta Key"
+msgstr "Meta klíč"
+
+#: admin/wpfm-field-editor.php:129
+msgid "Only For Admin"
+msgstr "Pouze pro správce"
+
+#: admin/wpfm-field-editor.php:130
+msgid "Priority"
+msgstr "Priorita"
+
+#: admin/wpfm-field-editor.php:132
+#, fuzzy
+msgid "Tab Group (Only For Admin)"
+msgstr "Skupina karet (pouze pro správce)"
+
+#: admin/wpfm-field-editor.php:134
+msgid "Validation"
+msgstr "Ověření"
+
+#: admin/wpfm-field-editor.php:141 templates/form-fields/repeated-field.php:30
+msgid "Add field"
+msgstr "Přidat pole"
+
+#: admin/wpfm-field-editor.php:144
+msgid "Reset to default"
+msgstr "Obnovit do základního nastavení"
+
+#: admin/wpfm-field-editor.php:145 admin/wpfm-settings.php:553
+msgid "Save Changes"
+msgstr "Uložit změny"
+
+#: admin/wpfm-field-editor.php:300
+msgid "The fields were successfully saved."
+msgstr "Pole byla úspěšně uložena."
+
+#: admin/wpfm-permalink-settings.php:62
+#, fuzzy
+msgid "Food base"
+msgstr "Potravinová základna"
+
+#: admin/wpfm-permalink-settings.php:70
+#, fuzzy
+msgid "Food category base"
+msgstr "Základní kategorie potravin"
+
+#: admin/wpfm-permalink-settings.php:78
+#, fuzzy
+msgid "Food type base"
+msgstr "Základní typ krmiva"
+
+#: admin/wpfm-permalink-settings.php:93
+msgctxt "food permalink - resave permalinks after changing this"
+msgid "food"
+msgstr "jídlo"
+
+#: admin/wpfm-permalink-settings.php:104
+#, fuzzy
+msgctxt "food category slug - resave permalinks after changing this"
+msgid "food-category"
+msgstr "kategorie potravin"
+
+#: admin/wpfm-permalink-settings.php:115
+#, fuzzy
+msgctxt "food type slug - resave permalinks after changing this"
+msgid "food-type"
+msgstr "potravinářský typ"
+
+#: admin/wpfm-settings.php:116 admin/wpfm-writepanels.php:236
+msgid "General"
+msgstr "Hlavní"
+
+#: admin/wpfm-settings.php:121 shortcodes/wpfm-shortcodes.php:422
+#, fuzzy
+msgid "Food Categories"
+msgstr "Kategorie potravin"
+
+#: admin/wpfm-settings.php:122
+#, fuzzy
+msgid "Display Food Categories."
+msgstr "Zobrazit kategorie potravin."
+
+#: admin/wpfm-settings.php:123
+#, fuzzy
+msgid ""
+"If enabled, the Food Categories option will display and manage from the both "
+"side at frontend and backend. "
+msgstr ""
+"Pokud je tato možnost povolena, možnost Kategorie potravin se zobrazí a "
+"spravuje z obou stran na frontendu i backendu. "
+
+#: admin/wpfm-settings.php:130 shortcodes/wpfm-shortcodes.php:438
+#: templates/content-single-food_manager.php:579
+#, fuzzy
+msgid "Food Types"
+msgstr "Druhy potravin"
+
+#: admin/wpfm-settings.php:131
+#, fuzzy
+msgid "Display Food Types."
+msgstr "Zobrazit druhy potravin."
+
+#: admin/wpfm-settings.php:139 includes/wpfm-custom-taxonomies.php:128
+#: templates/content-single-food_manager.php:584
+#, fuzzy
+msgid "Food Tags"
+msgstr "Štítky na jídlo"
+
+#: admin/wpfm-settings.php:140
+#, fuzzy
+msgid "Display Food Tags."
+msgstr "Zobrazit potravinové štítky."
+
+#: admin/wpfm-settings.php:149
+#, fuzzy
+msgid "Display Field Editor."
+msgstr "Zobrazit editor polí."
+
+#: admin/wpfm-settings.php:156
+msgid "Food Items"
+msgstr "Potraviny"
+
+#: admin/wpfm-settings.php:168
+msgid "Delete Data On Uninstall"
+msgstr "Smazat data při odinstalování"
+
+#: admin/wpfm-settings.php:169
+#, fuzzy
+msgid ""
+"Delete WP Food Manager data when the plugin is deleted. Once removed, this "
+"data cannot be restored."
+msgstr ""
+"Po smazání pluginu odstraňte data WP Food Manager. Po odstranění nelze tato "
+"data obnovit."
+
+#: admin/wpfm-settings.php:177
+#, fuzzy
+msgid "Food Listings"
+msgstr "Seznam potravin"
+
+#: admin/wpfm-settings.php:183
+msgid "Listings Per Page"
+msgstr "Počet výpisů na stránce"
+
+#: admin/wpfm-settings.php:184
+msgid "How many listings should be shown per page by default?"
+msgstr "Kolik výpisů má být zobrazeno na stránce?"
+
+#: admin/wpfm-settings.php:194
+#, fuzzy
+msgid "Multi-select Food Categories"
+msgstr "Vícenásobný výběr kategorií potravin"
+
+#: admin/wpfm-settings.php:195
+#, fuzzy
+msgid "Enable Food Category multiselect by default."
+msgstr "Ve výchozím nastavení povolte vícenásobný výběr kategorie potravin."
+
+#: admin/wpfm-settings.php:196
+#, fuzzy
+msgid ""
+"If enabled, the Food Category select box will default to a multi select on "
+"the food listing page in filter section."
+msgstr ""
+"Pokud je tato možnost povolena, pole pro výběr kategorie jídla se na stránce "
+"seznamu potravin v sekci filtru změní na vícenásobný výběr."
+
+#: admin/wpfm-settings.php:203
+#, fuzzy
+msgid "Multi-select Food Types"
+msgstr "Vícenásobný výběr typů potravin"
+
+#: admin/wpfm-settings.php:204
+#, fuzzy
+msgid "Enable Food Type multiselect by default."
+msgstr "Ve výchozím nastavení povolte vícenásobný výběr typu jídla."
+
+#: admin/wpfm-settings.php:205
+#, fuzzy
+msgid ""
+"If enabled, the Food Type select box will default to a multi select on the "
+"food listing page in filter section."
+msgstr ""
+"Pokud je tato možnost povolena, pole pro výběr typu jídla se ve výchozím "
+"nastavení změní na vícenásobný výběr na stránce seznamu potravin v sekci "
+"filtru."
+
+#: admin/wpfm-settings.php:212
+#, fuzzy
+msgid "Multi-select Food Menu"
+msgstr "Vícenásobný výběr Jídelní lístek"
+
+#: admin/wpfm-settings.php:213
+#, fuzzy
+msgid "Enable Food Menu multiselect by default."
+msgstr "Ve výchozím nastavení povolte vícenásobný výběr Food Menu."
+
+#: admin/wpfm-settings.php:214
+#, fuzzy
+msgid ""
+"If enabled, the Food Menu select box will default to a multi select on the "
+"food listing page in filter section."
+msgstr ""
+"Pokud je tato možnost povolena, pole pro výběr nabídky potravin se na "
+"stránce seznamu potravin v sekci filtru změní na vícenásobný výběr."
+
+#: admin/wpfm-settings.php:221 includes/wpfm-custom-post-types.php:99
+#, fuzzy
+msgid "Food Thumbnail"
+msgstr "Miniatura jídla"
+
+#: admin/wpfm-settings.php:222
+#, fuzzy
+msgid ""
+"Based on any option selection, it will reflect the thumbnail placement on "
+"food menu page."
+msgstr ""
+"Na základě výběru libovolné možnosti bude odrážet umístění miniatury na "
+"stránce s nabídkou jídla."
+
+#: admin/wpfm-settings.php:225
+#, fuzzy
+msgid "Left Side."
+msgstr "Levá strana."
+
+#: admin/wpfm-settings.php:226
+#, fuzzy
+msgid "Right Side."
+msgstr "Líc."
+
+#: admin/wpfm-settings.php:227
+#, fuzzy
+msgid "Disable."
+msgstr "Zakázáním této možnosti odeberete funkce organizátorů na webu akcí."
+
+#: admin/wpfm-settings.php:233
+#, fuzzy
+msgid "Food Submission"
+msgstr "Odeslání jídla"
+
+#: admin/wpfm-settings.php:238
+msgid "Account Required"
+msgstr "Je vyžadován účet"
+
+#: admin/wpfm-settings.php:239
+msgid "Submitting listings requires an account."
+msgstr "Odesílání nabídek vyžaduje účet."
+
+#: admin/wpfm-settings.php:240
+msgid ""
+"If disabled, non-logged in users will be able to submit listings without "
+"creating an account."
+msgstr ""
+"Pokud je zakázáno, budou moci neregistrovaný uživatelé předložit výpisy bez "
+"vytvoření účtu."
+
+#: admin/wpfm-settings.php:247
+msgid "Account Creation"
+msgstr "Založení účtu"
+
+#: admin/wpfm-settings.php:248
+msgid "Allow account creation."
+msgstr "Povolit vytvoření účtu."
+
+#: admin/wpfm-settings.php:249
+msgid ""
+"If enabled, non-logged in users will be able to create an account by "
+"entering their email address on the submission form."
+msgstr ""
+"Pokud je povoleno, budou nepřihlášení uživatelé moci vytvořit účet zadáním "
+"své e-mailové adresy ve formuláři pro podání návrhu."
+
+#: admin/wpfm-settings.php:256
+msgid "Account Username"
+msgstr "Uživatelské jméno účtu"
+
+#: admin/wpfm-settings.php:257
+msgid "Automatically Generate Username from Email Address."
+msgstr "Automaticky generovat uživatelské jméno z e-mailové adresy."
+
+#: admin/wpfm-settings.php:258
+msgid ""
+"If enabled, a username will be generated from the first part of the user "
+"email address. Otherwise, a username field will be shown."
+msgstr ""
+"Pokud je povoleno, bude uživatelské jméno generováno z první části "
+"uživatelem zadané e-mailové adresy. V opačném případě se zobrazí pole "
+"uživatelské jméno."
+
+#: admin/wpfm-settings.php:265
+msgid "Account Password"
+msgstr "Heslo účtu"
+
+#: admin/wpfm-settings.php:266
+msgid ""
+"Use WordPress' default behavior and email new users link to set a password."
+msgstr ""
+"Použijte výchozí chování WordPress a pošlete e-mail novým uživatelům k "
+"nastavení hesla."
+
+#: admin/wpfm-settings.php:267
+msgid ""
+"If enabled, an email will be sent to the user with their username and a link "
+"to set their password. Otherwise, a password field will be shown and their "
+"email address won't be verified."
+msgstr ""
+"Pokud je tato možnost povolena, bude uživateli zaslán e-mail s jeho "
+"uživatelským jménem a odkazem na nastavení hesla. V opačném případě se "
+"zobrazí pole hesla a jeho e-mailová adresa nebude ověřena."
+
+#: admin/wpfm-settings.php:274
+msgid "Account Role"
+msgstr "Funkce účtu"
+
+#: admin/wpfm-settings.php:275
+msgid ""
+"If you enable user registration on your submission form, choose a role for "
+"the new user."
+msgstr ""
+"Pokud povolíte registraci uživatele ve formuláři pro odeslání, vyberte roli "
+"pro nového uživatele."
+
+#: admin/wpfm-settings.php:282
+msgid "Moderate New Listings"
+msgstr "Moderovat nové zápisy"
+
+#: admin/wpfm-settings.php:283
+msgid "New listing submissions require admin approval."
+msgstr "Odeslání nových zápisů vyžaduje schválení správcem."
+
+#: admin/wpfm-settings.php:284
+msgid "If enabled, new submissions will be inactive, pending admin approval."
+msgstr ""
+"Pokud je povoleno, budou nové podání neaktivní, čeká se na schválení "
+"správcem."
+
+#: admin/wpfm-settings.php:291
+msgid "Pages"
+msgstr "Stránky"
+
+#: admin/wpfm-settings.php:296
+#, fuzzy
+msgid "Submit a Food"
+msgstr "Odeslat potravinu"
+
+#: admin/wpfm-settings.php:297
+#, fuzzy
+msgid ""
+"Select the page where you have placed the [add_food] shortcode. This lets "
+"the plugin know where the form is located."
+msgstr ""
+"Vyberte stránku, na kterou jste umístili krátký kód [add_food]. To umožní "
+"zásuvnému modulu zjistit, kde se formulář nachází."
+
+#: admin/wpfm-settings.php:303 templates/food-dashboard.php:87
+#, fuzzy
+msgid "Food Dashboard"
+msgstr "Palubní deska potravin"
+
+#: admin/wpfm-settings.php:304
+#, fuzzy
+msgid ""
+"Select the page where you have placed the [food_dashboard] shortcode. This "
+"lets the plugin know where the dashboard is located."
+msgstr ""
+"Vyberte stránku, na kterou jste umístili krátký kód [food_dashboard]. Díky "
+"tomu plugin ví, kde se ovládací panel nachází."
+
+#: admin/wpfm-settings.php:310 includes/wpfm-custom-post-types.php:59
+#: shortcodes/wpfm-shortcodes.php:264 templates/food-dashboard.php:14
+msgid "Foods"
+msgstr "Jídlo"
+
+#: admin/wpfm-settings.php:311
+#, fuzzy
+msgid ""
+"Select the page where you have placed the [foods] shortcode. This lets the "
+"plugin know where the food listings page is located."
+msgstr ""
+"Vyberte stránku, na kterou jste umístili krátký kód [potraviny]. Díky tomu "
+"plugin zjistí, kde se nachází stránka se seznamem potravin."
+
+#: admin/wpfm-settings.php:317 includes/wpfm-custom-post-types.php:130
+msgid "Menu"
+msgstr "Menu"
+
+#: admin/wpfm-settings.php:318
+#, fuzzy
+msgid ""
+"Select the page where you have placed the [wpfm_food_menu] shortcode. This "
+"lets the plugin know where the food menu listings page is located."
+msgstr ""
+"Vyberte stránku, na kterou jste umístili krátký kód [wpfm_food_menu]. Díky "
+"tomu plugin zjistí, kde se nachází stránka se seznamem jídelních lístků."
+
+#: admin/wpfm-settings.php:324 admin/wpfm-settings.php:327
+msgid "Currency"
+msgstr "Měna"
+
+#: admin/wpfm-settings.php:328
+msgid ""
+"This controls what currency prices are listed at in the catalog and which "
+"currency gateways will take payments in."
+msgstr ""
+"To určuje, jaké měny u ceny jsou uvedeny v katalogu a které měnové brány "
+"budou platit."
+
+#: admin/wpfm-settings.php:336
+msgid "Currency Position"
+msgstr "Umístění měny"
+
+#: admin/wpfm-settings.php:337
+msgid "This controls the position of the currency symbol."
+msgstr "Tím se řídí poloha symbolu měny."
+
+#: admin/wpfm-settings.php:343
+msgid "Left"
+msgstr "Vlevo"
+
+#: admin/wpfm-settings.php:344
+msgid "Right"
+msgstr "Vpravo"
+
+#: admin/wpfm-settings.php:345
+msgid "Left with space"
+msgstr "Vlevo s mezerou"
+
+#: admin/wpfm-settings.php:346
+msgid "Right with space"
+msgstr "Vpravo s prostorem"
+
+#: admin/wpfm-settings.php:350
+msgid "Thousand Separator"
+msgstr "Oddělovač tisíců"
+
+#: admin/wpfm-settings.php:351
+msgid "This sets the thousand separator of displayed prices."
+msgstr "Tím se nastaví oddělovač tisíců zobrazených cen."
+
+#: admin/wpfm-settings.php:358
+msgid "Decimal Separator"
+msgstr "Oddělovač desetin"
+
+#: admin/wpfm-settings.php:359
+msgid "This sets the decimal separator of displayed prices."
+msgstr "Tím se nastaví oddělovač desetinných míst zobrazených cen."
+
+#: admin/wpfm-settings.php:366
+msgid "Number of Decimals"
+msgstr "Počet desetinných míst"
+
+#: admin/wpfm-settings.php:367
+msgid "This sets the number of decimal points shown in displayed prices."
+msgstr ""
+"Tím se nastaví počet desetinných míst zobrazených v zobrazených cenách."
+
+#: admin/wpfm-settings.php:380
+msgid "Shortcodes"
+msgstr "Zkratky (Shortcodes)"
+
+#: admin/wpfm-settings.php:383
+#, fuzzy
+msgid "Restaurant Menu Title"
+msgstr "Název menu restaurace"
+
+#: admin/wpfm-settings.php:384
+#, fuzzy
+msgid "Displays the list of restaurant food menu titles using the shortcode."
+msgstr "Zobrazí seznam názvů jídelních lístků restaurací pomocí krátkého kódu."
+
+#: admin/wpfm-settings.php:393
+#, fuzzy
+msgid "Restaurant Menu"
+msgstr "Jídelní lístek restaurace"
+
+#: admin/wpfm-settings.php:394
+#, fuzzy
+msgid "Displays the list of restaurant food menu using the shortcode."
+msgstr "Zobrazí seznam jídelního lístku restaurace pomocí krátkého kódu."
+
+#: admin/wpfm-settings.php:434
+msgid "Settings successfully saved"
+msgstr "Nastavení úspěšně uloženo"
+
+#: admin/wpfm-settings.php:503
+msgid "--no page--"
+msgstr "—žádná stránka--"
+
+#: admin/wpfm-settings.php:507
+msgid "Select a page&hellip;"
+msgstr "Vyberte stránku&hellip;"
+
+#: admin/wpfm-settings.php:559 admin/wpfm-setup.php:229
+msgid "Helpful Resources"
+msgstr "Užitečné zdroje"
+
+#: admin/wpfm-settings.php:567 admin/wpfm-setup.php:236
+msgid "Knowledge Base"
+msgstr "Znalostní databáze"
+
+#: admin/wpfm-settings.php:568 admin/wpfm-setup.php:237
+msgid "Solve your queries by browsing our documentation."
+msgstr "Vyřešte své dotazy procházením naší dokumentace."
+
+#: admin/wpfm-settings.php:569 admin/wpfm-setup.php:238
+msgid "Browse More"
+msgstr "Procházet více"
+
+#: admin/wpfm-settings.php:577 admin/wpfm-setup.php:246
+msgid "FAQs"
+msgstr "FAQs"
+
+#: admin/wpfm-settings.php:578 admin/wpfm-setup.php:247
+msgid "Explore through the frequently asked questions."
+msgstr "Projděte si nejčastější dotazy."
+
+#: admin/wpfm-settings.php:579 admin/wpfm-setup.php:248
+msgid "Get Answers"
+msgstr "Získejte odpovědi"
+
+#: admin/wpfm-settings.php:587 admin/wpfm-setup.php:256
+msgid "Video Tutorials"
+msgstr "Video Návody"
+
+#: admin/wpfm-settings.php:588 admin/wpfm-setup.php:257
+msgid "Learn different skills by examining attractive video tutorials."
+msgstr "Naučte se různé dovednosti zkoumáním atraktivních video tutoriálů."
+
+#: admin/wpfm-settings.php:589 admin/wpfm-setup.php:258
+msgid "Watch all"
+msgstr "Přehrát vše"
+
+#: admin/wpfm-settings.php:593
+msgid "Powered By"
+msgstr "Běží na"
+
+#: admin/wpfm-setup.php:94
+msgid "Error in nonce. Try again."
+msgstr "Chyba v nonce. Zkuste to znovu."
+
+#: admin/wpfm-setup.php:118
+#, fuzzy
+msgid "WP Food Manager Setup"
+msgstr "Nastavení WP Food Manager"
+
+#: admin/wpfm-setup.php:123 admin/wpfm-setup.php:128 admin/wpfm-setup.php:133
+msgid "1. Introduction"
+msgstr "1. Úvod"
+
+#: admin/wpfm-setup.php:124 admin/wpfm-setup.php:129 admin/wpfm-setup.php:134
+msgid "2. Page Setup"
+msgstr "2. Nastavení stránky"
+
+#: admin/wpfm-setup.php:125 admin/wpfm-setup.php:130 admin/wpfm-setup.php:135
+msgid "3. Done"
+msgstr "3. Hotovo"
+
+#: admin/wpfm-setup.php:142
+msgid "Setup Wizard Introduction"
+msgstr "Průvodce nastavením"
+
+#: admin/wpfm-setup.php:143
+#, fuzzy
+msgid "Thanks for installing WP Food Manager!"
+msgstr "Děkujeme za instalaci WP Food Manager!"
+
+#: admin/wpfm-setup.php:144
+#, fuzzy
+msgid ""
+"This setup wizard will help you get started by creating various pages for "
+"listing your foods, food dashboard and add food along with setting up "
+"Ingredients and Nutritions."
+msgstr ""
+"Tento průvodce nastavením vám pomůže začít vytvořením různých stránek pro "
+"seznam vašich potravin, řídicího panelu potravin a přidání jídla spolu s "
+"nastavením ingrediencí a nutričních hodnot."
+
+#: admin/wpfm-setup.php:145
+#, php-format
+msgid ""
+"The process is still relatively simple if you want to skip the wizard and "
+"manually set up the pages and shortcodes yourself. Please refer to the "
+"%1$sdocumentation%2$s for support."
+msgstr ""
+"Proces je stále poměrně jednoduchý, pokud chcete průvodce přeskočit a ručně "
+"nastavit stránky a zkrácené kódy sami. Podporu naleznete v %1$sdokumentaci"
+"%2$s pro podporu."
+
+#: admin/wpfm-setup.php:148
+msgid "Continue to page setup"
+msgstr "Pokračovat v nastavení stránky"
+
+#: admin/wpfm-setup.php:149
+msgid "Skip for now"
+msgstr "Prozatím přeskočit"
+
+#: admin/wpfm-setup.php:154
+msgid "Page Setup"
+msgstr "Vzhled stránky"
+
+#: admin/wpfm-setup.php:155
+#, fuzzy, php-format
+msgid ""
+"The <em>WP Food Manager</em> includes %1$sshortcodes%2$s which can be used "
+"to output content within your %3$spages%2$s. These can be generated directly "
+"as mentioned below. Check the shortcode documentation for more information "
+"on food %4$sshortcodes%2$s."
+msgstr ""
+"<em>WP Food Manager</em> obsahuje %1$skrátké kódy%2$s, které lze použít k "
+"výstupu obsahu na vašich %3$sstránkách%2$s. Ty lze generovat přímo, jak je "
+"uvedeno níže. Další informace o krátkých kódech potravin %4$snajdete v "
+"dokumentaci ke zkráceným kódům%2$s."
+
+#: admin/wpfm-setup.php:162
+msgid "Page Title"
+msgstr "Titulek stránky"
+
+#: admin/wpfm-setup.php:163
+msgid "Page Description"
+msgstr "Popis stránky"
+
+#: admin/wpfm-setup.php:164
+msgid "Content Shortcode"
+msgstr "Shortcode obsahu"
+
+#: admin/wpfm-setup.php:170
+msgctxt "Default page title (wizard)"
+msgid "Foods"
+msgstr "Jídlo"
+
+#: admin/wpfm-setup.php:171
+#, fuzzy
+msgid ""
+"This page allows users to browse, search, and filter food listings on the "
+"front-end of your site."
+msgstr ""
+"Tato stránka umožňuje uživatelům procházet, vyhledávat a filtrovat seznamy "
+"jídel na front-endu vašeho webu."
+
+#: admin/wpfm-setup.php:176
+#, fuzzy
+msgctxt "Default page title (wizard)"
+msgid "Add Food"
+msgstr "Přidat jídlo"
+
+#: admin/wpfm-setup.php:178
+#, fuzzy
+msgid ""
+"This page allows peoples to add food to your website from the front-end."
+msgstr "Tato stránka umožňuje lidem přidávat jídlo na váš web z front-endu."
+
+#: admin/wpfm-setup.php:179
+#, fuzzy
+msgid ""
+"If you do not wish to accept submissions from users in this way (for example "
+"you just want to post foods from the admin dashboard) you can skip creating "
+"this page."
+msgstr ""
+"Pokud si nepřejete přijímat příspěvky od uživatelů tímto způsobem (například "
+"chcete pouze zveřejňovat potraviny z administračního panelu), můžete "
+"vytvoření této stránky přeskočit."
+
+#: admin/wpfm-setup.php:185
+#, fuzzy
+msgctxt "Default page title (wizard)"
+msgid "Food Dashboard"
+msgstr "Palubní deska potravin"
+
+#: admin/wpfm-setup.php:187
+#, fuzzy
+msgid ""
+"This page allows peoples to manage and edit their own foods from the front-"
+"end."
+msgstr ""
+"Tato stránka umožňuje lidem spravovat a upravovat svá vlastní jídla z front-"
+"endu."
+
+#: admin/wpfm-setup.php:188 admin/wpfm-setup.php:197
+msgid ""
+"If you plan on managing all listings from the admin dashboard you can skip "
+"creating this page."
+msgstr ""
+"Pokud máte v plánu spravovat všechny výpisy z panelu admin můžete přeskočit "
+"vytvoření této stránky."
+
+#: admin/wpfm-setup.php:194
+msgctxt "Default page title (wizard)"
+msgid "Menu"
+msgstr "Menu"
+
+#: admin/wpfm-setup.php:196
+#, fuzzy
+msgid ""
+"This page allows peoples to manage and edit their own food menu from the "
+"front-end."
+msgstr ""
+"Tato stránka umožňuje lidem spravovat a upravovat svůj vlastní jídelní "
+"lístek z front-endu."
+
+#: admin/wpfm-setup.php:206
+msgid "Skip this step"
+msgstr "Tento krok přeskočit"
+
+#: admin/wpfm-setup.php:218
+msgid "All Done!"
+msgstr "Vše hotové!"
+
+#: admin/wpfm-setup.php:222
+#, fuzzy
+msgid ""
+"Thanks for installing WP Food Manager! Here are some valuable resources that "
+"will assist you in getting started with our plugins."
+msgstr ""
+"Děkujeme za instalaci WP Food Manager! Zde je několik cenných zdrojů, které "
+"vám pomohou začít s našimi pluginy."
+
+#: admin/wpfm-setup.php:224
+#, fuzzy
+msgid "Create Your First Food"
+msgstr "Vytvořte si své první jídlo"
+
+#: admin/wpfm-setup.php:268
+msgid "Add ons Support"
+msgstr "Podpora doplňků"
+
+#: admin/wpfm-setup.php:269
+msgid ""
+"Get support for all the Add ons related queries with our experienced/ "
+"talented support team."
+msgstr ""
+"Získejte podporu pro všechny dotazy týkající se přidání s naším zkušeným / "
+"talentovaným týmem podpory."
+
+#: admin/wpfm-setup.php:270
+msgid "Get Add ons Support"
+msgstr "Získat podporu doplňků"
+
+#: admin/wpfm-writepanels.php:65
+#, fuzzy
+msgid "Enter Your Food Name"
+msgstr "Zadejte název svého krmiva"
+
+#: admin/wpfm-writepanels.php:112
+#, fuzzy
+msgid "Select food category"
+msgstr "Vyberte kategorii potravin"
+
+#: admin/wpfm-writepanels.php:131
+#, fuzzy
+msgid "Select food types"
+msgstr "Vyberte druhy potravin"
+
+#: admin/wpfm-writepanels.php:242 includes/wpfm-custom-taxonomies.php:232
+#, fuzzy
+msgid "Toppings"
+msgstr "Polevy"
+
+#: admin/wpfm-writepanels.php:248 includes/wpfm-custom-taxonomies.php:181
+msgid "Ingredients"
+msgstr "Ingredience"
+
+#: admin/wpfm-writepanels.php:254 includes/wpfm-custom-taxonomies.php:283
+msgid "Nutritions"
+msgstr "Nutriční hodnoty"
+
+#: admin/wpfm-writepanels.php:260
+msgid "Advanced"
+msgstr "Pokročilé"
+
+#: admin/wpfm-writepanels.php:372
+#, php-format
+msgid "%s Data"
+msgstr "%s Datum"
+
+#: admin/wpfm-writepanels.php:373
+msgid "Menu Icon"
+msgstr "Ikona menu"
+
+#: admin/wpfm-writepanels.php:374
+#, fuzzy
+msgid "Select Food "
+msgstr "Vybrat jídlo "
+
+#: admin/wpfm-writepanels.php:416
+#, fuzzy
+msgid "Food Redirection Enable/Disable"
+msgstr "Přesměrování jídla Povolit/Zakázat"
+
+#: admin/wpfm-writepanels.php:443
+#, fuzzy
+msgid "Food Image Enable/Disable"
+msgstr "Povolit/zakázat obrázek jídla"
+
+#: autoupdater/templates/activated-key.php:2
+#, fuzzy, php-format
+msgid "Your licence for <strong>%s</strong> has been activated. Thanks!"
+msgstr "Vaše licence pro <strong>%s</strong> byla aktivována. Dík!"
+
+#: autoupdater/templates/addon-licence.php:10
+#: autoupdater/wpfm-updater-license.php:36
+#: autoupdater/wpfm-updater-license.php:37
+#: autoupdater/wpfm-updater-license.php:64
+msgid "License"
+msgstr "Licence"
+
+#: autoupdater/templates/addon-licence.php:14
+msgid "Email"
+msgstr "Email"
+
+#: autoupdater/templates/addon-licence.php:15
+msgid "Email address"
+msgstr "Emailová adresa"
+
+#: autoupdater/templates/addon-licence.php:19
+msgid "Deactivate License"
+msgstr "Deaktivovat licenci"
+
+#: autoupdater/templates/addon-licence.php:21
+msgid "Activate License"
+msgstr "Aktivovat licenci"
+
+#: autoupdater/templates/deactivated-key.php:2
+#, fuzzy, php-format
+msgid "Your licence for <strong>%s</strong> has been deactivated."
+msgstr "Vaše licence pro <strong>%s</strong> byla deaktivována."
+
+#: autoupdater/templates/key-expire-notice.php:6
+#: autoupdater/templates/key-expire-notice.php:12
+#: autoupdater/templates/key-notice.php:3
+msgid "Hide notice"
+msgstr "Skrýt oznámení"
+
+#: autoupdater/templates/key-expire-notice.php:7
+#, fuzzy, php-format
+msgid ""
+"A licence key for <strong>\"%1$s\"</strong> will expired on<strong> %2$s</"
+"strong>. Please renew your subscription to continue the plugin work."
+msgstr ""
+"Platnost licenčního klíče pro <strong>\"%1$s\"</strong> vyprší dne<strong> "
+"%2$s</strong>. Chcete-li pokračovat v práci s pluginem, obnovte své "
+"předplatné."
+
+#: autoupdater/templates/key-expire-notice.php:13
+#, fuzzy, php-format
+msgid ""
+"A licence key for <strong>\"%1$s\"</strong> is expired. Please renew your "
+"subscription to continue the plugin work."
+msgstr ""
+"Platnost licenčního klíče pro <strong>\"%1$s\"</strong> vypršela. Chcete-li "
+"pokračovat v práci s pluginem, obnovte své předplatné."
+
+#: autoupdater/templates/key-notice.php:4
+#, fuzzy, php-format
+msgid ""
+"Please enter your licence key in <a href=\"%1$s\">the plugin list</a> below "
+"to get activate all features of \"%2$s\"."
+msgstr ""
+"Zadejte prosím svůj licenční klíč do <a href=\"%1$s\">seznamu pluginů</a> "
+"níže, abyste aktivovali všechny funkce \"%2$s\"."
+
+#: autoupdater/templates/key-notice.php:5
+#, fuzzy, php-format
+msgid "Lost your key? <a href=\"%s\">Retrieve it here</a>."
+msgstr "Ztratili jste klíč? <a href=\"%s\">Stáhněte si jej zde</a>."
+
+#: autoupdater/templates/ms-update.php:6
+#, php-format
+msgid ""
+"There is a new version of %1$s available. <a target=\"_blank\" class="
+"\"thickbox\" href=\"%2$s\">View version %3$s details</a> or <a href=\"%4$s"
+"\">update now</a>."
+msgstr ""
+"Je dostupná nová verze %1$s. <a target=\"_blank\" class=\"thickbox\" href="
+"\"%2$s\">Zobrazit podrobnosti o verzi %3$s</a> nebo <a href=\"%4$s"
+"\">aktualizovat nyní</a>."
+
+#: autoupdater/wpfm-updater-license.php:83
+#, fuzzy
+msgid "Lost your license key?"
+msgstr "Ztratili jste licenční klíč?"
+
+#: autoupdater/wpfm-updater-license.php:83
+#, fuzzy
+msgid "Retrieve it here"
+msgstr "Stáhněte si jej zde"
+
+#: autoupdater/wpfm-updater.php:262
+#, fuzzy
+msgid "Activate licence"
+msgstr "Aktivovat licenci"
+
+#: autoupdater/wpfm-updater.php:449
+#, fuzzy, php-format
+msgid ""
+"A licence key for %1$s could not be found. Maybe you forgot to enter a "
+"licence key when setting up %2$s."
+msgstr ""
+"Licenční klíč pro %1$s nebyl nalezen. Možná jste při nastavování %2$s "
+"zapomněli zadat licenční klíč."
+
+#: forms/wpfm-add-food-form.php:35
+msgid "Submit Details"
+msgstr "Odeslat podrobnosti"
+
+#: forms/wpfm-add-food-form.php:41 forms/wpfm-add-food-form.php:482
+#: templates/food-preview.php:18
+msgid "Preview"
+msgstr "Náhled"
+
+#: forms/wpfm-add-food-form.php:47
+msgid "Done"
+msgstr "Hotovo"
+
+#: forms/wpfm-add-food-form.php:124 forms/wpfm-add-food-form.php:197
+#, fuzzy
+msgid "Food Tag"
+msgstr "Štítek na jídlo"
+
+#: forms/wpfm-add-food-form.php:152 forms/wpfm-add-food-form.php:155
+#: wp-food-manager-functions.php:792
+#, fuzzy
+msgid "Food Title"
+msgstr "Název jídla"
+
+#: forms/wpfm-add-food-form.php:159 includes/wpfm-custom-taxonomies.php:21
+#: templates/content-single-food_manager.php:574
+#, fuzzy
+msgid "Food Category"
+msgstr "Kategorie potravin"
+
+#: forms/wpfm-add-food-form.php:168 includes/wpfm-custom-taxonomies.php:74
+#, fuzzy
+msgid "Food Type"
+msgstr "Typ krmiva"
+
+#: forms/wpfm-add-food-form.php:177 includes/wpfm-custom-taxonomies.php:180
+#, fuzzy
+msgid "Food Ingredient"
+msgstr "Potravinářská složka"
+
+#: forms/wpfm-add-food-form.php:187
+#, fuzzy
+msgid "Food Nutrition"
+msgstr "Výživa potravin"
+
+#: forms/wpfm-add-food-form.php:206
+#, fuzzy
+msgid "Food Banner "
+msgstr "Potravinový banner "
+
+#: forms/wpfm-add-food-form.php:231
+msgid "Regular Price"
+msgstr "Bežná cena"
+
+#: forms/wpfm-add-food-form.php:239
+msgid "Sale Price"
+msgstr "Cena po slevě"
+
+#: forms/wpfm-add-food-form.php:251
+msgid "In stock"
+msgstr "Skladem"
+
+#: forms/wpfm-add-food-form.php:252
+msgid "Out of stock"
+msgstr "Není skladem"
+
+#: forms/wpfm-add-food-form.php:258
+#, fuzzy
+msgid "Enable Ingredient"
+msgstr "Povolit přísadu"
+
+#: forms/wpfm-add-food-form.php:267
+#, fuzzy
+msgid "Enable Nutrition"
+msgstr "Povolit výživu"
+
+#: forms/wpfm-add-food-form.php:276
+#, fuzzy
+msgid "Food Label"
+msgstr "Etiketa na potraviny"
+
+#: forms/wpfm-add-food-form.php:286
+#, fuzzy
+msgid "Topping Name"
+msgstr "Název polevy"
+
+#: forms/wpfm-add-food-form.php:289
+#, fuzzy
+msgid "Enter Topping option name"
+msgstr "Zadejte název možnosti polevy"
+
+#: forms/wpfm-add-food-form.php:294
+#, fuzzy
+msgid "Topping Description"
+msgstr "Popis polevy"
+
+#: forms/wpfm-add-food-form.php:305
+#, fuzzy
+msgid "Enter option name"
+msgstr "Zadejte název možnosti"
+
+#: forms/wpfm-add-food-form.php:330 forms/wpfm-add-food-form.php:336
+#, php-format
+msgid "%s is a required field."
+msgstr "%s je povinné pole."
+
+#: forms/wpfm-add-food-form.php:348
+#, php-format
+msgid "%s is invalid."
+msgstr "%s je neplatný."
+
+#: forms/wpfm-add-food-form.php:364 wp-food-manager-functions.php:759
+#, fuzzy, php-format
+msgid "\"%s\" (filetype %s) needs to be one of the following file types: %s."
+msgstr ""
+"\"%s\" (typ souboru %s) musí být jedním z následujících typů souborů: %s."
+
+#: forms/wpfm-add-food-form.php:520
+msgid "Please enter a username."
+msgstr "Zadejte prosím uživatelské jméno."
+
+#: forms/wpfm-add-food-form.php:524 forms/wpfm-add-food-form.php:528
+msgid "Please enter your email address."
+msgstr "Prosíme zadejte svou e-mailovou adresu."
+
+#: forms/wpfm-add-food-form.php:533
+msgid "Passwords must match."
+msgstr "Hesla se musí shodovat."
+
+#: forms/wpfm-add-food-form.php:539
+#, php-format
+msgid "Invalid Password: %s"
+msgstr "Neplatné heslo: %s"
+
+#: forms/wpfm-add-food-form.php:541
+msgid "Password is not valid."
+msgstr "Heslo není platné."
+
+#: forms/wpfm-add-food-form.php:561
+msgid "You must be signed in to post a new listing."
+msgstr "Musíte být přihlášeni, abyste mohli přidat inzerát."
+
+#: forms/wpfm-edit-food-form.php:61
+msgid "Invalid listing"
+msgstr "Neplatný výpis"
+
+#: forms/wpfm-edit-food-form.php:147
+msgid "Save changes"
+msgstr "Uložit změny"
+
+#: forms/wpfm-edit-food-form.php:182 forms/wpfm-edit-food-form.php:185
+msgid "Your changes have been saved."
+msgstr "Vaše změny byly uloženy."
+
+#: forms/wpfm-edit-food-form.php:182
+msgid "View &rarr;"
+msgstr "Zobrazit &rarr;"
+
+#: includes/wpfm-action-hooks.php:168
+msgid "Select Date"
+msgstr "Vyberte datum"
+
+#: includes/wpfm-action-hooks.php:169
+msgid "Today"
+msgstr "Dnes"
+
+#: includes/wpfm-action-hooks.php:170
+msgid "Tomorrow"
+msgstr "Zítra"
+
+#: includes/wpfm-action-hooks.php:171
+msgid "This Week"
+msgstr "Tento týden"
+
+#: includes/wpfm-action-hooks.php:172
+msgid "Next Week"
+msgstr "Následující týden"
+
+#: includes/wpfm-action-hooks.php:173
+msgid "This Month"
+msgstr "Tento měsíc"
+
+#: includes/wpfm-action-hooks.php:174 includes/wpfm-action-hooks.php:176
+msgid "Next Month"
+msgstr "Následující měsíc"
+
+#: includes/wpfm-action-hooks.php:175
+msgid "This Year"
+msgstr "Tento rok"
+
+#: includes/wpfm-action-hooks.php:191
+msgid "Cancel"
+msgstr "Zrušit"
+
+#: includes/wpfm-action-hooks.php:192
+#, fuzzy
+msgid "Are you sure you want to delete this food?"
+msgstr "Opravdu chcete toto krmivo smazat?"
+
+#: includes/wpfm-ajax.php:215
+#, fuzzy
+msgid "There is no food item listed in your food manager."
+msgstr "Ve vašem food manageru není uvedena žádná potravinová položka."
+
+#: includes/wpfm-ajax.php:283
+#, php-format
+msgid "Search completed. Found %d matching record."
+msgid_plural "Search completed. Found %d matching records."
+msgstr[0] "Hledání bylo dokončeno. Byl nalezen %d odpovídající záznam."
+msgstr[1] ""
+msgstr[2] ""
+
+#: includes/wpfm-ajax.php:358
+msgid "You must be logged in to upload files using this method."
+msgstr ""
+"Musíte být přihlášeni, abyste pomocí této metody mohli nahrávat soubory ."
+
+#: includes/wpfm-custom-post-types.php:58
+msgid "Food"
+msgstr "Jídlo"
+
+#: includes/wpfm-custom-post-types.php:68
+msgctxt "Post type archive slug - resave permalinks after changing this"
+msgid "foods"
+msgstr "jídlo"
+
+#: includes/wpfm-custom-post-types.php:88 templates/food-dashboard.php:97
+#, fuzzy
+msgid "Add Food"
+msgstr "Přidat jídlo"
+
+#: includes/wpfm-custom-post-types.php:100
+#, fuzzy
+msgid "Set food thumbnail"
+msgstr "Nastavení miniatury jídla"
+
+#: includes/wpfm-custom-post-types.php:101
+#, fuzzy
+msgid "Remove food thumbnail"
+msgstr "Odstranit miniaturu jídla"
+
+#: includes/wpfm-custom-post-types.php:102
+#: includes/wpfm-custom-post-types.php:162
+#, fuzzy
+msgid "Use as food thumbnail"
+msgstr "Použití jako miniatura jídla"
+
+#: includes/wpfm-custom-post-types.php:131
+msgid "Menus"
+msgstr "Nabídky"
+
+#: includes/wpfm-custom-post-types.php:146 templates/food-filters.php:28
+msgid "Food Menu"
+msgstr "Jídelní lístek"
+
+#: includes/wpfm-custom-post-types.php:148
+msgid "Add New"
+msgstr "Přidat nový"
+
+#: includes/wpfm-custom-post-types.php:149
+#, php-format
+msgid "Add %s"
+msgstr "Přidat %s"
+
+#: includes/wpfm-custom-post-types.php:151
+#: includes/wpfm-custom-taxonomies.php:51
+#: includes/wpfm-custom-taxonomies.php:104
+#: includes/wpfm-custom-taxonomies.php:157
+#: includes/wpfm-custom-taxonomies.php:209
+#: includes/wpfm-custom-taxonomies.php:260
+#: includes/wpfm-custom-taxonomies.php:311
+#: includes/wpfm-custom-taxonomies.php:362
+#, php-format
+msgid "Edit %s"
+msgstr "Upravit %s"
+
+#: includes/wpfm-custom-post-types.php:152
+#, php-format
+msgid "New %s"
+msgstr "Nový %s"
+
+#: includes/wpfm-custom-post-types.php:153
+#: includes/wpfm-custom-post-types.php:154
+#: includes/wpfm-custom-post-types.php:163
+#: includes/wpfm-custom-taxonomies.php:105
+#, php-format
+msgid "View %s"
+msgstr "Zobrazit %s"
+
+#: includes/wpfm-custom-post-types.php:155
+#: includes/wpfm-custom-taxonomies.php:47
+#: includes/wpfm-custom-taxonomies.php:99
+#: includes/wpfm-custom-taxonomies.php:153
+#: includes/wpfm-custom-taxonomies.php:205
+#: includes/wpfm-custom-taxonomies.php:256
+#: includes/wpfm-custom-taxonomies.php:307
+#: includes/wpfm-custom-taxonomies.php:358
+#, php-format
+msgid "Search %s"
+msgstr "Hledat %s"
+
+#: includes/wpfm-custom-post-types.php:156
+#: includes/wpfm-custom-taxonomies.php:103
+#, php-format
+msgid "No %s found"
+msgstr "Žádné %s nebyly nalezeny"
+
+#: includes/wpfm-custom-post-types.php:157
+#, php-format
+msgid "No %s found in trash"
+msgstr "Žádné %s nebyly nenalezeny v koši"
+
+#: includes/wpfm-custom-post-types.php:158
+#: includes/wpfm-custom-taxonomies.php:49
+#: includes/wpfm-custom-taxonomies.php:101
+#: includes/wpfm-custom-taxonomies.php:155
+#: includes/wpfm-custom-taxonomies.php:207
+#: includes/wpfm-custom-taxonomies.php:258
+#: includes/wpfm-custom-taxonomies.php:309
+#: includes/wpfm-custom-taxonomies.php:360
+#, php-format
+msgid "Parent %s"
+msgstr "Nadřazená %s"
+
+#: includes/wpfm-custom-post-types.php:159
+#, fuzzy
+msgid "Food Menu Image"
+msgstr "Obrázek jídelního lístku"
+
+#: includes/wpfm-custom-post-types.php:165
+#, php-format
+msgid "This is where you can create and manage %s."
+msgstr "To je místo, kde si můžete vytvořit a spravovat %s."
+
+#: includes/wpfm-custom-post-types.php:189
+#, php-format
+msgid "Preview <span class=\"count\">(%s)</span>"
+msgid_plural "Preview <span class=\"count\">(%s)</span>"
+msgstr[0] "Náhled <span class=\"count\">( %s)</span>"
+msgstr[1] ""
+msgstr[2] ""
+
+#: includes/wpfm-custom-post-types.php:497
+msgctxt "Food permalink - resave permalinks after changing this"
+msgid "food"
+msgstr "jídlo"
+
+#: includes/wpfm-custom-post-types.php:498
+#, fuzzy
+msgctxt "Food category slug - resave permalinks after changing this"
+msgid "food-category"
+msgstr "kategorie potravin"
+
+#: includes/wpfm-custom-post-types.php:499
+#, fuzzy
+msgctxt "Food type slug - resave permalinks after changing this"
+msgid "food-type"
+msgstr "potravinářský typ"
+
+#: includes/wpfm-custom-post-types.php:500
+#, fuzzy
+msgctxt "Food topping slug - resave permalinks after changing this"
+msgid "food-topping"
+msgstr "poleva na jídlo"
+
+#. translators: %s: product count
+#: includes/wpfm-custom-post-types.php:522
+#, fuzzy, php-format
+msgid "%s food updated."
+msgid_plural "%s foods updated."
+msgstr[0] "%s jídlo aktualizováno."
+msgstr[1] ""
+msgstr[2] ""
+
+#. translators: %s: product count
+#: includes/wpfm-custom-post-types.php:524
+#, fuzzy, php-format
+msgid "%s food not updated, somebody is editing it."
+msgid_plural "%s foods not updated, somebody is editing them."
+msgstr[0] "%s jídlo není aktualizováno, někdo ho upravuje."
+msgstr[1] ""
+msgstr[2] ""
+
+#. translators: %s: product count
+#: includes/wpfm-custom-post-types.php:526
+#, fuzzy, php-format
+msgid "%s food permanently deleted."
+msgid_plural "%s foods permanently deleted."
+msgstr[0] "%s jídlo trvale odstraněno."
+msgstr[1] ""
+msgstr[2] ""
+
+#. translators: %s: product count
+#: includes/wpfm-custom-post-types.php:528
+#, fuzzy, php-format
+msgid "%s food moved to the Trash."
+msgid_plural "%s foods moved to the Trash."
+msgstr[0] "%s jídlo přesunuto do koše."
+msgstr[1] ""
+msgstr[2] ""
+
+#. translators: %s: product count
+#: includes/wpfm-custom-post-types.php:530
+#, fuzzy, php-format
+msgid "%s food restored from the Trash."
+msgid_plural "%s foods restored from the Trash."
+msgstr[0] "%s jídlo obnovené z koše."
+msgstr[1] ""
+msgstr[2] ""
+
+#: includes/wpfm-custom-taxonomies.php:48
+#: includes/wpfm-custom-taxonomies.php:100
+#: includes/wpfm-custom-taxonomies.php:154
+#: includes/wpfm-custom-taxonomies.php:206
+#: includes/wpfm-custom-taxonomies.php:257
+#: includes/wpfm-custom-taxonomies.php:308
+#: includes/wpfm-custom-taxonomies.php:359
+#, php-format
+msgid "All %s"
+msgstr "Všechny %s"
+
+#: includes/wpfm-custom-taxonomies.php:50
+#: includes/wpfm-custom-taxonomies.php:102
+#: includes/wpfm-custom-taxonomies.php:156
+#: includes/wpfm-custom-taxonomies.php:208
+#: includes/wpfm-custom-taxonomies.php:259
+#: includes/wpfm-custom-taxonomies.php:310
+#: includes/wpfm-custom-taxonomies.php:361
+#, php-format
+msgid "Parent %s:"
+msgstr "Nadřazená %s:"
+
+#: includes/wpfm-custom-taxonomies.php:52
+#: includes/wpfm-custom-taxonomies.php:106
+#: includes/wpfm-custom-taxonomies.php:158
+#: includes/wpfm-custom-taxonomies.php:210
+#: includes/wpfm-custom-taxonomies.php:261
+#: includes/wpfm-custom-taxonomies.php:312
+#: includes/wpfm-custom-taxonomies.php:363
+#, php-format
+msgid "Update %s"
+msgstr "Aktualizovat %s"
+
+#: includes/wpfm-custom-taxonomies.php:53
+#: includes/wpfm-custom-taxonomies.php:107
+#: includes/wpfm-custom-taxonomies.php:159
+#: includes/wpfm-custom-taxonomies.php:211
+#: includes/wpfm-custom-taxonomies.php:262
+#: includes/wpfm-custom-taxonomies.php:313
+#: includes/wpfm-custom-taxonomies.php:364
+#, php-format
+msgid "Add New %s"
+msgstr "Přidat nové %s"
+
+#: includes/wpfm-custom-taxonomies.php:54
+#: includes/wpfm-custom-taxonomies.php:108
+#: includes/wpfm-custom-taxonomies.php:160
+#: includes/wpfm-custom-taxonomies.php:212
+#: includes/wpfm-custom-taxonomies.php:263
+#: includes/wpfm-custom-taxonomies.php:314
+#: includes/wpfm-custom-taxonomies.php:365
+#, php-format
+msgid "New %s Name"
+msgstr "Nový název pro %s"
+
+#: includes/wpfm-custom-taxonomies.php:55
+#: includes/wpfm-custom-taxonomies.php:109
+#: includes/wpfm-custom-taxonomies.php:161
+#, fuzzy, php-format
+msgid "No Food %s Found."
+msgstr "Nebylo nalezeno žádné jídlo %s."
+
+#: includes/wpfm-custom-taxonomies.php:56
+#: includes/wpfm-custom-taxonomies.php:110
+#: includes/wpfm-custom-taxonomies.php:162
+#: includes/wpfm-custom-taxonomies.php:367
+#, fuzzy, php-format
+msgid "← Go to Food %s"
+msgstr "← Přejít na %s potravin"
+
+#: includes/wpfm-custom-taxonomies.php:75
+msgid "Types"
+msgstr "Typy"
+
+#: includes/wpfm-custom-taxonomies.php:129
+msgid "Tags"
+msgstr "Štítky"
+
+#: includes/wpfm-custom-taxonomies.php:213
+#: includes/wpfm-custom-taxonomies.php:264
+#: includes/wpfm-custom-taxonomies.php:315
+#: includes/wpfm-custom-taxonomies.php:366
+#, fuzzy, php-format
+msgid "No %s Found."
+msgstr "Nebyl nalezen žádný %s."
+
+#: includes/wpfm-custom-taxonomies.php:214
+#: includes/wpfm-custom-taxonomies.php:265
+#: includes/wpfm-custom-taxonomies.php:316
+#, fuzzy, php-format
+msgid "← Go to %s"
+msgstr "← Přejděte na %s"
+
+#: includes/wpfm-custom-taxonomies.php:231
+#, fuzzy
+msgid "Food Topping"
+msgstr "Poleva na jídlo"
+
+#: includes/wpfm-custom-taxonomies.php:282
+#: templates/content-single-food_manager.php:97
+#, fuzzy
+msgid "Food Nutritions"
+msgstr "Výživové hodnoty potravin"
+
+#: includes/wpfm-custom-taxonomies.php:333
+msgid "Unit"
+msgstr "Jednotka"
+
+#: includes/wpfm-custom-taxonomies.php:334
+msgid "Units"
+msgstr "Jednotky"
+
+#: includes/wpfm-install.php:86
+#, fuzzy
+msgid "Restaurant Owner"
+msgstr "Majitel restaurace"
+
+#: shortcodes/wpfm-shortcodes.php:79
+msgid "Invalid ID"
+msgstr "Chybné ID"
+
+#: shortcodes/wpfm-shortcodes.php:88
+#, php-format
+msgid "%s has been deleted."
+msgstr "%s byla odstraněna."
+
+#: shortcodes/wpfm-shortcodes.php:93
+msgid "Missing submission page."
+msgstr "Chybí stránka pro podání."
+
+#: shortcodes/wpfm-shortcodes.php:221
+msgid "Viewed"
+msgstr "Zobrazeno"
+
+#: shortcodes/wpfm-shortcodes.php:222
+msgid "Action"
+msgstr "Akce"
+
+#: shortcodes/wpfm-shortcodes.php:352
+#, fuzzy
+msgid "Load more foods"
+msgstr "Načíst další potraviny"
+
+#: shortcodes/wpfm-shortcodes.php:376
+msgid "Load more listings"
+msgstr "Načíst více seznamů"
+
+#: templates/account-signin.php:3
+msgid "Your Account"
+msgstr "Váš účet"
+
+#: templates/account-signin.php:6
+#, php-format
+msgid "You are currently signed in as <strong>%s</strong>."
+msgstr "Jste přihlášeni jako <strong>%s</strong>."
+
+#: templates/account-signin.php:7
+msgid "Sign out"
+msgstr "Odhlásit se"
+
+#: templates/account-signin.php:16
+msgid "Have an account?"
+msgstr "Máte účet?"
+
+#: templates/account-signin.php:18 templates/food-dashboard-login.php:2
+msgid "Sign in"
+msgstr "Přihlásit se"
+
+#: templates/account-signin.php:20
+msgid "You must sign in to create a new listing."
+msgstr "Pro přidání poptávky se musíte přihlásit."
+
+#: templates/account-signin.php:28 templates/food-submit.php:66
+#: templates/food-submit.php:121 templates/food-submit.php:134
+#: templates/food-submit.php:251 templates/form-fields/repeated-field.php:11
+#: templates/form-fields/repeated-field.php:50
+msgid "(optional)"
+msgstr "(volitelné)"
+
+#: templates/content-food_manager_menu.php:14
+#, fuzzy
+msgid "Food Lists"
+msgstr "Seznamy potravin"
+
+#: templates/content-no-foods-found.php:2
+#, fuzzy
+msgid "There are no foods matching your search."
+msgstr "Vašemu vyhledávání neodpovídají žádné potraviny."
+
+#: templates/content-no-foods-found.php:4
+#, fuzzy
+msgid "There are currently no foods."
+msgstr "V současné době nejsou žádné potraviny."
+
+#: templates/content-single-food_manager.php:12
+msgid "This listing has been expired."
+msgstr "Platnost tohoto zápisu vypršela."
+
+#: templates/content-single-food_manager.php:53
+#, php-format
+msgid " %d"
+msgstr " %d"
+
+#: templates/content-single-food_manager.php:54
+#, fuzzy, php-format
+msgid "%d people viewed this food."
+msgstr "%d lidí si toto jídlo prohlíželo."
+
+#: templates/content-single-food_manager.php:89
+#, fuzzy
+msgid "Food Ingredients"
+msgstr "Potravinářské přísady"
+
+#: templates/content-single-food_manager.php:189
+#: templates/food_menu_popup.php:139
+#, fuzzy
+msgid "View more +"
+msgstr ""
+"Chcete-li zobrazit další podrobnosti, musíte <a href=\"%s\">se přihlásit</"
+"a> ."
+
+#: templates/content-single-food_manager.php:239
+msgid "Additional Details"
+msgstr "Dodatečně podrobnosti"
+
+#: templates/content-single-food_manager.php:316
+#: templates/content-single-food_manager.php:323
+#: templates/content-single-food_manager.php:423
+#: templates/content-single-food_manager.php:437
+msgid "Download"
+msgstr "Stáhnout"
+
+#: templates/content-single-food_manager.php:593
+msgid "Share With Friends"
+msgstr "Sdílet s přáteli"
+
+#: templates/food-dashboard-login.php:2
+#, fuzzy
+msgid "You need to be signed in to manage your food listings."
+msgstr "Abyste mohli spravovat své seznamy potravin, musíte být přihlášeni."
+
+#: templates/food-dashboard.php:92
+msgid "Reset Filter"
+msgstr "Obnovit filtry"
+
+#: templates/food-dashboard.php:92 wp-food-manager-functions.php:632
+msgid "Reset"
+msgstr "Resetovat"
+
+#: templates/food-dashboard.php:102 templates/food-dashboard.php:144
+msgid "Filter"
+msgstr "Filtr"
+
+#: templates/food-dashboard.php:121 templates/food-filters.php:15
+msgid "Keywords"
+msgstr "Klíčová slova"
+
+#: templates/food-dashboard.php:126
+msgid "Order by"
+msgstr "Seřadit podle"
+
+#: templates/food-dashboard.php:152
+msgid "You do not have any active listings."
+msgstr "Nemáte žádné aktivní inzeráty."
+
+#: templates/food-dashboard.php:212
+msgid "Duplicate"
+msgstr "Duplikovat"
+
+#: templates/food-dashboard.php:219
+msgid "Relist"
+msgstr "Znovu vypisovat"
+
+#: templates/food-filters.php:16
+#, fuzzy
+msgid "Search for food items"
+msgstr "Vyhledávání potravin"
+
+#: templates/food-filters.php:30
+#, fuzzy
+msgid "Choose a Food Menu…"
+msgstr "Vyberte si jídelní lístek..."
+
+#: templates/food-filters.php:30 templates/form-fields/multiselect-field.php:12
+#: wp-food-manager-functions.php:459
+msgid "No results match"
+msgstr "Žádné výsledky"
+
+#: templates/food-filters.php:33
+#, fuzzy
+msgid "Choose a Food Menu"
+msgstr "Vyberte si jídelní lístek"
+
+#: templates/food-filters.php:57
+msgid "Category"
+msgstr "Kategorie"
+
+#: templates/food-filters.php:61
+#, fuzzy
+msgid "Choose a Food Category"
+msgstr "Vyberte kategorii jídla"
+
+#: templates/food-filters.php:75
+#, fuzzy
+msgid "food Type"
+msgstr "Typ krmiva"
+
+#: templates/food-filters.php:79
+#, fuzzy
+msgid "Choose a Food Type"
+msgstr "Vyberte si typ krmiva"
+
+#: templates/food-filters.php:90
+msgid ""
+"Your browser does not support JavaScript, or it is disabled. JavaScript must "
+"be enabled in order to view listings."
+msgstr ""
+"Protože váš prohlížeč nepodporuje JavaScript, nebo je zakázaný, prosím, "
+"ujistěte se kliknutím na tlačítko <em>Přepočítat</em> před odesláním "
+"objednávky. Pokud tak neučiníte, poplatky se mohou lišit od těch uvedených "
+"výše."
+
+#: templates/food-listings-start.php:17
+#, fuzzy
+msgid "foods Box View"
+msgstr "Potraviny Box Zobrazit"
+
+#: templates/food-listings-start.php:18
+#, fuzzy
+msgid "foods List View"
+msgstr "Zobrazení seznamu potravin"
+
+#: templates/food-preview.php:17
+msgid "← Edit listing"
+msgstr "← Upravit zápis"
+
+#: templates/food-preview.php:19
+msgid "Submit Listing →"
+msgstr "Odeslat → nabídky"
+
+#: templates/food-submit.php:48
+#, fuzzy
+msgid "Food Details"
+msgstr "Podrobnosti o jídle"
+
+#: templates/food-submit.php:51
+#, fuzzy, php-format
+msgid "You are editing an existing food. %s"
+msgstr "Upravujete existující krmivo. %s"
+
+#: templates/food-submit.php:51
+#, fuzzy
+msgid "Create A New Food"
+msgstr "Vytvořte Nové Jídlo"
+
+#: templates/food-submit.php:85
+#, fuzzy
+msgid "Extra Toppings"
+msgstr "Extra polevy"
+
+#: templates/food-submit.php:141
+msgid "Label"
+msgstr "Štítek"
+
+#: templates/food-submit.php:194
+msgid "Add Option"
+msgstr "Přidat nastavení"
+
+#: templates/food-submit.php:219
+#, fuzzy
+msgid "Topping Option __repeated-option-index__"
+msgstr "Možnost polevy __repeated-option-index__"
+
+#: templates/food-submit.php:267
+#, fuzzy
+msgid "+ Add Topping"
+msgstr "+ Přidat polevu"
+
+#: templates/food-submitted.php:6
+#, php-format
+msgid ""
+"%s listed successfully. To view your listing <a href=\"%s\">click here</a>."
+msgstr "%s úspěšně přidána. Pro zobrazení <a href=\"%s\">klikněte zde</a>."
+
+#: templates/food-submitted.php:9
+#, fuzzy, php-format
+msgid ""
+"Your %s has been successfully added to WP Food Manager. Your food listing "
+"will be visible after the admin's approval."
+msgstr ""
+"Váš %s byl úspěšně přidán do WP Food Manager. Váš seznam potravin bude "
+"viditelný po schválení správcem."
+
+#: templates/form-fields/file-field.php:42
+#: templates/form-fields/file-field.php:45
+msgid "Use file"
+msgstr "Použít soubor"
+
+#: templates/form-fields/file-field.php:42
+#: templates/form-fields/file-field.php:45
+msgid "Upload"
+msgstr "Nahrát"
+
+#: templates/form-fields/file-field.php:118
+#, php-format
+msgid "Maximum file size: %s."
+msgstr "Maximální velikost souboru: %s."
+
+#: templates/form-fields/multiselect-field.php:12
+#: wp-food-manager-functions.php:460
+msgid "Select Some Options"
+msgstr "Vyberte některé možnosti"
+
+#: templates/form-fields/repeated-field.php:39
+msgid "Remove"
+msgstr "Odstranit"
+
+#: templates/form-fields/repeated-field.php:42
+msgid "Details"
+msgstr "Detaily"
+
+#: templates/form-fields/uploaded-file-html.php:15
+#: templates/form-fields/uploaded-file-html.php:17
+msgid "remove"
+msgstr "odstranit"
+
+#: wp-food-manager-functions.php:284
+msgid "Invalid email address."
+msgstr "Neplatná e-mailová adresa."
+
+#: wp-food-manager-functions.php:292
+msgid "Your email address isn&#8217;t correct."
+msgstr "Vaše e-mailová adresa není správná."
+
+#: wp-food-manager-functions.php:296
+msgid "This email is already registered, please choose another one."
+msgstr "Tato e-mailová adresa je již registrována, zvolte si prosím jinou."
+
+#: wp-food-manager-functions.php:458
+#, fuzzy
+msgid "Choose a Food category&hellip;"
+msgstr "Vyberte kategorii Jídlo..."
+
+#: wp-food-manager-functions.php:492
+#, fuzzy
+msgid "Choose a food Category&hellip;"
+msgstr "Vyberte kategorii potravin..."
+
+#: wp-food-manager-functions.php:494
+#, fuzzy
+msgid "Choose a Food Type&hellip;"
+msgstr "Vyberte si typ krmiva..."
+
+#: wp-food-manager-functions.php:496
+#, fuzzy
+msgid "Choose a food Ingredients&hellip;"
+msgstr "Vyberte si potravinu Ingredience..."
+
+#: wp-food-manager-functions.php:498
+#, fuzzy
+msgid "Choose a food Nutritions&hellip;"
+msgstr "Vyberte si potravinu Výživa..."
+
+#: wp-food-manager-functions.php:502
+#, fuzzy
+msgid "Choose a Food type&hellip;"
+msgstr "Vyberte si typ jídla..."
+
+#: wp-food-manager-functions.php:636
+msgid "RSS"
+msgstr "RSS"
+
+#: wp-food-manager-functions.php:761
+#, fuzzy, php-format
+msgid "Uploaded files need to be one of the following file types: %s."
+msgstr "Nahrané soubory musí být jedním z následujících typů souborů: %s."
+
+#: wp-food-manager-functions.php:794
+msgid "Ascending (ASC)"
+msgstr "Vzestupně (ASC)"
+
+#: wp-food-manager-functions.php:795
+msgid "Descending (DESC)"
+msgstr "Sestupně (DESC)"
+
+#: wp-food-manager-functions.php:995
+msgid "Passwords must be at least 8 characters long."
+msgstr "Heslo musí být nejméně 8 znaků dlouhé."
+
+#: wp-food-manager-functions.php:1008
+msgctxt "post status"
+msgid "Draft"
+msgstr "Koncept"
+
+#: wp-food-manager-functions.php:1009
+msgctxt "post status"
+msgid "Expired"
+msgstr "Expirovaný"
+
+#: wp-food-manager-functions.php:1010
+msgctxt "post status"
+msgid "Preview"
+msgstr "Náhled"
+
+#: wp-food-manager-functions.php:1011
+msgctxt "post status"
+msgid "Pending approval"
+msgstr "Čeká na schválení"
+
+#: wp-food-manager-functions.php:1012
+msgctxt "post status"
+msgid "Pending payment"
+msgstr "Čeká na platbu"
+
+#: wp-food-manager-functions.php:1013
+msgctxt "post status"
+msgid "Active"
+msgstr "Aktivní"
+
+#: wp-food-manager-functions.php:1096
+msgid "United Arab Emirates dirham"
+msgstr "Spojené arabské emiráty dirham"
+
+#: wp-food-manager-functions.php:1097
+msgid "Afghan afghani"
+msgstr "Afghánský afghánce"
+
+#: wp-food-manager-functions.php:1098
+msgid "Albanian lek"
+msgstr "Albanian lek"
+
+#: wp-food-manager-functions.php:1099
+msgid "Armenian dram"
+msgstr "Armenian dram"
+
+#: wp-food-manager-functions.php:1100
+msgid "Netherlands Antillean guilder"
+msgstr "Nizozemský antilský gulden"
+
+#: wp-food-manager-functions.php:1101
+msgid "Angolan kwanza"
+msgstr "Angolská kwanza"
+
+#: wp-food-manager-functions.php:1102
+msgid "Argentine peso"
+msgstr "Argentinské peso"
+
+#: wp-food-manager-functions.php:1103
+msgid "Australian dollar"
+msgstr "Australský dolar"
+
+#: wp-food-manager-functions.php:1104
+msgid "Aruban florin"
+msgstr "Aruban florin"
+
+#: wp-food-manager-functions.php:1105
+msgid "Azerbaijani manat"
+msgstr "Ázerbájdžánské manáty"
+
+#: wp-food-manager-functions.php:1106
+msgid "Bosnia and Herzegovina convertible mark"
+msgstr "Bosnia and Herzegovina convertible mark"
+
+#: wp-food-manager-functions.php:1107
+msgid "Barbadian dollar"
+msgstr "Barbadian dollar"
+
+#: wp-food-manager-functions.php:1108
+msgid "Bangladeshi taka"
+msgstr "Bangladéšský taka"
+
+#: wp-food-manager-functions.php:1109
+msgid "Bulgarian lev"
+msgstr "Bulharský lev"
+
+#: wp-food-manager-functions.php:1110
+msgid "Bahraini dinar"
+msgstr "Bahraini dinar"
+
+#: wp-food-manager-functions.php:1111
+msgid "Burundian franc"
+msgstr "Burundian franc"
+
+#: wp-food-manager-functions.php:1112
+msgid "Bermudian dollar"
+msgstr "Bermudian dollar"
+
+#: wp-food-manager-functions.php:1113
+msgid "Brunei dollar"
+msgstr "Brunei dollar"
+
+#: wp-food-manager-functions.php:1114
+msgid "Bolivian boliviano"
+msgstr "Bolivijská bolivijská"
+
+#: wp-food-manager-functions.php:1115
+msgid "Brazilian real"
+msgstr "Brazilský skutečný"
+
+#: wp-food-manager-functions.php:1116
+msgid "Bahamian dollar"
+msgstr "Bahamian dollar"
+
+#: wp-food-manager-functions.php:1117
+msgid "Bitcoin"
+msgstr "Bitcoin"
+
+#: wp-food-manager-functions.php:1118
+msgid "Bhutanese ngultrum"
+msgstr "Bhutanese ngultrum"
+
+#: wp-food-manager-functions.php:1119
+msgid "Botswana pula"
+msgstr "Botswana pula"
+
+#: wp-food-manager-functions.php:1120
+msgid "Belarusian ruble (old)"
+msgstr "Běloruský rubl (starý)"
+
+#: wp-food-manager-functions.php:1121
+msgid "Belarusian ruble"
+msgstr "Belarusian ruble"
+
+#: wp-food-manager-functions.php:1122
+msgid "Belize dollar"
+msgstr "Belize dolar"
+
+#: wp-food-manager-functions.php:1123
+msgid "Canadian dollar"
+msgstr "Kanadský dolar"
+
+#: wp-food-manager-functions.php:1124
+msgid "Congolese franc"
+msgstr "Congolese franc"
+
+#: wp-food-manager-functions.php:1125
+msgid "Swiss franc"
+msgstr "Švýcarský frank"
+
+#: wp-food-manager-functions.php:1126
+msgid "Chilean peso"
+msgstr "Chilské peso"
+
+#: wp-food-manager-functions.php:1127
+msgid "Chinese yuan"
+msgstr "Čínský juan"
+
+#: wp-food-manager-functions.php:1128
+msgid "Colombian peso"
+msgstr "Colombian peso"
+
+#: wp-food-manager-functions.php:1129
+msgid "Costa Rican col&oacute;n"
+msgstr "Costa Rican col&oacute;n"
+
+#: wp-food-manager-functions.php:1130
+msgid "Cuban convertible peso"
+msgstr "Kubánské kabrioletové peso"
+
+#: wp-food-manager-functions.php:1131
+msgid "Cuban peso"
+msgstr "Cuban peso"
+
+#: wp-food-manager-functions.php:1132
+msgid "Cape Verdean escudo"
+msgstr "Cape Verdean escudo"
+
+#: wp-food-manager-functions.php:1133
+msgid "Czech koruna"
+msgstr "Česká koruna"
+
+#: wp-food-manager-functions.php:1134
+msgid "Djiboutian franc"
+msgstr "Džibutský frank"
+
+#: wp-food-manager-functions.php:1135
+msgid "Danish krone"
+msgstr "Dánská koruna"
+
+#: wp-food-manager-functions.php:1136
+msgid "Dominican peso"
+msgstr "Dominikánské peso"
+
+#: wp-food-manager-functions.php:1137
+msgid "Algerian dinar"
+msgstr "Algerian dinar"
+
+#: wp-food-manager-functions.php:1138
+msgid "Egyptian pound"
+msgstr "Egyptská libra"
+
+#: wp-food-manager-functions.php:1139
+msgid "Eritrean nakfa"
+msgstr "Eritrejská nakfa"
+
+#: wp-food-manager-functions.php:1140
+msgid "Ethiopian birr"
+msgstr "Etiopská birr"
+
+#: wp-food-manager-functions.php:1141
+msgid "Euro"
+msgstr "Euro"
+
+#: wp-food-manager-functions.php:1142
+msgid "Fijian dollar"
+msgstr "Fidžijský dolar"
+
+#: wp-food-manager-functions.php:1143
+msgid "Falkland Islands pound"
+msgstr "Falklandské ostrovy libra"
+
+#: wp-food-manager-functions.php:1144
+msgid "Pound sterling"
+msgstr "Libra šterlinků"
+
+#: wp-food-manager-functions.php:1145
+msgid "Georgian lari"
+msgstr "Gruzínská lari"
+
+#: wp-food-manager-functions.php:1146
+msgid "Guernsey pound"
+msgstr "Guernseyová libra"
+
+#: wp-food-manager-functions.php:1147
+msgid "Ghana cedi"
+msgstr "Ghana cedi"
+
+#: wp-food-manager-functions.php:1148
+msgid "Gibraltar pound"
+msgstr "Gibraltarová libra"
+
+#: wp-food-manager-functions.php:1149
+msgid "Gambian dalasi"
+msgstr "Gambian dalasi"
+
+#: wp-food-manager-functions.php:1150
+msgid "Guinean franc"
+msgstr "Guinejský frank"
+
+#: wp-food-manager-functions.php:1151
+msgid "Guatemalan quetzal"
+msgstr "Guatemalský quetzal"
+
+#: wp-food-manager-functions.php:1152
+msgid "Guyanese dollar"
+msgstr "Guyanský dolar"
+
+#: wp-food-manager-functions.php:1153
+msgid "Hong Kong dollar"
+msgstr "Hong Kong dolar"
+
+#: wp-food-manager-functions.php:1154
+msgid "Honduran lempira"
+msgstr "Honduraská lempira"
+
+#: wp-food-manager-functions.php:1155
+msgid "Croatian kuna"
+msgstr "Chorvatská kuna"
+
+#: wp-food-manager-functions.php:1156
+msgid "Haitian gourde"
+msgstr "Haitian gourde"
+
+#: wp-food-manager-functions.php:1157
+msgid "Hungarian forint"
+msgstr "Maďarský forint"
+
+#: wp-food-manager-functions.php:1158
+msgid "Indonesian rupiah"
+msgstr "Indonéský rupiah"
+
+#: wp-food-manager-functions.php:1159
+msgid "Israeli new shekel"
+msgstr "Izraelský nový šekel"
+
+#: wp-food-manager-functions.php:1160
+msgid "Manx pound"
+msgstr "Manxová libra"
+
+#: wp-food-manager-functions.php:1161
+msgid "Indian rupee"
+msgstr "Indická rupie"
+
+#: wp-food-manager-functions.php:1162
+msgid "Iraqi dinar"
+msgstr "Irácký dinár"
+
+#: wp-food-manager-functions.php:1163
+msgid "Iranian rial"
+msgstr "Íránský riál"
+
+#: wp-food-manager-functions.php:1164
+msgid "Iranian toman"
+msgstr "Íránský toman"
+
+#: wp-food-manager-functions.php:1165
+msgid "Icelandic kr&oacute;na"
+msgstr "Icelandic kr&oacute;na"
+
+#: wp-food-manager-functions.php:1166
+msgid "Jersey pound"
+msgstr "Jersey pound"
+
+#: wp-food-manager-functions.php:1167
+msgid "Jamaican dollar"
+msgstr "Jamajský dolar"
+
+#: wp-food-manager-functions.php:1168
+msgid "Jordanian dinar"
+msgstr "Jordánský dinár"
+
+#: wp-food-manager-functions.php:1169
+msgid "Japanese yen"
+msgstr "Japonský jen"
+
+#: wp-food-manager-functions.php:1170
+msgid "Kenyan shilling"
+msgstr "Keňský šiling"
+
+#: wp-food-manager-functions.php:1171
+msgid "Kyrgyzstani som"
+msgstr "Kyrgyzstani som"
+
+#: wp-food-manager-functions.php:1172
+msgid "Cambodian riel"
+msgstr "Cambodian riel"
+
+#: wp-food-manager-functions.php:1173
+msgid "Comorian franc"
+msgstr "Comorian franc"
+
+#: wp-food-manager-functions.php:1174
+msgid "North Korean won"
+msgstr "Severokorejský vyhrál"
+
+#: wp-food-manager-functions.php:1175
+msgid "South Korean won"
+msgstr "Jihokorejský vyhrál"
+
+#: wp-food-manager-functions.php:1176
+msgid "Kuwaiti dinar"
+msgstr "Kuvajtský dinár"
+
+#: wp-food-manager-functions.php:1177
+msgid "Cayman Islands dollar"
+msgstr "Cayman Islands dollar"
+
+#: wp-food-manager-functions.php:1178
+msgid "Kazakhstani tenge"
+msgstr "Kazachstánský tenge"
+
+#: wp-food-manager-functions.php:1179
+msgid "Lao kip"
+msgstr "Lao kip"
+
+#: wp-food-manager-functions.php:1180
+msgid "Lebanese pound"
+msgstr "Libanonská libra"
+
+#: wp-food-manager-functions.php:1181
+msgid "Sri Lankan rupee"
+msgstr "Srí Lanká rupie"
+
+#: wp-food-manager-functions.php:1182
+msgid "Liberian dollar"
+msgstr "Libérijský dolar"
+
+#: wp-food-manager-functions.php:1183
+msgid "Lesotho loti"
+msgstr "Lesotho loti"
+
+#: wp-food-manager-functions.php:1184
+msgid "Libyan dinar"
+msgstr "Libyjský dinár"
+
+#: wp-food-manager-functions.php:1185
+msgid "Moroccan dirham"
+msgstr "Marocký dirham"
+
+#: wp-food-manager-functions.php:1186
+msgid "Moldovan leu"
+msgstr "Moldavské leu"
+
+#: wp-food-manager-functions.php:1187
+msgid "Malagasy ariary"
+msgstr "Malgašská arriária"
+
+#: wp-food-manager-functions.php:1188
+msgid "Macedonian denar"
+msgstr "Makedonský denar"
+
+#: wp-food-manager-functions.php:1189
+msgid "Burmese kyat"
+msgstr "Burmese kyat"
+
+#: wp-food-manager-functions.php:1190
+msgid "Mongolian t&ouml;gr&ouml;g"
+msgstr "Mongolské t & ouml; gr & ouml; g"
+
+#: wp-food-manager-functions.php:1191
+msgid "Macanese pataca"
+msgstr "Macaneská pataca"
+
+#: wp-food-manager-functions.php:1192
+msgid "Mauritanian ouguiya"
+msgstr "Mauritánie ouguiya"
+
+#: wp-food-manager-functions.php:1193
+msgid "Mauritian rupee"
+msgstr "Mauritské rupie"
+
+#: wp-food-manager-functions.php:1194
+msgid "Maldivian rufiyaa"
+msgstr "Maledivská rufiyaa"
+
+#: wp-food-manager-functions.php:1195
+msgid "Malawian kwacha"
+msgstr "Malawian kwacha"
+
+#: wp-food-manager-functions.php:1196
+msgid "Mexican peso"
+msgstr "Mexické peso"
+
+#: wp-food-manager-functions.php:1197
+msgid "Malaysian ringgit"
+msgstr "Malajský ringgit"
+
+#: wp-food-manager-functions.php:1198
+msgid "Mozambican metical"
+msgstr "Mosambické metical"
+
+#: wp-food-manager-functions.php:1199
+msgid "Namibian dollar"
+msgstr "Namibijský dolar"
+
+#: wp-food-manager-functions.php:1200
+msgid "Nigerian naira"
+msgstr "Nigerijská naira"
+
+#: wp-food-manager-functions.php:1201
+msgid "Nicaraguan c&oacute;rdoba"
+msgstr "Nikaragujský okruh; rdoba"
+
+#: wp-food-manager-functions.php:1202
+msgid "Norwegian krone"
+msgstr "Norská koruna"
+
+#: wp-food-manager-functions.php:1203
+msgid "Nepalese rupee"
+msgstr "Nepálská rupie"
+
+#: wp-food-manager-functions.php:1204
+msgid "New Zealand dollar"
+msgstr "Novozélandský dolar"
+
+#: wp-food-manager-functions.php:1205
+msgid "Omani rial"
+msgstr "Ománský riál"
+
+#: wp-food-manager-functions.php:1206
+msgid "Panamanian balboa"
+msgstr "Panamská balboa"
+
+#: wp-food-manager-functions.php:1207
+msgid "Sol"
+msgstr "Sol"
+
+#: wp-food-manager-functions.php:1208
+msgid "Papua New Guinean kina"
+msgstr "Papua Nová Guinea kina"
+
+#: wp-food-manager-functions.php:1209
+msgid "Philippine peso"
+msgstr "Filipínské peso"
+
+#: wp-food-manager-functions.php:1210
+msgid "Pakistani rupee"
+msgstr "Pákistánská rupie"
+
+#: wp-food-manager-functions.php:1211
+msgid "Polish z&#x142;oty"
+msgstr "Polská zóna"
+
+#: wp-food-manager-functions.php:1212
+msgid "Transnistrian ruble"
+msgstr "Podnesterský rubl"
+
+#: wp-food-manager-functions.php:1213
+msgid "Paraguayan guaran&iacute;"
+msgstr "Paraguayský guaraní,"
+
+#: wp-food-manager-functions.php:1214
+msgid "Qatari riyal"
+msgstr "Katarský rij"
+
+#: wp-food-manager-functions.php:1215
+msgid "Romanian leu"
+msgstr "Rumunský leu"
+
+#: wp-food-manager-functions.php:1216
+msgid "Serbian dinar"
+msgstr "Srbský dinár"
+
+#: wp-food-manager-functions.php:1217
+msgid "Russian ruble"
+msgstr "Ruský rubl"
+
+#: wp-food-manager-functions.php:1218
+msgid "Rwandan franc"
+msgstr "Rwandský frank"
+
+#: wp-food-manager-functions.php:1219
+msgid "Saudi riyal"
+msgstr "Saúdské riyal"
+
+#: wp-food-manager-functions.php:1220
+msgid "Solomon Islands dollar"
+msgstr "Dolar Šalamounových ostrovů"
+
+#: wp-food-manager-functions.php:1221
+msgid "Seychellois rupee"
+msgstr "Seychellois rupee"
+
+#: wp-food-manager-functions.php:1222
+msgid "Sudanese pound"
+msgstr "Súdánská libra"
+
+#: wp-food-manager-functions.php:1223
+msgid "Swedish krona"
+msgstr "Švédská koruna"
+
+#: wp-food-manager-functions.php:1224
+msgid "Singapore dollar"
+msgstr "Singapurský dolar"
+
+#: wp-food-manager-functions.php:1225
+msgid "Saint Helena pound"
+msgstr "Svatá Helena"
+
+#: wp-food-manager-functions.php:1226
+msgid "Sierra Leonean leone"
+msgstr "Sierra Leonean leone"
+
+#: wp-food-manager-functions.php:1227
+msgid "Somali shilling"
+msgstr "Somálský šilink"
+
+#: wp-food-manager-functions.php:1228
+msgid "Surinamese dollar"
+msgstr "Surinamský dolar"
+
+#: wp-food-manager-functions.php:1229
+msgid "South Sudanese pound"
+msgstr "Jižní Súdánská libra"
+
+#: wp-food-manager-functions.php:1230
+msgid "S&atilde;o Tom&eacute; and Pr&iacute;ncipe dobra"
+msgstr "S & atilde; o Tom & eacute; a Prcicute; ncipe dobra"
+
+#: wp-food-manager-functions.php:1231
+msgid "Syrian pound"
+msgstr "Syrská libra"
+
+#: wp-food-manager-functions.php:1232
+msgid "Swazi lilangeni"
+msgstr "Svazijská lilangeni"
+
+#: wp-food-manager-functions.php:1233
+msgid "Thai baht"
+msgstr "Thajský baht"
+
+#: wp-food-manager-functions.php:1234
+msgid "Tajikistani somoni"
+msgstr "Tajikistani somoni"
+
+#: wp-food-manager-functions.php:1235
+msgid "Turkmenistan manat"
+msgstr "Turkmenistan manat"
+
+#: wp-food-manager-functions.php:1236
+msgid "Tunisian dinar"
+msgstr "Tuniský dinár"
+
+#: wp-food-manager-functions.php:1237
+msgid "Tongan pa&#x2bb;anga"
+msgstr "Tongan pa & anga"
+
+#: wp-food-manager-functions.php:1238
+msgid "Turkish lira"
+msgstr "Turecká lira"
+
+#: wp-food-manager-functions.php:1239
+msgid "Trinidad and Tobago dollar"
+msgstr "Trinidad a Tobago dolar"
+
+#: wp-food-manager-functions.php:1240
+msgid "New Taiwan dollar"
+msgstr "Nový tchajwanský dolar"
+
+#: wp-food-manager-functions.php:1241
+msgid "Tanzanian shilling"
+msgstr "Tanzanský šiling"
+
+#: wp-food-manager-functions.php:1242
+msgid "Ukrainian hryvnia"
+msgstr "Ukrajinská hřivna"
+
+#: wp-food-manager-functions.php:1243
+msgid "Ugandan shilling"
+msgstr "Ugandský šilink"
+
+#: wp-food-manager-functions.php:1244
+msgid "United States (US) dollar"
+msgstr "Americký dolar (USA)"
+
+#: wp-food-manager-functions.php:1245
+msgid "Uruguayan peso"
+msgstr "Uruguayské peso"
+
+#: wp-food-manager-functions.php:1246
+msgid "Uzbekistani som"
+msgstr "Uzbekistani som"
+
+#: wp-food-manager-functions.php:1247
+msgid "Venezuelan bol&iacute;var"
+msgstr "Venezuelský bol & iacute; var"
+
+#: wp-food-manager-functions.php:1248
+msgid "Bol&iacute;var soberano"
+msgstr "Bol&iacute;var soberano"
+
+#: wp-food-manager-functions.php:1249
+msgid "Vietnamese &#x111;&#x1ed3;ng"
+msgstr "Vietnamské & # x11ed; ng"
+
+#: wp-food-manager-functions.php:1250
+msgid "Vanuatu vatu"
+msgstr "Vanuatu vatu"
+
+#: wp-food-manager-functions.php:1251
+msgid "Samoan t&#x101;l&#x101;"
+msgstr "Samoan t & lt; x & gt;"
+
+#: wp-food-manager-functions.php:1252
+msgid "Central African CFA franc"
+msgstr "Central African CFA franc"
+
+#: wp-food-manager-functions.php:1253
+msgid "East Caribbean dollar"
+msgstr "Východoafrický karibský dolar"
+
+#: wp-food-manager-functions.php:1254
+msgid "West African CFA franc"
+msgstr "Západoafrický CFA frank"
+
+#: wp-food-manager-functions.php:1255
+msgid "CFP franc"
+msgstr "CFP franc"
+
+#: wp-food-manager-functions.php:1256
+msgid "Yemeni rial"
+msgstr "Jemenský rial"
+
+#: wp-food-manager-functions.php:1257
+msgid "South African rand"
+msgstr "Jihoafrický rand"
+
+#: wp-food-manager-functions.php:1258
+msgid "Zambian kwacha"
+msgstr "Zambian kwacha"
+
+#: wp-food-manager-template.php:40
+msgid "Your email"
+msgstr "Váš email"
+
+#: wp-food-manager-template.php:41
+msgid "you@yourdomain.com"
+msgstr "vy@vasemail.cz"
+
+#: wp-food-manager-template.php:48
+msgid "Username"
+msgstr "Uživatelské jméno"
+
+#: wp-food-manager-template.php:56 wp-food-manager-template.php:57
+msgid "Password"
+msgstr "Heslo"
+
+#: wp-food-manager-template.php:67
+msgid "Verify Password"
+msgstr "Potvrzení hesla"
+
+#: wp-food-manager-template.php:68
+msgid "Confirm Password"
+msgstr "Potvrdit heslo"
+
+#: wp-food-manager-template.php:719
+msgid "Inactive"
+msgstr "Neaktivní"
+
+#. translators: %s: add new taxonomy label
+#: wp-food-manager-template.php:991
+#, fuzzy, php-format
+msgid "+ %s"
+msgstr "od %s"
+
+#. Plugin Name of the plugin/theme
+#. Author of the plugin/theme
+#, fuzzy
+msgid "WP Food Manager"
+msgstr "Manažer potravin WP"
+
+#. Plugin URI of the plugin/theme
+#, fuzzy
+msgid "https://www.wpfoodmanager.com/"
+msgstr "https://www.wpfoodmanager.com/"
+
+#. Description of the plugin/theme
+#, fuzzy
+msgid ""
+"Lightweight, scalable and full-featured food listings & management plugin "
+"for managing food listings from the Frontend and Backend."
+msgstr ""
+"Lehký, škálovatelný a plně vybavený plugin pro seznamy potravin a správu pro "
+"správu seznamů potravin z frontendu a backendu."
+
+#. Author URI of the plugin/theme
+#, fuzzy
+msgid "https://www.wpfoodmanager.com"
+msgstr "https://www.wpfoodmanager.com"

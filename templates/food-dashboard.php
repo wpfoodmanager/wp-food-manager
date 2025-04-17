@@ -43,7 +43,7 @@
 									$child_menu_html .= '<li class="wpfm-main-vmenu-dashboard-submenu-li"><a class="wpfm-main-vmenu-dashboard-link ' . $active_menu . '" href="' . $action_url . '">' . $submenu['title'] . '</a></li>';
 								}
 								$child_menu_html .= '</ul>';
-								printf('<li class="wpfm-main-vmenu-dashboard-li wpfm-main-vmenu-dashboard-sub-menu"><a class="wpfm-main-vmenu-dashboard-link %s" href="javascript:void(0)"><i class="%s"></i>%s<i class="wpfm-icon-play3 wpfm-main-vmenu-caret wpfm-main-vmenu-caret-up"></i></a>', $active_parent_menu, $menu['icon'], $menu['title']);
+								printf('<li class="wpfm-main-vmenu-dashboard-li wpfm-main-vmenu-dashboard-sub-menu"><a class="wpfm-main-vmenu-dashboard-link %s" href="javascript:void(0)"><i class="%s"></i>%s<i class="wpfm-icon-play3 wpfm-main-vmenu-caret wpfm-main-vmenu-caret-up"></i></a>', esc_attr($active_parent_menu), esc_attr($menu['icon']), esc_html($menu['title']));
 								echo wp_kses_post($child_menu_html);
 								printf('</li>');
 							} else {
@@ -62,7 +62,7 @@
 								if ($current_action === $name) {
 									$active_menu = 'wpfm-main-vmenu-dashboard-link-active';
 								}
-								printf('<li class="wpfm-main-vmenu-dashboard-li"><a class="wpfm-main-vmenu-dashboard-link %s" href="%s"> <i class="%s"></i>%s</a></li>', $active_menu, $action_url, $menu['icon'], $menu['title']);
+								printf('<li class="wpfm-main-vmenu-dashboard-li"><a class="wpfm-main-vmenu-dashboard-link %s" href="%s"> <i class="%s"></i>%s</a></li>', esc_attr($active_menu), esc_url($action_url), esc_attr($menu['icon']), esc_html($menu['title']));
 							}
 							
 						}
@@ -177,13 +177,13 @@
 																		$imagePath = '';
 																		if (empty($image_src)) {
 																			if ($wpfm_veg_nonveg_tag->slug === 'vegetarian') {
-																				$imagePath = WPFM_PLUGIN_URL . "/assets/images/wpfm-veg-organic.png";
+																				$imagePath = WPFM_PLUGIN_URL . "/assets/images/wpfm-veg-organic.svg";
 																			}
 																			if ($wpfm_veg_nonveg_tag->slug === 'non-vegetarian') {
-																				$imagePath = WPFM_PLUGIN_URL . "/assets/images/wpfm-non-veg-organic.png";
+																				$imagePath = WPFM_PLUGIN_URL . "/assets/images/wpfm-non-veg-organic.svg";
 																			}
 																			if ($wpfm_veg_nonveg_tag->slug === 'vegan') {
-																				$imagePath = WPFM_PLUGIN_URL . "/assets/images/wpfm-vegan-organic.png";
+																				$imagePath = WPFM_PLUGIN_URL . "/assets/images/wpfm-vegan-organic.svg";
 																			}
 																		} else {
 																			$imagePath = $image_src[0];
@@ -250,7 +250,7 @@
 														elseif ('food_categories' === $key) :
 															display_food_category($food);
 														elseif ('view_count' === $key) :
-															echo get_food_views_count($food);
+															echo esc_html(get_food_views_count($food));
 														?>
 														<?php else : ?>
 															<?php do_action('food_manager_food_dashboard_column_' . $key, $food); ?>

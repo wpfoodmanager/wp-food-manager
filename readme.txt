@@ -3,10 +3,10 @@
 Contributors: wpfoodmanager,ashokdudhat,krinay
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=55FRYATTFLA5N
 Tags:  food menu, restaurant menu, food ordering, restaurant, table reservation, food delivery, food pickup, cafe menu, food order,food,menu
-Requires at least: 6.2
-Tested up to: 6.4.2
-Stable tag: 1.0.6
-Requires PHP: 5.6
+Requires at least: 6.2.1
+Tested up to: 6.8
+Stable tag: 1.0.7
+Requires PHP: 8
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -199,6 +199,64 @@ You can also find us on GitHub: see the [WP Food Manager GitHub Repository](http
 
 
 == Changelog ==
+
+
+= 1.0.7 [ 17th Apr 2025 ] =
+
+Fixed : Adminside Setting section change logo and link to foodmato
+Fixed : Frontside Food detail page shows warning into topping section
+Fixed : Frontside Food menu items not shows in restaurant detail page
+Fixed : Frontside Food detail page the food view count not show properly
+Fixed : In the application user side shows multiple user as removed
+Fixed : Frontside Remove insert/edit link dialog box
+Fixed : Frontside Foods page shows warning
+Fixed : Frontside On food menu page shows warning
+Fixed : Fixed deprecated error in setup wizard
+Fixed : Frontside Menu filter UI not looks proper
+Fixed : Frontside If no food image then change image to foodmato
+Fixed : Adminside from food Menu the food remove is not working
+Fixed : Duplicate Availability Popup Issue
+Fixed : SEO Issue related to Minify Frontend CSS
+Fixed : Adminside Shortcode list not looks proper
+Fixed : Frontside food menu shortcode is not working
+Fixed : Frontside Food Menu shortcode page UI is not proper
+Fixed : Frontside Menu filter issues as no all details are showing for food
+Fixed : Frontend Menu page popup does not allow to reach close button
+Fixed : Frontside Shows extra topping on food detail page
+Fixed : Frontside In food popup the sale price is not looks proper
+Fixed : Frontside The popup on food click will not open in tab section
+Fixed : Adminside field editor reset not showing all food fields
+Fixed : Adminside Add food topping name add auto suggestion is stopped working
+Fixed : Frontside improve placeholder text for search food and restaurant filter
+Fixed : Frontside In popup the topping add to cart is not working
+Fixed : Frontside delivery popup will not show on page where use the menu shortcode
+Fixed : Frontside Food types snot showing on food menu page
+Fixed : Adminside Field editor extra added field remove not works properly first time
+Fixed : Topping field extra field added front side not looks proper
+Fixed : Field editor food form title not proper at adminside
+Fixed : Menu list the image should be shows as thumbnail at adminside
+Fixed : Adminside Add food nutrition/ingredient search not showing proper message if no result found
+Fixed : Adminside Food nutrition and ingredients text are not properly
+Fixed : Adminside Add food topping options the drag and drop is not working
+Fixed : Adminside Improvement in button position and text on Add food page
+Fixed : Added drag and drop functionality for menu position change
+Fixed : Frontside Food Menu page improve the image size
+Fixed : Adminside added various improvements while creating food menu
+Fixed : There is no field to add toppings when add food from frontend-side
+Fixed : High light stock status in single food page
+Fixed : Frontside Food Menu need to add food thumbnail image for better view
+Fixed : Frontside Food Listing page add category on each food
+Added : More default food category import
+Added : Shortcode menu at admin side
+Added : Added shortcode for food menu
+Added : Provide search option in food menu
+Added : When click on food it will display in popup
+Added : Food Menu give option for showing food image
+Added : Adminside added image upload option for toppings
+Added : Static and Dynamic option added for Food menu
+Added : Show stock and quantity option for food
+Added : Food and Food menu Import functionality
+Added : Enable & Disable Food menu and category from website and mobile app
 
 = 1.0.6 [ 23rd Sep 2024 ] =
 

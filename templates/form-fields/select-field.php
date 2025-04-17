@@ -27,7 +27,7 @@ if( isset( $field['post_type'] ) && !empty( $field['post_type'] ) ){
 	</select>
 	<?php
 } else { ?>
-	<select name="<?php echo esc_attr(isset($field['name']) ? $field['name'] : $key); ?>" id="<?php echo esc_attr($key); ?>" <?php if (!empty($field['required'])) echo 'required'; ?> attribute="<?php echo esc_attr(isset($field['attribute']) ? $field['attribute'] : ''); ?>">
+	<select name="<?php echo esc_attr(isset($field['name']) ? $field['name'] : $key); ?>" id="<?php echo esc_attr($key); ?>" <?php if (!empty($field['required'])) echo 'required'; ?> attribute="<?php echo esc_attr(isset($field['attribute']) ? $field['attribute'] : ''); ?>" <?php echo esc_attr(isset($field['custom_attribute']) ? $field['custom_attribute'] : ''); ?>>
 		<?php 
 		if (is_array($field['options']) || is_object($field['options'])) :
 			foreach ($field['options'] as $key => $value) : 
