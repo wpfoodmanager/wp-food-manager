@@ -75,7 +75,7 @@ class WP_Food_Manager extends WPFM_Updater {
 	 */
 	public function __construct() {
 		// Define constants
-		define('WPFM_VERSION', '1.0.7');
+    define('WPFM_VERSION', '1.0.7');
 		define('WPFM_PLUGIN_DIR', untrailingslashit(plugin_dir_path(__FILE__)));
 		define('WPFM_PLUGIN_URL', untrailingslashit(plugins_url(basename(plugin_dir_path(__FILE__)), basename(__FILE__))));
 

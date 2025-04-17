@@ -201,9 +201,6 @@ You can also find us on GitHub: see the [WP Food Manager GitHub Repository](http
 == Changelog ==
 
 
-
-== Changelog ==
-
 = 1.0.7 [ 17th Apr 2025 ] =
 
 Fixed : Adminside Setting section change logo and link to foodmato
