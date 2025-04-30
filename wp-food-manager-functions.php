@@ -2653,7 +2653,6 @@ function handle_topping_data($post_id, $params) {
         $term = term_exists(trim($topping_name), $taxonomy) ?: wp_insert_term(trim($topping_name), $taxonomy);
 
         if (is_wp_error($term)) {
-            error_log('Term creation failed: ' . $term->get_error_message());
             continue;
         }
 
@@ -2685,7 +2684,7 @@ function handle_topping_data($post_id, $params) {
             '_topping_name' => $topping_name,
             '_topping_description' => '<p>' . $topping_description . '</p>',
             '_topping_image' => [$topping_image],
-            '_topping_options' => $topping_option_data
+            '_topping_options' => $topping_option_data	
         ];
     }
 

@@ -147,7 +147,7 @@ $food = $post;
                                                     }
                                                     echo ' <div class="wpfm-topping-item-header-text"> <h4 class="wpfm-topping-item-title">' . esc_html($ext_option['_topping_name']) . '';
                                                     if( isset($ext_option['_topping_required']) && $ext_option['_topping_required'] === 'yes') {
-                                                        echo '<span class="wpfm-require-mark"> *</span></h4>';
+                                                        echo '<span class="wpfm-require-mark" style="color: red;"> *</span></h4>';
                                                     } else {
                                                         echo '</h4>';
                                                     }
@@ -177,33 +177,52 @@ $food = $post;
                                                                 $option_price_sep = ' - ';
                                                             }
     
-                                                            $topping_htm .= '<li class="wpfm-topping-items">' . esc_attr($value2['option_name']) . $option_price_sep . $f_formatted_option_price . '</li>';
+                                                            $topping_htm .= esc_attr($value2['option_name']) . $option_price_sep . $f_formatted_option_price ;
+                                                            $topping_htm .= $value2['option_default'];
+                                                            $topping_htm .= $ext_option['_topping_type'];
+                                                            $topping_htm .= $value2['option_price_type'];
                                                         }
                                                     }
                                                     $topping_htm .= '</ul>';
                                                     $allowed_html = array(
+                                                        'select' => array(
+                                                            'name' => array(),
+                                                            'class' => array(),
+                                                            'required' => array(),
+                                                        ),
+                                                        'option' => array(
+                                                            'value' => array(),
+                                                            'selected' => array(),
+                                                            'data-attr-name' => array(),
+                                                            'data-attr-price_type' => array(),
+                                                        ),
                                                         'input' => array(
-                                                            'type'    => array('checkbox'), // Only allow input with type="checkbox"
+                                                            'type'    => array(),
                                                             'name'    => array(),
                                                             'value'   => array(),
-                                                            'checked' => array(),           // Allow the checked attribute
+                                                            'checked' => array(),
                                                             'class'   => array(),
                                                             'id'      => array(),
                                                             'data-attribute_name' => array(),
+                                                            'data-attr-price_type' => array(),
                                                             'data-val' => array(),
                                                             'data-attr-name' => array(),
-                                                            'data-attribute_name' => array(),
+                                                            'style' =>array(),
+                                                            'min' => array(),
+                                                            'max' => array(),
                                                         ),
                                                         'label' => array(
                                                             'for'   => array(),
                                                             'class' => array(),
                                                         ),
-                                                        'p'     => array(),
-                                                        'div'   => array(
-                                                            'class' => array(),
-                                                            'data-attribute_name' => array()
+                                                       
+                                                        'span' => array(
+                                                            'class' => array()
                                                         ),
-                                                        // Add other allowed tags and attributes as needed
+                                                        'div' => array(
+                                                            'class' => array(),
+                                                            'style' => array(),
+                                                        ),
                                                     );
                                                     
                                                     echo wp_kses( apply_filters( 'wpfm_toppings_list_htm', $topping_htm, array(

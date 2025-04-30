@@ -325,13 +325,37 @@ class WPFM_Add_Food_Form extends WPFM_Form {
 					),
 					'tabgroup' => 1,
 				),
+				'topping_type' => array(
+					'label'    => __( 'Topping Type', 'wp-food-manager' ),
+					'type'     => 'radio',
+					'required' => false,
+					'default'  => 'checkbox',
+					'priority' => 4,
+					'options'  => array(
+						'checkbox' =>  __('Checkbox', 'wp-food-manager'),
+					 	'radio' =>  __('Radio', 'wp-food-manager'),
+					 	'select' =>  __('Select', 'wp-food-manager')
+					),
+				),
+				'topping_required' => array(
+					'label'       => __('Topping Required ', 'wp-food-manager'),
+					'type'        => 'radio',
+					'required'    => false,
+					'default'  => 'no',
+					'priority' => 5,
+					'options'  => array(
+						'no' =>  __('No', 'wp-food-manager'),
+					 	'yes' =>  __('Yes', 'wp-food-manager'),
+					),
+				),
 				'topping_options' => array(
 					'label'       => __('Options', 'wp-food-manager'),
 					'type'        => 'options',
 					'required'    => false,
 					'placeholder' => __('Enter option name', 'wp-food-manager'),
-					'priority'    => 4
+					'priority'    => 6
 				),
+				
 			)
 		));
 	}

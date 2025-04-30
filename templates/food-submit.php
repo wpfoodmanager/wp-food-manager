@@ -147,6 +147,7 @@ if (!empty($extra_fields_options)) {
 																	<?php do_action('wpfm_repeated_option_name_label_after'); ?>
 																	<th><?php esc_html_e('Price', 'wp-food-manager');?></th>
 																	<?php do_action('wpfm_repeated_option_price_label_after'); ?>
+																	<th><?php esc_html_e('Default', 'wp-food-manager');?></th>
 																	<th></th>
 																</tr>
 															</thead>
@@ -175,6 +176,9 @@ if (!empty($extra_fields_options)) {
 																			<input type="number" name="<?php echo esc_attr($key); ?>_option_price_<?php echo esc_attr($sub_value_count); ?>" value="<?php echo esc_attr($values['option_price']); ?>" class="opt_price" step="any" min="0" required>
 																		</td>
 																		<?php do_action('wpfm_repeated_option_price_after', $args); ?>
+																		<td>
+																			<input type="checkbox" name="<?php echo esc_attr($key); ?>_option_default_<?php echo esc_attr($sub_value_count); ?>" <?php echo (isset($op_value['option_default']) && $op_value['option_default'] === 'on') ? 'checked' : ''; ?> class="opt_default" >
+																		</td>
 																		<td><a href="javascript: void(0);" data-id="<?php echo esc_attr($sub_value_count); ?>" class="option-delete-btn dashicons dashicons-dismiss"></a></td>
 																		<input type="hidden" class="option-value-class" name="option_value_count[<?php echo esc_attr($key); ?>][]" value="<?php echo esc_attr($sub_value_count); ?>">
 																	</tr>
@@ -191,6 +195,7 @@ if (!empty($extra_fields_options)) {
 								                    <td><input type='text' name='%%repeated-option-index2%%_option_name_%%repeated-option-index3%%' value='' class='opt_name' pattern='.*\S+.*' required placeholder='Enter topping option name'></td>
 													<?php do_action('wpfm_repeated_option_name_after', $args); ?>
 								                    <td><input type='number' name='%%repeated-option-index2%%_option_price_%%repeated-option-index3%%' value='' class='opt_price' min='0' required placeholder='Enter topping price'></td>
+								                    <td><input type='checkbox' name='%%repeated-option-index2%%_option_default_%%repeated-option-index3%%' value='' class='opt_price'></td>
 													<?php do_action('wpfm_repeated_option_price_after', $args); ?>
 								                    <td><a href='javascript: void(0);' data-id='%%repeated-option-index3%%' class='option-delete-btn dashicons dashicons-dismiss'></a></td>
 								                    <input type='hidden' class='option-value-class' name='option_value_count[%%repeated-option-index2%%][]' value='%%repeated-option-index3%%'>

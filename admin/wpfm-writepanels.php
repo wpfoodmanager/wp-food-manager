@@ -843,6 +843,8 @@ class WPFM_Writepanels {
                                             $option_values[$option_value_count] = apply_filters('wpfm_topping_options_values_array', array(
                                                 'option_name' => isset($_POST[$count . '_option_name_' . $option_value_count]) ? sanitize_text_field(wp_unslash($_POST[$count . '_option_name_' . $option_value_count])) : '',
                                                 'option_price' => isset($_POST[$count . '_option_price_' . $option_value_count]) ? sanitize_text_field(wp_unslash($_POST[$count . '_option_price_' . $option_value_count])) : '',
+                                                'option_default' => isset($_POST[$count . '_option_default_' . $option_value_count]) ? sanitize_text_field(wp_unslash($_POST[$count . '_option_default_' . $option_value_count])) : '',
+                                                'option_price_type' => isset($_POST[$count . '_option_price_type_' . $option_value_count]) ? sanitize_text_field(wp_unslash($_POST[$count . '_option_price_type_' . $option_value_count])) : '',
                                             ), array('option_count' => $count, 'option_value_count' => $option_value_count));
                                         }
                                     }
@@ -851,6 +853,8 @@ class WPFM_Writepanels {
                                         $option_values[$option_key_count] = apply_filters('wpfm_topping_options_values_array', array(
                                             'option_name' => isset($_POST[$count . '_option_name_' . $option_key_count]) ? sanitize_text_field(wp_unslash($_POST[$count . '_option_name_' . $option_key_count])) : '',
                                             'option_price' => isset($_POST[$count . '_option_price_' . $option_key_count]) ? sanitize_text_field(wp_unslash($_POST[$count . '_option_price_' . $option_key_count])) : '',
+                                            'option_default' => isset($_POST[$count . '_option_default_' . $option_key_count]) ? sanitize_text_field(wp_unslash($_POST[$count . '_option_default_' . $option_key_count])) : '',
+                                            'option_price_type' => isset($_POST[$count . '_option_price_type_' . $option_key_count]) ? sanitize_text_field(wp_unslash($_POST[$count . '_option_price_type_' . $option_key_count])) : '',
                                         ), array('option_count' => $count, 'option_value_count' => $option_key_count));
                                     }
                                 }
@@ -887,6 +891,10 @@ class WPFM_Writepanels {
                         
                         if ($key == 'topping_options') {
                             $toppings_meta[$count]['_' . $key] = $option_values;
+                        }
+                          
+                        if ($key == 'topping_required') {
+                            $toppings_arr[] = isset($_POST[$key . '_' . $count]) ? esc_attr(wp_unslash($_POST[$key . '_' . $count])) : '';
                         }
                     }
                 }

@@ -329,6 +329,8 @@ abstract class WPFM_Form {
 										$output[$option_value_count] = apply_filters('wpfm_topping_options_values_array', array(
 											'option_name' => isset($_POST[$option_count . '_option_name_' . $option_value_count]) ? $_POST[$option_count . '_option_name_' . $option_value_count] : '',
 											'option_price' => isset($_POST[$option_count . '_option_price_' . $option_value_count]) ? $_POST[$option_count . '_option_price_' . $option_value_count] : '',
+											'option_default' => isset($_POST[$option_count . '_option_default_' . $option_value_count]) ? $_POST[$option_count . '_option_default_' . $option_value_count] : '',
+											'option_price_type' => isset($_POST[$option_count . '_option_price_type_' . $option_value_count]) ? $_POST[$option_count . '_option_price_type_' . $option_value_count] : '',
 										), array('option_count' => $option_count, 'option_value_count' => $option_value_count));
 										$values[$group_key][$first_out][$key] = $output;
 									}

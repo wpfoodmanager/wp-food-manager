@@ -99,7 +99,7 @@ if (!empty($regular_price)) {
                                                     }
                                                     echo ' <div class="wpfm-topping-item-header-text"> <h4 class="wpfm-topping-item-title">' . esc_html($ext_option['_topping_name']) . '';
                                                     if( isset($ext_option['_topping_required']) && $ext_option['_topping_required'] === 'yes') {
-                                                        echo '<span class="wpfm-require-mark"> *</span></h4>';
+                                                        echo '<span class="wpfm-require-mark" style="color: red;"> *</span></h4>';
                                                     } else {
                                                         echo '</h4>';
                                                     }

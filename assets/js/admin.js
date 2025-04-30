@@ -53,6 +53,24 @@ var WPFM_Admin = function () {
                     });
                 }
             }
+            jQuery('body').on('change', '.opt_price_type', function () {
+                var priceInput = jQuery(this).closest('tr').find('.opt_price');
+                if (jQuery(this).val() === 'no_cost') {
+                    priceInput.prop('disabled', true);
+                    priceInput.attr('placeholder', ''); // Remove the placeholder
+                } else {
+                    priceInput.prop('disabled', false);
+                }
+            });
+        
+            // Initialize the state of price inputs on page load 
+            jQuery('.opt_price_type').each(function () {
+                var priceInput = jQuery(this).closest('tr').find('.opt_price');
+                if (jQuery(this).val() === 'no_cost') {
+                    priceInput.prop('disabled', true);
+                    priceInput.val('1'); // Clear the value when disabled
+                }
+            });
             if (jQuery('.wpfm-options-wrapper div.wpfm-options-wrap p.wpfm-admin-postbox-form-field.wp-editor-field').length) {
                 jQuery('.wpfm-options-wrapper div.wpfm-options-wrap p.wpfm-admin-postbox-form-field.wp-editor-field').each(function () {
                     var editorId = jQuery(this).attr("data-field-name");
@@ -292,6 +310,8 @@ var WPFM_Admin = function () {
                         jQuery(this).children('.option-value-class').val(humanNum);
                         jQuery(this).children('td').children('.opt_name').attr('name', repeater_row_count + '_option_name_' + humanNum);
                         jQuery(this).children('td').children('.opt_price').attr('name', repeater_row_count + '_option_price_' + humanNum);
+                        jQuery(this).children('td').children('.opt_default').attr('name', repeater_row_count + '_option_default_' + humanNum);
+                        jQuery(this).children('td').children('.opt_price_type').attr('name', repeater_row_count + '_option_price_type_' + humanNum);
                         jQuery(this).children('td').children('.option-delete-btn').attr('data-id', humanNum);
                     });
                 }
@@ -831,6 +851,8 @@ var WPFM_Admin = function () {
                             jQuery(this).children('.option-value-class').val(humanNum);
                             jQuery(this).children('td').children('.opt_name').attr('name', repeater_row_count + '_option_name_' + humanNum);
                             jQuery(this).children('td').children('.opt_price').attr('name', repeater_row_count + '_option_price_' + humanNum);
+                            jQuery(this).children('td').children('.opt_default').attr('name', repeater_row_count + '_option_default_' + humanNum);
+                            jQuery(this).children('td').children('.opt_price_type').attr('name', repeater_row_count + '_option_price_type_' + humanNum);
                             jQuery(this).children('td').children('.option-delete-btn').attr('data-id', humanNum);
                         });
                     }
