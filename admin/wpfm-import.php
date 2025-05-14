@@ -180,7 +180,7 @@ class WPFM_Import{
                                 $import_data[$field_name] = $file_data[$i][$field_date['key']];
                             }
                         }
-                        import_data(sanitize_text_field($_POST['food_post_type']), $import_data);
+                        wpfm_import_food(sanitize_text_field($_POST['food_post_type']), $import_data);
                     }
                 }
 
