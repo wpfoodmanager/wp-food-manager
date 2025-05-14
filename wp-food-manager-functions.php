@@ -2771,7 +2771,9 @@ function wpfm_import_food_menu_data($post_id, $post_type, $params) {
 		}
 
 		$food_cats_ids = isset($params['_food_cats_ids']) ? wpfm_get_term_id_by_name(explode(", ", $params['_food_cats_ids']), 'food_manager_category') : array();
+        update_post_meta($post_id, '_food_cats_ids', $food_cats_ids);
 		$food_type_ids = isset($params['_food_type_ids']) ? wpfm_get_term_id_by_name(explode(", ", $params['_food_type_ids']), 'food_manager_type') : array();
+        update_post_meta($post_id, '_food_type_ids', $food_type_ids);
 
 		// Handle other fields as normal
         update_post_meta($post_id, 'wpfm_radio_icons', $wpfm_radio_icons);
@@ -2779,56 +2781,10 @@ function wpfm_import_food_menu_data($post_id, $post_type, $params) {
         update_post_meta($post_id, '_wpfm_disable_food_image', $wpfm_disable_food_image);
         update_post_meta($post_id, '_wpfm_food_menu_visibility', $wpfm_food_menu_visibility);
         update_post_meta($post_id, '_food_menu_option', $food_menu_option);
-        update_post_meta($post_id, '_food_cats_ids', $food_cats_ids);
-        update_post_meta($post_id, '_food_type_ids', $food_type_ids);
 		
         // Initialize food IDs with empty arrays if not set
-		$food_item_ids = isset($params['_food_item_ids']) ? explode(", ", $params['_food_item_ids']) : array();
-		$new_food_ids = array();
-
-		if (!empty($food_item_ids)) {
-			foreach ($food_item_ids as $item_id) {
-				// Query posts of type 'food_manager' with meta key '_post_id' matching $item_id
-				$food_query = new WP_Query(array(
-					'post_type'  => 'food_manager',
-					'meta_query' => array(
-						array(
-							'key'     => '_post_id',
-							'value'   => $item_id,
-							'compare' => '='
-						)
-					),
-					'fields' => 'ids', // Only return post IDs
-					'posts_per_page' => -1
-				));
-
-				if (!empty($food_query->posts)) {
-					// Store matching post IDs in the new array
-					foreach ($food_query->posts as $food_id) {
-						$new_food_ids[] = $food_id;
-					}
-				}
-			}
-		}
-        update_post_meta($post_id, '_food_item_ids', $new_food_ids);
-
-        
-        // Convert food categories and types to IDs
-    	$convert_terms = function($names, $taxonomy) {
-    	    $ids = [];
-    	    if ($names) {
-    	        foreach (explode(', ', $names) as $name) {
-    	            $term = get_term_by('name', $name, $taxonomy);
-    	            if ($term) {
-    	                $ids[] = (string) $term->term_id;
-    	            } else {
-    	                $new_term = wp_insert_term($name, $taxonomy);
-    	                if (!is_wp_error($new_term)) $ids[] = (string) $new_term['term_id'];
-    	            }
-    	        }
-    	    }
-    	    return $ids;
-    	};
+		$food_item_ids = isset($params['_food_item_ids']) ? wpfm_get_food_ids(explode(", ", $params['_food_item_ids'])) : array();
+        update_post_meta($post_id, '_food_item_ids', $food_item_ids);
 
     	// Handle 'food menu by days' field
     	if (isset($params['_wpfm_food_menu_by_days'])) {
@@ -2836,17 +2792,21 @@ function wpfm_import_food_menu_data($post_id, $post_type, $params) {
     	    if (is_array($menu_by_days_data)) {
     	        foreach ($menu_by_days_data as $day => &$data) {
     	            if (isset($data['food_categories'])) {
-    	                $data['food_categories'] = $convert_terms(implode(', ', $data['food_categories']), 'food_manager_category');
+						$data['food_categories'] = wpfm_get_term_id_by_name($data['food_categories'], 'food_manager_category');
     	            }
     	            if (isset($data['food_types'])) {
-    	                $data['food_types'] = $convert_terms(implode(', ', $data['food_types']), 'food_manager_type');
+						$data['food_types'] = wpfm_get_term_id_by_name($data['food_types'], 'food_manager_type');
     	            }
+					if(isset($data['food_items']) && !empty($data['food_items'])){
+						$data['food_items'] = wpfm_get_food_ids($data['food_items']);
+					}
     	        }
     	    }
     	    update_post_meta($post_id, '_wpfm_food_menu_by_days', $menu_by_days_data);
     	}
     }
 }
+
 /**
  * convert term name to term id.
  *
@@ -2873,6 +2833,41 @@ function wpfm_get_term_id_by_name($term_names, $taxonomy) {
 	}
     
     return $term_ids;
+}
+
+/**
+ * get food id if exist based on parent id.
+ *
+ * @param $term_names, $taxonomy
+ * @return $term_ids
+ */
+function wpfm_get_food_ids($food_item_ids) {
+	$new_food_ids = [];
+    if (!empty($food_item_ids)) {
+		foreach ($food_item_ids as $item_id) {
+			// Query posts of type 'food_manager' with meta key '_post_id' matching $item_id
+			$food_query = new WP_Query(array(
+				'post_type'  => 'food_manager',
+				'meta_query' => array(
+					array(
+						'key'     => '_post_id',
+						'value'   => $item_id,
+						'compare' => '='
+					)
+				),
+				'fields' => 'ids', // Only return post IDs
+				'posts_per_page' => -1
+			));
+
+			if (!empty($food_query->posts)) {
+				// Store matching post IDs in the new array
+				foreach ($food_query->posts as $food_id) {
+					$new_food_ids[] = $food_id;
+				}
+			}
+		}
+	}    
+    return $new_food_ids;
 }
 
 /**
