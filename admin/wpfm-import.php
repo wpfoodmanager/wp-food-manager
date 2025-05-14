@@ -1,20 +1,15 @@
 <?php
-
 // Start session to use for storing the error message temporarily
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
-
-/**
- * From admin panel, setuping post food page, food dashboard page and food listings page.
- */
 
 if (!defined('ABSPATH')) {
     exit;
 }
 
 /**
- * WPFM_Import class.
+ * WPFM_Import class used to import food and foodmenus.
  */
 class WPFM_Import{
 
@@ -42,7 +37,6 @@ class WPFM_Import{
 
     /**
      * __construct function.
-     *
      * @access public
      * @return void
      */

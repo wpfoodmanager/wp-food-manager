@@ -2384,9 +2384,9 @@ function import_data($post_type, $params) {
 			);
 
 			// Insert the product post
-			$post_id1 = wp_insert_post($post_data);
+			$product_id = wp_insert_post($post_data);
 			// Link product to custom post
-			update_post_meta($post_id1, '_food_id', (int) $params['_post_id']);
+			update_post_meta($product_id, '_food_id', (int) $params['_post_id']);
 		}
 	}
 	
@@ -2433,20 +2433,20 @@ function import_food($post_id, $post_type, $params , $meta_id) {
 		$import_fields = $wpfm_food_import_fields[$meta_key];
 
 		if ($meta_key == '_food_banner') {
-			handle_food_banner($post_id,$meta_value,$meta_key,$params);
+			wpfm_import_food_file_upload($post_id,$meta_value,$meta_key,$params);
 		}elseif ($import_fields['taxonomy'] != '') {
 			if($meta_key == 'food_manager_ingredient'){
-				handle_food_ingredient($post_id, $meta_value);
+				wpfm_import_food_ingredient($post_id, $meta_value);
 			}elseif ($meta_key == 'food_manager_nutrition') {
-				handle_food_nutrition($post_id, $meta_value);
+				wpfm_import_food_nutrition($post_id, $meta_value);
 			}else {
-				handle_taxonomy_terms($post_id,  $meta_key, $meta_value, $import_fields);
+				wpfm_import_food_taxonomy_terms($post_id,  $meta_key, $meta_value, $import_fields);
 			}
 		}
 		elseif (($meta_key == '_topping_names') || ($meta_key == '_topping_description') || ($meta_key == '_topping_image')|| ($meta_key == '_topping_options')) {
-				handle_topping_data($post_id, $params );
+				wpfm_import_food_topping_data($post_id, $params );
 		}else {
-			handle_post_meta($post_id, $meta_key, $meta_value, $import_fields,$params,$meta_id);
+			wpfm_import_food_post_meta($post_id, $meta_key, $meta_value, $import_fields,$params,$meta_id);
 		}
 	}
 }
@@ -2458,37 +2458,36 @@ function import_food($post_id, $post_type, $params , $meta_id) {
 * @param $post_id,$banner_url
 * @return 
 */
-function handle_food_banner($post_id, $meta_value, $meta_key, $params) {
+function wpfm_import_food_file_upload($post_id, $meta_value, $meta_key, $params) {
     $is_json = is_string($meta_value) && is_array(json_decode($meta_value, true)) ? true : false;
 
     if ($is_json) {
-        $arrImages = json_decode($meta_value, true);
+        $images = json_decode($meta_value, true);
     } else {
         if (strpos($meta_value, ',') !== false) {
-            $arrImages = explode(',', $meta_value);
+            $images = explode(',', $meta_value);
         } else if (strpos($meta_value, '|') !== false) {
-            $arrImages = explode('|', $meta_value);
+            $images = explode('|', $meta_value);
         } else {
-            $arrImages = [$meta_value];
+            $images = [$meta_value];
         }
     }
-    if (!empty($arrImages)) {
-        $imageData = [];
-        foreach ($arrImages as $url) {
+    if (!empty($images)) {
+        $img_url = [];
+        foreach ($images as $url) {
             $response = image_exists($url);
             if ($response) {
                 $image = upload_image($url);
                 if (!empty($image)) {
-                    $imageData[] = $image['image_url'];
+                    $img_url[] = $image['image_url'];
                     // Make sure you are passing only a single image URL to attachment_url_to_postid
                     $image_post_id = attachment_url_to_postid($image['image_url']);
                 }
             }
         }
-
         // If images are found, update the post meta
-        if (!empty($imageData)) {
-            update_post_meta($post_id, $meta_key, $imageData);
+        if (!empty($img_url)) {
+            update_post_meta($post_id, $meta_key, $img_url);
             if (empty($params['_thumbnail_id'])) {
                 update_post_meta($post_id, '_thumbnail_id', $image_post_id);  // Use the image post ID
             }
@@ -2504,7 +2503,7 @@ function handle_food_banner($post_id, $meta_value, $meta_key, $params) {
  * @param $post_id,meta_key, $meta_value, $import_fields
  * @return 
  */
-function handle_taxonomy_terms($post_id, $meta_key, $meta_value, $import_fields) {
+function wpfm_import_food_taxonomy_terms($post_id, $meta_key, $meta_value, $import_fields) {
 	if ($meta_value != '') {
 		$terms = explode(',', $meta_value);
 		$term_ids = [];
@@ -2544,7 +2543,7 @@ function handle_taxonomy_terms($post_id, $meta_key, $meta_value, $import_fields)
  * @param $post_id,$meta_value
  * @return 
  */
-function handle_food_ingredient($post_id, $meta_value) {
+function wpfm_import_food_ingredient($post_id, $meta_value) {
 	$ingredients = explode(',', $meta_value);
 	$ingredients_meta = [];
 	foreach ($ingredients as $ingredient) {
@@ -2590,7 +2589,7 @@ function handle_food_ingredient($post_id, $meta_value) {
  * @param $post_id,$meta_value
  * @return 
  */
-function handle_food_nutrition($post_id, $meta_value) {
+function wpfm_import_food_nutrition($post_id, $meta_value) {
 	$nutritions = explode(',', $meta_value);
 	$nutritions_meta = [];
 	foreach ($nutritions as $nutrition) {
@@ -2631,7 +2630,7 @@ function handle_food_nutrition($post_id, $meta_value) {
  * @param $post_id,$meta_key,$meta_value
  * @return 
  */
-function handle_topping_data($post_id, $params) {
+function wpfm_import_food_topping_data($post_id, $params) {
     $topping_names = explode(',', $params['_topping_name']);
     $topping_descriptions = explode(',', $params['_topping_description']);
     $topping_images = explode(',', $params['_topping_image']);
@@ -2701,7 +2700,7 @@ function handle_topping_data($post_id, $params) {
  * @param $post_id,$meta_key, $import_fields
  * @return 
  */
-function handle_post_meta($post_id, $meta_key, $meta_value, $import_fields, $params, $meta_id) {
+function wpfm_import_food_post_meta($post_id, $meta_key, $meta_value, $import_fields, $params, $meta_id) {
 
 	if (empty($meta_value) && isset($import_fields['default_value'])) {
         $meta_value = $import_fields['default_value'];
@@ -2939,13 +2938,18 @@ function upload_image($url) {
  * @return bool True if image exists, otherwise false.
  */
 function image_exists($url) {
-	$ch = curl_init($url);
-	curl_setopt($ch, CURLOPT_NOBODY, true);
-	curl_exec($ch);
-	$retcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-	curl_close($ch);
-
-	if ($retcode == 200) {
+	 $ch = curl_init($url);
+    curl_setopt($ch, CURLOPT_NOBODY, true);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);  // ⛔ Not safe for production
+    curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);  // ⛔ Not safe for production
+    curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0');
+    curl_exec($ch);
+    $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    curl_close($ch);
+	
+	if ($http_code == 200) {
 		return true;
 	} else {
 		return false;
