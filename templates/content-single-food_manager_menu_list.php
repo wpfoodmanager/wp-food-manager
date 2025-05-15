@@ -23,23 +23,25 @@ $show_image = ($disable_food_image !== 'yes');
         the_content(); ?>
         <h2 class="wpfm-heading-text">
             <?php the_title();
-            $wpfm_radio_icons = get_post_meta(get_the_ID(), 'wpfm_radio_icons', true);
-            $without_food_str = str_replace("wpfm-menu-", "", $wpfm_radio_icons);
-            $without_dashicons_str = str_replace("dashicons-", "", $wpfm_radio_icons);
-            $data_food_menu = ucwords(str_replace("-", " ", $without_dashicons_str));
-            $data_food_menu2 = ucwords(str_replace("-", " ", $without_food_str));
-            if (wpfm_begnWith($wpfm_radio_icons, "dashicons")) {
-                if ($wpfm_radio_icons) {
-                    echo "<span class='wpfm-front-radio-icon food-icon' data-food-menu='" . esc_attr($data_food_menu2) . "'><span class='wpfm-menu dashicons " . esc_attr($wpfm_radio_icons) . "'></span></span>";
-                }
-            } else {
-                if ($wpfm_radio_icons) {
-                    if ($wpfm_radio_icons == 'wpfm-menu-fast-cart') {
-                        echo '<span class="wpfm-front-radio-icon food-icon" data-food-menu="' . esc_attr($data_food_menu2) . '"><span class="wpfm-menu ' . esc_attr($wpfm_radio_icons) . '"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span></span></span>';
-                    } elseif ($wpfm_radio_icons == 'wpfm-menu-rice-bowl') {
-                        echo '<span class="wpfm-front-radio-icon food-icon" data-food-menu="' . esc_attr($data_food_menu2) . '"><span class="wpfm-menu ' . esc_attr($wpfm_radio_icons) . '"><span class="path1"></span><span class "path2"></span><span class="path3"></span><span class="path4"></span></span></span>';
-                    } else {
-                        echo "<span class 'wpfm-front-radio-icon food-icon' data-food-menu='" . esc_attr($data_food_menu2) . "'><span class='wpfm-menu " . esc_attr($wpfm_radio_icons) . "'></span></span>";
+            if(get_option('wpfm_enable_webshop_food_menu_icon')) {
+                $wpfm_radio_icons = get_post_meta(get_the_ID(), 'wpfm_radio_icons', true);
+                $without_food_str = str_replace("wpfm-menu-", "", $wpfm_radio_icons);
+                $without_dashicons_str = str_replace("dashicons-", "", $wpfm_radio_icons);
+                $data_food_menu = ucwords(str_replace("-", " ", $without_dashicons_str));
+                $data_food_menu2 = ucwords(str_replace("-", " ", $without_food_str));
+                if (wpfm_begnWith($wpfm_radio_icons, "dashicons")) {
+                    if ($wpfm_radio_icons) {
+                        echo "<span class='wpfm-front-radio-icon food-icon' data-food-menu='" . esc_attr($data_food_menu2) . "'><span class='wpfm-menu dashicons " . esc_attr($wpfm_radio_icons) . "'></span></span>";
+                    }
+                } else {
+                    if ($wpfm_radio_icons) {
+                        if ($wpfm_radio_icons == 'wpfm-menu-fast-cart') {
+                            echo '<span class="wpfm-front-radio-icon food-icon" data-food-menu="' . esc_attr($data_food_menu2) . '"><span class="wpfm-menu ' . esc_attr($wpfm_radio_icons) . '"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span></span></span>';
+                        } elseif ($wpfm_radio_icons == 'wpfm-menu-rice-bowl') {
+                            echo '<span class="wpfm-front-radio-icon food-icon" data-food-menu="' . esc_attr($data_food_menu2) . '"><span class="wpfm-menu ' . esc_attr($wpfm_radio_icons) . '"><span class="path1"></span><span class "path2"></span><span class="path3"></span><span class="path4"></span></span></span>';
+                        } else {
+                            echo "<span class 'wpfm-front-radio-icon food-icon' data-food-menu='" . esc_attr($data_food_menu2) . "'><span class='wpfm-menu " . esc_attr($wpfm_radio_icons) . "'></span></span>";
+                        }
                     }
                 }
             } ?>
