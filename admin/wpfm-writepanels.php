@@ -389,7 +389,7 @@ class WPFM_Writepanels {
 
         // Replace the food_manager_type taxonomy metabox for changing checkbox to radio button in backend.
         remove_meta_box('food_manager_typediv', 'food_manager', 'side');
-        add_meta_box('radio-food_manager_typediv', (isset($taxonomy->labels->name) ? esc_html($taxonomy->labels->name) : ''), 'replace_food_manager_type_metabox', 'food_manager', 'side', 'core', array('taxonomy' => $taxonomy_slug));
+        add_meta_box('radio-food_manager_typediv', (isset($taxonomy->labels->name) ? esc_html($taxonomy->labels->name) : ''), array($this, 'replace_food_manager_type_metabox'), 'food_manager', 'side', 'core', array('taxonomy' => $taxonomy_slug));
         if ('add' != $screen->action) {
             // Show food menu Shortcode on edit menu page - admin.
             add_meta_box('wpfm_menu_shortcode', 'Shortcode', array($this, 'food_menu_shortcode'), 'food_manager_menu', 'side', 'low');
@@ -449,8 +449,109 @@ class WPFM_Writepanels {
 	    echo '<img src="' . $qr_code_url . '" alt="QR Code" style="max-width: 100%; height: auto;">';
 	    echo '<a href="' . $qr_code_url . '" download="QR_Code_' . $menu_id . '.png" style="margin-right: 10px; text-decoration: none; background-color: #0073aa; color: #fff; padding: 10px 15px; border-radius: 5px;"><span class="dashicons dashicons-download"></span></a>';
 	    echo '</div>';
+    }    
+        
+    /**
+     * Callback to set up the metabox.
+     * Mimicks the traditional hierarchical term metabox, but modified with our nonces.
+     * 
+     * @access public
+     * @param object $post
+     * @param array $box
+     * @return void
+     * @since 1.0.1
+     */
+    public function replace_food_manager_type_metabox($post, $box) {
+        $defaults = array('taxonomy' => 'category');
+
+        if (!isset($box['args']) || !is_array($box['args'])) {
+            $args = array();
+        } else {
+            $args = $box['args'];
+        }
+
+        $food_taxonomy = wp_parse_args($args, $defaults);
+        $tax_name = esc_attr($food_taxonomy['taxonomy']);
+        $taxonomy = get_taxonomy($food_taxonomy['taxonomy']);
+        $checked_terms = isset($post->ID) ? get_the_terms($post->ID, $tax_name) : array();
+        $single_term = !empty($checked_terms) && !is_wp_error($checked_terms) ? array_pop($checked_terms) : false;
+        $single_term_id = $single_term ? (int) $single_term->term_id : 0; ?>
+
+        <div id="taxonomy-<?php echo esc_attr($tax_name); ?>" class="radio-buttons-for-taxonomies categorydiv">
+            <ul id="<?php echo esc_attr($tax_name); ?>-tabs" class="category-tabs">
+                <li class="tabs"><a href="#<?php echo esc_attr($tax_name); ?>-all"><?php echo esc_html($taxonomy->labels->all_items); ?></a></li>
+                <li class="hide-if-no-js"><a href="#<?php echo esc_attr($tax_name); ?>-pop"><?php echo esc_html($taxonomy->labels->most_used); ?></a></li>
+            </ul>
+            <div id="<?php echo esc_attr($tax_name); ?>-pop" class="tabs-panel" style="display: none;">
+                <ul id="<?php echo esc_attr($tax_name); ?>checklist-pop" class="categorychecklist form-no-clear">
+                    <?php
+                    $popular_terms = get_terms($tax_name, array('orderby' => 'count', 'order' => 'DESC', 'number' => 10, 'hierarchical' => false));
+                    $popular_ids = array();
+
+                    foreach ($popular_terms as $term) {
+                        $popular_ids[] = $term->term_id;
+                        $value = is_taxonomy_hierarchical($tax_name) ? $term->term_id : $term->slug;
+                        $id = 'popular-' . $tax_name . '-' . $term->term_id;
+                        $checked = checked($single_term_id, $term->term_id, false); ?>
+
+                        <li id="<?php echo esc_attr($id); ?>" class="popular-category">
+                            <label class="selectit">
+                            <input id="in-<?php echo esc_attr($id); ?>" type="radio" <?php echo esc_attr($checked); ?> name="tax_input[<?php echo esc_attr($tax_name); ?>][]" value="<?php echo esc_attr((int) $term->term_id); ?>" <?php disabled(!current_user_can($taxonomy->cap->assign_terms)); ?> />
+                                <?php
+                                /** This filter is documented in wp-includes/category-template.php */
+                                echo esc_html(apply_filters('the_category', $term->name, '', ''));
+                                ?>
+                            </label>
+                        </li>
+                    <?php } ?>
+                </ul>
+            </div>
+            <div id="<?php echo esc_attr($tax_name); ?>-all" class="tabs-panel">
+                <ul id="<?php echo esc_attr($tax_name); ?>checklist" data-wp-lists="list:<?php echo esc_attr($tax_name); ?>" class="categorychecklist form-no-clear">
+                    <?php wp_terms_checklist($post->ID, array('taxonomy' => $tax_name, 'popular_cats' => $popular_ids, 'selected_cats' => array($single_term_id))); ?>
+                </ul>
+            </div>
+            <?php if (current_user_can($taxonomy->cap->edit_terms)) : ?>
+                <div id="<?php echo esc_attr($tax_name); ?>-adder" class="wp-hidden-children">
+                    <a id="<?php echo esc_attr($tax_name); ?>-add-toggle" href="#<?php echo esc_attr($tax_name); ?>-add" class="hide-if-no-js taxonomy-add-new">
+
+                        <?php
+                        /* translators: %s: add new taxonomy label */
+                        printf( esc_html__( '+ %s', 'wp-food-manager' ), esc_html( $taxonomy->labels->add_new_item ) );
+
+                        ?>
+                    </a>
+                    <p id="<?php echo esc_attr($tax_name); ?>-add" class="category-add wp-hidden-child">
+                        <label class="screen-reader-text" for="new<?php echo esc_attr($tax_name); ?>"><?php echo esc_html($taxonomy->labels->add_new_item); ?></label>
+                        <input type="text" name="new<?php echo esc_attr($tax_name); ?>" id="new<?php echo esc_attr($tax_name); ?>" class="form-required form-input-tip" value="<?php echo esc_attr($taxonomy->labels->new_item_name); ?>" aria-required="true" />
+                        <label class="screen-reader-text" for="new<?php echo esc_attr($tax_name); ?>_parent">
+                            <?php echo esc_html($taxonomy->labels->parent_item_colon); ?>
+                        </label>
+
+                        <?php
+                        // Only add parent option for hierarchical taxonomies.
+                        if (is_taxonomy_hierarchical($tax_name)) {
+                            $parent_dropdown_args = array(
+                                'taxonomy'         => $tax_name,
+                                'hide_empty'       => 0,
+                                'name'             => 'new' . $tax_name . '_parent',
+                                'orderby'          => 'name',
+                                'hierarchical'     => 1,
+                                'show_option_none' => '&mdash; ' . $taxonomy->labels->parent_item . ' &mdash;',
+                            );
+                            $parent_dropdown_args = apply_filters('post_edit_category_parent_dropdown_args', $parent_dropdown_args);
+                            wp_dropdown_categories($parent_dropdown_args);
+                        }
+                        ?>
+                        <input type="button" id="<?php echo esc_attr($tax_name); ?>-add-submit" data-wp-lists="add:<?php echo esc_attr($tax_name); ?>checklist:<?php echo esc_attr($tax_name); ?>-add" class="button category-add-submit" value="<?php echo esc_attr($taxonomy->labels->add_new_item); ?>" />
+                        <?php wp_nonce_field('add-' . $tax_name, '_ajax_nonce-add-' . $tax_name, false); ?>
+                        <span id="<?php echo esc_attr($tax_name); ?>-ajax-response"></span>
+                    </p>
+                </div>
+            <?php endif; ?>
+        </div>
+    <?php
     }
-    
     
     /**
      * This function is responsible for disabling any redirection related to the food.

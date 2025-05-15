@@ -265,13 +265,47 @@ class WPFM_CPT {
                 }
                 break;
             case 'qr_code':
-                display_menu_qr_code();
+                $this->display_menu_qr_code();
                 break;
             default:
                 break;
         }
     }
     
+    /**
+     * This function is used to display menu QR code
+     * @since 1.0.2
+     */
+    public function display_menu_qr_code(){
+        global $post;
+            
+            // Get the Post ID and Post URL
+            $menu_id = $post->ID;
+            $post_url = get_permalink($menu_id);  // Get the URL of the post
+        
+            // Check if the QR code class exists and include it if it doesn't
+            if(!class_exists('QRcode')) {
+                require_once WPFM_PLUGIN_DIR . '/includes/lib/phpqrcode/qrlib.php';
+            }
+        
+            // Define the path to store the generated QR code image
+            $upload_dir = wp_upload_dir(); // Get the upload directory
+            $qr_code_image = $upload_dir['path'] . "/qr_code_$menu_id.png"; // Path for the QR code image
+            
+            // Generate QR code image
+            QRcode::png($post_url, $qr_code_image, 'L', 4, 2);  // 'L' for low error correction, 4 is the size, 2 is the margin
+            $qr_code_url = $upload_dir['url'] . "/qr_code_$menu_id.png";
+
+            // Output the QR code image and the download button
+            echo '<div class="qr_code-actions">';
+            // Print button
+            echo '<a href="javascript:void(0)" class="qr_print_button button button-icon wpfm-tooltip" wpfm-data-tip="' . esc_attr(sprintf(__('Print', 'wpfm-food-manager'))) . '"><span class="dashicons dashicons-printer"></span> </a>';
+            echo '<a href="' . $qr_code_url . '" download="QR_Code_' . $menu_id . '.png" class="button button-icon wpfm-tooltip" wpfm-data-tip="' . esc_attr(sprintf(__('Download', 'wpfm-restaurant-manager'))) . '"><span class="dashicons dashicons-download"></span></a>';
+            echo '<a href="javascript:void(0)" class="qr_preview button button-icon wpfm-tooltip" wpfm-data-tip="' . esc_attr(sprintf(__('Qr Code', 'wpfm-restaurant-manager'))) . '"><span class="dashicons dashicons-visibility"></span></a>';
+            echo '<div class="qrcode_img" style="display: none"><div class="qr_code-modal"><h2>QR Code Scan</h2><img src="' . $qr_code_url . '" alt="QR Code"><span class="dashicons dashicons-no-alt"></span></div></div>';
+            echo '</div>';
+    }
+
     /**
      * Set Copy Shortcode.
      *

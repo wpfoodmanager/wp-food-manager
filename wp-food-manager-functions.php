@@ -1,5 +1,4 @@
 <?php
-
 if (!function_exists('get_food_listings')) :
 	/**
 	 * Queries food listings with certain criteria and returns them.
@@ -1017,43 +1016,43 @@ if (!function_exists('get_food_listing_post_statuses')) :
 	}
 endif;
 
-if (!function_exists('get_food_listing_types')) :
-	/**
-	 * This get_food_listing_types() function is used to get food listing types.
-	 *
-	 * @access public
-	 * @param string $fields (default: 'all')
-	 * @return array
-	 * @since 1.0.0
-	 */
-	function get_food_listing_types($fields = 'all') {
-		if (!get_option('food_manager_enable_food_types')) {
-			return array();
-		} else {
-			$args = array(
-				'fields'     => $fields,
-				'hide_empty' => false,
-				'order'      => 'ASC',
-				'orderby'    => 'name'
-			);
-			$args = apply_filters('get_food_listing_types_args', $args);
-			// Prevent users from filtering the taxonomy.
-			$args['taxonomy'] = 'food_manager_type';
-			return get_terms($args);
-		}
-	}
-endif;
+// if (!function_exists('get_food_listing_types')) :
+// 	/**
+// 	 * This get_food_listing_types() function is used to get food listing types.
+// 	 *
+// 	 * @access public
+// 	 * @param string $fields (default: 'all')
+// 	 * @return array
+// 	 * @since 1.0.0
+// 	 */
+// 	function get_food_listing_types($fields = 'all') {
+// 		if (!get_option('food_manager_enable_food_types')) {
+// 			return array();
+// 		} else {
+// 			$args = array(
+// 				'fields'     => $fields,
+// 				'hide_empty' => false,
+// 				'order'      => 'ASC',
+// 				'orderby'    => 'name'
+// 			);
+// 			$args = apply_filters('get_food_listing_types_args', $args);
+// 			// Prevent users from filtering the taxonomy.
+// 			$args['taxonomy'] = 'food_manager_type';
+// 			return get_terms($args);
+// 		}
+// 	}
+// endif;
 
-if (!function_exists('get_food_listing_categories')) :
+if (!function_exists('get_food_listing_taxonomy')) :
 	/**
-	 * This get_food_listing_categories() function is used to get food categories.
+	 * This get_food_listing_taxonomy() function is used to get food taxonomy.
 	 *
 	 * @access public
 	 * @param array $args
 	 * @return array
 	 * @since 1.0.0
 	 */
-	function get_food_listing_categories() {
+	function get_food_listing_taxonomy($taxonomy) {
 		if (!get_option('food_manager_enable_categories')) {
 			return array();
 		}
@@ -1065,7 +1064,7 @@ if (!function_exists('get_food_listing_categories')) :
 		// Change the category query arguments.
 		$args = apply_filters('get_food_listing_category_args', $args);
 		// Prevent users from filtering the taxonomy.
-		$args['taxonomy'] = 'food_manager_category';
+		$args['taxonomy'] = $taxonomy;
 		return get_terms($args);
 	}
 endif;
@@ -1087,7 +1086,7 @@ function get_food_manager_currency() {
  * @return array
  * @since 1.0.0
  */
-function get_food_manager_currencies() {
+function get_wpfm_currencies() {
 	static $currencies;
 
 	if (!isset($currencies)) {
@@ -1267,13 +1266,13 @@ function get_food_manager_currencies() {
 }
 
 /**
- * This get_food_manager_currency_symbols() function is used to Get all available Currency symbols.
+ * This get_wpfm_currency_symbols() function is used to Get all available Currency symbols.
  * Currency symbols and names should follow the Unicode CLDR recommendation (https://cldr.unicode.org/translation/currency-names-and-symbols).
  *
  * @return array
  * @since 1.0.0
  */
-function get_food_manager_currency_symbols() {
+function get_wpfm_currency_symbols() {
 	$symbols = apply_filters(
 		'food_manager_currency_symbols',
 		array(
@@ -1448,29 +1447,29 @@ function get_food_manager_currency_symbols() {
 }
 
 /**
- * This get_food_manager_currency_symbol() function is used to get Currency symbol.
+ * This get_wpfm_currency_symbol() function is used to get Currency symbol.
  * Currency symbols and names should follow the Unicode CLDR recommendation (https://cldr.unicode.org/translation/currency-names-and-symbols).
  *
  * @param string $currency (default: '').
  * @return string
  * @since 1.0.0
  */
-function get_food_manager_currency_symbol($currency = '') {
+function get_wpfm_currency_symbol($currency = '') {
 	if (!$currency) {
 		$currency = get_food_manager_currency();
 	}
-	$symbols = get_food_manager_currency_symbols();
+	$symbols = get_wpfm_currency_symbols();
 	$currency_symbol = isset($symbols[$currency]) ? $symbols[$currency] : '';
 	return apply_filters('food_manager_currency_symbol', esc_attr($currency_symbol), esc_attr($currency));
 }
 
 /**
- * This get_food_manager_price_format() function is used to get the price format depending on the currency position.
+ * This get_wpfm_price_format() function is used to get the price format depending on the currency position.
  *
  * @return string
  * @since 1.0.0
  */
-function get_food_manager_price_format() {
+function get_wpfm_price_format() {
 	$currency_pos = get_option('wpfm_currency_pos');
 	$format       = '%1$s%2$s';
 
@@ -1743,14 +1742,14 @@ function wpfm_get_font_food_icons() {
 }
 
 /**
- * This wpfm_begnWith() Checks if given string ($str) is begin with the second parameter ($begin_string) of function.
+ * This wpfm_begin_with() Checks if given string ($str) is begin with the second parameter ($begin_string) of function.
  *
  * @param string $str
  * @param string $begin_string
  * @return bool
  * @since 1.0.1
  */
-function wpfm_begnWith($str, $begin_string) {
+function wpfm_begin_with($str, $begin_string) {
 	$len = strlen($begin_string);
 	if (is_array($str)) {
 		$str = '';
@@ -1815,16 +1814,16 @@ if (!function_exists('get_food_listings_keyword_search')) :
 endif;
 
 /**
- * This food_manager_user_can_upload_file_via_ajax() function Checks if the user can upload a file via the Ajax endpoint.
+ * This check_wpfm_user_can_upload_file_via_ajax() function Checks if the user can upload a file via the Ajax endpoint.
  * @param bool $can_upload True if they can upload files from Ajax endpoint.
  * @return bool
  * @since 1.0.0
  */
-function food_manager_user_can_upload_file_via_ajax() {
+function check_wpfm_user_can_upload_file_via_ajax() {
 	$can_upload = wpfm_user_can_post_food();
 
 	// Override ability of a user to upload a file via Ajax.
-	return apply_filters('food_manager_user_can_upload_file_via_ajax', esc_attr($can_upload));
+	return apply_filters('check_wpfm_user_can_upload_file_via_ajax', esc_attr($can_upload));
 }
 
 /**
@@ -2004,17 +2003,6 @@ function wpfm_term_menu_lists(){
 		return $items;
 	}
 }
-
-/** 
-* common error message in menu page.
-*
-* @since 1.0.0
-*/
-function error_message_for_menu_page($message){ ?>
-	<div class="wpfm-alert wpfm-alert-danger">
-		<?php echo esc_html($message, "wp-food-manager"); ?>
-	</div>
-<?php }
 
 /** 
 * common query in menu page.

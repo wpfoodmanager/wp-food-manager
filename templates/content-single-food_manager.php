@@ -161,7 +161,7 @@ $food = $post;
                                                     if (isset($ext_option['_topping_options']) && !empty($ext_option['_topping_options'])) {
                                                         foreach ($ext_option['_topping_options'] as $key2 => $value2) {
                                                             $price_decimals = wpfm_get_price_decimals();
-                                                            $price_format = get_food_manager_price_format();
+                                                            $price_format = get_wpfm_price_format();
                                                             $price_thousand_separator = wpfm_get_price_thousand_separator();
                                                             $price_decimal_separator = wpfm_get_price_decimal_separator();
                                                             $option_price = $value2['option_price'];
@@ -169,7 +169,7 @@ $food = $post;
     
                                                             if (!empty($option_price)) {
                                                                 $formatted_option_price = number_format($option_price, $price_decimals, $price_decimal_separator, $price_thousand_separator);
-                                                                $f_formatted_option_price = sprintf($price_format, '<span class="food-manager-Price-currencySymbol">' . get_food_manager_currency_symbol() . '</span>', $formatted_option_price);
+                                                                $f_formatted_option_price = sprintf($price_format, '<span class="food-manager-Price-currencySymbol">' . get_wpfm_currency_symbol() . '</span>', $formatted_option_price);
                                                             }
     
                                                             $option_price_sep = '';
@@ -452,7 +452,7 @@ $food = $post;
                                                                 </div>
                                                             <?php endif; ?>
                                                         <?php elseif ($field['type'] == 'textarea' || $field['type'] == 'wp-editor') :
-                                                            if (is_array($field_value) || wpfm_begnWith($field_value, "http")) {
+                                                            if (is_array($field_value) || wpfm_begin_with($field_value, "http")) {
                                                                 $field_value = '';
                                                             }
                                                         ?>
@@ -550,7 +550,7 @@ $food = $post;
                                                                         <?php if (in_array(pathinfo($field_value, PATHINFO_EXTENSION), ['png', 'jpg', 'jpeg', 'gif', 'svg', 'webp'])) : ?>
                                                                             <div class="wpfm-img-single"><img src="<?php echo esc_attr($field_value); ?>"></div>
                                                                             <?php else :
-                                                                            if (wpfm_begnWith($field_value, "http")) { ?>
+                                                                            if (wpfm_begin_with($field_value, "http")) { ?>
                                                                                 <div class="wpfm-icon">
                                                                                     <p class="wpfm-additional-info-block-title"><strong><?php echo esc_attr(wp_basename($field_value)); ?></strong></p><a target="_blank" href="<?php echo esc_attr($field_value); ?>"><i class='wpfm-icon-download3' style='margin-right: 3px;'></i> <?php esc_html_e('Download', 'wp-food-manager'); ?></a>
                                                                                 </div>

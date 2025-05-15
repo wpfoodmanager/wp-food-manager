@@ -89,7 +89,7 @@ if ('food_manager_menu' == get_post_type() || (isset($menu_id) && !empty($menu_i
         echo "<div class='fm-food-menu-container'>";
             foreach ($food_listings as $food_listing) {
                 $price_decimals = wpfm_get_price_decimals();
-                $price_format = get_food_manager_price_format();
+                $price_format = get_wpfm_price_format();
                 $price_thousand_separator = wpfm_get_price_thousand_separator();
                 $price_decimal_separator = wpfm_get_price_decimal_separator();
                 $menu_food_desc = '';
@@ -123,11 +123,11 @@ if ('food_manager_menu' == get_post_type() || (isset($menu_id) && !empty($menu_i
                             echo "<h3 class='fm-food-menu-title'>" . esc_html($food_listing->post_title) . "</h3>";
                             echo "<div class='fm-food-menu-pricing'>";
                                 if (!empty($regular_price) && !empty($sale_price)) {
-                                    $food_regular_price = sprintf($price_format, '<span class="food-manager-Price-currencySymbol">' . esc_html(get_food_manager_currency_symbol()) . '</span>', $formatted_sale_price);
-                                    $food_sale_price = sprintf($price_format, '<span class="food-manager-Price-currencySymbol">' . esc_html(get_food_manager_currency_symbol()) . '</span>', $formatted_regular_price);
+                                    $food_regular_price = sprintf($price_format, '<span class="food-manager-Price-currencySymbol">' . esc_html(get_wpfm_currency_symbol()) . '</span>', $formatted_sale_price);
+                                    $food_sale_price = sprintf($price_format, '<span class="food-manager-Price-currencySymbol">' . esc_html(get_wpfm_currency_symbol()) . '</span>', $formatted_regular_price);
                                     echo "<del> " . esc_html($food_sale_price) . "</del> <ins><span class='food-manager-Price-currencySymbol'><strong>" . esc_html($food_regular_price) . "</strong></span></ins>";
                                 } elseif (!empty($regular_price)) {
-                                    echo sprintf(esc_html($price_format), '<span class="food-manager-Price-currencySymbol">' . esc_html(get_food_manager_currency_symbol()) . '</span>', esc_html($formatted_regular_price));
+                                    echo sprintf(esc_html($price_format), '<span class="food-manager-Price-currencySymbol">' . esc_html(get_wpfm_currency_symbol()) . '</span>', esc_html($formatted_regular_price));
                                 }
                             echo "</div>";
                         echo "</a>";

@@ -1,5 +1,5 @@
 <?php
-$food_cats = get_food_listing_types();
+$food_cats = get_food_listing_taxonomy('food_manager_type');
 foreach ($food_cats as $food_cat) {
     $image_id           = get_term_meta($food_cat->term_id, 'thumbnail_id', true);
     $post_thumbnail_img = wp_get_attachment_image_src($image_id, 'full');

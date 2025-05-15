@@ -7,7 +7,7 @@ if (isset($featured_img) && empty($featured_img)) {
 $sale_price = get_post_meta($food_id, '_food_sale_price', true);
 $regular_price = get_post_meta($food_id, '_food_price', true);
 $price_decimals = wpfm_get_price_decimals();
-$price_format = get_food_manager_price_format();
+$price_format = get_wpfm_price_format();
 $price_thousand_separator = wpfm_get_price_thousand_separator();
 $price_decimal_separator = wpfm_get_price_decimal_separator();
 $formatted_sale_price = '';
@@ -36,12 +36,12 @@ if (!empty($regular_price)) {
             <?php do_action('wpfm_food_menu_popup_title_after', $food_id); ?>
             <div id="wpfm_food_menu_modal_price" class="wpfm-food-modal-food_price">
                 <?php if (!empty($regular_price) && !empty($sale_price)) {
-                    $food_regular_price = sprintf($price_format, '<span class="food-manager-Price-currencySymbol">' . esc_html(get_food_manager_currency_symbol()) . '</span>', $formatted_sale_price);
-                    $food_sale_price = sprintf($price_format, '<span class="food-manager-Price-currencySymbol">' . esc_html(get_food_manager_currency_symbol()) . '</span>', $formatted_regular_price);
+                    $food_regular_price = sprintf($price_format, '<span class="food-manager-Price-currencySymbol">' . esc_html(get_wpfm_currency_symbol()) . '</span>', $formatted_sale_price);
+                    $food_sale_price = sprintf($price_format, '<span class="food-manager-Price-currencySymbol">' . esc_html(get_wpfm_currency_symbol()) . '</span>', $formatted_regular_price);
                     echo "<del> " . $food_sale_price . "</del>";
                     echo "<ins><strong>" . wp_kses_post($food_regular_price) . "</strong></ins>"; 
                 } elseif (!empty($regular_price)) {
-                    echo sprintf(esc_html($price_format), '<span class="food-manager-Price-currencySymbol">' . esc_html(get_food_manager_currency_symbol()) . '</span>', esc_attr($formatted_regular_price));
+                    echo sprintf(esc_html($price_format), '<span class="food-manager-Price-currencySymbol">' . esc_html(get_wpfm_currency_symbol()) . '</span>', esc_attr($formatted_regular_price));
                 } ?>
             </div>
             <?php do_action('wpfm_food_menu_popup_price_after', $food_id); ?>
@@ -112,7 +112,7 @@ if (!empty($regular_price)) {
                                                     if (isset($ext_option['_topping_options']) && !empty($ext_option['_topping_options'])) {
                                                         foreach ($ext_option['_topping_options'] as $key2 => $value2) {
                                                             $price_decimals = wpfm_get_price_decimals();
-                                                            $price_format = get_food_manager_price_format();
+                                                            $price_format = get_wpfm_price_format();
                                                             $price_thousand_separator = wpfm_get_price_thousand_separator();
                                                             $price_decimal_separator = wpfm_get_price_decimal_separator();
                                                             $option_price = $value2['option_price'];
@@ -120,7 +120,7 @@ if (!empty($regular_price)) {
     
                                                             if (!empty($option_price)) {
                                                                 $formatted_option_price = number_format($option_price, $price_decimals, $price_decimal_separator, $price_thousand_separator);
-                                                                $f_formatted_option_price = sprintf($price_format, '<span class="food-manager-Price-currencySymbol">' . get_food_manager_currency_symbol() . '</span>', $formatted_option_price);
+                                                                $f_formatted_option_price = sprintf($price_format, '<span class="food-manager-Price-currencySymbol">' . get_wpfm_currency_symbol() . '</span>', $formatted_option_price);
                                                             }
     
                                                             $option_price_sep = '';

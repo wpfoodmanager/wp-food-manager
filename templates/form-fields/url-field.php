@@ -7,7 +7,7 @@ if (!empty($field['value']) && is_array($field['value'])) {
 } else {
     $field_val_num = !empty($field['value']) ? $field['value'] : '';
 }
-if (!wpfm_begnWith($field_val_num, "http")) {
+if (!wpfm_begin_with($field_val_num, "http")) {
     $field_val_num = '';
 }
 ?>

@@ -380,7 +380,7 @@ class WPFM_Ajax {
      * @since 1.0.0
      */
     public function upload_file() {
-        if (!food_manager_user_can_upload_file_via_ajax()) {
+        if (!check_wpfm_user_can_upload_file_via_ajax()) {
             wp_send_json_error(new WP_Error('upload', __('You must be logged in to upload files using this method.', 'wp-food-manager')));
             return;
         }

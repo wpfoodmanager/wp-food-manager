@@ -22,7 +22,7 @@ if (is_admin()) {
 						<img src="<?php echo esc_attr($value); ?>">
 						<a class="food-manager-remove-uploaded-file" href="javascript:void(0);">[remove]</a>
 						<?php else :
-						if (!wpfm_begnWith($value, "http")) {
+						if (!wpfm_begin_with($value, "http")) {
 							$value	= '';
 						}
 						if (!empty($value)) { ?>
@@ -51,7 +51,7 @@ if (is_admin()) {
 	$allowed_mime_types = array_keys(!empty($field['allowed_mime_types']) ? $field['allowed_mime_types'] : get_allowed_mime_types());
 	$field_name         = esc_attr(sanitize_title(isset($field['name']) ? $field['name'] : $key));
 	$field_name         .= !empty($field['multiple']) ? '[]' : '';
-	if (!empty($field['ajax']) && food_manager_user_can_upload_file_via_ajax()) {
+	if (!empty($field['ajax']) && check_wpfm_user_can_upload_file_via_ajax()) {
 		$classes[] = 'wp-food-manager-file-upload';
 	}
 	$field_val_num = '';
@@ -96,13 +96,13 @@ if (is_admin()) {
 				} else {
 					if (is_array($field['value'])) {
 						foreach ($field['value'] as $value) :
-							if (wpfm_begnWith($value, "http")) {
+							if (wpfm_begin_with($value, "http")) {
 								get_food_manager_template('form-fields/uploaded-file-html.php', array('key' => esc_attr($key), 'name' => esc_attr($field_name), 'value' => $value, 'field' => $field));
 							}
 						endforeach;
-					} elseif (wpfm_begnWith($field['value'], "http") && !is_array($field['value'])) {
+					} elseif (wpfm_begin_with($field['value'], "http") && !is_array($field['value'])) {
 						get_food_manager_template('form-fields/uploaded-file-html.php', array('key' => esc_attr($key), 'name' => esc_attr($field_name), 'value' => $field['value'], 'field' => $field));
-					} elseif (wpfm_begnWith($field_val_num, "http") && !is_array($field_val_num)) {
+					} elseif (wpfm_begin_with($field_val_num, "http") && !is_array($field_val_num)) {
 						get_food_manager_template('form-fields/uploaded-file-html.php', array('key' => esc_attr($key), 'name' => esc_attr($field_name), 'value' => $field_val_num, 'field' => $field));
 					}
 				}

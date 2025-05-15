@@ -75,7 +75,7 @@ class WP_Food_Manager extends WPFM_Updater {
 	 */
 	public function __construct() {
 		// Define constants
-    define('WPFM_VERSION', '1.0.7');
+    	define('WPFM_VERSION', '1.0.7');
 		define('WPFM_PLUGIN_DIR', untrailingslashit(plugin_dir_path(__FILE__)));
 		define('WPFM_PLUGIN_URL', untrailingslashit(plugins_url(basename(plugin_dir_path(__FILE__)), basename(__FILE__))));
 
@@ -194,7 +194,6 @@ class WP_Food_Manager extends WPFM_Updater {
         load_textdomain($domain, WP_LANG_DIR . "/wp-food-manager/" . $domain . "-" . $locale . ".mo");
         load_plugin_textdomain($domain, false, dirname(plugin_basename(__FILE__)) . '/languages/');
     }
-
 }
 
 $GLOBALS['food_manager'] =  WP_Food_Manager::instance();

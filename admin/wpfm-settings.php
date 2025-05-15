@@ -104,9 +104,9 @@ class WPFM_Settings {
             $account_roles[$key] = $role['name'];
         }
 
-        $currency_code_options = get_food_manager_currencies();
+        $currency_code_options = get_wpfm_currencies();
         foreach ($currency_code_options as $code => $name) {
-            $currency_code_options[$code] = $name . ' (' . get_food_manager_currency_symbol($code) . ')';
+            $currency_code_options[$code] = $name . ' (' . get_wpfm_currency_symbol($code) . ')';
         }
 
         $this->settings = apply_filters(

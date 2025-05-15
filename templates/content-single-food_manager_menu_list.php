@@ -29,7 +29,7 @@ $show_image = ($disable_food_image !== 'yes');
                 $without_dashicons_str = str_replace("dashicons-", "", $wpfm_radio_icons);
                 $data_food_menu = ucwords(str_replace("-", " ", $without_dashicons_str));
                 $data_food_menu2 = ucwords(str_replace("-", " ", $without_food_str));
-                if (wpfm_begnWith($wpfm_radio_icons, "dashicons")) {
+                if (wpfm_begin_with($wpfm_radio_icons, "dashicons")) {
                     if ($wpfm_radio_icons) {
                         echo "<span class='wpfm-front-radio-icon food-icon' data-food-menu='" . esc_attr($data_food_menu2) . "'><span class='wpfm-menu dashicons " . esc_attr($wpfm_radio_icons) . "'></span></span>";
                     }
@@ -49,7 +49,7 @@ $show_image = ($disable_food_image !== 'yes');
     <?php }
         echo "<div class='fm-food-menu-container'>";
             $price_decimals = wpfm_get_price_decimals();
-            $price_format = get_food_manager_price_format();
+            $price_format = get_wpfm_price_format();
             $price_thousand_separator = wpfm_get_price_thousand_separator();
             $price_decimal_separator = wpfm_get_price_decimal_separator();
             $menu_food_desc = '';
@@ -101,11 +101,11 @@ $show_image = ($disable_food_image !== 'yes');
             echo "<div class='fm-food-menu-pricing'>";
 
             if (!empty($regular_price) && !empty($sale_price)) {
-                $food_regular_price = sprintf($price_format, '<span class="food-manager-Price-currencySymbol">' . esc_html(get_food_manager_currency_symbol()) . '</span>', $formatted_sale_price);
-                $food_sale_price = sprintf($price_format, '<span class="food-manager-Price-currencySymbol">' . esc_html(get_food_manager_currency_symbol()) . '</span>', $formatted_regular_price);
+                $food_regular_price = sprintf($price_format, '<span class="food-manager-Price-currencySymbol">' . esc_html(get_wpfm_currency_symbol()) . '</span>', $formatted_sale_price);
+                $food_sale_price = sprintf($price_format, '<span class="food-manager-Price-currencySymbol">' . esc_html(get_wpfm_currency_symbol()) . '</span>', $formatted_regular_price);
                 echo "<del> " . $food_sale_price . "</del> <ins><span class='food-manager-Price-currencySymbol'><strong>" . $food_regular_price . "</strong></span></ins>";
             } elseif (!empty($regular_price)) {
-                echo sprintf($price_format, '<span class="food-manager-Price-currencySymbol">' . esc_html(get_food_manager_currency_symbol()) . '</span>', $formatted_regular_price);
+                echo sprintf($price_format, '<span class="food-manager-Price-currencySymbol">' . esc_html(get_wpfm_currency_symbol()) . '</span>', $formatted_regular_price);
             }
             echo "</div>";
             echo "</a>";

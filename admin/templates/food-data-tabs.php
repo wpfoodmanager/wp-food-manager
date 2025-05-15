@@ -61,7 +61,7 @@ $disbled_fields_for_admin = array('food_category', 'food_tag', 'food_nutritions'
 											$name = $key;
 										}
 
-										if (wpfm_begnWith($field['value'], "http")) {
+										if (wpfm_begin_with($field['value'], "http")) {
 											$field['value'] = '';
 										} ?>
 									<div class="wpfm_editor" data-field-name="<?php echo esc_attr($name); ?>">

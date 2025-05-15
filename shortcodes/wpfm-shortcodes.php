@@ -577,7 +577,9 @@ class WPFM_Shortcodes {
 				$restaurant_args['posts_per_page'] = 1;
 				$restaurant_query = new WP_Query($restaurant_args);
 				if($restaurant_query->found_posts == 0){ 
-					error_message_for_menu_page('Invalid restaurant id.');
+					echo '<div class="wpfm-alert wpfm-alert-danger">';
+						echo __('Invalid restaurant id.', "wp-food-manager");
+					echo '</div>';
 					return ob_get_clean(); 
 				}
 			} 
@@ -613,18 +615,24 @@ class WPFM_Shortcodes {
 				}
 
 				if($food_ids && $restaurant_query->found_posts == 0){ 
-					error_message_for_menu_page('No Restaurant found.'); 
+					echo '<div class="wpfm-alert wpfm-alert-danger">';
+						echo esc_html('No Restaurant found.', "wp-food-manager");
+					echo '</div>';
 					return ob_get_clean();
 				}
 				else{
-					error_message_for_menu_page('No Food Menu are available'); 
+					echo '<div class="wpfm-alert wpfm-alert-danger">';
+						echo esc_html('No Food Menu are available.', "wp-food-manager");
+					echo '</div>';
 					return ob_get_clean();
 				}
 			}
 			wp_reset_postdata();
 
 			if(!$restaurant_menus){
-				error_message_for_menu_page('No Food Menu are available'); 
+				echo '<div class="wpfm-alert wpfm-alert-danger">';
+					echo esc_html('No Food Menu are available.', "wp-food-manager");
+				echo '</div>';
 				return ob_get_clean();
 			}
 
@@ -752,10 +760,14 @@ class WPFM_Shortcodes {
 				}
 
 				if (!empty(trim($search_term)) && !isset($found_post_id)) { 
-					error_message_for_menu_page('No search result found.');  
+					echo '<div class="wpfm-alert wpfm-alert-danger">';
+						echo esc_html('No search result found.', "wp-food-manager");
+					echo '</div>';
 				}
 				else if(!$food_menu_ids){ 
-					error_message_for_menu_page('No Food Menu are available'); 
+					echo '<div class="wpfm-alert wpfm-alert-danger">';
+						echo esc_html('No Food Menu are available.', "wp-food-manager");
+					echo '</div>';
 					return ob_get_clean();
 				}
 				?>
@@ -786,7 +798,9 @@ class WPFM_Shortcodes {
 	
 		// Check if restaurant ID is provided
 		if (!$restaurant_id) {
-			error_message_for_menu_page('No restaurant ID provided.');
+			echo '<div class="wpfm-alert wpfm-alert-danger">';
+				echo esc_html('No restaurant ID provided.', "wp-food-manager");
+			echo '</div>';
 			return ob_get_clean();
 		}
 	
@@ -819,13 +833,16 @@ class WPFM_Shortcodes {
 
 					}
 				} else {
-					error_message_for_menu_page('No menus found for this restaurant.');
-					
+					echo '<div class="wpfm-alert wpfm-alert-danger">';
+						echo esc_html('No menus found for this restaurant.', "wp-food-manager");
+					echo '</div>';
 				}
 			}
 			wp_reset_postdata();
 		} else {
-			error_message_for_menu_page('Invalid restaurant ID.');
+			echo '<div class="wpfm-alert wpfm-alert-danger">';
+				echo esc_html('Invalid restaurant ID.', "wp-food-manager");
+			echo '</div>';
 		}
 	
 		return ob_get_clean();
@@ -849,7 +866,9 @@ class WPFM_Shortcodes {
 		$search_term = (isset($_GET['search_term'])) ? sanitize_text_field($_GET['search_term']) : '';
 	
 		if (empty($restaurant_id)) {
-			error_message_for_menu_page('Restaurant ID is required.');
+			echo '<div class="wpfm-alert wpfm-alert-danger">';
+				echo esc_html('Restaurant ID is required.', "wp-food-manager");
+			echo '</div>';
 			return ob_get_clean();
 		}
 	
@@ -860,7 +879,9 @@ class WPFM_Shortcodes {
 		$restaurant_menus = get_post_meta($restaurant_id, '_restaurant_menus', true);
 	
 		if (empty($restaurant_menus) || !is_array($restaurant_menus)) {
-			error_message_for_menu_page('No Food Menu available for this restaurant.');
+			echo '<div class="wpfm-alert wpfm-alert-danger">';
+				echo esc_html('No menus found for this restaurant.', "wp-food-manager");
+			echo '</div>';
 			return ob_get_clean();
 		}
 	
@@ -943,13 +964,17 @@ class WPFM_Shortcodes {
 						</div>
 						<?php
 					} else {
-						error_message_for_menu_page('No food items found for this menu.');
+						echo '<div class="wpfm-alert wpfm-alert-danger">';
+							echo esc_html('No food items found for this menu.', "wp-food-manager");
+						echo '</div>';
 					}
 				}
 			}
 			echo '</div>';
 		} else {
-			error_message_for_menu_page('No Food Menu available.');
+			echo '<div class="wpfm-alert wpfm-alert-danger">';
+				echo esc_html('No Food Menu availble.', "wp-food-manager");
+			echo '</div>';
 		}
 	
 		wp_reset_postdata();
@@ -998,7 +1023,9 @@ class WPFM_Shortcodes {
 					</div>
 				<?php endwhile; ?>
 			<?php } else{
-				error_message_for_menu_page('No Foods are available..'); 
+				echo '<div class="wpfm-alert wpfm-alert-danger">';
+					echo esc_html('No Foods are available.', "wp-food-manager");
+				echo '</div>';
 				return ob_get_clean();
 			}
 			wp_reset_postdata();
@@ -1052,7 +1079,9 @@ class WPFM_Shortcodes {
 				</div>
 			<?php endwhile; ?>
 		<?php } else{
-			error_message_for_menu_page('No Foods are available..'); 
+			echo '<div class="wpfm-alert wpfm-alert-danger">';
+				echo esc_html('No Foods are available.', "wp-food-manager");
+			echo '</div>';
 			return ob_get_clean();
 		}
 		wp_reset_postdata();
