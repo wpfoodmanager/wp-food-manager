@@ -31,8 +31,7 @@
 						<?php get_food_manager_template('form-fields/' . esc_attr($field['type']) . '-field.php', array('key'   => esc_attr($key), 'field' => $field)); ?>
 					</div>
 				</div>
-<?php
-			}
+			<?php }
 			do_action('food_manager_register_form');
 		}
 	endif;

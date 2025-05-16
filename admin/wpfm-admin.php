@@ -1021,7 +1021,7 @@ class WPFM_Admin {
                     $type_names = implode(', ', get_wpfm_food_terms_names(get_the_ID(), 'food_manager_type'));
                     $tag_names = implode(', ', get_wpfm_food_terms_names(get_the_ID(), 'food_manager_tag'));
                     $ingredients = get_wpfm_food_ingredients(get_the_ID());
-                    $nutrition_names = wpfm_get_food_nutritions(get_the_ID());
+                    $nutrition_names = wpfm_get_food_nutritions_term_name(get_the_ID());
                     $topping_data = maybe_unserialize(get_post_meta(get_the_ID(), '_food_toppings', true)); // Unserialize topping data
 
                     // Prepare topping data

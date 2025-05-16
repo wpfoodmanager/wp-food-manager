@@ -286,11 +286,11 @@ class WPFM_Post_Types {
 		if ($post && $post->post_type !== 'food_manager') {
 			return false;
 		}
-		$food_banner = get_food_banner($post);
+		$food_banner = get_wpfm_food_banner($post);
 		if( is_array($food_banner) ){
-			$food_banner = array_map('esc_url', get_food_banner($post));
+			$food_banner = array_map('esc_url', get_wpfm_food_banner($post));
 		}else{
-			$food_banner = esc_url(get_food_banner($post));
+			$food_banner = esc_url(get_wpfm_food_banner($post));
 		}
 		$data = array();
 		$data['@context'] = 'http://schema.org/';

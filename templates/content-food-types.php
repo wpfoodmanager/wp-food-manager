@@ -7,8 +7,7 @@ foreach ($food_cats as $food_cat) {
         $post_thumbnail_img = apply_filters('wpfm_default_food_banner', esc_url(WPFM_PLUGIN_URL . '/assets/images/wpfm-placeholder.jpg'));
     } else {
         $post_thumbnail_img = $post_thumbnail_img[0];
-    }
-?>
+    } ?>
     <div class="wpfm-food-box-col wpfm-col wpfm-col-12 wpfm-col-md-6 wpfm-col-lg-<?php echo esc_attr(apply_filters('food_manager_food_wpfm_column', '4')); ?>">
         <!----- wpfm-col-lg-4 value can be change by admin settings ------->
         <div class="wpfm-food-layout-wrapper">
@@ -21,6 +20,4 @@ foreach ($food_cats as $food_cat) {
             </div>
         </div>
     </div>
-<?php
-}
-?>
+<?php } ?>

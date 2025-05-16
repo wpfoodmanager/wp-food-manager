@@ -1,5 +1,4 @@
 <?php
-
 /**
  * This file is use to create a shortcode of wp food manager plugin.
  * This file include shortcode of food listing, food submit form, and food dashboard, etc.

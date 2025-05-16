@@ -1464,12 +1464,12 @@ function get_wpfm_currency_symbol($currency = '') {
 }
 
 /**
- * This get_wpfm_price_format() function is used to get the price format depending on the currency position.
+ * This wpfm_get_price_format() function is used to get the price format depending on the currency position.
  *
  * @return string
  * @since 1.0.0
  */
-function get_wpfm_price_format() {
+function wpfm_get_price_format() {
 	$currency_pos = get_option('wpfm_currency_pos');
 	$format       = '%1$s%2$s';
 
@@ -2309,7 +2309,7 @@ function get_wpfm_food_ingredients($post_id) {
 * @param $post_id
 * @return $nutrition_details
 */
-function wpfm_get_food_nutritions($post_id) {
+function wpfm_get_food_nutritions_term_name($post_id) {
 	$nutrition_meta = maybe_unserialize(get_post_meta($post_id, 'food_manager_nutrition', true));
 	$nutrition_details = [];         
 	if (!empty($nutrition_meta) && is_array($nutrition_meta)) {   

@@ -15,8 +15,7 @@ if (is_admin()) {
 	}
 	if (wpfm_begin_with($field['value'], "http") || is_array($field['value'])) {
 		$field['value'] = '';
-	}
-?>
+	} ?>
 	<textarea name="<?php echo esc_attr($name); ?>" id="<?php echo esc_attr($key); ?>" rows="4" cols="63" placeholder="<?php echo esc_attr($field['placeholder']); ?>"><?php echo esc_html($field['value']); ?></textarea>
 <?php } else {
 	$editor = apply_filters('add_food_wp_editor_args', array(

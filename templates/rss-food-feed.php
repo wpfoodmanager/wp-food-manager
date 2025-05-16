@@ -1,6 +1,6 @@
 <?php
-$food_type = get_food_type($post_id);
-$food_category = get_food_category($post_id);
+$food_type = wpfm_get_food_type($post_id);
+$food_category = wpfm_get_food_category($post_id);
 
 do_action('food_fee_item_start');
 if (isset($food_type->name)) {

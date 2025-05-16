@@ -163,21 +163,21 @@ class WPFM_CPT {
 
             case 'food_banner':
                 echo '<div class="food_banner">';
-                display_food_banner();
+                wpfm_display_food_banner();
                 echo '</div>';
-                display_food_veg_nonveg_icon_tag();
+                wpfm_display_food_veg_nonveg_icon_tag();
                 break;
 
             case 'food-price':
-                display_food_price_tag();
+                wpfm_display_food_price_tag();
                 break;
 
             case 'food_categories':
-               echo esc_html(display_food_category()); 
+               echo esc_html(wpfm_display_food_category()); 
                 break;
 
             case 'food_stock_status':
-                echo esc_html(display_stock_status());
+                echo esc_html(wpfm_display_stock_status());
                 break;
 
             case 'food_menu_order':

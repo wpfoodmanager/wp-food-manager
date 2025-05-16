@@ -243,9 +243,9 @@
 															</div>
 														<?php
 														elseif ('food_categories' === $key) :
-															display_food_category($food);
+															wpfm_display_food_category($food);
 														elseif ('view_count' === $key) :
-															echo esc_html(get_food_views_count($food)); ?>
+															echo esc_html(wpfm_get_food_views_count($food)); ?>
 														<?php else :
 															do_action('food_manager_food_dashboard_column_' . $key, $food);
 														endif; ?>

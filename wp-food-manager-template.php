@@ -145,14 +145,14 @@ function get_food_manager_template_part($slug, $name = '', $template_path = 'wp-
 }
 
 /**
- * This get_food_banner() function is used to get the food banner url if not then return placeholder image.
+ * This get_wpfm_food_banner() function is used to get the food banner url if not then return placeholder image.
  *
  * @access public
  * @param mixed $post (default: null)
  * @return string
  * @since 1.0.0
  */
-function get_food_banner($post = null) {
+function get_wpfm_food_banner($post = null) {
 	$post = get_post($post);
 	if ($post->post_type !== 'food_manager')
 		return;
@@ -164,7 +164,7 @@ function get_food_banner($post = null) {
 	if (is_array($food_banner)) {
 		$food_banner = array_map('esc_url', $food_banner);
 	}
-	return apply_filters('display_food_banner', $food_banner, $post);
+	return apply_filters('wpfm_display_food_banner', $food_banner, $post);
 }
 
 /**
@@ -187,19 +187,19 @@ function get_food_thumbnail($post = null, $size = 'full') {
 }
 
 /**
- * This display_food_price_tag() function is used to display the food price tag.
+ * This wpfm_display_food_price_tag() function is used to display the food price tag.
  *
  * @access public
  * @param mixed $post (default: null)
  * @return string
  * @since 1.0.0
  */
-function display_food_price_tag($post = null) {
+function wpfm_display_food_price_tag($post = null) {
 	$post = get_post($post);
 	if ($post->post_type !== 'food_manager')
 		return;
 	$price_decimals = wpfm_get_price_decimals();
-	$price_format = get_wpfm_price_format();
+	$price_format = wpfm_get_price_format();
 	$price_thousand_separator = wpfm_get_price_thousand_separator();
 	$price_decimal_separator = wpfm_get_price_decimal_separator();
 	$sale_price = get_post_meta($post->ID, '_food_sale_price', true);
@@ -224,7 +224,7 @@ function display_food_price_tag($post = null) {
 }
 
 /**
- * This display_food_banner() function is used to display the food banner.
+ * This wpfm_display_food_banner() function is used to display the food banner.
  *
  * @access public
  * @param string $size (default: 'full')
@@ -233,8 +233,8 @@ function display_food_price_tag($post = null) {
  * @return void
  * @since 1.0.0
  */
-function display_food_banner($size = 'full', $default = null, $post = null) {
-	$banner = get_food_banner($post);
+function wpfm_display_food_banner($size = 'full', $default = null, $post = null) {
+	$banner = get_wpfm_food_banner($post);
 	if (!empty($banner) && !is_array($banner)  && (strstr($banner, 'http') || file_exists($banner))) {
 		echo '<img itemprop="image" content="' . esc_attr($banner) . '" src="' . esc_url(esc_attr($banner)) . '" alt="" />';
 	} else if ($default) {
@@ -250,13 +250,13 @@ function display_food_banner($size = 'full', $default = null, $post = null) {
 }
 
 /**
- * This get_food_views_count() function is use to get the counts of the food views and also used at food.
+ * This wpfm_get_food_views_count() function is use to get the counts of the food views and also used at food.
  * 
  *  @return number counted view.
  *  @param mixed $post
  *  @since 1.0.0
  **/
-function get_food_views_count($post) {
+function wpfm_get_food_views_count($post) {
 	$count_key = '_view_count';
 	$count = get_post_meta($post->ID, $count_key, true);
 	if ($count == '' || $count == null) {
@@ -268,7 +268,7 @@ function get_food_views_count($post) {
 }
 
 /**
- * This display_food_veg_nonveg_icon_tag() function is used to display the food veg or non-veg or vegan icon.
+ * This wpfm_display_food_veg_nonveg_icon_tag() function is used to display the food veg or non-veg or vegan icon.
  *
  * @access public
  * @param mixed $post (default: null)
@@ -276,7 +276,7 @@ function get_food_views_count($post) {
  * @return void
  * @since 1.0.0
  */
-function display_food_veg_nonveg_icon_tag($post = null, $after = '') {
+function wpfm_display_food_veg_nonveg_icon_tag($post = null, $after = '') {
 	$wpfm_veg_nonveg_tags = get_food_veg_nonveg_icon_tag($post);
 	$image_id = '';
 	if (!empty($wpfm_veg_nonveg_tags)) {
@@ -321,11 +321,11 @@ function get_food_veg_nonveg_icon_tag($post = null) {
 		return;
 	}
 	$wpfm_veg_nonveg_tag = wp_get_post_terms($post->ID, 'food_manager_type');
-	return apply_filters('display_food_veg_nonveg_icon_tag', $wpfm_veg_nonveg_tag, $post);
+	return apply_filters('wpfm_display_food_veg_nonveg_icon_tag', $wpfm_veg_nonveg_tag, $post);
 }
 
 /**
- * This display_food_type() function is used to display the food type.
+ * This wpfm_display_food_type() function is used to display the food type.
  *
  * @access public
  * @param mixed $post (default: null)
@@ -333,8 +333,8 @@ function get_food_veg_nonveg_icon_tag($post = null) {
  * @return void
  * @since 1.0.0
  */
-function display_food_type($post = null, $after = '') {
-	if ($food_type = get_food_type($post)) {
+function wpfm_display_food_type($post = null, $after = '') {
+	if ($food_type = wpfm_get_food_type($post)) {
 		if (!empty($food_type)) {
 			$numType = count($food_type);
 			$i = 0;
@@ -357,14 +357,14 @@ function display_food_type($post = null, $after = '') {
 }
 
 /**
- * This get_food_type() function is used get the food type.
+ * This wpfm_get_food_type() function is used get the food type.
  *
  * @access public
  * @param mixed $post (default: null)
  * @return mixed
  * @since 1.0.0
  */
-function get_food_type($post = null) {
+function wpfm_get_food_type($post = null) {
 	$post = get_post($post);
 	if ($post->post_type !== 'food_manager' || !get_option('food_manager_enable_food_types')) {
 		return;
@@ -372,11 +372,11 @@ function get_food_type($post = null) {
 	$types = wp_get_post_terms($post->ID, 'food_manager_type');
 	if (empty($types))
 		$types = '';
-	return apply_filters('display_food_type', $types, $post);
+	return apply_filters('wpfm_display_food_type', $types, $post);
 }
 
 /**
- * This display_food_tag() function is used to display the food tag.
+ * This wpfm_display_food_tag() function is used to display the food tag.
  *
  * @access public
  * @param mixed $post (default: null)
@@ -384,8 +384,8 @@ function get_food_type($post = null) {
  * @return void
  * @since 1.0.0
  */
-function display_food_tag($post = null, $after = '') {
-	if ($food_tag = get_food_tag($post)) {
+function wpfm_display_food_tag($post = null, $after = '') {
+	if ($food_tag = wpfm_get_food_tag($post)) {
 		if (!empty($food_tag)) {
 			$numTag = count($food_tag);
 			$i = 0;
@@ -408,14 +408,14 @@ function display_food_tag($post = null, $after = '') {
 }
 
 /**
- * This get_food_tag() function is used to get the food tag.
+ * This wpfm_get_food_tag() function is used to get the food tag.
  *
  * @access public
  * @param mixed $post (default: null)
  * @return mixed
  * @since 1.0.0
  */
-function get_food_tag($post = null) {
+function wpfm_get_food_tag($post = null) {
 	$post = get_post($post);
 	if ($post->post_type !== 'food_manager' || !get_option('food_manager_enable_food_tags')) {
 		return;
@@ -423,11 +423,11 @@ function get_food_tag($post = null) {
 	$tags = wp_get_post_terms($post->ID, 'food_manager_tag');
 	if (empty($tags))
 		$tags = '';
-	return apply_filters('display_food_tag', $tags, $post);
+	return apply_filters('wpfm_display_food_tag', $tags, $post);
 }
 
 /**
- * This display_food_category() function is used to display the food Category.
+ * This wpfm_display_food_category() function is used to display the food Category.
  *
  * @access public
  * @param mixed $post (default: null)
@@ -435,8 +435,8 @@ function get_food_tag($post = null) {
  * @return void
  * @since 1.0.0
  */
-function display_food_category($post = null, $after = '') {
-	if ($food_category = get_food_category($post)) {
+function wpfm_display_food_category($post = null, $after = '') {
+	if ($food_category = wpfm_get_food_category($post)) {
 		if (!empty($food_category)) {
 			$numCategory = count($food_category);
 			$i = 0;
@@ -461,14 +461,14 @@ function display_food_category($post = null, $after = '') {
 }
 
 /**
- * This get_food_category() function is used to get the food Category.
+ * This wpfm_get_food_category() function is used to get the food Category.
  *
  * @access public
  * @param mixed $post (default: null)
  * @return mixed
  * @since 1.0.0
  */
-function get_food_category($post = null) {
+function wpfm_get_food_category($post = null) {
 	$post = get_post($post);
 	if ($post->post_type !== 'food_manager' || !get_option('food_manager_enable_categories')) {
 		return;
@@ -478,7 +478,7 @@ function get_food_category($post = null) {
 }
 
 /**
- * This display_food_ingredients() function is used to display the food ingredients.
+ * This wpfm_display_food_ingredients() function is used to display the food ingredients.
  *
  * @access public
  * @param $post (default: null)
@@ -486,8 +486,8 @@ function get_food_category($post = null) {
  * @return void
  * @since 1.0.0
  */
-function display_food_ingredients($post = null, $after = '') {
-	if ($food_ingredients = get_food_ingredients($post)) {
+function wpfm_display_food_ingredients($post = null, $after = '') {
+	if ($food_ingredients = wpfm_get_food_ingredients($post)) {
 		if (!empty($food_ingredients)) {
 			$numIngredient = count($food_ingredients);
 			$i = 0;
@@ -509,24 +509,24 @@ function display_food_ingredients($post = null, $after = '') {
 }
 
 /**
- * This get_food_ingredients() function is used to get the food ingredients.
+ * This wpfm_get_food_ingredients() function is used to get the food ingredients.
  *
  * @access public
  * @param mixed $post (default: null)
  * @return mixed
  * @since 1.0.0
  */
-function get_food_ingredients($post = null) {
+function wpfm_get_food_ingredients($post = null) {
 	$post = get_post($post);
 	if ($post->post_type !== 'food_manager') {
 		return;
 	}
 	$ingredients = get_post_meta(get_the_ID(), '_food_ingredients', true);
-	return apply_filters('display_food_ingredients', $ingredients, $post);
+	return apply_filters('wpfm_display_food_ingredients', $ingredients, $post);
 }
 
 /**
- * This display_food_nutritions() function is used to  display the food nutritions.
+ * This wpfm_display_food_nutritions() function is used to  display the food nutritions.
  * 
  * @access public
  * @param $post (default: null)
@@ -534,8 +534,8 @@ function get_food_ingredients($post = null) {
  * @return void
  * @since 1.0.0
  */
-function display_food_nutritions($post = null, $after = '') {
-	if ($food_nutritions = get_food_nutritions($post)) {
+function wpfm_display_food_nutritions($post = null, $after = '') {
+	if ($food_nutritions = wpfm_get_food_nutritions($post)) {
 		if (!empty($food_nutritions)) {
 			$numNutrition = count($food_nutritions);
 			$i = 0;
@@ -557,24 +557,24 @@ function display_food_nutritions($post = null, $after = '') {
 }
 
 /**
- * This get_food_nutritions() function is used to get the food nutritions.
+ * This wpfm_get_food_nutritions() function is used to get the food nutritions.
  *
  * @access public
  * @param mixed $post (default: null)
  * @return mixed
  * @since 1.0.0
  */
-function get_food_nutritions($post = null) {
+function wpfm_get_food_nutritions($post = null) {
 	$post = get_post($post);
 	if ($post->post_type !== 'food_manager') {
 		return;
 	}
 	$nutritions = get_post_meta(get_the_ID(), '_food_nutritions', true);
-	return apply_filters('display_food_nutritions', $nutritions, $post);
+	return apply_filters('wpfm_display_food_nutritions', $nutritions, $post);
 }
 
 /**
- * This display_food_units() function is used to display the food Units.
+ * This wpfm_display_food_units() function is used to display the food Units.
  *
  * @access public
  * @param mixed $post (default: null)
@@ -582,8 +582,8 @@ function get_food_nutritions($post = null) {
  * @return void
  * @since 1.0.0
  */
-function display_food_units($post = null, $after = '') {
-	if ($food_units = get_food_units($post)) {
+function wpfm_display_food_units($post = null, $after = '') {
+	if ($food_units = wpfm_get_food_units($post)) {
 		if (!empty($food_units)) {
 			$numUnit = count($food_units);
 			$i = 0;
@@ -598,46 +598,46 @@ function display_food_units($post = null, $after = '') {
 }
 
 /**
- * This get_food_units() function is used to get the food Units.
+ * This wpfm_get_food_units() function is used to get the food Units.
  *
  * @access public
  * @param mixed $post (default: null)
  * @return mixed
  * @since 1.0.0
  */
-function get_food_units($post = null) {
+function wpfm_get_food_units($post = null) {
 	$post = get_post($post);
 	if ($post->post_type !== 'food_manager') {
 		return;
 	}
 	$units = wp_get_post_terms($post->ID, 'food_manager_unit');
-	return apply_filters('display_food_units', $units, $post);
+	return apply_filters('wpfm_display_food_units', $units, $post);
 }
 
 /**
- * This display_food_permalink() function is used to diplay the food permalink.
+ * This wpfm_display_food_permalink() function is used to diplay the food permalink.
  *
  * @access public
  * @param mixed $post (default: null)
  * @return void
  * @since 1.0.0
  */
-function display_food_permalink($post = null) {
-	echo esc_attr(get_food_permalink($post));
+function wpfm_display_food_permalink($post = null) {
+	echo esc_attr(wpfm_get_food_permalink($post));
 }
 
 /**
- * This get_food_permalink() function is used to get the food permalink.
+ * This wpfm_get_food_permalink() function is used to get the food permalink.
  *
  * @access public
  * @param mixed $post (default: null)
  * @return string
  * @since 1.0.0
  */
-function get_food_permalink($post = null) {
+function wpfm_get_food_permalink($post = null) {
 	$post = get_post($post);
 	$link = get_permalink($post);
-	return apply_filters('display_food_permalink', esc_url($link), $post);
+	return apply_filters('wpfm_display_food_permalink', esc_url($link), $post);
 }
 
 /**
@@ -673,7 +673,7 @@ function get_food_manager_class($class = '', $post_id = null) {
 		return $classes;
 	}
 	$classes[] = 'food_manager';
-	if ($food_type = get_food_type()) {
+	if ($food_type = wpfm_get_food_type()) {
 		if ($food_type && !empty($food_type)) {
 			foreach ($food_type as $type) {
 				$classes[] = 'food-type-' . sanitize_title($type->name);
@@ -720,7 +720,7 @@ function get_food_status($post = null) {
 }
 
 /**
- * This display_stock_status() function is used to display the food stock status.
+ * This wpfm_display_stock_status() function is used to display the food stock status.
  *
  * @access public
  * @param $post (default: null)
@@ -728,8 +728,8 @@ function get_food_status($post = null) {
  * @return void
  * @since 1.0.0
  */
-function display_stock_status($post = null, $after = '') {
-    $food_stock_status = get_stock_status($post);
+function wpfm_display_stock_status($post = null, $after = '') {
+    $food_stock_status = wpfm_get_stock_status($post);
 
     if (is_array($food_stock_status)) {
         //display individual stock statuses.
@@ -768,17 +768,17 @@ function display_single_stock_status($food_stock_status) {
 }
 
 /**
- * This get_stock_status() function is used to get the food stock status.
+ * This wpfm_get_stock_status() function is used to get the food stock status.
  *
  * @access public
  * @param mixed $post (default: null)
  * @return void
  * @since 1.0.0
  */
-function get_stock_status($post = null) {
+function wpfm_get_stock_status($post = null) {
 	$post = get_post($post);
 	$stock_status = get_post_meta($post->ID, '_food_stock_status', true);
-	return apply_filters('display_stock_status', $stock_status, $post);
+	return apply_filters('wpfm_display_stock_status', $stock_status, $post);
 }
 
 /**

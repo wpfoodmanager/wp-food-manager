@@ -198,9 +198,9 @@ class WPFM_Ajax {
         if ($foods->have_posts()) : $result['found_foods'] = true; ?>
             <?php while ($foods->have_posts()) : $foods->the_post(); ?>
                 <?php
-                if (get_option('food_manager_food_item_show_hide') == 0 && get_stock_status() !== 'food_outofstock') {
+                if (get_option('food_manager_food_item_show_hide') == 0 && wpfm_get_stock_status() !== 'food_outofstock') {
                     $food_cnt++;
-                } elseif (get_option('food_manager_food_item_show_hide') == 1 && get_stock_status()) {
+                } elseif (get_option('food_manager_food_item_show_hide') == 1 && wpfm_get_stock_status()) {
                     $food_cnt++;
                 }
                 get_food_manager_template_part('content', 'food_manager'); ?>

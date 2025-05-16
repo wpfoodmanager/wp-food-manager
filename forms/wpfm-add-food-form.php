@@ -436,7 +436,7 @@ class WPFM_Add_Food_Form extends WPFM_Form {
 	 */
 	private function food_types() {
 		$options = array();
-		$terms   = get_food_type();
+		$terms   = wpfm_get_food_type();
 		foreach ($terms as $term) {
 			$options[$term->slug] = $term->name;
 		}
