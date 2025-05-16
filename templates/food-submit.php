@@ -10,19 +10,19 @@ $add_food_page_id = get_option('food_manager_add_food_page_id');
 $food_dashboard_page_id = get_option('food_manager_food_dashboard_page_id');
 $extra_fields_options = get_post_meta($food_id, '_food_toppings', true) ? get_post_meta($food_id, '_food_toppings', true) : '';
 if (!empty($extra_fields_options)) {
-	$topping_item_count1 = array();
+	$topping_count = array();
 	for ($i = 1; $i <= count($extra_fields_options); $i++) {
 		foreach ($extra_fields_options as $key => $value) {
 			for ($j = 1; $j <= count($value['_topping_options']); $j++) {
-				$topping_item_count1[$key][] = $j;
+				$topping_count[$key][] = $j;
 			}
 		}
 	}
 	$topping_item_count = array();
-	foreach ($topping_item_count1 as $option_value_count) {
+	foreach ($topping_count as $option_value_count) {
 		$topping_item_count[] = array_unique($option_value_count);
 	}
-	array_unshift($topping_item_count1, "");
+	array_unshift($topping_count, "");
 	unset($topping_item_count[0]);
 	$topping_item_list = array();
 
@@ -214,8 +214,7 @@ if (!empty($extra_fields_options)) {
 								</div>
 							</div>
 					<?php }
-					}
-					?>
+					} ?>
 					<div class="wpfm-actions">
 						<button type="button" class="wpfm-add-button button button-primary" id="wpfm-add-new-option" data-row='<?php
                                                                                                                             ob_start();
@@ -274,14 +273,12 @@ if (!empty($extra_fields_options)) {
 						            </div>
 						        </div>
 						    </div>
-							<?php echo esc_attr(ob_get_clean());
-        					?>
+							<?php echo esc_attr(ob_get_clean()); ?>
 							'><?php esc_html_e('+ Add Topping', 'wp-food-manager'); ?>
 						</button>
 					</div>
 				</div>
-		<?php
-			endif;
+		<?php endif;
 		} ?>
 		<div class="wpfm-form-footer">
 			<input type="hidden" name="food_manager_form" value="<?php echo esc_attr($form); ?>" />

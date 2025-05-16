@@ -64,9 +64,7 @@
 								}
 								printf('<li class="wpfm-main-vmenu-dashboard-li"><a class="wpfm-main-vmenu-dashboard-link %s" href="%s"> <i class="%s"></i>%s</a></li>', esc_attr($active_menu), esc_url($action_url), esc_attr($menu['icon']), esc_html($menu['title']));
 							}
-							
-						}
-						?>
+						} ?>
 					</ul>
 				</div>
 			</div>
@@ -110,8 +108,7 @@
 
 							if (!empty($search_keywords) || !empty($search_order_by)) {
 								$display_block = 'wpfm-d-block';
-							}
-							?>
+							} ?>
 							<form action="<?php echo esc_url(get_permalink(get_the_ID())); ?>" method="get" class="wpfm-form-wrapper wpfm-food-dashboard-filter-toggle wpfm-dashboard-main-filter-block <?php echo esc_attr($display_block); ?>">
 								<div class="wpfm-foods-filter">
 									<?php do_action('food_manager_food_dashboard_food_filter_start'); ?>
@@ -125,15 +122,15 @@
 											<select name="search_order_by" id="search_order_by">
 												<option value=""><?php esc_html_e('Order by', 'wp-food-manager'); ?></option>
 												<?php
-												foreach (get_food_order_by() as $order_by) : ?>
-													<?php if (isset($order_by['type']) && !empty($order_by['type'])) : ?>
+												foreach (get_food_order_by() as $order_by) :
+													if (isset($order_by['type']) && !empty($order_by['type'])) : ?>
 														<optgroup label="<?php echo esc_html($order_by['label']); ?>">
 															<?php foreach ($order_by['type'] as $order_key => $order_value) : ?>
 																<option value="<?php echo esc_attr($order_key); ?>" <?php selected($order_key, $search_order_by); ?>><?php echo esc_html($order_value); ?></option>
 															<?php endforeach; ?>
 														</optgroup>
-													<?php endif; ?>
-												<?php endforeach; ?>
+													<?php endif;
+												endforeach; ?>
 											</select>
 										</div>
 									</div>
@@ -164,8 +161,8 @@
 											<tr>
 												<?php foreach ($food_dashboard_columns as $key => $column) : ?>
 													<td data-title="<?php echo esc_attr($column); ?>" class="<?php echo esc_attr($key); ?>">
-														<?php if ('food_title' === $key) : ?>
-															<?php if ($food->post_status == 'publish') :
+														<?php if ('food_title' === $key) :
+															if ($food->post_status == 'publish') :
 																$out = strlen($food->post_title) > 50 ? substr($food->post_title, 0, 50) . "..." : $food->post_title; ?>
 																<a href="<?php echo esc_url(get_permalink($food->ID)); ?>"><?php echo esc_html($out); ?></a>
 																<?php
@@ -193,12 +190,11 @@
 																			echo '<div class="parent-organic-tag ' . esc_attr($wpfm_veg_nonveg_tag->slug) . '" data-icon-type="' . esc_attr($data_icon_label) . '"><img alt="' . esc_attr($wpfm_veg_nonveg_tag->slug) . '" src="' . esc_url($imagePath) . '" class="wpfm-organic-tag-icon ' . esc_attr($wpfm_veg_nonveg_tag->slug) . '"></div>';
 																		}
 																	}
-																}
-																?>
-															<?php else : ?>
-																<?php echo esc_html($food->post_title); ?> <small class="wpfm-food-status-pending-approval"><?php display_food_status($food); ?></small>
-															<?php endif; ?>
-														<?php elseif ('food_action' === $key) : ?>
+																} ?>
+															<?php else :
+																echo esc_html($food->post_title); ?> <small class="wpfm-food-status-pending-approval"><?php display_food_status($food); ?></small>
+															<?php endif;
+														elseif ('food_action' === $key) : ?>
 															<div class="wpfm-dboard-food-action">
 																<?php
 																$actions = array();
@@ -243,38 +239,30 @@
 																		$action_url = wp_nonce_url($action_url, 'food_manager_my_food_actions');
 																	}
 																	echo '<div class="wpfm-dboard-food-act-btn"><a href="' . esc_url($action_url) . '" class="food-dashboard-action-' . esc_attr($action) . '" title="' . esc_attr($value['label']) . '" >' . esc_html($value['label']) . '</a></div>';
-																}
-																?>
+																} ?>
 															</div>
 														<?php
 														elseif ('food_categories' === $key) :
 															display_food_category($food);
 														elseif ('view_count' === $key) :
-															echo esc_html(get_food_views_count($food));
-														?>
-														<?php else : ?>
-															<?php do_action('food_manager_food_dashboard_column_' . $key, $food); ?>
-														<?php endif; ?>
+															echo esc_html(get_food_views_count($food)); ?>
+														<?php else :
+															do_action('food_manager_food_dashboard_column_' . $key, $food);
+														endif; ?>
 													</td>
 												<?php endforeach; ?>
 											</tr>
 										<?php endforeach; ?>
-										
 									</tbody>
 								</table>
-							<?php endif; get_food_manager_template('pagination.php', array('max_num_pages' => $max_num_pages));?>
+							<?php endif; 
+							get_food_manager_template('pagination.php', array('max_num_pages' => $max_num_pages));?>
 						</div>
 						<?php do_action('food_manager_food_dashboard_after_table'); ?>
-									</div>
-								</div>
-								<!-- food Dashboard End -->
-							</div>
-							
-							
 					</div>
-					<?php endif; 
-					do_action('food_manager_food_dashboard_after'); ?>
-
-
-
-
+				</div>
+				<!-- food Dashboard End -->
+			</div>		
+		</div>
+	<?php endif; 
+	do_action('food_manager_food_dashboard_after'); ?>

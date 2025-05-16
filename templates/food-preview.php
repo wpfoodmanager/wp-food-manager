@@ -10,8 +10,7 @@
  */
 if (!defined('ABSPATH')) {
 	exit; // Exit if accessed directly.
-}
-?>
+} ?>
 <form method="post" id="food_preview" action="<?php echo esc_url($form->get_action()); ?>">
 	<div class="food_listing_preview_title">
 		<input type="submit" name="edit_food" class="button food-manager-button-edit-listing wpfm-theme-button" value="<?php esc_attr_e('← Edit listing', 'wp-food-manager'); ?>" />

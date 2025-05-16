@@ -532,9 +532,9 @@ class WPFM_Import{
             $image_url = isset($params['_thumbnail_id']) ? $params['_thumbnail_id'] : '';
 
             if (!empty($image_url)) {
-                $response = image_exists($image_url);
+                $response = $this->wpfm_check_import_image_exists($image_url);
                 if ($response == 'true' || $response == 'false' ) {
-                    $image = upload_image($image_url);
+                    $image = $this->wpfm_upload_import_image($image_url);
                     if (!empty($image)) {
                         $imageData =  $image['image_url'];
                         $image_post_id = attachment_url_to_postid($imageData);
@@ -558,7 +558,7 @@ class WPFM_Import{
             update_post_meta($post_id, '_food_menu_option', $food_menu_option);
             
             // Initialize food IDs with empty arrays if not set
-            $food_item_ids = isset($params['_food_item_ids']) ? wpfm_get_food_ids(explode(", ", $params['_food_item_ids'])) : array();
+            $food_item_ids = isset($params['_food_item_ids']) ? $this->wpfm_check_imported_food_ids(explode(", ", $params['_food_item_ids'])) : array();
             update_post_meta($post_id, '_food_item_ids', $food_item_ids);
 
             // Handle 'food menu by days' field
@@ -573,7 +573,7 @@ class WPFM_Import{
                             $data['food_types'] = $this->wpfm_get_term_id_by_name($data['food_types'], 'food_manager_type');
                         }
                         if(isset($data['food_items']) && !empty($data['food_items'])){
-                            $data['food_items'] = wpfm_get_food_ids($data['food_items']);
+                            $data['food_items'] = $this->wpfm_check_imported_food_ids($data['food_items']);
                         }
                     }
                 }
@@ -581,7 +581,152 @@ class WPFM_Import{
             }
         }
     }
+    				
+    /**
+     * get food id if exist based on parent id.
+     *
+     * @param $term_names, $taxonomy
+     * @return $term_ids
+     */
+    public function wpfm_check_imported_food_ids($food_item_ids) {
+        $new_food_ids = [];
+        if (!empty($food_item_ids)) {
+            foreach ($food_item_ids as $item_id) {
+                // Query posts of type 'food_manager' with meta key '_post_id' matching $item_id
+                $food_query = new WP_Query(array(
+                    'post_type'  => 'food_manager',
+                    'meta_query' => array(
+                        array(
+                            'key'     => '_post_id',
+                            'value'   => $item_id,
+                            'compare' => '='
+                        )
+                    ),
+                    'fields' => 'ids', // Only return post IDs
+                    'posts_per_page' => -1
+                ));
 
+                if (!empty($food_query->posts)) {
+                    // Store matching post IDs in the new array
+                    foreach ($food_query->posts as $food_id) {
+                        $new_food_ids[] = $food_id;
+                    }
+                }
+            }
+        }    
+        return $new_food_ids;
+    }
+
+    /**
+     * Upload image function.
+     *
+     * @param string $url The URL of the image to be uploaded.
+     * @return array|WP_Error The uploaded image data or a WP_Error object.
+     */
+    public function wpfm_upload_import_image($url) {
+        $arrData = [];
+
+        if ($url != '') {
+            // Get file name and extension
+            $path_info = pathinfo($url);
+            $file_name = $path_info['filename'];
+            $extension = $path_info['extension'];
+                
+            // Get upload directory
+            $upload_dir = wp_upload_dir()['basedir'];
+            $upload_path = '/' . date('Y') . '/' . date('m') . '/';
+                
+            // Check if the file exists
+            $original_file_path = $upload_dir . $upload_path . $file_name . '.' . $extension;
+            if (file_exists($original_file_path)) {
+                $attachment_url = wp_upload_dir()['baseurl'] . $upload_path . $file_name . '.' . $extension;
+                $attachment_id = attachment_url_to_postid($attachment_url);
+                if ($attachment_id) {
+                    $arrData['image_id'] = $attachment_id;
+                    $arrData['image_url'] = wp_get_attachment_url($attachment_id);
+                    return $arrData;  // Return existing image details
+                }
+            }
+            $count = 1;
+            while (file_exists($upload_dir . $upload_path . $file_name . '-' . $count . '.' . $extension)) {
+                $file_with_number_path = $upload_dir . $upload_path . $file_name . '-' . $count . '.' . $extension;
+                if (file_exists($file_with_number_path)) {
+                    $attachment_url = wp_upload_dir()['baseurl'] . $upload_path . $file_name . '-' . $count . '.' . $extension;
+                    $attachment_id = attachment_url_to_postid($attachment_url);
+                    if ($attachment_id) {
+                        $arrData['image_id'] = $attachment_id;
+                        $arrData['image_url'] = wp_get_attachment_url($attachment_id);
+                        return $arrData;  // Return existing image details
+                    }
+                }
+                $count++;
+            }
+
+            // If image doesn't exist, proceed with upload
+            require_once(ABSPATH . 'wp-admin/includes/image.php');
+            require_once(ABSPATH . 'wp-admin/includes/file.php');
+            require_once(ABSPATH . 'wp-admin/includes/media.php');
+
+            $url = stripslashes($url);
+            $tmp = download_url($url);
+
+            // Check for download errors
+            if (is_wp_error($tmp)) {
+                // Handle the error, return the error object or log it
+                return $tmp;  // You can return or log the error depending on your requirements
+            }
+
+            // Proceed with media_handle_sideload to handle the file upload
+            $file_array = array(
+                'name' => basename($url),
+                'tmp_name' => $tmp
+            );
+
+            // Handle the file upload
+            $post_id = 0;  // No specific post to attach the image to
+            $image_id = media_handle_sideload($file_array, $post_id);
+
+            // Check for errors after upload
+            if (is_wp_error($image_id)) {
+                @unlink($file_array['tmp_name']);
+                return $image_id;  // Return the error if sideload fails
+            }
+
+            // Get the URL of the uploaded image
+            $image_url = wp_get_attachment_url($image_id);
+
+            // Prepare and return the result
+            $arrData['image_id'] = $image_id;
+            $arrData['image_url'] = $image_url;
+        }
+
+        return $arrData;
+    }
+
+    /**
+     * Check if image exists via URL.
+     *
+     * @param string $url The image URL to check.
+     * @return bool True if image exists, otherwise false.
+     */
+    public function wpfm_check_import_image_exists($url) {
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_NOBODY, true);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);  // ⛔ Not safe for production
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);  // ⛔ Not safe for production
+        curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0');
+        curl_exec($ch);
+        $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        curl_close($ch);
+        
+        if ($http_code == 200) {
+            return true;
+        } else {
+            return false;
+        }
+    }
     /**
      * convert term name to term id.
      *
@@ -634,9 +779,9 @@ class WPFM_Import{
         if (!empty($images)) {
             $img_url = [];
             foreach ($images as $url) {
-                $response = image_exists($url);
+                $response = $this->wpfm_check_import_image_exists($url);
                 if ($response) {
-                    $image = upload_image($url);
+                    $image = $this->wpfm_upload_import_image($url);
                     if (!empty($image)) {
                         $img_url[] = $image['image_url'];
                         // Make sure you are passing only a single image URL to attachment_url_to_postid

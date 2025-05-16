@@ -70,7 +70,13 @@ $options = array(
 	'food_manager_installation',
 	'food_manager_installation_skip',
 	'food_manager_enable_thumbnail',
-	'food_manager_enable_food_menu'
+	'food_manager_enable_food_menu',
+	'food_manager_add_food_form_fields',
+	'food_manager_submit_toppings_form_fields',
+	'food_manager_form_fields',
+	'wpfm_food_import_fields',
+	''
+
 );
 
 //Delete the options.

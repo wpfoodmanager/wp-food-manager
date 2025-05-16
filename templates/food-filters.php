@@ -1,5 +1,5 @@
-<?php wp_enqueue_script('wpfm-ajax-filters'); ?>
-<?php do_action('food_manager_food_filters_before', $atts); ?>
+<?php wp_enqueue_script('wpfm-ajax-filters');
+do_action('food_manager_food_filters_before', $atts); ?>
 
 <form class="wpfm-main wpfm-form-wrapper wpfm-food-filter-wrapper food_filters" id="food_filters">
 	<?php do_action('food_manager_food_filters_start', $atts); ?>
@@ -20,8 +20,7 @@
 			<!-- Search by keywords section end-->
 			<?php
 			if (get_option('food_manager_enable_food_menu', true)) {
-				if ($food_menu_query) {
-					?>
+				if ($food_menu_query) { ?>
 					<!-- Search by food menu section start -->
 					<div class="wpfm-col">
 						<!-- shows default food menu items text field start-->
@@ -50,19 +49,20 @@
 		<div class="wpfm-row">
 			<!-- Search by food categories section start -->
 			<?php if ($categories) : 
-				foreach ($categories as $category) : ?>
-					<!-- <input type="hidden" name="search_categories[]" value="<?php //echo esc_attr(sanitize_title($category)); ?>" /> -->
-					<?php food_manager_dropdown_selection(array('value' => 'slug', 'taxonomy' => 'food_manager_category', 'hierarchical' => 1, 'name' => 'search_categories', 'orderby' => 'name', 'selected' => $category, 'hide_empty' => false)); ?>
-				<?php endforeach; 
+				foreach ($categories as $category) :
+					food_manager_dropdown_selection(array('value' => 'slug', 'taxonomy' => 'food_manager_category', 'hierarchical' => 1, 'name' => 'search_categories', 'orderby' => 'name', 'selected' => $category, 'hide_empty' => false));
+				endforeach;
 			elseif ($show_categories && !is_tax('food_manager_category') && get_terms('food_manager_category', ['hide_empty' => false])) : ?>
 				<div class="wpfm-col">
 					<div class="wpfm-form-group">
-						<label for="search_categories" class="wpfm-form-label"><?php esc_html_e('Category', 'wp-food-manager'); ?></label>
-						<?php if ($show_category_multiselect) : ?>
-							<?php food_manager_dropdown_selection(array('value' => 'slug', 'taxonomy' => 'food_manager_category', 'hierarchical' => 1, 'name' => 'search_categories', 'orderby' => 'name', 'selected' => $selected_category, 'hide_empty' => false)); ?>
-						<?php else : ?>
-							<?php food_manager_dropdown_selection(array('value' => 'slug', 'taxonomy' => 'food_manager_category', 'hierarchical' => 1, 'show_option_all' => esc_html__('Choose a Food Category', 'wp-food-manager'), 'name' => 'search_categories', 'orderby' => 'name', 'selected' => $selected_category, 'multiple' => false, 'hide_empty' => false)); ?>
-						<?php endif; ?>
+						<label for="search_categories" class="wpfm-form-label">
+							<?php esc_html_e('Category', 'wp-food-manager'); ?>
+						</label>
+						<?php if ($show_category_multiselect) :
+							food_manager_dropdown_selection(array('value' => 'slug', 'taxonomy' => 'food_manager_category', 'hierarchical' => 1, 'name' => 'search_categories', 'orderby' => 'name', 'selected' => $selected_category, 'hide_empty' => false)); ?>
+						<?php else : 
+							food_manager_dropdown_selection(array('value' => 'slug', 'taxonomy' => 'food_manager_category', 'hierarchical' => 1, 'show_option_all' => esc_html__('Choose a Food Category', 'wp-food-manager'), 'name' => 'search_categories', 'orderby' => 'name', 'selected' => $selected_category, 'multiple' => false, 'hide_empty' => false));
+						endif; ?>
 					</div>
 				</div>
 			<?php endif; ?>
@@ -75,12 +75,14 @@
 			elseif ($show_food_types && !is_tax('food_manager_type') && get_terms('food_manager_type', ['hide_empty' => false])) : ?>
 				<div class="wpfm-col">
 					<div class="wpfm-form-group">
-						<label for="search_food_types" class="wpfm-form-label"><?php esc_html_e('food Type', 'wp-food-manager'); ?></label>
-						<?php if ($show_food_type_multiselect) : ?>
-							<?php food_manager_dropdown_selection(array('value' => 'slug', 'taxonomy' => 'food_manager_type', 'hierarchical' => 1, 'name' => 'search_food_types', 'orderby' => 'name', 'selected' => $selected_food_type, 'hide_empty' => false)); ?>
-						<?php else : ?>
-							<?php food_manager_dropdown_selection(array('value' => 'slug', 'taxonomy' => 'food_manager_type', 'hierarchical' => 1, 'show_option_all' => esc_html__('Choose a Food Type', 'wp-food-manager'), 'name' => 'search_food_types', 'orderby' => 'name', 'selected' => $selected_food_type, 'multiple' => false, 'hide_empty' => false)); ?>
-						<?php endif; ?>
+						<label for="search_food_types" class="wpfm-form-label">
+							<?php _e('food Type', 'wp-food-manager'); ?>
+						</label>
+						<?php if ($show_food_type_multiselect) :
+							food_manager_dropdown_selection(array('value' => 'slug', 'taxonomy' => 'food_manager_type', 'hierarchical' => 1, 'name' => 'search_food_types', 'orderby' => 'name', 'selected' => $selected_food_type, 'hide_empty' => false)); ?>
+						<?php else :
+							food_manager_dropdown_selection(array('value' => 'slug', 'taxonomy' => 'food_manager_type', 'hierarchical' => 1, 'show_option_all' => esc_html__('Choose a Food Type', 'wp-food-manager'), 'name' => 'search_food_types', 'orderby' => 'name', 'selected' => $selected_food_type, 'multiple' => false, 'hide_empty' => false));
+						endif; ?>
 					</div>
 				</div>
 			<?php endif; ?>
@@ -90,4 +92,6 @@
 	<?php do_action('food_manager_food_filters_end', $atts); ?>
 </form>
 <?php do_action('food_manager_food_filters_after', $atts); ?>
-<noscript><?php echo esc_html__('Your browser does not support JavaScript, or it is disabled. JavaScript must be enabled in order to view listings.', 'wp-food-manager'); ?></noscript>
+<noscript>
+	<?php echo esc_html__('Your browser does not support JavaScript, or it is disabled. JavaScript must be enabled in order to view listings.', 'wp-food-manager'); ?>
+</noscript>
