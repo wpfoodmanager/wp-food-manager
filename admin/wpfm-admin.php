@@ -982,8 +982,112 @@ class WPFM_Admin {
 			if (!current_user_can('manage_options')) {
 				return;
 			}
-			wpfm_export_csv_file('food-manager');
-			exit;
+            // Query to fetch 'food_manager' posts
+            $query = new WP_Query([
+                'post_type'      => 'food_manager',
+                'posts_per_page' => -1,
+            ]);
+
+            // Set headers for CSV export
+            header('Content-Type: text/csv; charset=utf-8');
+            header('Content-Disposition: attachment; filename="food-manager.csv"');
+
+            // Open output stream
+            $output = fopen('php://output', 'w');
+            $headers = [
+                __('_post_id', 'wp-food-manager'), __('_food_title', 'wp-food-manager'), __('_food_description', 'wp-food-manager'), __('_food_banner', 'wp-food-manager'),
+                __('_food_quantity', 'wp-food-manager'), __('_food_price', 'wp-food-manager'), __('_food_sale_price', 'wp-food-manager'), __('_food_stock_status', 'wp-food-manager'),
+                __('_food_label', 'wp-food-manager'), __('food_manager_tax_classes', 'wp-food-manager'), __('_food_thumbnail', 'wp-food-manager'), __('_food_reward_point', 'wp-food-manager'),
+                __('_gallery_title', 'wp-food-manager'), __('food_manager_category', 'wp-food-manager'),
+                __('food_manager_tag', 'wp-food-manager'), __('food_manager_type', 'wp-food-manager'),
+                __('food_manager_ingredient', 'wp-food-manager'), __('food_manager_nutrition', 'wp-food-manager'),
+                __('_topping_name', 'wp-food-manager'), __('_topping_description', 'wp-food-manager'), __('_topping_image', 'wp-food-manager'), __('_topping_options', 'wp-food-manager'),
+                __('_enable_food_ingre', 'wp-food-manager'), __('_enable_food_nutri', 'wp-food-manager')
+            ];
+		    fputcsv($output, apply_filters('wpfm_reservation_export_file_headers', $headers));
+
+            // Process each post
+            if ($query->have_posts()) {
+                while ($query->have_posts()) {
+                    $query->the_post();
+
+                    // Retrieve meta data
+                    $food_banner = maybe_unserialize(get_post_meta(get_the_ID(), '_food_banner', true));
+                    $food_banner = is_array($food_banner) ? implode(', ', $food_banner) : $food_banner;
+                    $attachment_id = get_post_meta(get_the_ID(), '_thumbnail_id', true);
+                    $thumbnail_id = wp_get_attachment_url($attachment_id);
+                    $tax_name = get_wpfm_term_name_from_meta('_tax_classes_cat', 'food_manager_tax_classes');
+                    $cat_names = implode(', ', get_wpfm_food_terms_names(get_the_ID(), 'food_manager_category'));
+                    $type_names = implode(', ', get_wpfm_food_terms_names(get_the_ID(), 'food_manager_type'));
+                    $tag_names = implode(', ', get_wpfm_food_terms_names(get_the_ID(), 'food_manager_tag'));
+                    $ingredients = get_wpfm_food_ingredients(get_the_ID());
+                    $nutrition_names = wpfm_get_food_nutritions(get_the_ID());
+                    $topping_data = maybe_unserialize(get_post_meta(get_the_ID(), '_food_toppings', true)); // Unserialize topping data
+
+                    // Prepare topping data
+                    $topping_names = [];
+                    $topping_descriptions = [];
+                    $topping_images = [];
+                    $topping_options = [];
+
+                    if (!empty($topping_data) && is_array($topping_data)) {
+                        foreach ($topping_data as $topping) {
+                            // Extracting each topping's details
+                            $topping_names[] = $topping['_topping_name'] ?? '';
+                            $topping_descriptions[] = strip_tags($topping['_topping_description'] ?? '');
+                            if (isset($topping['_topping_image'])) {
+                                if (is_array($topping['_topping_image'])) {
+                                    $topping_images[] = $topping['_topping_image'][0] ?? '';
+                                } else {
+                                    $topping_images[] = $topping['_topping_image'] ?? '';
+                                }
+                            }							
+                            // Process topping options
+                            $options = [];
+                            if (isset($topping['_topping_options']) && is_array($topping['_topping_options'])) {
+                                foreach ($topping['_topping_options'] as $option) {
+                                    $options[] = $option['option_name'] . ',' . $option['option_price'];
+                                }
+                            }
+                            $topping_options[] = implode(' ', $options);
+                        }
+                    }
+
+                    // Prepare meta values for CSV
+                    $meta_values = [
+                        'post_id'               => get_the_ID(),
+                        'food_title'            => get_the_title(),
+                        'food_description'      => get_the_content(),
+                        'food_banner'           => $food_banner,
+                        'food_quantity'         => get_post_meta(get_the_ID(), '_food_quantity', true),
+                        'food_price'            => get_post_meta(get_the_ID(), '_food_price', true),
+                        'food_sale_price'       => get_post_meta(get_the_ID(), '_food_sale_price', true),
+                        'food_stock_status'     => get_post_meta(get_the_ID(), '_food_stock_status', true),
+                        'food_label'            => get_post_meta(get_the_ID(), '_food_label', true),
+                        'food_manager_tax_classes' =>$tax_name,
+                        'food_thumbnail'        => $thumbnail_id,
+                        'food_reward_point'     => get_post_meta(get_the_ID(), '_food_reward_point', true),
+                        'gallery_title'         => get_post_meta(get_the_ID(), '_gallery_title', true),
+                        'food_manager_category' => $cat_names,
+                        'food_manager_tag'      => $tag_names,
+                        'food_manager_type'     => $type_names,
+                        'food_manager_ingredient' => $ingredients,
+                        'food_manager_nutrition'=> $nutrition_names,
+                        'topping_names'         => implode(', ', $topping_names),
+                        'topping_descriptions'  => implode(', ', $topping_descriptions),
+                        'topping_images'        => implode(', ', $topping_images),
+                        'topping_options'       => implode('; ', $topping_options), // Using semicolon to separate multiple options
+                        'enable_food_ingre'     => get_post_meta(get_the_ID(), '_enable_food_ingre', true),
+                        'enable_food_nutri'     => get_post_meta(get_the_ID(), '_enable_food_nutri', true),
+                    ];
+
+                    // Prepare CSV row
+                    $data = apply_filters('wpfm_reservation_export_file_data', array_values($meta_values), get_the_ID(), $meta_values);
+                    fputcsv($output, $data);
+                }
+            }
+            fclose($output); // Close output stream
+            exit;
 		}
 	}
 

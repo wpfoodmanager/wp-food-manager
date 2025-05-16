@@ -86,7 +86,7 @@ if (!empty($regular_price)) {
                                     }
                                     $more_class = !empty($additional_fields_extra_topping) ? 'with-more' : '';
                                     if (!empty($repeated_count)) {
-                                        if (!empty($ext_options) && isArrayNotBlank($ext_options)) {
+                                        if (!empty($ext_options) && wpfm_check_empty_toppings($ext_options)) {
                                             echo "<h3 class='wpfm-heading-text'>Extra Toppings</h3>";
                                             foreach ($ext_options as $key => $ext_option) {
                                                 if (!empty($ext_option['_topping_name']) && !empty($ext_option['_topping_options'])) {

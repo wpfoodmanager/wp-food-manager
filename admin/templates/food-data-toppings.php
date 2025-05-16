@@ -12,11 +12,11 @@ $food_toppings = get_post_meta($thepostid, '_food_toppings', true);
 			<?php if (!empty($food_toppings)) {
     $count = 1;
     foreach ($food_toppings as $topping) {
-        render_topping($count, $topping);
+        wpfm_display_food_topping($count, $topping);
         $count++;
     }
 } else {
-    render_topping(1); // Call the function for empty state
+    wpfm_display_food_topping(1); // Call the function for empty state
 } ?>
 			<div class="wpfm-actions">
 				<button type="button" class="wpfm-add-button button button-primary" id="wpfm-add-new-option" data-row='<div class="wpfm-options-wrap wpfm-metabox postbox wpfm-options-box-__repeated-option-index__">

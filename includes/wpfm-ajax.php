@@ -252,7 +252,7 @@ class WPFM_Ajax {
         if (is_array($search_food_menu) && implode(',', $search_food_menu)) {
             $showing_food_menus = array();
             foreach ($search_food_menu as $food_menu) {
-                $food_item_ids = get_menu_list($food_menu,get_the_ID());
+                $food_item_ids = get_wpfm_menu_list($food_menu,get_the_ID());
                 if ($food_item_ids) {
                     foreach ($food_item_ids as $food_item_id) {
                         $showing_food_menus[] = $food_item_id;

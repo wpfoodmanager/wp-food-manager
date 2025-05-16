@@ -682,7 +682,7 @@ class WPFM_Shortcodes {
 					if ($food_menus->have_posts()) {
 						while ($food_menus->have_posts()) { 
 							$food_menus->the_post(); 
-							$food_menu_ids = get_menu_list(get_the_ID(), get_the_ID());
+							$food_menu_ids = get_wpfm_menu_list(get_the_ID(), get_the_ID());
 							
 							if (!empty($food_menu_ids) && is_array($food_menu_ids)) {
 								// Check if search term is provided
@@ -943,7 +943,7 @@ class WPFM_Shortcodes {
 				$menu_query->the_post();
 	
 				// Get food items in this menu
-				$food_menu_ids = get_menu_list($menu_id , get_the_ID());
+				$food_menu_ids = get_wpfm_menu_list($menu_id , get_the_ID());
 				if (!empty($food_menu_ids) && is_array($food_menu_ids)) {
 					$food_args = array(
 						'post_type'      => 'food_manager',
