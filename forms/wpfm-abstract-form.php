@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Abstract WPFM_Form class.
  *

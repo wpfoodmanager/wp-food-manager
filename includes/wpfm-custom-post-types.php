@@ -1,5 +1,4 @@
 <?php
-
 /**
  * WPFM_Post_Types class.
  */
@@ -31,11 +30,11 @@ class WPFM_Post_Types {
 	 * Constructor
 	 */
 	public function __construct() {
-		 // wpfm custom post-types.
-		 add_action('wp_footer', array($this, 'output_structured_data'));
-		 add_action('init', array($this, 'register_post_types'), 0);
-		 // View count action.
-		 add_action('set_single_listing_view_count', array($this, 'set_single_listing_view_count'));
+		// wpfm custom post-types.
+		add_action('wp_footer', array($this, 'output_structured_data'));
+		add_action('init', array($this, 'register_post_types'), 0);
+		// View count action.
+		add_action('set_single_listing_view_count', array($this, 'set_single_listing_view_count'));
 	}
 
 	/**
@@ -131,7 +130,6 @@ class WPFM_Post_Types {
 			 */
 			$singular_menu  = esc_html__('Menu', 'wp-food-manager');
 			$plural_menu    = esc_html__('Menus', 'wp-food-manager');
-	
 			$rewrite_menu     = array(
 				'slug'       => 'food-menu',
 				'with_front' => false,
@@ -329,7 +327,6 @@ class WPFM_Post_Types {
 			$cats     = explode(',', sanitize_text_field(wp_unslash($_GET['search_food_types']))) + array(0);
 			$field    = is_numeric($cats) ? 'term_id' : 'slug';
 			$operator = 'all' === get_option('food_manager_food_type_filter_type', 'all') && sizeof($cats) > 1 ? 'AND' : 'IN';
-
 			$query_args['tax_query'][] = array(
 				'taxonomy'         => 'food_manager_type',
 				'field'            => $field,
@@ -343,7 +340,6 @@ class WPFM_Post_Types {
 			$cats     = explode(',', sanitize_text_field(wp_unslash($_GET['search_categories']))) + array(0);
 			$field    = is_numeric($cats) ? 'term_id' : 'slug';
 			$operator = 'all' === get_option('food_manager_category_filter_type', 'all') && sizeof($cats) > 1 ? 'AND' : 'IN';
-
 			$query_args['tax_query'][] = array(
 				'taxonomy'         => 'food_manager_category',
 				'field'            => $field,
@@ -602,7 +598,6 @@ class WPFM_Post_Types {
 			/* translators: %s: product count */
 			'untrashed' => _n('%s food restored from the Trash.', '%s foods restored from the Trash.', $bulk_counts['untrashed'], 'wp-food-manager'),
 		);
-
 		return $bulk_messages;
 	}
 }

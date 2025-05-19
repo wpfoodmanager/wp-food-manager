@@ -1529,7 +1529,7 @@ function wpfm_get_price_decimals() {
  * @since  1.0.0
  */
 function wpfm_get_dashicons() {
-	return array(
+	return apply_filters('wpfm_get_dashicons', array(
 		'dashicons-menu'                       => 'f333',
 		'dashicons-admin-site'                 => 'f319',
 		'dashicons-dashboard'                  => 'f226',
@@ -1693,7 +1693,7 @@ function wpfm_get_dashicons() {
 		'dashicons-backup'                     => 'f321',
 		'dashicons-lightbulb'                  => 'f339',
 		'dashicons-smiley'                     => 'f328',
-	);
+	) );
 }
 
 /**
@@ -1703,7 +1703,7 @@ function wpfm_get_dashicons() {
  * @since  1.0.1
  */
 function wpfm_get_font_food_icons() {
-	return array(
+	return apply_filters('wpfm_get_font_food_icons', array(
 		'wpfm-icon-broccoli'                            => 'eaeb',
 		'wpfm-icon-buffet-breakfast'                    => 'e901',
 		'wpfm-icon-chocolate-bar'                       => 'e904',
@@ -1738,7 +1738,7 @@ function wpfm_get_font_food_icons() {
 		'wpfm-icon-weber'                        		=> 'e92a',
 		'wpfm-icon-wedding-cake'                        => 'e92b',
 		'wpfm-icon-wrap'                        		=> 'e92c',
-	);
+	) );
 }
 
 /**

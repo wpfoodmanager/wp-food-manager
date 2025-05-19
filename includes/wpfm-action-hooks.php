@@ -51,12 +51,8 @@ class WPFM_ActionHooks {
         add_action('food_manager_food_filters_end', array($this, 'food_filter_results'), 30);
         add_action('food_manager_output_foods_no_results', array($this, 'output_no_results'));
        
-        add_action('wpfm_save_food_data', array($this, 'food_manager_save_food_manager_data'), 20, 3);
-        
+        add_action('wpfm_save_food_data', array($this, 'food_manager_save_food_manager_data'), 20, 3); 
     }
-
-    
-    
     
     /**
      * Output some content when no results were found.

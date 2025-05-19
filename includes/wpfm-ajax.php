@@ -195,16 +195,15 @@ class WPFM_Ajax {
         $result['found_foods'] = false;
         $food_cnt = 0;
     
-        if ($foods->have_posts()) : $result['found_foods'] = true; ?>
-            <?php while ($foods->have_posts()) : $foods->the_post(); ?>
-                <?php
+        if ($foods->have_posts()) : $result['found_foods'] = true;
+            while ($foods->have_posts()) : $foods->the_post();
                 if (get_option('food_manager_food_item_show_hide') == 0 && wpfm_get_stock_status() !== 'food_outofstock') {
                     $food_cnt++;
                 } elseif (get_option('food_manager_food_item_show_hide') == 1 && wpfm_get_stock_status()) {
                     $food_cnt++;
                 }
-                get_food_manager_template_part('content', 'food_manager'); ?>
-            <?php endwhile; ?>
+                get_food_manager_template_part('content', 'food_manager');
+            endwhile;?>
         <?php else :
     
             // Check there is a publish food or not.

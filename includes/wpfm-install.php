@@ -1,6 +1,5 @@
 <?php
 if (!defined('ABSPATH')) exit;
-
 /**
  * WPFM_Install
  */
@@ -77,8 +76,7 @@ class WPFM_Install {
 	 * @return void
 	 * @since 1.0.0
 	 */	
-	private static function init_user_roles()
-     {
+	private static function init_user_roles() {
          global $wp_roles;
      
          if (class_exists('WP_Roles') && !isset($wp_roles)) {
@@ -102,8 +100,7 @@ class WPFM_Install {
          }
      }
 	
-	private static function fm_update_or_add_role($old_role_slug, $new_role_slug, $role_name, $capabilities)
-     {
+	private static function fm_update_or_add_role($old_role_slug, $new_role_slug, $role_name, $capabilities) {
          // Check if the old role exists
          $old_role = get_role($old_role_slug);
          

@@ -69,7 +69,6 @@ class WPFM_Category_Walker extends Walker {
 		if (!empty($args['show_count'])) {
 			$output .= '&nbsp;(' . esc_html($object->count) . ')';
 		}
-
 		$output .= "</option>\n";
 	}
 }

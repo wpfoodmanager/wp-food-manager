@@ -35,16 +35,16 @@ class WPFM_Cache_Helper {
 	 * Constructor
 	 */
 	public function __construct() {
-		 // wpfm cache helper.
-		 add_action('save_post', array($this, 'flush_get_food_managers_cache'));
-		 add_action('delete_post', array($this, 'flush_get_food_managers_cache'));
-		 add_action('trash_post', array($this, 'flush_get_food_managers_cache'));
-		 add_action('set_object_terms', array($this, 'set_term'), 10, 4);
-		 add_action('edited_term', array($this, 'edited_term'), 10, 3);
-		 add_action('create_term', array($this, 'edited_term'), 10, 3);
-		 add_action('delete_term', array($this, 'edited_term'), 10, 3);
-		 add_action('food_manager_clear_expired_transients', array($this, 'clear_expired_transients'), 10);
-		 add_action('transition_post_status', array($this, 'maybe_clear_count_transients'), 10, 3);
+		// wpfm cache helper.
+		add_action('save_post', array($this, 'flush_get_food_managers_cache'));
+		add_action('delete_post', array($this, 'flush_get_food_managers_cache'));
+		add_action('trash_post', array($this, 'flush_get_food_managers_cache'));
+		add_action('set_object_terms', array($this, 'set_term'), 10, 4);
+		add_action('edited_term', array($this, 'edited_term'), 10, 3);
+		add_action('create_term', array($this, 'edited_term'), 10, 3);
+		add_action('delete_term', array($this, 'edited_term'), 10, 3);
+		add_action('food_manager_clear_expired_transients', array($this, 'clear_expired_transients'), 10);
+		add_action('transition_post_status', array($this, 'maybe_clear_count_transients'), 10, 3);
 	}
 
 	  /**
