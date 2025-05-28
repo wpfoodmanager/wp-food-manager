@@ -1,5 +1,4 @@
 <?php
-
 /**
  * WPFM_Field_Editor class.
  * Class for the field editor handler.
@@ -43,14 +42,13 @@ class WPFM_Field_Editor {
 	 */
 	public function output() {
 		wp_enqueue_style('chosen', esc_url(WPFM_PLUGIN_URL . '/assets/css/chosen.min.css'));
-		wp_enqueue_script('wp-food-manager-form-field-editor');
-?>
+		wp_enqueue_script('wp-food-manager-form-field-editor'); ?>
 		<div class="wrap wp-food-manager-form-editor">
 			<h1 class="wp-heading-inline"><?php echo esc_html__('Form fields'); ?></h1>
 			<div class="wpfm-wrap wp-food-manager-form-field-editor">
 				<form method="post" id="mainform" action="<?php echo esc_url('edit.php?post_type=food_manager&page=food-manager-form-editor'); ?>">
-					<?php $this->form_editor(); ?>
-					<?php wp_nonce_field('save-wp-food-manager-form-field-editor'); ?>
+					<?php $this->form_editor();
+					wp_nonce_field('save-wp-food-manager-form-field-editor'); ?>
 				</form>
 			</div>
 		</div>
@@ -108,8 +106,6 @@ class WPFM_Field_Editor {
 		$form_add_food_instance = call_user_func(array('WPFM_Add_Food_Form', 'instance'));
 		$food_fields = $form_add_food_instance->merge_with_custom_fields('backend');
 		$fields = array_merge($food_fields);
-		// $add_food_form_fields = get_option('food_manager_add_food_form_fields');
-		// $add_toppings_form_fields = get_option('food_manager_submit_toppings_form_fields');
 
 		foreach ($fields  as $group_key => $group_fields) {
 			if (empty($group_fields)) {
@@ -164,47 +160,16 @@ class WPFM_Field_Editor {
 				echo esc_attr(ob_get_clean());
 				if (isset($group_fields) && !empty($group_fields)) {
 					foreach ($group_fields as $field_key => $field) {
-						// echo '<pre>';
-						// print_r($field);
-						
-						// if ($group_key == 'food') {
-						// 	if ($add_food_form_fields) {
-						// 		if (trim($field['label']) != '' && isset($add_food_form_fields['food'][$field_key])) {
-						// 			$index++;
-						// 			include 'wpfm-field-editor-form-field.php';
-						// 		}
-						// 	} else {
-						// 		if (trim($field['label']) != '') {
-						// 			$index++;
-						// 			include 'wpfm-field-editor-form-field.php';
-						// 		}
-						// 	}
-						// }  elseif($group_key == 'toppings'){
-						// 	if ($add_toppings_form_fields) {
-						// 		if (trim($field['label']) != '' && isset($add_toppings_form_fields['toppings'][$field_key])) {
-						// 			$index++;
-						// 			include 'wpfm-field-editor-form-field.php';
-						// 		}
-						// 	} else {
-						// 		if (trim($field['label']) != '') {
-						// 			$index++;
-						// 			include 'wpfm-field-editor-form-field.php';
-						// 		}
-						// 	}
-						// } else {
-							if (trim($field['label']) != '') {
-								$index++;
-								include 'wpfm-field-editor-form-field.php';
-							}
-						// }
+						if (trim($field['label']) != '') {
+							$index++;
+							include 'wpfm-field-editor-form-field.php';
+						}
 					}
-				}
-				?>					
+				} ?>					
                 </tbody>
             </table>
         </div>
-        <?php
-		}
+        <?php }
 	}
 
 	/**
@@ -304,7 +269,6 @@ class WPFM_Field_Editor {
 		}
 		echo wp_kses_post('<div class="updated"><p>' . esc_attr__('The fields were successfully saved.', 'wp-food-manager') . '</p></div>');
 	}
-	
 
 	/**
 	 * Sanitize a 2 dimension array.

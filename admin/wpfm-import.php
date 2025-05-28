@@ -624,7 +624,7 @@ class WPFM_Import{
      * @return array|WP_Error The uploaded image data or a WP_Error object.
      */
     public function wpfm_upload_import_image($url) {
-        $arrData = [];
+        $array_data = [];
 
         if ($url != '') {
             // Get file name and extension
@@ -642,9 +642,9 @@ class WPFM_Import{
                 $attachment_url = wp_upload_dir()['baseurl'] . $upload_path . $file_name . '.' . $extension;
                 $attachment_id = attachment_url_to_postid($attachment_url);
                 if ($attachment_id) {
-                    $arrData['image_id'] = $attachment_id;
-                    $arrData['image_url'] = wp_get_attachment_url($attachment_id);
-                    return $arrData;  // Return existing image details
+                    $array_data['image_id'] = $attachment_id;
+                    $array_data['image_url'] = wp_get_attachment_url($attachment_id);
+                    return $array_data;  // Return existing image details
                 }
             }
             $count = 1;
@@ -654,9 +654,9 @@ class WPFM_Import{
                     $attachment_url = wp_upload_dir()['baseurl'] . $upload_path . $file_name . '-' . $count . '.' . $extension;
                     $attachment_id = attachment_url_to_postid($attachment_url);
                     if ($attachment_id) {
-                        $arrData['image_id'] = $attachment_id;
-                        $arrData['image_url'] = wp_get_attachment_url($attachment_id);
-                        return $arrData;  // Return existing image details
+                        $array_data['image_id'] = $attachment_id;
+                        $array_data['image_url'] = wp_get_attachment_url($attachment_id);
+                        return $array_data;  // Return existing image details
                     }
                 }
                 $count++;
@@ -696,11 +696,11 @@ class WPFM_Import{
             $image_url = wp_get_attachment_url($image_id);
 
             // Prepare and return the result
-            $arrData['image_id'] = $image_id;
-            $arrData['image_url'] = $image_url;
+            $array_data['image_id'] = $image_id;
+            $array_data['image_url'] = $image_url;
         }
 
-        return $arrData;
+        return $array_data;
     }
 
     /**
@@ -714,8 +714,8 @@ class WPFM_Import{
         curl_setopt($ch, CURLOPT_NOBODY, true);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);  // ⛔ Not safe for production
-        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);  // ⛔ Not safe for production
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
         curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0');
         curl_exec($ch);
         $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);

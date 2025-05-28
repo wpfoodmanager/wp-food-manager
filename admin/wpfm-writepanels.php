@@ -1191,11 +1191,8 @@ class WPFM_Writepanels {
             } else {
                 update_post_meta($post_id, '_food_type_ids', '');
             }
-            
             update_post_meta($post_id, '_wpfm_food_menu_by_days', '');
-            
         }
-        
     }
     
     /**
@@ -1209,7 +1206,7 @@ class WPFM_Writepanels {
      */
     public function disable_gutenberg($is_enabled, $post_type) {
         if (apply_filters('wpfm_disable_gutenberg', true) && $post_type === 'food_manager') return false;
-        return $is_enabled;
+            return $is_enabled;
     }
     
     /**

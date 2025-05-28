@@ -553,7 +553,7 @@ class WPFM_Settings {
                                 </td>
                                 </tr>
                             <?php } ?>
-                            </table>
+                        </table>
                     </div>
                 <?php } ?>
                 </div>

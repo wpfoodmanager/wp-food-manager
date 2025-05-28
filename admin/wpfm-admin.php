@@ -140,11 +140,11 @@ class WPFM_Admin {
      * 
      * @access public
      * @param int $term_id
-     * @param int $tt_id
+     * @param int $taxonomy_id
      * @return void
      * @since 1.0.0
      */
-    public function save_custom_taxonomy_image_for_food_type($term_id, $tt_id) {
+    public function save_custom_taxonomy_image_for_food_type($term_id, $taxonomy_id) {
         if (isset($_POST['image_id']) && '' !== $_POST['image_id']) {
             $image = wp_unslash($_POST['image_id']);
             add_term_meta($term_id, 'image_id', $image, true);
@@ -188,10 +188,10 @@ class WPFM_Admin {
      * 
      * @access public
      * @param int $term_id
-     * @param int $tt_id
+     * @param int $taxonomy_id
      * @since 1.0.0
      */
-    public function updated_custom_taxonomy_image_for_food_type($term_id, $tt_id) {
+    public function updated_custom_taxonomy_image_for_food_type($term_id, $taxonomy_id) {
         if (isset($_POST['image_id']) && '' !== $_POST['image_id']) {
             $image = wp_unslash($_POST['image_id']);
             update_term_meta($term_id, 'image_id', $image);
@@ -224,8 +224,7 @@ class WPFM_Admin {
     public function add_custom_taxonomy_script_for_food_type() {
         if (!isset($_GET['taxonomy']) || $_GET['taxonomy'] != 'food_manager_type') {
             return;
-        }
-    ?>
+        } ?>
 
         <script>
             jQuery(document).ready(function($) {
@@ -299,8 +298,7 @@ class WPFM_Admin {
      * @return void
      * @since 1.0.0
      */
-    public function add_custom_taxonomy_image_for_food_category($taxonomy) {
-    ?>
+    public function add_custom_taxonomy_image_for_food_category($taxonomy) { ?>
         <div class="form-field term-group">
             <label for="food_cat_image_id" class="wpfm-food-category-tax-image"><?php esc_html_e('Image/Icon', 'taxt-domain'); ?></label>
             <input type="hidden" id="food_cat_image_id" name="food_cat_image_id" class="custom_media_url" value="">
@@ -312,9 +310,9 @@ class WPFM_Admin {
         </div>
         
         <div class="form-field term-group">
-            <label for="wpfm_disable_cat_visibility">Food Category Enable/Disable</label>
-            <input type="radio" name="wpfm_disable_cat_visibility" value="yes" id="yes" /> Yes
-            <input type="radio" name="wpfm_disable_cat_visibility" value="no" id="no" checked /> No
+            <label for="wpfm_disable_cat_visibility"><?php _e('Food Category Enable/Disable', 'wp-food-manager');?></label>
+            <input type="radio" name="wpfm_disable_cat_visibility" value="yes" id="yes" /><?php _e(' Yes', 'wp-food-manager');?>
+            <input type="radio" name="wpfm_disable_cat_visibility" value="no" id="no" checked /> <?php _e(' No', 'wp-food-manager');?>
         </div>
     <?php
     }
@@ -324,11 +322,11 @@ class WPFM_Admin {
      * 
      * @access public
      * @param int $term_id
-     * @param int $tt_id
+     * @param int $taxonomy_id
      * @return void
      * @since 1.0.0
      */
-    public function save_custom_taxonomy_image_for_food_category($term_id, $tt_id) {
+    public function save_custom_taxonomy_image_for_food_category($term_id, $taxonomy_id) {
         if (isset($_POST['food_cat_image_id']) && '' !== $_POST['food_cat_image_id']) {
             $image = wp_unslash($_POST['food_cat_image_id']);
             add_term_meta($term_id, 'food_cat_image_id', $image, true);
@@ -369,14 +367,13 @@ class WPFM_Admin {
             </td>
         </tr>
     <?php $value = get_term_meta($term->term_id, '_wpfm_disable_cat_visibility', true);
-    $checked_option_1 = ($value === 'yes') ? 'checked' : '';
-    $checked_option_2 = ($value === 'no' || !$value) ? 'checked' : '';
-    ?>
+    $checked_visibility = ($value === 'yes') ? 'checked' : '';
+    $checked_option = ($value === 'no' || !$value) ? 'checked' : ''; ?>
          <tr class="form-field term-group-wrap">
-             <th scope="row"><label for="wpfm_disable_cat_visibility">Hide Category</label></th>
+             <th scope="row"><label for="wpfm_disable_cat_visibility"><?php _e('Hide Category', 'wp-event-manager');?></label></th>
              <td>
-                 <input type="radio" name="wpfm_disable_cat_visibility" value="yes" id="yes" <?php echo $checked_option_1; ?> /> Yes<br />
-                 <input type="radio" name="wpfm_disable_cat_visibility" value="no" id="no" <?php echo $checked_option_2; ?> /> No
+                 <input type="radio" name="wpfm_disable_cat_visibility" value="yes" id="yes" <?php echo $checked_visibility; ?> /> Yes<br />
+                 <input type="radio" name="wpfm_disable_cat_visibility" value="no" id="no" <?php echo $checked_option; ?> /> No
              </td>
          </tr>
     <?php
@@ -387,11 +384,11 @@ class WPFM_Admin {
      *
      * @access public
      * @param int $term_id
-     * @param int $tt_id
+     * @param int $taxonomy_id
      * @return void
      * @since 1.0.0
      */
-    public function updated_custom_taxonomy_image_for_food_category($term_id, $tt_id) {
+    public function updated_custom_taxonomy_image_for_food_category($term_id, $taxonomy_id) {
         if (isset($_POST['food_cat_image_id']) && '' !== $_POST['food_cat_image_id']) {
             $image = sanitize_text_field(wp_unslash($_POST['food_cat_image_id']));
             update_term_meta($term_id, 'food_cat_image_id', $image);
@@ -428,8 +425,7 @@ class WPFM_Admin {
     public function add_custom_taxonomy_script_for_food_category() {
         if (!isset($_GET['taxonomy']) || $_GET['taxonomy'] != 'food_manager_category') {
             return;
-        }
-    ?>
+        } ?>
 
         <script>
             jQuery(document).ready(function($) {
@@ -511,7 +507,6 @@ class WPFM_Admin {
         add_dashboard_page(esc_html__('Setup', 'wp-food-manager'), esc_html__('Setup', 'wp-food-manager'), 'manage_options', 'food_manager_setup', array(WPFM_Setup::instance(), 'output'));
 		add_submenu_page('edit.php?post_type=food_manager', __('WPFM Shortcodes', 'wp-food-manager'), __('Shortcodes', 'wp-food-manager'), 'manage_options', 'food-manager-shortcodes', array($this, 'shortcodes_page'));
 		add_submenu_page('edit.php?post_type=food_manager', __('WPFM Import', 'wp-food-manager'), __('Import', 'wp-food-manager'), 'manage_options', 'food-manager-import', array(WPFM_Import::instance(), 'output'));
-        
     }
     
     /**
@@ -679,8 +674,7 @@ class WPFM_Admin {
                echo 'File not found: ' . esc_html($file_path);
                 }
                 break;
-        }
-        
+        }        
     }
 
     /**
@@ -784,20 +778,20 @@ class WPFM_Admin {
             return false;
         }
 
-        $id_arr = [];
+        $id_array = [];
         foreach ($data as $position => $id) {
-            $id_arr[] = $id;
+            $id_array[] = $id;
         }
 
-        $menu_order_arr = [];
-        foreach ($id_arr as $key => $id) {
+        $menu_order_array = [];
+        foreach ($id_array as $key => $id) {
             $results = $wpdb->get_results("SELECT menu_order FROM $wpdb->posts WHERE ID = " . intval($id));
             foreach ($results as $result) {
-                $menu_order_arr[] = $result->menu_order;
+                $menu_order_array[] = $result->menu_order;
             }
         }
 
-        sort($menu_order_arr);
+        sort($menu_order_array);
         array_unshift($data, "");
         unset($data[0]);
 
@@ -895,8 +889,7 @@ class WPFM_Admin {
         return $links;
     }
     
-    public static function init_user_roles()
-     {
+    public static function init_user_roles() {
          global $wp_roles;
      
          if (class_exists('WP_Roles') && !isset($wp_roles)) {
@@ -954,28 +947,27 @@ class WPFM_Admin {
 		);
 	}
 	
-	private static function fm_update_or_add_role($old_role_slug, $new_role_slug, $role_name, $capabilities)
-     {
-         // Check if the old role exists
-         $old_role = get_role($old_role_slug);
-         
-         if ($old_role) {
-             // Remove the old role if it exists
-             remove_role($old_role_slug);
-         }
-         
-         // Add the new role with 'fm_' prefix
-         add_role($new_role_slug, $role_name, $capabilities);
-     }
+	private static function fm_update_or_add_role($old_role_slug, $new_role_slug, $role_name, $capabilities) {
+        // Check if the old role exists
+        $old_role = get_role($old_role_slug);
+        
+        if ($old_role) {
+            // Remove the old role if it exists
+            remove_role($old_role_slug);
+        }
+        
+        // Add the new role with 'fm_' prefix
+        add_role($new_role_slug, $role_name, $capabilities);
+    }
 
-      /**
-	 * Export filtered posts as a CSV file.
-	 * 
-	 * The CSV file is generated and downloaded directly via the browser.
-	 * 
-	 * @access public
-	 * @return void
-	 */
+    /**
+     * Export filtered posts as a CSV file.
+     * 
+     * The CSV file is generated and downloaded directly via the browser.
+     * 
+     * @access public
+     * @return void
+     */
 	public function wpfm_export_csv() {
 		if (isset($_GET['wpfm_export_csv'])) { // phpcs:ignore
 			// Check user capabilities
@@ -1090,7 +1082,6 @@ class WPFM_Admin {
             exit;
 		}
 	}
-
 }
 
 WPFM_Admin::instance();

@@ -43,7 +43,7 @@ class WPFM_Category_Walker extends Walker {
 	 * @since 1.0.0
 	 */
 	function start_el(&$output, $object, $depth = 0, $args = array(), $current_object_id = 0) {
-		$cat_arr_ids = array($object->term_id);
+		$category_array_ids = array($object->term_id);
 		$item_cat_ids = isset($_GET['post']) && !empty(get_post_meta(wp_unslash($_GET['post']), '_food_item_cat_ids', true)) ? get_post_meta(wp_unslash($_GET['post']), '_food_item_cat_ids', true) : '';
 		$field_val = '';
 

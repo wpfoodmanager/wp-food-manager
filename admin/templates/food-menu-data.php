@@ -27,29 +27,29 @@
         </div>
         <div class="wpfm-admin-menu-selection wpfm-admin-postbox-form-field">
             <?php $selected_ids = get_post_meta($food_menu_id, '_food_type_ids', true);
-                if ( !empty($selected_ids)) {
-                    $selected_ids = !empty($selected_ids) ? (array)$selected_ids : array();
-                } else{
-                    $selected_ids = array();
-                }
-                food_manager_dropdown_selection(array(
-                    'multiple' => true, 'show_option_all' => __('Select food types', 'wp-food-manager'),
-                    'id' => 'wpfm-admin-food-types-selection',
-                    'taxonomy' => 'food_manager_type',
-                    'hide_empty' => false,
-                    'pad_counts' => true,
-                    'show_count' => true,
-                    'hierarchical' => false,
-                    'name' => 'food_type',
-                    'selected' => $selected_ids,
-                )); ?>
+            if ( !empty($selected_ids)) {
+                $selected_ids = !empty($selected_ids) ? (array)$selected_ids : array();
+            } else{
+                $selected_ids = array();
+            }
+            food_manager_dropdown_selection(array(
+                'multiple' => true, 'show_option_all' => __('Select food types', 'wp-food-manager'),
+                'id' => 'wpfm-admin-food-types-selection',
+                'taxonomy' => 'food_manager_type',
+                'hide_empty' => false,
+                'pad_counts' => true,
+                'show_count' => true,
+                'hierarchical' => false,
+                'name' => 'food_type',
+                'selected' => $selected_ids,
+            )); ?>
         </div>
     </div>
     <div class="wpfm-admin-food-menu-items">
         <?php $item_ids = get_post_meta($food_menu_id, '_food_item_ids', true); ?>
         <ul class="wpfm-food-menu menu menu-item-bar" id="wpfm-food-menu-list">
-            <?php if ($item_ids && is_array($item_ids)) { ?>
-                <?php foreach ($item_ids as $key => $id) { ?>
+            <?php if ($item_ids && is_array($item_ids)) {
+                foreach ($item_ids as $key => $id) { ?>
                     <li class="menu-item-handle" data-food-id="<?php echo esc_attr($id); ?>">
                         <div class="wpfm-admin-left-col">
                             <span class="dashicons dashicons-menu"></span>

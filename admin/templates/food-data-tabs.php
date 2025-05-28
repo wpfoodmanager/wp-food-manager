@@ -23,75 +23,75 @@ $disbled_fields_for_admin = array('food_category', 'food_tag', 'food_nutritions'
 			$check_custom_tab = apply_filters('wpfm_food_custom_tab', false, $key);
 			if($check_custom_tab){
 				do_action('wpfm_custom_tab', $thepostid, $food_fields);
-				}else{ 
-					?>
+			}else{ 	?>
 
-			<div id="<?php echo (isset($tab['target'])) ? esc_attr($tab['target']) : ''; ?>" class="panel wpfm_panel wpfm-metaboxes-wrapper">
-				<div class="wp_food_manager_meta_data">
-					<div class="wpfm-variation-wrapper wpfm-metaboxes">
-						<?php if($key === 'advanced') { ?>
-						  <p class="wpfm-advanced-notice"><?php esc_html_e('Based on the given setting the ingredients and nutrition will be show on food detail page.', 'wp-food-manager'); ?></p> 
-						<?php } ?>
-						<?php do_action('food_manager_food_data_start', $thepostid);
-						if (isset($food_fields['food']))						
-							foreach ($food_fields['food'] as $key => $field) {
-								if (!isset($field['value'])) {
-									$field['value'] = get_post_meta($thepostid, '_' . $key, true);
-								}
+				<div id="<?php echo (isset($tab['target'])) ? esc_attr($tab['target']) : ''; ?>" class="panel wpfm_panel wpfm-metaboxes-wrapper">
+					<div class="wp_food_manager_meta_data">
+						<div class="wpfm-variation-wrapper wpfm-metaboxes">
+							<?php if($key === 'advanced') { ?>
+							<p class="wpfm-advanced-notice"><?php esc_html_e('Based on the given setting the ingredients and nutrition will be show on food detail page.', 'wp-food-manager'); ?></p> 
+							<?php } ?>
+							<?php do_action('food_manager_food_data_start', $thepostid);
+							if (isset($food_fields['food']))						
+								foreach ($food_fields['food'] as $key => $field) {
+									if (!isset($field['value'])) {
+										$field['value'] = get_post_meta($thepostid, '_' . $key, true);
+									}
 
-								$field['required'] = false;
-								$field['tabgroup'] = isset($field['tabgroup']) ? $field['tabgroup'] : 1;
-								if (!in_array($key, $disbled_fields_for_admin) && $field['tabgroup'] == $tab['priority']) {
+									$field['required'] = false;
+									$field['tabgroup'] = isset($field['tabgroup']) ? $field['tabgroup'] : 1;
+									if (!in_array($key, $disbled_fields_for_admin) && $field['tabgroup'] == $tab['priority']) {
 
-									$type = !empty($field['type']) ? $field['type'] : 'text';
-									if ($type == 'wp-editor') {
+										$type = !empty($field['type']) ? $field['type'] : 'text';
+										if ($type == 'wp-editor') {
 
-										global $thepostid;
-										if (!isset($field['value']) || empty($field['value'])) {
-											$field['value'] = get_post_meta($thepostid, '_' . $key, true);
-										}
+											global $thepostid;
+											if (!isset($field['value']) || empty($field['value'])) {
+												$field['value'] = get_post_meta($thepostid, '_' . $key, true);
+											}
 
-										if (is_array($field['value'])) {
-											$field['value'] = '';
-										}
+											if (is_array($field['value'])) {
+												$field['value'] = '';
+											}
 
-										if (!empty($field['name'])) {
-											$name = $field['name'];
-										} else {
-											$name = $key;
-										}
+											if (!empty($field['name'])) {
+												$name = $field['name'];
+											} else {
+												$name = $key;
+											}
 
-										if (wpfm_begin_with($field['value'], "http")) {
-											$field['value'] = '';
-										} ?>
-									<div class="wpfm_editor" data-field-name="<?php echo esc_attr($name); ?>">
-										<p class="wpfm-admin-postbox-form-field <?php echo esc_attr($name); ?>">
-											<label for="<?php echo esc_attr($key); ?>"><?php echo esc_html($field['label']); ?>:
-												<?php if (!empty($field['description'])) : ?>
-													<span class="wpfm-tooltip" wpfm-data-tip="<?php echo esc_attr($field['description']); ?>">[?]</span>
-												<?php endif; ?>
-											</label>
+											if (wpfm_begin_with($field['value'], "http")) {
+												$field['value'] = '';
+											} ?>
+										<div class="wpfm_editor" data-field-name="<?php echo esc_attr($name); ?>">
+											<p class="wpfm-admin-postbox-form-field <?php echo esc_attr($name); ?>">
+												<label for="<?php echo esc_attr($key); ?>"><?php echo esc_html($field['label']); ?>:
+													<?php if (!empty($field['description'])) : ?>
+														<span class="wpfm-tooltip" wpfm-data-tip="<?php echo esc_attr($field['description']); ?>">[?]</span>
+													<?php endif; ?>
+												</label>
+											</p>
+											<span class="wpfm-input-field">
+												<?php wp_editor($field['value'], $name, array('media_buttons' => false)); ?>
+											</span>
+										</div>
+									<?php } else { ?>
+										<p class="wpfm-admin-postbox-form-field <?php echo esc_attr($key); ?>" data-field-name="<?php echo esc_attr($key); ?>">
+											<label for="<?php echo esc_attr($key); ?>"><?php echo esc_html($field['label']); ?> : </label>
+											<span class="wpfm-input-field">
+												<?php get_food_manager_template('form-fields/' . $field['type'] . '-field.php', array('key' => $key, 'field' => $field)); ?>
+											</span>
 										</p>
-										<span class="wpfm-input-field">
-											<?php wp_editor($field['value'], $name, array('media_buttons' => false)); ?>
-										</span>
-									</div>
-								<?php } else { ?>
-									<p class="wpfm-admin-postbox-form-field <?php echo esc_attr($key); ?>" data-field-name="<?php echo esc_attr($key); ?>">
-										<label for="<?php echo esc_attr($key); ?>"><?php echo esc_html($field['label']); ?> : </label>
-										<span class="wpfm-input-field">
-											<?php get_food_manager_template('form-fields/' . $field['type'] . '-field.php', array('key' => $key, 'field' => $field)); ?>
-										</span>
-									</p>
-						<?php
+							<?php
+										}
 									}
 								}
-							}
-						do_action('food_manager_food_data_end', $thepostid); ?>
+							do_action('food_manager_food_data_end', $thepostid); ?>
+						</div>
 					</div>
 				</div>
-			</div>
-		<?php } }?>
-	<?php endforeach; ?>
+		<?php } 
+		}
+	endforeach; ?>
 	<div class="clear"></div>
 </div>

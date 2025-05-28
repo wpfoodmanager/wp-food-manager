@@ -49,7 +49,6 @@ class WPFM_CPT {
         add_filter('manage_edit-food_manager_sortable_columns', array($this, 'set_custom_food_sortable_columns'));
         add_filter('post_row_actions', array($this, 'row_actions'));
         add_filter('wp_terms_checklist_args', 'wpfm_term_radio_checklist_for_food_type', 10, 2);
-        
 	}
 	
 	/**
@@ -102,7 +101,6 @@ class WPFM_CPT {
         }
     }
     
-
     /**
      * Do custom bulk actions.
      * 
