@@ -637,7 +637,7 @@ class WPFM_Shortcodes {
 			if (!isset($_GET['is_ajax'])) {
 				// Query to retrieve all menu titles
 				if (!empty($restaurant_ids)) {
-					$title_query = food_manager_menu($restaurant_ids);
+					$title_query = wpfm_get_restaurant_food_menu($restaurant_ids);
 					if ($title_query->have_posts()) { ?>
 						<div class="food-menu-page-filters">
 							<div class="wpfm-form-wrapper">
@@ -671,7 +671,7 @@ class WPFM_Shortcodes {
 			} ?>
 			<div id="food-menu-results">
 				<?php if (!empty($restaurant_ids)) {
-					$food_menus = food_manager_menu($restaurant_ids);
+					$food_menus = wpfm_get_restaurant_food_menu($restaurant_ids);
 					// Display the specific menu or search results
 					if ($food_menus->have_posts()) {
 						while ($food_menus->have_posts()) { 

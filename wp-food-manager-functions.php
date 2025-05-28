@@ -2015,6 +2015,7 @@ function wpfm_get_restaurant_food_menu($restaurant_ids){
         'post_status' => 'publish',
         'post__in'    => $restaurant_ids,
         'orderby'     => 'post__in',
+        'posts_per_page' => -1,
         'meta_query'  => array(
 	        'relation' => 'OR', // Use OR for the two possible conditions
 	        array(
