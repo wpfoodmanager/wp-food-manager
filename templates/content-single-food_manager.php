@@ -148,9 +148,9 @@ $food = $post; ?>
                                                     $topping_images = isset($ext_option['_topping_image']) && is_array($ext_option['_topping_image']) && isset($ext_option['_topping_image'][0]) ? $ext_option['_topping_image'][0] : $ext_option['_topping_image'];?>
                                                     <div class='wpfm-topping-list-item" <?php esc_attr_e($more_class);?>'>
                                                         <div class='wpfm-topping-item-header wpfm-d-flex wpfm-align-items-start'>
-                                                            <?php if (!empty($topping_images))?>
-                                                                <img src="<?php echo $topping_images;?>" alt="topping image" width="100" height="20" />
-                                                            
+                                                            <?php if (!empty($topping_images)) {
+                                                                ?><img src="<?php echo $topping_images;?>" alt="topping image" width="100" height="20" /><?php
+                                                            } ?>
                                                             <div class="wpfm-topping-item-header-text">
                                                                 <h4 class="wpfm-topping-item-title">
                                                                     <?php echo esc_html($ext_option['_topping_name']);
