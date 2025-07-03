@@ -2051,6 +2051,7 @@ if (!function_exists('get_wpfm_plugins_info')) {
 				$plugin_info = array();
 				$plugin_info['Name'] = $plugin['Name'];
 				$plugin_info['TextDomain'] = $plugin['TextDomain'];
+				$plugin_info['plugin_files'] = $filename;
 				$plugin_info['Version'] = $plugin['Version'];
 				$plugin_info['Title'] = $plugin['Title'];
 				$plugin_info['AuthorName'] = $plugin['AuthorName'];
