@@ -51,12 +51,8 @@ class WPFM_ActionHooks {
         add_action('food_manager_food_filters_end', array($this, 'food_filter_results'), 30);
         add_action('food_manager_output_foods_no_results', array($this, 'output_no_results'));
        
-        add_action('wpfm_save_food_data', array($this, 'food_manager_save_food_manager_data'), 20, 3);
-        
+        add_action('wpfm_save_food_data', array($this, 'food_manager_save_food_manager_data'), 20, 3); 
     }
-
-    
-    
     
     /**
      * Output some content when no results were found.
@@ -522,6 +518,8 @@ class WPFM_ActionHooks {
                                             $option_values[$option_value_count] = apply_filters('wpfm_topping_options_values_array', array(
                                                 'option_name' => isset($_POST[$count . '_option_name_' . $option_value_count]) ? $_POST[$count . '_option_name_' . $option_value_count] : '',
                                                 'option_price' => isset($_POST[$count . '_option_price_' . $option_value_count]) ? $_POST[$count . '_option_price_' . $option_value_count] : '',
+                                                'option_default' => isset($_POST[$count . '_option_default_' . $option_key_count]) ? $_POST[$count . '_option_default_' . $option_key_count] : '',
+                                                'option_price_type' => isset($_POST[$count . '_option_price_type_' . $option_key_count]) ? $_POST[$count . '_option_price_type_' . $option_key_count] : '',
                                             ), array('option_count' => $count, 'option_value_count' => $option_value_count));
                                         }
                                     }
@@ -530,6 +528,8 @@ class WPFM_ActionHooks {
                                         $option_values[$option_key_count] = apply_filters('wpfm_topping_options_values_array', array(
                                             'option_name' => isset($_POST[$count . '_option_name_' . $option_key_count]) ? $_POST[$count . '_option_name_' . $option_key_count] : '',
                                             'option_price' => isset($_POST[$count . '_option_price_' . $option_key_count]) ? $_POST[$count . '_option_price_' . $option_key_count] : '',
+                                            'option_default' => isset($_POST[$count . '_option_default_' . $option_key_count]) ? $_POST[$count . '_option_default_' . $option_key_count] : '',
+                                            'option_price_type' => isset($_POST[$count . '_option_price_type_' . $option_key_count]) ? $_POST[$count . '_option_price_type_' . $option_key_count] : '',
                                         ), array('option_count' => $count, 'option_value_count' => $option_key_count));
                                     }
                                 }

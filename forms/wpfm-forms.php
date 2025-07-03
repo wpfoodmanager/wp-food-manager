@@ -47,7 +47,6 @@ class WPFM_Forms {
 		if (!empty($_POST['food_manager_form'])) {
 			$forms->load_form_class(sanitize_title(wp_unslash($_POST['food_manager_form'])));
 		}
-		
     }
 
 	/**

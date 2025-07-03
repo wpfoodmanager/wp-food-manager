@@ -1,5 +1,4 @@
 <?php
-
 /**
  * WPFM_Custom_Taxonomies class.
  */
@@ -524,6 +523,5 @@ class WPFM_Custom_Taxonomies{
 			)
 			)
 		);
-
 	}
 }

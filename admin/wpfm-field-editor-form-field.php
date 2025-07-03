@@ -95,8 +95,8 @@ $disable_field_types = array('term-autocomplete', 'term-select-multi-appearance'
 			$options = implode(
 				'|',
 				array_map(
-					function ($v, $k) {
-						return sprintf($k . ' : %s ', $v);
+					function ($value, $key) {
+						return sprintf($key . ' : %s ', $value);
 					},
 					$field['options'],
 					array_keys($field['options'])
@@ -156,8 +156,7 @@ printf(esc_html__('%s', 'wp-food-manager'), esc_attr(stripslashes($field['placeh
 					$selected = ($field['tabgroup'] == $cnt) ? 'selected' : '';
 					echo '<option value="' . esc_attr($cnt) . '"' . esc_attr($selected) . '>' . esc_html($tab['label']) . '</option>';
 					$cnt++;
-				}
-				?>
+				} ?>
 			</select>
 		</td>
 	<?php } ?>

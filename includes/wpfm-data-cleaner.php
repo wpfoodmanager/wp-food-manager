@@ -1,11 +1,9 @@
 <?php
-
 /**
  * Defines a class with methods for cleaning up plugin data. To be used when the plugin is deleted.
  *
  * @package Core
  */
-
 // Exit if accessed directly.
 if (!defined('ABSPATH')) exit;
 
@@ -143,7 +141,6 @@ class WPFM_Data_Cleaner {
 	 */
 	private static function cleanup_custom_post_types() {
 		foreach (self::$custom_post_types as $post_type) {
-
 			$items = get_posts(
 				array(
 					'post_type'   => $post_type,
@@ -152,7 +149,6 @@ class WPFM_Data_Cleaner {
 					'fields'      => 'ids',
 				)
 			);
-
 			foreach ($items as $item) {
 				self::delete_food_with_attachment($item);
 				wp_delete_post($item);
@@ -174,11 +170,9 @@ class WPFM_Data_Cleaner {
 
 		$food_banner = get_post_meta($post_id, '_food_banner', true);
 		if (!empty($food_banner)) {
-
 			$wp_upload_dir = wp_get_upload_dir();
 			$baseurl = $wp_upload_dir['baseurl'] . '/';
 			if (is_array($food_banner)) {
-
 				foreach ($food_banner as $banner) {
 					$wp_attached_file = str_replace($baseurl, '', $banner);
 					$args = array(
@@ -210,7 +204,6 @@ class WPFM_Data_Cleaner {
 				}
 			}
 		}
-
 		$thumbnail_id = get_post_thumbnail_id($post_id);
 		if (!empty($thumbnail_id)) {
 			wp_delete_attachment($thumbnail_id, true);
@@ -226,7 +219,6 @@ class WPFM_Data_Cleaner {
 	 */
 	private static function cleanup_taxonomies() {
 		global $wpdb;
-
 		foreach (self::$taxonomies as $taxonomy) {
 			$terms = $wpdb->get_results(
 				$wpdb->prepare(
@@ -242,7 +234,6 @@ class WPFM_Data_Cleaner {
 				$wpdb->delete($wpdb->terms, array('term_id' => $term->term_id));
 				$wpdb->delete($wpdb->termmeta, array('term_id' => $term->term_id));
 			}
-
 			if (function_exists('clean_taxonomy_cache')) {
 				clean_taxonomy_cache($taxonomy);
 			}

@@ -104,9 +104,9 @@ class WPFM_Settings {
             $account_roles[$key] = $role['name'];
         }
 
-        $currency_code_options = get_food_manager_currencies();
+        $currency_code_options = get_wpfm_currencies();
         foreach ($currency_code_options as $code => $name) {
-            $currency_code_options[$code] = $name . ' (' . get_food_manager_currency_symbol($code) . ')';
+            $currency_code_options[$code] = $name . ' (' . get_wpfm_currency_symbol($code) . ')';
         }
 
         $this->settings = apply_filters(
@@ -152,15 +152,6 @@ class WPFM_Settings {
                             'attributes' => array(),
                         ),
                         array(
-                            'name'       => 'food_manager_enable_food_menu',
-                            'std'        => '1',
-                            'label'      => __('Food Menu', 'wp-food-manager'),
-                            'cb_label'   => __('Display Food Menu.', 'wp-food-manager'),
-                            'desc'       => 'If enabled, the Food Menu option will display at frontend and manage from the backend. ',
-                            'type'       => 'checkbox',
-                            'attributes' => array(),
-                        ),
-                        array(
                             'name'       => 'food_manager_food_item_show_hide',
                             'label'      => __('Food Items', 'wp-food-manager'),
                             'type'       => 'radio',
@@ -179,6 +170,36 @@ class WPFM_Settings {
                             'desc'       => '',
                             'type'       => 'checkbox',
                             'attributes' => array(),
+                        ),
+                    )
+                ),
+                'food_menu' => array(
+                    __('Food Menu', 'wp-food-manager'),
+                    array(
+                        array(
+                            'name'       => 'food_manager_enable_food_menu',
+                            'std'        => '1',
+                            'label'      => __('Food Menu', 'wp-food-manager'),
+                            'cb_label'   => __('Display Food Menu.', 'wp-food-manager'),
+                            'desc'       => 'If enabled, the Food Menu option will display at frontend and manage from the backend. ',
+                            'type'       => 'checkbox',
+                            'attributes' => array(),
+                        ),
+                        array(
+                            'name'       => 'wpfm_enable_webshop_food_menu_icon',
+                            'std'        => '1',
+                            'label'      => __('Webshop Foodmenu Icon', 'wp-food-manager'),
+                            'cb_label'   => __('Display Food Menu Icon on webshop.', 'wp-food-manager'),
+                            'desc'       => 'If enabled, the Foodmenu Icon woll show in webshop foodmenu page. ',
+                            'type'       => 'checkbox',
+                        ),
+                        array(
+                            'name'       => 'wpfm_enable_mobileapp_food_menu_icon',
+                            'std'        => '1',
+                            'label'      => __('Mobile App Foodmenu Icon', 'wp-food-manager'),
+                            'cb_label'   => __('Display Food Menu Icon on Mobileapp.', 'wp-food-manager'),
+                            'desc'       => 'If enabled, the Foodmenu Icon woll show in Mobileapp foodmenu page. ',
+                            'type'       => 'checkbox',
                         ),
                     )
                 ),
@@ -532,7 +553,7 @@ class WPFM_Settings {
                                 </td>
                                 </tr>
                             <?php } ?>
-                            </table>
+                        </table>
                     </div>
                 <?php } ?>
                 </div>

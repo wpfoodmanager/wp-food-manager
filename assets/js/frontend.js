@@ -6,7 +6,6 @@ var WPFM_Frontend = function () {
             }
             // Open modal popup on food image click
             jQuery('.food_manager_menu .food-list-box img').on('click', WPFM_Frontend.actions.openFoodMenuPopup);  
-            jQuery('.fm-food-menu-container .fm-food-menu-title').on('click', WPFM_Frontend.actions.openFoodMenuPopup);  
             jQuery('.fm-food-menu-container .food-list-box img').on('click', WPFM_Frontend.actions.openFoodMenuPopup);                
             jQuery(document).on('click', '.wpfm-modal-close', function(){
                 jQuery(this).parents('#wpfm_food_popup').removeClass('wpfm-modal-open');
@@ -146,6 +145,8 @@ var WPFM_Frontend = function () {
                         jQuery(this).children('.option-value-class').val(humanNum);
                         jQuery(this).children('td').children('.opt_name').attr('name', repeater_row_count + '_option_name_' + humanNum);
                         jQuery(this).children('td').children('.opt_price').attr('name', repeater_row_count + '_option_price_' + humanNum);
+                        jQuery(this).children('td').children('.opt_default').attr('name', repeater_row_count + '_option_default_' + humanNum);
+                        jQuery(this).children('td').children('.opt_price_type').attr('name', repeater_row_count + '_option_price_type_' + humanNum);
                         jQuery(this).children('td').children('.option-delete-btn').attr('data-id', humanNum);
                     });
                 }

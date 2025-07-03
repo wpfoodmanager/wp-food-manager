@@ -1,8 +1,6 @@
 <?php wp_enqueue_script(esc_attr('wpfm-content-food-listing')); 
     $title = !empty($title) ? $title : '';
-?>
-
-<?php if (esc_attr($layout_type) == 'all') : ?>
+if (esc_attr($layout_type) == 'all') : ?>
     <div class="wpfm-main wpfm-food-listings-header">
         <div class="wpfm-row">
             <div class="wpfm-col wpfm-col-12 wpfm-col-sm-6 wpfm-col-md-6 wpfm-col-lg-8">

@@ -41,9 +41,9 @@
                                                     endif;
                                                 endforeach; ?>
                                             </optgroup>
-                                        <?php endforeach; ?>
+                                        <?php endforeach;
 
-                                        <?php if (!empty($taxonomies)) : ?>
+                                        if (!empty($taxonomies)) : ?>
                                             <optgroup label="<?php _e('Taxonomy', 'wp-food-manager') ?>">
                                                 <?php foreach ($taxonomies as $name => $taxonomy) : ?>
                                                     <option class="taxonomy" value="<?php echo esc_attr($name); ?>" <?php selected($head_fields, $name); ?> ><?php echo esc_html($taxonomy->label); ?></option>
@@ -84,24 +84,19 @@
                                         <option class="text" value="_post_id" <?php selected($head_fields, '_post_id'); ?>><?php _e('ID', 'wp-food-manager'); ?></option>
 
                                         <optgroup label="<?php _e('Food Menu', 'wp-food-manager') ?>">
-                                        <option class="text" value="_menu_title" <?php selected($head_fields, '_menu_title'); ?>><?php _e('Menu Title', 'wp-food-manager'); ?></option>
+                                            <option class="text" value="_menu_title" <?php selected($head_fields, '_menu_title'); ?>><?php _e('Menu Title', 'wp-food-manager'); ?></option>
 
-                                        <?php
-                                        
-                                        // Loop through food_import_fields for food_manager_menu and generate options
-                                        foreach ($food_import_fields as $group_key => $group_fields) : ?>
-                                                <?php 
-                                                        if ($head_fields == '_thumbnail_id') { ?>
-                                                            <option class="text" value="_<?php echo esc_attr($group_fields); ?>" selected ><?php _e(esc_attr($group_fields), 'wp-food-manager'); ?></option>
-                                                            <?php } elseif ($head_fields == '_wpfm_radio_icons') { ?>
-                                                                <option class="text" value="_<?php echo esc_attr($group_fields); ?>" <?php selected($head_fields, '_' . $group_fields); ?> ><?php _e(esc_attr($group_fields), 'wp-food-manager'); ?></option>
-                                                            <?php } else { ?>
-                                                            <option class="text" value="_<?php echo esc_attr($group_fields); ?>" <?php selected($head_fields, '_' . $group_fields); ?> ><?php _e(esc_attr($group_fields), 'wp-food-manager'); ?></option>
-                                                        <?php }
-                                               
-                                                 ?>
-                                                 
-                                        <?php endforeach; ?>
+                                            <?php
+                                            // Loop through food_import_fields for food_manager_menu and generate options
+                                            foreach ($food_import_fields as $group_key => $group_fields) : 
+                                                if ($head_fields == '_thumbnail_id') { ?>
+                                                    <option class="text" value="_<?php echo esc_attr($group_fields); ?>" selected ><?php _e(esc_attr($group_fields), 'wp-food-manager'); ?></option>
+                                                    <?php } elseif ($head_fields == '_wpfm_radio_icons') { ?>
+                                                        <option class="text" value="_<?php echo esc_attr($group_fields); ?>" <?php selected($head_fields, '_' . $group_fields); ?> ><?php _e(esc_attr($group_fields), 'wp-food-manager'); ?></option>
+                                                    <?php } else { ?>
+                                                    <option class="text" value="_<?php echo esc_attr($group_fields); ?>" <?php selected($head_fields, '_' . $group_fields); ?> ><?php _e(esc_attr($group_fields), 'wp-food-manager'); ?></option>
+                                                <?php }
+                                            endforeach; ?>
                                         </optgroup>
                                         <optgroup label="<?php _e('Other', 'wp-food-manager') ?>">
                                             <option class="custom-field" value="custom_field" ><?php _e('Custom Field', 'wp-food-manager') ?></option>
@@ -122,8 +117,7 @@
                             </tr>
                         <?php endforeach;
                     endif;
-                }
-                ?>
+                } ?>
             </tbody>
 
             <tfoot>

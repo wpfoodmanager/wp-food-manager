@@ -13,10 +13,9 @@ if (is_admin()) {
 	if ($field['type'] == 'wp-editor') {
 		$fieldLabel =  'wp-editor-field';
 	}
-	if (wpfm_begnWith($field['value'], "http") || is_array($field['value'])) {
+	if (wpfm_begin_with($field['value'], "http") || is_array($field['value'])) {
 		$field['value'] = '';
-	}
-?>
+	} ?>
 	<textarea name="<?php echo esc_attr($name); ?>" id="<?php echo esc_attr($key); ?>" rows="4" cols="63" placeholder="<?php echo esc_attr($field['placeholder']); ?>"><?php echo esc_html($field['value']); ?></textarea>
 <?php } else {
 	$editor = apply_filters('add_food_wp_editor_args', array(
@@ -47,7 +46,7 @@ if (is_admin()) {
 	} else {
 		$field_val_num = !empty($field['value']) ? $field['value'] : '';
 	}
-	if (wpfm_begnWith($field_val_num, "http") || is_array($field_val_num)) {
+	if (wpfm_begin_with($field_val_num, "http") || is_array($field_val_num)) {
 		$field_val_num = '';
 	}
 	wp_editor(isset($field_val_num) ? apply_filters('wpfm_the_content', $field_val_num) : '', $key, $editor);

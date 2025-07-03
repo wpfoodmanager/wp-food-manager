@@ -195,16 +195,15 @@ class WPFM_Ajax {
         $result['found_foods'] = false;
         $food_cnt = 0;
     
-        if ($foods->have_posts()) : $result['found_foods'] = true; ?>
-            <?php while ($foods->have_posts()) : $foods->the_post(); ?>
-                <?php
-                if (get_option('food_manager_food_item_show_hide') == 0 && get_stock_status() !== 'food_outofstock') {
+        if ($foods->have_posts()) : $result['found_foods'] = true;
+            while ($foods->have_posts()) : $foods->the_post();
+                if (get_option('food_manager_food_item_show_hide') == 0 && wpfm_get_stock_status() !== 'food_outofstock') {
                     $food_cnt++;
-                } elseif (get_option('food_manager_food_item_show_hide') == 1 && get_stock_status()) {
+                } elseif (get_option('food_manager_food_item_show_hide') == 1 && wpfm_get_stock_status()) {
                     $food_cnt++;
                 }
-                get_food_manager_template_part('content', 'food_manager'); ?>
-            <?php endwhile; ?>
+                get_food_manager_template_part('content', 'food_manager');
+            endwhile;?>
         <?php else :
     
             // Check there is a publish food or not.
@@ -252,7 +251,7 @@ class WPFM_Ajax {
         if (is_array($search_food_menu) && implode(',', $search_food_menu)) {
             $showing_food_menus = array();
             foreach ($search_food_menu as $food_menu) {
-                $food_item_ids = get_menu_list($food_menu,get_the_ID());
+                $food_item_ids = get_wpfm_menu_list($food_menu,get_the_ID());
                 if ($food_item_ids) {
                     foreach ($food_item_ids as $food_item_id) {
                         $showing_food_menus[] = $food_item_id;
@@ -380,7 +379,7 @@ class WPFM_Ajax {
      * @since 1.0.0
      */
     public function upload_file() {
-        if (!food_manager_user_can_upload_file_via_ajax()) {
+        if (!check_wpfm_user_can_upload_file_via_ajax()) {
             wp_send_json_error(new WP_Error('upload', __('You must be logged in to upload files using this method.', 'wp-food-manager')));
             return;
         }

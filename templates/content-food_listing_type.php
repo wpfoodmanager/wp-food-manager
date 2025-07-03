@@ -7,8 +7,7 @@ get_header();
 global $wp_query, $post;
 $term = get_queried_object();
 $image_id = !empty($term) ? get_term_meta(get_queried_object()->term_id, 'image_id', true) : '';
-$image_url = wp_get_attachment_image_src($image_id, 'full');
-?>
+$image_url = wp_get_attachment_image_src($image_id, 'full'); ?>
 <div class="wpfm-container">
     <div class="wpfm-main wpfm-food-listing-type-page">
         <div class="wpfm-row">

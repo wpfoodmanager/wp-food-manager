@@ -1,5 +1,4 @@
 <?php
-
 /**
  * This file use to cretae fields of wp food manager at admin side.
  */
@@ -92,102 +91,26 @@ class WPFM_Writepanels {
      * @return void
      * @since 1.0.0
      */
-    public function food_manager_menu_data_icons($post) {
+    public function food_manager_menu_data($post) {
         global $post, $thepostid;
-        $thepostid = $post->ID;
+        $food_menu_id = $post->ID;
     
         wp_enqueue_script('wpfm-admin');
         wp_enqueue_script('wpfm-loader');
         wp_nonce_field('save_meta_data', 'food_manager_nonce'); 
         // Determine visibility for the first div (static or empty)
-        $get_menu_options = get_post_meta(get_the_ID(), '_food_menu_option', true); 
-        if (empty($get_menu_options) || $get_menu_options == 'static_menu') {
-            $first_div_hide_block = ''; // First div is visible
-            $second_div_hide_block = 'hide_block'; // Second div is hidden
-        } else {
-            $first_div_hide_block = 'hide_block'; // First div is hidden
-            $second_div_hide_block = ''; // Second div is visible
-        }
-        ?>
-            <div class="wpfm-admin-food-menu-container wpfm-flex-col wpfm-admin-postbox-meta-data static_menu <?php echo $first_div_hide_block; ?>">
-                <div class="wpfm-admin-postbox-meta-data">
-                    <div class="wpfm-admin-menu-selection wpfm-admin-postbox-form-field">
-                        <?php 
-                        $selected_ids = get_post_meta(get_the_ID(), '_food_cats_ids', true);
-                        // Ensure $selected_ids is an array
-                        if ( !empty($selected_ids)) {
-                            $selected_ids = !empty($selected_ids) ? (array)$selected_ids : array();
-                        }
-                        food_manager_dropdown_selection(array(
-                            'multiple' => true, 'show_option_all' => __('Select food category', 'wp-food-manager'),
-                            'id' => 'wpfm-admin-food-selection',
-                            'taxonomy' => 'food_manager_category',
-                            'hide_empty' => false,
-                            'pad_counts' => true,
-                            'show_count' => true,
-                            'hierarchical' => false,
-                            'selected' => $selected_ids,
-                        )); ?>
-                    </div>
-                    <div class="wpfm-admin-menu-selection wpfm-admin-postbox-form-field">
-                        <?php 
-                            $selected_ids = get_post_meta(get_the_ID(), '_food_type_ids', true);
-                            if ( !empty($selected_ids)) {
-                                $selected_ids = !empty($selected_ids) ? (array)$selected_ids : array();
-                            } else{
-                                $selected_ids = array();
-                            }
-                            food_manager_dropdown_selection(array(
-                                'multiple' => true, 'show_option_all' => __('Select food types', 'wp-food-manager'),
-                                'id' => 'wpfm-admin-food-types-selection',
-                                'taxonomy' => 'food_manager_type',
-                                'hide_empty' => false,
-                                'pad_counts' => true,
-                                'show_count' => true,
-                                'hierarchical' => false,
-                                'name' => 'food_type',
-                                'selected' => $selected_ids,
-                            )); ?>
-                    </div>
-                </div>
-                <div class="wpfm-admin-food-menu-items">
-                    <?php $item_ids = get_post_meta($thepostid, '_food_item_ids', true); ?>
-                    <ul class="wpfm-food-menu menu menu-item-bar" id="wpfm-food-menu-list">
-                        <?php if ($item_ids && is_array($item_ids)) { ?>
-                            <?php foreach ($item_ids as $key => $id) { ?>
-                                <li class="menu-item-handle" data-food-id="<?php echo esc_attr($id); ?>">
-                                    <div class="wpfm-admin-left-col">
-                                        <span class="dashicons dashicons-menu"></span>
-                                        <span class="item-title"><?php echo esc_html(get_the_title($id)); ?></span>
-                                    </div>
-                                    <div class="wpfm-admin-right-col">
-                                        <a href="javascript:void(0);" class="wpfm-food-item-remove">
-                                            <span class="dashicons dashicons-dismiss"></span>
-                                        </a>
-                                    </div>
-                                    <input type="hidden" name="wpfm_food_listing_ids[]" value="<?php echo esc_attr($id); ?>" />
-                                </li>
-                            <?php }
-                        } ?>
-                    </ul>
-                    <?php if ($item_ids && is_array($item_ids)) { ?>
-                        <span class="no-menu-item-handle" style="display: none;">Please select the food category or food types to add food items to the menu.</span>
-                    <?php } else { ?>
-                        <span class="no-menu-item-handle">Please select the food category or food types to add food items to the menu.</span>
-                    <?php } ?>
+        $menu_options = get_post_meta(get_the_ID(), '_food_menu_option', true); 
         
-                    <!-- Loader and success message -->
-                    <div class="wpfm-loader" style="display: none;">
-                     <img src="<?php echo esc_url(WPFM_PLUGIN_URL . '/assets/images/loader.gif'); ?>" alt="Loading..." class="wpfm-loader-image">
-                    </div>
-                    <div class="success_message"><span class="wpfm-success-message" style="display: none;">Foods added to the menu successfully!</span></div>
-                </div>
-            </div>
-        <div class="wpfm-admin-food-menu-container wpfm-flex-col wpfm-admin-postbox-meta-data dynamic_menu <?php echo $second_div_hide_block; ?>">
-            <?php
-    			include 'templates/food-menu-data-by-days.php'; ?>
-            </div>
-    <?php }
+        get_food_manager_template(
+            'food-menu-data.php',
+            array(
+                'menu_options' => $menu_options,
+                'food_menu_id' => $food_menu_id
+            ),
+            'wp-food-manager',
+            WPFM_PLUGIN_DIR . '/admin/templates/'
+        );
+    }
 
 	/**
 	 * Display the food menu data.
@@ -197,40 +120,25 @@ class WPFM_Writepanels {
 	 * @return void
 	 * @since 1.0.0
 	 */
-	public function food_manager_menu_data($post) {
+	public function food_manager_menu_icons_meta_box($post) {
 		global $post, $thepostid;
-		$thepostid = $post->ID;
+		$food_menu_id = $post->ID;
 
 		wp_enqueue_script('wpfm-admin');
 		wp_nonce_field('save_meta_data', 'food_manager_nonce');
 
-		$icon_arrs = wpfm_get_dashicons();
-		$food_icon_arrs = wpfm_get_font_food_icons();
-
-		echo '<div class="wpfm-parent-icons"><input type="text" id="wpfm_icon_search" name="wpfm_icon_search" placeholder="Icon Search"><span class="wpfm-searh-clear"><i class="fa fa-times"></i></span></div>';
-		echo '<div class="no-radio-icons"><strong>No icons found!</strong></div>';
-		echo "<div class='wpfm-food-icon-class'>";
-
-		foreach ($icon_arrs as $key => $icon_arr) {
-			$radio_checked = (get_post_meta($thepostid, 'wpfm_radio_icons', true) === $key) ? "checked" : "";
-            echo '<div class="sub-font-icon"><input type="radio" id="' . $key . '" name="radio_icons" value="' . $key . '" ' . $radio_checked . '><label for="' . $key . '"><span class="wpfm-key-name">' . $key . '</span><i class="dashicons ' . $key . '"></i></label></div>';
-        }
-
-		foreach ($food_icon_arrs as $key => $icon_arr) {
-			$radio_checked = (get_post_meta($thepostid, 'wpfm_radio_icons', true) === $key) ? "checked" : "";
-			$key_name = str_replace("wpfm-menu-", "", $key);
-            echo '<div class="sub-font-icon"><input type="radio" id="' . $key . '" name="radio_icons" value="' . $key . '" ' . $radio_checked . '><label for="' . $key . '"><span class="wpfm-key-name">' . $key_name . '</span>';
-			if ($key_name == 'fast-cart') {
-				echo '<span class="wpfm-menu wpfm-menu-fast-cart"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span></span>';
-			} elseif ($key_name == 'rice-bowl') {
-				echo '<span class="wpfm-menu wpfm-menu-rice-bowl"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span></span>';
-			} else {
-				echo '<span class="wpfm-menu ' .esc_attr($key) . '"></span>';
-			}
-			echo "</span></label></div>";
-		}
-
-		echo "</div>";
+		$food_menu_icon_list = wpfm_get_dashicons();
+		$food_icon_list = wpfm_get_font_food_icons();
+        get_food_manager_template(
+            'food-menu-icons.php',
+            array(
+                'food_menu_icon_list' => $food_menu_icon_list,
+                'food_icon_list' => $food_icon_list,
+                'food_menu_id' => $food_menu_id
+            ),
+            'wp-food-manager',
+            WPFM_PLUGIN_DIR . '/admin/templates/'
+        );
 	}
 
 	/**
@@ -383,13 +291,13 @@ class WPFM_Writepanels {
 
        // translators: %s: singular name of the food manager post type
         add_meta_box('food_manager_data', sprintf(__('%s Data', 'wp-food-manager'), $wp_post_types['food_manager']->labels->singular_name), array($this, 'food_manager_data'), 'food_manager', 'normal', 'high');
-        add_meta_box('food_manager_menu_data', __('Menu Icon', 'wp-food-manager'), array($this, 'food_manager_menu_data'), 'food_manager_menu', 'normal', 'high');
+        add_meta_box('food_manager_menu_data_icons', __('Menu Icon', 'wp-food-manager'), array($this, 'food_manager_menu_icons_meta_box'), 'food_manager_menu', 'normal', 'high');
         add_meta_box('food_manager_menu_options', __('Select Food Menu Options ', 'wp-food-manager'), array($this, 'food_manager_menu_options'), 'food_manager_menu', 'normal', 'high');
-        add_meta_box('food_manager_menu_data_icons', __('Select Food ', 'wp-food-manager'), array($this, 'food_manager_menu_data_icons'), 'food_manager_menu', 'normal', 'high');
+        add_meta_box('food_manager_menu_data', __('Select Food ', 'wp-food-manager'), array($this, 'food_manager_menu_data'), 'food_manager_menu', 'normal', 'high');
 
         // Replace the food_manager_type taxonomy metabox for changing checkbox to radio button in backend.
         remove_meta_box('food_manager_typediv', 'food_manager', 'side');
-        add_meta_box('radio-food_manager_typediv', (isset($taxonomy->labels->name) ? esc_html($taxonomy->labels->name) : ''), 'replace_food_manager_type_metabox', 'food_manager', 'side', 'core', array('taxonomy' => $taxonomy_slug));
+        add_meta_box('radio-food_manager_typediv', (isset($taxonomy->labels->name) ? esc_html($taxonomy->labels->name) : ''), array($this, 'replace_food_manager_type_metabox'), 'food_manager', 'side', 'core', array('taxonomy' => $taxonomy_slug));
         if ('add' != $screen->action) {
             // Show food menu Shortcode on edit menu page - admin.
             add_meta_box('wpfm_menu_shortcode', 'Shortcode', array($this, 'food_menu_shortcode'), 'food_manager_menu', 'side', 'low');
@@ -449,8 +357,109 @@ class WPFM_Writepanels {
 	    echo '<img src="' . $qr_code_url . '" alt="QR Code" style="max-width: 100%; height: auto;">';
 	    echo '<a href="' . $qr_code_url . '" download="QR_Code_' . $menu_id . '.png" style="margin-right: 10px; text-decoration: none; background-color: #0073aa; color: #fff; padding: 10px 15px; border-radius: 5px;"><span class="dashicons dashicons-download"></span></a>';
 	    echo '</div>';
+    }    
+        
+    /**
+     * Callback to set up the metabox.
+     * the traditional hierarchical term metabox, but modified with our nonces.
+     * 
+     * @access public
+     * @param object $post
+     * @param array $box
+     * @return void
+     * @since 1.0.1
+     */
+    public function replace_food_manager_type_metabox($post, $box) {
+        $defaults = array('taxonomy' => 'category');
+
+        if (!isset($box['args']) || !is_array($box['args'])) {
+            $args = array();
+        } else {
+            $args = $box['args'];
+        }
+
+        $food_taxonomy = wp_parse_args($args, $defaults);
+        $tax_name = esc_attr($food_taxonomy['taxonomy']);
+        $taxonomy = get_taxonomy($food_taxonomy['taxonomy']);
+        $checked_terms = isset($post->ID) ? get_the_terms($post->ID, $tax_name) : array();
+        $single_term = !empty($checked_terms) && !is_wp_error($checked_terms) ? array_pop($checked_terms) : false;
+        $single_term_id = $single_term ? (int) $single_term->term_id : 0; ?>
+
+        <div id="taxonomy-<?php echo esc_attr($tax_name); ?>" class="radio-buttons-for-taxonomies categorydiv">
+            <ul id="<?php echo esc_attr($tax_name); ?>-tabs" class="category-tabs">
+                <li class="tabs"><a href="#<?php echo esc_attr($tax_name); ?>-all"><?php echo esc_html($taxonomy->labels->all_items); ?></a></li>
+                <li class="hide-if-no-js"><a href="#<?php echo esc_attr($tax_name); ?>-pop"><?php echo esc_html($taxonomy->labels->most_used); ?></a></li>
+            </ul>
+            <div id="<?php echo esc_attr($tax_name); ?>-pop" class="tabs-panel" style="display: none;">
+                <ul id="<?php echo esc_attr($tax_name); ?>checklist-pop" class="categorychecklist form-no-clear">
+                    <?php
+                    $popular_terms = get_terms($tax_name, array('orderby' => 'count', 'order' => 'DESC', 'number' => 10, 'hierarchical' => false));
+                    $popular_ids = array();
+
+                    foreach ($popular_terms as $term) {
+                        $popular_ids[] = $term->term_id;
+                        $value = is_taxonomy_hierarchical($tax_name) ? $term->term_id : $term->slug;
+                        $id = 'popular-' . $tax_name . '-' . $term->term_id;
+                        $checked = checked($single_term_id, $term->term_id, false); ?>
+
+                        <li id="<?php echo esc_attr($id); ?>" class="popular-category">
+                            <label class="selectit">
+                            <input id="in-<?php echo esc_attr($id); ?>" type="radio" <?php echo esc_attr($checked); ?> name="tax_input[<?php echo esc_attr($tax_name); ?>][]" value="<?php echo esc_attr((int) $term->term_id); ?>" <?php disabled(!current_user_can($taxonomy->cap->assign_terms)); ?> />
+                                <?php
+                                /** This filter is documented in wp-includes/category-template.php */
+                                echo esc_html(apply_filters('the_category', $term->name, '', ''));
+                                ?>
+                            </label>
+                        </li>
+                    <?php } ?>
+                </ul>
+            </div>
+            <div id="<?php echo esc_attr($tax_name); ?>-all" class="tabs-panel">
+                <ul id="<?php echo esc_attr($tax_name); ?>checklist" data-wp-lists="list:<?php echo esc_attr($tax_name); ?>" class="categorychecklist form-no-clear">
+                    <?php wp_terms_checklist($post->ID, array('taxonomy' => $tax_name, 'popular_cats' => $popular_ids, 'selected_cats' => array($single_term_id))); ?>
+                </ul>
+            </div>
+            <?php if (current_user_can($taxonomy->cap->edit_terms)) : ?>
+                <div id="<?php echo esc_attr($tax_name); ?>-adder" class="wp-hidden-children">
+                    <a id="<?php echo esc_attr($tax_name); ?>-add-toggle" href="#<?php echo esc_attr($tax_name); ?>-add" class="hide-if-no-js taxonomy-add-new">
+
+                        <?php
+                        /* translators: %s: add new taxonomy label */
+                        printf( esc_html__( '+ %s', 'wp-food-manager' ), esc_html( $taxonomy->labels->add_new_item ) );
+
+                        ?>
+                    </a>
+                    <p id="<?php echo esc_attr($tax_name); ?>-add" class="category-add wp-hidden-child">
+                        <label class="screen-reader-text" for="new<?php echo esc_attr($tax_name); ?>"><?php echo esc_html($taxonomy->labels->add_new_item); ?></label>
+                        <input type="text" name="new<?php echo esc_attr($tax_name); ?>" id="new<?php echo esc_attr($tax_name); ?>" class="form-required form-input-tip" value="<?php echo esc_attr($taxonomy->labels->new_item_name); ?>" aria-required="true" />
+                        <label class="screen-reader-text" for="new<?php echo esc_attr($tax_name); ?>_parent">
+                            <?php echo esc_html($taxonomy->labels->parent_item_colon); ?>
+                        </label>
+
+                        <?php
+                        // Only add parent option for hierarchical taxonomies.
+                        if (is_taxonomy_hierarchical($tax_name)) {
+                            $parent_dropdown_args = array(
+                                'taxonomy'         => $tax_name,
+                                'hide_empty'       => 0,
+                                'name'             => 'new' . $tax_name . '_parent',
+                                'orderby'          => 'name',
+                                'hierarchical'     => 1,
+                                'show_option_none' => '&mdash; ' . $taxonomy->labels->parent_item . ' &mdash;',
+                            );
+                            $parent_dropdown_args = apply_filters('post_edit_category_parent_dropdown_args', $parent_dropdown_args);
+                            wp_dropdown_categories($parent_dropdown_args);
+                        }
+                        ?>
+                        <input type="button" id="<?php echo esc_attr($tax_name); ?>-add-submit" data-wp-lists="add:<?php echo esc_attr($tax_name); ?>checklist:<?php echo esc_attr($tax_name); ?>-add" class="button category-add-submit" value="<?php echo esc_attr($taxonomy->labels->add_new_item); ?>" />
+                        <?php wp_nonce_field('add-' . $tax_name, '_ajax_nonce-add-' . $tax_name, false); ?>
+                        <span id="<?php echo esc_attr($tax_name); ?>-ajax-response"></span>
+                    </p>
+                </div>
+            <?php endif; ?>
+        </div>
+    <?php
     }
-    
     
     /**
      * This function is responsible for disabling any redirection related to the food.
@@ -723,7 +732,7 @@ class WPFM_Writepanels {
                     $multi_array_nutrition = array();
 
                     if (isset($_POST[$key]) && !empty($_POST[$key])) {
-                        foreach (sanitize_key($_POST[$key]) as $id => $nutrition) {
+                        foreach ($_POST[$key] as $id => $nutrition) {
                             $term_name = esc_attr(get_term($id)->name);
                             $unit_name = "Unit";
                             if ($nutrition['unit_id'] == '' && empty($nutrition['unit_id'])) {
@@ -843,6 +852,8 @@ class WPFM_Writepanels {
                                             $option_values[$option_value_count] = apply_filters('wpfm_topping_options_values_array', array(
                                                 'option_name' => isset($_POST[$count . '_option_name_' . $option_value_count]) ? sanitize_text_field(wp_unslash($_POST[$count . '_option_name_' . $option_value_count])) : '',
                                                 'option_price' => isset($_POST[$count . '_option_price_' . $option_value_count]) ? sanitize_text_field(wp_unslash($_POST[$count . '_option_price_' . $option_value_count])) : '',
+                                                'option_default' => isset($_POST[$count . '_option_default_' . $option_value_count]) ? sanitize_text_field(wp_unslash($_POST[$count . '_option_default_' . $option_value_count])) : '',
+                                                'option_price_type' => isset($_POST[$count . '_option_price_type_' . $option_value_count]) ? sanitize_text_field(wp_unslash($_POST[$count . '_option_price_type_' . $option_value_count])) : '',
                                             ), array('option_count' => $count, 'option_value_count' => $option_value_count));
                                         }
                                     }
@@ -851,6 +862,8 @@ class WPFM_Writepanels {
                                         $option_values[$option_key_count] = apply_filters('wpfm_topping_options_values_array', array(
                                             'option_name' => isset($_POST[$count . '_option_name_' . $option_key_count]) ? sanitize_text_field(wp_unslash($_POST[$count . '_option_name_' . $option_key_count])) : '',
                                             'option_price' => isset($_POST[$count . '_option_price_' . $option_key_count]) ? sanitize_text_field(wp_unslash($_POST[$count . '_option_price_' . $option_key_count])) : '',
+                                            'option_default' => isset($_POST[$count . '_option_default_' . $option_key_count]) ? sanitize_text_field(wp_unslash($_POST[$count . '_option_default_' . $option_key_count])) : '',
+                                            'option_price_type' => isset($_POST[$count . '_option_price_type_' . $option_key_count]) ? sanitize_text_field(wp_unslash($_POST[$count . '_option_price_type_' . $option_key_count])) : '',
                                         ), array('option_count' => $count, 'option_value_count' => $option_key_count));
                                     }
                                 }
@@ -887,6 +900,10 @@ class WPFM_Writepanels {
                         
                         if ($key == 'topping_options') {
                             $toppings_meta[$count]['_' . $key] = $option_values;
+                        }
+                          
+                        if ($key == 'topping_required') {
+                            $toppings_arr[] = isset($_POST[$key . '_' . $count]) ? esc_attr(wp_unslash($_POST[$key . '_' . $count])) : '';
                         }
                     }
                 }
@@ -1082,7 +1099,6 @@ class WPFM_Writepanels {
         wp_die(); // End the request
     }
     
-    
     /**
      * Save the food menu meta data.
      *
@@ -1175,11 +1191,8 @@ class WPFM_Writepanels {
             } else {
                 update_post_meta($post_id, '_food_type_ids', '');
             }
-            
             update_post_meta($post_id, '_wpfm_food_menu_by_days', '');
-            
         }
-        
     }
     
     /**
@@ -1193,7 +1206,7 @@ class WPFM_Writepanels {
      */
     public function disable_gutenberg($is_enabled, $post_type) {
         if (apply_filters('wpfm_disable_gutenberg', true) && $post_type === 'food_manager') return false;
-        return $is_enabled;
+            return $is_enabled;
     }
     
     /**
@@ -1221,11 +1234,10 @@ class WPFM_Writepanels {
             $post_type = 'food_manager';
         }
         return $post_type;
-    
     }
     
     /**
-     * Display the food menu content.
+     * Display the food menu type content.
      *
      * @access public
      * @param mixed $post
@@ -1234,34 +1246,19 @@ class WPFM_Writepanels {
      */
     public function food_manager_menu_options($post) {
         global $post, $thepostid;
-        $thepostid = $post->ID;
+        $food_menu_id = $post->ID;
     
         wp_enqueue_script('wpfm-admin');
         wp_enqueue_script('wpfm-loader');
-        wp_nonce_field('save_meta_data', 'food_manager_nonce'); ?>
-    
-        <div class="wpfm-admin-food-menu-container wpfm-flex-col wpfm-admin-postbox-meta-data">
-            <div class="wpfm-admin-food-menu-items">
-                <?php $item_menu_option = get_post_meta($thepostid, '_food_menu_option', true); 
-                $key = 'food_menu_options';
-                $field = array(
-                    'name'        => 'wpfm_food_menu_option',
-					'label'       => __('Food Menu Options', 'wp-food-manager'),
-					'type'        => 'radio',
-					'required'    => true,
-					'options' 	  => array(
-						'static_menu' => __('Static Menu', 'wp-food-manager'),
-						'dynamic_menu' => __('Dynamic Menu', 'wp-food-manager'),
-					),
-					'value'       => $item_menu_option,
-				);
-                get_food_manager_template('form-fields/' . $field['type'] . '-field.php', array('key' => esc_attr($key), 'field' => $field));
-				
-                ?>
-                
-            </div>
-        </div>
-        <?php
+        wp_nonce_field('save_meta_data', 'food_manager_nonce');
+        get_food_manager_template(
+            'food-menu-type.php',
+            array(
+                'food_menu_id' => $food_menu_id
+            ),
+            'wp-food-manager',
+            WPFM_PLUGIN_DIR . '/admin/templates/'
+        );
     }
 }
 

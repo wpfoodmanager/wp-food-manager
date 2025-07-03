@@ -5,7 +5,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags:  food menu, restaurant menu, food ordering, restaurant, table reservation, food delivery, food pickup, cafe menu, food order,food,menu
 Requires at least: 6.2.1
 Tested up to: 6.8
-Stable tag: 1.0.7
+Stable tag: 1.0.8
 Requires PHP: 8
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
@@ -200,6 +200,15 @@ You can also find us on GitHub: see the [WP Food Manager GitHub Repository](http
 
 == Changelog ==
 
+= 1.0.8 [ 7th Jul 2025 ] =
+
+Fixed : Plugin Check error
+Fixed : According to the menu selected at restaurant on food menu page it is not showing
+Fixed : Various Bug Fixes and Code Improvements
+Fixed : Food description added not shows as same format at frontside
+Added : Food and Food Menu import functionality
+Added : Option to show/hide Food menu icon for Desktop and Mobile Application
+Added : Improved the topping add options
 
 = 1.0.7 [ 17th Apr 2025 ] =
 

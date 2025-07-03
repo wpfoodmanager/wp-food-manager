@@ -1,5 +1,4 @@
 <?php
-
 /**
  * WPFM_Post_Types class.
  */
@@ -31,11 +30,11 @@ class WPFM_Post_Types {
 	 * Constructor
 	 */
 	public function __construct() {
-		 // wpfm custom post-types.
-		 add_action('wp_footer', array($this, 'output_structured_data'));
-		 add_action('init', array($this, 'register_post_types'), 0);
-		 // View count action.
-		 add_action('set_single_listing_view_count', array($this, 'set_single_listing_view_count'));
+		// wpfm custom post-types.
+		add_action('wp_footer', array($this, 'output_structured_data'));
+		add_action('init', array($this, 'register_post_types'), 0);
+		// View count action.
+		add_action('set_single_listing_view_count', array($this, 'set_single_listing_view_count'));
 	}
 
 	/**
@@ -131,7 +130,6 @@ class WPFM_Post_Types {
 			 */
 			$singular_menu  = esc_html__('Menu', 'wp-food-manager');
 			$plural_menu    = esc_html__('Menus', 'wp-food-manager');
-	
 			$rewrite_menu     = array(
 				'slug'       => 'food-menu',
 				'with_front' => false,
@@ -243,14 +241,70 @@ class WPFM_Post_Types {
         if (!is_single()) {
             return;
         }
-        if (!wpfm_output_food_listing_structured_data()) {
+        if (!$this->wpfm_output_food_listing_structured_data()) {
             return;
         }
-        $structured_data = wpfm_get_food_listing_structured_data();
+        $structured_data = $this->wpfm_get_food_listing_structured_data();
         if (!empty($structured_data)) {
             echo '<script type="application/ld+json">' . wp_json_encode($structured_data) . '</script>';
         }
     }
+	
+	/**
+	 * This wpfm_output_food_listing_structured_data() function Returns if we output food listing structured data for a post.
+	 *
+	 * @param WP_Post|int|null $post (default: null)
+	 * @return bool
+	 * @param bool $output_structured_data True if we should show structured data for post.
+	 * @since 1.0.0
+	 */
+	public function wpfm_output_food_listing_structured_data($post = null) {
+		$post = get_post($post);
+		if ($post && $post->post_type !== 'food_manager') {
+			return false;
+		}
+		// Only show structured data for un-filled and published food listings.
+		$output_structured_data = 'publish' === $post->post_status;
+
+		// This Filter apply if we should output structured data.
+		return apply_filters('wpfm_output_food_listing_structured_data', $output_structured_data);
+	}
+	/**
+	 * This wpfm_get_food_listing_structured_data() function is used to gets the structured data for the food listing.
+	 *
+	 * @see https://developers.google.com/search/docs/data-types/foods
+	 *
+	 * @param WP_Post|int|null $post (default: null)
+	 * @return bool|array False if functionality is disabled; otherwise array of structured data.
+	 * @param bool|array $structured_data False if functionality is disabled; otherwise array of structured data.
+	 * @since 1.0.0
+	 */
+	public function wpfm_get_food_listing_structured_data($post = null) {
+		$post = get_post($post);
+		if ($post && $post->post_type !== 'food_manager') {
+			return false;
+		}
+		$food_banner = get_wpfm_food_banner($post);
+		if( is_array($food_banner) ){
+			$food_banner = array_map('esc_url', get_wpfm_food_banner($post));
+		}else{
+			$food_banner = esc_url(get_wpfm_food_banner($post));
+		}
+		$data = array();
+		$data['@context'] = 'http://schema.org/';
+		$data['@type'] = 'food';
+		$food_expires = get_post_meta($post->ID, '_food_expires', true);
+		if (!empty($food_expires)) {
+			$data['validThrough'] = date('c', strtotime($food_expires));
+		}
+		$data['description'] = sanitize_textarea_field(get_food_description($post));
+		$data['name'] = sanitize_text_field(strip_tags(get_food_title($post)));
+		$data['image'] = $food_banner;
+		$data['foodStatus'] = 'foodScheduled';
+		
+		// Filter the structured data for a food listing.
+		return apply_filters('wpfm_get_food_listing_structured_data', $data, $post);
+	}
 
 	/**
 	 * Display the food's feed.
@@ -273,7 +327,6 @@ class WPFM_Post_Types {
 			$cats     = explode(',', sanitize_text_field(wp_unslash($_GET['search_food_types']))) + array(0);
 			$field    = is_numeric($cats) ? 'term_id' : 'slug';
 			$operator = 'all' === get_option('food_manager_food_type_filter_type', 'all') && sizeof($cats) > 1 ? 'AND' : 'IN';
-
 			$query_args['tax_query'][] = array(
 				'taxonomy'         => 'food_manager_type',
 				'field'            => $field,
@@ -287,7 +340,6 @@ class WPFM_Post_Types {
 			$cats     = explode(',', sanitize_text_field(wp_unslash($_GET['search_categories']))) + array(0);
 			$field    = is_numeric($cats) ? 'term_id' : 'slug';
 			$operator = 'all' === get_option('food_manager_category_filter_type', 'all') && sizeof($cats) > 1 ? 'AND' : 'IN';
-
 			$query_args['tax_query'][] = array(
 				'taxonomy'         => 'food_manager_category',
 				'field'            => $field,
@@ -546,7 +598,6 @@ class WPFM_Post_Types {
 			/* translators: %s: product count */
 			'untrashed' => _n('%s food restored from the Trash.', '%s foods restored from the Trash.', $bulk_counts['untrashed'], 'wp-food-manager'),
 		);
-
 		return $bulk_messages;
 	}
 }

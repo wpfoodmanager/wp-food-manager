@@ -49,7 +49,6 @@ class WPFM_CPT {
         add_filter('manage_edit-food_manager_sortable_columns', array($this, 'set_custom_food_sortable_columns'));
         add_filter('post_row_actions', array($this, 'row_actions'));
         add_filter('wp_terms_checklist_args', 'wpfm_term_radio_checklist_for_food_type', 10, 2);
-        
 	}
 	
 	/**
@@ -102,7 +101,6 @@ class WPFM_CPT {
         }
     }
     
-
     /**
      * Do custom bulk actions.
      * 
@@ -163,21 +161,21 @@ class WPFM_CPT {
 
             case 'food_banner':
                 echo '<div class="food_banner">';
-                display_food_banner();
+                wpfm_display_food_banner();
                 echo '</div>';
-                display_food_veg_nonveg_icon_tag();
+                wpfm_display_food_veg_nonveg_icon_tag();
                 break;
 
             case 'food-price':
-                display_food_price_tag();
+                wpfm_display_food_price_tag();
                 break;
 
             case 'food_categories':
-               echo esc_html(display_food_category()); 
+               echo esc_html(wpfm_display_food_category()); 
                 break;
 
             case 'food_stock_status':
-                echo esc_html(display_stock_status());
+                echo esc_html(wpfm_display_stock_status());
                 break;
 
             case 'food_menu_order':
@@ -265,13 +263,47 @@ class WPFM_CPT {
                 }
                 break;
             case 'qr_code':
-                display_menu_qr_code();
+                $this->display_menu_qr_code();
                 break;
             default:
                 break;
         }
     }
     
+    /**
+     * This function is used to display menu QR code
+     * @since 1.0.2
+     */
+    public function display_menu_qr_code(){
+        global $post;
+            
+            // Get the Post ID and Post URL
+            $menu_id = $post->ID;
+            $post_url = get_permalink($menu_id);  // Get the URL of the post
+        
+            // Check if the QR code class exists and include it if it doesn't
+            if(!class_exists('QRcode')) {
+                require_once WPFM_PLUGIN_DIR . '/includes/lib/phpqrcode/qrlib.php';
+            }
+        
+            // Define the path to store the generated QR code image
+            $upload_dir = wp_upload_dir(); // Get the upload directory
+            $qr_code_image = $upload_dir['path'] . "/qr_code_$menu_id.png"; // Path for the QR code image
+            
+            // Generate QR code image
+            QRcode::png($post_url, $qr_code_image, 'L', 4, 2);  // 'L' for low error correction, 4 is the size, 2 is the margin
+            $qr_code_url = $upload_dir['url'] . "/qr_code_$menu_id.png";
+
+            // Output the QR code image and the download button
+            echo '<div class="qr_code-actions">';
+            // Print button
+            echo '<a href="javascript:void(0)" class="qr_print_button button button-icon wpfm-tooltip" wpfm-data-tip="' . esc_attr(sprintf(__('Print', 'wpfm-food-manager'))) . '"><span class="dashicons dashicons-printer"></span> </a>';
+            echo '<a href="' . $qr_code_url . '" download="QR_Code_' . $menu_id . '.png" class="button button-icon wpfm-tooltip" wpfm-data-tip="' . esc_attr(sprintf(__('Download', 'wpfm-restaurant-manager'))) . '"><span class="dashicons dashicons-download"></span></a>';
+            echo '<a href="javascript:void(0)" class="qr_preview button button-icon wpfm-tooltip" wpfm-data-tip="' . esc_attr(sprintf(__('Qr Code', 'wpfm-restaurant-manager'))) . '"><span class="dashicons dashicons-visibility"></span></a>';
+            echo '<div class="qrcode_img" style="display: none"><div class="qr_code-modal"><h2>QR Code Scan</h2><img src="' . $qr_code_url . '" alt="QR Code"><span class="dashicons dashicons-no-alt"></span></div></div>';
+            echo '</div>';
+    }
+
     /**
      * Set Copy Shortcode.
      *
