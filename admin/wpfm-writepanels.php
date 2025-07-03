@@ -732,7 +732,7 @@ class WPFM_Writepanels {
                     $multi_array_nutrition = array();
 
                     if (isset($_POST[$key]) && !empty($_POST[$key])) {
-                        foreach (sanitize_key($_POST[$key]) as $id => $nutrition) {
+                        foreach ($_POST[$key] as $id => $nutrition) {
                             $term_name = esc_attr(get_term($id)->name);
                             $unit_name = "Unit";
                             if ($nutrition['unit_id'] == '' && empty($nutrition['unit_id'])) {
