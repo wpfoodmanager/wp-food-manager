@@ -152,6 +152,7 @@ if (!empty($regular_price)) {
                                         'class' => array(),
                                         'data-attribute_name' => array()
                                     ),
+                                    'li' => array()
                                     // Add other allowed tags and attributes as needed
                                 );
                                 
