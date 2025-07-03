@@ -8,7 +8,7 @@
  * Author URI: https://www.wpfoodmanager.com
  * Text Domain: wp-food-manager
  * Domain Path: /languages
- * Version: 1.0.7
+ * Version: 1.0.8
  * Since: 1.0.0
  * Requires WordPress Version at least: 6.2.1
  * Copyright: 2020 WP Food Manager
