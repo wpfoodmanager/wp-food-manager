@@ -1862,3 +1862,12 @@ span.toppings-radio-btn {
   cursor: pointer;
 }
 /*QR code actions end*/
+
+
+.wp-list-table.widefat .wpfm-food-category-text.food-category {
+    background: #eee;
+    padding: 2px 5px;
+    border-radius: 4px;
+    display: inline-block;
+    margin: 5px 5px 0 0;
+}
