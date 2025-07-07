@@ -187,7 +187,7 @@ span.wpfm-success-message, span.wpfm-success-message-days {
   color: #fff;
 }
 
-.sub-font-icon input[type=radio]:checked - .sub-font-icon {
+.sub-font-icon input[type=radio]:checked ~ .sub-font-icon {
   border-color: #333;
 }
 
@@ -1870,4 +1870,101 @@ span.toppings-radio-btn {
     border-radius: 4px;
     display: inline-block;
     margin: 5px 5px 0 0;
+}
+
+
+
+
+/*Import Timeline Start*/
+.wp-admin-timeline ul {
+    display: flex;
+    justify-content: center;
+    max-width: 800px;
+    width: 100%;
+    margin: 0 auto;
+}
+.wp-admin-timeline ul li {
+    width: 100%;
+    text-align: center;
+    border-bottom: 3px solid #c3c4c7;
+    padding: 15px;
+    color: #999;
+    font-size: 14px;
+}
+.wp-admin-timeline ul li.wp-admin-timeline-active {
+    border-color: #2271b1;
+    color: #2271b1;
+}
+
+
+.wp-admin-import-food-box {
+    max-width: 800px;
+    width: 100%;
+    margin: 20px auto;
+    background-color: #fff;
+    border: 1px solid #c3c4c7;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, .04);
+    border-radius: 6px;
+}
+.wp-admin-import-food-box table.widefat {
+    border: 0;
+    box-shadow: none;
+    background-color: transparent;
+}
+.wp-admin-import-food-box-header {
+    padding: 20px;
+    border-bottom: 1px solid #c3c4c7;
+}
+.wp-admin-import-food-box-header h3 {
+    margin: 0 0 10px;
+    font-size: 16px;
+}
+.wp-admin-import-food-box-header p {
+    margin: 0;
+    font-size: 14px;
+}
+.wp-admin-import-food-box .wp-food-manager-upload-file {
+    padding: 15px;
+}
+.wp-admin-import-food-box .upload-file {
+    border: 1px solid;
+    padding: 5px 7px;
+    display: inline-block;
+    border-radius: 3px;
+    color: #2271b1;
+    border-color: #2271b1;
+    font-size: 14px;
+    margin-right: 5px;
+}
+.wp-admin-import-food-box .button-primary {
+    padding: 2px 15px;
+    font-size: 16px;
+    border-radius: 4px;
+}
+.wp-admin-import-food-box table.widefat tfoot tr td {
+    padding: 20px;
+}
+
+.wp-admin-import-success-step {
+    padding: 20px;
+    text-align: center;
+}
+.wp-admin-import-success-step b {
+    width: 90px;
+    height: 90px;
+    display: block;
+    text-align: center;
+    line-height: 90px;
+    border: 1px solid;
+    border-radius: 100px;
+    margin: 1rem auto;
+    font-size: 2rem;
+}
+.wp-admin-import-success-step .button-primary {
+    margin: 5px;
+}
+.wp-admin-import-success-step h4 {
+    margin: 30px 0 40px;
+    font-size: 16px;
+    font-weight: normal;
 }
