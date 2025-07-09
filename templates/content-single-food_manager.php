@@ -176,7 +176,7 @@ $food = $post; ?>
                                                                             $price_decimal_separator = wpfm_get_price_decimal_separator();
                                                                             $option_price = $ext_option_value['option_price'];
                                                                             $ext_option_formatted_option_price = '';
-                    
+                                                                            $topping_html .= "<li>";
                                                                             if (!empty($option_price)) {
                                                                                 $formatted_option_price = number_format($option_price, $price_decimals, $price_decimal_separator, $price_thousand_separator);
                                                                                 $ext_option_formatted_option_price = sprintf($price_format, '<span class="food-manager-Price-currencySymbol">' . get_wpfm_currency_symbol() . '</span>', $formatted_option_price);
@@ -189,8 +189,7 @@ $food = $post; ?>
                     
                                                                             $topping_html .= esc_attr($ext_option_value['option_name']) . $option_price_sep . $ext_option_formatted_option_price ;
                                                                             $topping_html .= $ext_option_value['option_default'];
-                                                                            $topping_html .= $ext_option['_topping_type'];
-                                                                            $topping_html .= $ext_option_value['option_price_type'];
+                                                                            $topping_html .="</li>";
                                                                         }
                                                                     }
                                                                 $topping_html .= '</ul>';
