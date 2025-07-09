@@ -1,11 +1,11 @@
 ===  WP Food Manager – Restaurant Menu & Online Food Ordering for WooCommerce - Food Delivery & Pickup - Table Reservation ===
 
-Contributors: wpfoodmanager,ashokdudhat,krinay
+Contributors: wpfoodmanager,ashokdudhat
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=55FRYATTFLA5N
 Tags:  food menu, restaurant menu, food ordering, restaurant, table reservation, food delivery, food pickup, cafe menu, food order,food,menu
 Requires at least: 6.2.1
 Tested up to: 6.8
-Stable tag: 1.0.8
+Stable tag: 1.0.9
 Requires PHP: 8
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
@@ -199,6 +199,16 @@ You can also find us on GitHub: see the [WP Food Manager GitHub Repository](http
 
 
 == Changelog ==
+
+= 1.0.9 [ 9th Jul 2025 ] =
+
+Fixed : Food Description not shows properly on food menu page and in Popup
+Fixed : Food menu the add to cart popup not looks proper
+Fixed : Admin side Multiple food category not looks proper
+Fixed : Edit delivery at admin side shows warning
+Fixed : Auto updater for the paid addons.
+Fixed : Design layout for food import
+Fixed : Bug Fixes and Code Improvements
 
 = 1.0.8 [ 7th Jul 2025 ] =
 

@@ -11,7 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @author  WPFM Team
  */
 class WPFM_Updater_Key_API {
-	private static $endpoint = 'https://wpfoodmanager.com/?wc-api=wpfmstore_licensing_activation_api';
+	private static $endpoint = 'https://foodmato.com/?wc-api=wpfmstore_licensing_activation_api';
 
 	
 	//Attempt to activate a plugin licence.
