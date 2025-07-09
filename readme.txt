@@ -1,6 +1,6 @@
 ===  WP Food Manager – Restaurant Menu & Online Food Ordering for WooCommerce - Food Delivery & Pickup - Table Reservation ===
 
-Contributors: wpfoodmanager,ashokdudhat,krinay
+Contributors: wpfoodmanager,ashokdudhat
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=55FRYATTFLA5N
 Tags:  food menu, restaurant menu, food ordering, restaurant, table reservation, food delivery, food pickup, cafe menu, food order,food,menu
 Requires at least: 6.2.1
