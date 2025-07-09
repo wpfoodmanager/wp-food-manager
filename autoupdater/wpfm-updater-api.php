@@ -11,7 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @author  WPFM Team
  */
 class WPFM_Updater_API {
-	private static $api_url = 'https://wpfoodmanager.com/?wc-api=wpfmstore_licensing_update_api';
+	private static $api_url = 'https://foodmato.com/?wc-api=wpfmstore_licensing_update_api';
 
 	/**
 	 * Sends and receives data to and from the server API.
