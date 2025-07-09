@@ -366,7 +366,7 @@ class WPFM_Updater {
 				$response = $this->get_plugin_version($plugin_names, $plugin_slugs, $plugin_licenses, $plugin_emails, $plugin_versions);
 				// Cache it
 				if ( is_object( $response ) ) {
-					set_transient( 'wpfm_bulk_plugin_update_check', $response, HOUR_IN_SECONDS * 6 );
+					set_transient( 'wpfm_bulk_plugin_update_check', $response, HOUR_IN_SECONDS * 500 );
 				}
 			}	
 		}
