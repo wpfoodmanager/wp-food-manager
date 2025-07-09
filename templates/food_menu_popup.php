@@ -45,7 +45,7 @@ if (!empty($regular_price)) {
             </div>
             <?php do_action('wpfm_food_menu_popup_price_after', $food_id); ?>
             <div id="wpfm_food_menu_modal_description" class="wpfm-food-modal-food_description">
-                <?php echo wp_kses_post($food->post_content);?>
+                <?php echo wpautop($food->post_content);?>
             </div>
             <?php if (wpfm_get_stock_status() == 'food_outofstock') { ?>
              <div class="food-stock-status">
@@ -152,6 +152,7 @@ if (!empty($regular_price)) {
                                         'class' => array(),
                                         'data-attribute_name' => array()
                                     ),
+                                    'li' => array()
                                     // Add other allowed tags and attributes as needed
                                 );
                                 

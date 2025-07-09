@@ -1,9 +1,25 @@
 <div class="wrap wp-food-manager-wrap">
-	<h2><?php _e('Import Food & Menu', 'wp-food-manager'); ?></h2>
-	<div class="notice notice-warning is-dismissible">
-    	<p><?php _e('Before adding imported food items to the menu, make sure they have been successfully imported.', 'wp-food-manager'); ?></p>
-	</div>
+<h2><?php _e('Import Food & Menu', 'wp-food-manager'); ?></h2>
+<div class="notice notice-warning is-dismissible">
+	<p><?php _e('Before adding imported food items to the menu, make sure they have been successfully imported.', 'wp-food-manager'); ?></p>
+</div>
 
+<div class="wp-admin-timeline">
+	<ul>
+		<li class="wp-admin-timeline-active">Upload CSV file</li>
+		<li>Column mapping</li>
+		<li>Import</li>
+		<li>Done!</li>
+	</ul>
+</div>
+
+
+	
+<div class="wp-admin-import-food-box">
+	<div class="wp-admin-import-food-box-header">
+		<h3><?php _e('Step 1: Upload CSV File', 'wp-food-manager'); ?></h3>
+		<p><?php _e('Upload a CSV file containing food items. The file should be formatted correctly with the necessary columns for food items.', 'wp-food-manager'); ?></p>
+	</div>
 	<form method="post" class="wp-food-manager-upload-file">
 		<table class="widefat">
 			<tr>
@@ -35,4 +51,7 @@
 		    </tr>
 		</table>
 	</form>
+</div>
+
+	
 </div>

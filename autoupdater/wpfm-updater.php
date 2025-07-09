@@ -338,6 +338,8 @@ class WPFM_Updater {
 			return $check_for_updates_data;
 		}
 		$cached_response = get_transient( 'wpfm_bulk_plugin_update_check' );
+		// // delete_transient( 'wpfm_bulk_plugin_update_check' );
+
 		if ( false !== $cached_response ) {
 			$response = $cached_response;
 		} else {
@@ -349,8 +351,8 @@ class WPFM_Updater {
 			$plugin_versions = array();
 			if(!empty($this->plugin_data)){
 				foreach($this->plugin_data as $plugin_info){
-					$licence_key = get_option(  $plugin_info['TextDomain'] . '_licence_key', true );
-					$email       = get_option(  $plugin_info['TextDomain'] . '_email', true );
+					$licence_key = get_option(  $plugin_info['TextDomain'] . '_licence_key' ) ? get_option(  $plugin_info['TextDomain'] . '_licence_key' ) : '';
+					$email       = get_option(  $plugin_info['TextDomain'] . '_email' ) ? get_option(  $plugin_info['TextDomain'] . '_email' ) : '';
 					if ( !empty($licence_key) && !empty($email) ) {
 						array_push($plugin_names,  $plugin_info['Name']);
 						array_push($plugin_slugs,  $plugin_info['TextDomain']);
@@ -364,18 +366,20 @@ class WPFM_Updater {
 				$response = $this->get_plugin_version($plugin_names, $plugin_slugs, $plugin_licenses, $plugin_emails, $plugin_versions);
 				// Cache it
 				if ( is_object( $response ) ) {
-					set_transient( 'wpfm_bulk_plugin_update_check', $response, HOUR_IN_SECONDS * 6 );
+					set_transient( 'wpfm_bulk_plugin_update_check', $response, HOUR_IN_SECONDS * 500 );
 				}
 			}	
 		}
 		if(isset($response) && !empty($response) && is_object($response)){
 			foreach ($this->plugin_data as $plugin_info) {
 				$plugin_slug = $plugin_info['TextDomain'];
-				$new_version = $response->$plugin_slug['new_version'];
-				if(isset($new_version)){
-					if (isset($check_for_updates_data->checked[$plugin_info['plugin_files']]) && version_compare( $new_version, $plugin_info['Version'], '>' ) ) {
-						$response->$plugin_slug['plugin'] = $plugin_info['plugin_files'];
-						$check_for_updates_data->response[ $plugin_info['plugin_files'] ] = (object)$response->$plugin_slug;
+				if(isset($response->$plugin_slug['new_version'])) {
+					$new_version = $response->$plugin_slug['new_version'];
+					if(isset($new_version)){
+						if (isset($check_for_updates_data->checked[$plugin_info['plugin_files']]) && version_compare( $new_version, $plugin_info['Version'], '>' ) ) {
+							$response->$plugin_slug['plugin'] = $plugin_info['plugin_files'];
+							$check_for_updates_data->response[ $plugin_info['plugin_files'] ] = (object)$response->$plugin_slug;
+						}
 					}
 				}
 			}

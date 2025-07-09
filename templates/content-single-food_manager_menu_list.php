@@ -77,7 +77,14 @@ $show_image = ($disable_food_image !== 'yes'); ?>
             $formatted_regular_price = number_format($regular_price, $price_decimals, $price_decimal_separator, $price_thousand_separator);
         }
         if (!empty(get_the_content())) {
-            $menu_food_desc = "<p class='fm-food-menu-desc'>" . wp_kses_post(get_the_content()) . "</p>";
+            $food_post_content = str_replace(["\r\n", "\r"], "\n", get_the_content());
+
+            // Collapse multiple newlines (\n\n, \n\n\n) into a single newline
+            $food_post_content = preg_replace("/\n{2,}/", "\n", $food_post_content);
+
+            // Now apply nl2br to convert each newline to one <br>
+            $food_post_content = nl2br(trim($food_post_content));
+            $menu_food_desc = "<p class='fm-food-menu-desc'>" . $food_post_content . "</p>";
         } ?>
         <div class='food-list-box' data-id='<?php echo get_the_ID();?>'>
 
